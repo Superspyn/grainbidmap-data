@@ -1,0 +1,30 @@
+source,location,commodity,delivery_date,futures_month,futures_price,basis_dollars,basis_cents,cash_bid,bid_change,as_of,scraped_at
+Golden Grain Energy,"Mason City, IA",Corn,Jun 2026,Jul'26,4.14,-0.2,-20.0,3.94,-0.015,,2026-06-15 20:11:52
+Golden Grain Energy,"Mason City, IA",Corn,Jul 2026,Jul'26,4.14,-0.22,-22.0,3.92,-0.015,,2026-06-15 20:11:52
+Golden Grain Energy,"Mason City, IA",Corn,Oct 2026,Dec'26,4.4025,-0.3,-30.0,4.1,-0.015,,2026-06-15 20:11:52
+Landus,Location 5,Corn,Jun 2026,Jul 2026,,-0.4,-40.0,3.74,-0.01,06/15/2026 08:01 PM,2026-06-15 20:11:52
+Landus,Location 5,Corn,Jul 2026,Jul 2026,,-0.4,-40.0,3.74,-0.01,06/15/2026 08:01 PM,2026-06-15 20:11:52
+Landus,Location 5,Corn,Oct 2026,Dec 2026,,-0.45,-45.0,3.95,-0.02,06/15/2026 08:01 PM,2026-06-15 20:11:52
+Landus,Location 5,Corn,Dec 2026,Dec 2026,,-0.45,-45.0,3.95,-0.02,06/15/2026 08:01 PM,2026-06-15 20:11:52
+Landus,Location 5,Corn,Jan 2027,Mar 2027,,-0.4,-40.0,4.14,-0.01,06/15/2026 08:01 PM,2026-06-15 20:11:52
+Landus,Location 5,Corn,Mar 2027,Mar 2027,,-0.45,-45.0,4.09,-0.01,06/15/2026 08:01 PM,2026-06-15 20:11:52
+Landus,Location 5,Soybeans,Jun 2026,Jul 2026,,-0.45,-45.0,10.72,-0.02,06/15/2026 08:01 PM,2026-06-15 20:11:52
+Landus,Location 5,Soybeans,Jul 2026,Jul 2026,,-0.45,-45.0,10.72,-0.02,06/15/2026 08:01 PM,2026-06-15 20:11:52
+Landus,Location 5,Soybeans,Oct 2026,Nov 2026,,-0.65,-65.0,10.67,-0.03,06/15/2026 08:01 PM,2026-06-15 20:11:52
+Landus,Location 5,Soybeans,Dec 2026,Jan 2027,,-0.65,-65.0,10.82,-0.02,06/15/2026 08:01 PM,2026-06-15 20:11:52
+Landus,Location 5,Soybeans,Jan 2027,Jan 2027,,-0.7,-70.0,10.77,-0.02,06/15/2026 08:01 PM,2026-06-15 20:11:52
+Landus,Location 5,Soybeans,Mar 2027,Mar 2027,,-0.7,-70.0,10.85,-0.02,06/15/2026 08:01 PM,2026-06-15 20:11:52
+NEW Cooperative,Britt,Corn,6/1/2026 - 6/30/2026,,414-0,,-26,$3.88,-1-4,,2026-06-15 20:11:52
+NEW Cooperative,Britt,Corn,7/1/2026 - 7/31/2026,,414-0,,-26,$3.88,-1-4,,2026-06-15 20:11:52
+NEW Cooperative,Britt,Corn,10/1/2026 - 10/31/2026,,440-2,,-45,$3.95,-1-4,,2026-06-15 20:11:52
+NEW Cooperative,Britt,Corn,1/1/2027 - 1/31/2027,,453-6,,-45,$4.09,-1-6,,2026-06-15 20:11:52
+NEW Cooperative,Britt,Corn,3/1/2027 - 3/31/2027,,453-6,,-45,$4.09,-1-6,,2026-06-15 20:11:52
+NEW Cooperative,Britt,Corn,5/1/2027 - 5/31/2027,,463-0,,-45,$4.18,-1-4,,2026-06-15 20:11:52
+NEW Cooperative,Britt,Corn,10/1/2027 - 10/31/2027,,469-4,,-45,$4.24,-0-4,,2026-06-15 20:11:52
+NEW Cooperative,Britt,Soybean,6/1/2026 - 6/30/2026,,1116-2,,-33,$10.83,-3-0,,2026-06-15 20:11:52
+NEW Cooperative,Britt,Soybean,7/1/2026 - 7/31/2026,,1116-2,,-33,$10.83,-3-0,,2026-06-15 20:11:52
+NEW Cooperative,Britt,Soybean,10/1/2026 - 10/31/2026,,1132-2,,-65,$10.67,-2-4,,2026-06-15 20:11:52
+NEW Cooperative,Britt,Soybean,1/1/2027 - 1/31/2027,,1147-0,,-70,$10.77,-2-4,,2026-06-15 20:11:52
+NEW Cooperative,Britt,Soybean,3/1/2027 - 3/31/2027,,1155-2,,-70,$10.85,-1-6,,2026-06-15 20:11:52
+NEW Cooperative,Britt,Soybean,5/1/2027 - 5/31/2027,,1162-4,,-70,$10.92,-2-6,,2026-06-15 20:11:52
+NEW Cooperative,Britt,Soybean,10/1/2027 - 10/31/2027,,1123-0,,-75,$10.48,-0-4,,2026-06-15 20:11:52
