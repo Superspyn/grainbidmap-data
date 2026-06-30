@@ -115,7 +115,7 @@ def scrape_landus():
 
             rows.append({
                 "source": "Landus",
-                "location": "Location 5",
+                "location": "Britt",
                 "commodity": commodity,
                 "delivery_date": bid.get("deliveryDate", ""),
                 "futures_month": bid.get("basisMonth", ""),
