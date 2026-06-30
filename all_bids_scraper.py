@@ -2,11 +2,12 @@ import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 from datetime import datetime
+from zoneinfo import ZoneInfo
 from pathlib import Path
 import re
 from playwright.sync_api import sync_playwright
 
-SCRAPED_AT = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+SCRAPED_AT = datetime.now(ZoneInfo("America/Chicago")).strftime("%m/%d/%Y %I:%M %p %Z")
 
 
 def clean_number(value):
