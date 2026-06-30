@@ -4,8 +4,8 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 from pathlib import Path
 import re
-
 from playwright.sync_api import sync_playwright
+
 SCRAPED_AT = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
@@ -13,7 +13,7 @@ def clean_number(value):
     if value is None:
         return None
 
-    text = str(value).replace(",", "").replace("−", "-")
+    text = str(value).replace(",", "").replace("−", "-").replace("$", "")
     matches = re.findall(r"[-+]?\d*\.\d+|[-+]?\d+", text)
 
     if not matches:
@@ -23,6 +23,87 @@ def clean_number(value):
         return float(matches[0])
     except:
         return None
+
+
+def clean_price(value):
+    num = clean_number(value)
+    return f"{num:.2f}" if num is not None else ""
+
+
+def normalize_commodity(value):
+    text = str(value).strip().lower()
+
+    if "soybean" in text or "bean" in text:
+        return "Soybeans"
+
+    if "corn" in text:
+        return "Corn"
+
+    return str(value).strip()
+
+
+def normalize_delivery(value):
+    text = str(value).strip()
+
+    first_date = text.split("-")[0].strip()
+
+    try:
+        dt = datetime.strptime(first_date, "%m/%d/%Y")
+        return dt.strftime("%b %Y")
+    except:
+        return text
+
+
+def normalize_futures_month(value):
+    text = str(value).strip().replace("’", "'")
+
+    match = re.search(r"([A-Za-z]{3})'?(\d{2,4})", text)
+
+    if match:
+        month = match.group(1).title()
+        year = match.group(2)
+
+        if len(year) == 2:
+            year = "20" + year
+
+        return f"{month} {year}"
+
+    return text
+
+
+def estimate_futures_month(commodity, delivery):
+    try:
+        dt = datetime.strptime(delivery, "%b %Y")
+    except:
+        return ""
+
+    month = dt.month
+    year = dt.year
+    commodity = commodity.lower()
+
+    if "corn" in commodity:
+        if month in [6, 7]:
+            return f"Jul {year}"
+        if month in [8, 9, 10, 11, 12]:
+            return f"Dec {year}"
+        if month in [1, 2, 3]:
+            return f"Mar {year}"
+        if month in [4, 5]:
+            return f"Jul {year}"
+
+    if "soybean" in commodity:
+        if month in [6, 7]:
+            return f"Jul {year}"
+        if month in [8, 9, 10, 11]:
+            return f"Nov {year}"
+        if month in [12, 1]:
+            return f"Jan {year}"
+        if month in [2, 3]:
+            return f"Mar {year}"
+        if month in [4, 5]:
+            return f"Jul {year}"
+
+    return ""
 
 
 def scrape_golden_grain():
@@ -56,8 +137,8 @@ def scrape_golden_grain():
         if "Delivery" in cells[0]:
             continue
 
-        delivery = cells[0]
-        futures_month = cells[1] if len(cells) > 1 else ""
+        delivery = normalize_delivery(cells[0])
+        futures_month = normalize_futures_month(cells[1]) if len(cells) > 1 else ""
 
         numbers = [clean_number(c) for c in cells[2:]]
         numbers = [n for n in numbers if n is not None]
@@ -70,7 +151,7 @@ def scrape_golden_grain():
         if cash_bid is None and futures_price is not None and basis_dollars is not None:
             cash_bid = futures_price + basis_dollars
 
-        basis_cents = basis_dollars * 100 if basis_dollars is not None else None
+        basis_cents = round(basis_dollars * 100, 1) if basis_dollars is not None else ""
 
         rows.append({
             "source": "Golden Grain Energy",
@@ -78,11 +159,11 @@ def scrape_golden_grain():
             "commodity": "Corn",
             "delivery_date": delivery,
             "futures_month": futures_month,
-            "futures_price": futures_price,
-            "basis_dollars": basis_dollars,
+            "futures_price": f"{futures_price:.2f}" if futures_price is not None else "",
+            "basis_dollars": basis_dollars if basis_dollars is not None else "",
             "basis_cents": basis_cents,
-            "cash_bid": cash_bid,
-            "bid_change": bid_change,
+            "cash_bid": f"{cash_bid:.2f}" if cash_bid is not None else "",
+            "bid_change": bid_change if bid_change is not None else "",
             "as_of": "",
             "scraped_at": SCRAPED_AT
         })
@@ -107,54 +188,31 @@ def scrape_landus():
     rows = []
 
     for commodity_group in data.get("cashBids", []):
-        commodity = commodity_group.get("commodity", "")
+        commodity = normalize_commodity(commodity_group.get("commodity", ""))
 
         for bid in commodity_group.get("bids", []):
             basis_dollars = bid.get("basisPrice", None)
-            basis_cents = basis_dollars * 100 if basis_dollars is not None else None
+            basis_cents = round(basis_dollars * 100, 1) if basis_dollars is not None else ""
+
+            cash_bid = bid.get("currentBid", "")
+            cash_bid = f"{cash_bid:.2f}" if isinstance(cash_bid, (int, float)) else clean_price(cash_bid)
 
             rows.append({
                 "source": "Landus",
-                "location": "Britt",
+                "location": "Britt, IA",
                 "commodity": commodity,
                 "delivery_date": bid.get("deliveryDate", ""),
                 "futures_month": bid.get("basisMonth", ""),
                 "futures_price": "",
-                "basis_dollars": basis_dollars,
+                "basis_dollars": basis_dollars if basis_dollars is not None else "",
                 "basis_cents": basis_cents,
-                "cash_bid": bid.get("currentBid", ""),
+                "cash_bid": cash_bid,
                 "bid_change": bid.get("bidChange", ""),
                 "as_of": as_of,
                 "scraped_at": SCRAPED_AT
             })
 
     return rows
-
-
-if __name__ == "__main__":
-    all_rows = []
-
-    print("Scraping Golden Grain...")
-    try:
-        all_rows.extend(scrape_golden_grain())
-        print("Golden Grain done.")
-    except Exception as e:
-        print("Golden Grain error:", e)
-
-    print("Scraping Landus...")
-    try:
-        all_rows.extend(scrape_landus())
-        print("Landus done.")
-    except Exception as e:
-        print("Landus error:", e)
-
-    df = pd.DataFrame(all_rows)
-
-    output_path = Path(__file__).with_name("all_grain_bids.csv")
-    df.to_csv(output_path, index=False)
-
-    print(df)
-    print(f"\nSaved to {output_path}")
 
 
 def scrape_newcoop():
@@ -185,20 +243,65 @@ def scrape_newcoop():
         if "commodity" in text and "delivery" in text:
             continue
 
-        if "corn" in text or "soybeans" in text or "bean" in text:
+        if "corn" in text or "soybean" in text or "bean" in text:
+            commodity = normalize_commodity(cells[0])
+            delivery = normalize_delivery(cells[1])
+            cash_bid = clean_price(cells[2])
+            basis_cents = clean_number(cells[3])
+            basis_cents = round(basis_cents, 1) if basis_cents is not None else ""
+            futures_month = estimate_futures_month(commodity, delivery)
+
             rows.append({
                 "source": "NEW Cooperative",
-                "location": "Britt",
-                "commodity": cells[0] if len(cells) > 0 else "",
-                "delivery_date": cells[1] if len(cells) > 1 else "",
-                "futures_month": "",
-                "futures_price": cells[4] if len(cells) > 4 else "",
+                "location": "Britt, IA",
+                "commodity": commodity,
+                "delivery_date": delivery,
+                "futures_month": futures_month,
+                "futures_price": "",
                 "basis_dollars": "",
-                "basis_cents": cells[3] if len(cells) > 3 else "",
-                "cash_bid": cells[2] if len(cells) > 2 else "",
-                "bid_change": cells[5] if len(cells) > 5 else "",
+                "basis_cents": basis_cents,
+                "cash_bid": cash_bid,
+                "bid_change": clean_number(cells[5]) if len(cells) > 5 else "",
                 "as_of": "",
                 "scraped_at": SCRAPED_AT
             })
 
     return rows
+
+
+if __name__ == "__main__":
+    all_rows = []
+
+    print("Scraping Golden Grain...")
+    try:
+        golden_rows = scrape_golden_grain()
+        print("Golden Grain rows found:", len(golden_rows))
+        all_rows.extend(golden_rows)
+    except Exception as e:
+        print("Golden Grain error:", e)
+
+    print("Scraping Landus...")
+    try:
+        landus_rows = scrape_landus()
+        print("Landus rows found:", len(landus_rows))
+        all_rows.extend(landus_rows)
+    except Exception as e:
+        print("Landus error:", e)
+
+    print("Scraping NEW Coop...")
+    try:
+        newcoop_rows = scrape_newcoop()
+        print("NEW Coop rows found:", len(newcoop_rows))
+        all_rows.extend(newcoop_rows)
+    except Exception as e:
+        print("NEW Coop error:", e)
+
+    df = pd.DataFrame(all_rows)
+
+    output_path = Path(__file__).with_name("all_grain_bids.csv")
+    df.to_csv(output_path, index=False)
+
+    print(df)
+    print("Rows saved:", len(df))
+    print("CSV saved here:", output_path)
+    print("Updated at:", SCRAPED_AT)
