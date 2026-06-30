@@ -14,23 +14,32 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.13"
 
-      - name: Install dependencies
+      - name: Install Python packages
         run: |
-          pip install -r requirements.txt
-          python -m playwright install chromium
+          python -m pip install --upgrade pip
+          pip install requests pandas beautifulsoup4 playwright
+
+      - name: Install Playwright browser and Linux dependencies
+        run: |
+          python -m playwright install --with-deps chromium
           sudo apt-get update
           sudo apt-get install -y xvfb
 
       - name: Run scraper
         run: |
-          xvfb-run python all_bids_scraper.py
+          xvfb-run -a python all_bids_scraper.py
+
+      - name: Show CSV preview
+        run: |
+          ls -l
+          head -20 all_grain_bids.csv
 
       - name: Commit updated CSV
         run: |
