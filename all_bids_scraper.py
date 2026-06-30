@@ -219,11 +219,18 @@ def scrape_newcoop():
     url = "https://www.newcoop.com/cash-bids?location_name=Britt"
 
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
-        page = browser.new_page()
+        browser = p.chromium.launch(headless=False)
 
-        page.goto(url, wait_until="domcontentloaded", timeout=60000)
-        page.wait_for_timeout(8000)
+        page = browser.new_page(
+            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36"
+        )
+
+        page.goto(url, wait_until="networkidle", timeout=90000)
+        page.wait_for_timeout(15000)
+
+        # Scroll in case bids lazy-load
+        page.mouse.wheel(0, 2000)
+        page.wait_for_timeout(5000)
 
         html = page.content()
         browser.close()
@@ -247,8 +254,10 @@ def scrape_newcoop():
             commodity = normalize_commodity(cells[0])
             delivery = normalize_delivery(cells[1])
             cash_bid = clean_price(cells[2])
+
             basis_cents = clean_number(cells[3])
             basis_cents = round(basis_cents, 1) if basis_cents is not None else ""
+
             futures_month = estimate_futures_month(commodity, delivery)
 
             rows.append({
@@ -257,11 +266,11 @@ def scrape_newcoop():
                 "commodity": commodity,
                 "delivery_date": delivery,
                 "futures_month": futures_month,
-                "futures_price": "",
+                "futures_price": cells[4] if len(cells) > 4 else "",
                 "basis_dollars": "",
                 "basis_cents": basis_cents,
                 "cash_bid": cash_bid,
-                "bid_change": clean_number(cells[5]) if len(cells) > 5 else "",
+                "bid_change": cells[5] if len(cells) > 5 else "",
                 "as_of": "",
                 "scraped_at": SCRAPED_AT
             })
