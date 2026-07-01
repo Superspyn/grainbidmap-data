@@ -2,7 +2,7 @@ name: Update Grain Bids
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "5 * * * *"
   workflow_dispatch:
 
 permissions:
