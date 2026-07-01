@@ -1,30 +1,30 @@
 source,location,commodity,delivery_date,futures_month,futures_price,basis_dollars,basis_cents,cash_bid,bid_change,as_of,scraped_at
-Golden Grain Energy,"Mason City, IA",Corn,Jul 2026,Sep 2026,4.19,-0.25,-25.0,3.94,0.025,,07/01/2026 04:02 AM CDT
-Golden Grain Energy,"Mason City, IA",Corn,Aug 2026,Sep 2026,4.19,-0.27,-27.0,3.92,0.025,,07/01/2026 04:02 AM CDT
-Golden Grain Energy,"Mason City, IA",Corn,Oct 2026,Dec 2026,4.39,-0.3,-30.0,4.09,0.0275,,07/01/2026 04:02 AM CDT
-Landus,"Britt, IA",Corn,Jun 2026,Sep 2026,,-0.3,-30.0,3.90,0.03,07/01/2026 03:52 AM,07/01/2026 04:02 AM CDT
-Landus,"Britt, IA",Corn,Jul 2026,Sep 2026,,-0.3,-30.0,3.90,0.03,07/01/2026 03:52 AM,07/01/2026 04:02 AM CDT
-Landus,"Britt, IA",Corn,Oct 2026,Dec 2026,,-0.45,-45.0,3.94,0.03,07/01/2026 03:52 AM,07/01/2026 04:02 AM CDT
-Landus,"Britt, IA",Corn,Dec 2026,Dec 2026,,-0.45,-45.0,3.94,0.03,07/01/2026 03:52 AM,07/01/2026 04:02 AM CDT
-Landus,"Britt, IA",Corn,Jan 2027,Mar 2027,,-0.4,-40.0,4.14,0.03,07/01/2026 03:52 AM,07/01/2026 04:02 AM CDT
-Landus,"Britt, IA",Corn,Mar 2027,Mar 2027,,-0.45,-45.0,4.09,0.03,07/01/2026 03:52 AM,07/01/2026 04:02 AM CDT
-Landus,"Britt, IA",Soybeans,Jun 2026,Aug 2026,,-0.45,-45.0,10.81,0.02,07/01/2026 03:52 AM,07/01/2026 04:02 AM CDT
-Landus,"Britt, IA",Soybeans,Jul 2026,Aug 2026,,-0.45,-45.0,10.81,0.02,07/01/2026 03:52 AM,07/01/2026 04:02 AM CDT
-Landus,"Britt, IA",Soybeans,Oct 2026,Nov 2026,,-0.65,-65.0,10.80,0.01,07/01/2026 03:52 AM,07/01/2026 04:02 AM CDT
-Landus,"Britt, IA",Soybeans,Dec 2026,Jan 2027,,-0.65,-65.0,10.95,0.01,07/01/2026 03:52 AM,07/01/2026 04:02 AM CDT
-Landus,"Britt, IA",Soybeans,Jan 2027,Jan 2027,,-0.7,-70.0,10.90,0.01,07/01/2026 03:52 AM,07/01/2026 04:02 AM CDT
-Landus,"Britt, IA",Soybeans,Mar 2027,Mar 2027,,-0.7,-70.0,10.99,0.02,07/01/2026 03:52 AM,07/01/2026 04:02 AM CDT
-NEW Cooperative,"Britt, IA",Corn,Jun 2026,Jul 2026,419-6,,-30.0,3.90,+3-0,,07/01/2026 04:02 AM CDT
-NEW Cooperative,"Britt, IA",Corn,Jul 2026,Jul 2026,419-6,,-30.0,3.90,+3-0,,07/01/2026 04:02 AM CDT
-NEW Cooperative,"Britt, IA",Corn,Oct 2026,Dec 2026,439-2,,-45.0,3.94,+3-2,,07/01/2026 04:02 AM CDT
-NEW Cooperative,"Britt, IA",Corn,Jan 2027,Mar 2027,454-4,,-45.0,4.09,+3-4,,07/01/2026 04:02 AM CDT
-NEW Cooperative,"Britt, IA",Corn,Mar 2027,Mar 2027,454-4,,-45.0,4.09,+3-4,,07/01/2026 04:02 AM CDT
-NEW Cooperative,"Britt, IA",Corn,May 2027,Jul 2027,463-4,,-45.0,4.18,+3-4,,07/01/2026 04:02 AM CDT
-NEW Cooperative,"Britt, IA",Corn,Oct 2027,Dec 2027,472-2,,-45.0,4.27,+2-6,,07/01/2026 04:02 AM CDT
-NEW Cooperative,"Britt, IA",Soybeans,Jun 2026,Jul 2026,1125-6,,-38.0,10.88,+1-4,,07/01/2026 04:02 AM CDT
-NEW Cooperative,"Britt, IA",Soybeans,Jul 2026,Jul 2026,1125-6,,-38.0,10.88,+1-4,,07/01/2026 04:02 AM CDT
-NEW Cooperative,"Britt, IA",Soybeans,Oct 2026,Nov 2026,1145-4,,-65.0,10.80,+1-6,,07/01/2026 04:02 AM CDT
-NEW Cooperative,"Britt, IA",Soybeans,Jan 2027,Jan 2027,1160-4,,-70.0,10.90,+1-6,,07/01/2026 04:02 AM CDT
-NEW Cooperative,"Britt, IA",Soybeans,Mar 2027,Mar 2027,1169-0,,-70.0,10.99,+2-0,,07/01/2026 04:02 AM CDT
-NEW Cooperative,"Britt, IA",Soybeans,May 2027,Jul 2027,1177-4,,-70.0,11.07,+2-6,,07/01/2026 04:02 AM CDT
-NEW Cooperative,"Britt, IA",Soybeans,Oct 2027,Nov 2027,1140-2,,-75.0,10.65,+3-4,,07/01/2026 04:02 AM CDT
+Golden Grain Energy,"Mason City, IA",Corn,Jul 2026,Sep 2026,4.23,-0.25,-25.0,3.98,0.065,,07/01/2026 08:36 AM CDT
+Golden Grain Energy,"Mason City, IA",Corn,Aug 2026,Sep 2026,4.23,-0.27,-27.0,3.96,0.065,,07/01/2026 08:36 AM CDT
+Golden Grain Energy,"Mason City, IA",Corn,Oct 2026,Dec 2026,4.43,-0.3,-30.0,4.13,0.0675,,07/01/2026 08:36 AM CDT
+Landus,"Britt, IA",Corn,Jun 2026,Sep 2026,,-0.3,-30.0,3.92,0.05,07/01/2026 08:25 AM,07/01/2026 08:36 AM CDT
+Landus,"Britt, IA",Corn,Jul 2026,Sep 2026,,-0.3,-30.0,3.92,0.05,07/01/2026 08:25 AM,07/01/2026 08:36 AM CDT
+Landus,"Britt, IA",Corn,Oct 2026,Dec 2026,,-0.45,-45.0,3.96,0.05,07/01/2026 08:25 AM,07/01/2026 08:36 AM CDT
+Landus,"Britt, IA",Corn,Dec 2026,Dec 2026,,-0.45,-45.0,3.96,0.05,07/01/2026 08:25 AM,07/01/2026 08:36 AM CDT
+Landus,"Britt, IA",Corn,Jan 2027,Mar 2027,,-0.4,-40.0,4.17,0.06,07/01/2026 08:25 AM,07/01/2026 08:36 AM CDT
+Landus,"Britt, IA",Corn,Mar 2027,Mar 2027,,-0.45,-45.0,4.12,0.06,07/01/2026 08:25 AM,07/01/2026 08:36 AM CDT
+Landus,"Britt, IA",Soybeans,Jun 2026,Aug 2026,,-0.45,-45.0,10.89,0.1,07/01/2026 08:25 AM,07/01/2026 08:36 AM CDT
+Landus,"Britt, IA",Soybeans,Jul 2026,Aug 2026,,-0.45,-45.0,10.89,0.1,07/01/2026 08:25 AM,07/01/2026 08:36 AM CDT
+Landus,"Britt, IA",Soybeans,Oct 2026,Nov 2026,,-0.65,-65.0,10.89,0.1,07/01/2026 08:25 AM,07/01/2026 08:36 AM CDT
+Landus,"Britt, IA",Soybeans,Dec 2026,Jan 2027,,-0.65,-65.0,11.03,0.09,07/01/2026 08:25 AM,07/01/2026 08:36 AM CDT
+Landus,"Britt, IA",Soybeans,Jan 2027,Jan 2027,,-0.7,-70.0,10.98,0.09,07/01/2026 08:25 AM,07/01/2026 08:36 AM CDT
+Landus,"Britt, IA",Soybeans,Mar 2027,Mar 2027,,-0.7,-70.0,11.06,0.09,07/01/2026 08:25 AM,07/01/2026 08:36 AM CDT
+NEW Cooperative,"Britt, IA",Corn,Jun 2026,Jul 2026,422-0,,-30.0,3.92,+5-2,,07/01/2026 08:36 AM CDT
+NEW Cooperative,"Britt, IA",Corn,Jul 2026,Jul 2026,422-0,,-30.0,3.92,+5-2,,07/01/2026 08:36 AM CDT
+NEW Cooperative,"Britt, IA",Corn,Oct 2026,Dec 2026,441-4,,-45.0,3.96,+5-4,,07/01/2026 08:36 AM CDT
+NEW Cooperative,"Britt, IA",Corn,Jan 2027,Mar 2027,456-6,,-45.0,4.12,+5-6,,07/01/2026 08:36 AM CDT
+NEW Cooperative,"Britt, IA",Corn,Mar 2027,Mar 2027,456-6,,-45.0,4.12,+5-6,,07/01/2026 08:36 AM CDT
+NEW Cooperative,"Britt, IA",Corn,May 2027,Jul 2027,465-2,,-45.0,4.20,+5-2,,07/01/2026 08:36 AM CDT
+NEW Cooperative,"Britt, IA",Corn,Oct 2027,Dec 2027,473-0,,-45.0,4.28,+3-4,,07/01/2026 08:36 AM CDT
+NEW Cooperative,"Britt, IA",Soybeans,Jun 2026,Jul 2026,1133-6,,-38.0,10.96,+9-4,,07/01/2026 08:36 AM CDT
+NEW Cooperative,"Britt, IA",Soybeans,Jul 2026,Jul 2026,1133-6,,-38.0,10.96,+9-4,,07/01/2026 08:36 AM CDT
+NEW Cooperative,"Britt, IA",Soybeans,Oct 2026,Nov 2026,1153-6,,-65.0,10.89,+10-0,,07/01/2026 08:36 AM CDT
+NEW Cooperative,"Britt, IA",Soybeans,Jan 2027,Jan 2027,1168-2,,-70.0,10.98,+9-4,,07/01/2026 08:36 AM CDT
+NEW Cooperative,"Britt, IA",Soybeans,Mar 2027,Mar 2027,1176-0,,-70.0,11.06,+9-0,,07/01/2026 08:36 AM CDT
+NEW Cooperative,"Britt, IA",Soybeans,May 2027,Jul 2027,1183-6,,-70.0,11.14,+9-0,,07/01/2026 08:36 AM CDT
+NEW Cooperative,"Britt, IA",Soybeans,Oct 2027,Nov 2027,1142-6,,-75.0,10.68,+6-0,,07/01/2026 08:36 AM CDT
