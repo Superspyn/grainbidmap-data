@@ -326,7 +326,16 @@ if __name__ == "__main__":
     # Safety check - don't overwrite good CSV with bad scrape
 if len(all_rows) < 10:
     print("Too few rows. Keeping old CSV.")
-    exit()
+else:
+    df = pd.DataFrame(all_rows)
+
+    output_path = Path(__file__).with_name("all_grain_bids.csv")
+    df.to_csv(output_path, index=False)
+
+    print(df)
+    print("Rows saved:", len(df))
+    print("CSV saved here:", output_path)
+    print("Updated at:", SCRAPED_AT)
 
 
 print("TOTAL ROWS BEFORE SAVE:", len(all_rows))
