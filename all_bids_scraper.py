@@ -328,6 +328,10 @@ if len(all_rows) < 10:
     print("Too few rows. Keeping old CSV.")
     exit()
 
+
+print("TOTAL ROWS BEFORE SAVE:", len(all_rows))
+
+
 df = pd.DataFrame(all_rows)
 
 output_path = Path(__file__).with_name("all_grain_bids.csv")
