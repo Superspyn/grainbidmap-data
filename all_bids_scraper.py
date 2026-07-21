@@ -176,12 +176,29 @@ def scrape_landus():
     url = "https://www.landus.ag/api/cash-bids?location=5"
 
     headers = {
-        "User-Agent": "Mozilla/5.0",
-        "Referer": "https://www.landus.ag/businesses/grain/grain-bids"
-    }
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120 Safari/537.36",
+    "Accept": "application/json",
+    "Referer": "https://www.landus.ag/businesses/grain/grain-bids"
+}
 
-    response = requests.get(url, headers=headers, timeout=30)
-    response.raise_for_status()
+    import time
+
+for attempt in range(3):
+    try:
+        response = requests.get(url, headers=headers, timeout=30)
+
+        if response.status_code == 429:
+            print("Landus rate limited, waiting...")
+            time.sleep(10)
+            continue
+
+        response.raise_for_status()
+        break
+
+    except Exception as e:
+        if attempt == 2:
+            raise e
+        time.sleep(5)
 
     data = response.json()
     as_of = data.get("asOfDateTime", "")
@@ -220,14 +237,14 @@ def scrape_newcoop():
     url = "https://www.newcoop.com/cash-bids?location_name=Britt"
 
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch(headless=True)
 
         page = browser.new_page(
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36"
         )
 
-        page.goto(url, wait_until="networkidle", timeout=90000)
-        page.wait_for_timeout(15000)
+        page.goto(url, wait_until="domcontentloaded", timeout=90000)
+        page.wait_for_timeout(10000)
 
         # Scroll in case bids lazy-load
         page.mouse.wheel(0, 2000)
