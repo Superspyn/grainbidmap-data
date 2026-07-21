@@ -1,4 +1,4 @@
 source,location,commodity,delivery_date,futures_month,futures_price,basis_dollars,basis_cents,cash_bid,bid_change,as_of,scraped_at
-Golden Grain Energy,"Mason City, IA",Corn,Jul 2026,Sep 2026,4.48,-0.2,-20.0,4.28,-0.015,,07/20/2026 11:24 PM CDT
-Golden Grain Energy,"Mason City, IA",Corn,Aug 2026,Sep 2026,4.48,-0.22,-22.0,4.26,-0.015,,07/20/2026 11:24 PM CDT
-Golden Grain Energy,"Mason City, IA",Corn,Oct 2026,Dec 2026,4.71,-0.3,-30.0,4.41,-0.0175,,07/20/2026 11:24 PM CDT
+Golden Grain Energy,"Mason City, IA",Corn,Jul 2026,Sep 2026,4.50,4.3,430.0,8.79,-0.2,,07/21/2026 02:40 AM CDT
+Golden Grain Energy,"Mason City, IA",Corn,Aug 2026,Sep 2026,4.50,4.28,428.0,8.78,-0.22,,07/21/2026 02:40 AM CDT
+Golden Grain Energy,"Mason City, IA",Corn,Oct 2026,Dec 2026,4.72,-0.3,-30.0,4.43,-0.005,,07/21/2026 02:40 AM CDT
