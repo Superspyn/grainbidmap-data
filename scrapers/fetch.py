@@ -131,6 +131,7 @@ def get(
     cache_ttl: int = 900,
     check_robots: bool = True,
     impersonate: bool = False,
+    method: str = "GET",
 ) -> str:
     """Fetch ``url`` and return its body as text.
 
@@ -139,6 +140,9 @@ def get(
 
     Set ``impersonate`` for hosts that reject Python's TLS handshake; it needs
     the optional curl_cffi dependency and implies a browser User-Agent.
+
+    ``method`` covers the handful of widget endpoints that only answer to POST.
+    Everything is still a read - no request body is ever sent.
     """
     if use_cache is None:
         use_cache = os.environ.get("BIDS_CACHE") == "1"
@@ -174,12 +178,12 @@ def get(
         _throttle(host)
         try:
             if impersonate:
-                response = curl_requests.get(
-                    url, headers=headers, timeout=timeout,
+                response = curl_requests.request(
+                    method, url, headers=headers, timeout=timeout,
                     impersonate=IMPERSONATE_PROFILE,
                 )
             else:
-                response = requests.get(url, headers=headers, timeout=timeout)
+                response = requests.request(method, url, headers=headers, timeout=timeout)
         except Exception as exc:  # curl_cffi raises its own error types
             last_error = exc
         else:

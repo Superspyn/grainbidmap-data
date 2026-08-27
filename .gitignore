@@ -11,3 +11,4 @@ scrapers/.build/
 
 # Local splice/verification scratch
 .build/
+.scratch/

@@ -78,6 +78,14 @@ sources:
   # Re-enable only with Cargill's permission, and expect to identify yourself
   # via BIDS_CONTACT when you do.
 
+  - id: cihedging:goldengrain
+    adapter: cihedging
+    company_id: 98951
+    label: Golden Grain Energy
+    referer: https://ggecorn.com/
+    # 1 pin (Mason City). CI Hedging widget - the company id comes from the
+    # "companyID:" line in the tableOptions block on the embedding page.
+
   - id: gradable:poet
     adapter: gradable
     tenant: poet
