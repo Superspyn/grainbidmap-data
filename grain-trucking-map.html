@@ -715,32 +715,34 @@
       </div>
     </div>
 
-    <!-- Populated from the scraped bids feed. Stays hidden when the feed is
-         unavailable or this elevator isn't covered, so the tool behaves
-         exactly as it did before if anything goes wrong. -->
-    <div class="gt-bids-panel" id="gt-bids-panel" hidden>
-      <div class="gt-bids-head">
-        <span class="gt-bids-title">Cash bids at this elevator</span>
-        <span class="gt-bids-asof" id="gt-bids-asof"></span>
-      </div>
-      <div class="gt-bids-info" id="gt-bids-info"></div>
-      <div class="gt-bids-scroll">
-        <table class="gt-bids-table">
-          <thead>
-            <tr>
-              <th>Grain</th>
-              <th>Delivery</th>
-              <th>Futures month</th>
-              <th style="text-align:right;">Futures</th>
-              <th style="text-align:right;">Basis</th>
-              <th style="text-align:right;">Cash</th>
-            </tr>
-          </thead>
-          <tbody id="gt-bids-body"></tbody>
-        </table>
-      </div>
-      <div class="gt-bids-hint">Click any row to load that bid into the calculator above. Bids are collected from each facility's public bid page for reference only and may be delayed &mdash; confirm with the elevator before hauling.</div>
+  </div>
+
+  <!-- Populated from the scraped bids feed. Stays hidden when the feed is
+       unavailable or this elevator isn't covered, so the tool behaves
+       exactly as it did before if anything goes wrong. -->
+  <div class="gt-bids-panel" id="gt-bids-panel" hidden>
+    <div class="gt-bids-head">
+      <span class="gt-bids-title">Cash bids at this elevator</span>
+      <span class="gt-bids-asof" id="gt-bids-asof"></span>
     </div>
+    <div class="gt-bids-info" id="gt-bids-info"></div>
+    <div class="gt-bids-scroll">
+      <table class="gt-bids-table">
+        <thead>
+          <tr>
+            <th>Grain</th>
+            <th>Delivery</th>
+            <th>Futures month</th>
+            <th style="text-align:right;">Futures</th>
+            <th style="text-align:right;">Basis</th>
+            <th style="text-align:right;">Cash</th>
+          </tr>
+        </thead>
+        <tbody id="gt-bids-body"></tbody>
+      </table>
+    </div>
+    <div class="gt-bids-hint" id="gt-bids-hint"></div>
+    <div class="gt-bids-hint">Bids are collected from each facility's public bid page for reference only and may be delayed &mdash; confirm with the elevator before hauling.</div>
   </div>
 
   <div class="gt-legend">
@@ -5757,6 +5759,7 @@
   var bidsBody = container.querySelector('#gt-bids-body');
   var bidsAsOfEl = container.querySelector('#gt-bids-asof');
   var bidsInfoEl = container.querySelector('#gt-bids-info');
+  var hintEl = container.querySelector('#gt-bids-hint');
 
   // --- Escape a narrow host column ----------------------------------------
   // Squarespace (and most CMS templates) drop this widget inside a content
@@ -5933,6 +5936,9 @@
       bidsBody.appendChild(tr);
     });
 
+    hintEl.textContent = resultsEl.classList.contains('gt-visible')
+      ? 'Click any row to load that bid into the calculator above.'
+      : 'Pick a second pin to price the haul, then click a row to use that bid.';
     bidsPanel.hidden = false;
   }
 
@@ -6469,13 +6475,15 @@
 
   function handlePinClick(marker) {
     showInfo(marker);
+    // Show this elevator's bid table right away - a route isn't needed to
+    // look up bids, only to price the haul.
+    renderBids(marker.gtData);
     if (selectedOrigin && selectedDestination) {
       // start a fresh selection
       selectedOrigin = marker;
       selectedDestination = null;
       resultsEl.classList.remove('gt-visible');
       openMapsEl.classList.remove('gt-visible');
-      bidsPanel.hidden = true;
       directionsRenderer.setMap(null);
       statusText.textContent = 'Origin: ' + marker.gtData.name + '  -  now click a second pin.';
     } else if (!selectedOrigin) {
@@ -6484,6 +6492,7 @@
     } else if (marker === selectedOrigin) {
       // clicked same pin again  -  deselect
       selectedOrigin = null;
+      bidsPanel.hidden = true;
       statusText.textContent = 'Click a pin to begin.';
     } else {
       selectedDestination = marker;
@@ -6566,8 +6575,10 @@
     openMapsEl.classList.add('gt-visible');
     bidInput.value = (destData.bid !== undefined) ? destData.bid : '';
     shrinkInput.value = (destData.shrinkPct !== undefined) ? destData.shrinkPct : '';
-    renderBids(destData);
+    // Mark the results visible first: renderBids reads that state to decide
+    // which hint to show.
     resultsEl.classList.add('gt-visible');
+    renderBids(destData);
     updateResults();
   }
 
