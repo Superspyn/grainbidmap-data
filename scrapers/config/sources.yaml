@@ -58,6 +58,26 @@ sources:
     # 51 pins. Own JSON API, but per-location: 1 + 51 requests, the only source
     # without a bulk endpoint. A failing location is skipped, not fatal.
 
+  # - id: cargill
+  #   adapter: cargill
+  #   label: Cargill Ag Horizons
+  #
+  # DISABLED ON PURPOSE - do not enable without checking with Cargill first.
+  #
+  # The adapter works (scrapers/adapters/cargill.py) and the data is good, but
+  # the cash-bid endpoint lives on d96y3rjfk5o7l.cloudfront.net, whose
+  # robots.txt is served correctly as HTTP 200 and reads:
+  #
+  #     User-agent: *
+  #     Disallow: /
+  #
+  # That is an explicit refusal, not the false negative NEW Co-op's bot wall
+  # produced. cargillag.com itself allows crawling, but its location pages load
+  # the cash bids from that same CDN, so there is no compliant route to them.
+  #
+  # Re-enable only with Cargill's permission, and expect to identify yourself
+  # via BIDS_CONTACT when you do.
+
   - id: agricharts:keycoop
     adapter: agricharts
     tenant: keycoop

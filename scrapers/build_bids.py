@@ -29,6 +29,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).parent))
 import yaml  # noqa: E402
 
 from adapters.agricharts import AgriChartsAdapter  # noqa: E402
+from adapters.cargill import CargillAdapter  # noqa: E402
 from adapters.heartland import HeartlandAdapter  # noqa: E402
 from adapters.landus import LandusAdapter  # noqa: E402
 from adapters.newcoop import NewCoopAdapter  # noqa: E402
@@ -64,6 +65,8 @@ def build_adapter(spec: dict):
         return NewCoopAdapter()
     if kind == "landus":
         return LandusAdapter()
+    if kind == "cargill":
+        return CargillAdapter()
     raise ValueError("unknown adapter type: " + str(kind))
 
 
