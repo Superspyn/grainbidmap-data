@@ -15,10 +15,10 @@ import re
 
 # CBOT grains quote in eighths notation ("511-6" == 511 and 6/8 cents), even
 # though the tradeable tick is a quarter cent.
-_TICK_RE = re.compile(r"^\s*(?P<sign>-?)(?P<whole>\d+)-(?P<frac>\d+)\s*$")
+_TICK_RE = re.compile(r"^\s*(?P<sign>[+-]?)(?P<whole>\d+)-(?P<frac>\d+)\s*$")
 # The sign may sit on either side of the dollar sign: "-$0.03" and "$-0.03"
 # both occur in these feeds.
-_MONEY_RE = re.compile(r"^\s*(?P<pre>-?)\$?\s*(?P<post>-?)(?P<num>[\d,]*\.?\d+)\s*$")
+_MONEY_RE = re.compile(r"^\s*(?P<pre>[+-]?)\$?\s*(?P<post>[+-]?)(?P<num>[\d,]*\.?\d+)\s*$")
 
 # Futures month letter codes, as they appear in symbols like ZCZ26 / CU26.
 MONTH_CODES = {

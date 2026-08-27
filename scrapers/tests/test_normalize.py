@@ -41,6 +41,15 @@ class TestParseTick:
     def test_negative_change_ticks(self, raw, expected):
         assert parse_tick(raw) == pytest.approx(expected)
 
+    @pytest.mark.parametrize(
+        "raw,expected",
+        [("+3-6", 0.0375), ("+2-0", 0.02), ("3-6", 0.0375)],
+    )
+    def test_positive_change_ticks(self, raw, expected):
+        """NEW Co-op prints gains as "+3-6". An earlier regex only allowed a
+        leading "-", which silently dropped every up day."""
+        assert parse_tick(raw) == pytest.approx(expected)
+
     @pytest.mark.parametrize("raw", ["0-0", "", "   ", None, "-", "n/a"])
     def test_missing_quotes_are_none(self, raw):
         assert parse_tick(raw) is None

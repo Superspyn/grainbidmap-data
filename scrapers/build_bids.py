@@ -30,6 +30,7 @@ import yaml  # noqa: E402
 
 from adapters.agricharts import AgriChartsAdapter  # noqa: E402
 from adapters.heartland import HeartlandAdapter  # noqa: E402
+from adapters.newcoop import NewCoopAdapter  # noqa: E402
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
 CONFIG = REPO / "scrapers" / "config" / "sources.yaml"
@@ -58,6 +59,8 @@ def build_adapter(spec: dict):
         )
     if kind == "heartland":
         return HeartlandAdapter()
+    if kind == "newcoop":
+        return NewCoopAdapter()
     raise ValueError("unknown adapter type: " + str(kind))
 
 

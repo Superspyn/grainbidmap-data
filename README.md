@@ -62,24 +62,30 @@ Run it by hand the first time from the **Actions** tab → *Update cash bids* �
 ## What's covered
 
 Bids come from platform endpoints that return every location for a co-op in a
-single request, so the whole scrape costs about six HTTP requests.
+single request, so the whole scrape is 16 HTTP requests for 496 delivery points.
 
 | Source | Pins | How |
 |---|---|---|
+| NEW Cooperative | 70 | Own server-rendered pages (TLS impersonation) |
 | Heartland Co-op | 53 | Server-rendered bid sheet |
 | CVA | 36 | AgriCharts |
 | Gold-Eagle Co-op | 24 | AgriCharts |
+| CGB | 16 | AgriCharts |
+| Key Cooperative | 16 | AgriCharts |
 | Pro Co-op | 14 | AgriCharts |
+| Stateline Cooperative | 9 | AgriCharts |
 | North Iowa Co-op | 4 | AgriCharts |
-| Mid-Iowa Milling | 2 | AgriCharts |
+| Two Rivers Cooperative | 4 | AgriCharts |
+| Tama-Benton, Innovative Ag, JBS, Mid-Iowa, CFE, SilverEdge | 11 | AgriCharts |
 
-**133 of 722 pins** currently carry live bids. Two things account for the rest:
+**257 of 722 pins** carry live bids. The rest:
 
-- **554 pins are on companies with no adapter yet.** The biggest are NEW Co-op
-  (71), MFA (59), Landus (51) and Cargill (31). See *Adding a source* below.
-- **33 pins matched a source that publishes no bid for them** — Heartland's
-  Texas, Kansas and Nebraska sites and its seasonal locations, plus CVA's Kansas
-  locations. There is no bid to show; those pins keep the "View bid page" link.
+- **424 pins are on companies with no adapter yet.** Biggest: MFA (59),
+  Landus (51), Cargill (31), Nexus (18), AGP (16), ADM (14), POET (13).
+- **38 pins matched a source that publishes no bid for them** — Heartland's
+  Texas, Kansas and Nebraska sites and its seasonal locations, plus CVA's
+  Kansas locations. There is no bid to show.
+- **3 pins are held back** as low-confidence matches (see below).
 
 Uncovered pins are not broken — they behave exactly as they did before.
 
@@ -102,6 +108,19 @@ error, so check the location count.
 
 Anything not on AgriCharts needs an adapter in `scrapers/adapters/` implementing
 the `Adapter` protocol in `adapters/base.py`.
+
+### Bot-protected sources
+
+Some sites reject Python's default TLS handshake with a 403 while serving the
+same public page to a browser. Pass `impersonate=True` to `fetch.get()` and it
+replays a real browser's TLS fingerprint via `curl_cffi`. NEW Co-op is the only
+source that currently needs it.
+
+`robots.txt` is fetched with the same client for those hosts. That matters:
+`RobotFileParser.read()` uses plain urllib, gets the same 403, and the standard
+says a 403 on robots.txt means "disallow everything" — so a bot-protected site
+would look like it forbids all crawling when it does not. NEW Co-op's robots.txt
+explicitly allows `/cash-bids/`.
 
 ---
 

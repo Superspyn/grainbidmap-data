@@ -11,6 +11,7 @@ import pytest
 
 from adapters.agricharts import AgriChartsAdapter
 from adapters.heartland import HeartlandAdapter
+from adapters.newcoop import NewCoopAdapter
 
 FIXTURES = pathlib.Path(__file__).parent / "fixtures"
 
@@ -25,6 +26,11 @@ def read_fixture(name: str) -> str:
 @pytest.fixture(scope="module")
 def nicoop():
     return AgriChartsAdapter("nicoop").parse(read_fixture("agricharts_nicoop.js"))
+
+
+@pytest.fixture(scope="module")
+def newcoop():
+    return NewCoopAdapter().parse(read_fixture("newcoop_cash_bids.html"))
 
 
 @pytest.fixture(scope="module")
@@ -82,6 +88,44 @@ class TestAgriCharts:
         payload = 'var bids = [{"id":"1","name":"X","cashbids":[]}];'
         with pytest.raises(ValueError, match="no corn or soybean"):
             AgriChartsAdapter("nicoop").parse(payload)
+
+
+class TestNewCoop:
+    def test_parses_every_town(self, newcoop):
+        assert len(newcoop) == 76
+        names = {l.name for l in newcoop}
+        assert {"Afton", "Algona", "Anita", "Blencoe"} <= names
+
+    def test_town_name_comes_from_the_preceding_heading(self, newcoop):
+        # Each table's location is the nearest heading above it; a mix-up here
+        # would silently attach one town's bids to another.
+        assert newcoop[0].name == "Afton"
+
+    def test_both_grains(self, newcoop):
+        assert {b.grain for l in newcoop for b in l.bids} == {"corn", "soybeans"}
+
+    def test_basis_reconciles(self, newcoop):
+        for loc in newcoop:
+            for bid in loc.bids:
+                if bid.futures is not None:
+                    assert bid.basis == pytest.approx(bid.cash - bid.futures, abs=1e-4)
+
+    def test_parses_positive_futures_change(self, newcoop):
+        """Guards the "+3-6" bug: soybeans were up the day this fixture was
+        captured, and every change parsed as None before the fix."""
+        changes = [b.futures_change for l in newcoop for b in l.bids
+                   if b.grain == "soybeans" and b.futures_change is not None]
+        assert changes, "no soybean futures_change parsed at all"
+        assert any(c > 0 for c in changes)
+
+    def test_delivery_ranges(self, newcoop):
+        bid = newcoop[0].bids[0]
+        assert bid.delivery_start and bid.delivery_end
+        assert bid.delivery_start < bid.delivery_end
+
+    def test_raises_on_a_page_with_no_tables(self):
+        with pytest.raises(ValueError, match="no corn or soybean"):
+            NewCoopAdapter().parse("<html><body><h1>Afton</h1></body></html>")
 
 
 class TestHeartland:
