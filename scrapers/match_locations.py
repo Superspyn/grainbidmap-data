@@ -38,6 +38,7 @@ from urllib.parse import urlparse
 REPO = pathlib.Path(__file__).resolve().parent.parent
 RAW = REPO / "scrapers" / ".build" / "raw.json"
 OUTPUT = REPO / "scrapers" / "config" / "location_map.json"
+MANUAL = REPO / "scrapers" / "config" / "manual_matches.json"
 
 # Candidate files holding the canonical `gtLocations` array, best first.
 HTML_CANDIDATES = [
@@ -284,6 +285,14 @@ def match_pin(pin: dict, candidates: list[dict]) -> tuple[dict | None, float, st
     return None, 0.0, "no-match"
 
 
+def load_manual() -> dict:
+    """Hand-verified overrides, keyed by pin id. Comment keys are ignored."""
+    if not MANUAL.exists():
+        return {}
+    data = json.loads(MANUAL.read_text(encoding="utf-8"))
+    return {k: v for k, v in data.items() if not k.startswith("_")}
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--report", action="store_true", help="print the full match report")
@@ -305,7 +314,35 @@ def main() -> int:
     unmatched: list[dict] = []
     no_source: list[dict] = []
 
+    manual = load_manual()
+    manual_used: set[str] = set()
+
     for pin in pins:
+        # A hand-verified entry wins outright - it exists precisely because the
+        # automatic matchers cannot see what the human could.
+        override = manual.get(pin["id"])
+        if override:
+            src = override.get("source")
+            loc_id = str(override.get("source_location_id"))
+            known = {str(c["source_location_id"]) for c in raw.get(src, [])}
+            if src not in raw:
+                print("  manual_matches: pin %r names unknown source %r" % (pin["id"], src),
+                      file=sys.stderr)
+            elif loc_id not in known:
+                print("  manual_matches: %r -> %s/%s is not a location that source "
+                      "returned; ignoring" % (pin["id"], src, loc_id), file=sys.stderr)
+            else:
+                manual_used.add(pin["id"])
+                mapping[pin["id"]] = {
+                    "name": pin["name"],
+                    "source": src,
+                    "source_location_id": loc_id,
+                    "source_name": override.get("source_name") or "",
+                    "confidence": 1.0,
+                    "method": "manual",
+                }
+                continue
+
         source_id = COMPANY_TO_SOURCE.get(pin["company"]) or HOST_TO_SOURCE.get(pin["host"])
         if source_id is None or source_id not in raw:
             if pin["type"] != "farm":
@@ -350,7 +387,16 @@ def main() -> int:
     }
     OUTPUT.write_text(json.dumps(payload, indent=2), encoding="utf-8")
 
-    print("\nmatched:        " + str(len(mapping)) + " pins")
+    # An entry that matched no pin is almost always a renamed pin: the id is a
+    # slug of the pin's name, so renaming one orphans its override silently.
+    orphans = sorted(set(manual) - manual_used)
+    if orphans:
+        print("\n  manual_matches: %d entr%s match no pin (renamed?): %s"
+              % (len(orphans), "y" if len(orphans) == 1 else "ies", ", ".join(orphans)),
+              file=sys.stderr)
+
+    print("\nmatched:        " + str(len(mapping)) + " pins"
+          + (" (" + str(len(manual_used)) + " manual)" if manual_used else ""))
     print("held back:      " + str(len(review)) + " (confidence < " + str(args.min_confidence) + ", not published)")
     print("unmatched:      " + str(len(unmatched)) + " (source known, no location found)")
     print("no source yet:  " + str(len(no_source)) + " (host not covered by an adapter)")
