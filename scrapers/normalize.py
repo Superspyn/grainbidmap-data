@@ -168,3 +168,54 @@ def futures_month_from_symbol(symbol: str | None) -> str | None:
     if m:
         return f"{m.group(1)}{m.group(2)}{m.group(3)}"
     return text or None
+
+# Reverse of MONTH_CODES, for feeds that name the futures month in words.
+_CODE_FOR_MONTH = {v: k for k, v in MONTH_CODES.items()}
+
+_GRAIN_LETTER = {CORN: "C", SOYBEANS: "S"}
+
+
+def futures_month_code(grain: str, month_name: str | None) -> str | None:
+    """Build the contract shorthand from a grain and a spoken month.
+
+    ``("corn", "Sep 2026")`` -> ``"CU26"``. Feeds that publish "Dec 2026"
+    instead of a symbol need this to line up with the sources that don't.
+    """
+    if not month_name:
+        return None
+    letter = _GRAIN_LETTER.get(grain)
+    if not letter:
+        return None
+    m = re.match(r"\s*([A-Za-z]{3,})\w*\s+(\d{2,4})\s*$", str(month_name))
+    if not m:
+        return None
+    try:
+        month = _dt.datetime.strptime(m.group(1)[:3].title(), "%b").month
+    except ValueError:
+        return None
+    code = _CODE_FOR_MONTH.get(month)
+    if not code:
+        return None
+    return f"{letter}{code}{m.group(2)[-2:]}"
+
+
+def month_bounds(month_name: str | None) -> tuple[str | None, str | None]:
+    """``"Aug 2026"`` -> ``("2026-08-01", "2026-08-31")``.
+
+    Feeds that give a single delivery month rather than a range still need a
+    start and end so the delivery label and sorting behave like every other
+    source.
+    """
+    if not month_name:
+        return None, None
+    m = re.match(r"\s*([A-Za-z]{3,})\w*\s+(\d{4})\s*$", str(month_name))
+    if not m:
+        return None, None
+    try:
+        month = _dt.datetime.strptime(m.group(1)[:3].title(), "%b").month
+    except ValueError:
+        return None, None
+    year = int(m.group(2))
+    first = _dt.date(year, month, 1)
+    nxt = _dt.date(year + (month == 12), (month % 12) + 1, 1)
+    return first.isoformat(), (nxt - _dt.timedelta(days=1)).isoformat()
