@@ -6342,27 +6342,36 @@
 
   function showInfo(marker) {
     var data = marker.gtData;
-    var html = '<div style="font-family:Inter,sans-serif;font-size:13px;max-width:240px;">' +
+    var html = '<div style="font-family:Inter,sans-serif;font-size:13px;min-width:230px;max-width:280px;">' +
       '<div style="font-weight:600;margin-bottom:4px;">' + escapeHtml(data.name) + '</div>';
 
-    // Nearby corn and soybean bids, when the feed covers this elevator.
+    // Every delivery period this elevator is bidding, grouped by grain. The
+    // bubble is small, so it scrolls rather than growing without limit; the
+    // table below the map carries the futures and basis columns too.
     var entry = bidsFor(data);
     if (entry) {
-      var near = nearestBids(entry);
-      var rows = [];
-      if (near.corn) rows.push(['Corn', near.corn]);
-      if (near.soybeans) rows.push(['Soybeans', near.soybeans]);
-      if (rows.length) {
-        html += '<div style="margin:6px 0 5px;padding:6px 0;border-top:1px solid #DBD5C3;border-bottom:1px solid #DBD5C3;">';
-        rows.forEach(function (r) {
-          html += '<div style="display:flex;justify-content:space-between;gap:12px;line-height:1.6;">' +
-            '<span style="color:#5B6350;">' + r[0] +
-            (r[1].delivery_label ? ' <span style="font-size:11px;">(' + escapeHtml(r[1].delivery_label) + ')</span>' : '') +
-            '</span>' +
-            '<strong style="font-family:monospace;color:#3C5A3E;">$' + Number(r[1].cash).toFixed(2) + '</strong>' +
-            '</div>';
+      var byGrain = { corn: [], soybeans: [] };
+      entry.bids.forEach(function (b) {
+        if (byGrain[b.grain]) byGrain[b.grain].push(b);
+      });
+
+      var sections = '';
+      [['corn', 'Corn'], ['soybeans', 'Soybeans']].forEach(function (g) {
+        var list = byGrain[g[0]];
+        if (!list.length) return;
+        sections += '<div style="font-weight:600;font-size:11px;text-transform:uppercase;' +
+          'letter-spacing:0.05em;color:#9C6E1C;margin:7px 0 2px;">' + g[1] + '</div>';
+        list.forEach(function (b) {
+          sections += '<div style="display:flex;justify-content:space-between;gap:14px;line-height:1.7;">' +
+            '<span style="color:#5B6350;">' + escapeHtml(b.delivery_label || '—') + '</span>' +
+            '<strong style="font-family:monospace;color:#3C5A3E;white-space:nowrap;">$' +
+            Number(b.cash).toFixed(2) + '</strong></div>';
         });
-        html += '</div>';
+      });
+
+      if (sections) {
+        html += '<div style="margin:4px 0 5px;padding:2px 0 6px;border-top:1px solid #DBD5C3;' +
+          'border-bottom:1px solid #DBD5C3;max-height:220px;overflow-y:auto;">' + sections + '</div>';
         var age = hoursSince(entry.as_of);
         var stale = entry.stale || (age !== null && age > 36);
         if (entry.as_of) {
