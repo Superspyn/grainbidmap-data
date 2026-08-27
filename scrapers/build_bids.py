@@ -30,6 +30,7 @@ import yaml  # noqa: E402
 
 from adapters.agricharts import AgriChartsAdapter  # noqa: E402
 from adapters.heartland import HeartlandAdapter  # noqa: E402
+from adapters.landus import LandusAdapter  # noqa: E402
 from adapters.newcoop import NewCoopAdapter  # noqa: E402
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
@@ -61,6 +62,8 @@ def build_adapter(spec: dict):
         return HeartlandAdapter()
     if kind == "newcoop":
         return NewCoopAdapter()
+    if kind == "landus":
+        return LandusAdapter()
     raise ValueError("unknown adapter type: " + str(kind))
 
 

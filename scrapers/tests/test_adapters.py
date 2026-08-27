@@ -11,6 +11,7 @@ import pytest
 
 from adapters.agricharts import AgriChartsAdapter
 from adapters.heartland import HeartlandAdapter
+from adapters.landus import LandusAdapter
 from adapters.newcoop import NewCoopAdapter
 
 FIXTURES = pathlib.Path(__file__).parent / "fixtures"
@@ -88,6 +89,56 @@ class TestAgriCharts:
         payload = 'var bids = [{"id":"1","name":"X","cashbids":[]}];'
         with pytest.raises(ValueError, match="no corn or soybean"):
             AgriChartsAdapter("nicoop").parse(payload)
+
+
+class TestLandus:
+    """Landus publishes basis and the bid but no futures column, so futures is
+    derived. It is also the only per-location source, so partial failure
+    handling matters."""
+
+    @staticmethod
+    @pytest.fixture(scope="class")
+    def parsed():
+        return LandusAdapter.parse_location(read_fixture("landus_cash_bids_109.json"))
+
+    def test_directory_covers_every_pin(self):
+        import json
+        d = json.loads(read_fixture("landus_locations.json"))
+        assert len(d) == 51
+        assert all(e.get("locationNumber") and e.get("locationName") for e in d)
+
+    def test_both_grains(self, parsed):
+        bids, _ = parsed
+        assert {b.grain for b in bids} == {"corn", "soybeans"}
+
+    def test_futures_derived_from_bid_minus_basis(self, parsed):
+        bids, _ = parsed
+        for b in bids:
+            if b.basis is not None:
+                assert b.futures == pytest.approx(b.cash - b.basis, abs=1e-4)
+
+    def test_futures_month_built_from_basis_month(self, parsed):
+        bids, _ = parsed
+        corn = [b for b in bids if b.grain == "corn" and b.futures_month]
+        beans = [b for b in bids if b.grain == "soybeans" and b.futures_month]
+        assert corn and beans
+        assert all(b.futures_month.startswith("C") for b in corn)
+        assert all(b.futures_month.startswith("S") for b in beans)
+
+    def test_single_delivery_month_gets_bounds(self, parsed):
+        bids, _ = parsed
+        for b in bids:
+            assert b.delivery_start and b.delivery_end
+            assert b.delivery_start <= b.delivery_end
+
+    def test_as_of_converted_from_central_to_utc(self, parsed):
+        _, as_of = parsed
+        assert as_of and as_of.endswith("Z")
+
+    def test_as_of_falls_back_when_unparseable(self):
+        bids, as_of = LandusAdapter.parse_location('{"asOfDateTime":"garbage","cashBids":[]}')
+        assert bids == []
+        assert as_of and as_of.endswith("Z")
 
 
 class TestNewCoop:

@@ -52,6 +52,12 @@ sources:
     # 71 pins. Own server-rendered pages (no longer AgriCharts). Behind bot
     # protection, so this is the one source fetched with TLS impersonation.
 
+  - id: landus
+    adapter: landus
+    label: Landus Cooperative
+    # 51 pins. Own JSON API, but per-location: 1 + 51 requests, the only source
+    # without a bulk endpoint. A failing location is skipped, not fatal.
+
   - id: agricharts:keycoop
     adapter: agricharts
     tenant: keycoop
