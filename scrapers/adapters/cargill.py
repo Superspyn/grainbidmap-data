@@ -23,7 +23,6 @@ from __future__ import annotations
 
 import datetime as _dt
 import json
-import re
 
 import fetch
 import normalize
@@ -39,9 +38,6 @@ REFERER = "https://www.cargillag.com/check-prices"
 
 # 19 locations in one call returns an empty payload; stay well under it.
 BATCH_SIZE = 12
-
-# "CU6" - contract letter plus a single-digit year.
-_SHORT_SYMBOL_RE = re.compile(r"^([A-Z]{1,2})([FGHJKMNQUVXZ])(\d)$")
 
 
 class CargillAdapter:
@@ -122,8 +118,9 @@ class CargillAdapter:
                     delivery_start=start,
                     delivery_end=end,
                     delivery_label=normalize.format_delivery_label(start, end),
-                    futures_month=cls._expand_symbol(row.get("futuresymbol"), start)
-                    or normalize.futures_month_from_symbol(group.get("symbol")),
+                    futures_month=normalize.expand_futures_symbol(
+                        row.get("futuresymbol"), int(start[:4]) if start else None
+                    ) or normalize.futures_month_from_symbol(group.get("symbol")),
                     futures=futures,
                     futures_change=normalize.parse_money(row.get("rawchange")),
                     basis=basis,
@@ -140,27 +137,6 @@ class CargillAdapter:
                     loc_id = str(loc.get("id") if isinstance(loc, dict) else loc)
                     if loc_id:
                         out.setdefault(loc_id, []).append(bid)
-
-    @staticmethod
-    def _expand_symbol(symbol: str | None, delivery_start: str | None) -> str | None:
-        """``"CU6"`` -> ``"CU26"``, using the delivery year for the decade.
-
-        Cargill abbreviates the contract year to one digit, which is ambiguous
-        on its own; the delivery date pins it down.
-        """
-        if not symbol:
-            return None
-        m = _SHORT_SYMBOL_RE.match(str(symbol).strip().upper())
-        if not m:
-            return normalize.futures_month_from_symbol(symbol)
-        root, month, digit = m.groups()
-        base_year = int(delivery_start[:4]) if delivery_start else _dt.date.today().year
-        # The contract year is the first year at or after delivery whose last
-        # digit matches.
-        for year in range(base_year, base_year + 10):
-            if year % 10 == int(digit):
-                return f"{root}{month}{year % 100:02d}"
-        return None
 
 
 def _as_float(value) -> float | None:
