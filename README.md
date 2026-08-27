@@ -18,7 +18,7 @@ A **public** repo is simplest — GitHub Pages on a private repo needs a paid
 plan, and cash bids are public information either way.
 
 ```bash
-git remote add origin https://github.com/<you>/grain-map.git
+git remote add origin https://github.com/Superspyn/grainbidmap-data.git
 git push -u origin main
 ```
 
@@ -28,22 +28,23 @@ Repo **Settings → Pages → Source: Deploy from a branch**, branch `main`,
 folder `/docs`. Your feed will then be at:
 
 ```
-https://<you>.github.io/grain-map/bids.json
+https://superspyn.github.io/grainbidmap-data/bids.json
 ```
 
 Pages serves `Access-Control-Allow-Origin: *`, which is what lets the map fetch
 it from Squarespace.
 
-### 3. Point the map at that URL
+### 3. The map already points at that URL
 
-In `grain-trucking-map.html`, edit the placeholder near the top:
+`grain-trucking-map.html` line 761 is already set:
 
 ```js
-var GT_BIDS_URL = 'https://REPLACE-ME.github.io/grain-map/bids.json';
+var GT_BIDS_URL = 'https://superspyn.github.io/grainbidmap-data/bids.json';
 ```
 
-Until that's set, the map simply skips the feed and behaves exactly as it did
-before — manual bid entry, "View bid page" links.
+Change it only if the repo is renamed. Note the Pages hostname lowercases the
+username. If the feed is ever unreachable the map simply skips it and behaves
+exactly as it did before — manual bid entry, "View bid page" links.
 
 ### 4. Paste the updated HTML into Squarespace
 
