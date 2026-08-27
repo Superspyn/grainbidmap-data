@@ -1,0 +1,580 @@
+<div id="grain-trucking-tool">
+<style>
+  #grain-trucking-tool {
+    --bg: #F6F4EC;
+    --surface: #FFFFFF;
+    --ink: #23281F;
+    --ink-soft: #5B6350;
+    --gold: #C08A28;
+    --gold-deep: #9C6E1C;
+    --green: #3C5A3E;
+    --green-pale: #E7EFE2;
+    --line: #DBD5C3;
+    --danger: #A64B3C;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    padding: 28px 20px 40px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  #grain-trucking-tool * { box-sizing: border-box; }
+
+  #grain-trucking-tool h1 {
+    font-family: 'Roboto Slab', Georgia, serif;
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: -0.01em;
+    margin: 0 0 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  #grain-trucking-tool p.gt-subtitle {
+    color: var(--ink-soft);
+    margin: 0 0 22px;
+    font-size: 14.5px;
+    max-width: 640px;
+    line-height: 1.5;
+  }
+  #grain-trucking-tool .gt-silo { width: 26px; height: 26px; flex-shrink: 0; }
+
+  #grain-trucking-tool section.gt-block {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px 18px 20px;
+    margin-bottom: 20px;
+  }
+  #grain-trucking-tool h2 {
+    font-family: 'Roboto Slab', Georgia, serif;
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gold-deep);
+    margin: 0 0 12px;
+  }
+
+  #grain-trucking-tool .gt-globals {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  #grain-trucking-tool .gt-field { display: flex; flex-direction: column; gap: 4px; }
+  #grain-trucking-tool .gt-field label { font-size: 12px; color: var(--ink-soft); font-weight: 600; }
+  #grain-trucking-tool .gt-field input {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    padding: 7px 9px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    width: 130px;
+    background: var(--bg);
+    color: var(--ink);
+  }
+
+  #grain-trucking-tool .gt-map-instructions {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+  #grain-trucking-tool .gt-map-wrap {
+    position: relative;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  #grain-trucking-tool #gt-map {
+    width: 100%;
+    height: 420px;
+    background: var(--bg);
+  }
+  #grain-trucking-tool .gt-map-fallback {
+    display: none;
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  #grain-trucking-tool .gt-status-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+    font-size: 13.5px;
+  }
+  #grain-trucking-tool .gt-status-row .gt-dot {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+  #grain-trucking-tool button.gt-reset {
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--ink-soft);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+  }
+  #grain-trucking-tool button.gt-reset:hover { border-color: var(--ink-soft); color: var(--ink); }
+
+  #grain-trucking-tool .gt-results {
+    margin-top: 16px;
+    display: none;
+  }
+  #grain-trucking-tool .gt-results.gt-visible { display: block; }
+  #grain-trucking-tool .gt-route-title {
+    font-family: 'Roboto Slab', Georgia, serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  #grain-trucking-tool .gt-metric-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  #grain-trucking-tool .gt-metric {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  #grain-trucking-tool .gt-metric .gt-metric-label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+  #grain-trucking-tool .gt-metric .gt-metric-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 17px;
+    font-weight: 700;
+  }
+  #grain-trucking-tool .gt-metric.gt-highlight { background: var(--green-pale); border-color: var(--green); }
+  #grain-trucking-tool .gt-metric.gt-highlight .gt-metric-value { color: var(--green); }
+
+  #grain-trucking-tool .gt-bid-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    border-top: 1px solid var(--line);
+    padding-top: 14px;
+  }
+
+  #grain-trucking-tool .gt-legend {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-top: 14px;
+    line-height: 1.6;
+    border-top: 1px solid var(--line);
+    padding-top: 12px;
+  }
+  #grain-trucking-tool .gt-legend code {
+    background: var(--bg);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+  }
+</style>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+</style>
+
+<h1>
+  <svg class="gt-silo" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="14" y="8" width="20" height="30" rx="10" fill="#C08A28"/>
+    <rect x="14" y="8" width="20" height="12" rx="10" fill="#9C6E1C"/>
+    <path d="M14 38 L24 46 L34 38 Z" fill="#3C5A3E"/>
+    <rect x="20" y="4" width="8" height="6" rx="2" fill="#3C5A3E"/>
+  </svg>
+  Grain Hauling Cost Map
+</h1>
+<p class="gt-subtitle">Click a pin to set your starting point, then click another pin to see the driving distance and fuel cost for that haul.</p>
+
+<section class="gt-block">
+  <h2>Truck &amp; Fuel Settings</h2>
+  <div class="gt-globals">
+    <div class="gt-field">
+      <label for="gt-diesel">Diesel price ($/gal)</label>
+      <input type="number" id="gt-diesel" value="3.75" step="0.01" min="0">
+    </div>
+    <div class="gt-field">
+      <label for="gt-mpg">Truck fuel economy (mpg)</label>
+      <input type="number" id="gt-mpg" value="6" step="0.1" min="0.1">
+    </div>
+    <div class="gt-field">
+      <label for="gt-cap">Truck capacity (bu)</label>
+      <input type="number" id="gt-cap" value="1000" step="10" min="1">
+    </div>
+  </div>
+</section>
+
+<section class="gt-block">
+  <h2>Map</h2>
+  <div class="gt-map-instructions">Yellow pin = your farm. Blue = co-op elevators, red = ethanol plants, purple = feed mills. Click any empty spot on the map to drop a temporary pin for a field &mdash; it becomes your start point and you can drag it to fine-tune. Then click an elevator pin to calculate that trip.</div>
+  <div class="gt-map-wrap">
+    <div id="gt-map"></div>
+    <div id="gt-map-fallback" class="gt-map-fallback">
+      Map didn't load. This usually means the Google Maps API key below still needs to be added (or billing enabled) &mdash; see the setup notes at the bottom.
+    </div>
+  </div>
+  <div class="gt-status-row">
+    <div>
+      <span id="gt-status-text">Click a pin to begin.</span>
+    </div>
+    <button class="gt-reset" id="gt-reset-btn">Reset selection</button>
+  </div>
+
+  <div class="gt-results" id="gt-results">
+    <div class="gt-route-title" id="gt-route-title"></div>
+    <a href="#" id="gt-open-maps" target="_blank" rel="noopener" style="display:inline-block;font-size:12.5px;color:#3C5A3E;margin-bottom:12px;">Open this route in Google Maps &rarr;</a>
+    <div class="gt-metric-grid">
+      <div class="gt-metric">
+        <div class="gt-metric-label">Driving distance</div>
+        <div class="gt-metric-value" id="gt-distance">&mdash;</div>
+      </div>
+      <div class="gt-metric">
+        <div class="gt-metric-label">Round trip miles</div>
+        <div class="gt-metric-value" id="gt-roundtrip">&mdash;</div>
+      </div>
+      <div class="gt-metric">
+        <div class="gt-metric-label">Fuel used (round trip)</div>
+        <div class="gt-metric-value" id="gt-gallons">&mdash;</div>
+      </div>
+      <div class="gt-metric gt-highlight">
+        <div class="gt-metric-label">Fuel cost (round trip)</div>
+        <div class="gt-metric-value" id="gt-fuelcost">&mdash;</div>
+      </div>
+    </div>
+
+    <div class="gt-bid-row">
+      <div class="gt-field">
+        <label for="gt-bid">Elevator bid ($/bu)</label>
+        <input type="number" id="gt-bid" step="0.01" min="0" placeholder="optional">
+      </div>
+      <div class="gt-field">
+        <label for="gt-shrink">Shrink %</label>
+        <input type="number" id="gt-shrink" step="0.1" min="0" placeholder="optional">
+      </div>
+      <div class="gt-metric gt-highlight" style="flex:1; min-width:160px;">
+        <div class="gt-metric-label">Net price after fuel</div>
+        <div class="gt-metric-value" id="gt-netprice">&mdash;</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gt-legend">
+    Fuel cost = (round-trip miles &divide; truck mpg) &times; diesel price. Net price after fuel = (bid &times; bushels after shrink &minus; fuel cost) &divide; truck capacity. This only nets out fuel &mdash; add your own math for any per-load hauling fee on top if you pay one.
+    <br><br>
+    <strong>41 locations are loaded in from your My Maps export.</strong> The one thing it didn't have was your farm/loadout point &mdash; that's a placeholder pin right now. Edit the first entry in the <code>gtLocations</code> list near the top of the script (search for <code>EDIT: your exact loadout point</code>) and set it to your real coordinates. Right-click that spot on Google Maps and click the coordinates shown to copy them.
+  </div>
+</section>
+
+<script>
+  // ====== EDIT THIS: your API key ======
+  var GT_API_KEY = 'AIzaSyA8lkzY1Q-gr80SxESMK4BOLZiW57Rqj-A';
+
+  // ====== Your real locations, pulled from your uploaded My Maps ======
+  // 'farm' pin is a placeholder  -  edit its lat/lng to your exact loadout point
+  // (right-click that spot on Google Maps and click the coordinates to copy them).
+  // Everything else came straight from your KMZ export.
+  var gtLocations = [
+    { name: 'Home Farm', type: 'farm', lat: 43.0972, lng: -93.8036 }, // EDIT: your exact loadout point
+    { name: 'Landus coop', type: 'coop', lat: 43.097057, lng: -93.84607, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'gold eagle coop hutchins', type: 'coop', lat: 43.091631, lng: -93.883394, url: 'https://www.goldeaglecoop.com/markets/cash.php?location_filter=66472' },
+    { name: 'poet hanlontown ethanol', type: 'ethanol', lat: 43.292221, lng: -93.392686, url: 'https://poet.gradable.com/market/Hanlontown--IA' },
+    { name: 'poet Emmetsburg Ethanol', type: 'ethanol', lat: 43.097457, lng: -94.655582, url: 'https://poet.gradable.com/market/Emmetsburg--IA' },
+    { name: 'poet Jewell Ethanol', type: 'ethanol', lat: 42.329504, lng: -93.664923, url: 'https://poet.gradable.com/market/Jewell--IA' },
+    { name: 'poet Gowrie Ethanol', type: 'ethanol', lat: 42.319626, lng: -94.288529, url: 'https://poet.gradable.com/market/Gowrie--IA' },
+    { name: 'Big River Resources West Burlington Ethanol', type: 'ethanol', lat: 40.831346, lng: -91.221867, url: 'https://bigriverresources.com/cashbidssingle-2164' },
+    { name: 'Cargill Eddyville', type: 'ethanol', lat: 41.141337, lng: -92.641603, url: 'https://www.cargillag.com/locations/eddyville-ssna' },
+    { name: 'Poet Corning Ethanol', type: 'ethanol', lat: 40.965207, lng: -94.79694, url: 'https://www.cargillag.com/locations/eddyville-ssna' },
+    { name: 'Green Plains Shenandoah Ethanol', type: 'ethanol', lat: 40.755078, lng: -95.395382, url: 'https://gpreinc.com/Corn-Bids/' },
+    { name: 'Southwest Iowa Renewable Energy Council Bluffs Ethanol', type: 'ethanol', lat: 41.172632, lng: -95.825328, url: 'https://sireethanol.com/cash-bids/' },
+    { name: 'Flint Hills/Poet ethanol Menlo', type: 'ethanol', lat: 41.523724, lng: -94.382023, url: 'https://poet.gradable.com/market/Menlo--IA' },
+    { name: 'Valero Renewables St. Lakota,', type: 'ethanol', lat: 43.384084, lng: -94.14419, url: 'https://www.valero.com/corn/lakota' },
+    { name: 'Valero Renewables Floyd Ethanol', type: 'ethanol', lat: 43.098633, lng: -92.742659, url: 'https://portal.bushelpowered.com/valero/auth/required' },
+    { name: 'Homeland Energy Solutions Lawler Ethanol', type: 'ethanol', lat: 43.072361, lng: -92.205918, url: 'https://www.homelandenergysolutions.com/grain-bids/' },
+    { name: 'Absolute Energy mona Ethanol', type: 'ethanol', lat: 43.497523, lng: -92.953569, url: 'https://absenergy.org/grain/https://absenergy.org/grain/' },
+    { name: 'Valero Renewables - Albert City Ethanol', type: 'ethanol', lat: 42.775461, lng: -94.946011, url: 'https://portal.bushelpowered.com/valero/welcome' },
+    { name: 'Cargill Fort Dodge Ethanol', type: 'ethanol', lat: 42.508409, lng: -94.312932, url: 'https://www.cargillag.com/locations/fort-dodge-ssna' },
+    { name: 'Valero Renewables Fort Dodge, Ethanol', type: 'ethanol', lat: 42.511893, lng: -94.303171, url: 'https://portal.bushelpowered.com/valero/welcome' },
+    { name: 'Flint Hill Resources/poet Arthur Ethanol', type: 'ethanol', lat: 42.331522, lng: -95.350883, url: 'https://poet.gradable.com/market/Arthur--IA' },
+    { name: 'The Andersons Denison Ethanol', type: 'ethanol', lat: 41.988475, lng: -95.399576, url: 'https://www.andersonsgrain.com/locations/cash-bids/' },
+    { name: 'POET Biorefining - Coon Rapids Ethanol', type: 'ethanol', lat: 41.861262, lng: -94.631023, url: 'https://poet.gradable.com/market/Coon-Rapids--IA' },
+    { name: 'Elite Octane Atlantic Ethanol', type: 'ethanol', lat: 41.420705, lng: -95.030973, url: 'https://www.eliteoctane.net/cash-bids' },
+    { name: 'Grain Processing Corporation', type: 'ethanol', lat: 41.400133, lng: -91.062952, url: 'http://kentbids.com/index.cfm?show=11&mid=6&theLocation=39&layout=1046' },
+    { name: 'ADM Clinton Ethanol', type: 'ethanol', lat: 41.817541, lng: -90.216456, url: 'https://adm.gradable.com/market/Clinton--IA-Corn-Processing' },
+    { name: 'ADM Cedar Rapids Ethanol', type: 'ethanol', lat: 41.92062, lng: -91.687458, url: 'https://adm.gradable.com/market/Clinton--IA-Corn-Processing' },
+    { name: 'Ingredion, Inc. Cedar Rapids Ethanol', type: 'ethanol', lat: 41.96818, lng: -91.667533, url: 'https://ag.ingredion.com/cash-bids' },
+    { name: 'Big River United Energy Dyersville Ethanol', type: 'ethanol', lat: 42.487263, lng: -91.16402, url: 'https://bigriverresources.com/cashbidssingle-2162' },
+    { name: 'Flint Hills Resources/Poet Faribanks Ethanol', type: 'ethanol', lat: 42.640684, lng: -92.028655, url: 'https://poet.gradable.com/market/Fairbank--IA' },
+    { name: 'Flint Hills Resources/Poet Shell Rock Ethanol', type: 'ethanol', lat: 42.73769, lng: -92.617938, url: 'https://poet.gradable.com/market/Shell-Rock--IA' },
+    { name: 'Pine Lake Corn Processors', type: 'ethanol', lat: 42.459127, lng: -93.0573, url: 'https://www.innovativeag.com/grain/cash-bids' },
+    { name: 'Flint Hills Resources/Poet Iowa falls Ethanol', type: 'ethanol', lat: 42.505592, lng: -93.282414, url: 'https://poet.gradable.com/market/Iowa-Falls--IA' },
+    { name: 'Lincolnway Energy Nevada Ethanol', type: 'ethanol', lat: 42.011212, lng: -93.390095, url: 'https://lincolnwayenergy.com/corn-bids/' },
+    { name: 'Louis Dreyfus Commodities Grand Junction Ethanol', type: 'ethanol', lat: 42.055754, lng: -94.242306, url: 'https://www.myldc.com/facility/grandjunction' },
+    { name: 'golden grain ethanol mason city', type: 'ethanol', lat: 43.116958, lng: -93.230325, url: 'https://ggecorn.com/cash-bids%2Fcustomers' },
+    { name: 'Christensen feed mill forest city', type: 'feedmill', lat: 43.287281, lng: -93.790921, url: 'https://www.christensenfarms.com/corn-bids/pricing/' },
+    { name: 'New Coop Britt', type: 'coop', lat: 43.10023, lng: -93.802095, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'Smithfield grain feed mill Allerton', type: 'feedmill', lat: 40.722954, lng: -93.364125, url: 'https://smithfieldgrain.com/cashBids.aspx?ksc=1' },
+    { name: 'heart land coop millerton', type: 'coop', lat: 40.848111, lng: -93.311253, url: 'https://myaccount.heartlandcoop.com/bids.htm?v=20260507' },
+    { name: 'New coop Humeston', type: 'coop', lat: 40.855941, lng: -93.50107, url: 'https://www.newcoop.com/cash-bids/?=&agricharts_loc=347' },
+    { name: 'Lucerne feed mill', type: 'feedmill', lat: 40.467039, lng: -93.286357, url: 'https://smithfieldgrain.com/cashbidssingle-1699' },
+  ];
+</script>
+
+<script>
+(function () {
+  var container = document.getElementById('grain-trucking-tool');
+  var dieselInput = container.querySelector('#gt-diesel');
+  var mpgInput = container.querySelector('#gt-mpg');
+  var capInput = container.querySelector('#gt-cap');
+  var statusText = container.querySelector('#gt-status-text');
+  var resetBtn = container.querySelector('#gt-reset-btn');
+  var resultsEl = container.querySelector('#gt-results');
+  var routeTitleEl = container.querySelector('#gt-route-title');
+  var openMapsEl = container.querySelector('#gt-open-maps');
+  var distanceEl = container.querySelector('#gt-distance');
+  var roundtripEl = container.querySelector('#gt-roundtrip');
+  var gallonsEl = container.querySelector('#gt-gallons');
+  var fuelcostEl = container.querySelector('#gt-fuelcost');
+  var bidInput = container.querySelector('#gt-bid');
+  var shrinkInput = container.querySelector('#gt-shrink');
+  var netpriceEl = container.querySelector('#gt-netprice');
+  var fallbackEl = container.querySelector('#gt-map-fallback');
+  var mapEl = container.querySelector('#gt-map');
+
+  var map, directionsService, directionsRenderer, infoWindow;
+  var markers = [];
+  var tempMarker = null;
+  var selectedOrigin = null;
+  var selectedDestination = null;
+  var lastLegMeters = 0;
+
+  var ICONS = {
+    farm: 'https://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
+    coop: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+    ethanol: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
+    feedmill: 'https://maps.google.com/mapfiles/ms/icons/purple-dot.png',
+    field: 'https://maps.google.com/mapfiles/ms/icons/pink-dot.png',
+    origin: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png',
+    destination: 'https://maps.google.com/mapfiles/ms/icons/orange-dot.png'
+  };
+
+  window.gtInitMap = function () {
+    map = new google.maps.Map(mapEl, { zoom: 9 });
+    directionsService = new google.maps.DirectionsService();
+    directionsRenderer = new google.maps.DirectionsRenderer({ suppressMarkers: true, preserveViewport: true });
+    infoWindow = new google.maps.InfoWindow();
+
+    var bounds = new google.maps.LatLngBounds();
+
+    gtLocations.forEach(function (loc) {
+      var marker = new google.maps.Marker({
+        position: { lat: loc.lat, lng: loc.lng },
+        map: map,
+        title: loc.name,
+        icon: ICONS[loc.type] || ICONS.coop
+      });
+      marker.gtData = loc;
+      marker.addListener('click', function () { handlePinClick(marker); });
+      markers.push(marker);
+      bounds.extend(marker.getPosition());
+    });
+
+    if (markers.length) map.fitBounds(bounds);
+
+    map.addListener('click', function (e) {
+      placeOrMoveTempPin(e.latLng);
+    });
+  };
+
+  function placeOrMoveTempPin(latLng) {
+    if (!tempMarker) {
+      tempMarker = new google.maps.Marker({
+        position: latLng,
+        map: map,
+        draggable: true,
+        icon: ICONS.origin,
+        title: 'Field pin (drag to adjust)',
+        zIndex: 999
+      });
+      tempMarker.gtData = { name: 'Field pin', type: 'field' };
+      tempMarker.addListener('dragend', function () { selectTempAsOrigin(); });
+      tempMarker.addListener('click', function () { selectTempAsOrigin(); });
+    } else {
+      tempMarker.setPosition(latLng);
+    }
+    selectTempAsOrigin();
+  }
+
+  function selectTempAsOrigin() {
+    selectedOrigin = tempMarker;
+    selectedDestination = null;
+    resultsEl.classList.remove('gt-visible');
+    if (directionsRenderer) directionsRenderer.setMap(null);
+    statusText.textContent = 'Origin: Field pin  -  now click an elevator pin.';
+    updateIcons();
+  };
+
+  window.gm_authFailure = function () {
+    mapEl.style.display = 'none';
+    fallbackEl.style.display = 'block';
+  };
+
+  function showInfo(marker) {
+    var data = marker.gtData;
+    var html = '<div style="font-family:Inter,sans-serif;font-size:13px;max-width:220px;">' +
+      '<div style="font-weight:600;margin-bottom:4px;">' + escapeHtml(data.name) + '</div>';
+    if (data.url) {
+      html += '<a href="' + escapeHtml(data.url) + '" target="_blank" rel="noopener" style="color:#3C5A3E;">View bid page &rarr;</a>';
+    } else {
+      html += '<span style="color:#5B6350;">No bid page linked</span>';
+    }
+    html += '</div>';
+    infoWindow.setContent(html);
+    infoWindow.open(map, marker);
+  }
+
+  function escapeHtml(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function updateIcons() {
+    markers.forEach(function (m) {
+      if (m === selectedOrigin) m.setIcon(ICONS.origin);
+      else if (m === selectedDestination) m.setIcon(ICONS.destination);
+      else m.setIcon(ICONS[m.gtData.type] || ICONS.coop);
+    });
+    if (tempMarker) {
+      tempMarker.setIcon(tempMarker === selectedOrigin ? ICONS.origin : ICONS.field);
+    }
+  }
+
+  function handlePinClick(marker) {
+    showInfo(marker);
+    if (selectedOrigin && selectedDestination) {
+      // start a fresh selection
+      selectedOrigin = marker;
+      selectedDestination = null;
+      resultsEl.classList.remove('gt-visible');
+      directionsRenderer.setMap(null);
+      statusText.textContent = 'Origin: ' + marker.gtData.name + '  -  now click a second pin.';
+    } else if (!selectedOrigin) {
+      selectedOrigin = marker;
+      statusText.textContent = 'Origin: ' + marker.gtData.name + '  -  now click a second pin.';
+    } else if (marker === selectedOrigin) {
+      // clicked same pin again  -  deselect
+      selectedOrigin = null;
+      statusText.textContent = 'Click a pin to begin.';
+    } else {
+      selectedDestination = marker;
+      statusText.textContent = selectedOrigin.gtData.name + ' \u2192 ' + selectedDestination.gtData.name;
+      computeRoute();
+    }
+    updateIcons();
+  }
+
+  function computeRoute() {
+    directionsRenderer.setMap(map);
+    directionsService.route({
+      origin: selectedOrigin.getPosition(),
+      destination: selectedDestination.getPosition(),
+      travelMode: google.maps.TravelMode.DRIVING
+    }, function (result, status) {
+      if (status !== 'OK') {
+        statusText.textContent = 'Could not find a driving route between those two pins.';
+        return;
+      }
+      directionsRenderer.setDirections(result);
+      lastLegMeters = result.routes[0].legs[0].distance.value;
+      var destData = selectedDestination.gtData;
+      routeTitleEl.textContent = selectedOrigin.gtData.name + ' \u2192 ' + destData.name;
+      var oPos = selectedOrigin.getPosition();
+      var dPos = selectedDestination.getPosition();
+      openMapsEl.href = 'https://www.google.com/maps/dir/?api=1&origin=' + oPos.lat() + ',' + oPos.lng() +
+        '&destination=' + dPos.lat() + ',' + dPos.lng() + '&travelmode=driving';
+      bidInput.value = (destData.bid !== undefined) ? destData.bid : '';
+      shrinkInput.value = (destData.shrinkPct !== undefined) ? destData.shrinkPct : '';
+      resultsEl.classList.add('gt-visible');
+      updateResults();
+    });
+  }
+
+  function updateResults() {
+    if (!lastLegMeters) return;
+    var oneWayMiles = lastLegMeters / 1609.34;
+    var roundTripMiles = oneWayMiles * 2;
+    var mpg = parseFloat(mpgInput.value) || 0;
+    var dieselPrice = parseFloat(dieselInput.value) || 0;
+    var truckCap = parseFloat(capInput.value) || 0;
+    var gallons = mpg > 0 ? roundTripMiles / mpg : 0;
+    var fuelCost = gallons * dieselPrice;
+
+    distanceEl.textContent = oneWayMiles.toFixed(1) + ' mi';
+    roundtripEl.textContent = roundTripMiles.toFixed(1) + ' mi';
+    gallonsEl.textContent = gallons.toFixed(1) + ' gal';
+    fuelcostEl.textContent = '$' + fuelCost.toFixed(2);
+
+    var bid = parseFloat(bidInput.value);
+    var shrinkPct = parseFloat(shrinkInput.value);
+    if (!isNaN(bid) && truckCap > 0) {
+      var shrinkFrac = (isNaN(shrinkPct) ? 0 : shrinkPct) / 100;
+      var payableBu = truckCap * (1 - shrinkFrac);
+      var grossRevenue = payableBu * bid;
+      var netRevenue = grossRevenue - fuelCost;
+      var netPricePerBu = netRevenue / truckCap;
+      netpriceEl.textContent = '$' + netPricePerBu.toFixed(3) + ' / bu';
+    } else {
+      netpriceEl.textContent = '\u2014';
+    }
+  }
+
+  [dieselInput, mpgInput, capInput, bidInput, shrinkInput].forEach(function (el) {
+    el.addEventListener('input', updateResults);
+  });
+
+  resetBtn.addEventListener('click', function () {
+    selectedOrigin = null;
+    selectedDestination = null;
+    lastLegMeters = 0;
+    resultsEl.classList.remove('gt-visible');
+    if (directionsRenderer) directionsRenderer.setMap(null);
+    if (tempMarker) { tempMarker.setMap(null); tempMarker = null; }
+    statusText.textContent = 'Click a pin to begin.';
+    updateIcons();
+  });
+
+  if (window.google && window.google.maps) {
+    window.gtInitMap();
+  } else if (!window.__gtMapsScriptLoading) {
+    window.__gtMapsScriptLoading = true;
+    var script = document.createElement('script');
+    script.src = 'https://maps.googleapis.com/maps/api/js?key=' + GT_API_KEY + '&callback=gtInitMap';
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+  }
+})();
+</script>
+</div>

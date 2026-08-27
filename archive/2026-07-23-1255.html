@@ -1,0 +1,506 @@
+<div id="grain-trucking-tool">
+<style>
+  #grain-trucking-tool {
+    --bg: #F6F4EC;
+    --surface: #FFFFFF;
+    --ink: #23281F;
+    --ink-soft: #5B6350;
+    --gold: #C08A28;
+    --gold-deep: #9C6E1C;
+    --green: #3C5A3E;
+    --green-pale: #E7EFE2;
+    --line: #DBD5C3;
+    --danger: #A64B3C;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    padding: 28px 20px 40px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  #grain-trucking-tool * { box-sizing: border-box; }
+
+  #grain-trucking-tool h1 {
+    font-family: 'Roboto Slab', Georgia, serif;
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: -0.01em;
+    margin: 0 0 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  #grain-trucking-tool p.gt-subtitle {
+    color: var(--ink-soft);
+    margin: 0 0 22px;
+    font-size: 14.5px;
+    max-width: 640px;
+    line-height: 1.5;
+  }
+  #grain-trucking-tool .gt-silo {
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+  }
+
+  #grain-trucking-tool .gt-summary {
+    background: var(--green);
+    color: #F4F1E4;
+    border-radius: 8px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 22px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  #grain-trucking-tool .gt-summary .gt-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.8;
+  }
+  #grain-trucking-tool .gt-summary .gt-best-name {
+    font-size: 19px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+  }
+  #grain-trucking-tool .gt-summary .gt-best-price {
+    font-size: 22px;
+    font-weight: 700;
+    color: #E8C77A;
+  }
+
+  #grain-trucking-tool section.gt-block {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px 18px 20px;
+    margin-bottom: 20px;
+  }
+  #grain-trucking-tool h2 {
+    font-family: 'Roboto Slab', Georgia, serif;
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gold-deep);
+    margin: 0 0 12px;
+  }
+
+  #grain-trucking-tool .gt-map-wrap {
+    position: relative;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  #grain-trucking-tool .gt-map-wrap iframe {
+    width: 100%;
+    height: 380px;
+    border: 0;
+    display: block;
+  }
+  #grain-trucking-tool .gt-map-note {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+  #grain-trucking-tool .gt-map-note code {
+    background: var(--bg);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+  }
+
+  #grain-trucking-tool .gt-globals {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  #grain-trucking-tool .gt-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  #grain-trucking-tool .gt-field label {
+    font-size: 12px;
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+  #grain-trucking-tool .gt-field input {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    padding: 7px 9px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    width: 130px;
+    background: var(--bg);
+    color: var(--ink);
+  }
+
+  #grain-trucking-tool table.gt-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  #grain-trucking-tool table.gt-table th {
+    text-align: left;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+    font-weight: 600;
+    padding: 6px 8px;
+    border-bottom: 2px solid var(--line);
+  }
+  #grain-trucking-tool table.gt-table td {
+    padding: 6px 8px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+  }
+  #grain-trucking-tool table.gt-table input,
+  #grain-trucking-tool table.gt-table select {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    padding: 6px 7px;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    width: 100%;
+    background: var(--bg);
+    color: var(--ink);
+  }
+  #grain-trucking-tool table.gt-table input[type="text"] {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+  }
+  #grain-trucking-tool td.gt-computed {
+    font-family: 'IBM Plex Mono', monospace;
+    background: var(--bg);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  #grain-trucking-tool td.gt-net {
+    color: var(--green);
+    font-weight: 700;
+    font-size: 14.5px;
+  }
+  #grain-trucking-tool tr.gt-best td {
+    background: var(--green-pale);
+  }
+  #grain-trucking-tool tr.gt-best td.gt-computed { background: var(--green-pale); }
+  #grain-trucking-tool tr.gt-best td.gt-elevator-cell::before {
+    content: "\2605";
+    color: var(--gold-deep);
+    margin-right: 5px;
+  }
+
+  #grain-trucking-tool button.gt-remove {
+    background: none;
+    border: none;
+    color: var(--danger);
+    font-size: 17px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px 6px;
+  }
+  #grain-trucking-tool button.gt-add {
+    margin-top: 12px;
+    background: var(--green);
+    color: #F4F1E4;
+    border: none;
+    padding: 9px 16px;
+    border-radius: 6px;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+  }
+  #grain-trucking-tool button.gt-add:hover { background: #2E4630; }
+
+  #grain-trucking-tool .gt-legend {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-top: 14px;
+    line-height: 1.6;
+    border-top: 1px solid var(--line);
+    padding-top: 12px;
+  }
+
+  @media (max-width: 720px) {
+    #grain-trucking-tool table.gt-table thead { display: none; }
+    #grain-trucking-tool table.gt-table, 
+    #grain-trucking-tool table.gt-table tbody,
+    #grain-trucking-tool table.gt-table tr,
+    #grain-trucking-tool table.gt-table td {
+      display: block;
+      width: 100%;
+    }
+    #grain-trucking-tool table.gt-table tr {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px 4px;
+      margin-bottom: 12px;
+      position: relative;
+    }
+    #grain-trucking-tool table.gt-table td {
+      border-bottom: none;
+      padding: 6px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    #grain-trucking-tool table.gt-table td::before {
+      content: attr(data-label);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--ink-soft);
+      font-weight: 600;
+      flex-shrink: 0;
+      width: 90px;
+    }
+    #grain-trucking-tool table.gt-table td input,
+    #grain-trucking-tool table.gt-table td select {
+      text-align: right;
+      width: auto;
+      flex: 1;
+    }
+    #grain-trucking-tool table.gt-table td.gt-elevator-cell input { text-align: left; }
+    #grain-trucking-tool button.gt-remove {
+      position: absolute;
+      top: 6px;
+      right: 8px;
+    }
+  }
+</style>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+</style>
+
+<h1>
+  <svg class="gt-silo" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="14" y="8" width="20" height="30" rx="10" fill="#C08A28"/>
+    <rect x="14" y="8" width="20" height="12" rx="10" fill="#9C6E1C"/>
+    <path d="M14 38 L24 46 L34 38 Z" fill="#3C5A3E"/>
+    <rect x="20" y="4" width="8" height="6" rx="2" fill="#3C5A3E"/>
+  </svg>
+  Grain Hauling Cost Comparison
+</h1>
+<p class="gt-subtitle">Your elevator map, plus the real math: bid price minus hauling and shrink, so the elevator you pick is the one that actually nets the most per bushel &mdash; not just the one with the highest posted bid.</p>
+
+<div class="gt-summary">
+  <div>
+    <div class="gt-label">Best net return right now</div>
+    <div class="gt-best-name" id="gt-best-name">&mdash;</div>
+  </div>
+  <div class="gt-best-price" id="gt-best-price">&mdash;</div>
+</div>
+
+<section class="gt-block">
+  <h2>Elevator &amp; Delivery Map</h2>
+  <div class="gt-map-wrap">
+    <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1W1kS4KBk03s6fKnHi3ovFqwZQizNSsU&ehbc=2E312F&noprof=1" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+  <div class="gt-map-note">
+    This map is pulling from your Google My Maps. To point it at a different map later: open My Maps &rarr; menu (&#8801;) &rarr; <strong>Embed on my site</strong> &rarr; copy the URL inside <code>src="..."</code> &rarr; paste it into the <code>src</code> attribute of the <code>&lt;iframe&gt;</code> above.
+  </div>
+</section>
+
+<section class="gt-block">
+  <h2>Hauling Cost Calculator</h2>
+
+  <div class="gt-globals">
+    <div class="gt-field">
+      <label for="gt-truck-cap">Truck capacity (bu)</label>
+      <input type="number" id="gt-truck-cap" value="1000" min="1" step="10">
+    </div>
+  </div>
+
+  <table class="gt-table">
+    <thead>
+      <tr>
+        <th style="width:16%">Elevator</th>
+        <th style="width:10%">Bid $/bu</th>
+        <th style="width:9%">Miles (one-way)</th>
+        <th style="width:14%">Hauling type</th>
+        <th style="width:11%">Rate</th>
+        <th style="width:9%">Shrink %</th>
+        <th style="width:11%">Haul $/bu</th>
+        <th style="width:12%">Net $/bu</th>
+        <th style="width:4%"></th>
+      </tr>
+    </thead>
+    <tbody id="gt-rows"></tbody>
+  </table>
+
+  <button class="gt-add" id="gt-add-row">+ Add elevator</button>
+
+  <div class="gt-legend">
+    <strong>How net $/bu is calculated:</strong> (Bid &times; bushels after shrink) &minus; hauling cost, divided by truck capacity.
+    &nbsp;<strong>Per mile</strong> rate is charged for the round trip (miles &times; 2).
+    &nbsp;<strong>Per bu</strong> rate is a flat charge per bushel hauled.
+    &nbsp;<strong>Per load</strong> rate is a flat charge for the whole truckload regardless of size.
+    Edit any cell &mdash; the sample rows are placeholders, not real bids.
+  </div>
+</section>
+
+<script>
+(function () {
+  // Note: this tool keeps values in memory only (no localStorage), so a page
+  // refresh resets it to the sample rows below. Replace the sample data with
+  // your real elevators.
+  var container = document.getElementById('grain-trucking-tool');
+  var rowsBody = container.querySelector('#gt-rows');
+  var truckCapInput = container.querySelector('#gt-truck-cap');
+  var addBtn = container.querySelector('#gt-add-row');
+  var bestNameEl = container.querySelector('#gt-best-name');
+  var bestPriceEl = container.querySelector('#gt-best-price');
+
+  var nextId = 1;
+  function makeRow(data) {
+    return Object.assign({
+      id: nextId++,
+      name: 'Elevator ' + nextId,
+      bid: 4.20,
+      miles: 10,
+      haulType: 'perMile',
+      rate: 3.50,
+      shrink: 2
+    }, data || {});
+  }
+
+  var elevators = [
+    makeRow({ name: 'Elevator A', bid: 4.20, miles: 8,  haulType: 'perMile', rate: 3.50, shrink: 2 }),
+    makeRow({ name: 'Elevator B', bid: 4.35, miles: 22, haulType: 'perBu',   rate: 0.12, shrink: 1.5 }),
+    makeRow({ name: 'Elevator C', bid: 4.10, miles: 5,  haulType: 'perLoad', rate: 150,  shrink: 2.5 })
+  ];
+
+  var unitLabels = { perMile: '$ / mile', perBu: '$ / bu', perLoad: '$ / load' };
+
+  function computeRow(row) {
+    var truckCap = parseFloat(truckCapInput.value) || 0;
+    var bid = parseFloat(row.bid) || 0;
+    var miles = parseFloat(row.miles) || 0;
+    var rate = parseFloat(row.rate) || 0;
+    var shrinkFrac = (parseFloat(row.shrink) || 0) / 100;
+
+    var haulCostPerLoad = 0;
+    if (row.haulType === 'perMile') {
+      haulCostPerLoad = rate * miles * 2;
+    } else if (row.haulType === 'perBu') {
+      haulCostPerLoad = rate * truckCap;
+    } else if (row.haulType === 'perLoad') {
+      haulCostPerLoad = rate;
+    }
+    var haulCostPerBu = truckCap > 0 ? haulCostPerLoad / truckCap : 0;
+
+    var payableBu = truckCap * (1 - shrinkFrac);
+    var grossRevenue = payableBu * bid;
+    var netRevenuePerLoad = grossRevenue - haulCostPerLoad;
+    var netPricePerBu = truckCap > 0 ? netRevenuePerLoad / truckCap : 0;
+
+    return {
+      haulCostPerBu: haulCostPerBu,
+      netPricePerBu: netPricePerBu,
+      netRevenuePerLoad: netRevenuePerLoad
+    };
+  }
+
+  function render() {
+    rowsBody.innerHTML = '';
+    var results = elevators.map(function (row) {
+      return { row: row, calc: computeRow(row) };
+    });
+
+    var bestIdx = -1, bestVal = -Infinity;
+    results.forEach(function (r, i) {
+      if (r.calc.netPricePerBu > bestVal) { bestVal = r.calc.netPricePerBu; bestIdx = i; }
+    });
+
+    results.forEach(function (r, i) {
+      var row = r.row, calc = r.calc;
+      var tr = document.createElement('tr');
+      if (i === bestIdx) tr.className = 'gt-best';
+
+      tr.innerHTML =
+        '<td class="gt-elevator-cell" data-label="Elevator"><input type="text" data-field="name" value="' + escapeHtml(row.name) + '"></td>' +
+        '<td data-label="Bid $/bu"><input type="number" step="0.01" data-field="bid" value="' + row.bid + '"></td>' +
+        '<td data-label="Miles"><input type="number" step="0.1" data-field="miles" value="' + row.miles + '"></td>' +
+        '<td data-label="Hauling type">' + buildSelect(row) + '</td>' +
+        '<td data-label="Rate (' + unitLabels[row.haulType] + ')"><input type="number" step="0.01" data-field="rate" value="' + row.rate + '"></td>' +
+        '<td data-label="Shrink %"><input type="number" step="0.1" data-field="shrink" value="' + row.shrink + '"></td>' +
+        '<td class="gt-computed" data-label="Haul $/bu">$' + calc.haulCostPerBu.toFixed(3) + '</td>' +
+        '<td class="gt-computed gt-net" data-label="Net $/bu">$' + calc.netPricePerBu.toFixed(3) + '</td>' +
+        '<td><button class="gt-remove" title="Remove elevator">&times;</button></td>';
+
+      tr.querySelectorAll('[data-field]').forEach(function (el) {
+        el.addEventListener('input', function () {
+          var field = el.getAttribute('data-field');
+          row[field] = el.type === 'number' ? el.value : el.value;
+          if (field === 'haulType') { /* handled in change listener below for select */ }
+          render();
+        });
+      });
+      var select = tr.querySelector('select[data-field="haulType"]');
+      if (select) {
+        select.addEventListener('change', function () {
+          row.haulType = select.value;
+          render();
+        });
+      }
+      tr.querySelector('.gt-remove').addEventListener('click', function () {
+        elevators = elevators.filter(function (e2) { return e2.id !== row.id; });
+        render();
+      });
+
+      rowsBody.appendChild(tr);
+    });
+
+    if (bestIdx >= 0) {
+      bestNameEl.textContent = results[bestIdx].row.name;
+      bestPriceEl.textContent = '$' + results[bestIdx].calc.netPricePerBu.toFixed(3) + ' / bu';
+    } else {
+      bestNameEl.textContent = '\u2014';
+      bestPriceEl.textContent = '\u2014';
+    }
+  }
+
+  function buildSelect(row) {
+    var options = [
+      ['perMile', 'Per mile'],
+      ['perBu', 'Per bushel'],
+      ['perLoad', 'Per load']
+    ];
+    var html = '<select data-field="haulType">';
+    options.forEach(function (opt) {
+      html += '<option value="' + opt[0] + '"' + (row.haulType === opt[0] ? ' selected' : '') + '>' + opt[1] + '</option>';
+    });
+    html += '</select>';
+    return html;
+  }
+
+  function escapeHtml(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  addBtn.addEventListener('click', function () {
+    elevators.push(makeRow({ name: 'New Elevator' }));
+    render();
+  });
+
+  truckCapInput.addEventListener('input', render);
+
+  render();
+})();
+</script>
+</div>

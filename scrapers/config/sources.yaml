@@ -1,0 +1,58 @@
+# Bid sources, one entry per upstream request.
+#
+# Each of these endpoints returns EVERY delivery point for that co-op in a
+# single response, so the whole file costs one HTTP request per source.
+#
+# `tenant` is the AgriCharts subdomain. To find it for a new co-op, open its
+# cash-bids page and read the `src` of the cashbids widget script - it looks
+# like //<tenant>.agricharts.com/inc/cashbids/cashbids.php?...
+# An unknown subdomain returns a 1,880-byte "Site Not Configured" page.
+
+sources:
+  - id: heartland
+    adapter: heartland
+    label: Heartland Co-op
+    # 78 pins - the largest single source. Plain server-rendered HTML.
+
+  - id: agricharts:cvacoop
+    adapter: agricharts
+    tenant: cvacoop
+    referer: https://www.cvacoop.com/
+    label: Central Valley Ag
+    # The public cvacoop.com site is bot-protected and returns an empty 202,
+    # but this backend answers normally.
+
+  - id: agricharts:goldeagle
+    adapter: agricharts
+    tenant: goldeagle
+    referer: https://goldeaglecoop.com/
+    label: Gold Eagle Co-op
+
+  - id: agricharts:procooperative
+    adapter: agricharts
+    tenant: procooperative
+    referer: https://procooperative.com/
+    label: Pro Cooperative
+
+  - id: agricharts:midiowa
+    adapter: agricharts
+    tenant: midiowa
+    referer: https://www.midiowacoop.com/
+    label: Mid Iowa Co-op
+
+  - id: agricharts:nicoop
+    adapter: agricharts
+    tenant: nicoop
+    referer: https://nicoop.com/
+    label: North Iowa Co-op
+
+# --- Not yet implemented (Phase 3) ------------------------------------------
+# newcoop  - 71 pins. Server-rendered HTML, 76 per-location tables with
+#            COMMODITY/DELIVERY/CASH PRICE/BASIS/FUTURE PRICE/FUTURE CHANGE.
+#            Futures are tick format ("534-2"), basis is in cents ("-44").
+#            Blocked by a 403 bot wall on plain HTTP; loads fine in a browser,
+#            so it needs Playwright. No longer on AgriCharts.
+# landus   - 51 pins. Client-rendered; returns 429 on cold requests.
+# gradable - 14 pins (POET). Bids load client-side.
+# bushel   - 5 pins (Valero). Client-side, and several URLs are login-gated;
+#            those are deliberately out of scope.

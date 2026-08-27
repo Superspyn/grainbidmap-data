@@ -1,0 +1,5 @@
+# Normalise to LF in the repo. The workflow's shell steps run on Linux, so
+# CRLF line endings in committed files would break them.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
