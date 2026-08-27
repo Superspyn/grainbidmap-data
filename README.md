@@ -161,6 +161,19 @@ threshold are deliberately *excluded* from the published mapping — showing the
 wrong elevator's bid is worse than showing none — so promote one by hand if you
 have checked it.
 
+### Overriding a match by hand
+
+`scrapers/config/manual_matches.json` maps a pin id straight to a source
+location, wins over automatic matching, and publishes at full confidence. Use it
+when the matcher cannot succeed on its own — a pin named `Landus coop` carries no
+town, and Landus publishes no coordinates, so neither name nor geography can
+find it (that pin is Landus's Britt elevator).
+
+Entries are validated on every run: an unknown source, a location id the source
+did not return, or a key matching no pin all print a warning and are ignored
+rather than silently publishing something wrong. Renaming a pin changes its id
+and orphans its override — the warning is how you find out.
+
 Pin IDs are slugs of the pin name (`Gold-Eagle Coop Clarion` →
 `gold-eagle-coop-clarion`), de-duplicated in list order. The map derives the same
 slug at runtime, so `gtLocations` needs no extra field.

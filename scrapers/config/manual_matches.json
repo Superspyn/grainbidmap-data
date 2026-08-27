@@ -1,0 +1,26 @@
+{
+  "_comment": [
+    "Hand-verified pin -> source mappings. These win over automatic matching and",
+    "are published at full confidence.",
+    "",
+    "Use this when the matcher cannot work it out on its own:",
+    "  - the pin name carries no town ('Landus coop'),",
+    "  - the source publishes no coordinates, so geography cannot help,",
+    "  - or two candidates tie and only you know which is right.",
+    "",
+    "Keys are pin ids: the pin's name lowercased with non-alphanumerics turned",
+    "into hyphens. RENAMING A PIN CHANGES ITS ID and orphans the entry here -",
+    "match_locations.py warns about entries that match no pin.",
+    "",
+    "source_location_id must match the id the adapter reports. Run",
+    "  python scrapers/build_bids.py --raw",
+    "and read scrapers/.build/raw.json to find it."
+  ],
+
+  "landus-coop": {
+    "source": "landus",
+    "source_location_id": "5",
+    "source_name": "Britt",
+    "why": "Pin is named 'Landus coop' with no town. It sits at 43.0971,-93.8461, which is Landus's Britt elevator. Landus publishes no coordinates, so neither name nor geo matching can find it."
+  }
+}

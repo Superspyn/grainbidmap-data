@@ -1,9 +1,9 @@
 {
   "disclaimer": "Cash bids are collected from each facility's public bid page for reference only and may be delayed or out of date. Confirm with the elevator before hauling.",
-  "generated_at": "2026-08-27T17:53:39Z",
+  "generated_at": "2026-08-27T18:00:52Z",
   "locations": {
     "adm-cedar-rapids-ethanol": {
-      "as_of": "2026-08-27T17:49:28Z",
+      "as_of": "2026-08-27T18:00:50Z",
       "bids": [
         {
           "basis": -0.1,
@@ -131,7 +131,7 @@
       "source_name": "Cedar Rapids, IA"
     },
     "adm-clinton-bean-terminal-ia": {
-      "as_of": "2026-08-27T17:49:42Z",
+      "as_of": "2026-08-27T18:00:50Z",
       "bids": [
         {
           "basis": -0.13,
@@ -219,7 +219,7 @@
       "source_name": "Clinton, IA (Elevator)"
     },
     "adm-clinton-ethanol": {
-      "as_of": "2026-08-27T17:49:42Z",
+      "as_of": "2026-08-27T18:00:50Z",
       "bids": [
         {
           "basis": -0.13,
@@ -307,7 +307,7 @@
       "source_name": "Clinton, IA (Elevator)"
     },
     "adm-deerfield-mo": {
-      "as_of": "2026-08-27T17:50:00Z",
+      "as_of": "2026-08-27T18:00:50Z",
       "bids": [
         {
           "basis": 0.25,
@@ -415,7 +415,7 @@
       "source_name": "Deerfield, MO"
     },
     "adm-mexico-mo": {
-      "as_of": "2026-08-27T17:51:40Z",
+      "as_of": "2026-08-27T18:00:50Z",
       "bids": [
         {
           "basis": -0.15,
@@ -513,7 +513,7 @@
       "source_name": "Mexico, MO"
     },
     "adm-new-madrid-mo-portageville": {
-      "as_of": "2026-08-27T17:52:04Z",
+      "as_of": "2026-08-27T18:00:51Z",
       "bids": [
         {
           "basis": 0.1,
@@ -701,7 +701,7 @@
       "source_name": "New Madrid, MO"
     },
     "adm-north-terminal-st-louis-mo": {
-      "as_of": "2026-08-27T17:52:58Z",
+      "as_of": "2026-08-27T18:00:51Z",
       "bids": [
         {
           "basis": 0.12,
@@ -949,7 +949,7 @@
       "source_name": "St. Louis, MO (Elevator)"
     },
     "adm-st-louis-milling-mo": {
-      "as_of": "2026-08-27T17:52:58Z",
+      "as_of": "2026-08-27T18:00:51Z",
       "bids": [
         {
           "basis": 0.12,
@@ -9296,7 +9296,7 @@
       "source_name": "Green Plains York"
     },
     "flint-hill-resources-poet-arthur-ethanol": {
-      "as_of": "2026-08-27T17:47:52Z",
+      "as_of": "2026-08-27T18:00:50Z",
       "bids": [
         {
           "basis": -0.4,
@@ -9414,7 +9414,7 @@
       "source_name": "Arthur, IA"
     },
     "flint-hills-poet-ethanol-menlo": {
-      "as_of": "2026-08-27T17:48:42Z",
+      "as_of": "2026-08-27T18:00:50Z",
       "bids": [
         {
           "basis": -0.3,
@@ -9532,7 +9532,7 @@
       "source_name": "Menlo, IA"
     },
     "flint-hills-resources-poet-iowa-falls-ethanol": {
-      "as_of": "2026-08-27T17:48:28Z",
+      "as_of": "2026-08-27T18:00:50Z",
       "bids": [
         {
           "basis": -0.1,
@@ -9660,7 +9660,7 @@
       "source_name": "Iowa Falls, IA"
     },
     "flint-hills-resources-poet-shell-rock-ethanol": {
-      "as_of": "2026-08-27T17:48:58Z",
+      "as_of": "2026-08-27T18:00:50Z",
       "bids": [
         {
           "basis": -0.25,
@@ -22705,6 +22705,146 @@
       "source": "landus",
       "source_name": "Conrad"
     },
+    "landus-coop": {
+      "as_of": "2026-08-27T17:33:00Z",
+      "bids": [
+        {
+          "basis": -0.29,
+          "cash": 4.83,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 5.12,
+          "futures_change": -0.02,
+          "futures_month": "CU26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.4,
+          "cash": 4.94,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 5.34,
+          "futures_change": -0.02,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.38,
+          "cash": 4.96,
+          "delivery_end": "2026-12-31",
+          "delivery_label": "Dec 2026",
+          "delivery_start": "2026-12-01",
+          "futures": 5.34,
+          "futures_change": -0.02,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.45,
+          "cash": 5.03,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 5.48,
+          "futures_change": -0.03,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.4,
+          "cash": 5.08,
+          "delivery_end": "2027-03-31",
+          "delivery_label": "Mar 2027",
+          "delivery_start": "2027-03-01",
+          "futures": 5.48,
+          "futures_change": -0.03,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.45,
+          "cash": 4.81,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 5.26,
+          "futures_change": -0.08,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.35,
+          "cash": 12.35,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 12.7,
+          "futures_change": 0.04,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.65,
+          "cash": 12.05,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 12.7,
+          "futures_change": 0.04,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.7,
+          "cash": 12.15,
+          "delivery_end": "2026-12-31",
+          "delivery_label": "Dec 2026",
+          "delivery_start": "2026-12-01",
+          "futures": 12.85,
+          "futures_change": 0.04,
+          "futures_month": "SF27",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.65,
+          "cash": 12.2,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 12.85,
+          "futures_change": 0.04,
+          "futures_month": "SF27",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.7,
+          "cash": 12.21,
+          "delivery_end": "2027-03-31",
+          "delivery_label": "Mar 2027",
+          "delivery_start": "2027-03-01",
+          "futures": 12.91,
+          "futures_change": 0.05,
+          "futures_month": "SH27",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.7,
+          "cash": 11.57,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 12.27,
+          "futures_change": 0.02,
+          "futures_month": "SX27",
+          "grain": "soybeans"
+        }
+      ],
+      "name": "Landus coop",
+      "source": "landus",
+      "source_name": "Britt"
+    },
     "landus-dawson-will-call": {
       "as_of": "2026-08-27T17:34:00Z",
       "bids": [
@@ -27235,7 +27375,7 @@
       "source_name": "STATE CENTER"
     },
     "new-coop-afton": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.44,
@@ -27403,7 +27543,7 @@
       "source_name": "Afton"
     },
     "new-coop-algona": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -27571,7 +27711,7 @@
       "source_name": "Algona"
     },
     "new-coop-anita": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.48,
@@ -27739,7 +27879,7 @@
       "source_name": "Anita"
     },
     "new-coop-anthon": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.51,
@@ -27907,7 +28047,7 @@
       "source_name": "Anthon"
     },
     "new-coop-badger": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -28075,7 +28215,7 @@
       "source_name": "Badger"
     },
     "new-coop-barnum": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -28243,7 +28383,7 @@
       "source_name": "Barnum"
     },
     "new-coop-belmond": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.45,
@@ -28411,7 +28551,7 @@
       "source_name": "Belmond"
     },
     "new-coop-blairsburg": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -28579,7 +28719,7 @@
       "source_name": "Blairsburg"
     },
     "new-coop-blencoe": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.51,
@@ -28747,7 +28887,7 @@
       "source_name": "Blencoe"
     },
     "new-coop-blencoe-barge-site": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.51,
@@ -28915,7 +29055,7 @@
       "source_name": "Blencoe"
     },
     "new-coop-bode": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -29083,7 +29223,7 @@
       "source_name": "Bode"
     },
     "new-coop-britt": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -29251,7 +29391,7 @@
       "source_name": "Britt"
     },
     "new-coop-cainsville": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.53,
@@ -29419,7 +29559,7 @@
       "source_name": "Cainsville"
     },
     "new-coop-chariton": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.46,
@@ -29587,7 +29727,7 @@
       "source_name": "Chariton"
     },
     "new-coop-churdan": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -29755,7 +29895,7 @@
       "source_name": "Churdan"
     },
     "new-coop-clare": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -29923,7 +30063,7 @@
       "source_name": "Clare"
     },
     "new-coop-clearfield": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.5,
@@ -30091,7 +30231,7 @@
       "source_name": "Clearfield"
     },
     "new-coop-cooper": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.42,
@@ -30259,7 +30399,7 @@
       "source_name": "Cooper"
     },
     "new-coop-correctionville": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.51,
@@ -30427,7 +30567,7 @@
       "source_name": "Correctionville"
     },
     "new-coop-creston-1": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.44,
@@ -30595,7 +30735,7 @@
       "source_name": "Creston 1"
     },
     "new-coop-creston-2": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.39,
@@ -30683,7 +30823,7 @@
       "source_name": "Creston 2"
     },
     "new-coop-davis-city": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.5,
@@ -30851,7 +30991,7 @@
       "source_name": "Davis City"
     },
     "new-coop-dickens": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.51,
@@ -31019,7 +31159,7 @@
       "source_name": "Dickens"
     },
     "new-coop-dows": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -31187,7 +31327,7 @@
       "source_name": "Dows"
     },
     "new-coop-duncombe": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -31355,7 +31495,7 @@
       "source_name": "Duncombe"
     },
     "new-coop-essex": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.48,
@@ -31523,7 +31663,7 @@
       "source_name": "Essex"
     },
     "new-coop-everly": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.51,
@@ -31691,7 +31831,7 @@
       "source_name": "Everly"
     },
     "new-coop-fostoria": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.51,
@@ -31859,7 +31999,7 @@
       "source_name": "Fostoria"
     },
     "new-coop-garner": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -32027,7 +32167,7 @@
       "source_name": "Garner"
     },
     "new-coop-glidden": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -32195,7 +32335,7 @@
       "source_name": "Glidden"
     },
     "new-coop-greenville": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.51,
@@ -32363,7 +32503,7 @@
       "source_name": "Greenville"
     },
     "new-coop-gruver": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.45,
@@ -32531,7 +32671,7 @@
       "source_name": "Gruver"
     },
     "new-coop-hornick": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.51,
@@ -32699,7 +32839,7 @@
       "source_name": "Hornick"
     },
     "new-coop-humboldt": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -32867,7 +33007,7 @@
       "source_name": "Humboldt"
     },
     "new-coop-humeston": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.46,
@@ -33035,7 +33175,7 @@
       "source_name": "Humeston"
     },
     "new-coop-klemme": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -33203,7 +33343,7 @@
       "source_name": "Klemme"
     },
     "new-coop-knierim": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -33371,7 +33511,7 @@
       "source_name": "Knierim"
     },
     "new-coop-knoke": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -33539,7 +33679,7 @@
       "source_name": "Knoke"
     },
     "new-coop-lamoni": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.5,
@@ -33707,7 +33847,7 @@
       "source_name": "Lamoni"
     },
     "new-coop-lanesboro": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -33875,7 +34015,7 @@
       "source_name": "Lanesboro"
     },
     "new-coop-langdon": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.51,
@@ -34043,7 +34183,7 @@
       "source_name": "Langdon"
     },
     "new-coop-lanyon": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -34211,7 +34351,7 @@
       "source_name": "Lanyon"
     },
     "new-coop-lidderdale": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -34379,7 +34519,7 @@
       "source_name": "Lidderdale"
     },
     "new-coop-lohrville": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -34547,7 +34687,7 @@
       "source_name": "Lohrville"
     },
     "new-coop-luverne": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -34715,7 +34855,7 @@
       "source_name": "LuVerne"
     },
     "new-coop-mallard": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -34883,7 +35023,7 @@
       "source_name": "Mallard"
     },
     "new-coop-mapleton": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.51,
@@ -35051,7 +35191,7 @@
       "source_name": "Mapleton"
     },
     "new-coop-milford": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.51,
@@ -35219,7 +35359,7 @@
       "source_name": "Milford"
     },
     "new-coop-mortonmills": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.48,
@@ -35387,7 +35527,7 @@
       "source_name": "MortonMills"
     },
     "new-coop-mt-ayr": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.5,
@@ -35555,7 +35695,7 @@
       "source_name": "Mt. Ayr"
     },
     "new-coop-onawa": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.51,
@@ -35723,7 +35863,7 @@
       "source_name": "Onawa"
     },
     "new-coop-osceola": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.42,
@@ -35891,7 +36031,7 @@
       "source_name": "Osceola"
     },
     "new-coop-otho": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -36059,7 +36199,7 @@
       "source_name": "Otho"
     },
     "new-coop-palmer": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -36227,7 +36367,7 @@
       "source_name": "Palmer"
     },
     "new-coop-pierson": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.51,
@@ -36395,7 +36535,7 @@
       "source_name": "Pierson"
     },
     "new-coop-pomeroy": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -36563,7 +36703,7 @@
       "source_name": "Pomeroy"
     },
     "new-coop-rands": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -36731,7 +36871,7 @@
       "source_name": "Rands"
     },
     "new-coop-red-oak": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.42,
@@ -36899,7 +37039,7 @@
       "source_name": "Red Oak"
     },
     "new-coop-roelyn": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -37067,7 +37207,7 @@
       "source_name": "Roelyn"
     },
     "new-coop-rowan": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -37235,7 +37375,7 @@
       "source_name": "Rowan"
     },
     "new-coop-sloan": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.46,
@@ -37403,7 +37543,7 @@
       "source_name": "Sloan"
     },
     "new-coop-superior": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.51,
@@ -37571,7 +37711,7 @@
       "source_name": "Superior"
     },
     "new-coop-ute": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.51,
@@ -37739,7 +37879,7 @@
       "source_name": "Ute"
     },
     "new-coop-villisca": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.48,
@@ -37907,7 +38047,7 @@
       "source_name": "Villisca"
     },
     "new-coop-vincent": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -38075,7 +38215,7 @@
       "source_name": "Vincent"
     },
     "new-coop-washta": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.51,
@@ -38243,7 +38383,7 @@
       "source_name": "Washta"
     },
     "new-coop-west-bend": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -38411,7 +38551,7 @@
       "source_name": "West Bend"
     },
     "new-coop-whiting": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.51,
@@ -38579,7 +38719,7 @@
       "source_name": "Whiting"
     },
     "new-coop-whittemore": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -38747,7 +38887,7 @@
       "source_name": "Whittemore"
     },
     "new-coop-woolstock": {
-      "as_of": "2026-08-27T17:45:25Z",
+      "as_of": "2026-08-27T18:00:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -39505,7 +39645,7 @@
       "source_name": "Pine Lake"
     },
     "poet-ashton-ethanol": {
-      "as_of": "2026-08-27T17:47:54Z",
+      "as_of": "2026-08-27T18:00:50Z",
       "bids": [
         {
           "basis": -0.16,
@@ -39593,7 +39733,7 @@
       "source_name": "Ashton, IA"
     },
     "poet-bingham-lake-mn-ethanol": {
-      "as_of": "2026-08-27T17:47:58Z",
+      "as_of": "2026-08-27T18:00:50Z",
       "bids": [
         {
           "basis": -0.4,
@@ -39781,7 +39921,7 @@
       "source_name": "Bingham Lake, MN"
     },
     "poet-biorefining-coon-rapids-ethanol": {
-      "as_of": "2026-08-27T17:48:06Z",
+      "as_of": "2026-08-27T18:00:50Z",
       "bids": [
         {
           "basis": -0.15,
@@ -39869,7 +40009,7 @@
       "source_name": "Coon Rapids, IA"
     },
     "poet-corning-ethanol": {
-      "as_of": "2026-08-27T17:48:08Z",
+      "as_of": "2026-08-27T18:00:50Z",
       "bids": [
         {
           "basis": -0.2,
@@ -39957,7 +40097,7 @@
       "source_name": "Corning, IA"
     },
     "poet-emmetsburg-ethanol": {
-      "as_of": "2026-08-27T17:48:10Z",
+      "as_of": "2026-08-27T18:00:50Z",
       "bids": [
         {
           "basis": -0.15,
@@ -40105,7 +40245,7 @@
       "source_name": "Emmetsburg, IA"
     },
     "poet-gowrie-ethanol": {
-      "as_of": "2026-08-27T17:48:20Z",
+      "as_of": "2026-08-27T18:00:50Z",
       "bids": [
         {
           "basis": -0.32,
@@ -40223,7 +40363,7 @@
       "source_name": "Gowrie, IA"
     },
     "poet-hanlontown-ethanol": {
-      "as_of": "2026-08-27T17:48:24Z",
+      "as_of": "2026-08-27T18:00:50Z",
       "bids": [
         {
           "basis": -0.22,
@@ -40281,7 +40421,7 @@
       "source_name": "Hanlontown, IA"
     },
     "poet-jewell-ethanol": {
-      "as_of": "2026-08-27T17:48:30Z",
+      "as_of": "2026-08-27T18:00:50Z",
       "bids": [
         {
           "basis": -0.32,
@@ -40399,7 +40539,7 @@
       "source_name": "Jewell, IA"
     },
     "poet-laddonia-mo-ethanol": {
-      "as_of": "2026-08-27T17:48:32Z",
+      "as_of": "2026-08-27T18:00:50Z",
       "bids": [
         {
           "basis": -0.22,
@@ -40497,7 +40637,7 @@
       "source_name": "Laddonia, MO"
     },
     "poet-lake-crystal-mn-ethanol": {
-      "as_of": "2026-08-27T17:48:34Z",
+      "as_of": "2026-08-27T18:00:50Z",
       "bids": [
         {
           "basis": -0.44,
@@ -40715,7 +40855,7 @@
       "source_name": "Lake Crystal, MN"
     },
     "poet-macon-mo-ethanol": {
-      "as_of": "2026-08-27T17:48:38Z",
+      "as_of": "2026-08-27T18:00:50Z",
       "bids": [
         {
           "basis": -0.27,
@@ -40823,7 +40963,7 @@
       "source_name": "Macon, MO"
     },
     "poet-preston-mn-ethanol": {
-      "as_of": "2026-08-27T17:48:52Z",
+      "as_of": "2026-08-27T18:00:50Z",
       "bids": [
         {
           "basis": -0.8,
@@ -45604,133 +45744,133 @@
   "sources": {
     "agricharts:cgb": {
       "bids": 954,
-      "fetched_at": "2026-08-27T17:53:34Z",
+      "fetched_at": "2026-08-27T18:00:51Z",
       "label": "CGB",
       "locations": 90,
       "ok": true
     },
     "agricharts:coopfe": {
       "bids": 404,
-      "fetched_at": "2026-08-27T17:53:36Z",
+      "fetched_at": "2026-08-27T18:00:52Z",
       "label": "CFE",
       "locations": 20,
       "ok": true
     },
     "agricharts:cvacoop": {
       "bids": 616,
-      "fetched_at": "2026-08-27T17:45:21Z",
+      "fetched_at": "2026-08-27T18:00:11Z",
       "label": "Central Valley Ag",
       "locations": 55,
       "ok": true
     },
     "agricharts:goldeagle": {
       "bids": 183,
-      "fetched_at": "2026-08-27T17:45:21Z",
+      "fetched_at": "2026-08-27T18:00:11Z",
       "label": "Gold Eagle Co-op",
       "locations": 24,
       "ok": true
     },
     "agricharts:innovativeag": {
       "bids": 711,
-      "fetched_at": "2026-08-27T17:53:35Z",
+      "fetched_at": "2026-08-27T18:00:51Z",
       "label": "Innovative Ag Services",
       "locations": 46,
       "ok": true
     },
     "agricharts:jbslivepork": {
       "bids": 75,
-      "fetched_at": "2026-08-27T17:53:39Z",
+      "fetched_at": "2026-08-27T18:00:52Z",
       "label": "JBS Live Pork",
       "locations": 9,
       "ok": true
     },
     "agricharts:keycoop": {
       "bids": 314,
-      "fetched_at": "2026-08-27T17:53:33Z",
+      "fetched_at": "2026-08-27T18:00:51Z",
       "label": "Key Cooperative",
       "locations": 27,
       "ok": true
     },
     "agricharts:midiowa": {
       "bids": 215,
-      "fetched_at": "2026-08-27T17:45:23Z",
+      "fetched_at": "2026-08-27T18:00:11Z",
       "label": "Mid Iowa Co-op",
       "locations": 30,
       "ok": true
     },
     "agricharts:nicoop": {
       "bids": 40,
-      "fetched_at": "2026-08-27T17:45:23Z",
+      "fetched_at": "2026-08-27T18:00:11Z",
       "label": "North Iowa Co-op",
       "locations": 4,
       "ok": true
     },
     "agricharts:procooperative": {
       "bids": 203,
-      "fetched_at": "2026-08-27T17:45:22Z",
+      "fetched_at": "2026-08-27T18:00:11Z",
       "label": "Pro Cooperative",
       "locations": 16,
       "ok": true
     },
     "agricharts:silveredgecoop": {
       "bids": 6,
-      "fetched_at": "2026-08-27T17:53:38Z",
+      "fetched_at": "2026-08-27T18:00:52Z",
       "label": "SilverEdge Cooperative",
       "locations": 1,
       "ok": true
     },
     "agricharts:statelinecoop": {
       "bids": 157,
-      "fetched_at": "2026-08-27T17:53:37Z",
+      "fetched_at": "2026-08-27T18:00:52Z",
       "label": "Stateline Cooperative",
       "locations": 11,
       "ok": true
     },
     "agricharts:tamabentoncoop": {
       "bids": 48,
-      "fetched_at": "2026-08-27T17:53:37Z",
+      "fetched_at": "2026-08-27T18:00:52Z",
       "label": "Tama-Benton Cooperative",
       "locations": 9,
       "ok": true
     },
     "agricharts:tworivers": {
       "bids": 48,
-      "fetched_at": "2026-08-27T17:53:38Z",
+      "fetched_at": "2026-08-27T18:00:52Z",
       "label": "Two Rivers Cooperative",
       "locations": 4,
       "ok": true
     },
     "gradable:adm": {
       "bids": 1408,
-      "fetched_at": "2026-08-27T17:53:32Z",
+      "fetched_at": "2026-08-27T18:00:51Z",
       "label": "ADM (Gradable)",
       "locations": 106,
       "ok": true
     },
     "gradable:poet": {
       "bids": 365,
-      "fetched_at": "2026-08-27T17:48:58Z",
+      "fetched_at": "2026-08-27T18:00:50Z",
       "label": "POET Biorefining",
       "locations": 35,
       "ok": true
     },
     "heartland": {
       "bids": 626,
-      "fetched_at": "2026-08-27T17:45:19Z",
+      "fetched_at": "2026-08-27T18:00:11Z",
       "label": "Heartland Co-op",
       "locations": 74,
       "ok": true
     },
     "landus": {
       "bids": 560,
-      "fetched_at": "2026-08-27T17:47:43Z",
+      "fetched_at": "2026-08-27T18:00:50Z",
       "label": "Landus Cooperative",
       "locations": 49,
       "ok": true
     },
     "newcoop": {
       "bids": 1103,
-      "fetched_at": "2026-08-27T17:45:25Z",
+      "fetched_at": "2026-08-27T18:00:12Z",
       "label": "NEW Cooperative",
       "locations": 76,
       "ok": true

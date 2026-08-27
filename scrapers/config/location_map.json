@@ -1402,6 +1402,14 @@
       "confidence": 1.0,
       "method": "name"
     },
+    "landus-coop": {
+      "name": "Landus coop",
+      "source": "landus",
+      "source_location_id": "5",
+      "source_name": "Britt",
+      "confidence": 1.0,
+      "method": "manual"
+    },
     "landus-dawson-will-call": {
       "name": "Landus Dawson (Will Call)",
       "source": "landus",
@@ -2667,18 +2675,6 @@
     }
   ],
   "unmatched": [
-    {
-      "id": "landus-coop",
-      "name": "Landus coop",
-      "type": "coop",
-      "company": "Landus",
-      "lat": 43.097057,
-      "lng": -93.84607,
-      "url": "https://www.landus.ag/businesses/grain/grain-bids",
-      "host": "www.landus.ag",
-      "source": "landus",
-      "method": "no-match"
-    },
     {
       "id": "flint-hills-resources-poet-faribanks-ethanol",
       "name": "Flint Hills Resources/Poet Faribanks Ethanol",
