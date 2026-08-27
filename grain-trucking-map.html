@@ -5867,6 +5867,16 @@
       d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
   }
 
+  function fmtPlain(v) {
+    return (v === null || v === undefined) ? '—' : Number(v).toFixed(2);
+  }
+
+  function fmtSigned(v) {
+    if (v === null || v === undefined) return '—';
+    var n = Number(v);
+    return (n < 0 ? '-' : '+') + Math.abs(n).toFixed(2);
+  }
+
   function money(v, digits) {
     if (v === null || v === undefined) return '—';
     return '$' + Number(v).toFixed(digits === undefined ? 2 : digits);
@@ -6342,7 +6352,7 @@
 
   function showInfo(marker) {
     var data = marker.gtData;
-    var html = '<div style="font-family:Inter,sans-serif;font-size:13px;min-width:230px;max-width:280px;">' +
+    var html = '<div style="font-family:Inter,sans-serif;font-size:13px;min-width:290px;max-width:340px;">' +
       '<div style="font-weight:600;margin-bottom:4px;">' + escapeHtml(data.name) + '</div>';
 
     // Every delivery period this elevator is bidding, grouped by grain. The
@@ -6355,23 +6365,40 @@
         if (byGrain[b.grain]) byGrain[b.grain].push(b);
       });
 
+      // Delivery, basis and board (futures) alongside the cash bid, so the
+      // whole quote is readable without leaving the map.
+      var NUM = 'font-family:monospace;text-align:right;white-space:nowrap;padding:1px 0 1px 10px;';
       var sections = '';
       [['corn', 'Corn'], ['soybeans', 'Soybeans']].forEach(function (g) {
         var list = byGrain[g[0]];
         if (!list.length) return;
-        sections += '<div style="font-weight:600;font-size:11px;text-transform:uppercase;' +
-          'letter-spacing:0.05em;color:#9C6E1C;margin:7px 0 2px;">' + g[1] + '</div>';
+        sections += '<tr><td colspan="4" style="font-weight:600;font-size:10.5px;' +
+          'text-transform:uppercase;letter-spacing:0.05em;color:#9C6E1C;padding:8px 0 2px;">' +
+          g[1] + '</td></tr>';
         list.forEach(function (b) {
-          sections += '<div style="display:flex;justify-content:space-between;gap:14px;line-height:1.7;">' +
-            '<span style="color:#5B6350;">' + escapeHtml(b.delivery_label || '—') + '</span>' +
-            '<strong style="font-family:monospace;color:#3C5A3E;white-space:nowrap;">$' +
-            Number(b.cash).toFixed(2) + '</strong></div>';
+          sections += '<tr>' +
+            '<td style="color:#5B6350;padding:1px 0;">' + escapeHtml(b.delivery_label || '—') + '</td>' +
+            '<td style="' + NUM + 'color:#5B6350;">' + fmtSigned(b.basis) + '</td>' +
+            '<td style="' + NUM + 'color:#5B6350;">' + fmtPlain(b.futures) + '</td>' +
+            '<td style="' + NUM + 'color:#3C5A3E;font-weight:700;">' + fmtPlain(b.cash) + '</td>' +
+            '</tr>';
         });
       });
 
       if (sections) {
         html += '<div style="margin:4px 0 5px;padding:2px 0 6px;border-top:1px solid #DBD5C3;' +
-          'border-bottom:1px solid #DBD5C3;max-height:220px;overflow-y:auto;">' + sections + '</div>';
+          'border-bottom:1px solid #DBD5C3;max-height:230px;overflow-y:auto;">' +
+          '<table style="border-collapse:collapse;font-size:12px;width:100%;">' +
+          '<tr>' +
+          '<th style="text-align:left;font-size:9.5px;text-transform:uppercase;letter-spacing:0.05em;' +
+          'color:#8B9184;font-weight:600;padding-bottom:2px;">Delivery</th>' +
+          '<th style="text-align:right;font-size:9.5px;text-transform:uppercase;letter-spacing:0.05em;' +
+          'color:#8B9184;font-weight:600;padding:0 0 2px 10px;">Basis</th>' +
+          '<th style="text-align:right;font-size:9.5px;text-transform:uppercase;letter-spacing:0.05em;' +
+          'color:#8B9184;font-weight:600;padding:0 0 2px 10px;">Board</th>' +
+          '<th style="text-align:right;font-size:9.5px;text-transform:uppercase;letter-spacing:0.05em;' +
+          'color:#8B9184;font-weight:600;padding:0 0 2px 10px;">Cash</th>' +
+          '</tr>' + sections + '</table></div>';
         var age = hoursSince(entry.as_of);
         var stale = entry.stale || (age !== null && age > 36);
         if (entry.as_of) {
