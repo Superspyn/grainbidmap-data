@@ -5,3 +5,8 @@ requests>=2.31
 beautifulsoup4>=4.12
 PyYAML>=6.0
 pytest>=8.0
+
+# Replays a real browser TLS fingerprint. Needed only for sources whose bot
+# protection rejects Python's default handshake (NEW Co-op); everything else
+# uses plain requests.
+curl_cffi>=0.7

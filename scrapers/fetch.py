@@ -19,6 +19,19 @@ from urllib.parse import urlparse
 
 import requests
 
+try:
+    # Optional. Some co-op sites sit behind bot protection that rejects the
+    # default Python TLS handshake outright (HTTP 403) while serving the same
+    # public page fine to a browser. curl_cffi replays a real browser's TLS
+    # fingerprint, which is enough to be served normally - we still identify
+    # ourselves in the From header and obey the same throttling as every other
+    # request.
+    from curl_cffi import requests as curl_requests
+except ImportError:  # pragma: no cover - exercised only where it isn't installed
+    curl_requests = None
+
+IMPERSONATE_PROFILE = "chrome124"
+
 CONTACT = os.environ.get("BIDS_CONTACT", "https://github.com/")
 USER_AGENT = (
     "GrainHaulingCostMap/1.0 (+{contact}) "
@@ -53,22 +66,46 @@ def _throttle(host: str) -> None:
     _last_request_at[host] = time.monotonic()
 
 
-def _robots_allows(url: str, user_agent: str) -> bool:
+def _robots_allows(url: str, user_agent: str, impersonate: bool = False) -> bool:
     """Check robots.txt, failing open if it cannot be retrieved.
 
     A co-op whose robots.txt is missing or unreachable should not silently
     become un-scrapable, but an explicit Disallow is always honoured.
+
+    robots.txt is fetched the same way the page itself will be. That matters on
+    bot-protected hosts: RobotFileParser.read() uses plain urllib, which such a
+    host answers with 403, and the spec says a 403 on robots.txt means "disallow
+    everything". Reading it with the same client we will actually use gives the
+    real policy instead of an artefact of the block.
     """
     parsed = urlparse(url)
     root = f"{parsed.scheme}://{parsed.netloc}"
+
     if root not in _robots_cache:
         parser = _robotparser.RobotFileParser()
         parser.set_url(f"{root}/robots.txt")
         try:
-            parser.read()
+            headers = {"User-Agent": user_agent, "From": CONTACT}
+            if impersonate and curl_requests is not None:
+                resp = curl_requests.get(
+                    f"{root}/robots.txt", headers=headers, timeout=20,
+                    impersonate=IMPERSONATE_PROFILE,
+                )
+            else:
+                resp = requests.get(f"{root}/robots.txt", headers=headers, timeout=20)
+
+            if resp.status_code == 200:
+                parser.parse(resp.text.splitlines())
+            elif resp.status_code in (401, 403):
+                # A genuine 401/403 on robots.txt means treat the site as
+                # off-limits, per the standard.
+                parser.disallow_all = True
+            else:
+                parser.allow_all = True
         except Exception:
             parser = None
         _robots_cache[root] = parser
+
     parser = _robots_cache[root]
     if parser is None:
         return True
@@ -93,11 +130,15 @@ def get(
     use_cache: bool | None = None,
     cache_ttl: int = 900,
     check_robots: bool = True,
+    impersonate: bool = False,
 ) -> str:
     """Fetch ``url`` and return its body as text.
 
     ``use_cache`` defaults to on whenever ``BIDS_CACHE=1`` is set, which is how
     local runs avoid hammering live sites while iterating on a parser.
+
+    Set ``impersonate`` for hosts that reject Python's TLS handshake; it needs
+    the optional curl_cffi dependency and implies a browser User-Agent.
     """
     if use_cache is None:
         use_cache = os.environ.get("BIDS_CACHE") == "1"
@@ -108,8 +149,13 @@ def get(
         if age < cache_ttl:
             return cache_file.read_text(encoding="utf-8")
 
-    agent = BROWSER_UA if browser_ua else USER_AGENT
-    if check_robots and not _robots_allows(url, agent):
+    if impersonate and curl_requests is None:
+        raise FetchError(
+            "this source needs the curl_cffi package (pip install curl_cffi)"
+        )
+
+    agent = BROWSER_UA if (browser_ua or impersonate) else USER_AGENT
+    if check_robots and not _robots_allows(url, agent, impersonate):
         raise FetchError(f"robots.txt disallows fetching {url}")
 
     headers = {
@@ -127,8 +173,14 @@ def get(
     for attempt in range(retries):
         _throttle(host)
         try:
-            response = requests.get(url, headers=headers, timeout=timeout)
-        except requests.RequestException as exc:
+            if impersonate:
+                response = curl_requests.get(
+                    url, headers=headers, timeout=timeout,
+                    impersonate=IMPERSONATE_PROFILE,
+                )
+            else:
+                response = requests.get(url, headers=headers, timeout=timeout)
+        except Exception as exc:  # curl_cffi raises its own error types
             last_error = exc
         else:
             if response.status_code == 200 and response.text.strip():

@@ -46,6 +46,67 @@ sources:
     referer: https://nicoop.com/
     label: North Iowa Co-op
 
+  - id: newcoop
+    adapter: newcoop
+    label: NEW Cooperative
+    # 71 pins. Own server-rendered pages (no longer AgriCharts). Behind bot
+    # protection, so this is the one source fetched with TLS impersonation.
+
+  - id: agricharts:keycoop
+    adapter: agricharts
+    tenant: keycoop
+    referer: https://www.keycoop.com/
+    label: Key Cooperative
+
+  - id: agricharts:cgb
+    adapter: agricharts
+    tenant: cgb
+    referer: https://cgb.com/
+    label: CGB
+
+  - id: agricharts:innovativeag
+    adapter: agricharts
+    tenant: innovativeag
+    referer: https://www.innovativeag.com/
+    label: Innovative Ag Services
+
+  - id: agricharts:coopfe
+    adapter: agricharts
+    tenant: coopfe
+    referer: https://www.coopfe.com/
+    label: CFE
+
+  - id: agricharts:statelinecoop
+    adapter: agricharts
+    tenant: statelinecoop
+    referer: https://statelinecoop.com/
+    label: Stateline Cooperative
+
+  - id: agricharts:tamabentoncoop
+    adapter: agricharts
+    tenant: tamabentoncoop
+    referer: https://www.tamabentoncoop.com/
+    label: Tama-Benton Cooperative
+
+  - id: agricharts:tworivers
+    adapter: agricharts
+    tenant: tworivers
+    referer: https://tworivers.coop/
+    label: Two Rivers Cooperative
+    # tworivers.coop itself returns 403 to plain HTTP, but this backend answers.
+
+  - id: agricharts:silveredgecoop
+    adapter: agricharts
+    tenant: silveredgecoop
+    referer: https://www.silveredgecoop.com/
+    label: SilverEdge Cooperative
+
+  - id: agricharts:jbslivepork
+    adapter: agricharts
+    tenant: jbslivepork
+    referer: https://www.jbslivepork.com/
+    label: JBS Live Pork
+
 # --- Not yet implemented (Phase 3) ------------------------------------------
 # newcoop  - 71 pins. Server-rendered HTML, 76 per-location tables with
 #            COMMODITY/DELIVERY/CASH PRICE/BASIS/FUTURE PRICE/FUTURE CHANGE.

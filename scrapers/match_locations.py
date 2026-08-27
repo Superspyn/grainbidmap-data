@@ -54,6 +54,17 @@ COMPANY_TO_SOURCE = {
     "Pro Coop": "agricharts:procooperative",
     "North Iowa Coop": "agricharts:nicoop",
     "Mid-Iowa Milling": "agricharts:midiowa",
+    "New Coop": "newcoop",
+    "Key Cooperative": "agricharts:keycoop",
+    "CGB": "agricharts:cgb",
+    "Innovative Ag Services": "agricharts:innovativeag",
+    "Pine Lake Corn Processors": "agricharts:innovativeag",
+    "CFE": "agricharts:coopfe",
+    "Stateline Cooperative": "agricharts:statelinecoop",
+    "Tama-Benton Cooperative": "agricharts:tamabentoncoop",
+    "Two Rivers Cooperative": "agricharts:tworivers",
+    "SilverEdge Cooperative": "agricharts:silveredgecoop",
+    "JBS": "agricharts:jbslivepork",
 }
 
 # Fallback resolver, keyed by the host of the pin's existing bid URL, for pins
