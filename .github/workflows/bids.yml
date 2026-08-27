@@ -1,12 +1,17 @@
 name: Update cash bids
 
-# Heartland publishes its sheet as of the 1:15 PM CT close, so both runs sit
-# after it. GitHub cron is UTC and does not follow DST, so these are 2:20 PM and
-# 4:20 PM CDT (one hour earlier in winter) - close enough either way.
+# Every 30 minutes through the trading day, weekdays only.
+#
+# GitHub cron is UTC and does not follow daylight saving, so the window is set
+# wide enough to cover the working day in both halves of the year:
+#   13:00-22:30 UTC = 8:00am-5:30pm CDT (summer) / 7:00am-4:30pm CST (winter)
+#
+# That is 20 runs a day. Each run is 16 HTTP requests - one per co-op, not one
+# per elevator - so it stays light on the sites we pull from. Runs that find no
+# change do not commit.
 on:
   schedule:
-    - cron: '20 19 * * 1-5'
-    - cron: '20 21 * * 1-5'
+    - cron: '0,30 13-22 * * 1-5'
   workflow_dispatch:
 
 # Never let two runs fight over the same commit.
