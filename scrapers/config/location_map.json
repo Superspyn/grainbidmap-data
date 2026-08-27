@@ -722,6 +722,14 @@
       "confidence": 1.0,
       "method": "geo(0.0km)"
     },
+    "golden-grain-ethanol-mason-city": {
+      "name": "golden grain ethanol mason city",
+      "source": "cihedging:goldengrain",
+      "source_location_id": "98951",
+      "source_name": "Golden Grain Energy",
+      "confidence": 1.0,
+      "method": "name"
+    },
     "heart-land-coop-millerton": {
       "name": "heart land coop millerton",
       "source": "heartland",
@@ -3360,12 +3368,6 @@
       "name": "Louis Dreyfus Commodities Grand Junction Ethanol",
       "company": "Louis Dreyfus Commodities",
       "host": "www.myldc.com"
-    },
-    {
-      "id": "golden-grain-ethanol-mason-city",
-      "name": "golden grain ethanol mason city",
-      "company": "Golden Grain Energy",
-      "host": "ggecorn.com"
     },
     {
       "id": "corn-lp-goldfield-ethanol",

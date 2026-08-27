@@ -10,6 +10,7 @@ import pathlib
 import pytest
 
 from adapters.agricharts import AgriChartsAdapter
+from adapters.cihedging import CIHedgingAdapter
 from adapters.gradable import GradableAdapter
 from adapters.heartland import HeartlandAdapter
 from adapters.landus import LandusAdapter
@@ -90,6 +91,47 @@ class TestAgriCharts:
         payload = 'var bids = [{"id":"1","name":"X","cashbids":[]}];'
         with pytest.raises(ValueError, match="no corn or soybean"):
             AgriChartsAdapter("nicoop").parse(payload)
+
+
+class TestCIHedging:
+    """Golden Grain Energy. The endpoint returns table markup wrapped in a JSON
+    string, and rows are attributed rather than positional."""
+
+    @staticmethod
+    @pytest.fixture(scope="class")
+    def parsed():
+        return CIHedgingAdapter.parse(
+            read_fixture("cihedging_goldengrain.json"), "98951", "Golden Grain Energy"
+        )
+
+    def test_single_location(self, parsed):
+        assert len(parsed) == 1
+        assert parsed[0].name == "Golden Grain Energy"
+
+    def test_corn_only(self, parsed):
+        # An ethanol plant buys corn; a soybean row here would mean a mis-parse.
+        assert {b.grain for b in parsed[0].bids} == {"corn"}
+
+    def test_basis_and_futures_reconcile(self, parsed):
+        for b in parsed[0].bids:
+            if b.futures is not None and b.basis is not None:
+                assert abs((b.futures + b.basis) - b.cash) <= 0.011
+
+    def test_futures_month_from_spoken_contract(self, parsed):
+        """The futures cell reads "Sep 26 5.1200" - month, year and price in one
+        string, with no symbol anywhere."""
+        months = {b.futures_month for b in parsed[0].bids}
+        assert "CU26" in months and "CZ26" in months
+        assert all(m and len(m) == 4 for m in months)
+
+    def test_delivery_from_row_attributes(self, parsed):
+        for b in parsed[0].bids:
+            assert b.delivery_start and b.delivery_end
+            assert b.delivery_start[:4].isdigit()
+
+    def test_rejects_markup_with_no_bids(self):
+        with pytest.raises(ValueError, match="no corn or soybean"):
+            CIHedgingAdapter.parse('"<div>nothing here</div>"', "1", "x")
 
 
 class TestGradable:

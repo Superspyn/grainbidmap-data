@@ -69,7 +69,7 @@ single request. Landus is the exception - it has no bulk endpoint, so it costs
 |---|---|---|
 | NEW Cooperative | 70 | Own pages (TLS impersonation) |
 | Heartland Co-op | 53 | Server-rendered bid sheet |
-| Landus Cooperative | 45 | Own JSON API (per location) |
+| Landus Cooperative | 46 | Own JSON API (per location) |
 | CVA | 37 | AgriCharts |
 | Gold-Eagle Co-op | 24 | AgriCharts |
 | CGB | 16 | AgriCharts |
@@ -85,11 +85,12 @@ single request. Landus is the exception - it has no bulk endpoint, so it costs
 | JBS Live Pork | 2 | AgriCharts |
 | Mid-Iowa Milling | 2 | AgriCharts |
 | CFE | 1 | AgriCharts |
+| Golden Grain Energy | 1 | CI Hedging widget API |
 | SilverEdge Cooperative | 1 | AgriCharts |
 
-**327 of 722 pins** carry live bids (4083 bid rows). The rest:
+**329 of 722 pins** carry live bids (~4,100 bid rows). The rest:
 
-- **341 pins are on companies with no adapter yet.** Biggest: MFA (59), Cargill (31), Nexus Cooperative (18), AGP (16), River Valley Cooperative (9), Valero (7).
+- **340 pins are on companies with no adapter yet.** Biggest: MFA (59), Cargill (31), Nexus Cooperative (18), AGP (16), River Valley Cooperative (9), Valero (7).
 - **49 pins matched a source that publishes no bid for them** — out-of-state and
   seasonal facilities their co-op does not quote.
 - **5 pins are held back** as low-confidence or ambiguous matches. One of

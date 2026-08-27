@@ -30,6 +30,7 @@ import yaml  # noqa: E402
 
 from adapters.agricharts import AgriChartsAdapter  # noqa: E402
 from adapters.cargill import CargillAdapter  # noqa: E402
+from adapters.cihedging import CIHedgingAdapter  # noqa: E402
 from adapters.gradable import GradableAdapter  # noqa: E402
 from adapters.heartland import HeartlandAdapter  # noqa: E402
 from adapters.landus import LandusAdapter  # noqa: E402
@@ -70,6 +71,10 @@ def build_adapter(spec: dict):
         return CargillAdapter()
     if kind == "gradable":
         return GradableAdapter(spec["tenant"])
+    if kind == "cihedging":
+        return CIHedgingAdapter(
+            spec["company_id"], spec.get("label", ""), spec.get("referer")
+        )
     raise ValueError("unknown adapter type: " + str(kind))
 
 

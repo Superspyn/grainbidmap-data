@@ -58,6 +58,7 @@ COMPANY_TO_SOURCE = {
     "Mid-Iowa Milling": "agricharts:midiowa",
     "New Coop": "newcoop",
     "Landus": "landus",
+    "Golden Grain Energy": "cihedging:goldengrain",
     "POET": "gradable:poet",
     "Flint Hills Resources / POET": "gradable:poet",
     "ADM": "gradable:adm",
