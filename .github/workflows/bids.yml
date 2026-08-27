@@ -62,4 +62,30 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/bids.json
           git commit -m "Update cash bids ($(date -u '+%Y-%m-%d %H:%M UTC'))"
-          git push
+
+          # A push from the farm PC can land between our checkout and our push.
+          # bids.json is generated, not authored, so there is nothing to merge:
+          # the newer build already carries everything the older one did. On a
+          # rejection, keep whichever file has the later generated_at.
+          cp docs/bids.json "$RUNNER_TEMP/ours.json"
+
+          for attempt in 1 2 3; do
+            if git push; then
+              exit 0
+            fi
+            echo "push rejected (attempt $attempt) - comparing against origin/main"
+            git fetch origin main
+            git reset --hard origin/main
+
+            if python -c 'import json, sys; f = lambda p: json.load(open(p, encoding="utf-8"))["generated_at"]; sys.exit(0 if f(sys.argv[1]) > f(sys.argv[2]) else 1)' "$RUNNER_TEMP/ours.json" docs/bids.json; then
+              echo "our build is newer - re-committing on top"
+              cp "$RUNNER_TEMP/ours.json" docs/bids.json
+              git add docs/bids.json
+              git commit -m "Update cash bids ($(date -u '+%Y-%m-%d %H:%M UTC'))"
+            else
+              echo "origin already has a newer build - nothing to do"
+              exit 0
+            fi
+          done
+          echo "could not push after 3 attempts"
+          exit 1
