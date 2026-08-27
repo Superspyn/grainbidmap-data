@@ -115,6 +115,18 @@ error, so check the location count.
 Anything not on AgriCharts needs an adapter in `scrapers/adapters/` implementing
 the `Adapter` protocol in `adapters/base.py`.
 
+### Sources we deliberately do not scrape
+
+**Cargill.** The adapter exists and works (`scrapers/adapters/cargill.py`), but
+its source entry is commented out. Cargill's cash bids come from
+`d96y3rjfk5o7l.cloudfront.net`, whose robots.txt is served correctly as HTTP 200
+and says `User-agent: * / Disallow: /`. `cargillag.com` itself allows crawling,
+but its location pages pull the bids from that same CDN, so there is no
+compliant route. Do not enable it without Cargill's permission.
+
+Note the difference from the case below: a bot wall that *breaks* the robots
+check is worth fixing, an explicit `Disallow` is not worth working around.
+
 ### Bot-protected sources
 
 Some sites reject Python's default TLS handshake with a 403 while serving the

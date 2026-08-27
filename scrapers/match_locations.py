@@ -56,6 +56,7 @@ COMPANY_TO_SOURCE = {
     "Mid-Iowa Milling": "agricharts:midiowa",
     "New Coop": "newcoop",
     "Landus": "landus",
+    "Cargill": "cargill",
     "Key Cooperative": "agricharts:keycoop",
     "CGB": "agricharts:cgb",
     "Innovative Ag Services": "agricharts:innovativeag",
