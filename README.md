@@ -70,12 +70,14 @@ single request. Landus is the exception - it has no bulk endpoint, so it costs
 | NEW Cooperative | 70 | Own pages (TLS impersonation) |
 | Heartland Co-op | 53 | Server-rendered bid sheet |
 | Landus Cooperative | 45 | Own JSON API (per location) |
-| CVA | 36 | AgriCharts |
+| CVA | 37 | AgriCharts |
 | Gold-Eagle Co-op | 24 | AgriCharts |
 | CGB | 16 | AgriCharts |
+| POET Biorefining | 16 | Gradable API |
 | Key Cooperative | 16 | AgriCharts |
 | Pro Co-op | 14 | AgriCharts |
 | Stateline Cooperative | 9 | AgriCharts |
+| ADM | 8 | Gradable API |
 | North Iowa Co-op | 4 | AgriCharts |
 | Two Rivers Cooperative | 4 | AgriCharts |
 | Tama-Benton Cooperative | 3 | AgriCharts |
@@ -85,13 +87,14 @@ single request. Landus is the exception - it has no bulk endpoint, so it costs
 | CFE | 1 | AgriCharts |
 | SilverEdge Cooperative | 1 | AgriCharts |
 
-**302 of 722 pins** carry live bids (3795 bid rows). The rest:
+**327 of 722 pins** carry live bids (4083 bid rows). The rest:
 
-- **373 pins are on companies with no adapter yet.** Biggest: MFA (59), Cargill (31), Nexus Cooperative (18), AGP (16), ADM (14), POET (13), River Valley Cooperative (9).
-- **43 pins matched a source that publishes no bid for them** — Heartland's
-  Texas, Kansas and Nebraska sites and its seasonal locations, plus CVA's Kansas
-  locations. There is no bid to show.
-- **4 pins are held back** as low-confidence matches (see below).
+- **341 pins are on companies with no adapter yet.** Biggest: MFA (59), Cargill (31), Nexus Cooperative (18), AGP (16), River Valley Cooperative (9), Valero (7).
+- **49 pins matched a source that publishes no bid for them** — out-of-state and
+  seasonal facilities their co-op does not quote.
+- **5 pins are held back** as low-confidence or ambiguous matches. One of
+  them, `Landus Davis City`, is a pin for an elevator Landus has since sold; the
+  `New Coop Davis City` pin covers the same site and does carry bids.
 
 Uncovered pins are not broken — they behave exactly as they did before.
 

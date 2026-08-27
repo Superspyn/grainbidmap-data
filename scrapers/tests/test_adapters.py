@@ -10,6 +10,7 @@ import pathlib
 import pytest
 
 from adapters.agricharts import AgriChartsAdapter
+from adapters.gradable import GradableAdapter
 from adapters.heartland import HeartlandAdapter
 from adapters.landus import LandusAdapter
 from adapters.newcoop import NewCoopAdapter
@@ -89,6 +90,58 @@ class TestAgriCharts:
         payload = 'var bids = [{"id":"1","name":"X","cashbids":[]}];'
         with pytest.raises(ValueError, match="no corn or soybean"):
             AgriChartsAdapter("nicoop").parse(payload)
+
+
+class TestGradable:
+    """POET and ADM both run Gradable. Responses carry a while(1); XSSI guard
+    that must be stripped before parsing."""
+
+    @staticmethod
+    @pytest.fixture(scope="class")
+    def bids():
+        import json, re
+        raw = read_fixture("gradable_instruments_hanlontown.json")
+        payload = json.loads(re.sub(r"^\s*while\(1\);\s*", "", raw))
+        return GradableAdapter.parse_instruments(payload, {1: "corn", 2: "soybeans"})
+
+    @pytest.mark.parametrize("raw", [
+        'while(1);{"instruments": []}',      # bootstrap ships this XSSI guard
+        '  while(1);  {"instruments": []}',
+        '{"instruments": []}',               # instruments endpoint does not
+    ])
+    def test_strips_the_xssi_guard_when_present(self, raw):
+        """Gradable prefixes some responses with while(1); to defeat JSON
+        hijacking. Loading must cope whether or not it is there."""
+        from adapters.gradable import _load
+        assert _load(raw) == {"instruments": []}
+
+    def test_parses_bids(self, bids):
+        assert bids
+        assert all(b.cash is not None for b in bids)
+
+    def test_basis_and_futures_reconcile(self, bids):
+        for b in bids:
+            if b.futures is not None and b.basis is not None:
+                # cash_bid is rounded half-down by Gradable, so allow a cent.
+                assert abs((b.futures + b.basis) - b.cash) <= 0.011
+
+    def test_single_digit_contract_year_expanded(self, bids):
+        # option_month arrives as "ZCU6"; it must not stay a 1-digit year.
+        months = [b.futures_month for b in bids if b.futures_month]
+        assert months
+        assert all(len(m) == 4 for m in months), months[:5]
+
+    def test_epoch_delivery_dates_become_iso(self, bids):
+        for b in bids:
+            if b.delivery_start:
+                assert len(b.delivery_start) == 10 and b.delivery_start[4] == "-"
+
+    def test_unknown_commodity_ids_fall_back_to_row_codes(self):
+        payload = {"instruments": [{"commodity_id": 999, "ext_commodity_id": "ZS",
+                                    "cash_bid": 12.0, "option_month": "ZSX6",
+                                    "delivery_period_start": 1785542400}]}
+        out = GradableAdapter.parse_instruments(payload, {})
+        assert len(out) == 1 and out[0].grain == "soybeans"
 
 
 class TestLandus:

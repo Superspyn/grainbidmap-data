@@ -27,6 +27,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import difflib
 import json
 import math
 import pathlib
@@ -56,6 +57,9 @@ COMPANY_TO_SOURCE = {
     "Mid-Iowa Milling": "agricharts:midiowa",
     "New Coop": "newcoop",
     "Landus": "landus",
+    "POET": "gradable:poet",
+    "Flint Hills Resources / POET": "gradable:poet",
+    "ADM": "gradable:adm",
     "Cargill": "cargill",
     "Key Cooperative": "agricharts:keycoop",
     "CGB": "agricharts:cgb",
@@ -87,12 +91,43 @@ HOST_TO_SOURCE = {
 
 MAX_MATCH_KM = 8.0
 
+# Deliberately below the default publish threshold so a tie is never published.
+AMBIGUOUS_CONFIDENCE = 0.25
+
+# How much clearer one tied candidate must be, character-wise, to win. Measured
+# against the real ties in this data: "Creston 1" beats "Creston 2" by 0.074 and
+# "EARLHAM" beats "EARLHAM FEED MILL" by 0.124, while ADM's "Quincy, IL
+# (Elevator)" and "(Terminal)" are separated by exactly 0.000 and must stay
+# unresolved.
+TIEBREAK_MARGIN = 0.05
+
+# Only break a tie when the token match was strong to begin with. A tie between
+# weak candidates means the right answer probably is not in the list at all -
+# Landus stops returning "Davis City" when their API errors on it, and the tied
+# alternatives are all wrong. Breaking that tie promotes a wrong match.
+TIEBREAK_MIN_TOKEN_SCORE = 0.75
+
+# Two-letter state codes. These must not count as matching signal: without
+# this, any two facilities in the same state share a token, which is enough to
+# push an unrelated pair over the threshold (POET Glenville MN once matched
+# Preston, MN on the strength of "MN" alone).
+#
+# Only the abbreviations, deliberately - full state names are excluded because
+# several are also town names in this data set (Nevada, Iowa).
+STATE_CODES = {
+    "al", "ak", "az", "ar", "ca", "co", "ct", "de", "fl", "ga", "hi", "id",
+    "il", "in", "ia", "ks", "ky", "la", "me", "md", "ma", "mi", "mn", "ms",
+    "mo", "mt", "ne", "nv", "nh", "nj", "nm", "ny", "nc", "nd", "oh", "ok",
+    "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "vt", "va", "wa", "wv",
+    "wi", "wy", "dc",
+}
+
 # Words that carry no identifying signal when comparing facility names.
 STOPWORDS = {
     "coop", "co", "op", "cooperative", "inc", "llc", "the", "grain", "elevator",
     "ethanol", "plant", "feed", "mill", "terminal", "energy", "ag", "farms",
-    "farm", "company", "of", "and", "ia", "iowa", "llp", "lp",
-}
+    "farm", "company", "of", "and", "iowa", "llp", "lp",
+} | STATE_CODES
 
 # `company` is optional so this still parses the older archive files, which
 # predate that field.
@@ -163,6 +198,17 @@ def tokens(name: str) -> set[str]:
     return meaningful or set(words)
 
 
+def literal_ratio(a: str, b: str) -> float:
+    """Character-level similarity of the two names, ignoring case and spacing.
+
+    Used only to break a token-level tie: "New Coop Creston 1" and "Creston 1"
+    share every meaningful token with "Creston 2", but the digit still tells
+    them apart.
+    """
+    norm = lambda t: re.sub(r"[^a-z0-9]+", " ", str(t).lower()).strip()
+    return difflib.SequenceMatcher(None, norm(a), norm(b)).ratio()
+
+
 def name_score(a: str, b: str) -> float:
     """Containment-biased token overlap, 0..1.
 
@@ -214,8 +260,25 @@ def match_pin(pin: dict, candidates: list[dict]) -> tuple[dict | None, float, st
     if best_score >= 0.5:
         runner_up = scored_names[1][0] if len(scored_names) > 1 else 0.0
         if runner_up >= best_score:
-            # Ambiguous: two sources share the name. Flag for manual review.
-            return best, round(best_score * 0.5, 3), "name-ambiguous"
+            # Token scores tie. Fall back to character-level similarity, which
+            # sees the parts token filtering throws away (digits, suffixes).
+            tied = [c for score, c in scored_names if score >= best_score]
+            ranked = sorted(
+                ((literal_ratio(pin["name"], c["name"]), c) for c in tied),
+                key=lambda t: t[0],
+                reverse=True,
+            )
+            if (
+                best_score >= TIEBREAK_MIN_TOKEN_SCORE
+                and len(ranked) > 1
+                and ranked[0][0] - ranked[1][0] >= TIEBREAK_MARGIN
+            ):
+                return ranked[0][1], round(best_score, 3), "name-tiebreak"
+
+            # Still indistinguishable - "Quincy, IL (Elevator)" against
+            # "Quincy, IL (Terminal)". Park it rather than pick a coin flip;
+            # scaling the score would let a perfect-but-tied name through.
+            return best, AMBIGUOUS_CONFIDENCE, "name-ambiguous"
         return best, round(best_score, 3), "name"
 
     return None, 0.0, "no-match"

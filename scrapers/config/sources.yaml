@@ -78,6 +78,17 @@ sources:
   # Re-enable only with Cargill's permission, and expect to identify yourself
   # via BIDS_CONTACT when you do.
 
+  - id: gradable:poet
+    adapter: gradable
+    tenant: poet
+    label: POET Biorefining
+    # 13 POET pins + 5 Flint Hills/POET. robots.txt: User-agent: * / Allow: /
+
+  - id: gradable:adm
+    adapter: gradable
+    tenant: adm
+    label: ADM (Gradable)
+
   - id: agricharts:keycoop
     adapter: agricharts
     tenant: keycoop

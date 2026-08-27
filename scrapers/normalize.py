@@ -219,3 +219,27 @@ def month_bounds(month_name: str | None) -> tuple[str | None, str | None]:
     first = _dt.date(year, month, 1)
     nxt = _dt.date(year + (month == 12), (month % 12) + 1, 1)
     return first.isoformat(), (nxt - _dt.timedelta(days=1)).isoformat()
+
+
+_SHORT_SYMBOL_RE = re.compile(r"^Z?([A-Z])([FGHJKMNQUVXZ])(\d)$")
+
+
+def expand_futures_symbol(symbol: str | None, year_hint: int | None = None) -> str | None:
+    """Normalise a contract symbol, expanding a one-digit year.
+
+    Cargill writes ``"CU6"`` and Gradable writes ``"ZCU6"``; both mean the same
+    contract as ``"CU26"``. One digit is ambiguous on its own, so the delivery
+    year decides which decade it lands in.
+    """
+    if not symbol:
+        return None
+    text = str(symbol).strip().upper()
+    m = _SHORT_SYMBOL_RE.match(text)
+    if not m:
+        return futures_month_from_symbol(text)
+    root, month, digit = m.groups()
+    base = year_hint or _dt.date.today().year
+    for year in range(base, base + 10):
+        if year % 10 == int(digit):
+            return f"{root}{month}{year % 100:02d}"
+    return None
