@@ -1,0 +1,849 @@
+<div id="grain-trucking-tool">
+<style>
+  #grain-trucking-tool {
+    --bg: #F6F4EC;
+    --surface: #FFFFFF;
+    --ink: #23281F;
+    --ink-soft: #5B6350;
+    --gold: #C08A28;
+    --gold-deep: #9C6E1C;
+    --green: #3C5A3E;
+    --green-pale: #E7EFE2;
+    --line: #DBD5C3;
+    --danger: #A64B3C;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    padding: 28px 20px 40px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  #grain-trucking-tool * { box-sizing: border-box; }
+
+  #grain-trucking-tool h1 {
+    font-family: 'Roboto Slab', Georgia, serif;
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: -0.01em;
+    margin: 0 0 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  #grain-trucking-tool p.gt-subtitle {
+    color: var(--ink-soft);
+    margin: 0 0 22px;
+    font-size: 14.5px;
+    max-width: 640px;
+    line-height: 1.5;
+  }
+  #grain-trucking-tool .gt-silo { width: 26px; height: 26px; flex-shrink: 0; }
+
+  #grain-trucking-tool section.gt-block {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px 18px 20px;
+    margin-bottom: 20px;
+  }
+  #grain-trucking-tool h2 {
+    font-family: 'Roboto Slab', Georgia, serif;
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gold-deep);
+    margin: 0 0 12px;
+  }
+
+  #grain-trucking-tool .gt-globals {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  #grain-trucking-tool .gt-field { display: flex; flex-direction: column; gap: 4px; }
+  #grain-trucking-tool .gt-field label { font-size: 12px; color: var(--ink-soft); font-weight: 600; }
+  #grain-trucking-tool .gt-field input {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    padding: 7px 9px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    width: 130px;
+    background: var(--bg);
+    color: var(--ink);
+  }
+
+  #grain-trucking-tool .gt-map-instructions {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+  #grain-trucking-tool .gt-map-wrap {
+    position: relative;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  #grain-trucking-tool #gt-map {
+    width: 100%;
+    height: 420px;
+    background: var(--bg);
+  }
+  #grain-trucking-tool .gt-map-fallback {
+    display: none;
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  #grain-trucking-tool .gt-status-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+    font-size: 13.5px;
+  }
+  #grain-trucking-tool .gt-status-row .gt-dot {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+  #grain-trucking-tool .gt-status-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  #grain-trucking-tool button.gt-reset {
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--ink-soft);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+  }
+  #grain-trucking-tool button.gt-reset:hover { border-color: var(--ink-soft); color: var(--ink); }
+  #grain-trucking-tool a.gt-open-maps-btn {
+    background: var(--green);
+    color: #F4F1E4;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    font-weight: 600;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    display: none;
+    align-items: center;
+    gap: 6px;
+  }
+  #grain-trucking-tool a.gt-open-maps-btn.gt-visible { display: inline-flex; }
+  #grain-trucking-tool a.gt-open-maps-btn:hover { background: #2E4630; }
+
+  #grain-trucking-tool .gt-results {
+    margin-top: 16px;
+    display: none;
+  }
+  #grain-trucking-tool .gt-results.gt-visible { display: block; }
+  #grain-trucking-tool .gt-route-title {
+    font-family: 'Roboto Slab', Georgia, serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  #grain-trucking-tool .gt-metric-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  #grain-trucking-tool .gt-metric {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  #grain-trucking-tool .gt-metric .gt-metric-label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+  #grain-trucking-tool .gt-metric .gt-metric-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 17px;
+    font-weight: 700;
+  }
+  #grain-trucking-tool .gt-metric.gt-highlight { background: var(--green-pale); border-color: var(--green); }
+  #grain-trucking-tool .gt-metric.gt-highlight .gt-metric-value { color: var(--green); }
+
+  #grain-trucking-tool .gt-bid-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    border-top: 1px solid var(--line);
+    padding-top: 14px;
+  }
+
+  #grain-trucking-tool .gt-legend {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-top: 14px;
+    line-height: 1.6;
+    border-top: 1px solid var(--line);
+    padding-top: 12px;
+  }
+  #grain-trucking-tool .gt-legend code {
+    background: var(--bg);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+  }
+
+  @media (max-width: 520px) {
+    #grain-trucking-tool { padding: 18px 14px 26px; border-radius: 0; }
+    #grain-trucking-tool h1 { font-size: 21px; gap: 8px; }
+    #grain-trucking-tool .gt-silo { width: 21px; height: 21px; }
+    #grain-trucking-tool p.gt-subtitle { font-size: 13px; margin-bottom: 16px; }
+    #grain-trucking-tool section.gt-block { padding: 14px 12px 16px; }
+    #grain-trucking-tool h2 { font-size: 13px; }
+
+    #grain-trucking-tool .gt-globals { flex-direction: column; gap: 12px; }
+    #grain-trucking-tool .gt-field input { width: 100%; }
+
+    #grain-trucking-tool #gt-map { height: 300px; }
+
+    #grain-trucking-tool .gt-status-row { flex-direction: column; align-items: stretch; }
+    #grain-trucking-tool .gt-status-actions { flex-direction: column; }
+    #grain-trucking-tool button.gt-reset,
+    #grain-trucking-tool a.gt-open-maps-btn { justify-content: center; text-align: center; width: 100%; }
+
+    #grain-trucking-tool .gt-metric-grid { grid-template-columns: repeat(2, 1fr); }
+    #grain-trucking-tool .gt-metric-value { font-size: 15px; }
+
+    #grain-trucking-tool .gt-bid-row { flex-direction: column; align-items: stretch; }
+    #grain-trucking-tool .gt-bid-row .gt-field input { width: 100%; }
+  }
+</style>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+</style>
+
+<h1>
+  <svg class="gt-silo" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="14" y="8" width="20" height="30" rx="10" fill="#C08A28"/>
+    <rect x="14" y="8" width="20" height="12" rx="10" fill="#9C6E1C"/>
+    <path d="M14 38 L24 46 L34 38 Z" fill="#3C5A3E"/>
+    <rect x="20" y="4" width="8" height="6" rx="2" fill="#3C5A3E"/>
+  </svg>
+  Grain Hauling Cost Map
+</h1>
+<p class="gt-subtitle">Click a pin to set your starting point, then click another pin to see the driving distance and fuel cost for that haul.</p>
+
+<section class="gt-block">
+  <h2>Truck &amp; Fuel Settings</h2>
+  <div class="gt-globals">
+    <div class="gt-field">
+      <label for="gt-diesel">Diesel price ($/gal)</label>
+      <input type="number" id="gt-diesel" value="3.75" step="0.01" min="0">
+    </div>
+    <div class="gt-field">
+      <label for="gt-mpg">Truck fuel economy (mpg)</label>
+      <input type="number" id="gt-mpg" value="6" step="0.1" min="0.1">
+    </div>
+    <div class="gt-field">
+      <label for="gt-cap">Truck capacity (bu)</label>
+      <input type="number" id="gt-cap" value="1000" step="10" min="1">
+    </div>
+  </div>
+</section>
+
+<section class="gt-block">
+  <h2>Map</h2>
+  <div class="gt-map-instructions">Yellow pin = your farm. Blue = co-op elevators, red = ethanol plants, purple = feed mills. Click any empty spot on the map to drop a temporary pin for a field &mdash; it becomes your start point and you can drag it to fine-tune. The target button on the map uses your current location instead. Then click an elevator pin to calculate that trip.</div>
+  <div class="gt-map-wrap">
+    <div id="gt-map"></div>
+    <div id="gt-map-fallback" class="gt-map-fallback">
+      Map didn't load. This usually means the Google Maps API key below still needs to be added (or billing enabled) &mdash; see the setup notes at the bottom.
+    </div>
+  </div>
+  <div class="gt-status-row">
+    <div>
+      <span id="gt-status-text">Click a pin to begin.</span>
+    </div>
+    <div class="gt-status-actions">
+      <a href="#" id="gt-open-maps" class="gt-open-maps-btn" target="_blank" rel="noopener">Open route in Google Maps &rarr;</a>
+      <button class="gt-reset" id="gt-reset-btn">Reset selection</button>
+    </div>
+  </div>
+
+  <div class="gt-results" id="gt-results">
+    <div class="gt-route-title" id="gt-route-title"></div>
+    <div class="gt-metric-grid">
+      <div class="gt-metric">
+        <div class="gt-metric-label">Driving distance</div>
+        <div class="gt-metric-value" id="gt-distance">&mdash;</div>
+      </div>
+      <div class="gt-metric">
+        <div class="gt-metric-label">Round trip miles</div>
+        <div class="gt-metric-value" id="gt-roundtrip">&mdash;</div>
+      </div>
+      <div class="gt-metric">
+        <div class="gt-metric-label">Drive time (round trip)</div>
+        <div class="gt-metric-value" id="gt-drivetime">&mdash;</div>
+      </div>
+      <div class="gt-metric">
+        <div class="gt-metric-label">Fuel used (round trip)</div>
+        <div class="gt-metric-value" id="gt-gallons">&mdash;</div>
+      </div>
+      <div class="gt-metric gt-highlight">
+        <div class="gt-metric-label">Fuel cost (round trip)</div>
+        <div class="gt-metric-value" id="gt-fuelcost">&mdash;</div>
+      </div>
+    </div>
+
+    <div class="gt-bid-row">
+      <div class="gt-field">
+        <label for="gt-bid">Elevator bid ($/bu)</label>
+        <input type="number" id="gt-bid" step="0.01" min="0" placeholder="optional">
+      </div>
+      <div class="gt-field">
+        <label for="gt-shrink">Shrink %</label>
+        <input type="number" id="gt-shrink" step="0.1" min="0" placeholder="optional">
+      </div>
+      <div class="gt-metric gt-highlight" style="flex:1; min-width:160px;">
+        <div class="gt-metric-label">Net price after fuel</div>
+        <div class="gt-metric-value" id="gt-netprice">&mdash;</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gt-legend">
+    Fuel cost = (round-trip miles &divide; truck mpg) &times; diesel price. Net price after fuel = (bid &times; bushels after shrink &minus; fuel cost) &divide; truck capacity. This only nets out fuel &mdash; add your own math for any per-load hauling fee on top if you pay one.
+    <br><br>
+    <strong>41 locations are loaded in from your My Maps export.</strong> The one thing it didn't have was your farm/loadout point &mdash; that's a placeholder pin right now. Edit the first entry in the <code>gtLocations</code> list near the top of the script (search for <code>EDIT: your exact loadout point</code>) and set it to your real coordinates. Right-click that spot on Google Maps and click the coordinates shown to copy them.
+  </div>
+</section>
+
+<script>
+  // ====== EDIT THIS: your API key ======
+  var GT_API_KEY = 'AIzaSyA8lkzY1Q-gr80SxESMK4BOLZiW57Rqj-A';
+
+  // ====== Your real locations, pulled from your uploaded My Maps ======
+  // 'farm' pin is a placeholder  -  edit its lat/lng to your exact loadout point
+  // (right-click that spot on Google Maps and click the coordinates to copy them).
+  // Everything else came straight from your KMZ export.
+  var gtLocations = [
+    { name: 'Home Farm', type: 'farm', lat: 43.0972, lng: -93.8036 }, // EDIT: your exact loadout point
+    { name: 'Landus coop', type: 'coop', lat: 43.097057, lng: -93.84607, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'gold eagle coop hutchins', type: 'coop', lat: 43.091631, lng: -93.883394, url: 'https://www.goldeaglecoop.com/markets/cash.php?location_filter=66472' },
+    { name: 'poet hanlontown ethanol', type: 'ethanol', lat: 43.292221, lng: -93.392686, url: 'https://poet.gradable.com/market/Hanlontown--IA' },
+    { name: 'poet Emmetsburg Ethanol', type: 'ethanol', lat: 43.097457, lng: -94.655582, url: 'https://poet.gradable.com/market/Emmetsburg--IA' },
+    { name: 'poet Jewell Ethanol', type: 'ethanol', lat: 42.329504, lng: -93.664923, url: 'https://poet.gradable.com/market/Jewell--IA' },
+    { name: 'poet Gowrie Ethanol', type: 'ethanol', lat: 42.319626, lng: -94.288529, url: 'https://poet.gradable.com/market/Gowrie--IA' },
+    { name: 'Big River Resources West Burlington Ethanol', type: 'ethanol', lat: 40.831346, lng: -91.221867, url: 'https://bigriverresources.com/cashbidssingle-2164' },
+    { name: 'Cargill Eddyville', type: 'ethanol', lat: 41.141337, lng: -92.641603, url: 'https://www.cargillag.com/locations/eddyville-ssna' },
+    { name: 'Poet Corning Ethanol', type: 'ethanol', lat: 40.965207, lng: -94.79694, url: 'https://www.cargillag.com/locations/eddyville-ssna' },
+    { name: 'Green Plains Shenandoah Ethanol', type: 'ethanol', lat: 40.755078, lng: -95.395382, url: 'https://gpreinc.com/Corn-Bids/' },
+    { name: 'Southwest Iowa Renewable Energy Council Bluffs Ethanol', type: 'ethanol', lat: 41.172632, lng: -95.825328, url: 'https://sireethanol.com/cash-bids/' },
+    { name: 'Flint Hills/Poet ethanol Menlo', type: 'ethanol', lat: 41.523724, lng: -94.382023, url: 'https://poet.gradable.com/market/Menlo--IA' },
+    { name: 'Valero Renewables St. Lakota,', type: 'ethanol', lat: 43.384084, lng: -94.14419, url: 'https://www.valero.com/corn/lakota' },
+    { name: 'Valero Renewables Floyd Ethanol', type: 'ethanol', lat: 43.098633, lng: -92.742659, url: 'https://portal.bushelpowered.com/valero/auth/required' },
+    { name: 'Homeland Energy Solutions Lawler Ethanol', type: 'ethanol', lat: 43.072361, lng: -92.205918, url: 'https://www.homelandenergysolutions.com/grain-bids/' },
+    { name: 'Absolute Energy mona Ethanol', type: 'ethanol', lat: 43.497523, lng: -92.953569, url: 'https://absenergy.org/grain/https://absenergy.org/grain/' },
+    { name: 'Valero Renewables - Albert City Ethanol', type: 'ethanol', lat: 42.775461, lng: -94.946011, url: 'https://portal.bushelpowered.com/valero/welcome' },
+    { name: 'Cargill Fort Dodge Ethanol', type: 'ethanol', lat: 42.508409, lng: -94.312932, url: 'https://www.cargillag.com/locations/fort-dodge-ssna' },
+    { name: 'Valero Renewables Fort Dodge, Ethanol', type: 'ethanol', lat: 42.511893, lng: -94.303171, url: 'https://portal.bushelpowered.com/valero/welcome' },
+    { name: 'Flint Hill Resources/poet Arthur Ethanol', type: 'ethanol', lat: 42.331522, lng: -95.350883, url: 'https://poet.gradable.com/market/Arthur--IA' },
+    { name: 'The Andersons Denison Ethanol', type: 'ethanol', lat: 41.988475, lng: -95.399576, url: 'https://www.andersonsgrain.com/locations/cash-bids/' },
+    { name: 'POET Biorefining - Coon Rapids Ethanol', type: 'ethanol', lat: 41.861262, lng: -94.631023, url: 'https://poet.gradable.com/market/Coon-Rapids--IA' },
+    { name: 'Elite Octane Atlantic Ethanol', type: 'ethanol', lat: 41.420705, lng: -95.030973, url: 'https://www.eliteoctane.net/cash-bids' },
+    { name: 'Grain Processing Corporation', type: 'ethanol', lat: 41.400133, lng: -91.062952, url: 'http://kentbids.com/index.cfm?show=11&mid=6&theLocation=39&layout=1046' },
+    { name: 'ADM Clinton Ethanol', type: 'ethanol', lat: 41.817541, lng: -90.216456, url: 'https://adm.gradable.com/market/Clinton--IA-Corn-Processing' },
+    { name: 'ADM Cedar Rapids Ethanol', type: 'ethanol', lat: 41.92062, lng: -91.687458, url: 'https://adm.gradable.com/market/Clinton--IA-Corn-Processing' },
+    { name: 'Ingredion, Inc. Cedar Rapids Ethanol', type: 'ethanol', lat: 41.96818, lng: -91.667533, url: 'https://ag.ingredion.com/cash-bids' },
+    { name: 'Big River United Energy Dyersville Ethanol', type: 'ethanol', lat: 42.487263, lng: -91.16402, url: 'https://bigriverresources.com/cashbidssingle-2162' },
+    { name: 'Flint Hills Resources/Poet Faribanks Ethanol', type: 'ethanol', lat: 42.640684, lng: -92.028655, url: 'https://poet.gradable.com/market/Fairbank--IA' },
+    { name: 'Flint Hills Resources/Poet Shell Rock Ethanol', type: 'ethanol', lat: 42.73769, lng: -92.617938, url: 'https://poet.gradable.com/market/Shell-Rock--IA' },
+    { name: 'Pine Lake Corn Processors', type: 'ethanol', lat: 42.459127, lng: -93.0573, url: 'https://www.innovativeag.com/grain/cash-bids' },
+    { name: 'Flint Hills Resources/Poet Iowa falls Ethanol', type: 'ethanol', lat: 42.505592, lng: -93.282414, url: 'https://poet.gradable.com/market/Iowa-Falls--IA' },
+    { name: 'Lincolnway Energy Nevada Ethanol', type: 'ethanol', lat: 42.011212, lng: -93.390095, url: 'https://lincolnwayenergy.com/corn-bids/' },
+    { name: 'Louis Dreyfus Commodities Grand Junction Ethanol', type: 'ethanol', lat: 42.055754, lng: -94.242306, url: 'https://www.myldc.com/facility/grandjunction' },
+    { name: 'golden grain ethanol mason city', type: 'ethanol', lat: 43.116958, lng: -93.230325, url: 'https://ggecorn.com/cash-bids%2Fcustomers' },
+    { name: 'Christensen feed mill forest city', type: 'feedmill', lat: 43.287281, lng: -93.790921, url: 'https://www.christensenfarms.com/corn-bids/pricing/' },
+    { name: 'New Coop Britt', type: 'coop', lat: 43.10023, lng: -93.802095, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'Smithfield grain feed mill Allerton', type: 'feedmill', lat: 40.722954, lng: -93.364125, url: 'https://smithfieldgrain.com/cashBids.aspx?ksc=1' },
+    { name: 'heart land coop millerton', type: 'coop', lat: 40.848111, lng: -93.311253, url: 'https://myaccount.heartlandcoop.com/bids.htm?v=20260507' },
+    { name: 'New coop Humeston', type: 'coop', lat: 40.855941, lng: -93.50107, url: 'https://www.newcoop.com/cash-bids/?=&agricharts_loc=347' },
+    { name: 'Lucerne feed mill', type: 'feedmill', lat: 40.467039, lng: -93.286357, url: 'https://smithfieldgrain.com/cashbidssingle-1699' },
+    { name: 'Landus Adair', type: 'coop', lat: 41.500419, lng: -94.637979, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Aredale (Seasonal)', type: 'coop', lat: 42.834724, lng: -93.005501, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Atlantic - Grain', type: 'coop', lat: 41.440005, lng: -95.002295, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Bayard', type: 'coop', lat: 41.852932, lng: -94.554202, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Beaver', type: 'coop', lat: 42.036323, lng: -94.141181, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Boone', type: 'coop', lat: 42.050838, lng: -93.798462, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Boxholm', type: 'coop', lat: 42.176783, lng: -94.105842, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Bradford', type: 'coop', lat: 42.632793, lng: -93.250336, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Bricelyn (Seasonal)', type: 'coop', lat: 43.559560, lng: -93.811757, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Casey (Seasonal)', type: 'coop', lat: 41.504825, lng: -94.518068, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Churdan (Seasonal)', type: 'coop', lat: 42.155418, lng: -94.480481, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Collins', type: 'coop', lat: 41.890903, lng: -93.310525, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Conrad (Seasonal)', type: 'coop', lat: 42.301757, lng: -92.909958, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Davis City', type: 'coop', lat: 40.635292, lng: -93.812081, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Dawson (Will Call)', type: 'coop', lat: 41.842273, lng: -94.221755, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Dike', type: 'coop', lat: 42.462376, lng: -92.629051, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Early', type: 'coop', lat: 42.451664, lng: -95.147293, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Farnhamville', type: 'coop', lat: 42.274315, lng: -94.403867, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Feed Partners LLC', type: 'feedmill', lat: 42.863098, lng: -95.546347, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Fort Dodge', type: 'coop', lat: 42.615859, lng: -94.229005, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Gowrie', type: 'coop', lat: 42.274734, lng: -94.270988, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Grant', type: 'coop', lat: 42.168056, lng: -94.162245, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Greene', type: 'coop', lat: 42.907342, lng: -92.813820, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Hamlin', type: 'coop', lat: 41.675415, lng: -94.882385, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Ida Grove', type: 'coop', lat: 42.346668, lng: -95.477669, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Jefferson', type: 'coop', lat: 42.028156, lng: -94.368858, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Lake City (Seasonal)', type: 'coop', lat: 42.265718, lng: -94.727129, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Latimer', type: 'coop', lat: 42.763945, lng: -93.366453, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Manilla', type: 'coop', lat: 41.889529, lng: -95.235276, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus McLeansboro', type: 'coop', lat: 38.101851, lng: -88.546236, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Mitchellville', type: 'coop', lat: 41.688378, lng: -93.375053, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus New Hartford', type: 'coop', lat: 42.564813, lng: -92.621780, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Newell', type: 'coop', lat: 42.606489, lng: -95.004067, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Odebolt', type: 'coop', lat: 42.311988, lng: -95.248580, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Packard', type: 'coop', lat: 42.831885, lng: -92.732838, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Panora (Will Call)', type: 'coop', lat: 41.694629, lng: -94.361263, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Perry', type: 'coop', lat: 41.887609, lng: -94.118057, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Pleasant Hill', type: 'coop', lat: 41.571749, lng: -93.520183, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Rake', type: 'coop', lat: 43.486220, lng: -93.919384, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Ralston SoyPlus', type: 'feedmill', lat: 42.042035, lng: -94.637379, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Rippey (Will Call)', type: 'coop', lat: 41.935641, lng: -94.199643, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Rockwell City', type: 'coop', lat: 42.394297, lng: -94.631753, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Rushville', type: 'coop', lat: 39.676088, lng: -85.435965, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Somers (Seasonal)', type: 'coop', lat: 42.378799, lng: -94.432518, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Sulphur Springs', type: 'coop', lat: 42.622990, lng: -95.098060, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Templeton', type: 'coop', lat: 41.919888, lng: -94.942841, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Ulmer', type: 'coop', lat: 42.268848, lng: -94.949371, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Wellsburg', type: 'coop', lat: 42.437743, lng: -92.926081, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Yale (Will Call)', type: 'coop', lat: 41.775849, lng: -94.352810, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'Landus Yetter', type: 'coop', lat: 42.315144, lng: -94.843103, url: 'https://www.landus.ag/businesses/grain/grain-bids' },
+    { name: 'New Coop Afton', type: 'coop', lat: 41.0290611, lng: -94.19710680000001, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Algona', type: 'coop', lat: 43.0649186, lng: -94.22671659999999, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Anita', type: 'coop', lat: 41.4445536, lng: -94.76463969999999, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Anthon', type: 'coop', lat: 42.3698448, lng: -95.883646, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Arispe', type: 'coop', lat: 40.9511087, lng: -94.2219213, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Badger', type: 'coop', lat: 42.6158415, lng: -94.1467427, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Blencoe Barge Site', type: 'coop', lat: 41.918484, lng: -96.134887, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Barnum', type: 'coop', lat: 42.5111808, lng: -94.3847594, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Belmond', type: 'coop', lat: 42.8341346, lng: -93.6174415, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Blairsburg', type: 'coop', lat: 42.4812431, lng: -93.6417864, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Blencoe', type: 'coop', lat: 41.9299801, lng: -96.0836537, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Bode', type: 'coop', lat: 42.8697841, lng: -94.2880486, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Cainsville', type: 'coop', lat: 40.4389889, lng: -93.7661907, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Chariton', type: 'coop', lat: 41.0249169, lng: -93.3272505, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Churdan', type: 'coop', lat: 42.1519262, lng: -94.4744169, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Clare', type: 'coop', lat: 42.5886729, lng: -94.3448263, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Clearfield', type: 'coop', lat: 40.7964851, lng: -94.4730038, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Cooper', type: 'coop', lat: 41.8965298, lng: -94.3694834, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Correctionville', type: 'coop', lat: 42.476137, lng: -95.7861147, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Creston 1', type: 'coop', lat: 41.059407, lng: -94.3495787, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Creston 2', type: 'coop', lat: 41.0611105, lng: -94.3405468, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Davis City', type: 'coop', lat: 40.635266, lng: -93.8120416, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Dickens', type: 'coop', lat: 43.1311441, lng: -95.0221809, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Dows', type: 'coop', lat: 42.6562934, lng: -93.4975838, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Duncombe', type: 'coop', lat: 42.4711588, lng: -93.9928647, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Essex', type: 'coop', lat: 40.8361618, lng: -95.3069547, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Everly', type: 'coop', lat: 43.1653267, lng: -95.328086, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Fostoria', type: 'coop', lat: 43.243073, lng: -95.153556, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Garner', type: 'coop', lat: 43.1009012, lng: -93.5989402, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Glidden', type: 'coop', lat: 42.0554548, lng: -94.7272437, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Greenville', type: 'coop', lat: 43.0163727, lng: -95.1481371, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Gruver', type: 'coop', lat: 43.3932914, lng: -94.7052597, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Hornick', type: 'coop', lat: 42.2232053, lng: -96.0958455, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Humboldt', type: 'coop', lat: 42.7218034, lng: -94.2075426, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Klemme', type: 'coop', lat: 43.0066373, lng: -93.6045889, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Knierim', type: 'coop', lat: 42.4549058, lng: -94.4561907, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Knoke', type: 'coop', lat: 42.5184728, lng: -94.7651279, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Lamoni', type: 'coop', lat: 40.6224726, lng: -93.9326997, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Lanesboro', type: 'coop', lat: 42.1844279, lng: -94.6913689, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Langdon', type: 'coop', lat: 43.2150804, lng: -95.086636, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Lanyon', type: 'coop', lat: 42.2238377, lng: -94.1987189, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Lidderdale', type: 'coop', lat: 42.1248639, lng: -94.78085, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Lohrville', type: 'coop', lat: 42.269238, lng: -94.5369681, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop LuVerne', type: 'coop', lat: 42.9076764, lng: -94.0876817, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Mallard', type: 'coop', lat: 42.9409422, lng: -94.6837668, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Mapleton', type: 'coop', lat: 42.1849119, lng: -95.7958103, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Milford', type: 'coop', lat: 43.3265131, lng: -95.1475272, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop MortonMills', type: 'coop', lat: 41.0801995, lng: -94.9842474, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Mt Ayr', type: 'coop', lat: 40.7096395, lng: -94.2336654, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Onawa', type: 'coop', lat: 42.0220529, lng: -96.0921543, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Osceola', type: 'coop', lat: 41.0454198, lng: -93.763058, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Otho', type: 'coop', lat: 42.4267231, lng: -94.1746475, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Palmer', type: 'coop', lat: 42.6303282, lng: -94.6008932, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Pierson', type: 'coop', lat: 42.5436335, lng: -95.868724, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Pomeroy', type: 'coop', lat: 42.5524706, lng: -94.6820934, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Rands', type: 'coop', lat: 42.3250281, lng: -94.5750665, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Red Oak', type: 'coop', lat: 41.0169671, lng: -95.2331702, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Roelyn', type: 'coop', lat: 42.413138, lng: -94.358811, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Rowan', type: 'coop', lat: 42.7444303, lng: -93.4979433, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Sloan', type: 'coop', lat: 42.2303484, lng: -96.2294006, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Superior', type: 'coop', lat: 43.4319493, lng: -94.946586, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Ute', type: 'coop', lat: 42.0499317, lng: -95.7071017, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Villisca', type: 'coop', lat: 40.9258786, lng: -94.984743, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Vincent', type: 'coop', lat: 42.5928854, lng: -94.0204082, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Washta', type: 'coop', lat: 42.5752672, lng: -95.7167462, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop West Bend', type: 'coop', lat: 42.9600129, lng: -94.4439709, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Whiting', type: 'coop', lat: 42.1271528, lng: -96.1513466, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Whittemore', type: 'coop', lat: 43.0649007, lng: -94.4252747, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'New Coop Woolstock', type: 'coop', lat: 42.5672354, lng: -93.8451184, url: 'https://www.newcoop.com/cash-bids/' },
+    { name: 'Gold-Eagle Coop Goldfield', type: 'coop', lat: 42.7357139, lng: -93.9157104, url: 'https://goldeaglecoop.com/grain/cash-bids/' },
+    { name: 'Gold-Eagle Coop Eagle Grove', type: 'coop', lat: 42.6642619, lng: -93.8997333, url: 'https://goldeaglecoop.com/grain/cash-bids/' },
+    { name: 'Gold-Eagle Coop Clarion', type: 'coop', lat: 42.7354747, lng: -93.7350155, url: 'https://goldeaglecoop.com/grain/cash-bids/' },
+    { name: 'Gold-Eagle Coop Eagle Grove Feedmill', type: 'feedmill', lat: 42.6710459, lng: -93.9045057, url: 'https://goldeaglecoop.com/grain/cash-bids/' },
+    { name: 'Gold-Eagle Coop Woden', type: 'coop', lat: 43.2335266, lng: -93.9103374, url: 'https://goldeaglecoop.com/grain/cash-bids/' },
+    { name: 'Gold-Eagle Coop Wesley', type: 'coop', lat: 43.0884584, lng: -93.9920092, url: 'https://goldeaglecoop.com/grain/cash-bids/' },
+    { name: 'Gold-Eagle Coop Thor', type: 'coop', lat: 42.6913104, lng: -94.0492525, url: 'https://goldeaglecoop.com/grain/cash-bids/' },
+    { name: 'Gold-Eagle Coop Livermore', type: 'coop', lat: 42.8698329, lng: -94.1852398, url: 'https://goldeaglecoop.com/grain/cash-bids/' },
+    { name: 'Gold-Eagle Coop Titonka', type: 'coop', lat: 43.2349322, lng: -94.0402599, url: 'https://goldeaglecoop.com/grain/cash-bids/' },
+    { name: 'Gold-Eagle Coop Clarion Annex', type: 'coop', lat: 42.7589116, lng: -93.7347134, url: 'https://goldeaglecoop.com/grain/cash-bids/' },
+    { name: 'Gold-Eagle Coop Hardy', type: 'coop', lat: 42.8100598, lng: -94.0514869, url: 'https://goldeaglecoop.com/grain/cash-bids/' },
+    { name: 'Gold-Eagle Coop Corwith', type: 'coop', lat: 42.9930178, lng: -93.9558268, url: 'https://goldeaglecoop.com/grain/cash-bids/' },
+    { name: 'Gold-Eagle Coop Renwick', type: 'coop', lat: 42.8276431, lng: -93.9802126, url: 'https://goldeaglecoop.com/grain/cash-bids/' },
+    { name: 'Gold-Eagle Coop Galbraith Lu Verne', type: 'coop', lat: 42.9807796, lng: -94.1644388, url: 'https://goldeaglecoop.com/grain/cash-bids/' },
+    { name: 'Gold-Eagle Coop Titonka North', type: 'coop', lat: 43.2428903, lng: -94.0278771, url: 'https://goldeaglecoop.com/grain/cash-bids/' },
+    { name: 'Gold-Eagle Coop Galt Feed Mill', type: 'feedmill', lat: 42.6710929, lng: -93.6361999, url: 'https://goldeaglecoop.com/grain/cash-bids/' },
+    { name: 'Gold-Eagle Coop Forest City', type: 'coop', lat: 43.2644959, lng: -93.6340137, url: 'https://goldeaglecoop.com/grain/cash-bids/' },
+    { name: 'Gold-Eagle Coop Kanawha', type: 'coop', lat: 42.9341872, lng: -93.7913902, url: 'https://goldeaglecoop.com/grain/cash-bids/' },
+    { name: 'Gold-Eagle Coop Kiester MN', type: 'coop', lat: 43.5352579, lng: -93.7121194, url: 'https://goldeaglecoop.com/grain/cash-bids/' },
+    { name: 'Gold-Eagle Coop Leland', type: 'coop', lat: 43.3371775, lng: -93.6352157, url: 'https://goldeaglecoop.com/grain/cash-bids/' },
+    { name: 'Gold-Eagle Coop Thompson', type: 'coop', lat: 43.3713445, lng: -93.7735556, url: 'https://goldeaglecoop.com/grain/cash-bids/' },
+    { name: 'Gold-Eagle Coop Holmes', type: 'coop', lat: 42.737536, lng: -93.831656, url: 'https://goldeaglecoop.com/grain/cash-bids/' },
+    { name: 'Gold-Eagle Coop Hawkeye Pride', type: 'feedmill', lat: 42.948471, lng: -93.9116793, url: 'https://goldeaglecoop.com/grain/cash-bids/' },
+  ];
+</script>
+
+<script>
+(function () {
+  var container = document.getElementById('grain-trucking-tool');
+  var dieselInput = container.querySelector('#gt-diesel');
+  var mpgInput = container.querySelector('#gt-mpg');
+  var capInput = container.querySelector('#gt-cap');
+  var statusText = container.querySelector('#gt-status-text');
+  var resetBtn = container.querySelector('#gt-reset-btn');
+  var resultsEl = container.querySelector('#gt-results');
+  var routeTitleEl = container.querySelector('#gt-route-title');
+  var openMapsEl = container.querySelector('#gt-open-maps');
+  var distanceEl = container.querySelector('#gt-distance');
+  var roundtripEl = container.querySelector('#gt-roundtrip');
+  var drivetimeEl = container.querySelector('#gt-drivetime');
+  var gallonsEl = container.querySelector('#gt-gallons');
+  var fuelcostEl = container.querySelector('#gt-fuelcost');
+  var bidInput = container.querySelector('#gt-bid');
+  var shrinkInput = container.querySelector('#gt-shrink');
+  var netpriceEl = container.querySelector('#gt-netprice');
+  var fallbackEl = container.querySelector('#gt-map-fallback');
+  var mapEl = container.querySelector('#gt-map');
+
+  var map, directionsService, directionsRenderer, infoWindow;
+  var markers = [];
+  var tempMarker = null;
+  var selectedOrigin = null;
+  var selectedDestination = null;
+  var lastLegMeters = 0;
+  var lastLegSeconds = 0;
+
+  var ICONS = {
+    farm: 'https://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
+    coop: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+    ethanol: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
+    feedmill: 'https://maps.google.com/mapfiles/ms/icons/purple-dot.png',
+    field: 'https://maps.google.com/mapfiles/ms/icons/pink-dot.png',
+    origin: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png',
+    destination: 'https://maps.google.com/mapfiles/ms/icons/orange-dot.png'
+  };
+
+  window.gtInitMap = function () {
+    map = new google.maps.Map(mapEl, { zoom: 9 });
+    directionsService = new google.maps.DirectionsService();
+    directionsRenderer = new google.maps.DirectionsRenderer({ suppressMarkers: true, preserveViewport: true });
+    infoWindow = new google.maps.InfoWindow();
+
+    var bounds = new google.maps.LatLngBounds();
+
+    gtLocations.forEach(function (loc) {
+      var marker = new google.maps.Marker({
+        position: { lat: loc.lat, lng: loc.lng },
+        map: map,
+        title: loc.name,
+        icon: ICONS[loc.type] || ICONS.coop
+      });
+      marker.gtData = loc;
+      marker.addListener('click', function () { handlePinClick(marker); });
+      markers.push(marker);
+      bounds.extend(marker.getPosition());
+    });
+
+    if (markers.length) map.fitBounds(bounds);
+
+    try {
+      map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(buildLocateControl());
+    } catch (e) {
+      console.error('Grain trucking map: could not add locate control', e);
+    }
+
+    map.addListener('click', function (e) {
+      placeOrMoveTempPin(e.latLng);
+    });
+  };
+
+  function buildLocateControl() {
+    var btn = document.createElement('div');
+    btn.setAttribute('role', 'button');
+    btn.setAttribute('tabindex', '0');
+    btn.title = 'Use my location';
+    btn.style.cssText = [
+      'background: #ffffff',
+      'border: none',
+      'border-radius: 3px',
+      'box-shadow: 0 1px 4px rgba(0,0,0,0.35)',
+      'cursor: pointer',
+      'margin: 10px',
+      'width: 40px',
+      'height: 40px',
+      'display: flex',
+      'align-items: center',
+      'justify-content: center',
+      'padding: 0',
+      'box-sizing: border-box',
+      'z-index: 9999',
+      'position: relative'
+    ].join(';');
+    btn.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+      '<circle cx="12" cy="12" r="3" fill="#3C5A3E"/>' +
+      '<path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="#3C5A3E" stroke-width="2" stroke-linecap="round"/>' +
+      '</svg>';
+    btn.addEventListener('mouseenter', function () { btn.style.background = '#f5f5f5'; });
+    btn.addEventListener('mouseleave', function () { btn.style.background = '#ffffff'; });
+    btn.addEventListener('click', doLocate);
+    btn.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); doLocate(); }
+    });
+    return btn;
+  }
+
+  function doLocate() {
+    if (!navigator.geolocation) {
+      statusText.textContent = 'Location is not supported in this browser.';
+      return;
+    }
+    statusText.textContent = 'Finding your location...';
+    navigator.geolocation.getCurrentPosition(function (pos) {
+      var latLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+      if (map) map.panTo(latLng);
+      placeOrMoveTempPin(latLng, 'My location');
+    }, function (err) {
+      statusText.textContent = 'Could not get your location  -  ' + err.message;
+    }, { enableHighAccuracy: true, timeout: 10000 });
+  }
+
+  function placeOrMoveTempPin(latLng, label) {
+    var nm = label || 'Field pin';
+    if (!tempMarker) {
+      tempMarker = new google.maps.Marker({
+        position: latLng,
+        map: map,
+        draggable: true,
+        icon: ICONS.origin,
+        title: nm + ' (drag to adjust)',
+        zIndex: 999
+      });
+      tempMarker.gtData = { name: nm, type: 'field' };
+      tempMarker.addListener('dragend', function () { selectTempAsOrigin(); });
+      tempMarker.addListener('click', function () { selectTempAsOrigin(); });
+    } else {
+      tempMarker.setPosition(latLng);
+      tempMarker.gtData.name = nm;
+      tempMarker.setTitle(nm + ' (drag to adjust)');
+    }
+    selectTempAsOrigin();
+  }
+
+  function selectTempAsOrigin() {
+    selectedOrigin = tempMarker;
+    selectedDestination = null;
+    resultsEl.classList.remove('gt-visible');
+    openMapsEl.classList.remove('gt-visible');
+    if (directionsRenderer) directionsRenderer.setMap(null);
+    statusText.textContent = 'Origin: ' + tempMarker.gtData.name + '  -  now click an elevator pin.';
+    updateIcons();
+  };
+
+  window.gm_authFailure = function () {
+    mapEl.style.display = 'none';
+    fallbackEl.style.display = 'block';
+  };
+
+  function showInfo(marker) {
+    var data = marker.gtData;
+    var html = '<div style="font-family:Inter,sans-serif;font-size:13px;max-width:220px;">' +
+      '<div style="font-weight:600;margin-bottom:4px;">' + escapeHtml(data.name) + '</div>';
+    if (data.url) {
+      html += '<a href="' + escapeHtml(data.url) + '" target="_blank" rel="noopener" style="color:#3C5A3E;">View bid page &rarr;</a>';
+    } else {
+      html += '<span style="color:#5B6350;">No bid page linked</span>';
+    }
+    html += '</div>';
+    infoWindow.setContent(html);
+    infoWindow.open(map, marker);
+  }
+
+  function escapeHtml(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function formatDuration(totalSeconds) {
+    var totalMinutes = Math.round(totalSeconds / 60);
+    var hours = Math.floor(totalMinutes / 60);
+    var minutes = totalMinutes % 60;
+    if (hours > 0) return hours + 'h ' + minutes + 'm';
+    return minutes + ' min';
+  }
+
+  function updateIcons() {
+    markers.forEach(function (m) {
+      if (m === selectedOrigin) m.setIcon(ICONS.origin);
+      else if (m === selectedDestination) m.setIcon(ICONS.destination);
+      else m.setIcon(ICONS[m.gtData.type] || ICONS.coop);
+    });
+    if (tempMarker) {
+      tempMarker.setIcon(tempMarker === selectedOrigin ? ICONS.origin : ICONS.field);
+    }
+  }
+
+  function handlePinClick(marker) {
+    showInfo(marker);
+    if (selectedOrigin && selectedDestination) {
+      // start a fresh selection
+      selectedOrigin = marker;
+      selectedDestination = null;
+      resultsEl.classList.remove('gt-visible');
+      openMapsEl.classList.remove('gt-visible');
+      directionsRenderer.setMap(null);
+      statusText.textContent = 'Origin: ' + marker.gtData.name + '  -  now click a second pin.';
+    } else if (!selectedOrigin) {
+      selectedOrigin = marker;
+      statusText.textContent = 'Origin: ' + marker.gtData.name + '  -  now click a second pin.';
+    } else if (marker === selectedOrigin) {
+      // clicked same pin again  -  deselect
+      selectedOrigin = null;
+      statusText.textContent = 'Click a pin to begin.';
+    } else {
+      selectedDestination = marker;
+      statusText.textContent = selectedOrigin.gtData.name + ' \u2192 ' + selectedDestination.gtData.name;
+      computeRoute();
+    }
+    updateIcons();
+  }
+
+  function computeRoute() {
+    directionsRenderer.setMap(map);
+    directionsService.route({
+      origin: selectedOrigin.getPosition(),
+      destination: selectedDestination.getPosition(),
+      travelMode: google.maps.TravelMode.DRIVING
+    }, function (result, status) {
+      if (status !== 'OK') {
+        statusText.textContent = 'Could not find a driving route between those two pins.';
+        return;
+      }
+      directionsRenderer.setDirections(result);
+      lastLegMeters = result.routes[0].legs[0].distance.value;
+      lastLegSeconds = result.routes[0].legs[0].duration.value;
+      var destData = selectedDestination.gtData;
+      routeTitleEl.textContent = selectedOrigin.gtData.name + ' \u2192 ' + destData.name;
+      var oPos = selectedOrigin.getPosition();
+      var dPos = selectedDestination.getPosition();
+      openMapsEl.href = 'https://www.google.com/maps/dir/?api=1&origin=' + oPos.lat() + ',' + oPos.lng() +
+        '&destination=' + dPos.lat() + ',' + dPos.lng() + '&travelmode=driving';
+      openMapsEl.classList.add('gt-visible');
+      bidInput.value = (destData.bid !== undefined) ? destData.bid : '';
+      shrinkInput.value = (destData.shrinkPct !== undefined) ? destData.shrinkPct : '';
+      resultsEl.classList.add('gt-visible');
+      updateResults();
+    });
+  }
+
+  function updateResults() {
+    if (!lastLegMeters) return;
+    var oneWayMiles = lastLegMeters / 1609.34;
+    var roundTripMiles = oneWayMiles * 2;
+    var mpg = parseFloat(mpgInput.value) || 0;
+    var dieselPrice = parseFloat(dieselInput.value) || 0;
+    var truckCap = parseFloat(capInput.value) || 0;
+    var gallons = mpg > 0 ? roundTripMiles / mpg : 0;
+    var fuelCost = gallons * dieselPrice;
+
+    distanceEl.textContent = oneWayMiles.toFixed(1) + ' mi';
+    roundtripEl.textContent = roundTripMiles.toFixed(1) + ' mi';
+    drivetimeEl.textContent = formatDuration(lastLegSeconds * 2);
+    gallonsEl.textContent = gallons.toFixed(1) + ' gal';
+    fuelcostEl.textContent = '$' + fuelCost.toFixed(2);
+
+    var bid = parseFloat(bidInput.value);
+    var shrinkPct = parseFloat(shrinkInput.value);
+    if (!isNaN(bid) && truckCap > 0) {
+      var shrinkFrac = (isNaN(shrinkPct) ? 0 : shrinkPct) / 100;
+      var payableBu = truckCap * (1 - shrinkFrac);
+      var grossRevenue = payableBu * bid;
+      var netRevenue = grossRevenue - fuelCost;
+      var netPricePerBu = netRevenue / truckCap;
+      netpriceEl.textContent = '$' + netPricePerBu.toFixed(3) + ' / bu';
+    } else {
+      netpriceEl.textContent = '\u2014';
+    }
+  }
+
+  [dieselInput, mpgInput, capInput, bidInput, shrinkInput].forEach(function (el) {
+    el.addEventListener('input', updateResults);
+  });
+
+  resetBtn.addEventListener('click', function () {
+    selectedOrigin = null;
+    selectedDestination = null;
+    lastLegMeters = 0;
+    lastLegSeconds = 0;
+    resultsEl.classList.remove('gt-visible');
+    openMapsEl.classList.remove('gt-visible');
+    if (directionsRenderer) directionsRenderer.setMap(null);
+    if (tempMarker) { tempMarker.setMap(null); tempMarker = null; }
+    statusText.textContent = 'Click a pin to begin.';
+    updateIcons();
+  });
+
+  if (window.google && window.google.maps) {
+    window.gtInitMap();
+  } else if (!window.__gtMapsScriptLoading) {
+    window.__gtMapsScriptLoading = true;
+    var script = document.createElement('script');
+    script.src = 'https://maps.googleapis.com/maps/api/js?key=' + GT_API_KEY + '&callback=gtInitMap';
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+  }
+})();
+</script>
+</div>

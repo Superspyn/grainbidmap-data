@@ -1,0 +1,13 @@
+# Local dev only
+.venv/
+__pycache__/
+*.py[cod]
+
+# HTTP response cache (BIDS_CACHE=1) - never commit scraped upstream pages
+.cache/
+
+# Intermediate dump consumed by match_locations.py; regenerate with --raw
+scrapers/.build/
+
+# Local splice/verification scratch
+.build/

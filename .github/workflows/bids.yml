@@ -1,0 +1,60 @@
+name: Update cash bids
+
+# Heartland publishes its sheet as of the 1:15 PM CT close, so both runs sit
+# after it. GitHub cron is UTC and does not follow DST, so these are 2:20 PM and
+# 4:20 PM CDT (one hour earlier in winter) - close enough either way.
+on:
+  schedule:
+    - cron: '20 19 * * 1-5'
+    - cron: '20 21 * * 1-5'
+  workflow_dispatch:
+
+# Never let two runs fight over the same commit.
+concurrency:
+  group: bids
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: scrapers/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r scrapers/requirements.txt
+
+      - name: Run tests
+        # Offline, fixture-based. If a parser is broken, fail before publishing.
+        run: python -m pytest scrapers/tests -q
+
+      - name: Scrape bids
+        env:
+          # Identifies us politely to the co-op sites we fetch from.
+          BIDS_CONTACT: https://github.com/${{ github.repository }}
+        run: python scrapers/build_bids.py
+
+      - name: Validate output
+        run: python scrapers/build_bids.py --validate docs/bids.json
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- docs/bids.json; then
+            echo "No bid changes."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/bids.json
+          git commit -m "Update cash bids ($(date -u '+%Y-%m-%d %H:%M UTC'))"
+          git push

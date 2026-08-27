@@ -1,0 +1,49 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Bid integration test</title></head><body>
+<h3 style="font-family:sans-serif">Bid integration test (Google Maps stubbed)</h3>
+<div id="mount"></div>
+<script>
+// Minimal Google Maps stub: enough for gtInitMap to build markers and for
+// computeRoute to complete, so the real renderBids path executes untouched.
+window.google = { maps: {
+  Size: function(w,h){this.w=w;this.h=h;},
+  Point: function(x,y){this.x=x;this.y=y;},
+  LatLng: function(lat,lng){this.lat=function(){return lat;};this.lng=function(){return lng;};},
+  LatLngBounds: function(){ this.extend=function(){}; },
+  ControlPosition: { RIGHT_BOTTOM:1, RIGHT_TOP:2, TOP_LEFT:3 },
+  TravelMode: { DRIVING: 'DRIVING' },
+  event: { trigger: function(){} },
+  Map: function(){ this.controls={1:[],2:[],3:[]}; this.fitBounds=function(){};
+                   this.addListener=function(){}; this.getCenter=function(){return null;};
+                   this.panTo=function(){}; this.getZoom=function(){return 9;}; this.setZoom=function(){}; },
+  InfoWindow: function(){ this.setContent=function(c){window.__lastInfo=c;}; this.open=function(){}; },
+  DirectionsRenderer: function(){ this.setMap=function(){}; this.setDirections=function(){}; },
+  DirectionsService: function(){
+    this.route = function(req, cb){
+      cb({ routes:[{ legs:[{ distance:{value:32187}, duration:{value:1800},
+            steps:[{ path:[ {lat:()=>43.0,lng:()=>-93.8} ] }] }] }] }, 'OK');
+    };
+  },
+  Marker: function(opts){
+    var self=this; this._listeners={}; this._map=opts.map; this._pos=opts.position;
+    this.addListener=function(ev,fn){ (self._listeners[ev]=self._listeners[ev]||[]).push(fn); };
+    this.setIcon=function(){}; this.setMap=function(m){self._map=m;}; this.getMap=function(){return self._map;};
+    this.getPosition=function(){ return { lat:function(){return self._pos.lat;}, lng:function(){return self._pos.lng;} }; };
+    this.setPosition=function(){}; this.setTitle=function(){};
+    window.__markers = window.__markers || []; window.__markers.push(this);
+  }
+}};
+
+fetch('../grain-trucking-map.html').then(r=>r.text()).then(h=>{
+  var feed = new URLSearchParams(location.search).get('feed') === '404'
+        ? '../docs/does-not-exist.json' : '../docs/bids.json';
+  h = h.replace(/var GT_BIDS_URL = '[^']*';/, "var GT_BIDS_URL = '" + feed + "';");
+  // Stop it from loading the real Maps script over the top of our stub.
+  h = h.replace(/script\.src = 'https:\/\/maps\.googleapis\.com[^;]*;/, "script.src = 'data:text/javascript,';");
+  var d=document.createElement('div'); d.innerHTML=h; document.getElementById('mount').appendChild(d);
+  d.querySelectorAll('script').forEach(function(old){
+    var s=document.createElement('script'); s.textContent=old.textContent; document.body.appendChild(s);
+  });
+  window.__ready = true;
+});
+</script>
+</body></html>
