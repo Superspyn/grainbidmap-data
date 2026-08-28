@@ -58,6 +58,7 @@ COMPANY_TO_SOURCE = {
     "Mid-Iowa Milling": "agricharts:midiowa",
     "New Coop": "newcoop",
     "Landus": "landus",
+    "Nexus Cooperative": "nexus",
     "Golden Grain Energy": "cihedging:goldengrain",
     "POET": "gradable:poet",
     "Flint Hills Resources / POET": "gradable:poet",
@@ -227,6 +228,57 @@ def name_score(a: str, b: str) -> float:
     return overlap / min(len(ta), len(tb))
 
 
+# Words that appear in so many company names they identify nobody. A company
+# left with none of its own words after this is skipped by the delivered-bid
+# check rather than allowed to match on a generic word.
+GENERIC_COMPANY_WORDS = {
+    "ag", "agri", "coop", "cooperative", "corn", "company", "elevator",
+    "energy", "ethanol", "farm", "farms", "feed", "grain", "grains", "inc",
+    "llc", "mill", "milling", "processing", "products", "renewables",
+    "service", "services", "supply",
+    # Words that are place-names as often as company names. "New Coop" reduces
+    # to "new", which would otherwise flag Cargill's own New Madrid.
+    "new", "north", "south", "east", "west", "central", "united", "mid",
+}
+
+
+def names_another_company(pin_company: str, candidate_name: str,
+                          companies: set[str]) -> str | None:
+    """Return the other company a candidate is named for, if any.
+
+    Co-ops quote *delivered* bids to other people's plants: Nexus publishes
+    "Valero Charles City, IA", "AGP Manning, IA" and "Cargill Iowa Falls, IA"
+    alongside its own elevators. Those are Nexus's bids for grain delivered
+    there, and they belong to a different physical site - Nexus's own Charles
+    City elevator is 6 km from Valero's plant, so pinning that bid on it would
+    price a haul to the wrong place.
+
+    Candidates only ever come from the pin's own co-op feed, so a candidate
+    carrying a different company's name inside that feed is a delivered bid,
+    not one of theirs. Two guards keep it from firing on ordinary town names:
+    the candidate must *lead* with the company's name, the way every delivered
+    bid here is written ("AGP Manning", "CARGILL - BLAIR", "Valero Charles
+    City"), and generic words are stripped first.
+    """
+    ordered = re.sub(r"[^a-z0-9 ]+", " ", (candidate_name or "").lower()).split()
+    words = set(ordered)
+    first = ordered[0] if ordered else ""
+    mine = set(re.sub(r"[^a-z0-9 ]+", " ", (pin_company or "").lower()).split())
+    for company in companies:
+        parts = [
+            w for w in re.sub(r"[^a-z0-9 ]+", " ", company.lower()).split()
+            if len(w) >= 3 and w not in GENERIC_COMPANY_WORDS
+        ]
+        # No distinctive word left means the name cannot identify anyone:
+        # "Corn LP" reduces to "corn", which would flag every location called
+        # "Clinton, IA (Corn Processing)".
+        if not parts or set(parts) & mine:
+            continue
+        if first in parts and all(w in words for w in parts):
+            return company
+    return None
+
+
 def match_pin(pin: dict, candidates: list[dict]) -> tuple[dict | None, float, str]:
     """Return (best_candidate, confidence, method)."""
     if not candidates:
@@ -314,6 +366,11 @@ def main() -> int:
     review: list[dict] = []
     unmatched: list[dict] = []
     no_source: list[dict] = []
+    delivered_skipped: list[tuple[str, str, str]] = []
+
+    # Every company that owns a pin, used to spot a co-op's delivered bids to
+    # someone else's plant.
+    companies = {p["company"] for p in pins if p.get("company")}
 
     manual = load_manual()
     manual_used: set[str] = set()
@@ -350,7 +407,17 @@ def main() -> int:
                 no_source.append(pin)
             continue
 
-        best, confidence, method = match_pin(pin, raw[source_id])
+        # Drop this co-op's delivered bids to other companies' plants before
+        # scoring - they are real bids, but for a different physical site.
+        candidates = []
+        for candidate in raw[source_id]:
+            other = names_another_company(pin["company"], candidate["name"], companies)
+            if other is None:
+                candidates.append(candidate)
+            else:
+                delivered_skipped.append((pin["id"], candidate["name"], other))
+
+        best, confidence, method = match_pin(pin, candidates)
         if best is None:
             unmatched.append({**pin, "source": source_id, "method": method})
             continue
@@ -401,6 +468,12 @@ def main() -> int:
     print("held back:      " + str(len(review)) + " (confidence < " + str(args.min_confidence) + ", not published)")
     print("unmatched:      " + str(len(unmatched)) + " (source known, no location found)")
     print("no source yet:  " + str(len(no_source)) + " (host not covered by an adapter)")
+    if delivered_skipped:
+        pairs = {(c, o) for _, c, o in delivered_skipped}
+        print("delivered bids: " + str(len(pairs))
+              + " source locations ignored as another company's plant")
+        for cand, other in sorted(pairs)[:8]:
+            print("                " + cand + "  (" + other + ")")
     print("wrote " + str(OUTPUT.relative_to(REPO)))
 
     if args.report:

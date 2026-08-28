@@ -142,3 +142,46 @@ class TestSlugStability:
         assert m.slugify("Gold-Eagle Coop Clarion") == "gold-eagle-coop-clarion"
         assert m.slugify("CVA 81-20 McLean NE") == "cva-81-20-mclean-ne"
         assert m.slugify("Heartland Coop Avon (Carlisle)") == "heartland-coop-avon-carlisle"
+
+
+class TestDeliveredBidGuard:
+    """Co-ops quote delivered bids to other companies' plants.
+
+    Nexus's own Charles City elevator sits 6 km from Valero's plant, and Nexus
+    publishes only "Valero Charles City, IA". Attributing that bid to the Nexus
+    pin priced a haul to the wrong building.
+    """
+
+    COMPANIES = {
+        "Nexus Cooperative", "Valero", "AGP", "Cargill", "ADM", "New Coop",
+        "Green Plains", "Corn LP", "CVA",
+    }
+
+    def _check(self, pin_company, candidate):
+        return m.names_another_company(pin_company, candidate, self.COMPANIES)
+
+    def test_flags_another_companys_plant(self):
+        assert self._check("Nexus Cooperative", "Valero Charles City, IA") == "Valero"
+        assert self._check("Nexus Cooperative", "AGP Manning, IA") == "AGP"
+        assert self._check("Heartland Coop", "CARGILL - BLAIR") == "Cargill"
+        assert self._check("CVA", "ADM Columbus") == "ADM"
+
+    def test_leaves_a_coops_own_locations_alone(self):
+        assert self._check("Nexus Cooperative", "Rockford, IA") is None
+        assert self._check("Cargill", "Beardstown, CAH") is None
+        assert self._check("ADM", "ADM CEDAR RAPIDS") is None
+
+    def test_generic_company_words_cannot_identify_anyone(self):
+        # "Corn LP" reduces to "corn", which would otherwise flag every
+        # location named "... (Corn Processing)".
+        assert self._check("ADM", "Clinton, IA (Corn Processing)") is None
+
+    def test_company_must_lead_the_name(self):
+        # "New Coop" reduces to "new"; Cargill's own New Madrid must survive.
+        assert self._check("Cargill", "New Madrid, CAH") is None
+        assert self._check("Cargill", "New Boston, CAH") is None
+
+    def test_multi_word_company_needs_every_word(self):
+        assert self._check("Heartland Coop", "GREEN PLAINS - SHENANDOAH") == "Green Plains"
+        # "Plains" alone is not Green Plains.
+        assert self._check("Heartland Coop", "Plains, KS") is None

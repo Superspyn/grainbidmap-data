@@ -97,6 +97,15 @@ sources:
     # Identify yourself via BIDS_CONTACT, and do not raise the request rate:
     # one bulk request covers all 77 of their locations.
 
+  - id: nexus
+    adapter: nexus
+    label: Nexus Cooperative
+    # 18 pins. One server-rendered page holds all 36 of their locations.
+    # robots.txt allows /cash-bids/ and asks for a 3s crawl delay; one request
+    # a run satisfies both. Note they also quote delivered bids to AGP, Cargill,
+    # Valero and POET plants - those are Nexus's bids, not the plants' own, and
+    # company scoping in match_locations.py keeps them off those pins.
+
   - id: cihedging:goldengrain
     adapter: cihedging
     company_id: 98951

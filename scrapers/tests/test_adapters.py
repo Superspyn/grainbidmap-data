@@ -15,6 +15,7 @@ from adapters.gradable import GradableAdapter
 from adapters.heartland import HeartlandAdapter
 from adapters.landus import LandusAdapter
 from adapters.newcoop import NewCoopAdapter
+from adapters.nexus import NexusAdapter
 
 FIXTURES = pathlib.Path(__file__).parent / "fixtures"
 
@@ -435,3 +436,72 @@ class TestAgriChartsBasisDrivenMode:
             for bid in loc.bids:
                 if bid.basis is not None and bid.futures is not None:
                     assert abs(bid.futures + bid.basis - bid.cash) < 0.006
+
+
+@pytest.fixture(scope="module")
+def nexus():
+    return NexusAdapter.parse(read_fixture("nexus_cash_bids.html"))
+
+
+class TestNexus:
+    def test_reads_locations_by_name(self, nexus):
+        assert "Rockford, IA" in {loc.name for loc in nexus}
+
+    def test_columns_are_read_by_header_name(self, nexus):
+        bid = next(b for l in nexus if l.name == "Rockford, IA" for b in l.bids)
+        assert bid.grain == "corn"
+        assert bid.futures == 5.15
+        assert bid.basis == -0.38
+        assert bid.cash == 4.77
+        assert bid.futures_month == "CU26"
+
+    def test_every_bid_reconciles(self, nexus):
+        for loc in nexus:
+            for b in loc.bids:
+                if b.basis is not None and b.futures is not None:
+                    assert abs(b.futures + b.basis - b.cash) < 0.006
+
+    def test_location_with_no_quotes_is_dropped(self, nexus):
+        # Conger's corn table says "No bids returned" and its beans carry a
+        # blank basis with a bare "$" for cash. A location with nothing
+        # quotable should not appear at all rather than appear empty.
+        assert "Conger, MN" not in {loc.name for loc in nexus}
+
+    def test_delivered_bids_stay_under_nexus(self, nexus):
+        # Nexus quotes delivery to other companies' plants. The bid is Nexus's
+        # own, not Cargill's, so it must be reported here - and company scoping
+        # in match_locations keeps it off the Cargill pin.
+        loc = next(l for l in nexus if l.name == "Cargill Iowa Falls, IA")
+        assert loc.bids
+
+
+class TestNexusChangeSign:
+    """The futures change carries its sign in a CSS class, not the text.
+
+    Every cell was class="pos" when this was built and the archived copies do
+    not include the tables, so the negative rendering has never been observed.
+    These snippets are synthetic - they exist to pin the behaviour whichever
+    way Nexus renders a down day.
+    """
+
+    def _change(self, html):
+        from bs4 import BeautifulSoup
+        from adapters.nexus import _signed_change
+        return _signed_change(BeautifulSoup(html, "html.parser").find("td"))
+
+    def test_pos_class_is_positive(self):
+        assert self._change('<td class="pos">0.0475</td>') == 0.0475
+
+    def test_neg_class_negates_unsigned_text(self):
+        assert self._change('<td class="neg">0.0475</td>') == -0.0475
+
+    def test_explicit_sign_in_text_wins(self):
+        assert self._change('<td class="neg">-0.0475</td>') == -0.0475
+        assert self._change('<td class="pos">+0.0475</td>') == 0.0475
+
+    def test_no_class_falls_back_to_text(self):
+        assert self._change('<td>-0.02</td>') == -0.02
+        assert self._change('<td>0.02</td>') == 0.02
+
+    def test_unparseable_is_none(self):
+        assert self._change('<td class="pos"></td>') is None

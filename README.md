@@ -103,17 +103,18 @@ single request. Landus is the exception - it has no bulk endpoint, so it costs
 | NEW Cooperative | 70 | Own pages (TLS impersonation) |
 | Heartland Co-op | 53 | Server-rendered bid sheet |
 | Landus Cooperative | 46 | Own JSON API (per location) |
-| CVA | 37 | AgriCharts |
-| Cargill | 28 | AgriCharts (`cargillus` — see below) |
+| CVA | 34 | AgriCharts |
+| Cargill | 27 | AgriCharts (`cargillus` — see below) |
 | Gold-Eagle Co-op | 24 | AgriCharts |
 | CGB | 16 | AgriCharts |
-| POET Biorefining | 16 | Gradable API |
 | Key Cooperative | 16 | AgriCharts |
+| Nexus Cooperative | 16 | Own server-rendered page |
+| POET Biorefining | 15 | Gradable API |
 | Pro Co-op | 14 | AgriCharts |
 | Stateline Cooperative | 9 | AgriCharts |
 | ADM | 8 | Gradable API |
-| North Iowa Co-op | 4 | AgriCharts |
 | Two Rivers Cooperative | 4 | AgriCharts |
+| North Iowa Co-op | 3 | AgriCharts |
 | Tama-Benton Cooperative | 3 | AgriCharts |
 | Innovative Ag | 2 | AgriCharts |
 | JBS Live Pork | 2 | AgriCharts |
@@ -122,11 +123,12 @@ single request. Landus is the exception - it has no bulk endpoint, so it costs
 | Golden Grain Energy | 1 | CI Hedging widget API |
 | SilverEdge Cooperative | 1 | AgriCharts |
 
-**357 of 722 pins** carry live bids (~4,580 bid rows). The rest:
+**367 of 722 pins** carry live bids (~4,850 bid rows). The rest:
 
-- **309 pins are on companies with no adapter yet.** Biggest: MFA (59), Nexus Cooperative (18), AGP (16), River Valley Cooperative (9), Valero (7).
-- **51 pins matched a source that publishes no bid for them** — out-of-state and
-  seasonal facilities their co-op does not quote.
+- **291 pins are on companies with no adapter yet.** Biggest: MFA (59), AGP (16), River Valley Cooperative (9), CHS (7), Valero (7).
+- **59 pins matched a source that publishes no bid for them** — out-of-state and
+  seasonal facilities their co-op does not quote, plus pins whose co-op only
+  quotes a *delivered* bid to someone else's plant (see below).
 - **5 pins are held back** as low-confidence or ambiguous matches. One of
   them, `Landus Davis City`, is a pin for an elevator Landus has since sold; the
   `New Coop Davis City` pin covers the same site and does carry bids.
@@ -188,6 +190,30 @@ _robots_allows("https://cargillus.websol.barchart.com/")             -> False
 The general rule this leaves: a bot wall that *breaks* the robots check is worth
 fixing, and an explicit `Disallow` on the host you are talking to is not worth
 working around.
+
+### Delivered bids to someone else's plant
+
+Co-ops quote bids for grain delivered to other companies' plants. Nexus
+publishes `Valero Charles City, IA`, `AGP Manning, IA` and `Cargill Iowa
+Falls, IA` next to its own elevators; Heartland publishes `CARGILL - BLAIR`
+and `POET - JEWELL`; CVA publishes `ADM Columbus`.
+
+Those are real bids, but they price delivery to a *different building*. Nexus's
+own Charles City elevator is 6 km from Valero's plant, so attaching that bid to
+the Nexus pin quoted a haul to the wrong place — and CVA Columbus NE was
+already showing CVA's delivered bid to ADM Columbus before Nexus was added.
+
+`names_another_company()` in `match_locations.py` drops these before scoring.
+Candidates only ever come from the pin's own co-op feed, so a location inside
+that feed carrying a different company's name is a delivered bid by definition.
+Two guards stop it firing on ordinary town names: the candidate must **lead**
+with the company name (every delivered bid here is written that way), and
+generic words are stripped first — `Corn LP` reduces to `corn`, which would
+otherwise flag `Clinton, IA (Corn Processing)`, and `New Coop` reduces to `new`,
+which would flag Cargill's own `New Madrid`.
+
+The run prints how many it ignored. A pin whose co-op only quotes a delivered
+bid now correctly carries **no** bid rather than a wrong one.
 
 ### Bot-protected sources
 
