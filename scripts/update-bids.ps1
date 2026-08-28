@@ -1,14 +1,14 @@
 # Refresh cash bids from this machine and push.
 #
-# Why this exists: NEW Co-op and Landus block GitHub's datacenter IP ranges.
-# The scheduled cloud run gets 403 / 429 from them and marks both stale, so
-# 116 of the 329 pins never refresh there. Both answer normally from a home
-# connection, so this task covers what the cloud run cannot.
+# This is THE runner - GitHub Actions no longer runs on a schedule. NEW Co-op
+# and Landus block GitHub's datacenter IP ranges (403 / 429) but answer a home
+# connection normally, and GitHub's cron proved unreliable besides (1 of 10
+# slots fired). The workflow remains as a manual fallback from the Actions tab
+# for when this PC is off for days.
 #
-# The cloud run still matters - it keeps the other 18 sources current when
-# this PC is off. The two runs are offset (cloud on :00/:30, this on :15/:45)
-# so they rarely collide, and bids.json is generated rather than authored, so
-# a collision is settled by keeping whichever build is newer.
+# A manual cloud run can still race a scheduled one here; bids.json is
+# generated rather than authored, so a collision is settled by keeping
+# whichever build is newer.
 #
 # Registered by scripts/install-task.ps1. Run it by hand any time:
 #     powershell -ExecutionPolicy Bypass -File scripts\update-bids.ps1
