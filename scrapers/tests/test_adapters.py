@@ -381,3 +381,57 @@ class TestDedupeBids:
         from build_bids import dedupe_bids
         rows = [self._bid(cash=1.0), self._bid(cash=2.0), self._bid(cash=1.0)]
         assert [b["cash"] for b in dedupe_bids(rows)] == [1.0, 2.0]
+
+
+@pytest.fixture(scope="module")
+def cargill():
+    return AgriChartsAdapter("cargillus").parse(read_fixture("agricharts_cargillus.js"))
+
+
+class TestAgriChartsBasisDrivenMode:
+    """Cargill's feed (price_calculations = 2) inverts what is authoritative.
+
+    Its price fields are not a bid: every location carries the same rounded
+    board price, so deriving basis from them gives ~0 everywhere. The real,
+    location-specific number is `basis`, in dollars, and the bid is
+    futures + basis. Getting this backwards published Alberta at $5.12 when
+    the actual bid was $4.47.
+    """
+
+    def test_basis_comes_from_the_feed_in_dollars(self, cargill):
+        alberta = next(l for l in cargill if l.name == "Alberta, CAH")
+        assert alberta.bids[0].basis == -0.65
+
+    def test_cash_is_futures_plus_basis_not_the_price_field(self, cargill):
+        alberta = next(l for l in cargill if l.name == "Alberta, CAH")
+        bid = alberta.bids[0]
+        assert bid.futures == 5.1275          # "512-6"
+        assert bid.cash == 4.4775             # not $5.12 from cashprice
+        assert round(bid.futures + bid.basis, 4) == bid.cash
+
+    def test_basis_varies_by_location_on_the_same_futures(self, cargill):
+        # Minnesota interior vs an Illinois river terminal, same board month.
+        alberta = next(l for l in cargill if l.name == "Alberta, CAH").bids[0]
+        beardstown = next(l for l in cargill if l.name == "Beardstown, CAH").bids[0]
+        assert alberta.futures == beardstown.futures
+        assert alberta.basis == -0.65 and beardstown.basis == -0.05
+        assert alberta.cash < beardstown.cash
+
+    def test_positive_basis_survives(self, cargill):
+        beans = next(
+            b
+            for l in cargill
+            if l.name == "Beardstown, CAH"
+            for b in l.bids
+            if b.grain == "soybeans"
+        )
+        assert beans.basis == 0.15
+        assert beans.cash == 12.94            # 12.79 + 0.15
+
+    def test_coop_feeds_are_unaffected(self, nicoop):
+        # Mode 0: price is the bid and basis is derived. Guards against the
+        # fix leaking into the 300+ pins that were always right.
+        for loc in nicoop:
+            for bid in loc.bids:
+                if bid.basis is not None and bid.futures is not None:
+                    assert abs(bid.futures + bid.basis - bid.cash) < 0.006
