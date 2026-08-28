@@ -62,7 +62,7 @@ COMPANY_TO_SOURCE = {
     "POET": "gradable:poet",
     "Flint Hills Resources / POET": "gradable:poet",
     "ADM": "gradable:adm",
-    "Cargill": "cargill",
+    "Cargill": "agricharts:cargillus",
     "Key Cooperative": "agricharts:keycoop",
     "CGB": "agricharts:cgb",
     "Innovative Ag Services": "agricharts:innovativeag",

@@ -122,8 +122,24 @@ class TestDeliveryLabel:
     def test_single_month(self):
         assert format_delivery_label("2026-08-01", "2026-08-31") == "Aug 2026"
 
-    def test_partial_month_still_reads_as_one_month(self):
-        assert format_delivery_label("2026-09-01", "2026-09-10") == "Sep 2026"
+    def test_partial_month_keeps_its_days(self):
+        # Was "Sep 2026" until Cargill turned up quoting first-half, whole-month
+        # and second-half November as three contracts - collapsing them all to
+        # "Nov 2026" put three identical-looking rows in the popup.
+        assert format_delivery_label("2026-09-01", "2026-09-10") == "Sep 1-10 2026"
+
+    def test_half_month_windows_stay_distinct(self):
+        first = format_delivery_label("2026-11-01", "2026-11-15")
+        whole = format_delivery_label("2026-11-01", "2026-11-30")
+        second = format_delivery_label("2026-11-16", "2026-11-30")
+        assert first == "Nov 1-15 2026"
+        assert whole == "Nov 2026"
+        assert second == "Nov 16-30 2026"
+        assert len({first, whole, second}) == 3
+
+    def test_february_is_a_whole_month_in_a_leap_year(self):
+        assert format_delivery_label("2028-02-01", "2028-02-29") == "Feb 2028"
+        assert format_delivery_label("2026-02-01", "2026-02-28") == "Feb 2026"
 
     def test_crossing_the_year_boundary(self):
         assert format_delivery_label("2026-12-01", "2027-01-31") == "Dec 2026-Jan 2027"
