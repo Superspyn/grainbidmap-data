@@ -505,3 +505,104 @@ class TestNexusChangeSign:
 
     def test_unparseable_is_none(self):
         assert self._change('<td class="pos"></td>') is None
+
+
+@pytest.fixture(scope="module")
+def bushel():
+    from adapters.bushel import BushelAdapter
+    return BushelAdapter.parse(read_fixture("bushel_bids.json"), "test")
+
+
+class TestBushel:
+    """CHS/AGP/Smithfield via Bushel's aggregator API. Clean JSON, but three
+    traps: free-text delivery labels, an out-of-band futures change sign, and
+    flat rows carrying a literal "0.00" price."""
+
+    def test_verified_against_agps_own_page(self, bushel):
+        # The live API was checked against agp.com/bids/ rendered in a browser
+        # the same day (August 13.06 / By September 15 12.86 - exact match at
+        # fetch time). This fixture is a snapshot from ~2h later, one tick
+        # lower; the STRUCTURE is what the test pins, on real values.
+        eg = next(l for l in bushel if l.name == "Eagle Grove, IA")
+        by_label = {b.delivery_label: b for b in eg.bids}
+        assert by_label["August"].cash == 13.05
+        assert by_label["August"].basis == 0.2
+        assert by_label["By September 15"].cash == 12.85
+        assert by_label["By September 30"].cash == 12.50
+
+    def test_futures_symbol_becomes_month_code(self, bushel):
+        eg = next(l for l in bushel if l.name == "Eagle Grove, IA")
+        assert {b.futures_month for b in eg.bids} >= {"SX26", "SF27"}
+
+    def test_wheat_is_dropped(self, bushel):
+        mitchell = next(l for l in bushel if l.name == "Mitchell")
+        assert {b.grain for b in mitchell.bids} <= {"corn", "soybeans"}
+
+    def test_every_bid_reconciles(self, bushel):
+        # CHS truncates the published bid down to the whole cent while futures
+        # keeps quarter-cents (5.3375 - 0.65 = 4.6875, shown as 4.68), so
+        # allow a cent - same as Gradable's half-down rounding.
+        for loc in bushel:
+            for b in loc.bids:
+                if b.basis is not None and b.futures is not None:
+                    assert abs(b.futures + b.basis - b.cash) <= 0.011
+
+    def test_zero_price_flat_row_is_dropped(self, bushel):
+        # Alma's only corn/bean row is a flat bid with bidPrice "0.00" -
+        # a placeholder, not a bid. The location must vanish entirely.
+        assert "Alma" not in {l.name for l in bushel}
+
+    def test_floating_rows_are_dropped(self, bushel):
+        # CHS Primeland's row is bidType=floating (and wheat besides).
+        assert "CHS Primeland" not in {l.name for l in bushel}
+
+
+class TestBushelDeliveryLabels:
+    def _p(self, label):
+        from adapters.bushel import parse_delivery
+        return parse_delivery(label)
+
+    def test_month_year(self):
+        assert self._p("AUG 2026") == ("2026-08-01", "2026-08-31")
+        assert self._p("Sept 2026") == ("2026-09-01", "2026-09-30")
+        assert self._p("March 2027") == ("2027-03-01", "2027-03-31")
+        assert self._p("SEPT. 26") == ("2026-09-01", "2026-09-30")
+
+    def test_month_ranges(self):
+        assert self._p("OCT/NOV 2026") == ("2026-10-01", "2026-11-30")
+        assert self._p("O/N 2026") == ("2026-10-01", "2026-11-30")
+
+    def test_range_wrapping_the_year(self):
+        assert self._p("DEC/JAN 2026") == ("2026-12-01", "2027-01-31")
+
+    def test_unparseable_labels_stay_labels(self):
+        assert self._p("New Crop 2026") == (None, None)
+        assert self._p("Open Storage") == (None, None)
+        assert self._p("August") == (None, None)       # no year - do not guess
+        assert self._p("By September 15") == (None, None)
+
+
+class TestBushelChangeSign:
+    """futuresChangeSign is 1 on every observed row; -1 has never been seen
+    live. Synthetic rows pin the behaviour for a down day."""
+
+    def _bid(self, **over):
+        from adapters.bushel import BushelAdapter
+        row = {"bidType": "cash", "description": "AUG 2026", "bidPrice": "4.50",
+               "basisPrice": "-0.50", "futuresPrice": "5.00",
+               "futuresChange": "0.0250", "futuresChangeSign": 1,
+               "futuresSymbol": "ZCZ26"}
+        row.update(over)
+        return BushelAdapter._parse_bid(row, "corn")
+
+    def test_sign_one_stays_positive(self):
+        assert self._bid().futures_change == 0.025
+
+    def test_sign_minus_one_negates(self):
+        assert self._bid(futuresChangeSign=-1).futures_change == -0.025
+
+    def test_explicit_sign_in_text_wins(self):
+        assert self._bid(futuresChange="-0.0250", futuresChangeSign=-1).futures_change == -0.025
+
+    def test_null_change_stays_null(self):
+        assert self._bid(futuresChange=None, futuresChangeSign=None).futures_change is None

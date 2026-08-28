@@ -115,8 +115,12 @@ def _robots_allows(url: str, user_agent: str, impersonate: bool = False) -> bool
         return True
 
 
-def _cache_path(url: str) -> pathlib.Path:
-    digest = hashlib.sha256(url.encode("utf-8")).hexdigest()[:20]
+def _cache_path(url: str, extra_headers: dict | None = None) -> pathlib.Path:
+    # Routing headers are part of the identity: Bushel serves every co-op from
+    # one URL, distinguished only by App-Company, so a URL-only key would hand
+    # one co-op's cached bids to another.
+    key = url + "|" + "|".join(f"{k}={v}" for k, v in sorted((extra_headers or {}).items()))
+    digest = hashlib.sha256(key.encode("utf-8")).hexdigest()[:20]
     return CACHE_DIR / f"{digest}.txt"
 
 
@@ -132,6 +136,8 @@ def get(
     check_robots: bool = True,
     impersonate: bool = False,
     method: str = "GET",
+    extra_headers: dict | None = None,
+    body: str | None = None,
 ) -> str:
     """Fetch ``url`` and return its body as text.
 
@@ -143,11 +149,18 @@ def get(
 
     ``method`` covers the handful of widget endpoints that only answer to POST.
     Everything is still a read - no request body is ever sent.
+
+    ``extra_headers`` is for APIs that route on a header - Bushel's aggregator
+    reads the co-op's public slug from ``App-Company``. Never put a credential
+    in here; a source that needs one is a source we do not scrape.
+
+    ``body`` is the raw request body for POST endpoints that insist on one.
+    Bushel's requires a literal ``{}`` - still a read, it carries no data.
     """
     if use_cache is None:
         use_cache = os.environ.get("BIDS_CACHE") == "1"
 
-    cache_file = _cache_path(url)
+    cache_file = _cache_path(url, extra_headers)
     if use_cache and cache_file.exists():
         age = time.time() - cache_file.stat().st_mtime
         if age < cache_ttl:
@@ -170,6 +183,8 @@ def get(
     }
     if referer:
         headers["Referer"] = referer
+    if extra_headers:
+        headers.update(extra_headers)
 
     host = urlparse(url).netloc
     last_error: Exception | None = None
@@ -179,11 +194,13 @@ def get(
         try:
             if impersonate:
                 response = curl_requests.request(
-                    method, url, headers=headers, timeout=timeout,
+                    method, url, headers=headers, timeout=timeout, data=body,
                     impersonate=IMPERSONATE_PROFILE,
                 )
             else:
-                response = requests.request(method, url, headers=headers, timeout=timeout)
+                response = requests.request(
+                    method, url, headers=headers, timeout=timeout, data=body
+                )
         except Exception as exc:  # curl_cffi raises its own error types
             last_error = exc
         else:

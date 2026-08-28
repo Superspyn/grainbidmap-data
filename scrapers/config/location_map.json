@@ -66,6 +66,126 @@
       "confidence": 1.0,
       "method": "name"
     },
+    "agp-aberdeen-sd": {
+      "name": "AGP Aberdeen SD",
+      "source": "bushel:agp",
+      "source_location_id": "a01dd9e2-da15-4e98-a86b-e4cc36c2974b",
+      "source_name": "Aberdeen, SD",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "agp-chester-ne": {
+      "name": "AGP Chester NE",
+      "source": "bushel:agp",
+      "source_location_id": "aa6c2985-993a-4242-bcc5-f20ed38e73a9",
+      "source_name": "Chester, NE",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "agp-cowles-ne": {
+      "name": "AGP Cowles NE",
+      "source": "bushel:agp",
+      "source_location_id": "a9bfb109-c050-4891-892d-c5e9efd79bb0",
+      "source_name": "Cowles, NE",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "agp-david-city-ne": {
+      "name": "AGP David City NE",
+      "source": "bushel:agp",
+      "source_location_id": "7c5c8f13-b5b9-4dbb-a4e2-3ea51c634c21",
+      "source_name": "David City, NE",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "agp-dawson-mn": {
+      "name": "AGP Dawson MN",
+      "source": "bushel:agp",
+      "source_location_id": "8244fb34-5f27-4961-bfe9-48d75bf21dc1",
+      "source_name": "Dawson, MN",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "agp-eagle-grove-ia": {
+      "name": "AGP Eagle Grove IA",
+      "source": "bushel:agp",
+      "source_location_id": "806024df-4b14-4295-965e-c8fb2d15f03c",
+      "source_name": "Eagle Grove, IA",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "agp-emmetsburg-ia": {
+      "name": "AGP Emmetsburg IA",
+      "source": "bushel:agp",
+      "source_location_id": "b3901ffe-c380-44e6-9ab1-221d6f8010cd",
+      "source_name": "Emmetsburg, IA",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "agp-fairfield-ne": {
+      "name": "AGP Fairfield NE",
+      "source": "bushel:agp",
+      "source_location_id": "27d71dee-7ce8-4b03-884e-031f4d0d0d37",
+      "source_name": "Fairfield, NE",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "agp-hastings-ne-grain-terminal": {
+      "name": "AGP Hastings NE Grain Terminal",
+      "source": "bushel:agp",
+      "source_location_id": "82df83c5-4169-42ef-93fe-75a71489e8f5",
+      "source_name": "Hastings, NE - Grain (Terminal)",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "agp-hastings-ne-soy-plant": {
+      "name": "AGP Hastings NE Soy Plant",
+      "source": "bushel:agp",
+      "source_location_id": "d88ab57e-a8bd-4c3b-8e55-a664d411ccb7",
+      "source_name": "Hastings, NE - Grain (Soy Plant)",
+      "confidence": 1.0,
+      "method": "name-tiebreak"
+    },
+    "agp-manning-ia": {
+      "name": "AGP Manning IA",
+      "source": "bushel:agp",
+      "source_location_id": "3ad8bace-6a19-407e-a7e1-ba13b91e977e",
+      "source_name": "Manning, IA",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "agp-mason-city-ia": {
+      "name": "AGP Mason City IA",
+      "source": "bushel:agp",
+      "source_location_id": "9e0a4952-62ef-4dbb-9031-c8b32c92f3f6",
+      "source_name": "Mason City, IA",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "agp-sergeant-bluff-ia": {
+      "name": "AGP Sergeant Bluff IA",
+      "source": "bushel:agp",
+      "source_location_id": "e4ba4c48-5540-457c-9c61-05db4b8dd197",
+      "source_name": "Sergeant Bluff, IA",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "agp-sheldon-ia": {
+      "name": "AGP Sheldon IA",
+      "source": "bushel:agp",
+      "source_location_id": "263ae6a2-8dab-482a-ab74-68e653300b71",
+      "source_name": "Sheldon, IA",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "agp-st-joseph-mo": {
+      "name": "AGP St Joseph MO",
+      "source": "bushel:agp",
+      "source_location_id": "97bc7227-47c0-4bae-8a2e-be5eda8e4bae",
+      "source_name": "Saint Joseph, MO",
+      "confidence": 0.5,
+      "method": "name"
+    },
     "cargill-beardstown-il": {
       "name": "Cargill Beardstown IL",
       "source": "agricharts:cargillus",
@@ -377,6 +497,62 @@
       "source_name": "CGB SCOTT CITY",
       "confidence": 1.0,
       "method": "geo(0.0km)"
+    },
+    "chs-kasson-mn": {
+      "name": "CHS Kasson MN",
+      "source": "bushel:chs",
+      "source_location_id": "61aa4a0b-4a65-42bd-a6e9-ad51046c1751",
+      "source_name": "Kasson",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "chs-oilseed-processing-fairmont-mn": {
+      "name": "CHS Oilseed Processing Fairmont MN",
+      "source": "bushel:chs",
+      "source_location_id": "a33375fe-cbce-4927-88fe-b5398968b4ed",
+      "source_name": "Fairmont",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "chs-oilseed-processing-mankato-mn": {
+      "name": "CHS Oilseed Processing Mankato MN",
+      "source": "bushel:chs",
+      "source_location_id": "2bfedd6e-f9c5-49fd-9621-5d23a396f5ff",
+      "source_name": "Mankato",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "chs-pipestone-grain-mn": {
+      "name": "CHS Pipestone Grain MN",
+      "source": "bushel:chs",
+      "source_location_id": "9d2aa6d9-9d90-437e-bd20-77aae270218b",
+      "source_name": "Pipestone",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "chs-savage-terminal-mn": {
+      "name": "CHS Savage Terminal MN",
+      "source": "bushel:chs",
+      "source_location_id": "2b0bdd27-e53f-4621-aec6-a7270ecdb7a4",
+      "source_name": "Savage",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "chs-tracy-mn": {
+      "name": "CHS Tracy MN",
+      "source": "bushel:chs",
+      "source_location_id": "1cad3d36-d5b5-4bca-ab8c-84c021a4cd16",
+      "source_name": "Tracy",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "chs-winona-river-and-rail-mn": {
+      "name": "CHS Winona River and Rail MN",
+      "source": "bushel:chs",
+      "source_location_id": "5f407051-5d3f-4cfb-9765-d52c6669e1c2",
+      "source_name": "Winona",
+      "confidence": 1.0,
+      "method": "name"
     },
     "ctlc-cahokia-il": {
       "name": "CTLC Cahokia IL",
@@ -1858,6 +2034,14 @@
       "confidence": 1.0,
       "method": "name"
     },
+    "lucerne-feed-mill": {
+      "name": "Lucerne feed mill",
+      "source": "bushel:smithfield",
+      "source_location_id": "7ecc29ae-ecb0-460e-8fa1-f9df52158ec1",
+      "source_name": "Lucerne",
+      "confidence": 1.0,
+      "method": "name"
+    },
     "mid-iowa-milling-edgewood-feed-mill": {
       "name": "Mid-Iowa Milling Edgewood Feed Mill",
       "source": "agricharts:midiowa",
@@ -1873,6 +2057,14 @@
       "source_name": "STATE CENTER",
       "confidence": 1.0,
       "method": "geo(0.0km)"
+    },
+    "murphy-brown-nevada-mo-smithfield": {
+      "name": "Murphy-Brown Nevada MO Smithfield",
+      "source": "bushel:smithfield",
+      "source_location_id": "a669f4b8-6968-45cd-92bd-bb4e58b5562f",
+      "source_name": "Nevada",
+      "confidence": 1.0,
+      "method": "name"
     },
     "new-coop-afton": {
       "name": "New Coop Afton",
@@ -2938,6 +3130,22 @@
       "confidence": 1.0,
       "method": "geo(0.1km)"
     },
+    "smithfield-grain-feed-mill-allerton": {
+      "name": "Smithfield grain feed mill Allerton",
+      "source": "bushel:smithfield",
+      "source_location_id": "2b47f2f9-efbe-4fb2-8e59-48bb5f039d13",
+      "source_name": "Allerton",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "southeastern-grain-laclede-mo-smithfield": {
+      "name": "Southeastern Grain Laclede MO Smithfield",
+      "source": "bushel:smithfield",
+      "source_location_id": "c083043c-3296-46b7-b62e-a119b4caa2cc",
+      "source_name": "Laclede",
+      "confidence": 1.0,
+      "method": "name"
+    },
     "stateline-armstrong-ia": {
       "name": "Stateline Armstrong IA",
       "source": "agricharts:statelinecoop",
@@ -3680,6 +3888,18 @@
       "method": "no-match"
     },
     {
+      "id": "agp-rosemont-ne",
+      "name": "AGP Rosemont NE",
+      "type": "coop",
+      "company": "AGP",
+      "lat": 40.2869572,
+      "lng": -98.3642206,
+      "url": "https://agp.o.bushelsites.com/cashbidssingle-2439",
+      "host": "agp.o.bushelsites.com",
+      "source": "bushel:agp",
+      "method": "no-match"
+    },
+    {
       "id": "nexus-cooperative-charles-city-ia",
       "name": "Nexus Cooperative Charles City IA",
       "type": "coop",
@@ -4006,118 +4226,10 @@
       "host": "www.christensenfarms.com"
     },
     {
-      "id": "smithfield-grain-feed-mill-allerton",
-      "name": "Smithfield grain feed mill Allerton",
-      "company": "Smithfield",
-      "host": "smithfieldgrain.com"
-    },
-    {
       "id": "seaboard-foods-feed-mill-iowa-falls",
       "name": "Seaboard Foods Feed Mill Iowa Falls",
       "company": "Seaboard Foods",
       "host": "www.grainbid.com"
-    },
-    {
-      "id": "lucerne-feed-mill",
-      "name": "Lucerne feed mill",
-      "company": "Smithfield",
-      "host": "smithfieldgrain.com"
-    },
-    {
-      "id": "agp-aberdeen-sd",
-      "name": "AGP Aberdeen SD",
-      "company": "AGP",
-      "host": "agp.o.bushelsites.com"
-    },
-    {
-      "id": "agp-david-city-ne",
-      "name": "AGP David City NE",
-      "company": "AGP",
-      "host": "agp.o.bushelsites.com"
-    },
-    {
-      "id": "agp-dawson-mn",
-      "name": "AGP Dawson MN",
-      "company": "AGP",
-      "host": "agp.o.bushelsites.com"
-    },
-    {
-      "id": "agp-eagle-grove-ia",
-      "name": "AGP Eagle Grove IA",
-      "company": "AGP",
-      "host": "agp.o.bushelsites.com"
-    },
-    {
-      "id": "agp-emmetsburg-ia",
-      "name": "AGP Emmetsburg IA",
-      "company": "AGP",
-      "host": "agp.o.bushelsites.com"
-    },
-    {
-      "id": "agp-manning-ia",
-      "name": "AGP Manning IA",
-      "company": "AGP",
-      "host": "agp.o.bushelsites.com"
-    },
-    {
-      "id": "agp-mason-city-ia",
-      "name": "AGP Mason City IA",
-      "company": "AGP",
-      "host": "agp.o.bushelsites.com"
-    },
-    {
-      "id": "agp-sergeant-bluff-ia",
-      "name": "AGP Sergeant Bluff IA",
-      "company": "AGP",
-      "host": "agp.o.bushelsites.com"
-    },
-    {
-      "id": "agp-sheldon-ia",
-      "name": "AGP Sheldon IA",
-      "company": "AGP",
-      "host": "agp.o.bushelsites.com"
-    },
-    {
-      "id": "agp-st-joseph-mo",
-      "name": "AGP St Joseph MO",
-      "company": "AGP",
-      "host": "agp.o.bushelsites.com"
-    },
-    {
-      "id": "agp-hastings-ne-soy-plant",
-      "name": "AGP Hastings NE Soy Plant",
-      "company": "AGP",
-      "host": "agp.o.bushelsites.com"
-    },
-    {
-      "id": "agp-hastings-ne-grain-terminal",
-      "name": "AGP Hastings NE Grain Terminal",
-      "company": "AGP",
-      "host": "agp.o.bushelsites.com"
-    },
-    {
-      "id": "agp-chester-ne",
-      "name": "AGP Chester NE",
-      "company": "AGP",
-      "host": "agp.o.bushelsites.com"
-    },
-    {
-      "id": "agp-fairfield-ne",
-      "name": "AGP Fairfield NE",
-      "company": "AGP",
-      "host": "agp.o.bushelsites.com"
-    },
-    {
-      "id": "agp-cowles-ne",
-      "name": "AGP Cowles NE",
-      "company": "AGP",
-      "host": "agp.o.bushelsites.com"
-    },
-    {
-      "id": "agp-rosemont-ne",
-      "name": "AGP Rosemont NE",
-      "company": "AGP",
-      "host": "agp.o.bushelsites.com"
     },
     {
       "id": "ray-carroll-grain-growers-richmond-mo",
@@ -5248,18 +5360,6 @@
       "host": "mfa-inc.com"
     },
     {
-      "id": "murphy-brown-nevada-mo-smithfield",
-      "name": "Murphy-Brown Nevada MO Smithfield",
-      "company": "Smithfield",
-      "host": "smithfieldgrain.com"
-    },
-    {
-      "id": "southeastern-grain-laclede-mo-smithfield",
-      "name": "Southeastern Grain Laclede MO Smithfield",
-      "company": "Smithfield",
-      "host": "smithfieldgrain.com"
-    },
-    {
       "id": "bowman-milling-pocahontas-mo",
       "name": "Bowman Milling Pocahontas MO",
       "company": "Bowman Milling",
@@ -5344,18 +5444,6 @@
       "host": "gevo.com"
     },
     {
-      "id": "chs-oilseed-processing-mankato-mn",
-      "name": "CHS Oilseed Processing Mankato MN",
-      "company": "CHS",
-      "host": "www.chsinc.com"
-    },
-    {
-      "id": "chs-oilseed-processing-fairmont-mn",
-      "name": "CHS Oilseed Processing Fairmont MN",
-      "company": "CHS",
-      "host": "www.chsinc.com"
-    },
-    {
       "id": "christensen-farms-feed-mill-sleepy-eye-mn",
       "name": "Christensen Farms Feed Mill Sleepy Eye MN",
       "company": "Christensen",
@@ -5368,22 +5456,10 @@
       "host": ""
     },
     {
-      "id": "chs-winona-river-and-rail-mn",
-      "name": "CHS Winona River and Rail MN",
-      "company": "CHS",
-      "host": "www.chsinc.com"
-    },
-    {
       "id": "red-wing-grain-mn",
       "name": "Red Wing Grain MN",
       "company": "Red Wing Grain",
       "host": "agpartners.net"
-    },
-    {
-      "id": "chs-savage-terminal-mn",
-      "name": "CHS Savage Terminal MN",
-      "company": "CHS",
-      "host": "www.chsinc.com"
     },
     {
       "id": "crystal-valley-cooperative-mankato-mn",
@@ -5498,24 +5574,6 @@
       "name": "Farmers Win Coop Rushford MN",
       "company": "Farmers Win Coop",
       "host": "www.farmerswin.com"
-    },
-    {
-      "id": "chs-pipestone-grain-mn",
-      "name": "CHS Pipestone Grain MN",
-      "company": "CHS",
-      "host": "www.chsinc.com"
-    },
-    {
-      "id": "chs-tracy-mn",
-      "name": "CHS Tracy MN",
-      "company": "CHS",
-      "host": "www.chsinc.com"
-    },
-    {
-      "id": "chs-kasson-mn",
-      "name": "CHS Kasson MN",
-      "company": "CHS",
-      "host": "www.chsinc.com"
     },
     {
       "id": "schmitz-grain-slayton-mn",
