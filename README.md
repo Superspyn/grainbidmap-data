@@ -51,30 +51,11 @@ exactly as it did before — manual bid entry, "View bid page" links.
 Copy all of `grain-trucking-map.html` into the code block. **Re-export it back
 into this repo whenever you edit it on the site**, or the two will drift.
 
-### 5. Let the two runners work
+### 5. The farm PC does the scraping
 
-Bids refresh from **two** places, because neither one alone is enough.
-
-| | Farm PC scheduled task | GitHub Actions |
-|---|---|---|
-| Runs | Weekdays :15 and :45, 8:15am–5:45pm local | Weekdays :07 and :37, 13:07–22:37 UTC |
-| Sources | All 20 | 18 — NEW Co-op and Landus fail |
-| Needs | The PC on and logged in | Nothing |
-| Observed reliability | 8 of 8 slots | 1 of 10 slots, one 2.5h late |
-
-**NEW Co-op and Landus block GitHub's datacenter IP ranges** — 403 and 429
-respectively — while answering normally from a home connection seconds later.
-`curl_cffi` does install and run on the runner, so this is IP reputation, not
-TLS fingerprinting. That is 116 of the 329 pins. Working around it would mean
-proxying through a residential address, which is evading an access control they
-put up deliberately; the honest fixes are to run from a normal home connection
-(what the farm PC task does) or to ask them to allowlist the runner.
-
-So the farm PC is the primary and the cloud run is the backup: when the PC is
-off, 18 sources stay current and those two are flagged `"stale": true` with
-their last good bids and real `fetched_at` — never blanked.
-
-Install the task once:
+All routine scraping runs as a Windows scheduled task on the farm PC —
+weekdays every 30 minutes (:15 and :45), 8:15am–5:45pm local time, which
+follows daylight saving on its own. Install it once:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts\install-task.ps1
@@ -83,9 +64,31 @@ powershell -ExecutionPolicy Bypass -File scripts\install-task.ps1
 It logs to `.build/update-bids.log` and needs no administrator rights. Remove it
 with `Unregister-ScheduledTask -TaskName 'Update cash bids' -Confirm:$false`.
 
-Both runners push to `main`. `bids.json` is generated rather than authored, so a
+GitHub Actions used to run on a schedule as a backup, and doesn't anymore — a
+deliberate choice, for two reasons observed in practice:
+
+- **NEW Co-op and Landus block GitHub's datacenter IP ranges** — 403 and 429
+  respectively — while answering normally from a home connection seconds later.
+  `curl_cffi` does install and run on the runner, so this is IP reputation, not
+  TLS fingerprinting. A cloud run can never refresh those 116 pins. Working
+  around it would mean proxying through a residential address, which is evading
+  an access control they put up deliberately; running from an actual home
+  connection is the honest fix.
+- **GitHub's cron was unreliable anyway**: 1 of 10 scheduled slots actually
+  fired, and that one ran 2.5 hours late. The farm PC task went 8 for 8.
+
+The workflow (`.github/workflows/bids.yml`) is kept as a **manual fallback**:
+if the PC is off for days, trigger it from the **Actions** tab → *Update cash
+bids* → *Run workflow*. It refreshes the 19 sources it can reach and flags NEW
+Co-op and Landus `"stale": true` with their last good bids — never blanked.
+
+Both push to `main`. `bids.json` is generated rather than authored, so a
 collision needs no merge — whichever build has the later `generated_at` wins,
 and both sides settle it the same way.
+
+**If the map's bids ever look frozen**, check in this order: is the PC on and
+were you logged in? Task Scheduler → "Update cash bids" → Last Run Result.
+Then `.build/update-bids.log` in the repo.
 
 ---
 
