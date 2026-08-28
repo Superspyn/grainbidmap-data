@@ -194,14 +194,6 @@
       "confidence": 1.0,
       "method": "geo(0.0km)"
     },
-    "cargill-iowa-falls-ia": {
-      "name": "Cargill Iowa Falls IA",
-      "source": "agricharts:cargillus",
-      "source_location_id": "63320",
-      "source_name": "Iowa Falls, GOS",
-      "confidence": 1.0,
-      "method": "geo(0.0km)"
-    },
     "cargill-kansas-city-mo": {
       "name": "Cargill Kansas City MO",
       "source": "agricharts:cargillus",
@@ -498,14 +490,6 @@
       "confidence": 1.0,
       "method": "geo(0.0km)"
     },
-    "cva-columbus-ne": {
-      "name": "CVA Columbus NE",
-      "source": "agricharts:cvacoop",
-      "source_location_id": "85909",
-      "source_name": "ADM Columbus",
-      "confidence": 0.636,
-      "method": "geo(2.9km)"
-    },
     "cva-east-hub-oakland-ne": {
       "name": "CVA East Hub Oakland NE",
       "source": "agricharts:cvacoop",
@@ -577,14 +561,6 @@
       "source_name": "Laurel",
       "confidence": 1.0,
       "method": "geo(0.0km)"
-    },
-    "cva-lincoln-ks": {
-      "name": "CVA Lincoln KS",
-      "source": "agricharts:cvacoop",
-      "source_location_id": "13875",
-      "source_name": "ADM Lincoln",
-      "confidence": 0.5,
-      "method": "name"
     },
     "cva-monroe-ne": {
       "name": "CVA Monroe NE",
@@ -714,14 +690,6 @@
       "confidence": 0.578,
       "method": "geo(0.3km)"
     },
-    "cva-york-office-ne": {
-      "name": "CVA York Office NE",
-      "source": "agricharts:cvacoop",
-      "source_location_id": "85908",
-      "source_name": "Green Plains York",
-      "confidence": 0.496,
-      "method": "geo(4.0km)"
-    },
     "flint-hill-resources-poet-arthur-ethanol": {
       "name": "Flint Hill Resources/poet Arthur Ethanol",
       "source": "gradable:poet",
@@ -735,14 +703,6 @@
       "source": "gradable:poet",
       "source_location_id": "331847712",
       "source_name": "Menlo, IA",
-      "confidence": 1.0,
-      "method": "name"
-    },
-    "flint-hills-resources-poet-iowa-falls-ethanol": {
-      "name": "Flint Hills Resources/Poet Iowa falls Ethanol",
-      "source": "gradable:poet",
-      "source_location_id": "331847137",
-      "source_name": "Iowa Falls, IA",
       "confidence": 1.0,
       "method": "name"
     },
@@ -789,9 +749,9 @@
     "gold-eagle-coop-eagle-grove-feedmill": {
       "name": "Gold-Eagle Coop Eagle Grove Feedmill",
       "source": "agricharts:goldeagle",
-      "source_location_id": "87766",
-      "source_name": "AGP Eagle Grove",
-      "confidence": 0.667,
+      "source_location_id": "51970",
+      "source_name": "EAGLE GROVE",
+      "confidence": 1.0,
       "method": "geo(0.8km)"
     },
     "gold-eagle-coop-forest-city": {
@@ -2474,6 +2434,134 @@
       "confidence": 1.0,
       "method": "name"
     },
+    "nexus-blooming-prairie-mn": {
+      "name": "Nexus Blooming Prairie MN",
+      "source": "nexus",
+      "source_location_id": "14:Blooming Prairie, MN",
+      "source_name": "Blooming Prairie, MN",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "nexus-carpenter-ia": {
+      "name": "Nexus Carpenter IA",
+      "source": "nexus",
+      "source_location_id": "28:Carpenter, IA",
+      "source_name": "Carpenter, IA",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "nexus-chapin-ia": {
+      "name": "Nexus Chapin IA",
+      "source": "nexus",
+      "source_location_id": "15:Chapin, IA",
+      "source_name": "Chapin, IA",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "nexus-denison-ia": {
+      "name": "Nexus Denison IA",
+      "source": "nexus",
+      "source_location_id": "7:Denison, IA",
+      "source_name": "Denison, IA",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "nexus-dewar-ia": {
+      "name": "Nexus Dewar IA",
+      "source": "nexus",
+      "source_location_id": "32:Dewar, IA",
+      "source_name": "Dewar, IA",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "nexus-elgin-ia": {
+      "name": "Nexus Elgin IA",
+      "source": "nexus",
+      "source_location_id": "23:Elgin, IA",
+      "source_name": "Elgin, IA",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "nexus-harlan-ia": {
+      "name": "Nexus Harlan IA",
+      "source": "nexus",
+      "source_location_id": "17:Harlan, IA",
+      "source_name": "Harlan, IA",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "nexus-manly-ia": {
+      "name": "Nexus Manly IA",
+      "source": "nexus",
+      "source_location_id": "18:Manly, IA",
+      "source_name": "Manly, IA",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "nexus-marble-rock-ia": {
+      "name": "Nexus Marble Rock IA",
+      "source": "nexus",
+      "source_location_id": "25:Marble Rock, IA",
+      "source_name": "Marble Rock, IA",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "nexus-northwood-ia": {
+      "name": "Nexus Northwood IA",
+      "source": "nexus",
+      "source_location_id": "29:Northwood, IA",
+      "source_name": "Northwood, IA",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "nexus-oelwein-ia": {
+      "name": "Nexus Oelwein IA",
+      "source": "nexus",
+      "source_location_id": "5:Oelwein, IA",
+      "source_name": "Oelwein, IA",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "nexus-rockford-ia": {
+      "name": "Nexus Rockford IA",
+      "source": "nexus",
+      "source_location_id": "9:Rockford, IA",
+      "source_name": "Rockford, IA",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "nexus-rudd-ia": {
+      "name": "Nexus Rudd IA",
+      "source": "nexus",
+      "source_location_id": "13:Rudd, IA",
+      "source_name": "Rudd, IA",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "nexus-stacyville-ia": {
+      "name": "Nexus Stacyville IA",
+      "source": "nexus",
+      "source_location_id": "6:Stacyville, IA",
+      "source_name": "Stacyville, IA",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "nexus-sumner-ia": {
+      "name": "Nexus Sumner IA",
+      "source": "nexus",
+      "source_location_id": "12:Sumner, IA",
+      "source_name": "Sumner, IA",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "nexus-toeterville-ia": {
+      "name": "Nexus Toeterville IA",
+      "source": "nexus",
+      "source_location_id": "22:Toeterville, IA",
+      "source_name": "Toeterville, IA",
+      "confidence": 1.0,
+      "method": "name"
+    },
     "north-iowa-coop-clear-lake": {
       "name": "North Iowa Coop Clear Lake",
       "source": "agricharts:nicoop",
@@ -2481,14 +2569,6 @@
       "source_name": "Clear Lake",
       "confidence": 1.0,
       "method": "geo(0.1km)"
-    },
-    "north-iowa-coop-plymouth": {
-      "name": "North Iowa Coop Plymouth",
-      "source": "agricharts:nicoop",
-      "source_location_id": "70857",
-      "source_name": "Plymouth",
-      "confidence": 1.0,
-      "method": "geo(0.0km)"
     },
     "north-iowa-coop-portland": {
       "name": "North Iowa Coop Portland",
@@ -2861,15 +2941,6 @@
   },
   "needs_review": [
     {
-      "name": "CVA Le Mars IA",
-      "source": "agricharts:cvacoop",
-      "source_location_id": "83175",
-      "source_name": "Plymouth Energy-Merrill",
-      "confidence": 0.052,
-      "method": "geo(7.3km)",
-      "pin_id": "cva-le-mars-ia"
-    },
-    {
       "name": "Landus Davis City",
       "source": "landus",
       "source_location_id": "25",
@@ -2886,6 +2957,15 @@
       "confidence": 0.25,
       "method": "name-ambiguous",
       "pin_id": "adm-quincy-il"
+    },
+    {
+      "name": "Cargill Iowa Falls IA",
+      "source": "agricharts:cargillus",
+      "source_location_id": "5762",
+      "source_name": "Cargill, CAH (Dlvd AC Grain LLC, Dana, IN)",
+      "confidence": 0.25,
+      "method": "name-ambiguous",
+      "pin_id": "cargill-iowa-falls-ia"
     },
     {
       "name": "ADM Marshall MN",
@@ -2927,6 +3007,18 @@
       "lat": 42.640684,
       "lng": -92.028655,
       "url": "https://poet.gradable.com/market/Fairbank--IA",
+      "host": "poet.gradable.com",
+      "source": "gradable:poet",
+      "method": "no-match"
+    },
+    {
+      "id": "flint-hills-resources-poet-iowa-falls-ethanol",
+      "name": "Flint Hills Resources/Poet Iowa falls Ethanol",
+      "type": "ethanol",
+      "company": "Flint Hills Resources / POET",
+      "lat": 42.505592,
+      "lng": -93.282414,
+      "url": "https://poet.gradable.com/market/Iowa-Falls--IA",
       "host": "poet.gradable.com",
       "source": "gradable:poet",
       "method": "no-match"
@@ -3244,6 +3336,18 @@
       "method": "no-match"
     },
     {
+      "id": "north-iowa-coop-plymouth",
+      "name": "North Iowa Coop Plymouth",
+      "type": "coop",
+      "company": "North Iowa Coop",
+      "lat": 43.245233,
+      "lng": -93.12202,
+      "url": "https://nicoop.com/markets/cash.php",
+      "host": "nicoop.com",
+      "source": "agricharts:nicoop",
+      "method": "no-match"
+    },
+    {
       "id": "pro-coop-estherville",
       "name": "Pro Coop Estherville",
       "type": "coop",
@@ -3265,6 +3369,42 @@
       "url": "https://procooperative.com/cash-bids/",
       "host": "procooperative.com",
       "source": "agricharts:procooperative",
+      "method": "no-match"
+    },
+    {
+      "id": "cva-columbus-ne",
+      "name": "CVA Columbus NE",
+      "type": "coop",
+      "company": "CVA",
+      "lat": 41.4291907,
+      "lng": -97.330466,
+      "url": "https://www.cvacoop.com/cash-bids",
+      "host": "www.cvacoop.com",
+      "source": "agricharts:cvacoop",
+      "method": "no-match"
+    },
+    {
+      "id": "cva-york-office-ne",
+      "name": "CVA York Office NE",
+      "type": "coop",
+      "company": "CVA",
+      "lat": 40.8913255,
+      "lng": -97.5919225,
+      "url": "https://www.cvacoop.com/cash-bids",
+      "host": "www.cvacoop.com",
+      "source": "agricharts:cvacoop",
+      "method": "no-match"
+    },
+    {
+      "id": "cva-le-mars-ia",
+      "name": "CVA Le Mars IA",
+      "type": "coop",
+      "company": "CVA",
+      "lat": 42.7938859,
+      "lng": -96.2243303,
+      "url": "https://www.cvacoop.com/cash-bids",
+      "host": "www.cvacoop.com",
+      "source": "agricharts:cvacoop",
       "method": "no-match"
     },
     {
@@ -3340,6 +3480,18 @@
       "method": "no-match"
     },
     {
+      "id": "cva-lincoln-ks",
+      "name": "CVA Lincoln KS",
+      "type": "coop",
+      "company": "CVA",
+      "lat": 39.0355072,
+      "lng": -98.1430892,
+      "url": "https://www.cvacoop.com/cash-bids",
+      "host": "www.cvacoop.com",
+      "source": "agricharts:cvacoop",
+      "method": "no-match"
+    },
+    {
       "id": "landus-dike",
       "name": "Landus Dike",
       "type": "coop",
@@ -3397,6 +3549,30 @@
       "url": "https://www.newcoop.com/cash-bids/",
       "host": "www.newcoop.com",
       "source": "newcoop",
+      "method": "no-match"
+    },
+    {
+      "id": "nexus-cooperative-charles-city-ia",
+      "name": "Nexus Cooperative Charles City IA",
+      "type": "coop",
+      "company": "Nexus Cooperative",
+      "lat": 43.0675035,
+      "lng": -92.673695,
+      "url": "https://www.nexus.coop/cash-bids/",
+      "host": "www.nexus.coop",
+      "source": "nexus",
+      "method": "no-match"
+    },
+    {
+      "id": "nexus-grafton-ia",
+      "name": "Nexus Grafton IA",
+      "type": "coop",
+      "company": "Nexus Cooperative",
+      "lat": 43.3411556,
+      "lng": -93.0630288,
+      "url": "https://www.nexus.coop/cash-bids/",
+      "host": "www.nexus.coop",
+      "source": "nexus",
       "method": "no-match"
     },
     {
@@ -3466,7 +3642,7 @@
       "company": "Cargill",
       "lat": 42.51274,
       "lng": -94.31387,
-      "url": "https://www.cargillag.com/check-prices",
+      "url": "https://www.cargillag.com/locations/fort-dodge-ssna",
       "host": "www.cargillag.com",
       "source": "agricharts:cargillus",
       "method": "no-match"
@@ -3478,7 +3654,7 @@
       "company": "Cargill",
       "lat": 41.5147,
       "lng": -90.6076,
-      "url": "https://www.cargillag.com/check-prices",
+      "url": "https://www.cargillag.com/locations/nestlepurina-davenport",
       "host": "www.cargillag.com",
       "source": "agricharts:cargillus",
       "method": "no-match"
@@ -3633,7 +3809,7 @@
       "id": "plymouth-energy-merrill-ethanol",
       "name": "Plymouth Energy Merrill Ethanol",
       "company": "Plymouth Energy",
-      "host": "www.plymouth-energy.com"
+      "host": "cvacoop365.agricharts.com"
     },
     {
       "id": "little-sioux-corn-processors-marcus-ethanol",
@@ -3645,7 +3821,7 @@
       "id": "quad-county-corn-processors-galva-ethanol",
       "name": "Quad County Corn Processors Galva Ethanol",
       "company": "Quad County Corn Processors",
-      "host": "www.quad-county.com"
+      "host": ""
     },
     {
       "id": "siouxland-energy-cooperative-sioux-center-ethanol",
@@ -3723,97 +3899,97 @@
       "id": "agp-aberdeen-sd",
       "name": "AGP Aberdeen SD",
       "company": "AGP",
-      "host": "www.agp.com"
+      "host": "agp.o.bushelsites.com"
     },
     {
       "id": "agp-david-city-ne",
       "name": "AGP David City NE",
       "company": "AGP",
-      "host": "www.agp.com"
+      "host": "agp.o.bushelsites.com"
     },
     {
       "id": "agp-dawson-mn",
       "name": "AGP Dawson MN",
       "company": "AGP",
-      "host": "www.agp.com"
+      "host": "agp.o.bushelsites.com"
     },
     {
       "id": "agp-eagle-grove-ia",
       "name": "AGP Eagle Grove IA",
       "company": "AGP",
-      "host": "www.agp.com"
+      "host": "agp.o.bushelsites.com"
     },
     {
       "id": "agp-emmetsburg-ia",
       "name": "AGP Emmetsburg IA",
       "company": "AGP",
-      "host": "www.agp.com"
+      "host": "agp.o.bushelsites.com"
     },
     {
       "id": "agp-manning-ia",
       "name": "AGP Manning IA",
       "company": "AGP",
-      "host": "www.agp.com"
+      "host": "agp.o.bushelsites.com"
     },
     {
       "id": "agp-mason-city-ia",
       "name": "AGP Mason City IA",
       "company": "AGP",
-      "host": "www.agp.com"
+      "host": "agp.o.bushelsites.com"
     },
     {
       "id": "agp-sergeant-bluff-ia",
       "name": "AGP Sergeant Bluff IA",
       "company": "AGP",
-      "host": "www.agp.com"
+      "host": "agp.o.bushelsites.com"
     },
     {
       "id": "agp-sheldon-ia",
       "name": "AGP Sheldon IA",
       "company": "AGP",
-      "host": "www.agp.com"
+      "host": "agp.o.bushelsites.com"
     },
     {
       "id": "agp-st-joseph-mo",
       "name": "AGP St Joseph MO",
       "company": "AGP",
-      "host": "www.agp.com"
+      "host": "agp.o.bushelsites.com"
     },
     {
       "id": "agp-hastings-ne-soy-plant",
       "name": "AGP Hastings NE Soy Plant",
       "company": "AGP",
-      "host": "www.agp.com"
+      "host": "agp.o.bushelsites.com"
     },
     {
       "id": "agp-hastings-ne-grain-terminal",
       "name": "AGP Hastings NE Grain Terminal",
       "company": "AGP",
-      "host": "www.agp.com"
+      "host": "agp.o.bushelsites.com"
     },
     {
       "id": "agp-chester-ne",
       "name": "AGP Chester NE",
       "company": "AGP",
-      "host": "www.agp.com"
+      "host": "agp.o.bushelsites.com"
     },
     {
       "id": "agp-fairfield-ne",
       "name": "AGP Fairfield NE",
       "company": "AGP",
-      "host": "www.agp.com"
+      "host": "agp.o.bushelsites.com"
     },
     {
       "id": "agp-cowles-ne",
       "name": "AGP Cowles NE",
       "company": "AGP",
-      "host": "www.agp.com"
+      "host": "agp.o.bushelsites.com"
     },
     {
       "id": "agp-rosemont-ne",
       "name": "AGP Rosemont NE",
       "company": "AGP",
-      "host": "www.agp.com"
+      "host": "agp.o.bushelsites.com"
     },
     {
       "id": "ray-carroll-grain-growers-richmond-mo",
@@ -3906,12 +4082,6 @@
       "host": "www.hullcoop.com"
     },
     {
-      "id": "nexus-cooperative-charles-city-ia",
-      "name": "Nexus Cooperative Charles City IA",
-      "company": "Nexus Cooperative",
-      "host": "www.nexus.coop"
-    },
-    {
       "id": "river-valley-cooperative-davenport-ia",
       "name": "River Valley Cooperative Davenport IA",
       "company": "River Valley Cooperative",
@@ -3928,102 +4098,6 @@
       "name": "Producer Cooperative Company Gaza IA",
       "company": "Producer Cooperative Company",
       "host": "gazaproducerscoop.com"
-    },
-    {
-      "id": "nexus-carpenter-ia",
-      "name": "Nexus Carpenter IA",
-      "company": "Nexus Cooperative",
-      "host": "www.nexus.coop"
-    },
-    {
-      "id": "nexus-chapin-ia",
-      "name": "Nexus Chapin IA",
-      "company": "Nexus Cooperative",
-      "host": "www.nexus.coop"
-    },
-    {
-      "id": "nexus-denison-ia",
-      "name": "Nexus Denison IA",
-      "company": "Nexus Cooperative",
-      "host": "www.nexus.coop"
-    },
-    {
-      "id": "nexus-dewar-ia",
-      "name": "Nexus Dewar IA",
-      "company": "Nexus Cooperative",
-      "host": "www.nexus.coop"
-    },
-    {
-      "id": "nexus-elgin-ia",
-      "name": "Nexus Elgin IA",
-      "company": "Nexus Cooperative",
-      "host": "www.nexus.coop"
-    },
-    {
-      "id": "nexus-grafton-ia",
-      "name": "Nexus Grafton IA",
-      "company": "Nexus Cooperative",
-      "host": "www.nexus.coop"
-    },
-    {
-      "id": "nexus-harlan-ia",
-      "name": "Nexus Harlan IA",
-      "company": "Nexus Cooperative",
-      "host": "www.nexus.coop"
-    },
-    {
-      "id": "nexus-manly-ia",
-      "name": "Nexus Manly IA",
-      "company": "Nexus Cooperative",
-      "host": "www.nexus.coop"
-    },
-    {
-      "id": "nexus-marble-rock-ia",
-      "name": "Nexus Marble Rock IA",
-      "company": "Nexus Cooperative",
-      "host": "www.nexus.coop"
-    },
-    {
-      "id": "nexus-northwood-ia",
-      "name": "Nexus Northwood IA",
-      "company": "Nexus Cooperative",
-      "host": "www.nexus.coop"
-    },
-    {
-      "id": "nexus-oelwein-ia",
-      "name": "Nexus Oelwein IA",
-      "company": "Nexus Cooperative",
-      "host": "www.nexus.coop"
-    },
-    {
-      "id": "nexus-rockford-ia",
-      "name": "Nexus Rockford IA",
-      "company": "Nexus Cooperative",
-      "host": "www.nexus.coop"
-    },
-    {
-      "id": "nexus-rudd-ia",
-      "name": "Nexus Rudd IA",
-      "company": "Nexus Cooperative",
-      "host": "www.nexus.coop"
-    },
-    {
-      "id": "nexus-stacyville-ia",
-      "name": "Nexus Stacyville IA",
-      "company": "Nexus Cooperative",
-      "host": "www.nexus.coop"
-    },
-    {
-      "id": "nexus-sumner-ia",
-      "name": "Nexus Sumner IA",
-      "company": "Nexus Cooperative",
-      "host": "www.nexus.coop"
-    },
-    {
-      "id": "nexus-toeterville-ia",
-      "name": "Nexus Toeterville IA",
-      "company": "Nexus Cooperative",
-      "host": "www.nexus.coop"
     },
     {
       "id": "hull-coop-sheldon-feed-mill-ia",
@@ -4137,7 +4211,7 @@
       "id": "farmers-elevator-supply-hawk-point-mo",
       "name": "Farmers Elevator Supply Hawk Point MO",
       "company": "Farmers Elevator & Supply Co (Hawk Point)",
-      "host": "farmerselevatorandsupply.com"
+      "host": ""
     },
     {
       "id": "moberly-natural-crush-mo",
@@ -4539,7 +4613,7 @@
       "id": "stover-milling-co-mo",
       "name": "Stover Milling Co MO",
       "company": "Stover Milling",
-      "host": "stovermilling.com"
+      "host": ""
     },
     {
       "id": "mfa-agri-services-lebanon-mo",
@@ -4557,7 +4631,7 @@
       "id": "consumers-oil-company-maryville-mo",
       "name": "Consumers Oil Company Maryville MO",
       "company": "Consumers Oil",
-      "host": "www.consumersoilmaryville.com"
+      "host": ""
     },
     {
       "id": "united-cooperatives-osborn-mo",
@@ -4683,7 +4757,7 @@
       "id": "rose-acre-farms-hawk-point-mo",
       "name": "Rose Acre Farms Hawk Point MO",
       "company": "Rose Acre Farms",
-      "host": "www.roseacrefarms.com"
+      "host": "www.goodegg.com"
     },
     {
       "id": "smart-bros-farms-tebbetts-mo",
@@ -5115,19 +5189,19 @@
       "id": "guardian-energy-janesville-mn",
       "name": "Guardian Energy Janesville MN",
       "company": "Guardian Energy",
-      "host": "guardianenergymn.com"
+      "host": "www.guardiannrg.com"
     },
     {
       "id": "heartland-corn-products-winthrop-mn",
       "name": "Heartland Corn Products Winthrop MN",
       "company": "Heartland Corn Products",
-      "host": "heartlandcornproducts.com"
+      "host": "www.heartlandcorn.com"
     },
     {
       "id": "green-plains-fairmont-mn-ethanol",
       "name": "Green Plains Fairmont MN Ethanol",
       "company": "Green Plains",
-      "host": "greenplains.com"
+      "host": "gpreinc.com"
     },
     {
       "id": "valero-welcome-mn-ethanol",
@@ -5175,7 +5249,7 @@
       "id": "red-wing-grain-mn",
       "name": "Red Wing Grain MN",
       "company": "Red Wing Grain",
-      "host": "redwinggrain.com"
+      "host": "agpartners.net"
     },
     {
       "id": "chs-savage-terminal-mn",
@@ -5229,37 +5303,37 @@
       "id": "central-farm-service-truman-mn",
       "name": "Central Farm Service Truman MN",
       "company": "Central Farm Service",
-      "host": "www.cfsagservice.com"
+      "host": "www.cfscoop.com"
     },
     {
       "id": "central-farm-service-st-james-mn",
       "name": "Central Farm Service St James MN",
       "company": "Central Farm Service",
-      "host": "www.cfsagservice.com"
+      "host": "www.cfscoop.com"
     },
     {
       "id": "central-farm-service-wells-mn",
       "name": "Central Farm Service Wells MN",
       "company": "Central Farm Service",
-      "host": "www.cfsagservice.com"
+      "host": "www.cfscoop.com"
     },
     {
       "id": "meadowland-farmers-coop-lamberton-mn",
       "name": "Meadowland Farmers Coop Lamberton MN",
       "company": "Meadowland Farmers Coop",
-      "host": "www.meadowlandcoop.com"
+      "host": "meadowlandfarmerscoop.com"
     },
     {
       "id": "meadowland-farmers-coop-wabasso-mn",
       "name": "Meadowland Farmers Coop Wabasso MN",
       "company": "Meadowland Farmers Coop",
-      "host": "www.meadowlandcoop.com"
+      "host": "meadowlandfarmerscoop.com"
     },
     {
       "id": "meadowland-farmers-coop-walnut-grove-mn",
       "name": "Meadowland Farmers Coop Walnut Grove MN",
       "company": "Meadowland Farmers Coop",
-      "host": "www.meadowlandcoop.com"
+      "host": "meadowlandfarmerscoop.com"
     },
     {
       "id": "new-vision-co-op-worthington-mn",
@@ -5289,37 +5363,31 @@
       "id": "ag-partners-goodhue-mn",
       "name": "Ag Partners Goodhue MN",
       "company": "Ag Partners (MN)",
-      "host": "www.agpartners.coop"
+      "host": "agpartners.net"
     },
     {
       "id": "ag-partners-lake-city-mn",
       "name": "Ag Partners Lake City MN",
       "company": "Ag Partners (MN)",
-      "host": "www.agpartners.coop"
+      "host": "agpartners.net"
     },
     {
       "id": "farmers-win-coop-houston-mn",
       "name": "Farmers Win Coop Houston MN",
       "company": "Farmers Win Coop",
-      "host": "www.farmerswincoop.com"
+      "host": "www.farmerswin.com"
     },
     {
       "id": "farmers-win-coop-caledonia-mn",
       "name": "Farmers Win Coop Caledonia MN",
       "company": "Farmers Win Coop",
-      "host": "www.farmerswincoop.com"
+      "host": "www.farmerswin.com"
     },
     {
       "id": "farmers-win-coop-rushford-mn",
       "name": "Farmers Win Coop Rushford MN",
       "company": "Farmers Win Coop",
-      "host": "www.farmerswincoop.com"
-    },
-    {
-      "id": "nexus-blooming-prairie-mn",
-      "name": "Nexus Blooming Prairie MN",
-      "company": "Nexus Cooperative",
-      "host": "www.nexuscoop.com"
+      "host": "www.farmerswin.com"
     },
     {
       "id": "chs-pipestone-grain-mn",

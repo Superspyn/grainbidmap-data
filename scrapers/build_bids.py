@@ -34,6 +34,7 @@ from adapters.gradable import GradableAdapter  # noqa: E402
 from adapters.heartland import HeartlandAdapter  # noqa: E402
 from adapters.landus import LandusAdapter  # noqa: E402
 from adapters.newcoop import NewCoopAdapter  # noqa: E402
+from adapters.nexus import NexusAdapter  # noqa: E402
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
 CONFIG = REPO / "scrapers" / "config" / "sources.yaml"
@@ -66,6 +67,8 @@ def build_adapter(spec: dict):
         return NewCoopAdapter()
     if kind == "landus":
         return LandusAdapter()
+    if kind == "nexus":
+        return NexusAdapter()
     if kind == "gradable":
         return GradableAdapter(spec["tenant"])
     if kind == "cihedging":
