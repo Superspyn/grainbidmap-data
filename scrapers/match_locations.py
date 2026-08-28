@@ -59,6 +59,7 @@ COMPANY_TO_SOURCE = {
     "New Coop": "newcoop",
     "Landus": "landus",
     "Nexus Cooperative": "nexus",
+    "New Vision Co-op": "agricharts:newvision",
     "Golden Grain Energy": "cihedging:goldengrain",
     "POET": "gradable:poet",
     "Flint Hills Resources / POET": "gradable:poet",
