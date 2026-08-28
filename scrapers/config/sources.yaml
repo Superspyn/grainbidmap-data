@@ -97,6 +97,14 @@ sources:
     # Identify yourself via BIDS_CONTACT, and do not raise the request rate:
     # one bulk request covers all 77 of their locations.
 
+  - id: agricharts:newvision
+    adapter: agricharts
+    tenant: newvision
+    label: New Vision Co-op
+    # 16 pins across southwest Minnesota. They also quote delivered bids to ADM
+    # Mankato, AGP Sheldon, CHS Fairmont/Mankato, POET Ashton and the MNSP
+    # Brewster soybean plant; those are not their elevators and are not pinned.
+
   - id: nexus
     adapter: nexus
     label: Nexus Cooperative

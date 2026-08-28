@@ -2434,6 +2434,134 @@
       "confidence": 1.0,
       "method": "name"
     },
+    "new-vision-co-op-adrian-mn": {
+      "name": "New Vision Co-op Adrian MN",
+      "source": "agricharts:newvision",
+      "source_location_id": "46899",
+      "source_name": "ADRIAN",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "new-vision-co-op-beaver-creek-mn": {
+      "name": "New Vision Co-op Beaver Creek MN",
+      "source": "agricharts:newvision",
+      "source_location_id": "18652",
+      "source_name": "BEAVER CREEK",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "new-vision-co-op-brewster-mn": {
+      "name": "New Vision Co-op Brewster MN",
+      "source": "agricharts:newvision",
+      "source_location_id": "46894",
+      "source_name": "BREWSTER",
+      "confidence": 1.0,
+      "method": "geo(0.1km)"
+    },
+    "new-vision-co-op-dundee-mn": {
+      "name": "New Vision Co-op Dundee MN",
+      "source": "agricharts:newvision",
+      "source_location_id": "46900",
+      "source_name": "DUNDEE",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "new-vision-co-op-ellsworth-mn": {
+      "name": "New Vision Co-op Ellsworth MN",
+      "source": "agricharts:newvision",
+      "source_location_id": "46901",
+      "source_name": "ELLSWORTH",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "new-vision-co-op-heron-lake-mn": {
+      "name": "New Vision Co-op Heron Lake MN",
+      "source": "agricharts:newvision",
+      "source_location_id": "46895",
+      "source_name": "HERON LAKE",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "new-vision-co-op-hills-terminal-mn": {
+      "name": "New Vision Co-op Hills Terminal MN",
+      "source": "agricharts:newvision",
+      "source_location_id": "18650",
+      "source_name": "HILLS TERMINAL",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "new-vision-co-op-jeffers-mn": {
+      "name": "New Vision Co-op Jeffers MN",
+      "source": "agricharts:newvision",
+      "source_location_id": "46902",
+      "source_name": "JEFFERS",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "new-vision-co-op-magnolia-mn": {
+      "name": "New Vision Co-op Magnolia MN",
+      "source": "agricharts:newvision",
+      "source_location_id": "20359",
+      "source_name": "MAGNOLIA",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "new-vision-co-op-mankato-mn": {
+      "name": "New Vision Co-op Mankato MN",
+      "source": "agricharts:newvision",
+      "source_location_id": "83898",
+      "source_name": "MANKATO",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "new-vision-co-op-miloma-mn": {
+      "name": "New Vision Co-op Miloma MN",
+      "source": "agricharts:newvision",
+      "source_location_id": "41203",
+      "source_name": "MILOMA",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "new-vision-co-op-mountain-lake-mn": {
+      "name": "New Vision Co-op Mountain Lake MN",
+      "source": "agricharts:newvision",
+      "source_location_id": "46896",
+      "source_name": "MOUNTAIN LAKE",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "new-vision-co-op-reading-mn": {
+      "name": "New Vision Co-op Reading MN",
+      "source": "agricharts:newvision",
+      "source_location_id": "46904",
+      "source_name": "READING",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "new-vision-co-op-wilmont-mn": {
+      "name": "New Vision Co-op Wilmont MN",
+      "source": "agricharts:newvision",
+      "source_location_id": "46905",
+      "source_name": "WILMONT",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "new-vision-co-op-windom-mn": {
+      "name": "New Vision Co-op Windom MN",
+      "source": "agricharts:newvision",
+      "source_location_id": "46898",
+      "source_name": "WINDOM",
+      "confidence": 1.0,
+      "method": "geo(0.1km)"
+    },
+    "new-vision-co-op-worthington-mn": {
+      "name": "New Vision Co-op Worthington MN",
+      "source": "agricharts:newvision",
+      "source_location_id": "46897",
+      "source_name": "WORTHINGTON",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
     "nexus-blooming-prairie-mn": {
       "name": "Nexus Blooming Prairie MN",
       "source": "nexus",
@@ -5334,24 +5462,6 @@
       "name": "Meadowland Farmers Coop Walnut Grove MN",
       "company": "Meadowland Farmers Coop",
       "host": "meadowlandfarmerscoop.com"
-    },
-    {
-      "id": "new-vision-co-op-worthington-mn",
-      "name": "New Vision Co-op Worthington MN",
-      "company": "New Vision Co-op",
-      "host": "www.newvision.coop"
-    },
-    {
-      "id": "new-vision-co-op-brewster-mn",
-      "name": "New Vision Co-op Brewster MN",
-      "company": "New Vision Co-op",
-      "host": "www.newvision.coop"
-    },
-    {
-      "id": "new-vision-co-op-windom-mn",
-      "name": "New Vision Co-op Windom MN",
-      "company": "New Vision Co-op",
-      "host": "www.newvision.coop"
     },
     {
       "id": "central-region-cooperative-sleepy-eye-mn",

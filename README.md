@@ -109,6 +109,7 @@ single request. Landus is the exception - it has no bulk endpoint, so it costs
 | CGB | 16 | AgriCharts |
 | Key Cooperative | 16 | AgriCharts |
 | Nexus Cooperative | 16 | Own server-rendered page |
+| New Vision Co-op | 16 | AgriCharts (`newvision`) |
 | POET Biorefining | 15 | Gradable API |
 | Pro Co-op | 14 | AgriCharts |
 | Stateline Cooperative | 9 | AgriCharts |
@@ -123,9 +124,9 @@ single request. Landus is the exception - it has no bulk endpoint, so it costs
 | Golden Grain Energy | 1 | CI Hedging widget API |
 | SilverEdge Cooperative | 1 | AgriCharts |
 
-**367 of 722 pins** carry live bids (~4,850 bid rows). The rest:
+**383 of 735 pins** carry live bids (~5,140 bid rows). The rest:
 
-- **291 pins are on companies with no adapter yet.** Biggest: MFA (59), AGP (16), River Valley Cooperative (9), CHS (7), Valero (7).
+- **288 pins are on companies with no adapter yet.** Biggest: MFA (59), AGP (16), River Valley Cooperative (9), CHS (7), Valero (7).
 - **59 pins matched a source that publishes no bid for them** — out-of-state and
   seasonal facilities their co-op does not quote, plus pins whose co-op only
   quotes a *delivered* bid to someone else's plant (see below).
