@@ -58,7 +58,8 @@ def build_adapter(spec: dict):
     kind = spec["adapter"]
     if kind == "agricharts":
         return AgriChartsAdapter(
-            spec["tenant"],
+            spec.get("tenant"),
+            base=spec.get("base"),
             months=spec.get("months", 12),
             referer=spec.get("referer"),
         )

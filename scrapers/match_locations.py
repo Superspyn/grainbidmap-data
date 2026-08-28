@@ -70,6 +70,8 @@ COMPANY_TO_SOURCE = {
     "StateLine Cooperative": "agricharts:statelinecoop",
     "North Iowa Cooperative": "agricharts:nicoop",
     "Pro Cooperative": "agricharts:procooperative",
+    "Hartog Elevator Inc": "agricharts:hartog",
+    "Faas Feed & Grain": "agricharts:faasfeed",
     "CHS": "bushel:chs",
     "AGP": "bushel:agp",
     "Smithfield": "bushel:smithfield",
