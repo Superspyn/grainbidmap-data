@@ -1810,8 +1810,8 @@
       "confidence": 1.0,
       "method": "name"
     },
-    "landus-cooperative-grant-ia": {
-      "name": "Landus Cooperative Grant IA",
+    "landus-cooperative-grant-ia-approx": {
+      "name": "Landus Cooperative Grant IA (approx)",
       "source": "landus",
       "source_location_id": "160",
       "source_name": "Grant",
@@ -3968,8 +3968,8 @@
       "method": "no-match"
     },
     {
-      "id": "heartland-co-op-chelsea-ia",
-      "name": "Heartland CO-OP Chelsea IA",
+      "id": "heartland-co-op-chelsea-ia-approx",
+      "name": "Heartland CO-OP Chelsea IA (approx)",
       "type": "coop",
       "company": "Heartland CO-OP",
       "lat": 41.917864,
@@ -4028,8 +4028,8 @@
       "method": "no-match"
     },
     {
-      "id": "landus-cooperative-kesley-ia",
-      "name": "LANDUS COOPERATIVE Kesley IA",
+      "id": "landus-cooperative-kesley-ia-approx",
+      "name": "LANDUS COOPERATIVE Kesley IA (approx)",
       "type": "coop",
       "company": "LANDUS COOPERATIVE",
       "lat": 42.662455,
@@ -4052,8 +4052,8 @@
       "method": "no-match"
     },
     {
-      "id": "heartland-co-op-luzerne-ia",
-      "name": "Heartland CO-OP Luzerne IA",
+      "id": "heartland-co-op-luzerne-ia-approx",
+      "name": "Heartland CO-OP Luzerne IA (approx)",
       "type": "coop",
       "company": "Heartland CO-OP",
       "lat": 41.906034,
@@ -4498,8 +4498,8 @@
       "host": ""
     },
     {
-      "id": "aspinwall-coop-aspinwall-ia",
-      "name": "Aspinwall Coop Aspinwall IA",
+      "id": "aspinwall-coop-aspinwall-ia-approx",
+      "name": "Aspinwall Coop Aspinwall IA (approx)",
       "company": "Aspinwall Coop",
       "host": ""
     },
@@ -4540,14 +4540,14 @@
       "host": ""
     },
     {
-      "id": "premium-feed-grain-brunsville-ia",
-      "name": "Premium Feed & Grain Brunsville IA",
+      "id": "premium-feed-grain-brunsville-ia-approx",
+      "name": "Premium Feed & Grain Brunsville IA (approx)",
       "company": "Premium Feed & Grain",
       "host": ""
     },
     {
-      "id": "chs-inc-buffalo-ia",
-      "name": "CHS Inc Buffalo IA",
+      "id": "chs-inc-buffalo-ia-approx",
+      "name": "CHS Inc Buffalo IA (approx)",
       "company": "CHS Inc",
       "host": ""
     },
@@ -4576,14 +4576,14 @@
       "host": ""
     },
     {
-      "id": "mfa-agri-service-corydon-ia",
-      "name": "MFA Agri Service Corydon IA",
+      "id": "mfa-agri-service-corydon-ia-approx",
+      "name": "MFA Agri Service Corydon IA (approx)",
       "company": "MFA Agri Service",
       "host": ""
     },
     {
-      "id": "ag-vantage-fs-inc-coulter-ia",
-      "name": "AG Vantage FS Inc Coulter IA",
+      "id": "ag-vantage-fs-inc-coulter-ia-approx",
+      "name": "AG Vantage FS Inc Coulter IA (approx)",
       "company": "AG Vantage FS Inc",
       "host": ""
     },
@@ -4618,14 +4618,14 @@
       "host": "www.rivervalleycoop.com"
     },
     {
-      "id": "five-star-cooperative-dougherty-ia",
-      "name": "Five Star Cooperative Dougherty IA",
+      "id": "five-star-cooperative-dougherty-ia-approx",
+      "name": "Five Star Cooperative Dougherty IA (approx)",
       "company": "Five Star Cooperative",
       "host": "www.fivestarcoop.com"
     },
     {
-      "id": "cogdill-farm-supply-inc-dow-city-ia",
-      "name": "Cogdill Farm Supply Inc Dow City IA",
+      "id": "cogdill-farm-supply-inc-dow-city-ia-approx",
+      "name": "Cogdill Farm Supply Inc Dow City IA (approx)",
       "company": "Cogdill Farm Supply Inc",
       "host": ""
     },
@@ -4678,26 +4678,26 @@
       "host": ""
     },
     {
-      "id": "consolidated-grain-barge-cgb-fayette-ia",
-      "name": "Consolidated Grain & Barge CGB Fayette IA",
+      "id": "consolidated-grain-barge-cgb-fayette-ia-approx",
+      "name": "Consolidated Grain & Barge CGB Fayette IA (approx)",
       "company": "Consolidated Grain & Barge CGB",
       "host": ""
     },
     {
-      "id": "agstate-fonda-ia",
-      "name": "AgState Fonda IA",
+      "id": "agstate-fonda-ia-approx",
+      "name": "AgState Fonda IA (approx)",
       "company": "AgState",
       "host": ""
     },
     {
-      "id": "21st-century-cooperative-fontanelle-ia",
-      "name": "21st Century Cooperative Fontanelle IA",
+      "id": "21st-century-cooperative-fontanelle-ia-approx",
+      "name": "21st Century Cooperative Fontanelle IA (approx)",
       "company": "21st Century Cooperative",
       "host": ""
     },
     {
-      "id": "farmers-cooperative-produce-co-fort-atkinson-ia",
-      "name": "Farmers Cooperative Produce Co Fort Atkinson IA",
+      "id": "farmers-cooperative-produce-co-fort-atkinson-ia-approx",
+      "name": "Farmers Cooperative Produce Co Fort Atkinson IA (approx)",
       "company": "Farmers Cooperative Produce Co",
       "host": ""
     },
@@ -4762,8 +4762,8 @@
       "host": "www.scoular.com"
     },
     {
-      "id": "fredericksburg-farmers-coop-hawkeye-ia",
-      "name": "Fredericksburg Farmers Coop Hawkeye IA",
+      "id": "fredericksburg-farmers-coop-hawkeye-ia-approx",
+      "name": "Fredericksburg Farmers Coop Hawkeye IA (approx)",
       "company": "Fredericksburg Farmers Coop",
       "host": ""
     },
@@ -4774,8 +4774,8 @@
       "host": ""
     },
     {
-      "id": "agstate-holstein-ia",
-      "name": "AgState Holstein IA",
+      "id": "agstate-holstein-ia-approx",
+      "name": "AgState Holstein IA (approx)",
       "company": "AgState",
       "host": ""
     },
@@ -4792,14 +4792,14 @@
       "host": ""
     },
     {
-      "id": "prairie-land-cooperative-hubbard-ia",
-      "name": "Prairie Land Cooperative Hubbard IA",
+      "id": "prairie-land-cooperative-hubbard-ia-approx",
+      "name": "Prairie Land Cooperative Hubbard IA (approx)",
       "company": "Prairie Land Cooperative",
       "host": ""
     },
     {
-      "id": "five-star-cooperative-ionia-ia",
-      "name": "Five Star Cooperative Ionia IA",
+      "id": "five-star-cooperative-ionia-ia-approx",
+      "name": "Five Star Cooperative Ionia IA (approx)",
       "company": "Five Star Cooperative",
       "host": "www.fivestarcoop.com"
     },
@@ -4846,8 +4846,8 @@
       "host": ""
     },
     {
-      "id": "farmers-coop-association-libertyville-ia",
-      "name": "Farmers Coop Association Libertyville IA",
+      "id": "farmers-coop-association-libertyville-ia-approx",
+      "name": "Farmers Coop Association Libertyville IA (approx)",
       "company": "Farmers Coop Association",
       "host": ""
     },
@@ -4900,14 +4900,14 @@
       "host": ""
     },
     {
-      "id": "nelson-grain-inc-marshalltown-ia",
-      "name": "Nelson Grain Inc. Marshalltown IA",
+      "id": "nelson-grain-inc-marshalltown-ia-approx",
+      "name": "Nelson Grain Inc. Marshalltown IA (approx)",
       "company": "Nelson Grain Inc.",
       "host": "nelsongrain.com"
     },
     {
-      "id": "agstate-maurice-ia",
-      "name": "AgState Maurice IA",
+      "id": "agstate-maurice-ia-approx",
+      "name": "AgState Maurice IA (approx)",
       "company": "AgState",
       "host": ""
     },
@@ -4924,20 +4924,20 @@
       "host": ""
     },
     {
-      "id": "south-central-cooperative-melcher-ia",
-      "name": "South Central Cooperative Melcher IA",
+      "id": "south-central-cooperative-melcher-ia-approx",
+      "name": "South Central Cooperative Melcher IA (approx)",
       "company": "South Central Cooperative",
       "host": ""
     },
     {
-      "id": "new-cooperative-inc-moorland-ia",
-      "name": "New Cooperative Inc. Moorland IA",
+      "id": "new-cooperative-inc-moorland-ia-approx",
+      "name": "New Cooperative Inc. Moorland IA (approx)",
       "company": "New Cooperative Inc.",
       "host": ""
     },
     {
-      "id": "trioak-foods-inc-mount-pleasant-ia",
-      "name": "TriOak Foods Inc Mount Pleasant IA",
+      "id": "trioak-foods-inc-mount-pleasant-ia-approx",
+      "name": "TriOak Foods Inc Mount Pleasant IA (approx)",
       "company": "TriOak Foods Inc",
       "host": ""
     },
@@ -4960,8 +4960,8 @@
       "host": ""
     },
     {
-      "id": "west-side-grain-sales-corp-newhall-ia",
-      "name": "West Side Grain Sales Corp Newhall IA",
+      "id": "west-side-grain-sales-corp-newhall-ia-approx",
+      "name": "West Side Grain Sales Corp Newhall IA (approx)",
       "company": "West Side Grain Sales Corp",
       "host": ""
     },
@@ -4984,8 +4984,8 @@
       "host": ""
     },
     {
-      "id": "farmers-cooperative-elevator-ottosen-ia",
-      "name": "Farmers Cooperative Elevator Ottosen IA",
+      "id": "farmers-cooperative-elevator-ottosen-ia-approx",
+      "name": "Farmers Cooperative Elevator Ottosen IA (approx)",
       "company": "Farmers Cooperative Elevator",
       "host": ""
     },
@@ -4996,8 +4996,8 @@
       "host": ""
     },
     {
-      "id": "cogdill-farm-supply-inc-panama-ia",
-      "name": "Cogdill Farm Supply Inc Panama IA",
+      "id": "cogdill-farm-supply-inc-panama-ia-approx",
+      "name": "Cogdill Farm Supply Inc Panama IA (approx)",
       "company": "Cogdill Farm Supply Inc",
       "host": ""
     },
@@ -5032,14 +5032,14 @@
       "host": ""
     },
     {
-      "id": "troy-elevator-inc-pulaski-ia",
-      "name": "Troy Elevator Inc Pulaski IA",
+      "id": "troy-elevator-inc-pulaski-ia-approx",
+      "name": "Troy Elevator Inc Pulaski IA (approx)",
       "company": "Troy Elevator Inc",
       "host": ""
     },
     {
-      "id": "farmers-feed-grain-company-inc-riceville-ia",
-      "name": "Farmers Feed & Grain Company Inc Riceville IA",
+      "id": "farmers-feed-grain-company-inc-riceville-ia-approx",
+      "name": "Farmers Feed & Grain Company Inc Riceville IA (approx)",
       "company": "Farmers Feed & Grain Company Inc",
       "host": ""
     },
@@ -5050,14 +5050,14 @@
       "host": ""
     },
     {
-      "id": "cartersville-elevator-inc-rockwell-ia",
-      "name": "Cartersville Elevator Inc. Rockwell IA",
+      "id": "cartersville-elevator-inc-rockwell-ia-approx",
+      "name": "Cartersville Elevator Inc. Rockwell IA (approx)",
       "company": "Cartersville Elevator Inc.",
       "host": ""
     },
     {
-      "id": "five-star-cooperative-rockwell-ia",
-      "name": "Five Star Cooperative Rockwell IA",
+      "id": "five-star-cooperative-rockwell-ia-approx",
+      "name": "Five Star Cooperative Rockwell IA (approx)",
       "company": "Five Star Cooperative",
       "host": "www.fivestarcoop.com"
     },
@@ -5080,8 +5080,8 @@
       "host": ""
     },
     {
-      "id": "farmers-cooperative-company-sac-city-ia",
-      "name": "Farmers Cooperative Company Sac City IA",
+      "id": "farmers-cooperative-company-sac-city-ia-approx",
+      "name": "Farmers Cooperative Company Sac City IA (approx)",
       "company": "Farmers Cooperative Company",
       "host": ""
     },
@@ -5092,14 +5092,14 @@
       "host": ""
     },
     {
-      "id": "five-star-cooperative-scarville-ia",
-      "name": "Five Star Cooperative Scarville IA",
+      "id": "five-star-cooperative-scarville-ia-approx",
+      "name": "Five Star Cooperative Scarville IA (approx)",
       "company": "Five Star Cooperative",
       "host": "www.fivestarcoop.com"
     },
     {
-      "id": "farmers-cooperative-elevator-company-schleswig-ia",
-      "name": "Farmers Cooperative Elevator Company Schleswig IA",
+      "id": "farmers-cooperative-elevator-company-schleswig-ia-approx",
+      "name": "Farmers Cooperative Elevator Company Schleswig IA (approx)",
       "company": "Farmers Cooperative Elevator Company",
       "host": ""
     },
@@ -5146,8 +5146,8 @@
       "host": ""
     },
     {
-      "id": "koster-grain-inc-stuart-ia",
-      "name": "Koster Grain Inc. Stuart IA",
+      "id": "koster-grain-inc-stuart-ia-approx",
+      "name": "Koster Grain Inc. Stuart IA (approx)",
       "company": "Koster Grain Inc.",
       "host": ""
     },
@@ -5182,20 +5182,20 @@
       "host": ""
     },
     {
-      "id": "koster-grain-inc-wall-lake-ia",
-      "name": "Koster Grain Inc. Wall Lake IA",
+      "id": "koster-grain-inc-wall-lake-ia-approx",
+      "name": "Koster Grain Inc. Wall Lake IA (approx)",
       "company": "Koster Grain Inc.",
       "host": ""
     },
     {
-      "id": "agri-way-partners-wayland-ia",
-      "name": "Agri-Way Partners Wayland IA",
+      "id": "agri-way-partners-wayland-ia-approx",
+      "name": "Agri-Way Partners Wayland IA (approx)",
       "company": "Agri-Way Partners",
       "host": ""
     },
     {
-      "id": "faas-feed-grain-inc-webster-ia",
-      "name": "Faas Feed & Grain Inc Webster IA",
+      "id": "faas-feed-grain-inc-webster-ia-approx",
+      "name": "Faas Feed & Grain Inc Webster IA (approx)",
       "company": "Faas Feed & Grain Inc",
       "host": "www.faasfeed.com"
     },
@@ -5224,14 +5224,14 @@
       "host": ""
     },
     {
-      "id": "northeast-iowa-cooperative-winthrop-ia",
-      "name": "Northeast Iowa Cooperative Winthrop IA",
+      "id": "northeast-iowa-cooperative-winthrop-ia-approx",
+      "name": "Northeast Iowa Cooperative Winthrop IA (approx)",
       "company": "Northeast Iowa Cooperative",
       "host": ""
     },
     {
-      "id": "wiota-elevator-inc-wiota-ia",
-      "name": "Wiota Elevator Inc Wiota IA",
+      "id": "wiota-elevator-inc-wiota-ia-approx",
+      "name": "Wiota Elevator Inc Wiota IA (approx)",
       "company": "Wiota Elevator Inc",
       "host": ""
     },

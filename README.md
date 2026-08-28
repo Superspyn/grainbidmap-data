@@ -223,6 +223,15 @@ collisions (a sign the geocoder fell back to something generic), organic and
 non-GMO dealers, and anything within 2 km of an existing pin — that close it is
 most likely the same site already mapped under another name.
 
+**Check what the geocoder actually matched, not just that it answered.** A
+query for "24828 Timber Avenue, Pulaski" comes back `class=highway/tertiary`
+when that house number is not in OpenStreetMap, which is common for rural
+Iowa — the point is then somewhere along a road that may run for miles. 41 of
+the 154 resolved that way (39 roads, 2 town boundaries) against 113 real
+building matches. Those 41 keep their pin, since a road point still beats
+nothing, but carry **"(approx)"** in the name so it is visible in the popup
+which coordinates to confirm before trusting the hauling cost.
+
 `scripts` for this live in `.scratch/` and are not part of the scheduled run;
 it is a one-off audit to repeat when the state republishes its lists.
 
