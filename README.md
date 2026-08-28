@@ -51,11 +51,41 @@ exactly as it did before — manual bid entry, "View bid page" links.
 Copy all of `grain-trucking-map.html` into the code block. **Re-export it back
 into this repo whenever you edit it on the site**, or the two will drift.
 
-### 5. Let the workflow run
+### 5. Let the two runners work
 
-`.github/workflows/bids.yml` runs twice each weekday after the 1:15 PM CT close.
-Run it by hand the first time from the **Actions** tab → *Update cash bids* →
-*Run workflow*.
+Bids refresh from **two** places, because neither one alone is enough.
+
+| | Farm PC scheduled task | GitHub Actions |
+|---|---|---|
+| Runs | Weekdays :15 and :45, 8:15am–5:45pm local | Weekdays :07 and :37, 13:07–22:37 UTC |
+| Sources | All 20 | 18 — NEW Co-op and Landus fail |
+| Needs | The PC on and logged in | Nothing |
+| Observed reliability | 8 of 8 slots | 1 of 10 slots, one 2.5h late |
+
+**NEW Co-op and Landus block GitHub's datacenter IP ranges** — 403 and 429
+respectively — while answering normally from a home connection seconds later.
+`curl_cffi` does install and run on the runner, so this is IP reputation, not
+TLS fingerprinting. That is 116 of the 329 pins. Working around it would mean
+proxying through a residential address, which is evading an access control they
+put up deliberately; the honest fixes are to run from a normal home connection
+(what the farm PC task does) or to ask them to allowlist the runner.
+
+So the farm PC is the primary and the cloud run is the backup: when the PC is
+off, 18 sources stay current and those two are flagged `"stale": true` with
+their last good bids and real `fetched_at` — never blanked.
+
+Install the task once:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\install-task.ps1
+```
+
+It logs to `.build/update-bids.log` and needs no administrator rights. Remove it
+with `Unregister-ScheduledTask -TaskName 'Update cash bids' -Confirm:$false`.
+
+Both runners push to `main`. `bids.json` is generated rather than authored, so a
+collision needs no merge — whichever build has the later `generated_at` wins,
+and both sides settle it the same way.
 
 ---
 

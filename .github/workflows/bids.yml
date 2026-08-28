@@ -1,17 +1,26 @@
 name: Update cash bids
 
-# Every 30 minutes through the trading day, weekdays only.
+# The backup runner. scripts/update-bids.ps1 on the farm PC is the primary one,
+# because NEW Co-op (403) and Landus (429) block GitHub's datacenter ranges and
+# answer normally from a home connection. This run keeps the other 18 sources
+# current when that PC is off, and marks those two stale rather than blanking
+# them.
 #
-# GitHub cron is UTC and does not follow daylight saving, so the window is set
-# wide enough to cover the working day in both halves of the year:
-#   13:00-22:30 UTC = 8:00am-5:30pm CDT (summer) / 7:00am-4:30pm CST (winter)
+# Every 30 minutes through the trading day, weekdays only. GitHub cron is UTC
+# and does not follow daylight saving, so the window is set wide enough to cover
+# the working day in both halves of the year:
+#   13:07-22:37 UTC = 8:07am-5:37pm CDT (summer) / 7:07am-4:37pm CST (winter)
+#
+# The odd minutes are deliberate. On :00/:30 this fired once in ten slots and
+# ran 2.5 hours late; GitHub warns that scheduled runs are delayed - or dropped
+# outright - when a slot is congested, and the top of the hour is the worst.
 #
 # That is 20 runs a day. Each run is 16 HTTP requests - one per co-op, not one
 # per elevator - so it stays light on the sites we pull from. Runs that find no
 # change do not commit.
 on:
   schedule:
-    - cron: '0,30 13-22 * * 1-5'
+    - cron: '7,37 13-22 * * 1-5'
   workflow_dispatch:
 
 # Never let two runs fight over the same commit.
