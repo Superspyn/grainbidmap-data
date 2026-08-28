@@ -25,6 +25,12 @@ ENDPOINT = (
 )
 
 _BIDS_RE = re.compile(r"var\s+bids\s*=\s*(\[.*?\])\s*;", re.S)
+_CONFIG_RE = re.compile(r"var\s+config\s*=\s*(\{.*?\})\s*;\s*var\s+domain", re.S)
+
+# The widget's own `price_calculations` flag says which of price and basis the
+# feed treats as authoritative. Every co-op here is mode 0; Cargill is mode 2,
+# and the two need opposite handling. See _parse_bids.
+_MODE_BASIS_DRIVEN = 2
 
 
 class AgriChartsAdapter:
@@ -45,11 +51,17 @@ class AgriChartsAdapter:
             raise ValueError(f"{self.name}: no 'var bids = [...]' payload in response")
         raw_locations = json.loads(match.group(1))
 
+        config_match = _CONFIG_RE.search(body)
+        try:
+            mode = json.loads(config_match.group(1)).get("price_calculations")
+        except (AttributeError, json.JSONDecodeError):
+            mode = None  # Absent config: fall back to the common mode.
+
         locations: list[SourceLocation] = []
         for raw in raw_locations:
             if raw.get("hide_on_sites_and_apis") == "1":
                 continue
-            bids, newest = self._parse_bids(raw.get("cashbids") or [])
+            bids, newest = self._parse_bids(raw.get("cashbids") or [], mode)
             if not bids:
                 continue
             locations.append(
@@ -68,7 +80,7 @@ class AgriChartsAdapter:
             raise ValueError(f"{self.name}: payload contained no corn or soybean bids")
         return locations
 
-    def _parse_bids(self, rows: list[dict]) -> tuple[list[Bid], str | None]:
+    def _parse_bids(self, rows: list[dict], mode=None) -> tuple[list[Bid], str | None]:
         bids: list[Bid] = []
         newest_ts = 0
 
@@ -86,17 +98,30 @@ class AgriChartsAdapter:
             if grain is None:
                 continue
 
-            cash = normalize.parse_money(
-                row.get("cashpricebushel") or row.get("cashprice") or row.get("price")
-            )
-            if cash is None:
-                continue
-
             futures = normalize.parse_tick(row.get("futures") or row.get("futuresprice"))
-            # The feed's own `basis` field is inconsistently scaled between
-            # tenants (cents in some, dollars in others), so derive it from the
-            # two values we can trust instead of guessing at the units.
-            basis = round(cash - futures, 4) if futures is not None else None
+
+            if mode == _MODE_BASIS_DRIVEN:
+                # Cargill's feed. Here `basis` is the real, location-specific
+                # number in DOLLARS, and the price fields are not a bid at all:
+                # every location carries the same rounded board price, so
+                # deriving basis from them yields ~0 everywhere. The bid is
+                # futures + basis.
+                basis = _as_float(row.get("basis"))
+                if basis is None or futures is None:
+                    continue
+                cash = round(futures + basis, 4)
+            else:
+                # Every co-op feed. `price` is the real bid and the basis field
+                # is in cents, so derive basis rather than guess at its scale -
+                # the subtraction reproduces it exactly.
+                cash = normalize.parse_money(
+                    row.get("cashpricebushel")
+                    or row.get("cashprice")
+                    or row.get("price")
+                )
+                if cash is None:
+                    continue
+                basis = round(cash - futures, 4) if futures is not None else None
 
             start = normalize.parse_date(
                 row.get("delivery_start_raw") or row.get("delivery_start")
