@@ -29,6 +29,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).parent))
 import yaml  # noqa: E402
 
 from adapters.agricharts import AgriChartsAdapter  # noqa: E402
+from adapters.bushel import BushelAdapter  # noqa: E402
 from adapters.cihedging import CIHedgingAdapter  # noqa: E402
 from adapters.gradable import GradableAdapter  # noqa: E402
 from adapters.heartland import HeartlandAdapter  # noqa: E402
@@ -69,6 +70,10 @@ def build_adapter(spec: dict):
         return LandusAdapter()
     if kind == "nexus":
         return NexusAdapter()
+    if kind == "bushel":
+        return BushelAdapter(
+            spec["slug"], spec.get("label", ""), spec.get("referer")
+        )
     if kind == "gradable":
         return GradableAdapter(spec["tenant"])
     if kind == "cihedging":

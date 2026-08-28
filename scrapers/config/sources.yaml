@@ -97,6 +97,33 @@ sources:
     # Identify yourself via BIDS_CONTACT, and do not raise the request rate:
     # one bulk request covers all 77 of their locations.
 
+  # The three Bushel aggregator sources share one API host and one request
+  # each. See the compliance note at the top of adapters/bushel.py - enabled
+  # by the user's explicit decision (per-host robots reading, as with Cargill).
+  - id: bushel:chs
+    adapter: bushel
+    slug: chs
+    label: CHS
+    referer: https://chsag.com/grain/cash-bids/
+    # 7 pins, all Minnesota. The feed returns 185 CHS locations nationwide.
+
+  - id: bushel:agp
+    adapter: bushel
+    slug: agp
+    label: AGP
+    referer: https://www.agp.com/bids/
+    # 16 pins. agp.com/bids/ renders this same data through an iframe.
+
+  - id: bushel:smithfield
+    adapter: bushel
+    slug: smithfield
+    label: Smithfield
+    referer: https://smithfieldgrain.com/
+    # 4 pins; the feed returns 48 locations.
+
+  # United Cooperative (WI) is NOT here: their aggregator slug returns a single
+  # "Central Office" stub with no per-elevator bids.
+
   - id: agricharts:newvision
     adapter: agricharts
     tenant: newvision

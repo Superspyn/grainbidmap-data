@@ -107,13 +107,16 @@ single request. Landus is the exception - it has no bulk endpoint, so it costs
 | Cargill | 27 | AgriCharts (`cargillus` — see below) |
 | Gold-Eagle Co-op | 24 | AgriCharts |
 | CGB | 16 | AgriCharts |
+| AGP | 15 | Bushel aggregator API |
 | Key Cooperative | 16 | AgriCharts |
 | Nexus Cooperative | 16 | Own server-rendered page |
 | New Vision Co-op | 16 | AgriCharts (`newvision`) |
 | POET Biorefining | 15 | Gradable API |
 | Pro Co-op | 14 | AgriCharts |
+| CHS | 7 | Bushel aggregator API |
 | Stateline Cooperative | 9 | AgriCharts |
 | ADM | 8 | Gradable API |
+| Smithfield | 4 | Bushel aggregator API |
 | Two Rivers Cooperative | 4 | AgriCharts |
 | North Iowa Co-op | 3 | AgriCharts |
 | Tama-Benton Cooperative | 3 | AgriCharts |
@@ -124,9 +127,9 @@ single request. Landus is the exception - it has no bulk endpoint, so it costs
 | Golden Grain Energy | 1 | CI Hedging widget API |
 | SilverEdge Cooperative | 1 | AgriCharts |
 
-**383 of 735 pins** carry live bids (~5,140 bid rows). The rest:
+**409 of 735 pins** carry live bids (~5,350 bid rows). The rest:
 
-- **288 pins are on companies with no adapter yet.** Biggest: MFA (59), AGP (16), River Valley Cooperative (9), CHS (7), Valero (7).
+- **261 pins are on companies with no adapter yet.** Biggest: MFA (59), River Valley Cooperative (9), Valero (7), Ray-Carroll (6), ADM's non-Gradable sites (6).
 - **59 pins matched a source that publishes no bid for them** — out-of-state and
   seasonal facilities their co-op does not quote, plus pins whose co-op only
   quotes a *delivered* bid to someone else's plant (see below).
@@ -215,6 +218,36 @@ which would flag Cargill's own `New Madrid`.
 
 The run prints how many it ignored. A pin whose co-op only quotes a delivered
 bid now correctly carries **no** bid rather than a wrong one.
+
+### The Bushel API, and how it differs from Bushel's hosted sites
+
+CHS, AGP and Smithfield come from Bushel's markets-aggregator API
+(`api.bushelpowered.com`) - the same endpoint CHS's own public cash-bids page
+calls from the visitor's browser. The co-op's public slug goes in an
+`App-Company` header; there are no credentials, and the component's own code
+treats its token as optional.
+
+The robots picture, stated plainly: the API host serves **no robots.txt**
+(404 - no stated policy). Bushel's hosted-*site* domains
+(`agp.o.bushelsites.com`, `smithfieldgrain.com`, `unitedcoop.com`) explicitly
+disallow all non-search crawlers - which is why scraping those *pages* was
+refused. robots.txt is per-origin; those policies govern their pages, not this
+API. That is the same per-host reasoning as Cargill, one step weaker: Cargill's
+data host explicitly allowed the path, Bushel's simply says nothing. Enabling
+it was the user's explicit decision with that laid out. To back it out, remove
+the three `bushel:` sources from sources.yaml.
+
+Login-gated Bushel portals (`portal.bushelpowered.com`, Valero) remain
+untouched - a source that needs credentials is a source we do not scrape.
+
+Two data quirks: CHS truncates its published bid down to the whole cent while
+futures keeps quarter-cents, so reconciliation allows a cent there; and
+`futuresChangeSign` arrives out-of-band (1/-1) next to an unsigned change -
+every observed row is sign=1, so the negative branch, like Nexus's, is handled
+and tested but has never been seen live.
+
+United Cooperative stays uncovered: their aggregator slug returns a single
+"Central Office" stub with no per-elevator bids.
 
 ### Bot-protected sources
 

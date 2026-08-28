@@ -1,0 +1,466 @@
+{
+ "type": "api.markets.aggregator.bids.v1#GetBidsListSuccess",
+ "locations": [
+  {
+   "id": "806024df-4b14-4295-965e-c8fb2d15f03c",
+   "name": "Eagle Grove, IA",
+   "groups": [
+    {
+     "id": "806024df-4b14-4295-965e-c8fb2d15f03c-8175",
+     "displayName": "Soybean Hulls",
+     "commodity": {
+      "id": "8175",
+      "name": "Soybean Hulls"
+     },
+     "bidPriceUoM": null,
+     "bidPriceCurrency": null,
+     "basisPriceUoM": null,
+     "basisPriceCurrency": null,
+     "futuresPriceUoM": null,
+     "futuresPriceCurrency": null,
+     "bids": [
+      {
+       "id": "885188127",
+       "bidType": "cash",
+       "description": "August",
+       "bidPrice": "150.00",
+       "basisPrice": "0.00",
+       "futuresPrice": "0.0000",
+       "futuresChange": "0.0000",
+       "futuresChangeSign": 0,
+       "futuresSymbol": null,
+       "operations": {
+        "makeOffer": false
+       }
+      },
+      {
+       "id": "885193747",
+       "bidType": "cash",
+       "description": "September",
+       "bidPrice": "150.00",
+       "basisPrice": "0.00",
+       "futuresPrice": "0.0000",
+       "futuresChange": "0.0000",
+       "futuresChangeSign": 0,
+       "futuresSymbol": null,
+       "operations": {
+        "makeOffer": false
+       }
+      }
+     ]
+    },
+    {
+     "id": "806024df-4b14-4295-965e-c8fb2d15f03c-607",
+     "displayName": "Soybean Meal",
+     "commodity": {
+      "id": "607",
+      "name": "Soybean Meal"
+     },
+     "bidPriceUoM": null,
+     "bidPriceCurrency": null,
+     "basisPriceUoM": null,
+     "basisPriceCurrency": null,
+     "futuresPriceUoM": null,
+     "futuresPriceCurrency": null,
+     "bids": [
+      {
+       "id": "885188126",
+       "bidType": "cash",
+       "description": "August",
+       "bidPrice": "339.50",
+       "basisPrice": "-5.00",
+       "futuresPrice": "34450.0000",
+       "futuresChange": "1010.0000",
+       "futuresChangeSign": 1,
+       "futuresSymbol": "ZMV26",
+       "operations": {
+        "makeOffer": false
+       }
+      },
+      {
+       "id": "885193746",
+       "bidType": "cash",
+       "description": "September",
+       "bidPrice": "339.50",
+       "basisPrice": "-5.00",
+       "futuresPrice": "34450.0000",
+       "futuresChange": "1010.0000",
+       "futuresChangeSign": 1,
+       "futuresSymbol": "ZMV26",
+       "operations": {
+        "makeOffer": false
+       }
+      },
+      {
+       "id": "885194822",
+       "bidType": "cash",
+       "description": "October",
+       "bidPrice": "334.50",
+       "basisPrice": "-10.00",
+       "futuresPrice": "34450.0000",
+       "futuresChange": "1010.0000",
+       "futuresChangeSign": 1,
+       "futuresSymbol": "ZMV26",
+       "operations": {
+        "makeOffer": false
+       }
+      },
+      {
+       "id": "885194823",
+       "bidType": "cash",
+       "description": "November",
+       "bidPrice": "340.80",
+       "basisPrice": "-10.00",
+       "futuresPrice": "35080.0000",
+       "futuresChange": "990.0000",
+       "futuresChangeSign": 1,
+       "futuresSymbol": "ZMZ26",
+       "operations": {
+        "makeOffer": false
+       }
+      },
+      {
+       "id": "885194824",
+       "bidType": "cash",
+       "description": "December",
+       "bidPrice": "340.80",
+       "basisPrice": "-10.00",
+       "futuresPrice": "35080.0000",
+       "futuresChange": "990.0000",
+       "futuresChangeSign": 1,
+       "futuresSymbol": "ZMZ26",
+       "operations": {
+        "makeOffer": false
+       }
+      }
+     ]
+    },
+    {
+     "id": "806024df-4b14-4295-965e-c8fb2d15f03c-6",
+     "displayName": "Soybeans",
+     "commodity": {
+      "id": "6",
+      "name": "Soybeans"
+     },
+     "bidPriceUoM": null,
+     "bidPriceCurrency": null,
+     "basisPriceUoM": null,
+     "basisPriceCurrency": null,
+     "futuresPriceUoM": null,
+     "futuresPriceCurrency": null,
+     "bids": [
+      {
+       "id": "885188125",
+       "bidType": "cash",
+       "description": "August",
+       "bidPrice": "13.05",
+       "basisPrice": "0.20",
+       "futuresPrice": "12.8525",
+       "futuresChange": "0.1725",
+       "futuresChangeSign": 1,
+       "futuresSymbol": "ZSX26",
+       "operations": {
+        "makeOffer": false
+       }
+      },
+      {
+       "id": "885194817",
+       "bidType": "cash",
+       "description": "By September 15",
+       "bidPrice": "12.85",
+       "basisPrice": "0.00",
+       "futuresPrice": "12.8525",
+       "futuresChange": "0.1725",
+       "futuresChangeSign": 1,
+       "futuresSymbol": "ZSX26",
+       "operations": {
+        "makeOffer": false
+       }
+      },
+      {
+       "id": "885194818",
+       "bidType": "cash",
+       "description": "By September 30",
+       "bidPrice": "12.50",
+       "basisPrice": "-0.35",
+       "futuresPrice": "12.8525",
+       "futuresChange": "0.1725",
+       "futuresChangeSign": 1,
+       "futuresSymbol": "ZSX26",
+       "operations": {
+        "makeOffer": false
+       }
+      },
+      {
+       "id": "885140283",
+       "bidType": "cash",
+       "description": "Oct/Nov",
+       "bidPrice": "12.50",
+       "basisPrice": "-0.35",
+       "futuresPrice": "12.8525",
+       "futuresChange": "0.1725",
+       "futuresChangeSign": 1,
+       "futuresSymbol": "ZSX26",
+       "operations": {
+        "makeOffer": false
+       }
+      },
+      {
+       "id": "885194819",
+       "bidType": "cash",
+       "description": "December",
+       "bidPrice": "12.70",
+       "basisPrice": "-0.30",
+       "futuresPrice": "13.0025",
+       "futuresChange": "0.1725",
+       "futuresChangeSign": 1,
+       "futuresSymbol": "ZSF27",
+       "operations": {
+        "makeOffer": false
+       }
+      },
+      {
+       "id": "885194820",
+       "bidType": "cash",
+       "description": "January",
+       "bidPrice": "12.70",
+       "basisPrice": "-0.30",
+       "futuresPrice": "13.0025",
+       "futuresChange": "0.1725",
+       "futuresChangeSign": 1,
+       "futuresSymbol": "ZSF27",
+       "operations": {
+        "makeOffer": false
+       }
+      },
+      {
+       "id": "885194821",
+       "bidType": "cash",
+       "description": "Feb/Mar",
+       "bidPrice": "12.75",
+       "basisPrice": "-0.30",
+       "futuresPrice": "13.0500",
+       "futuresChange": "0.1675",
+       "futuresChangeSign": 1,
+       "futuresSymbol": "ZSH27",
+       "operations": {
+        "makeOffer": false
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "96201bd3-98ce-4522-9969-16bd13b811bd",
+   "name": "Mitchell",
+   "groups": [
+    {
+     "id": "798eecab-4aff-4fcb-b875-acf93c8fa4ad|bu|USD",
+     "displayName": "Corn",
+     "commodity": {
+      "id": "Corn",
+      "name": "Corn"
+     },
+     "bidPriceUoM": "bu",
+     "bidPriceCurrency": "USD",
+     "basisPriceUoM": null,
+     "basisPriceCurrency": null,
+     "futuresPriceUoM": null,
+     "futuresPriceCurrency": null,
+     "bids": [
+      {
+       "id": "CNCMT000O6MK",
+       "bidType": "cash",
+       "description": "August 2026",
+       "bidPrice": "4.66",
+       "basisPrice": "-0.70",
+       "futuresPrice": "5.3600",
+       "futuresChange": "0.0250",
+       "futuresChangeSign": 1,
+       "futuresSymbol": "ZCZ26",
+       "operations": {
+        "makeOffer": false
+       }
+      },
+      {
+       "id": "CNCMT000ODZW",
+       "bidType": "cash",
+       "description": "Nov 2026",
+       "bidPrice": "4.76",
+       "basisPrice": "-0.60",
+       "futuresPrice": "5.3600",
+       "futuresChange": "0.0250",
+       "futuresChangeSign": 1,
+       "futuresSymbol": "ZCZ26",
+       "operations": {
+        "makeOffer": false
+       }
+      }
+     ]
+    },
+    {
+     "id": "3480a421-f8e3-4710-ae69-2ff94f34889d|bu|USD",
+     "displayName": "Soybeans",
+     "commodity": {
+      "id": "Soybeans",
+      "name": "Soybeans"
+     },
+     "bidPriceUoM": "bu",
+     "bidPriceCurrency": "USD",
+     "basisPriceUoM": null,
+     "basisPriceCurrency": null,
+     "futuresPriceUoM": null,
+     "futuresPriceCurrency": null,
+     "bids": [
+      {
+       "id": "SBCMT000O6US",
+       "bidType": "cash",
+       "description": "Aug 2026",
+       "bidPrice": "12.51",
+       "basisPrice": "-0.35",
+       "futuresPrice": "12.8600",
+       "futuresChange": "0.1800",
+       "futuresChangeSign": 1,
+       "futuresSymbol": "ZSX26",
+       "operations": {
+        "makeOffer": false
+       }
+      },
+      {
+       "id": "SBCMT000PB4A",
+       "bidType": "cash",
+       "description": "Sept 2026",
+       "bidPrice": "12.31",
+       "basisPrice": "-0.55",
+       "futuresPrice": "12.8600",
+       "futuresChange": "0.1800",
+       "futuresChangeSign": 1,
+       "futuresSymbol": "ZSX26",
+       "operations": {
+        "makeOffer": false
+       }
+      },
+      {
+       "id": "SBCMT000ODZR",
+       "bidType": "cash",
+       "description": "Oct 2026",
+       "bidPrice": "12.31",
+       "basisPrice": "-0.55",
+       "futuresPrice": "12.8600",
+       "futuresChange": "0.1800",
+       "futuresChangeSign": 1,
+       "futuresSymbol": "ZSX26",
+       "operations": {
+        "makeOffer": false
+       }
+      }
+     ]
+    },
+    {
+     "id": "ca90a3df-fa5c-4495-80df-7db63da1c0d6|bu|USD",
+     "displayName": "Wheat HRW",
+     "commodity": {
+      "id": "Wheat HRW",
+      "name": "Wheat HRW"
+     },
+     "bidPriceUoM": "bu",
+     "bidPriceCurrency": "USD",
+     "basisPriceUoM": null,
+     "basisPriceCurrency": null,
+     "futuresPriceUoM": null,
+     "futuresPriceCurrency": null,
+     "bids": [
+      {
+       "id": "WTCMT000PAFH",
+       "bidType": "cash",
+       "description": "Aug 2026",
+       "bidPrice": "7.34",
+       "basisPrice": "-1.14",
+       "futuresPrice": "8.4825",
+       "futuresChange": "0.2625",
+       "futuresChangeSign": 1,
+       "futuresSymbol": "KEZ26",
+       "operations": {
+        "makeOffer": false
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "x-SBFAL000O5UR",
+   "name": "Alma",
+   "groups": [
+    {
+     "id": "1f93e1b9-26b6-4d60-ae8b-e840799fa6b9|bu|USD",
+     "displayName": "Soybeans",
+     "commodity": {
+      "id": "Soybeans",
+      "name": "Soybeans"
+     },
+     "bidPriceUoM": "bu",
+     "bidPriceCurrency": "USD",
+     "basisPriceUoM": null,
+     "basisPriceCurrency": null,
+     "futuresPriceUoM": null,
+     "futuresPriceCurrency": null,
+     "bids": [
+      {
+       "id": "SBFAL000O5UR",
+       "bidType": "flat",
+       "description": "O/N 2027",
+       "bidPrice": "0.00",
+       "basisPrice": null,
+       "futuresPrice": null,
+       "futuresChange": null,
+       "futuresChangeSign": null,
+       "futuresSymbol": null,
+       "operations": {
+        "makeOffer": false
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "x-SWWLNO000OGXH",
+   "name": "CHS Primeland",
+   "groups": [
+    {
+     "id": "0811e3e3-f06f-4b24-929d-91350f35d696|bu|USD",
+     "displayName": "Wheat SWW",
+     "commodity": {
+      "id": "Wheat SWW",
+      "name": "Wheat SWW"
+     },
+     "bidPriceUoM": "bu",
+     "bidPriceCurrency": "USD",
+     "basisPriceUoM": null,
+     "basisPriceCurrency": null,
+     "futuresPriceUoM": null,
+     "futuresPriceCurrency": null,
+     "bids": [
+      {
+       "id": "SWWLNO000OGXH",
+       "bidType": "floating",
+       "description": "AUG 26",
+       "bidPrice": "6.95",
+       "basisPrice": "-0.70",
+       "futuresPrice": "7.6525",
+       "futuresChange": "0.2250",
+       "futuresChangeSign": 1,
+       "futuresSymbol": "ZWU26",
+       "operations": {
+        "makeOffer": false
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "meta": {}
+}
