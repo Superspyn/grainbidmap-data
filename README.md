@@ -127,9 +127,11 @@ single request. Landus is the exception - it has no bulk endpoint, so it costs
 | Golden Grain Energy | 1 | CI Hedging widget API |
 | SilverEdge Cooperative | 1 | AgriCharts |
 
-**409 of 735 pins** carry live bids (~5,350 bid rows). The rest:
+**415 of 892 pins** carry live bids (~5,450 bid rows). The rest:
 
-- **261 pins are on companies with no adapter yet.** Biggest: MFA (59), River Valley Cooperative (9), Valero (7), Ray-Carroll (6), ADM's non-Gradable sites (6).
+- **398 pins are on companies with no adapter yet.** Biggest: MFA (59), AgState (16), River Valley Cooperative (13), Five Star Cooperative (7), Valero (7).
+  This grew because 152 pins were added from the Iowa DNR grain facility list
+  (see below) - most are small independents with no online bid page at all.
 - **59 pins matched a source that publishes no bid for them** — out-of-state and
   seasonal facilities their co-op does not quote, plus pins whose co-op only
   quotes a *delivered* bid to someone else's plant (see below).
@@ -194,6 +196,35 @@ _robots_allows("https://cargillus.websol.barchart.com/")             -> False
 The general rule this leaves: a bot wall that *breaks* the robots check is worth
 fixing, and an explicit `Disallow` on the host you are talking to is not worth
 working around.
+
+### Finding elevators the map was missing
+
+Two Iowa public records were cross-checked against the pins:
+
+- **Licensed grain dealers** (`data.iowaagriculture.gov/licensing_lists/graindealers/`)
+  — 251 companies, one row per licence, no addresses. Empty robots.txt.
+- **DNR grain facility list** (`iowadnr.gov/media/2138`) — 692 rows, one per
+  physical site, **with street addresses**.
+
+The DNR list is the one worth using. The dealer list has no addresses, so every
+business in a town geocodes to the same point, and matching by company name is
+worse still: licence names differ from operating names ("Valero Grain
+Marketing, LLC" is the Valero Renewables pin), while common words produce
+nonsense ("Little Cedar Cooperative" matching "Cedar County Cooperative" on
+*cedar*, "Farmers Union Cooperative" matching 47 unrelated facilities on
+*farmers*).
+
+So the check runs off geography, with no name matching at all: geocode each
+DNR facility's own street address, then ask whether any pin sits within 1 km.
+That added 152 pins, each placed at the facility rather than the town centre.
+
+Excluded, deliberately: anything outside Iowa's bounding box, coordinate
+collisions (a sign the geocoder fell back to something generic), organic and
+non-GMO dealers, and anything within 2 km of an existing pin — that close it is
+most likely the same site already mapped under another name.
+
+`scripts` for this live in `.scratch/` and are not part of the scheduled run;
+it is a one-off audit to repeat when the state republishes its lists.
 
 ### Delivered bids to someone else's plant
 
