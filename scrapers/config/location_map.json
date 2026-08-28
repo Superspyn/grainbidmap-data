@@ -1514,6 +1514,22 @@
       "confidence": 1.0,
       "method": "name"
     },
+    "innovative-ag-services-co-independence-ia": {
+      "name": "Innovative AG Services Co Independence IA",
+      "source": "agricharts:innovativeag",
+      "source_location_id": "82228",
+      "source_name": "Independen",
+      "confidence": 0.937,
+      "method": "geo(0.5km)"
+    },
+    "innovative-ag-services-co-manchester-ia": {
+      "name": "Innovative AG Services Co Manchester IA",
+      "source": "agricharts:innovativeag",
+      "source_location_id": "4653",
+      "source_name": "Manchester",
+      "confidence": 1.0,
+      "method": "geo(0.2km)"
+    },
     "innovative-ag-services-monticello-ia": {
       "name": "Innovative Ag Services Monticello IA",
       "source": "agricharts:innovativeag",
@@ -1777,6 +1793,30 @@
       "source_name": "Britt",
       "confidence": 1.0,
       "method": "manual"
+    },
+    "landus-cooperative-boone-ia": {
+      "name": "Landus Cooperative Boone IA",
+      "source": "landus",
+      "source_location_id": "103",
+      "source_name": "Boone",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "landus-cooperative-grant-ia": {
+      "name": "Landus Cooperative Grant IA",
+      "source": "landus",
+      "source_location_id": "160",
+      "source_name": "Grant",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "landus-cooperative-plainfield-ia": {
+      "name": "LANDUS COOPERATIVE PLAINFIELD IA",
+      "source": "landus",
+      "source_location_id": "37",
+      "source_name": "Plainfield",
+      "confidence": 1.0,
+      "method": "name"
     },
     "landus-dawson-will-call": {
       "name": "Landus Dawson (Will Call)",
@@ -3122,6 +3162,14 @@
       "confidence": 1.0,
       "method": "geo(0.1km)"
     },
+    "pro-cooperative-pocahontas-ia": {
+      "name": "Pro Cooperative Pocahontas IA",
+      "source": "agricharts:procooperative",
+      "source_location_id": "21306",
+      "source_name": "POCAHONTAS.IA",
+      "confidence": 1.0,
+      "method": "name"
+    },
     "silveredge-cooperative-edgewood-ia": {
       "name": "SilverEdge Cooperative Edgewood IA",
       "source": "agricharts:silveredgecoop",
@@ -3888,6 +3936,174 @@
       "method": "no-match"
     },
     {
+      "id": "heartland-co-op-blairstown-ia",
+      "name": "Heartland CO-OP Blairstown IA",
+      "type": "coop",
+      "company": "Heartland CO-OP",
+      "lat": 41.910323,
+      "lng": -92.084549,
+      "url": "",
+      "host": "",
+      "source": "heartland",
+      "method": "no-match"
+    },
+    {
+      "id": "stateline-cooperative-buffalo-center-ia",
+      "name": "StateLine Cooperative Buffalo Center IA",
+      "type": "coop",
+      "company": "StateLine Cooperative",
+      "lat": 43.385139,
+      "lng": -93.946857,
+      "url": "",
+      "host": "",
+      "source": "agricharts:statelinecoop",
+      "method": "no-match"
+    },
+    {
+      "id": "heartland-co-op-chelsea-ia",
+      "name": "Heartland CO-OP Chelsea IA",
+      "type": "coop",
+      "company": "Heartland CO-OP",
+      "lat": 41.917864,
+      "lng": -92.394723,
+      "url": "",
+      "host": "",
+      "source": "heartland",
+      "method": "no-match"
+    },
+    {
+      "id": "landus-cooperative-exira-ia",
+      "name": "LANDUS COOPERATIVE EXIRA IA",
+      "type": "coop",
+      "company": "LANDUS COOPERATIVE",
+      "lat": 41.591046,
+      "lng": -94.887583,
+      "url": "",
+      "host": "",
+      "source": "landus",
+      "method": "no-match"
+    },
+    {
+      "id": "heartland-co-op-gilman-ia",
+      "name": "Heartland CO-OP Gilman IA",
+      "type": "coop",
+      "company": "Heartland CO-OP",
+      "lat": 41.879218,
+      "lng": -92.786998,
+      "url": "",
+      "host": "",
+      "source": "heartland",
+      "method": "no-match"
+    },
+    {
+      "id": "heartland-co-op-hartwick-ia",
+      "name": "Heartland CO-OP Hartwick IA",
+      "type": "coop",
+      "company": "Heartland CO-OP",
+      "lat": 41.786619,
+      "lng": -92.343414,
+      "url": "",
+      "host": "",
+      "source": "heartland",
+      "method": "no-match"
+    },
+    {
+      "id": "landus-cooperative-irwin-ia",
+      "name": "LANDUS COOPERATIVE IRWIN IA",
+      "type": "coop",
+      "company": "LANDUS COOPERATIVE",
+      "lat": 41.789333,
+      "lng": -95.207306,
+      "url": "",
+      "host": "",
+      "source": "landus",
+      "method": "no-match"
+    },
+    {
+      "id": "landus-cooperative-kesley-ia",
+      "name": "LANDUS COOPERATIVE Kesley IA",
+      "type": "coop",
+      "company": "LANDUS COOPERATIVE",
+      "lat": 42.662455,
+      "lng": -92.909719,
+      "url": "",
+      "host": "",
+      "source": "landus",
+      "method": "no-match"
+    },
+    {
+      "id": "heartland-co-op-laurel-ia",
+      "name": "Heartland CO-OP Laurel IA",
+      "type": "coop",
+      "company": "Heartland CO-OP",
+      "lat": 41.883519,
+      "lng": -92.920734,
+      "url": "",
+      "host": "",
+      "source": "heartland",
+      "method": "no-match"
+    },
+    {
+      "id": "heartland-co-op-luzerne-ia",
+      "name": "Heartland CO-OP Luzerne IA",
+      "type": "coop",
+      "company": "Heartland CO-OP",
+      "lat": 41.906034,
+      "lng": -92.181362,
+      "url": "",
+      "host": "",
+      "source": "heartland",
+      "method": "no-match"
+    },
+    {
+      "id": "landus-cooperative-maxwell-ia",
+      "name": "LANDUS COOPERATIVE MAXWELL IA",
+      "type": "coop",
+      "company": "LANDUS COOPERATIVE",
+      "lat": 41.886036,
+      "lng": -93.399063,
+      "url": "",
+      "host": "",
+      "source": "landus",
+      "method": "no-match"
+    },
+    {
+      "id": "landus-cooperative-paton-ia",
+      "name": "LANDUS COOPERATIVE PATON IA",
+      "type": "coop",
+      "company": "LANDUS COOPERATIVE",
+      "lat": 42.166155,
+      "lng": -94.247958,
+      "url": "",
+      "host": "",
+      "source": "landus",
+      "method": "no-match"
+    },
+    {
+      "id": "north-iowa-cooperative-plymouth-ia",
+      "name": "North Iowa Cooperative Plymouth IA",
+      "type": "coop",
+      "company": "North Iowa Cooperative",
+      "lat": 42.592863,
+      "lng": -95.967096,
+      "url": "",
+      "host": "",
+      "source": "agricharts:nicoop",
+      "method": "no-match"
+    },
+    {
+      "id": "landus-cooperative-scranton-ia",
+      "name": "LANDUS COOPERATIVE SCRANTON IA",
+      "type": "coop",
+      "company": "LANDUS COOPERATIVE",
+      "lat": 42.019681,
+      "lng": -94.545498,
+      "url": "",
+      "host": "",
+      "source": "landus",
+      "method": "no-match"
+    },
+    {
       "id": "agp-rosemont-ne",
       "name": "AGP Rosemont NE",
       "type": "coop",
@@ -4232,6 +4448,828 @@
       "host": "www.grainbid.com"
     },
     {
+      "id": "farmers-cooperative-company-ackley-ia",
+      "name": "Farmers Cooperative Company Ackley IA",
+      "company": "Farmers Cooperative Company",
+      "host": ""
+    },
+    {
+      "id": "farmers-coop-association-ainsworth-ia",
+      "name": "Farmers Coop Association Ainsworth IA",
+      "company": "Farmers Coop Association",
+      "host": ""
+    },
+    {
+      "id": "smith-fertilizer-grain-albia-ia",
+      "name": "Smith Fertilizer & Grain Albia IA",
+      "company": "Smith Fertilizer & Grain",
+      "host": ""
+    },
+    {
+      "id": "us-ag-center-inc-allison-ia",
+      "name": "US AG Center Inc Allison IA",
+      "company": "US AG Center Inc",
+      "host": ""
+    },
+    {
+      "id": "agstate-alta-ia",
+      "name": "AgState Alta IA",
+      "company": "AgState",
+      "host": ""
+    },
+    {
+      "id": "howard-county-equity-coop-alta-vista-ia",
+      "name": "Howard County Equity Coop Alta Vista IA",
+      "company": "Howard County Equity Coop",
+      "host": ""
+    },
+    {
+      "id": "berne-cooperative-anthon-ia",
+      "name": "Berne Cooperative Anthon IA",
+      "company": "Berne Cooperative",
+      "host": ""
+    },
+    {
+      "id": "aspinwall-coop-aspinwall-ia",
+      "name": "Aspinwall Coop Aspinwall IA",
+      "company": "Aspinwall Coop",
+      "host": ""
+    },
+    {
+      "id": "duffe-grain-inc-atalissa-ia",
+      "name": "Duffe Grain Inc. Atalissa IA",
+      "company": "Duffe Grain Inc.",
+      "host": ""
+    },
+    {
+      "id": "west-side-grain-sales-corp-atkins-ia",
+      "name": "West Side Grain Sales Corp Atkins IA",
+      "company": "West Side Grain Sales Corp",
+      "host": ""
+    },
+    {
+      "id": "agstate-battle-creek-ia",
+      "name": "AgState Battle Creek IA",
+      "company": "AgState",
+      "host": ""
+    },
+    {
+      "id": "troy-elevator-inc-blakesburg-ia",
+      "name": "Troy Elevator Inc Blakesburg IA",
+      "company": "Troy Elevator Inc",
+      "host": ""
+    },
+    {
+      "id": "troy-elevator-inc-bloomfield-ia",
+      "name": "Troy Elevator Inc Bloomfield IA",
+      "company": "Troy Elevator Inc",
+      "host": ""
+    },
+    {
+      "id": "farmers-cooperative-society-boyden-ia",
+      "name": "Farmers Cooperative Society Boyden IA",
+      "company": "Farmers Cooperative Society",
+      "host": ""
+    },
+    {
+      "id": "premium-feed-grain-brunsville-ia",
+      "name": "Premium Feed & Grain Brunsville IA",
+      "company": "Premium Feed & Grain",
+      "host": ""
+    },
+    {
+      "id": "chs-inc-buffalo-ia",
+      "name": "CHS Inc Buffalo IA",
+      "company": "CHS Inc",
+      "host": ""
+    },
+    {
+      "id": "east-central-iowa-co-op-cedar-falls-ia",
+      "name": "East Central Iowa CO-OP Cedar Falls IA",
+      "company": "East Central Iowa CO-OP",
+      "host": ""
+    },
+    {
+      "id": "agstate-cleghorn-ia",
+      "name": "AgState Cleghorn IA",
+      "company": "AgState",
+      "host": ""
+    },
+    {
+      "id": "nicholas-ag-columbus-junction-ia",
+      "name": "Nicholas Ag Columbus Junction IA",
+      "company": "Nicholas Ag",
+      "host": ""
+    },
+    {
+      "id": "consumers-coop-coralville-ia",
+      "name": "Consumers Coop Coralville IA",
+      "company": "Consumers Coop",
+      "host": ""
+    },
+    {
+      "id": "mfa-agri-service-corydon-ia",
+      "name": "MFA Agri Service Corydon IA",
+      "company": "MFA Agri Service",
+      "host": ""
+    },
+    {
+      "id": "ag-vantage-fs-inc-coulter-ia",
+      "name": "AG Vantage FS Inc Coulter IA",
+      "company": "AG Vantage FS Inc",
+      "host": ""
+    },
+    {
+      "id": "winneshiek-cooperative-association-cresco-ia",
+      "name": "Winneshiek Cooperative Association Cresco IA",
+      "company": "Winneshiek Cooperative Association",
+      "host": ""
+    },
+    {
+      "id": "chs-inc-davenport-ia",
+      "name": "CHS Inc Davenport IA",
+      "company": "CHS Inc",
+      "host": ""
+    },
+    {
+      "id": "winneshiek-cooperative-association-decorah-ia",
+      "name": "Winneshiek Cooperative Association Decorah IA",
+      "company": "Winneshiek Cooperative Association",
+      "host": ""
+    },
+    {
+      "id": "farmers-cooperative-company-diagonal-ia",
+      "name": "Farmers Cooperative Company Diagonal IA",
+      "company": "Farmers Cooperative Company",
+      "host": ""
+    },
+    {
+      "id": "river-valley-cooperative-donahue-ia",
+      "name": "River Valley Cooperative Donahue IA",
+      "company": "River Valley Cooperative",
+      "host": ""
+    },
+    {
+      "id": "five-star-cooperative-dougherty-ia",
+      "name": "Five Star Cooperative Dougherty IA",
+      "company": "Five Star Cooperative",
+      "host": ""
+    },
+    {
+      "id": "cogdill-farm-supply-inc-dow-city-ia",
+      "name": "Cogdill Farm Supply Inc Dow City IA",
+      "company": "Cogdill Farm Supply Inc",
+      "host": ""
+    },
+    {
+      "id": "cogdill-farm-supply-inc-dunlap-ia",
+      "name": "Cogdill Farm Supply Inc Dunlap IA",
+      "company": "Cogdill Farm Supply Inc",
+      "host": ""
+    },
+    {
+      "id": "united-western-coop-dunlap-ia",
+      "name": "United Western Coop Dunlap IA",
+      "company": "United Western Coop",
+      "host": ""
+    },
+    {
+      "id": "river-valley-cooperative-eldridge-ia",
+      "name": "River Valley Cooperative Eldridge IA",
+      "company": "River Valley Cooperative",
+      "host": ""
+    },
+    {
+      "id": "the-scoular-company-elk-horn-ia",
+      "name": "The Scoular Company Elk Horn IA",
+      "company": "The Scoular Company",
+      "host": ""
+    },
+    {
+      "id": "prairie-land-cooperative-ellsworth-ia",
+      "name": "Prairie Land Cooperative Ellsworth IA",
+      "company": "Prairie Land Cooperative",
+      "host": ""
+    },
+    {
+      "id": "howard-county-equity-coop-elma-ia",
+      "name": "Howard County Equity Coop Elma IA",
+      "company": "Howard County Equity Coop",
+      "host": ""
+    },
+    {
+      "id": "the-scoular-company-emerson-ia",
+      "name": "The Scoular Company Emerson IA",
+      "company": "The Scoular Company",
+      "host": ""
+    },
+    {
+      "id": "prairie-land-cooperative-faulkner-ia",
+      "name": "Prairie Land Cooperative Faulkner IA",
+      "company": "Prairie Land Cooperative",
+      "host": ""
+    },
+    {
+      "id": "consolidated-grain-barge-cgb-fayette-ia",
+      "name": "Consolidated Grain & Barge CGB Fayette IA",
+      "company": "Consolidated Grain & Barge CGB",
+      "host": ""
+    },
+    {
+      "id": "agstate-fonda-ia",
+      "name": "AgState Fonda IA",
+      "company": "AgState",
+      "host": ""
+    },
+    {
+      "id": "21st-century-cooperative-fontanelle-ia",
+      "name": "21st Century Cooperative Fontanelle IA",
+      "company": "21st Century Cooperative",
+      "host": ""
+    },
+    {
+      "id": "farmers-cooperative-produce-co-fort-atkinson-ia",
+      "name": "Farmers Cooperative Produce Co Fort Atkinson IA",
+      "company": "Farmers Cooperative Produce Co",
+      "host": ""
+    },
+    {
+      "id": "fredericksburg-farmers-coop-frederika-ia",
+      "name": "Fredericksburg Farmers Coop Frederika IA",
+      "company": "Fredericksburg Farmers Coop",
+      "host": ""
+    },
+    {
+      "id": "agstate-galva-ia",
+      "name": "AgState Galva IA",
+      "company": "AgState",
+      "host": ""
+    },
+    {
+      "id": "new-cooperative-inc-george-ia",
+      "name": "New Cooperative Inc. George IA",
+      "company": "New Cooperative Inc.",
+      "host": ""
+    },
+    {
+      "id": "agstate-granville-ia",
+      "name": "AgState Granville IA",
+      "company": "AgState",
+      "host": ""
+    },
+    {
+      "id": "21st-century-cooperative-greenfield-ia",
+      "name": "21st Century Cooperative Greenfield IA",
+      "company": "21st Century Cooperative",
+      "host": ""
+    },
+    {
+      "id": "farmers-cooperative-company-greenfield-ia",
+      "name": "Farmers Cooperative Company Greenfield IA",
+      "company": "Farmers Cooperative Company",
+      "host": ""
+    },
+    {
+      "id": "ag-vantage-fs-inc-hansell-ia",
+      "name": "AG Vantage FS Inc Hansell IA",
+      "company": "AG Vantage FS Inc",
+      "host": ""
+    },
+    {
+      "id": "cooperative-elevator-association-harris-ia",
+      "name": "Cooperative Elevator Association Harris IA",
+      "company": "Cooperative Elevator Association",
+      "host": ""
+    },
+    {
+      "id": "cooperative-elevator-association-hartley-ia",
+      "name": "Cooperative Elevator Association Hartley IA",
+      "company": "Cooperative Elevator Association",
+      "host": ""
+    },
+    {
+      "id": "the-scoular-company-hastings-ia",
+      "name": "The Scoular Company Hastings IA",
+      "company": "The Scoular Company",
+      "host": ""
+    },
+    {
+      "id": "fredericksburg-farmers-coop-hawkeye-ia",
+      "name": "Fredericksburg Farmers Coop Hawkeye IA",
+      "company": "Fredericksburg Farmers Coop",
+      "host": ""
+    },
+    {
+      "id": "chem-gro-of-houghton-inc-hillsboro-ia",
+      "name": "Chem Gro of Houghton Inc Hillsboro IA",
+      "company": "Chem Gro of Houghton Inc",
+      "host": ""
+    },
+    {
+      "id": "agstate-holstein-ia",
+      "name": "AgState Holstein IA",
+      "company": "AgState",
+      "host": ""
+    },
+    {
+      "id": "agstate-hospers-ia",
+      "name": "AgState Hospers IA",
+      "company": "AgState",
+      "host": ""
+    },
+    {
+      "id": "chem-gro-of-houghton-inc-houghton-ia",
+      "name": "Chem Gro of Houghton Inc Houghton IA",
+      "company": "Chem Gro of Houghton Inc",
+      "host": ""
+    },
+    {
+      "id": "prairie-land-cooperative-hubbard-ia",
+      "name": "Prairie Land Cooperative Hubbard IA",
+      "company": "Prairie Land Cooperative",
+      "host": ""
+    },
+    {
+      "id": "five-star-cooperative-ionia-ia",
+      "name": "Five Star Cooperative Ionia IA",
+      "company": "Five Star Cooperative",
+      "host": ""
+    },
+    {
+      "id": "east-central-iowa-co-op-jesup-ia",
+      "name": "East Central Iowa CO-OP Jesup IA",
+      "company": "East Central Iowa CO-OP",
+      "host": ""
+    },
+    {
+      "id": "adm-grain-ompany-kalona-kalona-ia",
+      "name": "ADM Grain ompany - Kalona Kalona IA",
+      "company": "ADM Grain ompany - Kalona",
+      "host": ""
+    },
+    {
+      "id": "cassen-s-mill-corp-keswick-ia",
+      "name": "Cassen's Mill Corp. Keswick IA",
+      "company": "Cassen's Mill Corp.",
+      "host": ""
+    },
+    {
+      "id": "smith-fertilizer-grain-knoxville-ia",
+      "name": "Smith Fertilizer & Grain Knoxville IA",
+      "company": "Smith Fertilizer & Grain",
+      "host": ""
+    },
+    {
+      "id": "south-central-cooperative-knoxville-ia",
+      "name": "South Central Cooperative Knoxville IA",
+      "company": "South Central Cooperative",
+      "host": ""
+    },
+    {
+      "id": "five-star-cooperative-lawler-ia",
+      "name": "FIVE STAR COOPERATIVE LAWLER IA",
+      "company": "FIVE STAR COOPERATIVE",
+      "host": ""
+    },
+    {
+      "id": "agstate-laurens-ia",
+      "name": "AgState Laurens IA",
+      "company": "AgState",
+      "host": ""
+    },
+    {
+      "id": "farmers-coop-association-libertyville-ia",
+      "name": "Farmers Coop Association Libertyville IA",
+      "company": "Farmers Coop Association",
+      "host": ""
+    },
+    {
+      "id": "farmers-cooperative-company-linden-ia",
+      "name": "Farmers Cooperative Company Linden IA",
+      "company": "Farmers Cooperative Company",
+      "host": ""
+    },
+    {
+      "id": "cogdill-farm-supplu-inc-logan-ia",
+      "name": "Cogdill Farm Supplu Inc Logan IA",
+      "company": "Cogdill Farm Supplu Inc",
+      "host": ""
+    },
+    {
+      "id": "testrake-bros-inc-lone-tree-ia",
+      "name": "TeStrake Bros. Inc Lone Tree IA",
+      "company": "TeStrake Bros. Inc",
+      "host": ""
+    },
+    {
+      "id": "river-valley-cooperative-lost-nation-ia",
+      "name": "River Valley Cooperative Lost Nation IA",
+      "company": "River Valley Cooperative",
+      "host": ""
+    },
+    {
+      "id": "ag-vantage-fs-inc-low-moor-ia",
+      "name": "AG Vantage FS Inc Low Moor IA",
+      "company": "AG Vantage FS Inc",
+      "host": ""
+    },
+    {
+      "id": "farmers-cooperative-company-macksburg-ia",
+      "name": "Farmers Cooperative Company Macksburg IA",
+      "company": "Farmers Cooperative Company",
+      "host": ""
+    },
+    {
+      "id": "berne-cooperative-mapleton-ia",
+      "name": "Berne Cooperative Mapleton IA",
+      "company": "Berne Cooperative",
+      "host": ""
+    },
+    {
+      "id": "first-cooperative-association-marcus-ia",
+      "name": "First Cooperative Association Marcus IA",
+      "company": "First Cooperative Association",
+      "host": ""
+    },
+    {
+      "id": "nelson-grain-inc-marshalltown-ia",
+      "name": "Nelson Grain Inc. Marshalltown IA",
+      "company": "Nelson Grain Inc.",
+      "host": ""
+    },
+    {
+      "id": "agstate-maurice-ia",
+      "name": "AgState Maurice IA",
+      "company": "AgState",
+      "host": ""
+    },
+    {
+      "id": "river-valley-cooperative-mccausland-ia",
+      "name": "River Valley Cooperative McCausland IA",
+      "company": "River Valley Cooperative",
+      "host": ""
+    },
+    {
+      "id": "sperry-union-store-inc-mediapolis-ia",
+      "name": "Sperry Union Store Inc Mediapolis IA",
+      "company": "Sperry Union Store Inc",
+      "host": ""
+    },
+    {
+      "id": "south-central-cooperative-melcher-ia",
+      "name": "South Central Cooperative Melcher IA",
+      "company": "South Central Cooperative",
+      "host": ""
+    },
+    {
+      "id": "new-cooperative-inc-moorland-ia",
+      "name": "New Cooperative Inc. Moorland IA",
+      "company": "New Cooperative Inc.",
+      "host": ""
+    },
+    {
+      "id": "trioak-foods-inc-mount-pleasant-ia",
+      "name": "TriOak Foods Inc Mount Pleasant IA",
+      "company": "TriOak Foods Inc",
+      "host": ""
+    },
+    {
+      "id": "five-star-cooperative-nashua-ia",
+      "name": "Five Star Cooperative Nashua IA",
+      "company": "Five Star Cooperative",
+      "host": ""
+    },
+    {
+      "id": "agstate-nemaha-ia",
+      "name": "AgState Nemaha IA",
+      "company": "AgState",
+      "host": ""
+    },
+    {
+      "id": "southeast-iowa-grain-new-london-ia",
+      "name": "Southeast Iowa Grain New London IA",
+      "company": "Southeast Iowa Grain",
+      "host": ""
+    },
+    {
+      "id": "west-side-grain-sales-corp-newhall-ia",
+      "name": "West Side Grain Sales Corp Newhall IA",
+      "company": "West Side Grain Sales Corp",
+      "host": ""
+    },
+    {
+      "id": "agri-center-of-henry-county-inc-olds-ia",
+      "name": "Agri-Center of Henry County Inc. Olds IA",
+      "company": "Agri-Center of Henry County Inc.",
+      "host": ""
+    },
+    {
+      "id": "us-ag-center-dba-big-wapsie-ag-service-oran-ia",
+      "name": "US AG Center dba Big Wapsie AG Service Oran IA",
+      "company": "US AG Center dba Big Wapsie AG Service",
+      "host": ""
+    },
+    {
+      "id": "agstate-orange-city-ia",
+      "name": "AgState Orange City IA",
+      "company": "AgState",
+      "host": ""
+    },
+    {
+      "id": "farmers-cooperative-elevator-ottosen-ia",
+      "name": "Farmers Cooperative Elevator Ottosen IA",
+      "company": "Farmers Cooperative Elevator",
+      "host": ""
+    },
+    {
+      "id": "ag-vantage-fs-inc-oxford-ia",
+      "name": "AG Vantage FS Inc Oxford IA",
+      "company": "AG Vantage FS Inc",
+      "host": ""
+    },
+    {
+      "id": "cogdill-farm-supply-inc-panama-ia",
+      "name": "Cogdill Farm Supply Inc Panama IA",
+      "company": "Cogdill Farm Supply Inc",
+      "host": ""
+    },
+    {
+      "id": "agstate-paullina-ia",
+      "name": "AgState Paullina IA",
+      "company": "AgState",
+      "host": ""
+    },
+    {
+      "id": "agstate-peterson-ia",
+      "name": "AgState Peterson IA",
+      "company": "AgState",
+      "host": ""
+    },
+    {
+      "id": "smith-fertilizer-grain-pleasantville-ia",
+      "name": "Smith Fertilizer & Grain Pleasantville IA",
+      "company": "Smith Fertilizer & Grain",
+      "host": ""
+    },
+    {
+      "id": "bullock-ag-service-inc-preston-ia",
+      "name": "Bullock AG Service Inc Preston IA",
+      "company": "Bullock AG Service Inc",
+      "host": ""
+    },
+    {
+      "id": "nicholson-edwards-grain-primghar-ia",
+      "name": "Nicholson & Edwards Grain Primghar IA",
+      "company": "Nicholson & Edwards Grain",
+      "host": ""
+    },
+    {
+      "id": "troy-elevator-inc-pulaski-ia",
+      "name": "Troy Elevator Inc Pulaski IA",
+      "company": "Troy Elevator Inc",
+      "host": ""
+    },
+    {
+      "id": "farmers-feed-grain-company-inc-riceville-ia",
+      "name": "Farmers Feed & Grain Company Inc Riceville IA",
+      "company": "Farmers Feed & Grain Company Inc",
+      "host": ""
+    },
+    {
+      "id": "winneshiek-cooperative-association-ridgeway-ia",
+      "name": "Winneshiek Cooperative Association Ridgeway IA",
+      "company": "Winneshiek Cooperative Association",
+      "host": ""
+    },
+    {
+      "id": "cartersville-elevator-inc-rockwell-ia",
+      "name": "Cartersville Elevator Inc. Rockwell IA",
+      "company": "Cartersville Elevator Inc.",
+      "host": ""
+    },
+    {
+      "id": "five-star-cooperative-rockwell-ia",
+      "name": "Five Star Cooperative Rockwell IA",
+      "company": "Five Star Cooperative",
+      "host": ""
+    },
+    {
+      "id": "heart-of-iowa-cooperative-roland-ia",
+      "name": "Heart of Iowa Cooperative Roland IA",
+      "company": "Heart of Iowa Cooperative",
+      "host": ""
+    },
+    {
+      "id": "agstate-royal-ia",
+      "name": "AgState Royal IA",
+      "company": "AgState",
+      "host": ""
+    },
+    {
+      "id": "maxyield-cooperative-spencer-ia",
+      "name": "MAXYIELD COOPERATIVE SPENCER IA",
+      "company": "MAXYIELD COOPERATIVE",
+      "host": ""
+    },
+    {
+      "id": "farmers-cooperative-company-sac-city-ia",
+      "name": "Farmers Cooperative Company Sac City IA",
+      "company": "Farmers Cooperative Company",
+      "host": ""
+    },
+    {
+      "id": "chem-gro-of-houghton-inc-salem-ia",
+      "name": "Chem Gro of Houghton Inc Salem IA",
+      "company": "Chem Gro of Houghton Inc",
+      "host": ""
+    },
+    {
+      "id": "hartog-elevator-inc-sanborn-ia",
+      "name": "Hartog Elevator Inc Sanborn IA",
+      "company": "Hartog Elevator Inc",
+      "host": ""
+    },
+    {
+      "id": "five-star-cooperative-scarville-ia",
+      "name": "Five Star Cooperative Scarville IA",
+      "company": "Five Star Cooperative",
+      "host": ""
+    },
+    {
+      "id": "farmers-cooperative-elevator-company-schleswig-ia",
+      "name": "Farmers Cooperative Elevator Company Schleswig IA",
+      "company": "Farmers Cooperative Elevator Company",
+      "host": ""
+    },
+    {
+      "id": "ag-vantage-fs-inc-sheffield-ia",
+      "name": "AG Vantage FS Inc Sheffield IA",
+      "company": "AG Vantage FS Inc",
+      "host": ""
+    },
+    {
+      "id": "five-star-cooperative-sheffield-ia",
+      "name": "Five Star Cooperative Sheffield IA",
+      "company": "Five Star Cooperative",
+      "host": ""
+    },
+    {
+      "id": "west-side-grain-sales-corp-shellsburg-ia",
+      "name": "West Side Grain Sales Corp Shellsburg IA",
+      "company": "West Side Grain Sales Corp",
+      "host": ""
+    },
+    {
+      "id": "cooperative-elevator-association-sibley-ia",
+      "name": "Cooperative Elevator Association Sibley IA",
+      "company": "Cooperative Elevator Association",
+      "host": ""
+    },
+    {
+      "id": "adm-grain-company-sioux-city-ia",
+      "name": "ADM Grain Company Sioux City IA",
+      "company": "ADM Grain Company",
+      "host": ""
+    },
+    {
+      "id": "f-j-krob-company-solon-ia",
+      "name": "F.J. Krob & Company Solon IA",
+      "company": "F.J. Krob & Company",
+      "host": ""
+    },
+    {
+      "id": "united-farmers-mercantile-coop-stanton-ia",
+      "name": "United Farmers Mercantile Coop Stanton IA",
+      "company": "United Farmers Mercantile Coop",
+      "host": ""
+    },
+    {
+      "id": "koster-grain-inc-stuart-ia",
+      "name": "Koster Grain Inc. Stuart IA",
+      "company": "Koster Grain Inc.",
+      "host": ""
+    },
+    {
+      "id": "fredericksburg-farmers-coop-sumner-ia",
+      "name": "Fredericksburg Farmers Coop Sumner IA",
+      "company": "Fredericksburg Farmers Coop",
+      "host": ""
+    },
+    {
+      "id": "five-star-cooperative-swaledale-ia",
+      "name": "Five Star Cooperative Swaledale IA",
+      "company": "Five Star Cooperative",
+      "host": ""
+    },
+    {
+      "id": "cedar-county-cooperative-tipton-ia",
+      "name": "Cedar County Cooperative Tipton IA",
+      "company": "Cedar County Cooperative",
+      "host": ""
+    },
+    {
+      "id": "west-side-grain-sales-corp-van-horne-ia",
+      "name": "West Side Grain Sales Corp Van Horne IA",
+      "company": "West Side Grain Sales Corp",
+      "host": ""
+    },
+    {
+      "id": "west-side-grain-sales-corp-vinton-ia",
+      "name": "West Side Grain Sales Corp Vinton IA",
+      "company": "West Side Grain Sales Corp",
+      "host": ""
+    },
+    {
+      "id": "koster-grain-inc-wall-lake-ia",
+      "name": "Koster Grain Inc. Wall Lake IA",
+      "company": "Koster Grain Inc.",
+      "host": ""
+    },
+    {
+      "id": "agri-way-partners-wayland-ia",
+      "name": "Agri-Way Partners Wayland IA",
+      "company": "Agri-Way Partners",
+      "host": ""
+    },
+    {
+      "id": "faas-feed-grain-inc-webster-ia",
+      "name": "Faas Feed & Grain Inc Webster IA",
+      "company": "Faas Feed & Grain Inc",
+      "host": ""
+    },
+    {
+      "id": "ag-vantage-fs-inc-welton-ia",
+      "name": "AG Vantage FS Inc Welton IA",
+      "company": "AG Vantage FS Inc",
+      "host": ""
+    },
+    {
+      "id": "cedar-county-cooperative-west-branch-ia",
+      "name": "Cedar County Cooperative West Branch IA",
+      "company": "Cedar County Cooperative",
+      "host": ""
+    },
+    {
+      "id": "farmers-cooperative-produce-co-west-union-ia",
+      "name": "Farmers Cooperative Produce Co West Union IA",
+      "company": "Farmers Cooperative Produce Co",
+      "host": ""
+    },
+    {
+      "id": "northern-ag-service-inc-west-union-ia",
+      "name": "Northern AG Service Inc West Union IA",
+      "company": "Northern AG Service Inc",
+      "host": ""
+    },
+    {
+      "id": "northeast-iowa-cooperative-winthrop-ia",
+      "name": "Northeast Iowa Cooperative Winthrop IA",
+      "company": "Northeast Iowa Cooperative",
+      "host": ""
+    },
+    {
+      "id": "wiota-elevator-inc-wiota-ia",
+      "name": "Wiota Elevator Inc Wiota IA",
+      "company": "Wiota Elevator Inc",
+      "host": ""
+    },
+    {
+      "id": "southeast-iowa-grain-yarmouth-ia",
+      "name": "Southeast Iowa Grain Yarmouth IA",
+      "company": "Southeast Iowa Grain",
+      "host": ""
+    },
+    {
+      "id": "osage-cooperative-elevator-ia",
+      "name": "Osage Cooperative Elevator IA",
+      "company": "Osage Cooperative Elevator",
+      "host": "osagecoop.com"
+    },
+    {
+      "id": "bunge-joice-ia",
+      "name": "Bunge Joice IA",
+      "company": "Bunge",
+      "host": "www.bungeag.com"
+    },
+    {
+      "id": "little-cedar-cooperative-elevator-ia",
+      "name": "Little Cedar Cooperative Elevator IA",
+      "company": "Little Cedar Cooperative Elevator",
+      "host": "www.iowaagriculture.gov"
+    },
+    {
+      "id": "midwest-soya-international-mason-city-ia",
+      "name": "Midwest Soya International Mason City IA",
+      "company": "Midwest Soya International",
+      "host": "www.iowaagriculture.gov"
+    },
+    {
+      "id": "five-star-cooperative-new-hampton-ia",
+      "name": "Five Star Cooperative New Hampton IA",
+      "company": "Five Star Cooperative",
+      "host": "www.fivestarcoop.com"
+    },
+    {
       "id": "ray-carroll-grain-growers-richmond-mo",
       "name": "Ray-Carroll Grain Growers Richmond MO",
       "company": "Ray-Carroll Grain Growers",
@@ -4265,7 +5303,7 @@
       "id": "mfa-hamilton-rail-facility-mo",
       "name": "MFA Hamilton Rail Facility MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "castana-grain-company-ia",
@@ -4421,13 +5459,13 @@
       "id": "mfa-agri-services-maysville-mo",
       "name": "MFA Agri Services Maysville MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-agri-services-pattonsburg-mo",
       "name": "MFA Agri Services Pattonsburg MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "cameron-co-op-mo",
@@ -4463,7 +5501,7 @@
       "id": "river-valley-mfa-agri-services-higginsville-mo",
       "name": "River Valley MFA Agri Services Higginsville MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "consumers-oil-supply-braymer-mo",
@@ -4499,7 +5537,7 @@
       "id": "mfa-farmers-elevator-argyle-mo",
       "name": "MFA Farmers Elevator Argyle MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "lakeview-farms-middletown-mo",
@@ -4559,61 +5597,61 @@
       "id": "heart-of-missouri-mfa-agri-services-glasgow-mo",
       "name": "Heart of Missouri MFA Agri Services Glasgow MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-agri-services-laddonia-mo",
       "name": "MFA Agri Services Laddonia MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-agri-services-marshfield-mo",
       "name": "MFA Agri Services Marshfield MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-agri-services-st-clair-mo",
       "name": "MFA Agri Services St Clair MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-agri-services-ste-genevieve-mo",
       "name": "MFA Agri Services Ste Genevieve MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "river-valley-mfa-agri-services-odessa-mo",
       "name": "River Valley MFA Agri Services Odessa MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-exchange-kirksville-mo",
       "name": "MFA Exchange Kirksville MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-agri-services-bethany-mo",
       "name": "MFA Agri Services Bethany MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-northwest-agri-services-maryville-mo",
       "name": "MFA Northwest Agri Services Maryville MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-producers-grain-walker-mo",
       "name": "MFA Producers Grain Walker MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mid-missouri-agri-services-alma-mo",
@@ -4625,7 +5663,7 @@
       "id": "mfa-agri-services-salem-mo",
       "name": "MFA Agri Services Salem MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "ce-grain-farber-mo",
@@ -4655,19 +5693,19 @@
       "id": "mfa-agri-services-trenton-mo",
       "name": "MFA Agri Services Trenton MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-agri-services-neosho-mo",
       "name": "MFA Agri Services Neosho MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "show-me-mfa-agri-services-centralia-mo",
       "name": "Show-Me MFA Agri Services Centralia MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "base-line-grain-golden-city-mo",
@@ -4685,7 +5723,7 @@
       "id": "mfa-agri-services-labelle-mo-novelty",
       "name": "MFA Agri Services LaBelle MO Novelty",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "prairieland-fs-memphis-mo",
@@ -4709,13 +5747,13 @@
       "id": "west-central-agri-services-adrian-mo",
       "name": "West Central Agri Services Adrian MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-agri-services-st-joseph-mo",
       "name": "MFA Agri Services St Joseph MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mcbride-grain-mo",
@@ -4727,7 +5765,7 @@
       "id": "mfa-agri-services-martinsburg-mo",
       "name": "MFA Agri Services Martinsburg MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "jamestown-agri-service-mo",
@@ -4739,7 +5777,7 @@
       "id": "mfa-agri-services-clark-mo",
       "name": "MFA Agri Services Clark MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "inland-cape-rice-scott-city-mo",
@@ -4763,67 +5801,67 @@
       "id": "heart-of-missouri-mfa-agri-services-salisbury-mo",
       "name": "Heart of Missouri MFA Agri Services Salisbury MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-agri-services-chillicothe-mo",
       "name": "MFA Agri Services Chillicothe MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-agri-services-montgomery-city-mo",
       "name": "MFA Agri Services Montgomery City MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-feed-mill-lebanon-mo",
       "name": "MFA Feed Mill Lebanon MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-agri-services-browning-mo",
       "name": "MFA Agri Services Browning MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-agri-services-kahoka-mo",
       "name": "MFA Agri Services Kahoka MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-agri-services-milan-mo",
       "name": "MFA Agri Services Milan MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-worth-co-sheridan-mo",
       "name": "MFA Worth Co Sheridan MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-agri-services-hale-mo",
       "name": "MFA Agri Services Hale MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-agri-services-versailles-mo",
       "name": "MFA Agri Services Versailles MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-agri-services-bernie-mo",
       "name": "MFA Agri Services Bernie MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "ricketts-farm-service-shelbina-mo",
@@ -4835,13 +5873,13 @@
       "id": "mfa-agri-services-sedalia-mo",
       "name": "MFA Agri Services Sedalia MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-farm-home-buffalo-mo",
       "name": "MFA Farm Home Buffalo MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "riceland-foods-poplar-bluff-mo",
@@ -4859,13 +5897,13 @@
       "id": "mfa-agri-services-lebanon-mo",
       "name": "MFA Agri Services Lebanon MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "west-central-ag-services-centerview-mo",
       "name": "West Central Ag Services Centerview MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "consumers-oil-company-maryville-mo",
@@ -4919,31 +5957,31 @@
       "id": "heart-of-missouri-mfa-agri-services-boonville-mo",
       "name": "Heart of Missouri MFA Agri Services Boonville MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-exchange-hamilton-mo",
       "name": "MFA Exchange Hamilton MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-agriservice-gallatin-mo",
       "name": "MFA AgriService Gallatin MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-agri-services-jefferson-city-mo",
       "name": "MFA Agri Services Jefferson City MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "west-central-agriservices-chilhowee-mo",
       "name": "West Central Agriservices Chilhowee MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "midam-grains-polo-mo",
@@ -4967,7 +6005,7 @@
       "id": "orrick-mfa-agri-services-mo",
       "name": "Orrick MFA Agri Services MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "monroe-county-service-company-paris-mo",
@@ -5075,7 +6113,7 @@
       "id": "mfa-coop-130-rhineland-mo",
       "name": "MFA Coop 130 Rhineland MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "farmers-ag-grain-supply-deerfield-mo",
@@ -5117,7 +6155,7 @@
       "id": "mfa-coop-association-280-freeburg-mo",
       "name": "MFA Coop Association 280 Freeburg MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "letterman-feed-niangua-mo",
@@ -5147,7 +6185,7 @@
       "id": "mfa-exchange-meta-mo",
       "name": "MFA Exchange Meta MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "ursa-farmers-co-op-canton-mo",
@@ -5225,7 +6263,7 @@
       "id": "mfa-exchange-chamois-mo",
       "name": "MFA Exchange Chamois MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "sullivan-county-farm-supply-milan-mo",
@@ -5249,31 +6287,31 @@
       "id": "mfa-agri-services-albany-mo",
       "name": "MFA Agri Services Albany MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-agri-services-guilford-mo",
       "name": "MFA Agri Services Guilford MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-agri-services-hangleys-macon-mo",
       "name": "MFA Agri Services Hangleys Macon MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-agri-services-lamar-mo",
       "name": "MFA Agri Services Lamar MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-plant-foods-owensville-mo",
       "name": "MFA Plant Foods Owensville MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "foster-feed-bakersfield-mo",
@@ -5339,25 +6377,25 @@
       "id": "mfa-exchange-ionia-mo",
       "name": "MFA Exchange Ionia MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "river-valley-mfa-lexington-mo",
       "name": "River Valley MFA Lexington MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-exchange-vandalia-mo",
       "name": "MFA Exchange Vandalia MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "mfa-agri-services-california-mo",
       "name": "MFA Agri Services California MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "bowman-milling-pocahontas-mo",
@@ -5381,7 +6419,7 @@
       "id": "mfa-agri-services-king-city-mo",
       "name": "MFA Agri Services King City MO",
       "company": "MFA",
-      "host": "mfa-inc.com"
+      "host": "connect.mfa-inc.com"
     },
     {
       "id": "foster-elevator-foster-mo",
