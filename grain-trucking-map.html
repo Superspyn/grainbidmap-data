@@ -5868,22 +5868,22 @@
   }
 
   function fmtPlain(v) {
-    return (v === null || v === undefined) ? '—' : Number(v).toFixed(2);
+    return (v === null || v === undefined) ? '\u2014' : Number(v).toFixed(2);
   }
 
   function fmtSigned(v) {
-    if (v === null || v === undefined) return '—';
+    if (v === null || v === undefined) return '\u2014';
     var n = Number(v);
     return (n < 0 ? '-' : '+') + Math.abs(n).toFixed(2);
   }
 
   function money(v, digits) {
-    if (v === null || v === undefined) return '—';
+    if (v === null || v === undefined) return '\u2014';
     return '$' + Number(v).toFixed(digits === undefined ? 2 : digits);
   }
 
   function signedMoney(v) {
-    if (v === null || v === undefined) return '—';
+    if (v === null || v === undefined) return '\u2014';
     var n = Number(v);
     return (n < 0 ? '-$' : '+$') + Math.abs(n).toFixed(2);
   }
@@ -5910,11 +5910,11 @@
     var stale = entry.stale || (age !== null && age > 36);
     bidsAsOfEl.className = 'gt-bids-asof' + (stale ? ' gt-bids-stale' : '');
     bidsAsOfEl.textContent = entry.as_of
-      ? (stale ? '⚠ possibly out of date — as of ' : 'as of ') + formatAsOf(entry.as_of)
+      ? (stale ? '\u26a0 possibly out of date \u2014 as of ' : 'as of ') + formatAsOf(entry.as_of)
       : '';
 
     bidsInfoEl.textContent = (entry.source_name && entry.source_name !== data.name)
-      ? 'Reported by this co-op as “' + entry.source_name + '”'
+      ? 'Reported by this co-op as \u201c' + entry.source_name + '\u201d'
       : '';
 
     entry.bids.forEach(function (b) {
@@ -5928,10 +5928,10 @@
       }
 
       tr.appendChild(cell(b.grain === 'soybeans' ? 'Soybeans' : 'Corn', 'gt-bids-grain'));
-      tr.appendChild(cell(b.delivery_label || '—'));
-      tr.appendChild(cell(b.futures_month || '—'));
-      tr.appendChild(cell(b.futures === undefined ? '—' : money(b.futures), 'gt-bids-num'));
-      tr.appendChild(cell(b.basis === undefined ? '—' : signedMoney(b.basis), 'gt-bids-num'));
+      tr.appendChild(cell(b.delivery_label || '\u2014'));
+      tr.appendChild(cell(b.futures_month || '\u2014'));
+      tr.appendChild(cell(b.futures === undefined ? '\u2014' : money(b.futures), 'gt-bids-num'));
+      tr.appendChild(cell(b.basis === undefined ? '\u2014' : signedMoney(b.basis), 'gt-bids-num'));
       tr.appendChild(cell(money(b.cash), 'gt-bids-cash'));
 
       tr.addEventListener('click', function () {
@@ -6377,7 +6377,7 @@
           g[1] + '</td></tr>';
         list.forEach(function (b) {
           sections += '<tr>' +
-            '<td style="color:#5B6350;padding:1px 0;">' + escapeHtml(b.delivery_label || '—') + '</td>' +
+            '<td style="color:#5B6350;padding:1px 0;">' + escapeHtml(b.delivery_label || '\u2014') + '</td>' +
             '<td style="' + NUM + 'color:#5B6350;">' + fmtSigned(b.basis) + '</td>' +
             '<td style="' + NUM + 'color:#5B6350;">' + fmtPlain(b.futures) + '</td>' +
             '<td style="' + NUM + 'color:#3C5A3E;font-weight:700;">' + fmtPlain(b.cash) + '</td>' +
@@ -6403,7 +6403,7 @@
         var stale = entry.stale || (age !== null && age > 36);
         if (entry.as_of) {
           html += '<div style="font-size:11px;color:' + (stale ? '#A64B3C' : '#5B6350') + ';margin-bottom:4px;">' +
-            (stale ? '⚠ possibly out of date — ' : '') + 'as of ' + escapeHtml(formatAsOf(entry.as_of)) +
+            (stale ? '\u26a0 possibly out of date \u2014 ' : '') + 'as of ' + escapeHtml(formatAsOf(entry.as_of)) +
             '</div>';
         }
       }
@@ -6532,7 +6532,7 @@
       statusText.textContent = 'Click a pin to begin.';
     } else {
       selectedDestination = marker;
-      statusText.textContent = selectedOrigin.gtData.name + ' → ' + selectedDestination.gtData.name;
+      statusText.textContent = selectedOrigin.gtData.name + ' \u2192 ' + selectedDestination.gtData.name;
       computeRoute();
     }
     updateIcons();
@@ -6593,17 +6593,17 @@
   }
 
   function finishRoute(destData, oPos, dPos, bridgeInfo) {
-    routeTitleEl.textContent = selectedOrigin.gtData.name + ' → ' + destData.name;
+    routeTitleEl.textContent = selectedOrigin.gtData.name + ' \u2192 ' + destData.name;
 
     routeEngineEl.className = 'gt-route-engine';
     if (bridgeInfo.reason === 'off') {
       routeEngineEl.textContent = 'Bridge warnings switched off';
     } else if (bridgeInfo.count > 0) {
       routeEngineEl.classList.add('gt-bridge-warning');
-      routeEngineEl.textContent = '⚠ This route crosses ' + bridgeInfo.count + ' weight-restricted bridge' + (bridgeInfo.count === 1 ? '' : 's') + ' (under 40 tons)';
+      routeEngineEl.textContent = '\u26a0 This route crosses ' + bridgeInfo.count + ' weight-restricted bridge' + (bridgeInfo.count === 1 ? '' : 's') + ' (under 40 tons)';
     } else {
       routeEngineEl.classList.add('gt-bridge-clear');
-      routeEngineEl.textContent = '✓ No weight-restricted bridges on this route';
+      routeEngineEl.textContent = '\u2713 No weight-restricted bridges on this route';
     }
 
     openMapsEl.href = 'https://www.google.com/maps/dir/?api=1&origin=' + oPos.lat + ',' + oPos.lng +
@@ -6684,13 +6684,13 @@
     laborcostEl.textContent = '$' + laborCost.toFixed(2);
     weartearcostEl.textContent = '$' + weartearCost.toFixed(2);
     totalcostEl.textContent = '$' + totalCost.toFixed(2);
-    fixedcostbuEl.textContent = fixedCostPerBu > 0 ? '$' + fixedCostPerBu.toFixed(4) + ' / bu' : '—';
+    fixedcostbuEl.textContent = fixedCostPerBu > 0 ? '$' + fixedCostPerBu.toFixed(4) + ' / bu' : '\u2014';
 
     if (truckCap > 0) {
       var haulCostPerBu = totalCost / truckCap + fixedCostPerBu;
       haulcostbuEl.textContent = '$' + haulCostPerBu.toFixed(3) + ' / bu';
     } else {
-      haulcostbuEl.textContent = '—';
+      haulcostbuEl.textContent = '\u2014';
     }
 
     var bid = parseFloat(bidInput.value);
@@ -6703,7 +6703,7 @@
       var netPricePerBu = netRevenue / truckCap - fixedCostPerBu;
       netpriceEl.textContent = '$' + netPricePerBu.toFixed(3) + ' / bu';
     } else {
-      netpriceEl.textContent = '—';
+      netpriceEl.textContent = '\u2014';
     }
   }
 
