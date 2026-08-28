@@ -1,0 +1,1097 @@
+<div id="nh3-price-tool">
+<style>
+  #nh3-price-tool {
+    --bg: #F6F4EC;
+    --surface: #FFFFFF;
+    --ink: #23281F;
+    --ink-soft: #5B6350;
+    --gold: #C08A28;
+    --gold-deep: #9C6E1C;
+    --green: #3C5A3E;
+    --green-pale: #E7EFE2;
+    --line: #DBD5C3;
+    --danger: #A64B3C;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    padding: clamp(16px, 3vw, 28px) clamp(12px, 2.5vw, 20px) clamp(24px, 4vw, 40px);
+    border-radius: 10px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    overflow-wrap: break-word;
+  }
+  #nh3-price-tool * { box-sizing: border-box; }
+  #nh3-price-tool img { max-width: 100%; }
+
+  #nh3-price-tool h1 {
+    font-family: 'Roboto Slab', Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(20px, 3.2vw, 28px);
+    letter-spacing: -0.01em;
+    margin: 0 0 4px;
+  }
+  #nh3-price-tool p.nf-subtitle {
+    color: var(--ink-soft);
+    margin: 0 0 clamp(14px, 2.2vw, 22px);
+    font-size: clamp(13px, 1.5vw, 14.5px);
+    max-width: 640px;
+    line-height: 1.5;
+  }
+
+  #nh3-price-tool section.nf-block {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px 18px 20px;
+    margin-bottom: 20px;
+  }
+  #nh3-price-tool h2 {
+    font-family: 'Roboto Slab', Georgia, serif;
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gold-deep);
+    margin: 0 0 12px;
+  }
+
+  #nh3-price-tool .nf-map-instructions {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+
+  /* ---- company filter panel (same pattern as the grain map) ---- */
+  #nh3-price-tool .nf-filter-panel { margin-bottom: 12px; }
+  #nh3-price-tool .nf-filter-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 7px 12px;
+    cursor: pointer;
+  }
+  #nh3-price-tool .nf-filter-body {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 8px;
+    background: var(--bg);
+  }
+  #nh3-price-tool .nf-filter-controls { display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+  #nh3-price-tool .nf-filter-search {
+    flex: 1;
+    min-width: 140px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    padding: 6px 9px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--ink);
+  }
+  #nh3-price-tool .nf-filter-btn {
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  #nh3-price-tool .nf-filter-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    max-height: 180px;
+    overflow-y: auto;
+  }
+  #nh3-price-tool .nf-filter-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  /* ---- map ---- */
+  #nh3-price-tool .nf-map-wrap { position: relative; }
+  #nh3-price-tool #nf-map {
+    width: 100%;
+    height: clamp(380px, 60vh, 560px);
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: #E9E6DB;
+  }
+  #nh3-price-tool .nf-map-wrap.nf-fs {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: #000;
+  }
+  #nh3-price-tool .nf-map-wrap.nf-fs #nf-map {
+    height: 100%;
+    border-radius: 0;
+    border: none;
+  }
+  body.nf-fs-lock { overflow: hidden; }
+  #nh3-price-tool .nf-map-fallback {
+    display: none;
+    padding: 14px;
+    font-size: 13.5px;
+    color: var(--danger);
+  }
+
+  #nh3-price-tool .nf-status-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+  }
+  #nh3-price-tool .nf-status-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  #nh3-price-tool .nf-open-maps-btn {
+    display: none;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--green);
+    text-decoration: none;
+    border: 1px solid var(--green);
+    border-radius: 6px;
+    padding: 6px 12px;
+  }
+  #nh3-price-tool .nf-open-maps-btn.nf-visible { display: inline-block; }
+  #nh3-price-tool .nf-reset {
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    background: none;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+
+  /* ---- selected dealer panel ---- */
+  #nh3-price-tool .nf-dealer-panel {
+    display: none;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px;
+    margin-top: 14px;
+    background: var(--green-pale);
+  }
+  #nh3-price-tool .nf-dealer-panel.nf-visible { display: block; }
+  #nh3-price-tool .nf-dealer-title {
+    font-family: 'Roboto Slab', Georgia, serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+  #nh3-price-tool .nf-dealer-sub {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+  }
+  #nh3-price-tool .nf-dealer-sub a { color: var(--green); font-weight: 600; }
+  #nh3-price-tool .nf-dealer-route {
+    font-size: 13.5px;
+    margin-bottom: 10px;
+  }
+  #nh3-price-tool .nf-quote-row {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+  }
+  #nh3-price-tool .nf-field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  #nh3-price-tool .nf-field label { font-size: 12px; color: var(--ink-soft); font-weight: 600; }
+  #nh3-price-tool .nf-field input {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    padding: 7px 9px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    width: 130px;
+    max-width: 100%;
+    background: var(--surface);
+    color: var(--ink);
+  }
+  #nh3-price-tool .nf-field input.nf-notes { width: 220px; }
+  #nh3-price-tool .nf-save-btn {
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--green);
+    border: none;
+    border-radius: 6px;
+    padding: 9px 18px;
+    cursor: pointer;
+  }
+  #nh3-price-tool .nf-clear-btn {
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--danger);
+    background: none;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 8px 14px;
+    cursor: pointer;
+  }
+  #nh3-price-tool .nf-saved-note {
+    font-size: 12.5px;
+    color: var(--green);
+    font-weight: 600;
+    margin-top: 8px;
+    min-height: 16px;
+  }
+
+  /* ---- comparison table ---- */
+  #nh3-price-tool .nf-table-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  #nh3-price-tool .nf-table-count { font-size: 12.5px; color: var(--ink-soft); }
+  #nh3-price-tool .nf-table-scroll { overflow-x: auto; }
+  #nh3-price-tool table.nf-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    min-width: 560px;
+  }
+  #nh3-price-tool table.nf-table th {
+    text-align: left;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+    border-bottom: 2px solid var(--line);
+    padding: 6px 8px;
+    white-space: nowrap;
+  }
+  #nh3-price-tool table.nf-table td {
+    border-bottom: 1px solid var(--line);
+    padding: 7px 8px;
+    vertical-align: top;
+  }
+  #nh3-price-tool table.nf-table tbody tr { cursor: pointer; }
+  #nh3-price-tool table.nf-table tbody tr:hover { background: var(--green-pale); }
+  #nh3-price-tool .nf-price-cell { font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: right; white-space: nowrap; }
+  #nh3-price-tool .nf-num { text-align: right; font-family: 'IBM Plex Mono', monospace; white-space: nowrap; }
+  #nh3-price-tool tr.nf-cheapest td { background: #F2EAD3; }
+  #nh3-price-tool tr.nf-cheapest .nf-price-cell { color: var(--gold-deep); }
+  #nh3-price-tool .nf-stale { color: var(--danger); font-weight: 600; }
+  #nh3-price-tool .nf-asof { white-space: nowrap; }
+  #nh3-price-tool .nf-empty-note { font-size: 13.5px; color: var(--ink-soft); padding: 8px 0; }
+
+  /* ---- backup / restore ---- */
+  #nh3-price-tool details.nf-backup { margin-top: 14px; font-size: 13px; }
+  #nh3-price-tool details.nf-backup summary { cursor: pointer; font-weight: 600; color: var(--ink-soft); }
+  #nh3-price-tool .nf-backup-body { margin-top: 8px; }
+  #nh3-price-tool .nf-backup textarea {
+    width: 100%;
+    height: 90px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 8px;
+    background: var(--bg);
+    color: var(--ink);
+  }
+  #nh3-price-tool .nf-backup-btns { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
+
+  #nh3-price-tool .nf-legend {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--line);
+  }
+</style>
+
+<h1>Anhydrous (NH3) Price Map</h1>
+<p class="nf-subtitle">Call or text your dealers for anhydrous quotes, type each one in as you get it, and this map keeps them all side by side &mdash; cheapest first, with the date you got each quote so you know what's gone stale. Prices are saved in this browser on this device.</p>
+
+<section class="nf-block">
+  <h2>Map</h2>
+  <div class="nf-map-instructions">Blue = dealer with no quote entered yet, green = dealer you have a current quote for, orange = quote has gone stale, purple = Koch wholesale terminal (where the dealers load &mdash; not retail). Use the search box in the top-left of the map to jump straight to a dealer by name. Click any empty spot on the map to drop a pin for your farm (draggable) &mdash; then clicking a dealer also shows driving miles and time from your farm. The target button uses your current location instead. Dealers came from the Iowa Dept of Ag fertilizer-license list, which doesn't say who handles anhydrous specifically &mdash; the first call to each one tells you; delete pins that don't.</div>
+
+  <div class="nf-filter-panel">
+    <button type="button" class="nf-filter-toggle-btn" id="nf-filter-toggle-btn" aria-expanded="false">
+      <span id="nf-filter-toggle-label">Filter by company</span>
+      <span id="nf-filter-chevron">&#9662;</span>
+    </button>
+    <div class="nf-filter-body" id="nf-filter-body" hidden>
+      <div class="nf-filter-controls">
+        <input type="text" id="nf-filter-search" class="nf-filter-search" placeholder="Search companies&hellip;">
+        <button type="button" class="nf-filter-btn" id="nf-filter-all-btn">All</button>
+        <button type="button" class="nf-filter-btn" id="nf-filter-none-btn">None</button>
+      </div>
+      <div class="nf-filter-list" id="nf-filter-list"></div>
+    </div>
+  </div>
+
+  <div class="nf-map-wrap">
+    <div id="nf-map"></div>
+    <div id="nf-map-fallback" class="nf-map-fallback">
+      Map didn't load. This usually means the Google Maps API key below still needs to be added (or billing enabled).
+    </div>
+  </div>
+
+  <div class="nf-status-row">
+    <div><span id="nf-status-text">Click a dealer pin to enter or check a quote.</span></div>
+    <div class="nf-status-actions">
+      <a href="#" id="nf-open-maps" class="nf-open-maps-btn" target="_blank" rel="noopener">Open route in Google Maps &rarr;</a>
+      <button class="nf-reset" id="nf-reset-btn">Reset selection</button>
+    </div>
+  </div>
+
+  <div class="nf-dealer-panel" id="nf-dealer-panel">
+    <div class="nf-dealer-title" id="nf-dealer-title"></div>
+    <div class="nf-dealer-sub" id="nf-dealer-sub"></div>
+    <div class="nf-dealer-route" id="nf-dealer-route"></div>
+    <div class="nf-quote-row">
+      <div class="nf-field">
+        <label for="nf-price">NH3 price ($/ton)</label>
+        <input type="number" id="nf-price" step="1" min="0" placeholder="e.g. 745">
+      </div>
+      <div class="nf-field">
+        <label for="nf-asof">Quoted on</label>
+        <input type="date" id="nf-asof">
+      </div>
+      <div class="nf-field">
+        <label for="nf-notes">Notes (optional)</label>
+        <input type="text" id="nf-notes" class="nf-notes" placeholder="fall prepay, w/ N-Serve, etc.">
+      </div>
+      <button type="button" class="nf-save-btn" id="nf-save-btn">Save quote</button>
+      <button type="button" class="nf-clear-btn" id="nf-clear-btn">Remove quote</button>
+    </div>
+    <div class="nf-saved-note" id="nf-saved-note"></div>
+  </div>
+</section>
+
+<section class="nf-block">
+  <div class="nf-table-head">
+    <h2 style="margin:0;">Quote comparison</h2>
+    <span class="nf-table-count" id="nf-table-count"></span>
+  </div>
+  <div class="nf-table-scroll">
+    <table class="nf-table">
+      <thead>
+        <tr>
+          <th>Dealer</th>
+          <th>Town</th>
+          <th style="text-align:right;">$/ton</th>
+          <th>Quoted on</th>
+          <th style="text-align:right;">Miles*</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody id="nf-table-body"></tbody>
+    </table>
+  </div>
+  <div class="nf-empty-note" id="nf-empty-note">No quotes entered yet &mdash; click a dealer pin on the map and type in the price they give you.</div>
+
+  <details class="nf-backup">
+    <summary>Backup / restore quotes</summary>
+    <div class="nf-backup-body">
+      Quotes live only in this browser. To move them to another computer (or keep a backup), click Export and copy the text somewhere safe; paste it back here and click Import on the other machine.
+      <textarea id="nf-backup-text" spellcheck="false"></textarea>
+      <div class="nf-backup-btns">
+        <button type="button" class="nf-filter-btn" id="nf-export-btn">Export</button>
+        <button type="button" class="nf-filter-btn" id="nf-import-btn">Import</button>
+      </div>
+    </div>
+  </details>
+
+  <div class="nf-legend">
+    Quotes turn <span class="nf-stale">red</span> once they're more than 14 days old &mdash; anhydrous moves, so re-check before you commit. The highlighted row is the cheapest current quote. *Miles are straight-line from your farm pin (drop one on the map) &mdash; click the dealer's pin for actual driving miles and time. Click any row to jump to that dealer on the map. Prices here are whatever you typed in &mdash; nothing is scraped or guaranteed; always confirm with the dealer before locking in tons.
+  </div>
+</section>
+
+<script>
+(function () {
+  'use strict';
+
+  // ====== EDIT THIS: your API key (same one as the grain map) ======
+  var NF_API_KEY = 'AIzaSyA8lkzY1Q-gr80SxESMK4BOLZiW57Rqj-A';
+
+  // How many days before a quote is flagged stale in the table.
+  var NF_STALE_DAYS = 14;
+
+  // ====== NH3 dealers ======
+  // Pulled from the Iowa Dept of Ag commercial fertilizer licensee search
+  // (dev/fetch_nh3_licensees.py -> filter -> geocode -> dev/make_nh3_pins.py
+  // in the grain-map repo regenerates this array; hand edits are fine too).
+  // Fields: phone/url optional. unsure:1 = independent from the license list,
+  // confirm they handle NH3. terminal:1 = Koch wholesale terminal, not retail.
+  // approx:1 = geocoder only found the town, pin sits at the town center.
+  var nfDealers = [
+    { name: 'Ag Performance Inc Buffalo Center', company: 'Ag Performance Inc', town: 'Buffalo Center', lat: 43.392965, lng: -93.946429, unsure: 1 },
+    { name: 'AgVantage FS Alexander', company: 'AgVantage FS', town: 'Alexander', lat: 42.803762, lng: -93.476556 },
+    { name: 'AgVantage FS Chapin', company: 'AgVantage FS', town: 'Chapin', lat: 42.842498, lng: -93.222144 },
+    { name: 'AgVantage FS Garner', company: 'AgVantage FS', town: 'Garner', lat: 43.105299, lng: -93.617449 },
+    { name: 'AgVantage FS Thornton', company: 'AgVantage FS', town: 'Thornton', lat: 42.943935, lng: -93.379456 },
+    { name: 'Asmus Farm Supply Manly', company: 'Asmus Farm Supply', town: 'Manly', lat: 43.284094, lng: -93.150023, unsure: 1 },
+    { name: 'Asmus Farm Supply Rake', company: 'Asmus Farm Supply', town: 'Rake', lat: 43.490616, lng: -93.892204, unsure: 1 },
+    { name: 'Cartersville Elevator Inc. Mason City', company: 'Cartersville Elevator Inc.', town: 'Mason City', lat: 43.137328, lng: -93.260516, unsure: 1 },
+    { name: 'Cd Custom Ag Corwith', company: 'Cd Custom Ag', town: 'Corwith', lat: 42.992200, lng: -93.956622, unsure: 1 },
+    { name: 'Crop Builders Usa Buffalo Center', company: 'Crop Builders Usa', town: 'Buffalo Center', lat: 43.385656, lng: -93.864017, unsure: 1 },
+    { name: 'Farmers Coop Ackley', company: 'Farmers Coop', town: 'Ackley', lat: 42.554656, lng: -93.059633 },
+    { name: 'Farmers Coop Ottosen', company: 'Farmers Coop', town: 'Ottosen', lat: 42.896516, lng: -94.377398 },
+    { name: 'Fisk Farm & Home Cresco', company: 'Fisk Farm & Home', town: 'Cresco', lat: 43.371064, lng: -92.125807, unsure: 1 },
+    { name: 'Five Star Coop Burchinal', company: 'Five Star Coop', town: 'Burchinal', lat: 43.064821, lng: -93.277839 },
+    { name: 'Five Star Coop Dougherty', company: 'Five Star Coop', town: 'Dougherty', lat: 42.923200, lng: -93.041920 },
+    { name: 'Five Star Coop Hanlontown', company: 'Five Star Coop', town: 'Hanlontown', lat: 43.279767, lng: -93.378689 },
+    { name: 'Five Star Coop Joice', company: 'Five Star Coop', town: 'Joice', lat: 43.357417, lng: -93.448179 },
+    { name: 'Five Star Coop Mason City', company: 'Five Star Coop', town: 'Mason City', lat: 43.119140, lng: -93.187867 },
+    { name: 'Five Star Coop Scarville', company: 'Five Star Coop', town: 'Scarville', lat: 43.469372, lng: -93.617010 },
+    { name: 'Five Star Coop Ventura', company: 'Five Star Coop', town: 'Ventura', lat: 43.127104, lng: -93.479014 },
+    { name: 'Gold-Eagle Coop Britt', company: 'Gold-Eagle Coop', town: 'Britt', lat: 43.091943, lng: -93.885672 },
+    { name: 'Gold-Eagle Coop Clarion (101 3Rd Ave Sw)', company: 'Gold-Eagle Coop', town: 'Clarion', lat: 42.729341, lng: -93.734139 },
+    { name: 'Gold-Eagle Coop Clarion (2004 Madison Ave)', company: 'Gold-Eagle Coop', town: 'Clarion', lat: 42.760281, lng: -93.735152 },
+    { name: 'Gold-Eagle Coop Clarion (221 4Th Ave Nw)', company: 'Gold-Eagle Coop', town: 'Clarion', lat: 42.735343, lng: -93.734360 },
+    { name: 'Gold-Eagle Coop Clarion (2366 Hwy 69)', company: 'Gold-Eagle Coop', town: 'Clarion', lat: 42.707654, lng: -93.636836 },
+    { name: 'Gold-Eagle Coop Clarion (2150 Hancock Ave)', company: 'Gold-Eagle Coop', town: 'Clarion', lat: 42.735282, lng: -93.833418 },
+    { name: 'Gold-Eagle Coop Corwith', company: 'Gold-Eagle Coop', town: 'Corwith', lat: 42.993796, lng: -93.955550 },
+    { name: 'Gold-Eagle Coop Eagle Grove', company: 'Gold-Eagle Coop', town: 'Eagle Grove', lat: 42.664190, lng: -93.900596 },
+    { name: 'Gold-Eagle Coop Forest City', company: 'Gold-Eagle Coop', town: 'Forest City', lat: 43.264290, lng: -93.634846 },
+    { name: 'Gold-Eagle Coop Goldfield', company: 'Gold-Eagle Coop', town: 'Goldfield', lat: 42.735342, lng: -93.920444, approx: 1 },
+    { name: 'Gold-Eagle Coop Hardy', company: 'Gold-Eagle Coop', town: 'Hardy', lat: 42.809807, lng: -94.051249 },
+    { name: 'Gold-Eagle Coop Kanawha', company: 'Gold-Eagle Coop', town: 'Kanawha', lat: 42.934253, lng: -93.795035 },
+    { name: 'Gold-Eagle Coop Livermore', company: 'Gold-Eagle Coop', town: 'Livermore', lat: 42.868324, lng: -94.185050, approx: 1 },
+    { name: 'Gold-Eagle Coop Renwick', company: 'Gold-Eagle Coop', town: 'Renwick', lat: 42.827899, lng: -93.976412 },
+    { name: 'Gold-Eagle Coop Thompson', company: 'Gold-Eagle Coop', town: 'Thompson', lat: 43.367608, lng: -93.773659 },
+    { name: 'Gold-Eagle Coop Thor', company: 'Gold-Eagle Coop', town: 'Thor', lat: 42.690014, lng: -94.049710 },
+    { name: 'Gold-Eagle Coop Titonka', company: 'Gold-Eagle Coop', town: 'Titonka', lat: 43.235313, lng: -94.040092 },
+    { name: 'Gold-Eagle Coop Wesley', company: 'Gold-Eagle Coop', town: 'Wesley', lat: 43.086091, lng: -94.024577 },
+    { name: 'Gold-Eagle Coop Woden', company: 'Gold-Eagle Coop', town: 'Woden', lat: 43.233632, lng: -93.910161 },
+    { name: 'Helena Mason City (16725 245Th St)', company: 'Helena', town: 'Mason City', lat: 43.119025, lng: -93.187039, unsure: 1 },
+    { name: 'Helena Mason City (2576 S Pierce Ave)', company: 'Helena', town: 'Mason City', lat: 43.116489, lng: -93.221023, unsure: 1 },
+    { name: 'Helena Rockwell', company: 'Helena', town: 'Rockwell', lat: 42.985064, lng: -93.188134, unsure: 1, approx: 1 },
+    { name: 'Ingham Ag Partners Llc Hampton', company: 'Ingham Ag Partners Llc', town: 'Hampton', lat: 42.738000, lng: -93.113148, unsure: 1 },
+    { name: 'Koch Fertilizer (terminal) Garner', company: 'Koch Fertilizer (terminal)', town: 'Garner', lat: 43.112567, lng: -93.557189, terminal: 1 },
+    { name: 'Koch Fertilizer (terminal) Lu Verne', company: 'Koch Fertilizer (terminal)', town: 'Lu Verne', lat: 43.007229, lng: -94.193154, terminal: 1 },
+    { name: 'Koch Fertilizer (terminal) Rake', company: 'Koch Fertilizer (terminal)', town: 'Rake', lat: 43.483647, lng: -93.918764, terminal: 1 },
+    { name: 'Koch Fertilizer (terminal) Ventura', company: 'Koch Fertilizer (terminal)', town: 'Ventura', lat: 43.126626, lng: -93.477897, terminal: 1, approx: 1 },
+    { name: 'Landus Bradford', company: 'Landus', town: 'Bradford', lat: 42.633519, lng: -93.251917 },
+    { name: 'Landus Britt', company: 'Landus', town: 'Britt', lat: 43.097229, lng: -93.851815 },
+    { name: 'Landus Humboldt', company: 'Landus', town: 'Humboldt', lat: 42.615902, lng: -94.229264 },
+    { name: 'Landus Latimer', company: 'Landus', town: 'Latimer', lat: 42.774583, lng: -93.350154 },
+    { name: 'Landus Rake', company: 'Landus', town: 'Rake', lat: 43.484407, lng: -93.918659, approx: 1 },
+    { name: 'Liqui-Grow Clear Lake', company: 'Liqui-Grow', town: 'Clear Lake', lat: 43.142846, lng: -93.383415, unsure: 1 },
+    { name: 'Liqui-Grow Hampton', company: 'Liqui-Grow', town: 'Hampton', lat: 42.730882, lng: -93.228163, unsure: 1 },
+    { name: 'NEW Cooperative Algona', company: 'NEW Cooperative', town: 'Algona', lat: 43.079137, lng: -94.187438 },
+    { name: 'NEW Cooperative Belmond', company: 'NEW Cooperative', town: 'Belmond', lat: 42.830627, lng: -93.618698 },
+    { name: 'NEW Cooperative Bode', company: 'NEW Cooperative', town: 'Bode', lat: 42.869642, lng: -94.287603 },
+    { name: 'NEW Cooperative Britt', company: 'NEW Cooperative', town: 'Britt', lat: 43.101389, lng: -93.802327 },
+    { name: 'NEW Cooperative Buffalo Center', company: 'NEW Cooperative', town: 'Buffalo Center', lat: 43.349990, lng: -93.931667 },
+    { name: 'NEW Cooperative Dows (1389 Wright Ave)', company: 'NEW Cooperative', town: 'Dows', lat: 42.662889, lng: -93.499189 },
+    { name: 'NEW Cooperative Dows (304 Ellsworth St)', company: 'NEW Cooperative', town: 'Dows', lat: 42.656514, lng: -93.498114 },
+    { name: 'NEW Cooperative Fertile', company: 'NEW Cooperative', town: 'Fertile', lat: 43.264089, lng: -93.420133, approx: 1 },
+    { name: 'NEW Cooperative Humboldt', company: 'NEW Cooperative', town: 'Humboldt', lat: 42.731729, lng: -94.204736 },
+    { name: 'NEW Cooperative Klemme', company: 'NEW Cooperative', town: 'Klemme', lat: 43.006849, lng: -93.604009 },
+    { name: 'NEW Cooperative Luverne', company: 'NEW Cooperative', town: 'Luverne', lat: 42.908637, lng: -94.080567, approx: 1 },
+    { name: 'NEW Cooperative Merservey', company: 'NEW Cooperative', town: 'Merservey', lat: 42.899248, lng: -93.478381 },
+    { name: 'NEW Cooperative Northwood', company: 'NEW Cooperative', town: 'Northwood', lat: 43.444058, lng: -93.202915 },
+    { name: 'NEW Cooperative Ventura', company: 'NEW Cooperative', town: 'Ventura', lat: 43.134832, lng: -93.477678 },
+    { name: 'NEW Cooperative Whittemore', company: 'NEW Cooperative', town: 'Whittemore', lat: 43.064753, lng: -94.422491 },
+    { name: 'NEW Cooperative Woolstock', company: 'NEW Cooperative', town: 'Woolstock', lat: 42.566605, lng: -93.843871, approx: 1 },
+    { name: 'New Horizon Coop Britt', company: 'New Horizon Coop', town: 'Britt', lat: 43.050058, lng: -93.812633 },
+    { name: 'Nexus Cooperative Grafton', company: 'Nexus Cooperative', town: 'Grafton', lat: 43.341636, lng: -93.063799 },
+    { name: 'Nexus Cooperative Northwood', company: 'Nexus Cooperative', town: 'Northwood', lat: 43.446330, lng: -93.213311 },
+    { name: 'North Central Ag Solutions Home Farm Humboldt', company: 'North Central Ag Solutions Home Farm', town: 'Humboldt', lat: 42.688008, lng: -94.258995, unsure: 1 },
+    { name: 'North Iowa Coop Mason City (16228 Thrush Ave)', company: 'North Iowa Coop', town: 'Mason City', lat: 43.129099, lng: -93.122410 },
+    { name: 'North Iowa Coop Mason City (Plymouth- 19856 Main St)', company: 'North Iowa Coop', town: 'Mason City', lat: 43.128911, lng: -93.124485 },
+    { name: 'North Iowa Coop Mason City (19856 Main St)', company: 'North Iowa Coop', town: 'Mason City', lat: 43.128911, lng: -93.124485 },
+    { name: 'North Iowa Coop Thornton', company: 'North Iowa Coop', town: 'Thornton', lat: 42.943722, lng: -93.379518 },
+    { name: 'Nutrien Ag Solutions Galt', company: 'Nutrien Ag Solutions', town: 'Galt', lat: 42.693580, lng: -93.605355, approx: 1 },
+    { name: 'Nutrien Ag Solutions Irvington', company: 'Nutrien Ag Solutions', town: 'Irvington', lat: 43.007229, lng: -94.193154 },
+    { name: 'Nutrien Ag Solutions Luverne', company: 'Nutrien Ag Solutions', town: 'Luverne', lat: 42.916887, lng: -94.081747 },
+    { name: 'Pro Cooperative Gilmore City', company: 'Pro Cooperative', town: 'Gilmore City', lat: 42.653356, lng: -94.392514 },
+    { name: 'Pro Cooperative Rutland', company: 'Pro Cooperative', town: 'Rutland', lat: 42.760833, lng: -94.296533 },
+    { name: 'Stateline Coop Bancroft (142 N Long St)', company: 'Stateline Coop', town: 'Bancroft', lat: 43.293020, lng: -94.218222, approx: 1 },
+    { name: 'Stateline Coop Bancroft (221 W Ramsey St)', company: 'Stateline Coop', town: 'Bancroft', lat: 43.293029, lng: -94.219572 },
+    { name: 'Stateline Coop Buffalo Center', company: 'Stateline Coop', town: 'Buffalo Center', lat: 43.387046, lng: -93.946351, approx: 1 },
+    { name: 'Stateline Coop Burt', company: 'Stateline Coop', town: 'Burt', lat: 43.241028, lng: -94.222158 },
+    { name: 'Stateline Coop Fenton', company: 'Stateline Coop', town: 'Fenton', lat: 43.219879, lng: -94.427289 },
+    { name: 'Stateline Coop Lakota', company: 'Stateline Coop', town: 'Lakota', lat: 43.385485, lng: -94.075698 },
+    { name: 'Stateline Coop Ledyard', company: 'Stateline Coop', town: 'Ledyard', lat: 43.421805, lng: -94.164778 },
+    { name: 'Stateline Coop Lone Rock', company: 'Stateline Coop', town: 'Lone Rock', lat: 43.219962, lng: -94.324661, approx: 1 },
+    { name: 'Stateline Coop Swea City', company: 'Stateline Coop', town: 'Swea City', lat: 43.386342, lng: -94.309913 },
+    { name: 'Steier Ag Algona', company: 'Steier Ag', town: 'Algona', lat: 43.083140, lng: -94.344079, unsure: 1 },
+    { name: 'Yield Solutions Llc Garner', company: 'Yield Solutions Llc', town: 'Garner', lat: 43.063792, lng: -93.694984, unsure: 1 }
+  ];
+
+  // ====== storage ======
+  var PRICES_KEY = 'nf-nh3-prices-v1';
+  var FARM_KEY = 'nf-farm-pin-v1';
+
+  function loadJSON(key) {
+    try {
+      var raw = window.localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) { return null; }
+  }
+  function saveJSON(key, val) {
+    try { window.localStorage.setItem(key, JSON.stringify(val)); } catch (e) {}
+  }
+
+  var prices = loadJSON(PRICES_KEY) || {}; // { dealerId: {price, asof, notes} }
+
+  function dealerId(d) {
+    return (d.name + '|' + d.lat.toFixed(4) + '|' + d.lng.toFixed(4))
+      .toLowerCase().replace(/\s+/g, '-');
+  }
+  nfDealers.forEach(function (d) { d.id = dealerId(d); });
+
+  // ====== element handles ======
+  var container = document.getElementById('nh3-price-tool');
+  var mapEl = container.querySelector('#nf-map');
+  var fallbackEl = container.querySelector('#nf-map-fallback');
+  var statusText = container.querySelector('#nf-status-text');
+  var openMapsEl = container.querySelector('#nf-open-maps');
+  var resetBtn = container.querySelector('#nf-reset-btn');
+  var dealerPanel = container.querySelector('#nf-dealer-panel');
+  var dealerTitle = container.querySelector('#nf-dealer-title');
+  var dealerSub = container.querySelector('#nf-dealer-sub');
+  var dealerRoute = container.querySelector('#nf-dealer-route');
+  var priceInput = container.querySelector('#nf-price');
+  var asofInput = container.querySelector('#nf-asof');
+  var notesInput = container.querySelector('#nf-notes');
+  var saveBtn = container.querySelector('#nf-save-btn');
+  var clearBtn = container.querySelector('#nf-clear-btn');
+  var savedNote = container.querySelector('#nf-saved-note');
+  var tableBody = container.querySelector('#nf-table-body');
+  var tableCount = container.querySelector('#nf-table-count');
+  var emptyNote = container.querySelector('#nf-empty-note');
+  var backupText = container.querySelector('#nf-backup-text');
+
+  // ====== map state ======
+  var map = null;
+  var markers = [];
+  var farmMarker = null;
+  var infoWindow = null;
+  var directionsService = null;
+  var directionsRenderer = null;
+  var selectedDealer = null;
+  var searchInput = null;
+  var searchResultsEl = null;
+
+  var ICONS = {
+    unquoted: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+    quoted: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png',
+    stale: 'https://maps.google.com/mapfiles/ms/icons/orange-dot.png',
+    terminal: 'https://maps.google.com/mapfiles/ms/icons/purple-dot.png',
+    farm: 'https://maps.google.com/mapfiles/ms/icons/yellow-dot.png'
+  };
+
+  // ====== helpers ======
+  function todayStr() {
+    var d = new Date();
+    var m = String(d.getMonth() + 1).padStart(2, '0');
+    var day = String(d.getDate()).padStart(2, '0');
+    return d.getFullYear() + '-' + m + '-' + day;
+  }
+  function quoteAgeDays(asof) {
+    if (!asof) return 0;
+    var then = new Date(asof + 'T12:00:00');
+    return Math.floor((Date.now() - then.getTime()) / 86400000);
+  }
+  function fmtDate(asof) {
+    if (!asof) return '';
+    var d = new Date(asof + 'T12:00:00');
+    return (d.getMonth() + 1) + '/' + d.getDate() + '/' + String(d.getFullYear()).slice(2);
+  }
+  function haversineMiles(a, b) {
+    var R = 3958.8, toRad = Math.PI / 180;
+    var dLat = (b.lat - a.lat) * toRad, dLng = (b.lng - a.lng) * toRad;
+    var s = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(a.lat * toRad) * Math.cos(b.lat * toRad) *
+      Math.sin(dLng / 2) * Math.sin(dLng / 2);
+    return R * 2 * Math.atan2(Math.sqrt(s), Math.sqrt(1 - s));
+  }
+  function iconFor(d) {
+    if (d.terminal) return ICONS.terminal;
+    var q = prices[d.id];
+    if (!q || !(q.price > 0)) return ICONS.unquoted;
+    return quoteAgeDays(q.asof) > NF_STALE_DAYS ? ICONS.stale : ICONS.quoted;
+  }
+  function refreshIcons() {
+    markers.forEach(function (m) { m.setIcon(iconFor(m.nfData)); });
+  }
+  function getFarmPos() {
+    if (!farmMarker) return null;
+    var p = farmMarker.getPosition();
+    return { lat: p.lat(), lng: p.lng() };
+  }
+
+  // ====== comparison table ======
+  function renderTable() {
+    var farm = getFarmPos();
+    var quoted = nfDealers.filter(function (d) {
+      var q = prices[d.id];
+      return q && q.price > 0;
+    });
+    quoted.sort(function (a, b) { return prices[a.id].price - prices[b.id].price; });
+
+    tableBody.innerHTML = '';
+    quoted.forEach(function (d, i) {
+      var q = prices[d.id];
+      var tr = document.createElement('tr');
+      if (i === 0 && quoted.length > 1) tr.className = 'nf-cheapest';
+      var stale = quoteAgeDays(q.asof) > NF_STALE_DAYS;
+      var miles = farm ? haversineMiles(farm, d).toFixed(0) : '&mdash;';
+      tr.innerHTML =
+        '<td>' + d.name + '</td>' +
+        '<td>' + (d.town || '') + '</td>' +
+        '<td class="nf-price-cell">$' + Number(q.price).toFixed(0) + '</td>' +
+        '<td class="nf-asof' + (stale ? ' nf-stale' : '') + '">' + fmtDate(q.asof) + (stale ? ' &#9888;' : '') + '</td>' +
+        '<td class="nf-num">' + miles + '</td>' +
+        '<td>' + (q.notes ? String(q.notes).replace(/</g, '&lt;') : '') + '</td>';
+      tr.addEventListener('click', function () {
+        var marker = null;
+        for (var k = 0; k < markers.length; k++) {
+          if (markers[k].nfData.id === d.id) { marker = markers[k]; break; }
+        }
+        if (marker && map) {
+          map.panTo(marker.getPosition());
+          if (map.getZoom() < 10) map.setZoom(10);
+          handlePinClick(marker);
+        }
+      });
+      tableBody.appendChild(tr);
+    });
+
+    emptyNote.style.display = quoted.length ? 'none' : '';
+    var dealerCount = nfDealers.filter(function (d) { return !d.terminal; }).length;
+    tableCount.textContent = quoted.length + ' of ' + dealerCount + ' dealers have a quote entered';
+  }
+
+  // ====== dealer panel ======
+  function showDealerPanel(d) {
+    selectedDealer = d;
+    dealerTitle.textContent = d.name;
+
+    var bits = [];
+    if (d.company) bits.push(d.company);
+    if (d.town) bits.push(d.town);
+    if (d.phone) bits.push('<a href="tel:' + d.phone.replace(/[^0-9+]/g, '') + '">' + d.phone + '</a>');
+    if (d.url) bits.push('<a href="' + d.url + '" target="_blank" rel="noopener">Website</a>');
+    dealerSub.innerHTML = bits.join(' &nbsp;&middot;&nbsp; ');
+
+    var q = prices[d.id];
+    priceInput.value = q && q.price > 0 ? q.price : '';
+    asofInput.value = q && q.asof ? q.asof : todayStr();
+    notesInput.value = q && q.notes ? q.notes : '';
+
+    var flags = [];
+    if (d.terminal) flags.push('Koch wholesale terminal — dealers load here; not a retail stop.');
+    if (d.unsure) flags.push('Independent from the state fertilizer-license list — confirm they actually handle NH3.');
+    if (d.approx) flags.push('Pin sits at the town center, not the exact driveway.');
+    savedNote.textContent = flags.join(' ');
+
+    // no point quoting at a wholesale terminal
+    container.querySelector('.nf-quote-row').style.display = d.terminal ? 'none' : '';
+
+    dealerRoute.innerHTML = '';
+    dealerPanel.classList.add('nf-visible');
+  }
+
+  function hideDealerPanel() {
+    selectedDealer = null;
+    dealerPanel.classList.remove('nf-visible');
+    openMapsEl.classList.remove('nf-visible');
+    if (directionsRenderer) directionsRenderer.setMap(null);
+  }
+
+  saveBtn.addEventListener('click', function () {
+    if (!selectedDealer) return;
+    var p = parseFloat(priceInput.value);
+    if (!(p > 0)) {
+      savedNote.textContent = 'Enter a price first.';
+      return;
+    }
+    prices[selectedDealer.id] = {
+      price: p,
+      asof: asofInput.value || todayStr(),
+      notes: notesInput.value.trim()
+    };
+    saveJSON(PRICES_KEY, prices);
+    savedNote.textContent = 'Saved.';
+    refreshIcons();
+    renderTable();
+  });
+
+  clearBtn.addEventListener('click', function () {
+    if (!selectedDealer) return;
+    delete prices[selectedDealer.id];
+    saveJSON(PRICES_KEY, prices);
+    priceInput.value = '';
+    notesInput.value = '';
+    asofInput.value = todayStr();
+    savedNote.textContent = 'Quote removed.';
+    refreshIcons();
+    renderTable();
+  });
+
+  // ====== routing ======
+  function handlePinClick(marker) {
+    var d = marker.nfData;
+    showDealerPanel(d);
+    statusText.textContent = d.name;
+
+    var farm = getFarmPos();
+    if (!farm) {
+      dealerRoute.innerHTML = 'Drop a pin on your farm (click any empty map spot) to see driving miles here.';
+      openMapsEl.classList.remove('nf-visible');
+      return;
+    }
+
+    openMapsEl.href = 'https://www.google.com/maps/dir/?api=1&origin=' +
+      farm.lat + ',' + farm.lng + '&destination=' + d.lat + ',' + d.lng;
+    openMapsEl.classList.add('nf-visible');
+
+    if (!directionsService) {
+      dealerRoute.innerHTML = 'Straight-line: ' + haversineMiles(farm, d).toFixed(1) + ' mi one way.';
+      return;
+    }
+
+    dealerRoute.innerHTML = 'Figuring the route&hellip;';
+    directionsService.route({
+      origin: farm,
+      destination: { lat: d.lat, lng: d.lng },
+      travelMode: google.maps.TravelMode.DRIVING
+    }, function (result, status) {
+      if (selectedDealer !== d) return; // user already clicked elsewhere
+      if (status === 'OK' && result.routes.length) {
+        var leg = result.routes[0].legs[0];
+        var mi = leg.distance.value / 1609.344;
+        var min = Math.round(leg.duration.value / 60);
+        dealerRoute.innerHTML = '<strong>' + mi.toFixed(1) + ' mi</strong> one way (' +
+          (mi * 2).toFixed(1) + ' mi round trip), about <strong>' + min + ' min</strong> each way from your farm pin.';
+        directionsRenderer.setMap(map);
+        directionsRenderer.setDirections(result);
+      } else {
+        dealerRoute.innerHTML = 'Straight-line: ' + haversineMiles(farm, d).toFixed(1) + ' mi one way (route lookup failed).';
+      }
+    });
+  }
+
+  function placeOrMoveFarmPin(latLng) {
+    if (!map) return;
+    if (farmMarker) {
+      farmMarker.setPosition(latLng);
+    } else {
+      farmMarker = new google.maps.Marker({
+        position: latLng,
+        map: map,
+        draggable: true,
+        title: 'Your farm (drag to fine-tune)',
+        icon: ICONS.farm,
+        zIndex: 9999
+      });
+      farmMarker.addListener('dragend', farmPinMoved);
+    }
+    farmPinMoved();
+  }
+  function farmPinMoved() {
+    var p = getFarmPos();
+    if (p) saveJSON(FARM_KEY, p);
+    renderTable();
+    if (selectedDealer) {
+      // re-run route with the new origin
+      for (var k = 0; k < markers.length; k++) {
+        if (markers[k].nfData.id === selectedDealer.id) { handlePinClick(markers[k]); break; }
+      }
+    } else {
+      statusText.textContent = 'Farm pin set. Now click a dealer.';
+    }
+  }
+
+  resetBtn.addEventListener('click', function () {
+    hideDealerPanel();
+    statusText.textContent = 'Click a dealer pin to enter or check a quote.';
+  });
+
+  // ====== company filter (mirrors the grain map's) ======
+  var activeCompanies = null;
+
+  function setupCompanyFilter() {
+    var toggleBtn = container.querySelector('#nf-filter-toggle-btn');
+    var body = container.querySelector('#nf-filter-body');
+    var listEl = container.querySelector('#nf-filter-list');
+    var searchEl = container.querySelector('#nf-filter-search');
+    var allBtn = container.querySelector('#nf-filter-all-btn');
+    var noneBtn = container.querySelector('#nf-filter-none-btn');
+    var label = container.querySelector('#nf-filter-toggle-label');
+
+    var companies = [];
+    nfDealers.forEach(function (d) {
+      var c = d.company || 'Other';
+      if (companies.indexOf(c) === -1) companies.push(c);
+    });
+    companies.sort();
+    activeCompanies = {};
+    companies.forEach(function (c) { activeCompanies[c] = true; });
+
+    function applyFilter() {
+      markers.forEach(function (m) {
+        var c = m.nfData.company || 'Other';
+        m.setMap(activeCompanies[c] ? map : null);
+      });
+      var hidden = companies.filter(function (c) { return !activeCompanies[c]; }).length;
+      label.textContent = hidden ? 'Filter by company (' + hidden + ' hidden)' : 'Filter by company';
+    }
+    window.nfApplyCompanyFilter = applyFilter;
+
+    function renderList(filterText) {
+      listEl.innerHTML = '';
+      var ft = (filterText || '').toLowerCase();
+      companies.forEach(function (c) {
+        if (ft && c.toLowerCase().indexOf(ft) === -1) return;
+        var lab = document.createElement('label');
+        lab.className = 'nf-filter-item';
+        var cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.checked = !!activeCompanies[c];
+        cb.addEventListener('change', function () {
+          activeCompanies[c] = cb.checked;
+          applyFilter();
+        });
+        lab.appendChild(cb);
+        lab.appendChild(document.createTextNode(' ' + c));
+        listEl.appendChild(lab);
+      });
+    }
+
+    toggleBtn.addEventListener('click', function () {
+      var open = !body.hidden;
+      body.hidden = open;
+      toggleBtn.setAttribute('aria-expanded', String(!open));
+      if (!open) renderList(searchEl.value);
+    });
+    searchEl.addEventListener('input', function () { renderList(searchEl.value); });
+    allBtn.addEventListener('click', function () {
+      companies.forEach(function (c) { activeCompanies[c] = true; });
+      renderList(searchEl.value); applyFilter();
+    });
+    noneBtn.addEventListener('click', function () {
+      companies.forEach(function (c) { activeCompanies[c] = false; });
+      renderList(searchEl.value); applyFilter();
+    });
+  }
+
+  // ====== map controls (locate / fullscreen / search - same as grain map) ======
+  function doLocate() {
+    if (!navigator.geolocation) { statusText.textContent = 'Geolocation not available in this browser.'; return; }
+    statusText.textContent = 'Finding your location…';
+    navigator.geolocation.getCurrentPosition(function (pos) {
+      var ll = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+      placeOrMoveFarmPin(ll);
+      map.panTo(ll);
+      if (map.getZoom() < 10) map.setZoom(10);
+    }, function () {
+      statusText.textContent = 'Could not get your location — click the map to drop a farm pin instead.';
+    });
+  }
+
+  function buildLocateControl() {
+    var btn = document.createElement('div');
+    btn.setAttribute('role', 'button');
+    btn.setAttribute('tabindex', '0');
+    btn.title = 'Use my location';
+    btn.style.cssText = 'background:#fff;border:none;border-radius:3px;box-shadow:0 1px 4px rgba(0,0,0,0.35);cursor:pointer;margin:10px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;';
+    btn.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+      '<circle cx="12" cy="12" r="3" fill="#3C5A3E"/>' +
+      '<path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="#3C5A3E" stroke-width="2" stroke-linecap="round"/></svg>';
+    btn.addEventListener('click', doLocate);
+    btn.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); doLocate(); }
+    });
+    return btn;
+  }
+
+  function buildFullscreenControl() {
+    var mapWrap = container.querySelector('.nf-map-wrap');
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.title = 'Full screen';
+    btn.style.cssText = 'background:#fff;border:none;border-radius:3px;box-shadow:0 1px 4px rgba(0,0,0,0.35);cursor:pointer;margin:56px 10px 10px 10px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;padding:0;';
+    var EXPAND = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" stroke="#23281F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    var COLLAPSE = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" stroke="#23281F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    btn.innerHTML = EXPAND;
+    function setFullscreen(on) {
+      var center = map.getCenter();
+      mapWrap.classList.toggle('nf-fs', on);
+      document.body.classList.toggle('nf-fs-lock', on);
+      btn.innerHTML = on ? COLLAPSE : EXPAND;
+      btn.title = on ? 'Exit full screen' : 'Full screen';
+      setTimeout(function () {
+        google.maps.event.trigger(map, 'resize');
+        if (center) map.setCenter(center);
+      }, 60);
+    }
+    btn.addEventListener('click', function () {
+      setFullscreen(!mapWrap.classList.contains('nf-fs'));
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && mapWrap.classList.contains('nf-fs')) setFullscreen(false);
+    });
+    return btn;
+  }
+
+  function buildSearchControl() {
+    var wrap = document.createElement('div');
+    wrap.style.cssText = 'position:relative;margin:10px;width:230px;max-width:60vw;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;';
+    searchInput = document.createElement('input');
+    searchInput.type = 'text';
+    searchInput.placeholder = 'Search dealers by name...';
+    searchInput.autocomplete = 'off';
+    searchInput.style.cssText = 'width:100%;font-family:"IBM Plex Mono",monospace;font-size:13px;padding:9px 12px;border:none;border-radius:3px;background:#fff;color:#23281F;box-shadow:0 1px 4px rgba(0,0,0,0.35);box-sizing:border-box;outline:none;';
+    searchResultsEl = document.createElement('div');
+    searchResultsEl.style.cssText = 'position:absolute;top:100%;left:0;right:0;margin-top:4px;background:#fff;border-radius:3px;box-shadow:0 1px 4px rgba(0,0,0,0.35);max-height:220px;overflow-y:auto;display:none;';
+    wrap.appendChild(searchInput);
+    wrap.appendChild(searchResultsEl);
+
+    function renderResults() {
+      var q = searchInput.value.trim().toLowerCase();
+      searchResultsEl.innerHTML = '';
+      if (!q) { searchResultsEl.style.display = 'none'; return; }
+      var hits = nfDealers.filter(function (d) {
+        return d.name.toLowerCase().indexOf(q) !== -1 ||
+          (d.town || '').toLowerCase().indexOf(q) !== -1 ||
+          (d.company || '').toLowerCase().indexOf(q) !== -1;
+      }).slice(0, 12);
+      if (!hits.length) { searchResultsEl.style.display = 'none'; return; }
+      hits.forEach(function (d) {
+        var row = document.createElement('div');
+        row.textContent = d.name;
+        row.style.cssText = 'padding:8px 12px;font-size:13px;cursor:pointer;border-bottom:1px solid #eee;';
+        row.addEventListener('mouseenter', function () { row.style.background = '#E7EFE2'; });
+        row.addEventListener('mouseleave', function () { row.style.background = ''; });
+        row.addEventListener('click', function () {
+          searchResultsEl.style.display = 'none';
+          searchInput.value = d.name;
+          map.panTo({ lat: d.lat, lng: d.lng });
+          if (map.getZoom() < 11) map.setZoom(11);
+          for (var k = 0; k < markers.length; k++) {
+            if (markers[k].nfData.id === d.id) { handlePinClick(markers[k]); break; }
+          }
+        });
+        searchResultsEl.appendChild(row);
+      });
+      searchResultsEl.style.display = '';
+    }
+    searchInput.addEventListener('input', renderResults);
+    searchInput.addEventListener('blur', function () {
+      setTimeout(function () { searchResultsEl.style.display = 'none'; }, 200);
+    });
+    return wrap;
+  }
+
+  // ====== init ======
+  window.nfInitMap = function () {
+    map = new google.maps.Map(mapEl, {
+      zoom: 9,
+      fullscreenControl: false,
+      streetViewControl: false
+    });
+    directionsService = new google.maps.DirectionsService();
+    directionsRenderer = new google.maps.DirectionsRenderer({ suppressMarkers: true, preserveViewport: true });
+    infoWindow = new google.maps.InfoWindow();
+
+    var bounds = new google.maps.LatLngBounds();
+    nfDealers.forEach(function (d) {
+      var marker = new google.maps.Marker({
+        position: { lat: d.lat, lng: d.lng },
+        map: map,
+        title: d.name,
+        icon: iconFor(d)
+      });
+      marker.nfData = d;
+      marker.addListener('click', function () { handlePinClick(marker); });
+      markers.push(marker);
+      bounds.extend(marker.getPosition());
+    });
+    if (markers.length) map.fitBounds(bounds);
+
+    if (window.nfApplyCompanyFilter) window.nfApplyCompanyFilter();
+
+    try { map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(buildLocateControl()); } catch (e) {}
+    try { map.controls[google.maps.ControlPosition.RIGHT_TOP].push(buildFullscreenControl()); } catch (e) {}
+    try { map.controls[google.maps.ControlPosition.TOP_LEFT].push(buildSearchControl()); } catch (e) {}
+
+    map.addListener('click', function (e) { placeOrMoveFarmPin(e.latLng); });
+
+    // restore the farm pin from last visit
+    var savedFarm = loadJSON(FARM_KEY);
+    if (savedFarm && typeof savedFarm.lat === 'number') {
+      placeOrMoveFarmPin(new google.maps.LatLng(savedFarm.lat, savedFarm.lng));
+    }
+
+    renderTable();
+  };
+
+  // ====== backup / restore ======
+  container.querySelector('#nf-export-btn').addEventListener('click', function () {
+    backupText.value = JSON.stringify(prices);
+    backupText.select();
+    try { document.execCommand('copy'); } catch (e) {}
+  });
+  container.querySelector('#nf-import-btn').addEventListener('click', function () {
+    try {
+      var incoming = JSON.parse(backupText.value);
+      if (!incoming || typeof incoming !== 'object') throw new Error('bad');
+      Object.keys(incoming).forEach(function (k) { prices[k] = incoming[k]; });
+      saveJSON(PRICES_KEY, prices);
+      refreshIcons();
+      renderTable();
+      backupText.value = 'Imported.';
+    } catch (e) {
+      backupText.value = 'Could not read that - paste the exact text Export gave you.';
+    }
+  });
+
+  // ====== boot ======
+  setupCompanyFilter();
+  renderTable();
+
+  if (window.google && window.google.maps) {
+    window.nfInitMap();
+  } else if (!window.__nfMapsScriptLoading) {
+    window.__nfMapsScriptLoading = true;
+    var script = document.createElement('script');
+    script.src = 'https://maps.googleapis.com/maps/api/js?key=' + NF_API_KEY + '&callback=nfInitMap';
+    script.async = true;
+    script.defer = true;
+    script.onerror = function () { fallbackEl.style.display = 'block'; };
+    document.head.appendChild(script);
+  }
+})();
+</script>
+</div>

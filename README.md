@@ -8,8 +8,56 @@ instead of making you look bids up and type them in by hand.
 Clicking a row in that table drops the bid into the existing calculator, so the
 "net price after all costs" number updates for that specific delivery period.
 
----
+## Also in this repo: NH3 price map
 
+`nh3-map.html` is a sibling tool for anhydrous ammonia. Same look and paste-into-
+Squarespace workflow as the grain map, but no scraper: NH3 prices aren't
+published anywhere, so you call dealers, type each quote in ($/ton), and the map
+saves it in that browser (localStorage) with the date. The comparison table
+sorts cheapest-first and flags quotes older than 14 days. Quotes are per-browser;
+the Backup/restore box moves them between machines.
+
+### Where the pins came from
+
+The Iowa Dept of Ag license portal (https://iowadeptag.my.site.com/s/searchlicense)
+is a public Salesforce site whose Apex controller answers guest requests, so
+`dev/fetch_nh3_licensees.py` asks it the same question the Search button does,
+once per county. Three scripts run in order:
+
+```bash
+python dev/fetch_nh3_licensees.py    # -> dev/nh3-licensees-raw.csv  (202 licensees, 8 counties)
+python dev/filter_nh3_dealers.py     # -> dev/nh3-dealers-filtered.csv (94 kept)
+python dev/geocode_nh3_dealers.py    # -> dev/nh3-dealers-geocoded.csv
+python dev/make_nh3_pins.py          # rewrites the nfDealers array in nh3-map.html
+```
+
+Pass `all` to the first script for every Iowa county instead of the eight around
+Britt (Hancock, Winnebago, Worth, Cerro Gordo, Franklin, Wright, Humboldt,
+Kossuth). If it ever starts failing, the `fwuid` in `AURA_CONTEXT` has gone
+stale -- load the search page in a browser and copy the current one out of any
+`/s/sfsites/aura` request.
+
+**The portal has no NH3 license type** -- only Ag Lime / Egg / Feed / Fertilizer,
+and "Fertilizer License" covers everyone from co-op agronomy plants to Dollar
+General selling bagged lawn food. So `filter_nh3_dealers.py` drops retail chains,
+egg/hog operations, lawn-care outfits and single farms, then splits what's left:
+
+- **dealer** (74) -- co-op agronomy locations and ag retail chains that
+  customarily sell anhydrous. Plain blue pins.
+- **uncertain** (16) -- independents, custom applicators, liquid-fertilizer
+  specialists. Pinned, but the panel says to confirm they handle NH3.
+- **terminal** (4) -- Koch wholesale NH3 terminals. Purple pins, no quote box;
+  they're where the retailers load, not a place a farmer buys.
+
+Geocoding is US Census batch first, Nominatim for rural addresses it misses,
+town centroid as a last resort (12 pins, flagged `approx: 1`, panel says the pin
+is on the town rather than the driveway).
+
+The list is a starting point, not a vetted NH3 directory -- the first call to
+each dealer tells you whether they handle it, and pins that don't can be deleted
+straight out of the `nfDealers` array.
+
+---
 ## Setup (one time)
 
 ### 1. Push this repo to GitHub
@@ -223,14 +271,23 @@ collisions (a sign the geocoder fell back to something generic), organic and
 non-GMO dealers, and anything within 2 km of an existing pin — that close it is
 most likely the same site already mapped under another name.
 
+**Use the state's own coordinates where they exist.** The DNR GIS layer
+`OneStop/QueryEnvFacs/MapServer/35` ("All Environmental Facilities") carries a
+point per permitted facility, labelled `<name> - <city>` — the same shape as
+the PDF list, so it joins cleanly. Those are the state's coordinates for the
+site and beat any geocode. Verify each one against its town before accepting:
+name+city can still match the wrong row, since Iowa has a Plymouth in Cerro
+Gordo *and* a Plymouth County. 48 of 52 proposed corrections were within 12 km
+of their own town and accepted; 4 were not and were discarded.
+
 **Check what the geocoder actually matched, not just that it answered.** A
 query for "24828 Timber Avenue, Pulaski" comes back `class=highway/tertiary`
 when that house number is not in OpenStreetMap, which is common for rural
 Iowa — the point is then somewhere along a road that may run for miles. 41 of
 the 154 resolved that way (39 roads, 2 town boundaries) against 113 real
-building matches. Those 41 keep their pin, since a road point still beats
-nothing, but carry **"(approx)"** in the name so it is visible in the popup
-which coordinates to confirm before trusting the hauling cost.
+building matches. 22 of those were then fixed outright from the DNR GIS layer. The remaining
+**19** have no GIS row and keep **"(approx)"** in the name, so it is visible in
+the popup which coordinates to confirm before trusting the hauling cost.
 
 `scripts` for this live in `.scratch/` and are not part of the scheduled run;
 it is a one-off audit to repeat when the state republishes its lists.
