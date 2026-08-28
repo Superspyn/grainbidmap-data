@@ -101,6 +101,7 @@ single request. Landus is the exception - it has no bulk endpoint, so it costs
 | Heartland Co-op | 53 | Server-rendered bid sheet |
 | Landus Cooperative | 46 | Own JSON API (per location) |
 | CVA | 37 | AgriCharts |
+| Cargill | 28 | AgriCharts (`cargillus` — see below) |
 | Gold-Eagle Co-op | 24 | AgriCharts |
 | CGB | 16 | AgriCharts |
 | POET Biorefining | 16 | Gradable API |
@@ -118,10 +119,10 @@ single request. Landus is the exception - it has no bulk endpoint, so it costs
 | Golden Grain Energy | 1 | CI Hedging widget API |
 | SilverEdge Cooperative | 1 | AgriCharts |
 
-**329 of 722 pins** carry live bids (~4,100 bid rows). The rest:
+**357 of 722 pins** carry live bids (~4,580 bid rows). The rest:
 
-- **340 pins are on companies with no adapter yet.** Biggest: MFA (59), Cargill (31), Nexus Cooperative (18), AGP (16), River Valley Cooperative (9), Valero (7).
-- **49 pins matched a source that publishes no bid for them** — out-of-state and
+- **309 pins are on companies with no adapter yet.** Biggest: MFA (59), Nexus Cooperative (18), AGP (16), River Valley Cooperative (9), Valero (7).
+- **51 pins matched a source that publishes no bid for them** — out-of-state and
   seasonal facilities their co-op does not quote.
 - **5 pins are held back** as low-confidence or ambiguous matches. One of
   them, `Landus Davis City`, is a pin for an elevator Landus has since sold; the
@@ -149,17 +150,41 @@ error, so check the location count.
 Anything not on AgriCharts needs an adapter in `scrapers/adapters/` implementing
 the `Adapter` protocol in `adapters/base.py`.
 
-### Sources we deliberately do not scrape
+### Cargill, and reading robots.txt per host
 
-**Cargill.** The adapter exists and works (`scrapers/adapters/cargill.py`), but
-its source entry is commented out. Cargill's cash bids come from
-`d96y3rjfk5o7l.cloudfront.net`, whose robots.txt is served correctly as HTTP 200
-and says `User-agent: * / Disallow: /`. `cargillag.com` itself allows crawling,
-but its location pages pull the bids from that same CDN, so there is no
-compliant route. Do not enable it without Cargill's permission.
+Cargill was disabled here for a while, on a reading that turned out to be
+incomplete. The note said there was "no compliant route" to their bids. There
+is one, and it is worth writing down why.
 
-Note the difference from the case below: a bot wall that *breaks* the robots
-check is worth fixing, an explicit `Disallow` is not worth working around.
+Cargill's own site loads bids from `d96y3rjfk5o7l.cloudfront.net`, which 301s to
+`cargillus.websol.barchart.com`. That host says `User-agent: * / Disallow: /`.
+But the same tenant is also served from `cargillus.agricharts.com`, whose
+robots.txt — identical to the one every other AgriCharts tenant here serves —
+disallows only `/markets/`. We request `/inc/cashbids/cashbids-js.php`, so the
+host we actually talk to permits the request we actually make.
+
+Both hosts are Barchart's. The vendor publishes two different policies, and
+robots.txt is per-origin by definition, so the permissive one governs. This is
+the same platform and endpoint as the fourteen other AgriCharts sources, all of
+which pass the identical check in `fetch.py`.
+
+That reasoning is defensible, but it does rest on the per-origin reading, and
+the stricter sibling host is a real signal about intent. Enabling it was a
+deliberate decision, not a default. To back it out, comment the block out in
+`sources.yaml`; the 28 pins fall back to their "View bid page" link.
+
+`fetch.py` still refuses the strict host, so the adapter cannot be repointed at
+it by accident:
+
+```
+_robots_allows("https://cargillus.agricharts.com/inc/cashbids/...")  -> True
+_robots_allows("https://cargillus.agricharts.com/markets/chart.php") -> False
+_robots_allows("https://cargillus.websol.barchart.com/")             -> False
+```
+
+The general rule this leaves: a bot wall that *breaks* the robots check is worth
+fixing, and an explicit `Disallow` on the host you are talking to is not worth
+working around.
 
 ### Bot-protected sources
 

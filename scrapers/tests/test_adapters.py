@@ -351,3 +351,33 @@ class TestBuiltOutput:
 
     def test_carries_a_disclaimer(self, built):
         assert "reference only" in built["disclaimer"]
+
+
+class TestDedupeBids:
+    """Only fully identical rows collapse - a shared window is not enough."""
+
+    def _bid(self, **over):
+        base = {
+            "grain": "soybeans", "delivery_start": "2026-08-01",
+            "delivery_end": "2026-08-31", "delivery_label": "Aug 2026",
+            "futures_month": "SX26", "futures": 12.79, "futures_change": 0.11,
+            "basis": 0.0, "cash": 12.79,
+        }
+        base.update(over)
+        return base
+
+    def test_identical_rows_collapse(self):
+        from build_bids import dedupe_bids
+        assert len(dedupe_bids([self._bid(), self._bid()])) == 1
+
+    def test_same_window_different_basis_is_kept(self):
+        # CVA Monroe quotes two bids for Jul/Aug 2026 that differ only in basis.
+        # That is the merchandiser drawing a real distinction, not a duplicate.
+        from build_bids import dedupe_bids
+        rows = [self._bid(basis=-0.2675, cash=4.87), self._bid(basis=0.6925, cash=5.83)]
+        assert len(dedupe_bids(rows)) == 2
+
+    def test_order_is_preserved(self):
+        from build_bids import dedupe_bids
+        rows = [self._bid(cash=1.0), self._bid(cash=2.0), self._bid(cash=1.0)]
+        assert [b["cash"] for b in dedupe_bids(rows)] == [1.0, 2.0]

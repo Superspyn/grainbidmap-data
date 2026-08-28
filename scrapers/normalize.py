@@ -10,6 +10,7 @@ raw values through here to land on one canonical representation:
 
 from __future__ import annotations
 
+import calendar as _calendar
 import datetime as _dt
 import re
 
@@ -137,8 +138,12 @@ def classify_grain(*hints) -> str | None:
 def format_delivery_label(start: str | None, end: str | None) -> str | None:
     """Render a delivery window the way a grain merchandiser would say it.
 
-    ``2026-10-01``..``2026-11-30`` becomes ``"Oct/Nov 2026"``; a window inside a
-    single month collapses to ``"Oct 2026"``.
+    ``2026-10-01``..``2026-11-30`` becomes ``"Oct/Nov 2026"``; a whole month
+    collapses to ``"Oct 2026"``.
+
+    Half-month windows keep their days: Cargill quotes first-half, whole-month
+    and second-half November as three separate contracts, and rendering all
+    three as ``"Nov 2026"`` puts three identical-looking rows in the popup.
     """
     if not start:
         return None
@@ -147,7 +152,10 @@ def format_delivery_label(start: str | None, end: str | None) -> str | None:
         return s.strftime("%b %Y")
     e = _dt.date.fromisoformat(end)
     if (s.year, s.month) == (e.year, e.month):
-        return s.strftime("%b %Y")
+        whole_month = s.day == 1 and e.day == _calendar.monthrange(s.year, s.month)[1]
+        if whole_month:
+            return s.strftime("%b %Y")
+        return f"{s.strftime('%b')} {s.day}-{e.day} {s.year}"
     months = []
     cur = s.replace(day=1)
     last = e.replace(day=1)

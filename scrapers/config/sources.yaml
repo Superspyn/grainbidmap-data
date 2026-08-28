@@ -58,25 +58,44 @@ sources:
     # 51 pins. Own JSON API, but per-location: 1 + 51 requests, the only source
     # without a bulk endpoint. A failing location is skipped, not fatal.
 
-  # - id: cargill
-  #   adapter: cargill
-  #   label: Cargill Ag Horizons
-  #
-  # DISABLED ON PURPOSE - do not enable without checking with Cargill first.
-  #
-  # The adapter works (scrapers/adapters/cargill.py) and the data is good, but
-  # the cash-bid endpoint lives on d96y3rjfk5o7l.cloudfront.net, whose
-  # robots.txt is served correctly as HTTP 200 and reads:
-  #
-  #     User-agent: *
-  #     Disallow: /
-  #
-  # That is an explicit refusal, not the false negative NEW Co-op's bot wall
-  # produced. cargillag.com itself allows crawling, but its location pages load
-  # the cash bids from that same CDN, so there is no compliant route to them.
-  #
-  # Re-enable only with Cargill's permission, and expect to identify yourself
-  # via BIDS_CONTACT when you do.
+  - id: agricharts:cargillus
+    adapter: agricharts
+    tenant: cargillus
+    label: Cargill
+    # 28 pins, mostly Illinois and Missouri river terminals. Read the note below
+    # before touching this one - it was disabled for a while, on a reading of
+    # the robots.txt situation that turned out to be incomplete.
+    #
+    # Cargill's own site loads bids from d96y3rjfk5o7l.cloudfront.net, which
+    # 301s to cargillus.websol.barchart.com. That host's robots.txt reads:
+    #
+    #     User-agent: *
+    #     Disallow: /
+    #
+    # But the same tenant is served from cargillus.agricharts.com, and that
+    # host's robots.txt - identical to the one every other AgriCharts tenant
+    # here serves - reads:
+    #
+    #     User-agent: *
+    #     Allow: /markets/stocks.php
+    #     Disallow: /markets/
+    #
+    # We request /inc/cashbids/cashbids-js.php, which is not under /markets/,
+    # so the host we actually talk to permits the request we actually make.
+    # Both hosts are Barchart's; the vendor publishes two different policies,
+    # and robots.txt is per-origin by definition. This is the same platform and
+    # the same endpoint as the fourteen other AgriCharts sources in this file,
+    # all of which pass the identical check in fetch.py.
+    #
+    # That reasoning is defensible but it does rest on the per-origin reading,
+    # and the stricter sibling host is a real signal about intent. The call to
+    # enable it was the farm's to make, and it was made deliberately rather
+    # than by default. To back it out, comment this block out again - nothing
+    # else depends on it, and the 28 pins fall back to their "View bid page"
+    # link exactly as they did before.
+    #
+    # Identify yourself via BIDS_CONTACT, and do not raise the request rate:
+    # one bulk request covers all 77 of their locations.
 
   - id: cihedging:goldengrain
     adapter: cihedging

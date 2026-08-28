@@ -66,6 +66,230 @@
       "confidence": 1.0,
       "method": "name"
     },
+    "cargill-beardstown-il": {
+      "name": "Cargill Beardstown IL",
+      "source": "agricharts:cargillus",
+      "source_location_id": "5827",
+      "source_name": "Beardstown, CAH",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "cargill-bettendorf-ia": {
+      "name": "Cargill Bettendorf IA",
+      "source": "agricharts:cargillus",
+      "source_location_id": "66457",
+      "source_name": "Bettendorf, CAH",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "cargill-bloomington-il": {
+      "name": "Cargill Bloomington IL",
+      "source": "agricharts:cargillus",
+      "source_location_id": "62677",
+      "source_name": "Bloomington, GOS",
+      "confidence": 0.976,
+      "method": "geo(0.2km)"
+    },
+    "cargill-buffalo-island-charleston-mo": {
+      "name": "Cargill Buffalo Island Charleston MO",
+      "source": "agricharts:cargillus",
+      "source_location_id": "22918",
+      "source_name": "Buffalo Island, CAH",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "cargill-cedar-rapids-east-ia": {
+      "name": "Cargill Cedar Rapids East IA",
+      "source": "agricharts:cargillus",
+      "source_location_id": "56950",
+      "source_name": "Cedar Rapids East, GOS",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "cargill-cedar-rapids-mill-ia": {
+      "name": "Cargill Cedar Rapids Mill IA",
+      "source": "agricharts:cargillus",
+      "source_location_id": "37646",
+      "source_name": "Cedar Rapids, SSNA",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "cargill-east-st-louis-il": {
+      "name": "Cargill East St Louis IL",
+      "source": "agricharts:cargillus",
+      "source_location_id": "62683",
+      "source_name": "East St. Louis, CAH",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "cargill-eddyville": {
+      "name": "Cargill Eddyville",
+      "source": "agricharts:cargillus",
+      "source_location_id": "37655",
+      "source_name": "Eddyville, SSNA",
+      "confidence": 0.78,
+      "method": "geo(1.8km)"
+    },
+    "cargill-eddyville-ia": {
+      "name": "Cargill Eddyville IA",
+      "source": "agricharts:cargillus",
+      "source_location_id": "37655",
+      "source_name": "Eddyville, SSNA",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "cargill-florence-pittsfield-il": {
+      "name": "Cargill Florence Pittsfield IL",
+      "source": "agricharts:cargillus",
+      "source_location_id": "5826",
+      "source_name": "Florence, CAH",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "cargill-forest-city-mo": {
+      "name": "Cargill Forest City MO",
+      "source": "agricharts:cargillus",
+      "source_location_id": "25351",
+      "source_name": "Forest City (MO), CAH",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "cargill-frederick-beardstown-il": {
+      "name": "Cargill Frederick Beardstown IL",
+      "source": "agricharts:cargillus",
+      "source_location_id": "64714",
+      "source_name": "Frederick, CAH",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "cargill-gibson-city-il": {
+      "name": "Cargill Gibson City IL",
+      "source": "agricharts:cargillus",
+      "source_location_id": "64092",
+      "source_name": "Gibson City, CAH",
+      "confidence": 0.667,
+      "method": "geo(0.1km)"
+    },
+    "cargill-gibson-city-il-dlvd-bunge": {
+      "name": "Cargill Gibson City IL (Dlvd Bunge)",
+      "source": "agricharts:cargillus",
+      "source_location_id": "9847",
+      "source_name": "Cargill, CAH (Dlvd Bunge, Gibson City, IL)",
+      "confidence": 1.0,
+      "method": "geo(0.2km)"
+    },
+    "cargill-gilman-il": {
+      "name": "Cargill Gilman IL",
+      "source": "agricharts:cargillus",
+      "source_location_id": "63684",
+      "source_name": "Gilman, CAH",
+      "confidence": 0.999,
+      "method": "geo(0.0km)"
+    },
+    "cargill-havana-il": {
+      "name": "Cargill Havana IL",
+      "source": "agricharts:cargillus",
+      "source_location_id": "64026",
+      "source_name": "Havana, CAH",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "cargill-iowa-falls-ia": {
+      "name": "Cargill Iowa Falls IA",
+      "source": "agricharts:cargillus",
+      "source_location_id": "63320",
+      "source_name": "Iowa Falls, GOS",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "cargill-kansas-city-mo": {
+      "name": "Cargill Kansas City MO",
+      "source": "agricharts:cargillus",
+      "source_location_id": "63226",
+      "source_name": "Kansas City, GOS",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "cargill-kansas-city-mo-2306-rochester": {
+      "name": "Cargill Kansas City MO 2306 Rochester",
+      "source": "agricharts:cargillus",
+      "source_location_id": "63226",
+      "source_name": "Kansas City, GOS",
+      "confidence": 0.993,
+      "method": "geo(0.1km)"
+    },
+    "cargill-keithsburg-il": {
+      "name": "Cargill Keithsburg IL",
+      "source": "agricharts:cargillus",
+      "source_location_id": "64724",
+      "source_name": "Keithsburg, CAH",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "cargill-lacon-il": {
+      "name": "Cargill Lacon IL",
+      "source": "agricharts:cargillus",
+      "source_location_id": "16898",
+      "source_name": "Lacon, CAH",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "cargill-meredosia-il": {
+      "name": "Cargill Meredosia IL",
+      "source": "agricharts:cargillus",
+      "source_location_id": "60266",
+      "source_name": "Meredosia, CAH",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "cargill-muscatine-ia": {
+      "name": "Cargill Muscatine IA",
+      "source": "agricharts:cargillus",
+      "source_location_id": "5842",
+      "source_name": "Muscatine, CAH",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "cargill-new-boston-il": {
+      "name": "Cargill New Boston IL",
+      "source": "agricharts:cargillus",
+      "source_location_id": "5843",
+      "source_name": "New Boston, CAH",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "cargill-new-madrid-mo": {
+      "name": "Cargill New Madrid MO",
+      "source": "agricharts:cargillus",
+      "source_location_id": "63624",
+      "source_name": "New Madrid, CAH",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "cargill-paris-mill-il": {
+      "name": "Cargill Paris Mill IL",
+      "source": "agricharts:cargillus",
+      "source_location_id": "49579",
+      "source_name": "Paris Mill, SSNA",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "cargill-sioux-city-ia": {
+      "name": "Cargill Sioux City IA",
+      "source": "agricharts:cargillus",
+      "source_location_id": "63418",
+      "source_name": "Sioux City, GOS",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "cargill-spring-valley-south-granville-il": {
+      "name": "Cargill Spring Valley South Granville IL",
+      "source": "agricharts:cargillus",
+      "source_location_id": "60796",
+      "source_name": "Spring Valley South, CAH",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
     "cfe-feed-mill-ocheyedan": {
       "name": "CFE Feed Mill Ocheyedan",
       "source": "agricharts:coopfe",
@@ -2684,6 +2908,18 @@
   ],
   "unmatched": [
     {
+      "id": "cargill-fort-dodge-ethanol",
+      "name": "Cargill Fort Dodge Ethanol",
+      "type": "ethanol",
+      "company": "Cargill",
+      "lat": 42.508409,
+      "lng": -94.312932,
+      "url": "https://www.cargillag.com/locations/fort-dodge-ssna",
+      "host": "www.cargillag.com",
+      "source": "agricharts:cargillus",
+      "method": "no-match"
+    },
+    {
       "id": "flint-hills-resources-poet-faribanks-ethanol",
       "name": "Flint Hills Resources/Poet Faribanks Ethanol",
       "type": "ethanol",
@@ -3224,6 +3460,30 @@
       "method": "no-match"
     },
     {
+      "id": "cargill-fort-dodge-ia",
+      "name": "Cargill Fort Dodge IA",
+      "type": "coop",
+      "company": "Cargill",
+      "lat": 42.51274,
+      "lng": -94.31387,
+      "url": "https://www.cargillag.com/check-prices",
+      "host": "www.cargillag.com",
+      "source": "agricharts:cargillus",
+      "method": "no-match"
+    },
+    {
+      "id": "cargill-nestle-purina-davenport-ia",
+      "name": "Cargill Nestle Purina Davenport IA",
+      "type": "coop",
+      "company": "Cargill",
+      "lat": 41.5147,
+      "lng": -90.6076,
+      "url": "https://www.cargillag.com/check-prices",
+      "host": "www.cargillag.com",
+      "source": "agricharts:cargillus",
+      "method": "no-match"
+    },
+    {
       "id": "adm-animal-nutrition-springfield-mo",
       "name": "ADM Animal Nutrition Springfield MO",
       "type": "feedmill",
@@ -3268,12 +3528,6 @@
       "host": "bigriverresources.com"
     },
     {
-      "id": "cargill-eddyville",
-      "name": "Cargill Eddyville",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
       "id": "green-plains-shenandoah-ethanol",
       "name": "Green Plains Shenandoah Ethanol",
       "company": "Green Plains",
@@ -3314,12 +3568,6 @@
       "name": "Valero Renewables - Albert City Ethanol",
       "company": "Valero",
       "host": "portal.bushelpowered.com"
-    },
-    {
-      "id": "cargill-fort-dodge-ethanol",
-      "name": "Cargill Fort Dodge Ethanol",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
     },
     {
       "id": "valero-renewables-fort-dodge-ethanol",
@@ -3868,174 +4116,6 @@
       "host": "mfa-inc.com"
     },
     {
-      "id": "cargill-bettendorf-ia",
-      "name": "Cargill Bettendorf IA",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-cedar-rapids-east-ia",
-      "name": "Cargill Cedar Rapids East IA",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-cedar-rapids-mill-ia",
-      "name": "Cargill Cedar Rapids Mill IA",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-eddyville-ia",
-      "name": "Cargill Eddyville IA",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-fort-dodge-ia",
-      "name": "Cargill Fort Dodge IA",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-iowa-falls-ia",
-      "name": "Cargill Iowa Falls IA",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-muscatine-ia",
-      "name": "Cargill Muscatine IA",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-nestle-purina-davenport-ia",
-      "name": "Cargill Nestle Purina Davenport IA",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-sioux-city-ia",
-      "name": "Cargill Sioux City IA",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-buffalo-island-charleston-mo",
-      "name": "Cargill Buffalo Island Charleston MO",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-forest-city-mo",
-      "name": "Cargill Forest City MO",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-kansas-city-mo",
-      "name": "Cargill Kansas City MO",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-new-madrid-mo",
-      "name": "Cargill New Madrid MO",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-beardstown-il",
-      "name": "Cargill Beardstown IL",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-bloomington-il",
-      "name": "Cargill Bloomington IL",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-east-st-louis-il",
-      "name": "Cargill East St Louis IL",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-florence-pittsfield-il",
-      "name": "Cargill Florence Pittsfield IL",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-frederick-beardstown-il",
-      "name": "Cargill Frederick Beardstown IL",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-gibson-city-il-dlvd-bunge",
-      "name": "Cargill Gibson City IL (Dlvd Bunge)",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-gibson-city-il",
-      "name": "Cargill Gibson City IL",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-gilman-il",
-      "name": "Cargill Gilman IL",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-havana-il",
-      "name": "Cargill Havana IL",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-keithsburg-il",
-      "name": "Cargill Keithsburg IL",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-lacon-il",
-      "name": "Cargill Lacon IL",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-meredosia-il",
-      "name": "Cargill Meredosia IL",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-new-boston-il",
-      "name": "Cargill New Boston IL",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-paris-mill-il",
-      "name": "Cargill Paris Mill IL",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
-      "id": "cargill-spring-valley-south-granville-il",
-      "name": "Cargill Spring Valley South Granville IL",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
-    },
-    {
       "id": "cameron-co-op-mo",
       "name": "Cameron Co-Op MO",
       "company": "Cameron Co-op",
@@ -4094,12 +4174,6 @@
       "name": "Dalton Elevator MO",
       "company": "Dalton Elevator",
       "host": ""
-    },
-    {
-      "id": "cargill-kansas-city-mo-2306-rochester",
-      "name": "Cargill Kansas City MO 2306 Rochester",
-      "company": "Cargill",
-      "host": "www.cargillag.com"
     },
     {
       "id": "nemo-feed-baring-mo",

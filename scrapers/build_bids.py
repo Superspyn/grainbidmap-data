@@ -29,7 +29,6 @@ sys.path.insert(0, str(pathlib.Path(__file__).parent))
 import yaml  # noqa: E402
 
 from adapters.agricharts import AgriChartsAdapter  # noqa: E402
-from adapters.cargill import CargillAdapter  # noqa: E402
 from adapters.cihedging import CIHedgingAdapter  # noqa: E402
 from adapters.gradable import GradableAdapter  # noqa: E402
 from adapters.heartland import HeartlandAdapter  # noqa: E402
@@ -67,8 +66,6 @@ def build_adapter(spec: dict):
         return NewCoopAdapter()
     if kind == "landus":
         return LandusAdapter()
-    if kind == "cargill":
-        return CargillAdapter()
     if kind == "gradable":
         return GradableAdapter(spec["tenant"])
     if kind == "cihedging":
@@ -130,6 +127,25 @@ def load_location_map() -> dict:
     return data.get("pins", data)
 
 
+def dedupe_bids(bids) -> list[dict]:
+    """Drop rows that repeat an earlier one in every field, keeping order.
+
+    A few feeds list the same location twice and emit its table twice with it.
+    Only fully identical rows are collapsed: two bids can legitimately share a
+    delivery window and differ in basis, which is a real distinction the
+    merchandiser is drawing, not a duplicate.
+    """
+    seen: set[tuple] = set()
+    out: list[dict] = []
+    for bid in bids:
+        key = tuple(sorted(bid.items(), key=lambda kv: kv[0]))
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(bid)
+    return out
+
+
 def assemble(results: dict, status: dict, previous: dict) -> dict:
     """Project scraped source data onto map pins, carrying forward stale sources."""
     pin_map = load_location_map()
@@ -156,7 +172,7 @@ def assemble(results: dict, status: dict, previous: dict) -> dict:
                 "source": source_id,
                 "source_name": location.name,
                 "as_of": location.as_of or status.get(source_id, {}).get("fetched_at"),
-                "bids": [b.as_dict() for b in location.bids],
+                "bids": dedupe_bids(b.as_dict() for b in location.bids),
             }
         elif pin_id in previous_locations:
             # This source failed (or dropped the location) - keep the last good
