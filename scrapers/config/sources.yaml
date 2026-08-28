@@ -124,6 +124,21 @@ sources:
   # United Cooperative (WI) is NOT here: their aggregator slug returns a single
   # "Central Office" stub with no per-elevator bids.
 
+  # Self-hosted AgriCharts: same software, the co-op's own domain rather than a
+  # tenant subdomain. They serve /markets/cash.php and answer the same
+  # /inc/cashbids/ endpoint, so only the base URL differs.
+  - id: agricharts:hartog
+    adapter: agricharts
+    base: https://www.hartogelevator.com
+    label: Hartog Elevator
+    referer: https://www.hartogelevator.com/markets/cash.php
+
+  - id: agricharts:faasfeed
+    adapter: agricharts
+    base: https://www.faasfeed.com
+    label: Faas Feed & Grain
+    referer: https://www.faasfeed.com/markets/cash.php
+
   - id: agricharts:newvision
     adapter: agricharts
     tenant: newvision

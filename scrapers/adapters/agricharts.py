@@ -19,10 +19,13 @@ import fetch
 import normalize
 from adapters.base import Bid, SourceLocation
 
-ENDPOINT = (
-    "https://{tenant}.agricharts.com/inc/cashbids/cashbids-js.php"
-    "?filter=all&groupby=location&months={months}&format=csv"
-)
+PATH = "/inc/cashbids/cashbids-js.php?filter=all&groupby=location&months={months}&format=csv"
+ENDPOINT = "https://{tenant}.agricharts.com" + PATH
+
+# Some co-ops run the same AgriCharts software on their own domain instead of a
+# tenant subdomain - hartogelevator.com and faasfeed.com serve /markets/cash.php
+# and answer the same /inc/cashbids/ endpoint. Give those a `base` instead of a
+# `tenant`; everything downstream is identical.
 
 _BIDS_RE = re.compile(r"var\s+bids\s*=\s*(\[.*?\])\s*;", re.S)
 _CONFIG_RE = re.compile(r"var\s+config\s*=\s*(\{.*?\})\s*;\s*var\s+domain", re.S)
@@ -34,14 +37,21 @@ _MODE_BASIS_DRIVEN = 2
 
 
 class AgriChartsAdapter:
-    def __init__(self, tenant: str, *, months: int = 12, referer: str | None = None):
+    def __init__(self, tenant: str | None = None, *, base: str | None = None,
+                 months: int = 12, referer: str | None = None):
+        if not tenant and not base:
+            raise ValueError("agricharts: needs a tenant or a base URL")
         self.tenant = tenant
+        self.base = base.rstrip("/") if base else None
         self.months = months
         self.referer = referer
-        self.name = f"agricharts:{tenant}"
+        self.name = f"agricharts:{tenant or self.base}"
 
     def fetch(self) -> list[SourceLocation]:
-        url = ENDPOINT.format(tenant=self.tenant, months=self.months)
+        if self.base:
+            url = self.base + PATH.format(months=self.months)
+        else:
+            url = ENDPOINT.format(tenant=self.tenant, months=self.months)
         body = fetch.get(url, referer=self.referer, browser_ua=True)
         return self.parse(body)
 
