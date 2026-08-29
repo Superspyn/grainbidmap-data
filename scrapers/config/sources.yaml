@@ -114,6 +114,17 @@ sources:
     referer: https://www.agp.com/bids/
     # 16 pins. agp.com/bids/ renders this same data through an iframe.
 
+  - id: bushel:scoular
+    adapter: bushel
+    slug: scoular
+    label: The Scoular Company
+    # 4 pins. Their public site scoularview.com is Bushel-HOSTED and its
+    # robots.txt ends "User-Agent: * / Disallow: /", so those pages are off
+    # limits; this is the aggregator API, the same route as CHS and AGP.
+    # Scoular labels commodities with trade codes (YC, YSB) rather than names -
+    # see classify_grain, which matches them exactly so the wheat and sorghum
+    # in the same feed are not swept in.
+
   - id: bushel:smithfield
     adapter: bushel
     slug: smithfield

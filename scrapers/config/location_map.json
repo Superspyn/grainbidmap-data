@@ -3450,6 +3450,14 @@
       "confidence": 1.0,
       "method": "geo(0.0km)"
     },
+    "the-scoular-company-emerson-ia": {
+      "name": "The Scoular Company Emerson IA",
+      "source": "bushel:scoular",
+      "source_location_id": "fb2a812a-c7d1-43f5-838a-4837b1dd3579",
+      "source_name": "Emerson, IA",
+      "confidence": 1.0,
+      "method": "name"
+    },
     "two-rivers-cooperative-pella-ia": {
       "name": "Two Rivers Cooperative Pella IA",
       "source": "agricharts:tworivers",
@@ -4160,6 +4168,18 @@
       "method": "no-match"
     },
     {
+      "id": "the-scoular-company-elk-horn-ia",
+      "name": "The Scoular Company Elk Horn IA",
+      "type": "coop",
+      "company": "The Scoular Company",
+      "lat": 41.589265,
+      "lng": -95.061191,
+      "url": "https://www.scoular.com/",
+      "host": "www.scoular.com",
+      "source": "bushel:scoular",
+      "method": "no-match"
+    },
+    {
       "id": "heartland-co-op-gilman-ia",
       "name": "Heartland CO-OP Gilman IA",
       "type": "coop",
@@ -4181,6 +4201,18 @@
       "url": "https://www.heartlandcoop.com/",
       "host": "www.heartlandcoop.com",
       "source": "heartland",
+      "method": "no-match"
+    },
+    {
+      "id": "the-scoular-company-hastings-ia",
+      "name": "The Scoular Company Hastings IA",
+      "type": "coop",
+      "company": "The Scoular Company",
+      "lat": 41.025642,
+      "lng": -95.497701,
+      "url": "https://www.scoular.com/",
+      "host": "www.scoular.com",
+      "source": "bushel:scoular",
       "method": "no-match"
     },
     {
@@ -4397,6 +4429,18 @@
       "url": "https://www.cargillag.com/locations/nestlepurina-davenport",
       "host": "www.cargillag.com",
       "source": "agricharts:cargillus",
+      "method": "no-match"
+    },
+    {
+      "id": "scoular-purdy-mo",
+      "name": "Scoular Purdy MO",
+      "type": "coop",
+      "company": "The Scoular Company",
+      "lat": 36.766584,
+      "lng": -93.912339,
+      "url": "https://scoularview.com/cbloc-1928",
+      "host": "scoularview.com",
+      "source": "bushel:scoular",
       "method": "no-match"
     },
     {
@@ -4810,12 +4854,6 @@
       "host": "www.rivervalleycoop.com"
     },
     {
-      "id": "the-scoular-company-elk-horn-ia",
-      "name": "The Scoular Company Elk Horn IA",
-      "company": "The Scoular Company",
-      "host": "www.scoular.com"
-    },
-    {
       "id": "prairie-land-cooperative-ellsworth-ia",
       "name": "Prairie Land Cooperative Ellsworth IA",
       "company": "Prairie Land Cooperative",
@@ -4826,12 +4864,6 @@
       "name": "Howard County Equity Coop Elma IA",
       "company": "Howard County Equity Coop",
       "host": ""
-    },
-    {
-      "id": "the-scoular-company-emerson-ia",
-      "name": "The Scoular Company Emerson IA",
-      "company": "The Scoular Company",
-      "host": "www.scoular.com"
     },
     {
       "id": "prairie-land-cooperative-faulkner-ia",
@@ -4916,12 +4948,6 @@
       "name": "Cooperative Elevator Association Hartley IA",
       "company": "Cooperative Elevator Association",
       "host": ""
-    },
-    {
-      "id": "the-scoular-company-hastings-ia",
-      "name": "The Scoular Company Hastings IA",
-      "company": "The Scoular Company",
-      "host": "www.scoular.com"
     },
     {
       "id": "fredericksburg-farmers-coop-hawkeye-ia",
@@ -5726,12 +5752,6 @@
       "name": "Majestic Milling Exeter MO",
       "company": "Majestic Milling",
       "host": "www.majesticmilling.com"
-    },
-    {
-      "id": "scoular-purdy-mo",
-      "name": "Scoular Purdy MO",
-      "company": "The Scoular Company",
-      "host": "scoularview.com"
     },
     {
       "id": "heart-of-missouri-mfa-agri-services-glasgow-mo",
