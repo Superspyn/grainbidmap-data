@@ -3314,14 +3314,6 @@
       "confidence": 1.0,
       "method": "geo(0.1km)"
     },
-    "pro-cooperative-pocahontas-ia": {
-      "name": "Pro Cooperative Pocahontas IA",
-      "source": "agricharts:procooperative",
-      "source_location_id": "21306",
-      "source_name": "POCAHONTAS.IA",
-      "confidence": 1.0,
-      "method": "geo(0.0km)"
-    },
     "silveredge-cooperative-edgewood-ia": {
       "name": "SilverEdge Cooperative Edgewood IA",
       "source": "agricharts:silveredgecoop",
@@ -3508,15 +3500,6 @@
     }
   },
   "needs_review": [
-    {
-      "name": "Landus Davis City",
-      "source": "landus",
-      "source_location_id": "25",
-      "source_name": "Lake City",
-      "confidence": 0.25,
-      "method": "name-ambiguous",
-      "pin_id": "landus-davis-city"
-    },
     {
       "name": "ADM Quincy IL",
       "source": "gradable:adm",
