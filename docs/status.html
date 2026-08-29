@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cash bid scraper status</title>
+<style>
+  :root { --ok:#1a7f37; --bad:#b3261e; --warn:#9a6700; --line:#d8d4cc; --ink:#1c1b19; --dim:#6b6862; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:16px; font:15px/1.45 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+         color:var(--ink); background:#faf9f7; }
+  .wrap { max-width: 860px; margin: 0 auto; }
+  h1 { font-size:19px; margin:0 0 4px; }
+  .sub { color:var(--dim); font-size:13px; margin-bottom:16px; }
+  .banner { padding:12px 14px; border-radius:8px; font-weight:600; margin-bottom:16px; }
+  .banner.good { background:#e6f4ea; color:var(--ok); }
+  .banner.bad  { background:#fce8e6; color:var(--bad); }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th { text-align:left; font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+       color:var(--dim); border-bottom:2px solid var(--line); padding:8px 6px; }
+  td { padding:8px 6px; border-bottom:1px solid var(--line); vertical-align:top; }
+  td.num { text-align:right; font-variant-numeric:tabular-nums; }
+  .state { font-weight:700; font-size:12px; letter-spacing:.04em; }
+  .state.ok{color:var(--ok)} .state.FAILED{color:var(--bad)} .state.STALE{color:var(--warn)}
+  tr.problem { background:#fff6f5; }
+  .err { display:block; color:var(--bad); font-size:12px; margin-top:3px; word-break:break-word; }
+  .foot { margin-top:20px; color:var(--dim); font-size:12px; }
+  a { color:#0b5cad; }
+  @media (max-width:560px){ .hide-sm{display:none} body{padding:12px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Cash bid scraper status</h1>
+  <div class="sub" id="sub">loading&hellip;</div>
+  <div id="banner"></div>
+  <table>
+    <thead><tr>
+      <th>Source</th><th>State</th>
+      <th class="num">Pins</th>
+      <th class="num hide-sm">Locations</th>
+      <th class="num hide-sm">Bids</th>
+      <th>Last refreshed</th>
+    </tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <div class="foot">
+    Reads the same <a href="bids.json">bids.json</a> the map uses, so this page is
+    only as fresh as the last scraper run. A source marked <b>FAILED</b> keeps its
+    previous bids on the map rather than blanking them &mdash; the pins still show
+    numbers, they just stop moving.
+    <div style="margin-top:6px">Reload for the latest.</div>
+  </div>
+</div>
+<script>
+(function () {
+  var STALE_HOURS = 36;
+
+  function ageText(iso) {
+    if (!iso) return 'never';
+    var h = (Date.now() - new Date(iso).getTime()) / 3.6e6;
+    if (!isFinite(h)) return 'unknown';
+    if (h < 1) return Math.max(0, Math.round(h * 60)) + ' min ago';
+    if (h < 48) return h.toFixed(1) + ' h ago';
+    return (h / 24).toFixed(1) + ' days ago';
+  }
+  function hoursSince(iso) {
+    if (!iso) return null;
+    return (Date.now() - new Date(iso).getTime()) / 3.6e6;
+  }
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+    });
+  }
+
+  fetch('bids.json', { cache: 'no-store' })
+    .then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function (data) {
+      var pins = {};
+      Object.keys(data.locations || {}).forEach(function (k) {
+        var s = data.locations[k].source;
+        pins[s] = (pins[s] || 0) + 1;
+      });
+
+      var rows = Object.keys(data.sources || {}).map(function (id) {
+        var info = data.sources[id];
+        var h = hoursSince(info.fetched_at);
+        var state = !info.ok ? 'FAILED' : (h !== null && h > STALE_HOURS ? 'STALE' : 'ok');
+        return {
+          id: id, label: info.label || id, state: state,
+          pins: pins[id] || 0, locations: info.locations || 0,
+          bids: info.bids || 0, fetched_at: info.fetched_at, error: info.error
+        };
+      });
+      var rank = { FAILED: 0, STALE: 1, ok: 2 };
+      rows.sort(function (a, b) { return rank[a.state] - rank[b.state] || b.pins - a.pins; });
+
+      var bad = rows.filter(function (r) { return r.state !== 'ok'; });
+      document.getElementById('sub').textContent =
+        'Feed built ' + ageText(data.generated_at) +
+        '  ·  ' + Object.keys(data.locations || {}).length + ' pins carrying bids';
+
+      var banner = document.getElementById('banner');
+      banner.className = 'banner ' + (bad.length ? 'bad' : 'good');
+      banner.textContent = bad.length
+        ? bad.length + ' of ' + rows.length + ' sources need attention'
+        : 'All ' + rows.length + ' sources healthy';
+
+      document.getElementById('rows').innerHTML = rows.map(function (r) {
+        return '<tr class="' + (r.state === 'ok' ? '' : 'problem') + '">' +
+          '<td>' + esc(r.label) +
+            (r.error ? '<span class="err">' + esc(r.error) + '</span>' : '') + '</td>' +
+          '<td><span class="state ' + r.state + '">' + r.state + '</span></td>' +
+          '<td class="num">' + r.pins + '</td>' +
+          '<td class="num hide-sm">' + r.locations + '</td>' +
+          '<td class="num hide-sm">' + r.bids + '</td>' +
+          '<td>' + esc(ageText(r.fetched_at)) + '</td>' +
+        '</tr>';
+      }).join('');
+    })
+    .catch(function (e) {
+      document.getElementById('sub').textContent = '';
+      var banner = document.getElementById('banner');
+      banner.className = 'banner bad';
+      banner.textContent = 'Could not load bids.json - ' + e.message;
+    });
+})();
+</script>
+</body>
+</html>
