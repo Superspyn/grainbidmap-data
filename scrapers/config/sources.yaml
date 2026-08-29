@@ -256,6 +256,15 @@ sources:
     # Valero and POET plants - those are Nexus's bids, not the plants' own, and
     # company scoping in match_locations.py keeps them off those pins.
 
+  - id: fivestar
+    adapter: fivestar
+    label: Five Star Cooperative
+    # 14 pins across north central Iowa. One server-rendered page holds every
+    # location. They also quote delivered bids to AGP and GGE Mason City,
+    # Valero Charles City, Shell Rock Soy Processing, Green Plains, Homeland,
+    # Reicks View Milling and Christensen Farms - those are Five Star's bids,
+    # not the plants' own, and company scoping keeps them off those pins.
+
   - id: cihedging:goldengrain
     adapter: cihedging
     company_id: 98951
