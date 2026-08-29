@@ -66,6 +66,14 @@
       "confidence": 1.0,
       "method": "name"
     },
+    "ag-partners-cooperative-tarkio-mo": {
+      "name": "Ag Partners Cooperative Tarkio MO",
+      "source": "agricharts:agpartners",
+      "source_location_id": "20565",
+      "source_name": "Tarkio",
+      "confidence": 1.0,
+      "method": "geo(0.4km)"
+    },
     "agp-aberdeen-sd": {
       "name": "AGP Aberdeen SD",
       "source": "bushel:agp",
@@ -185,6 +193,14 @@
       "source_name": "Saint Joseph, MO",
       "confidence": 0.5,
       "method": "name"
+    },
+    "butterfield-associates-grain-meadville-mo": {
+      "name": "Butterfield Associates Grain Meadville MO",
+      "source": "agricharts:butterfield",
+      "source_location_id": "36163",
+      "source_name": "Butterfield",
+      "confidence": 1.0,
+      "method": "geo(0.1km)"
     },
     "cargill-beardstown-il": {
       "name": "Cargill Beardstown IL",
@@ -554,6 +570,14 @@
       "confidence": 1.0,
       "method": "name"
     },
+    "craig-supply-grain-mo": {
+      "name": "Craig Supply Grain MO",
+      "source": "agricharts:craiggrain",
+      "source_location_id": "36046",
+      "source_name": "Craig Grain",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
     "ctlc-cahokia-il": {
       "name": "CTLC Cahokia IL",
       "source": "agricharts:cgb",
@@ -865,6 +889,54 @@
       "source_name": "MG Waldbaum - Wakefield",
       "confidence": 0.578,
       "method": "geo(0.3km)"
+    },
+    "elite-octane-atlantic-ethanol": {
+      "name": "Elite Octane Atlantic Ethanol",
+      "source": "cihedging:eliteoctane",
+      "source_location_id": "22641",
+      "source_name": "Elite Octane",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "faas-feed-grain-inc-webster-ia": {
+      "name": "Faas Feed & Grain Inc Webster IA",
+      "source": "agricharts:faasfeed",
+      "source_location_id": "62149",
+      "source_name": "Webster/Keswick",
+      "confidence": 0.5,
+      "method": "name"
+    },
+    "farmers-elevator-exchange-monroe-city-mo": {
+      "name": "Farmers Elevator & Exchange Monroe City MO",
+      "source": "agricharts:farmerselevator",
+      "source_location_id": "16641",
+      "source_name": "Farmers Elevator & Exchange",
+      "confidence": 1.0,
+      "method": "geo(0.2km)"
+    },
+    "farmers-elevator-supply-clinton-mo": {
+      "name": "Farmers Elevator Supply Clinton MO",
+      "source": "agricharts:farmerselevatorco",
+      "source_location_id": "80217",
+      "source_name": "Clinton",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "farmers-win-coop-houston-mn": {
+      "name": "Farmers Win Coop Houston MN",
+      "source": "agricharts:farmerswin",
+      "source_location_id": "51093",
+      "source_name": "Houston",
+      "confidence": 1.0,
+      "method": "geo(0.1km)"
+    },
+    "farmers-win-coop-rushford-mn": {
+      "name": "Farmers Win Coop Rushford MN",
+      "source": "agricharts:farmerswin",
+      "source_location_id": "51094",
+      "source_name": "Rushford",
+      "confidence": 1.0,
+      "method": "geo(1.1km)"
     },
     "flint-hill-resources-poet-arthur-ethanol": {
       "name": "Flint Hill Resources/poet Arthur Ethanol",
@@ -1522,6 +1594,22 @@
       "confidence": 1.0,
       "method": "name"
     },
+    "hull-coop-sheldon-feed-mill-ia": {
+      "name": "Hull Coop Sheldon Feed Mill IA",
+      "source": "agricharts:hullcoop",
+      "source_location_id": "3420",
+      "source_name": "Hull",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "hull-cooperative-association-ia": {
+      "name": "Hull Cooperative Association IA",
+      "source": "agricharts:hullcoop",
+      "source_location_id": "3420",
+      "source_name": "Hull",
+      "confidence": 1.0,
+      "method": "geo(0.1km)"
+    },
     "innovative-ag-services-co-independence-ia": {
       "name": "Innovative AG Services Co Independence IA",
       "source": "agricharts:innovativeag",
@@ -2082,11 +2170,43 @@
       "confidence": 1.0,
       "method": "name"
     },
+    "little-sioux-corn-processors-marcus-ethanol": {
+      "name": "Little Sioux Corn Processors Marcus Ethanol",
+      "source": "cihedging:littlesioux",
+      "source_location_id": "15569",
+      "source_name": "Little Sioux Corn Processors",
+      "confidence": 1.0,
+      "method": "name"
+    },
     "lucerne-feed-mill": {
       "name": "Lucerne feed mill",
       "source": "bushel:smithfield",
       "source_location_id": "7ecc29ae-ecb0-460e-8fa1-f9df52158ec1",
       "source_name": "Lucerne",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "meadowland-farmers-coop-lamberton-mn": {
+      "name": "Meadowland Farmers Coop Lamberton MN",
+      "source": "agricharts:meadowland",
+      "source_location_id": "21330",
+      "source_name": "Meadowland",
+      "confidence": 1.0,
+      "method": "geo(0.1km)"
+    },
+    "meadowland-farmers-coop-wabasso-mn": {
+      "name": "Meadowland Farmers Coop Wabasso MN",
+      "source": "agricharts:meadowland",
+      "source_location_id": "21330",
+      "source_name": "Meadowland",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "meadowland-farmers-coop-walnut-grove-mn": {
+      "name": "Meadowland Farmers Coop Walnut Grove MN",
+      "source": "agricharts:meadowland",
+      "source_location_id": "21330",
+      "source_name": "Meadowland",
       "confidence": 1.0,
       "method": "name"
     },
@@ -2105,6 +2225,22 @@
       "source_name": "STATE CENTER",
       "confidence": 1.0,
       "method": "geo(0.0km)"
+    },
+    "mid-missouri-energy-malta-bend-ethanol": {
+      "name": "Mid-Missouri Energy Malta Bend Ethanol",
+      "source": "agricharts:midmissourienergy",
+      "source_location_id": "16430",
+      "source_name": "Mid-Missouri Energy, LLC",
+      "confidence": 1.0,
+      "method": "geo(2.5km)"
+    },
+    "montrose-grain-supply-mo": {
+      "name": "Montrose Grain Supply MO",
+      "source": "agricharts:montrose",
+      "source_location_id": "36052",
+      "source_name": "Montrose",
+      "confidence": 1.0,
+      "method": "geo(0.5km)"
     },
     "murphy-brown-nevada-mo-smithfield": {
       "name": "Murphy-Brown Nevada MO Smithfield",
@@ -2962,6 +3098,14 @@
       "confidence": 1.0,
       "method": "geo(0.1km)"
     },
+    "plymouth-energy-merrill-ethanol": {
+      "name": "Plymouth Energy Merrill Ethanol",
+      "source": "agricharts:plymouthenergy",
+      "source_location_id": "83175",
+      "source_name": "Plymouth Energy-Merrill",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
     "poet-ashton-ethanol": {
       "name": "POET Ashton Ethanol",
       "source": "gradable:poet",
@@ -3186,6 +3330,14 @@
       "confidence": 1.0,
       "method": "geo(0.1km)"
     },
+    "siouxland-energy-cooperative-sioux-center-ethanol": {
+      "name": "Siouxland Energy Cooperative Sioux Center Ethanol",
+      "source": "agricharts:siouxlandenergy",
+      "source_location_id": "20505",
+      "source_name": "Siouxland Energy",
+      "confidence": 1.0,
+      "method": "geo(0.3km)"
+    },
     "smithfield-grain-feed-mill-allerton": {
       "name": "Smithfield grain feed mill Allerton",
       "source": "bushel:smithfield",
@@ -3327,6 +3479,22 @@
       "source": "agricharts:tworivers",
       "source_location_id": "85834",
       "source_name": "TRACY",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "united-cooperatives-osborn-mo": {
+      "name": "United Cooperatives Osborn MO",
+      "source": "agricharts:useunited",
+      "source_location_id": "84957",
+      "source_name": "Osborn",
+      "confidence": 1.0,
+      "method": "geo(0.1km)"
+    },
+    "united-cooperatives-plattsburg-mo": {
+      "name": "United Cooperatives Plattsburg MO",
+      "source": "agricharts:useunited",
+      "source_location_id": "85059",
+      "source_name": "Plattsburg",
       "confidence": 1.0,
       "method": "geo(0.0km)"
     }
@@ -4256,6 +4424,18 @@
       "method": "no-match"
     },
     {
+      "id": "buchheit-perryville-mo",
+      "name": "Buchheit Perryville MO",
+      "type": "coop",
+      "company": "Buchheit",
+      "lat": 37.714054,
+      "lng": -89.8879183,
+      "url": "https://www.buchheitagri.com/",
+      "host": "www.buchheitagri.com",
+      "source": "agricharts:buchheit",
+      "method": "no-match"
+    },
+    {
       "id": "poet-glenville-mn-ethanol",
       "name": "POET Glenville MN Ethanol",
       "type": "ethanol",
@@ -4265,6 +4445,18 @@
       "url": "https://poet.com/glenville",
       "host": "poet.com",
       "source": "gradable:poet",
+      "method": "no-match"
+    },
+    {
+      "id": "farmers-win-coop-caledonia-mn",
+      "name": "Farmers Win Coop Caledonia MN",
+      "type": "coop",
+      "company": "Farmers Win Coop",
+      "lat": 43.6220283,
+      "lng": -91.5060119,
+      "url": "https://www.farmerswin.com/",
+      "host": "www.farmerswin.com",
+      "source": "agricharts:farmerswin",
       "method": "no-match"
     }
   ],
@@ -4330,12 +4522,6 @@
       "host": "www.andersonsgrain.com"
     },
     {
-      "id": "elite-octane-atlantic-ethanol",
-      "name": "Elite Octane Atlantic Ethanol",
-      "company": "Elite Octane",
-      "host": "www.eliteoctane.net"
-    },
-    {
       "id": "grain-processing-corporation",
       "name": "Grain Processing Corporation",
       "company": "Grain Processing Corporation",
@@ -4378,28 +4564,10 @@
       "host": "gpreinc.com"
     },
     {
-      "id": "plymouth-energy-merrill-ethanol",
-      "name": "Plymouth Energy Merrill Ethanol",
-      "company": "Plymouth Energy",
-      "host": "cvacoop365.agricharts.com"
-    },
-    {
-      "id": "little-sioux-corn-processors-marcus-ethanol",
-      "name": "Little Sioux Corn Processors Marcus Ethanol",
-      "company": "Little Sioux Corn Processors",
-      "host": "littlesiouxcornprocessors.com"
-    },
-    {
       "id": "quad-county-corn-processors-galva-ethanol",
       "name": "Quad County Corn Processors Galva Ethanol",
       "company": "Quad County Corn Processors",
       "host": ""
-    },
-    {
-      "id": "siouxland-energy-cooperative-sioux-center-ethanol",
-      "name": "Siouxland Energy Cooperative Sioux Center Ethanol",
-      "company": "Siouxland Energy Cooperative",
-      "host": "www.siouxlandenergy.com"
     },
     {
       "id": "valero-renewables-charles-city-ethanol",
@@ -4424,12 +4592,6 @@
       "name": "Golden Triangle Energy Craig MO Ethanol",
       "company": "Golden Triangle Energy",
       "host": "goldentriangleenergy.com"
-    },
-    {
-      "id": "mid-missouri-energy-malta-bend-ethanol",
-      "name": "Mid-Missouri Energy Malta Bend Ethanol",
-      "company": "Mid-Missouri Energy",
-      "host": "www.midmissourienergy.com"
     },
     {
       "id": "lifeline-foods-st-joseph-mo-ethanol",
@@ -5194,12 +5356,6 @@
       "host": ""
     },
     {
-      "id": "faas-feed-grain-inc-webster-ia",
-      "name": "Faas Feed & Grain Inc Webster IA",
-      "company": "Faas Feed & Grain Inc",
-      "host": "www.faasfeed.com"
-    },
-    {
       "id": "ag-vantage-fs-inc-welton-ia",
       "name": "AG Vantage FS Inc Welton IA",
       "company": "AG Vantage FS Inc",
@@ -5356,12 +5512,6 @@
       "host": "chinnfeedmill.com"
     },
     {
-      "id": "hull-cooperative-association-ia",
-      "name": "Hull Cooperative Association IA",
-      "company": "Hull Cooperative",
-      "host": "www.hullcoop.com"
-    },
-    {
       "id": "river-valley-cooperative-davenport-ia",
       "name": "River Valley Cooperative Davenport IA",
       "company": "River Valley Cooperative",
@@ -5378,12 +5528,6 @@
       "name": "Producer Cooperative Company Gaza IA",
       "company": "Producer Cooperative Company",
       "host": "gazaproducerscoop.com"
-    },
-    {
-      "id": "hull-coop-sheldon-feed-mill-ia",
-      "name": "Hull Coop Sheldon Feed Mill IA",
-      "company": "Hull Cooperative",
-      "host": "www.hullcoop.com"
     },
     {
       "id": "river-valley-dewitt-ia",
@@ -5450,12 +5594,6 @@
       "name": "A G Co-Op Services Boonville MO",
       "company": "A G Co-Op Services",
       "host": "agcoopservices.net"
-    },
-    {
-      "id": "farmers-elevator-exchange-monroe-city-mo",
-      "name": "Farmers Elevator & Exchange Monroe City MO",
-      "company": "Farmers Elevator & Exchange",
-      "host": "www.farmerselevator.net"
     },
     {
       "id": "mfa-agri-services-maysville-mo",
@@ -5914,12 +6052,6 @@
       "host": ""
     },
     {
-      "id": "united-cooperatives-osborn-mo",
-      "name": "United Cooperatives Osborn MO",
-      "company": "United Cooperatives (MO)",
-      "host": "useunited.com"
-    },
-    {
       "id": "heiman-rockville-mo",
       "name": "Heiman Rockville MO",
       "company": "Heiman",
@@ -5930,12 +6062,6 @@
       "name": "Bethlehem Feed Mill Rocky Comfort MO",
       "company": "Bethlehem Feed Mill",
       "host": "www.bethlehemfeedmill.com"
-    },
-    {
-      "id": "united-cooperatives-plattsburg-mo",
-      "name": "United Cooperatives Plattsburg MO",
-      "company": "United Cooperatives (MO)",
-      "host": "useunited.com"
     },
     {
       "id": "purina-mills-springfield-mo",
@@ -6022,12 +6148,6 @@
       "host": "bolivarfarmersexchange.com"
     },
     {
-      "id": "ag-partners-cooperative-tarkio-mo",
-      "name": "Ag Partners Cooperative Tarkio MO",
-      "company": "Ag Partners Cooperative",
-      "host": "www.agpartnerscoop.com"
-    },
-    {
       "id": "nutraag-versailles-mo",
       "name": "NutraAg Versailles MO",
       "company": "NutraAg",
@@ -6062,12 +6182,6 @@
       "name": "Oakley Grain Foristell MO",
       "company": "Oakley Grain",
       "host": "oakleyproducts.com"
-    },
-    {
-      "id": "butterfield-associates-grain-meadville-mo",
-      "name": "Butterfield Associates Grain Meadville MO",
-      "company": "Butterfield & Associates Grain",
-      "host": "www.butterfieldgrain.com"
     },
     {
       "id": "stokes-mayberry-gin-malden-mo",
@@ -6274,12 +6388,6 @@
       "host": ""
     },
     {
-      "id": "montrose-grain-supply-mo",
-      "name": "Montrose Grain Supply MO",
-      "company": "Montrose Grain and Supply",
-      "host": "www.montrosegrain.com"
-    },
-    {
       "id": "heiman-agri-services-butler-mo",
       "name": "Heiman Agri-Services Butler MO",
       "company": "Heiman",
@@ -6322,12 +6430,6 @@
       "host": ""
     },
     {
-      "id": "craig-supply-grain-mo",
-      "name": "Craig Supply Grain MO",
-      "company": "Craig Supply & Grain",
-      "host": "www.craiggrain.com"
-    },
-    {
       "id": "agriservices-brunswick-dewitt-mo",
       "name": "AGRIServices Brunswick DeWitt MO",
       "company": "AGRIServices of Brunswick",
@@ -6350,12 +6452,6 @@
       "name": "Prairie Home Co-Op MO",
       "company": "Prairie Home Co-op",
       "host": ""
-    },
-    {
-      "id": "farmers-elevator-supply-clinton-mo",
-      "name": "Farmers Elevator Supply Clinton MO",
-      "company": "Farmers Elevator & Supply Company (Clinton)",
-      "host": "farmerselevatorco.com"
     },
     {
       "id": "bartlett-kct-kansas-city-mo",
@@ -6410,12 +6506,6 @@
       "name": "Roth Grains Harrisonville MO",
       "company": "Roth Grains",
       "host": "www.rothirrigation.com"
-    },
-    {
-      "id": "buchheit-perryville-mo",
-      "name": "Buchheit Perryville MO",
-      "company": "Buchheit",
-      "host": "www.buchheitagri.com"
     },
     {
       "id": "mfa-agri-services-king-city-mo",
@@ -6562,24 +6652,6 @@
       "host": "www.cfscoop.com"
     },
     {
-      "id": "meadowland-farmers-coop-lamberton-mn",
-      "name": "Meadowland Farmers Coop Lamberton MN",
-      "company": "Meadowland Farmers Coop",
-      "host": "meadowlandfarmerscoop.com"
-    },
-    {
-      "id": "meadowland-farmers-coop-wabasso-mn",
-      "name": "Meadowland Farmers Coop Wabasso MN",
-      "company": "Meadowland Farmers Coop",
-      "host": "meadowlandfarmerscoop.com"
-    },
-    {
-      "id": "meadowland-farmers-coop-walnut-grove-mn",
-      "name": "Meadowland Farmers Coop Walnut Grove MN",
-      "company": "Meadowland Farmers Coop",
-      "host": "meadowlandfarmerscoop.com"
-    },
-    {
       "id": "central-region-cooperative-sleepy-eye-mn",
       "name": "Central Region Cooperative Sleepy Eye MN",
       "company": "Central Region Cooperative",
@@ -6596,24 +6668,6 @@
       "name": "Ag Partners Lake City MN",
       "company": "Ag Partners (MN)",
       "host": "agpartners.net"
-    },
-    {
-      "id": "farmers-win-coop-houston-mn",
-      "name": "Farmers Win Coop Houston MN",
-      "company": "Farmers Win Coop",
-      "host": "www.farmerswin.com"
-    },
-    {
-      "id": "farmers-win-coop-caledonia-mn",
-      "name": "Farmers Win Coop Caledonia MN",
-      "company": "Farmers Win Coop",
-      "host": "www.farmerswin.com"
-    },
-    {
-      "id": "farmers-win-coop-rushford-mn",
-      "name": "Farmers Win Coop Rushford MN",
-      "company": "Farmers Win Coop",
-      "host": "www.farmerswin.com"
     },
     {
       "id": "schmitz-grain-slayton-mn",

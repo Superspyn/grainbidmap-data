@@ -139,6 +139,95 @@ sources:
     label: Faas Feed & Grain
     referer: https://www.faasfeed.com/markets/cash.php
 
+  # ---------------------------------------------------------------------------
+  # Found by sweeping every uncovered company's own site for a platform we
+  # already support. Most run AgriCharts; several serve it from their OWN
+  # domain with no *.agricharts.com subdomain to give it away, which is why
+  # `base` exists. All robots-checked before probing.
+  # ---------------------------------------------------------------------------
+  - id: agricharts:meadowland
+    adapter: agricharts
+    tenant: meadsprout2
+    label: Meadowland Farmers Coop
+
+  - id: agricharts:farmerswin
+    adapter: agricharts
+    base: https://www.farmerswin.com
+    label: Farmers Win Coop
+
+  - id: agricharts:hullcoop
+    adapter: agricharts
+    tenant: hullcoopresp
+    label: Hull Cooperative
+
+  - id: agricharts:useunited
+    adapter: agricharts
+    base: https://useunited.com
+    label: United Cooperatives (MO)
+
+  - id: agricharts:siouxlandenergy
+    adapter: agricharts
+    base: https://www.siouxlandenergy.com
+    label: Siouxland Energy Cooperative
+
+  - id: agricharts:midmissourienergy
+    adapter: agricharts
+    base: https://www.midmissourienergy.com
+    label: Mid-Missouri Energy
+
+  - id: agricharts:farmerselevator
+    adapter: agricharts
+    base: https://www.farmerselevator.net
+    label: Farmers Elevator & Exchange
+
+  - id: agricharts:agpartners
+    adapter: agricharts
+    tenant: agpartners
+    label: Ag Partners Cooperative
+
+  - id: agricharts:butterfield
+    adapter: agricharts
+    base: https://www.butterfieldgrain.com
+    label: Butterfield & Associates Grain
+
+  - id: agricharts:montrose
+    adapter: agricharts
+    base: https://www.montrosegrain.com
+    label: Montrose Grain and Supply
+
+  - id: agricharts:craiggrain
+    adapter: agricharts
+    base: https://www.craiggrain.com
+    label: Craig Supply & Grain
+
+  - id: agricharts:farmerselevatorco
+    adapter: agricharts
+    base: https://farmerselevatorco.com
+    label: Farmers Elevator & Supply (Clinton)
+
+  - id: agricharts:buchheit
+    adapter: agricharts
+    tenant: buchheitagri
+    label: Buchheit
+
+  # Plymouth Energy's bids are published through CVA's own AgriCharts tenant.
+  - id: agricharts:plymouthenergy
+    adapter: agricharts
+    base: https://cvacoop365.agricharts.com
+    label: Plymouth Energy
+
+  - id: cihedging:eliteoctane
+    adapter: cihedging
+    company_id: 22641
+    label: Elite Octane
+    referer: https://www.eliteoctane.net/cash-bids
+
+  - id: cihedging:littlesioux
+    adapter: cihedging
+    company_id: 15569
+    label: Little Sioux Corn Processors
+    referer: https://littlesiouxcornprocessors.com/
+
   - id: agricharts:newvision
     adapter: agricharts
     tenant: newvision
