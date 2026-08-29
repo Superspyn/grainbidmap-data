@@ -606,3 +606,118 @@ class TestBushelChangeSign:
 
     def test_null_change_stays_null(self):
         assert self._bid(futuresChange=None, futuresChangeSign=None).futures_change is None
+
+
+@pytest.fixture(scope="module")
+def fivestar():
+    from adapters.fivestar import FiveStarAdapter
+    return FiveStarAdapter.parse(read_fixture("fivestar_cash_bids.html"))
+
+
+class TestFiveStar:
+    def test_reads_every_location(self, fivestar):
+        names = {loc.name for loc in fivestar}
+        # Their fourteen elevators, plus the plants they quote delivery to.
+        for town in ("Burchinal", "Hanlontown", "Klemme", "Lime Springs",
+                     "North Washington", "Ventura", "Rockwell", "Ionia"):
+            assert town in names, town
+
+    def test_keyed_by_the_feeds_own_location_id(self, fivestar):
+        # The name is not unique across their whole feed and could be
+        # retitled; LocationID is the stable handle.
+        loc = next(l for l in fivestar if l.name == "Ionia")
+        assert loc.source_location_id == "7TZJ7E2012ZHMUBKRLVJ"
+
+    def test_futures_is_derived_from_cash_and_basis(self, fivestar):
+        # The feed publishes no futures price, so every row's must reconcile
+        # by construction - this pins the arithmetic, not the source.
+        for loc in fivestar:
+            for b in loc.bids:
+                assert b.basis is not None and b.futures is not None
+                assert abs(b.futures + b.basis - b.cash) < 0.006
+
+    def test_change_is_converted_from_cents(self, fivestar):
+        # The column reads "3" for a three cent day, matching the board table.
+        loc = next(l for l in fivestar if l.name == "Klemme")
+        bid = next(b for b in loc.bids if b.futures_month == "CZ26")
+        assert bid.futures_change == 0.03
+
+    def test_every_row_resolves_to_one_contract(self, fivestar):
+        # Price alone is ambiguous (CZ26 and CH28 both closed at 5.365) and so
+        # is change; together they resolved all 291 rows when this was built.
+        unresolved = [b for l in fivestar for b in l.bids if b.futures_month is None]
+        assert unresolved == []
+
+    def test_delivered_bids_stay_under_five_star(self, fivestar):
+        # These are Five Star's bids for grain hauled to those plants, not the
+        # plants' own posted bids. They belong in this source; company scoping
+        # in match_locations keeps them off the AGP and Valero pins.
+        names = {loc.name for loc in fivestar}
+        assert "AGP Mason City" in names
+        assert "Valero Charles City" in names
+
+    def test_blank_rows_are_dropped(self, fivestar):
+        # A period a location is not bidding on is left blank, not omitted.
+        for loc in fivestar:
+            for b in loc.bids:
+                assert b.cash is not None and b.cash > 0
+
+
+class TestFiveStarDeliveryPeriods:
+    """Delivery periods are free text and inconsistently written."""
+
+    def _window(self, text):
+        from adapters.fivestar import _delivery_window
+        return _delivery_window(text)
+
+    def test_whole_month_spellings(self):
+        assert self._window("Dec26") == ("2026-12-01", "2026-12-31")
+        assert self._window("Oct 2026.") == ("2026-10-01", "2026-10-31")
+        assert self._window("Aug 26.") == ("2026-08-01", "2026-08-31")
+        assert self._window("April 27") == ("2027-04-01", "2027-04-30")
+        assert self._window("July 27") == ("2027-07-01", "2027-07-31")
+
+    def test_half_months(self):
+        assert self._window("FH Sep")[0].endswith("-09-01")
+        assert self._window("FH Sep")[1].endswith("-09-15")
+        assert self._window("LH Aug")[0].endswith("-08-16")
+        assert self._window("LH Aug")[1].endswith("-08-31")
+
+    def test_february_end_is_not_hardcoded(self):
+        assert self._window("Feb 28") == ("2028-02-01", "2028-02-29")
+        assert self._window("Feb 27") == ("2027-02-01", "2027-02-28")
+
+    def test_junk_is_none(self):
+        assert self._window("") == (None, None)
+        assert self._window("Delivery Periods") == (None, None)
+
+
+class TestFiveStarContractMatch:
+    """Two contracts can share a close, and two can share a day's change."""
+
+    def _board(self):
+        from adapters.fivestar import _Board
+        return _Board([
+            ("corn", 5.365, 0.03, "CZ26"),
+            ("corn", 5.365, 0.015, "CH28"),    # same close, different change
+            ("corn", 5.57, 0.04, "CK27"),
+            ("corn", 5.575, 0.0325, "CN27"),   # half a cent from CK27
+        ])
+
+    def test_change_breaks_a_price_tie(self):
+        assert self._board().match("corn", 5.36, 0.03) == "CZ26"
+        assert self._board().match("corn", 5.36, 0.015) == "CH28"
+
+    def test_price_breaks_a_change_tie(self):
+        assert self._board().match("corn", 5.57, 0.04) == "CK27"
+        assert self._board().match("corn", 5.57, 0.0325) == "CN27"
+
+    def test_no_guess_when_still_ambiguous(self):
+        from adapters.fivestar import _Board
+        board = _Board([("corn", 5.365, 0.03, "CZ26"), ("corn", 5.365, 0.03, "CH28")])
+        assert board.match("corn", 5.36, 0.03) is None
+
+    def test_no_match_is_none_not_an_error(self):
+        assert self._board().match("corn", 9.99, 0.03) is None
+        assert self._board().match("corn", None, 0.03) is None
+        assert self._board().match("soybeans", 5.36, 0.03) is None

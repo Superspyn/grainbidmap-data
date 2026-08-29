@@ -938,6 +938,118 @@
       "confidence": 1.0,
       "method": "geo(1.1km)"
     },
+    "five-star-cooperative-burchinal-ia": {
+      "name": "Five Star Cooperative Burchinal IA",
+      "source": "fivestar",
+      "source_location_id": "KJYQER9HDBNHRQ61MO55",
+      "source_name": "Burchinal",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "five-star-cooperative-dougherty-ia": {
+      "name": "Five Star Cooperative Dougherty IA",
+      "source": "fivestar",
+      "source_location_id": "E1OBTS5S2LL510RRED6N",
+      "source_name": "Dougherty",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "five-star-cooperative-hanlontown-ia": {
+      "name": "Five Star Cooperative Hanlontown IA",
+      "source": "fivestar",
+      "source_location_id": "ITL7BPY2YEIH53Z035NX",
+      "source_name": "Hanlontown",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "five-star-cooperative-ionia-ia": {
+      "name": "Five Star Cooperative Ionia IA",
+      "source": "fivestar",
+      "source_location_id": "7TZJ7E2012ZHMUBKRLVJ",
+      "source_name": "Ionia",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "five-star-cooperative-klemme-ia": {
+      "name": "Five Star Cooperative Klemme IA",
+      "source": "fivestar",
+      "source_location_id": "B4SH96JE8BW612NDR68O",
+      "source_name": "Klemme",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "five-star-cooperative-lawler-ia": {
+      "name": "Five Star Cooperative Lawler IA",
+      "source": "fivestar",
+      "source_location_id": "IKEU402QY2ZW5WXL59BY",
+      "source_name": "Lawler",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "five-star-cooperative-lime-springs-ia": {
+      "name": "Five Star Cooperative Lime Springs IA",
+      "source": "fivestar",
+      "source_location_id": "UZ6OIOXTDRSF77IO9JBM",
+      "source_name": "Lime Springs",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "five-star-cooperative-nashua-ia": {
+      "name": "Five Star Cooperative Nashua IA",
+      "source": "fivestar",
+      "source_location_id": "HF6ODW6MGZTLW0WGIDDR",
+      "source_name": "Nashua",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "five-star-cooperative-new-hampton-ia": {
+      "name": "Five Star Cooperative New Hampton IA",
+      "source": "fivestar",
+      "source_location_id": "C8FAL8XG0QPZRZMGMNQ1",
+      "source_name": "New Hampton",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "five-star-cooperative-north-washington-ia": {
+      "name": "Five Star Cooperative North Washington IA",
+      "source": "fivestar",
+      "source_location_id": "KQ9NQ01AGYJ4FNPJIEGI",
+      "source_name": "North Washington",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "five-star-cooperative-rockwell-ia": {
+      "name": "Five Star Cooperative Rockwell IA",
+      "source": "fivestar",
+      "source_location_id": "V8O92JP9NMRPCAS7S5XS",
+      "source_name": "Rockwell",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "five-star-cooperative-scarville-ia": {
+      "name": "Five Star Cooperative Scarville IA",
+      "source": "fivestar",
+      "source_location_id": "M16DVLAQAT4PZ6I47UWR",
+      "source_name": "Scarville",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "five-star-cooperative-sheffield-ia": {
+      "name": "Five Star Cooperative Sheffield IA",
+      "source": "fivestar",
+      "source_location_id": "YI61YH6D129DEEJND6H1",
+      "source_name": "Sheffield",
+      "confidence": 1.0,
+      "method": "name"
+    },
+    "five-star-cooperative-ventura-ia": {
+      "name": "Five Star Cooperative Ventura IA",
+      "source": "fivestar",
+      "source_location_id": "DX0DREJKLTULE5J66GJ0",
+      "source_name": "Ventura",
+      "confidence": 1.0,
+      "method": "name"
+    },
     "flint-hill-resources-poet-arthur-ethanol": {
       "name": "Flint Hill Resources/poet Arthur Ethanol",
       "source": "gradable:poet",
@@ -4295,6 +4407,18 @@
       "method": "no-match"
     },
     {
+      "id": "five-star-cooperative-swaledale-ia",
+      "name": "Five Star Cooperative Swaledale IA",
+      "type": "coop",
+      "company": "Five Star Cooperative",
+      "lat": 42.978349,
+      "lng": -93.312767,
+      "url": "https://www.fivestarcoop.com/",
+      "host": "www.fivestarcoop.com",
+      "source": "fivestar",
+      "method": "no-match"
+    },
+    {
       "id": "agp-rosemont-ne",
       "name": "AGP Rosemont NE",
       "type": "coop",
@@ -4807,12 +4931,6 @@
       "host": "www.rivervalleycoop.com"
     },
     {
-      "id": "five-star-cooperative-dougherty-ia",
-      "name": "Five Star Cooperative Dougherty IA",
-      "company": "Five Star Cooperative",
-      "host": "www.fivestarcoop.com"
-    },
-    {
       "id": "cogdill-farm-supply-inc-dow-city-ia",
       "name": "Cogdill Farm Supply Inc Dow City IA",
       "company": "Cogdill Farm Supply Inc",
@@ -4969,12 +5087,6 @@
       "host": ""
     },
     {
-      "id": "five-star-cooperative-ionia-ia",
-      "name": "Five Star Cooperative Ionia IA",
-      "company": "Five Star Cooperative",
-      "host": "www.fivestarcoop.com"
-    },
-    {
       "id": "east-central-iowa-co-op-jesup-ia",
       "name": "East Central Iowa CO-OP Jesup IA",
       "company": "East Central Iowa CO-OP",
@@ -5002,12 +5114,6 @@
       "id": "south-central-cooperative-knoxville-ia",
       "name": "South Central Cooperative Knoxville IA",
       "company": "South Central Cooperative",
-      "host": ""
-    },
-    {
-      "id": "five-star-cooperative-lawler-ia",
-      "name": "FIVE STAR COOPERATIVE LAWLER IA",
-      "company": "FIVE STAR COOPERATIVE",
       "host": ""
     },
     {
@@ -5111,12 +5217,6 @@
       "name": "TriOak Foods Inc Mount Pleasant IA",
       "company": "TriOak Foods Inc",
       "host": ""
-    },
-    {
-      "id": "five-star-cooperative-nashua-ia",
-      "name": "Five Star Cooperative Nashua IA",
-      "company": "Five Star Cooperative",
-      "host": "www.fivestarcoop.com"
     },
     {
       "id": "agstate-nemaha-ia",
@@ -5227,12 +5327,6 @@
       "host": ""
     },
     {
-      "id": "five-star-cooperative-rockwell-ia",
-      "name": "Five Star Cooperative Rockwell IA",
-      "company": "Five Star Cooperative",
-      "host": "www.fivestarcoop.com"
-    },
-    {
       "id": "heart-of-iowa-cooperative-roland-ia",
       "name": "Heart of Iowa Cooperative Roland IA",
       "company": "Heart of Iowa Cooperative",
@@ -5263,12 +5357,6 @@
       "host": ""
     },
     {
-      "id": "five-star-cooperative-scarville-ia-approx",
-      "name": "Five Star Cooperative Scarville IA (approx)",
-      "company": "Five Star Cooperative",
-      "host": "www.fivestarcoop.com"
-    },
-    {
       "id": "farmers-cooperative-elevator-company-schleswig-ia-approx",
       "name": "Farmers Cooperative Elevator Company Schleswig IA (approx)",
       "company": "Farmers Cooperative Elevator Company",
@@ -5279,12 +5367,6 @@
       "name": "AG Vantage FS Inc Sheffield IA",
       "company": "AG Vantage FS Inc",
       "host": ""
-    },
-    {
-      "id": "five-star-cooperative-sheffield-ia",
-      "name": "Five Star Cooperative Sheffield IA",
-      "company": "Five Star Cooperative",
-      "host": "www.fivestarcoop.com"
     },
     {
       "id": "west-side-grain-sales-corp-shellsburg-ia",
@@ -5327,12 +5409,6 @@
       "name": "Fredericksburg Farmers Coop Sumner IA",
       "company": "Fredericksburg Farmers Coop",
       "host": ""
-    },
-    {
-      "id": "five-star-cooperative-swaledale-ia",
-      "name": "Five Star Cooperative Swaledale IA",
-      "company": "Five Star Cooperative",
-      "host": "www.fivestarcoop.com"
     },
     {
       "id": "cedar-county-cooperative-tipton-ia",
@@ -5429,12 +5505,6 @@
       "name": "Midwest Soya International Mason City IA",
       "company": "Midwest Soya International",
       "host": "www.iowaagriculture.gov"
-    },
-    {
-      "id": "five-star-cooperative-new-hampton-ia",
-      "name": "Five Star Cooperative New Hampton IA",
-      "company": "Five Star Cooperative",
-      "host": "www.fivestarcoop.com"
     },
     {
       "id": "ray-carroll-grain-growers-richmond-mo",

@@ -31,6 +31,7 @@ import yaml  # noqa: E402
 from adapters.agricharts import AgriChartsAdapter  # noqa: E402
 from adapters.bushel import BushelAdapter  # noqa: E402
 from adapters.cihedging import CIHedgingAdapter  # noqa: E402
+from adapters.fivestar import FiveStarAdapter  # noqa: E402
 from adapters.gradable import GradableAdapter  # noqa: E402
 from adapters.heartland import HeartlandAdapter  # noqa: E402
 from adapters.landus import LandusAdapter  # noqa: E402
@@ -71,6 +72,8 @@ def build_adapter(spec: dict):
         return LandusAdapter()
     if kind == "nexus":
         return NexusAdapter()
+    if kind == "fivestar":
+        return FiveStarAdapter()
     if kind == "bushel":
         return BushelAdapter(
             spec["slug"], spec.get("label", ""), spec.get("referer")

@@ -1,9 +1,9 @@
 {
   "disclaimer": "Cash bids are collected from each facility's public bid page for reference only and may be delayed or out of date. Confirm with the elevator before hauling.",
-  "generated_at": "2026-08-29T15:16:17Z",
+  "generated_at": "2026-08-29T18:41:29Z",
   "locations": {
     "adm-cedar-rapids-ethanol": {
-      "as_of": "2026-08-29T15:10:32Z",
+      "as_of": "2026-08-29T18:36:48Z",
       "bids": [
         {
           "basis": -0.28,
@@ -131,7 +131,7 @@
       "source_name": "Cedar Rapids, IA"
     },
     "adm-clinton-bean-terminal-ia": {
-      "as_of": "2026-08-29T15:10:46Z",
+      "as_of": "2026-08-29T18:37:02Z",
       "bids": [
         {
           "basis": -0.2,
@@ -219,7 +219,7 @@
       "source_name": "Clinton, IA (Elevator)"
     },
     "adm-clinton-ethanol": {
-      "as_of": "2026-08-29T15:10:46Z",
+      "as_of": "2026-08-29T18:37:02Z",
       "bids": [
         {
           "basis": -0.2,
@@ -307,7 +307,7 @@
       "source_name": "Clinton, IA (Elevator)"
     },
     "adm-deerfield-mo": {
-      "as_of": "2026-08-29T15:11:04Z",
+      "as_of": "2026-08-29T18:37:20Z",
       "bids": [
         {
           "basis": 0.25,
@@ -415,7 +415,7 @@
       "source_name": "Deerfield, MO"
     },
     "adm-mexico-mo": {
-      "as_of": "2026-08-29T15:12:47Z",
+      "as_of": "2026-08-29T18:39:01Z",
       "bids": [
         {
           "basis": -0.2,
@@ -513,7 +513,7 @@
       "source_name": "Mexico, MO"
     },
     "adm-new-madrid-mo-portageville": {
-      "as_of": "2026-08-29T15:13:13Z",
+      "as_of": "2026-08-29T18:39:24Z",
       "bids": [
         {
           "basis": 0.1,
@@ -701,7 +701,7 @@
       "source_name": "New Madrid, MO"
     },
     "adm-north-terminal-st-louis-mo": {
-      "as_of": "2026-08-29T15:14:54Z",
+      "as_of": "2026-08-29T18:40:18Z",
       "bids": [
         {
           "basis": 0.14,
@@ -949,7 +949,7 @@
       "source_name": "St. Louis, MO (Elevator)"
     },
     "adm-st-louis-milling-mo": {
-      "as_of": "2026-08-29T15:14:54Z",
+      "as_of": "2026-08-29T18:40:18Z",
       "bids": [
         {
           "basis": 0.14,
@@ -1271,7 +1271,7 @@
       "source_name": "Tarkio"
     },
     "agp-aberdeen-sd": {
-      "as_of": "2026-08-29T15:08:06Z",
+      "as_of": "2026-08-29T18:34:11Z",
       "bids": [
         {
           "basis": -0.4,
@@ -1342,7 +1342,7 @@
       "source_name": "Aberdeen, SD"
     },
     "agp-chester-ne": {
-      "as_of": "2026-08-29T15:08:06Z",
+      "as_of": "2026-08-29T18:34:11Z",
       "bids": [
         {
           "basis": -0.43,
@@ -1386,7 +1386,7 @@
       "source_name": "Chester, NE"
     },
     "agp-cowles-ne": {
-      "as_of": "2026-08-29T15:08:06Z",
+      "as_of": "2026-08-29T18:34:11Z",
       "bids": [
         {
           "basis": -0.4,
@@ -1412,7 +1412,7 @@
       "source_name": "Cowles, NE"
     },
     "agp-david-city-ne": {
-      "as_of": "2026-08-29T15:08:06Z",
+      "as_of": "2026-08-29T18:34:11Z",
       "bids": [
         {
           "basis": 0.55,
@@ -1483,7 +1483,7 @@
       "source_name": "David City, NE"
     },
     "agp-dawson-mn": {
-      "as_of": "2026-08-29T15:08:06Z",
+      "as_of": "2026-08-29T18:34:11Z",
       "bids": [
         {
           "basis": -0.65,
@@ -1554,7 +1554,7 @@
       "source_name": "Dawson, MN"
     },
     "agp-eagle-grove-ia": {
-      "as_of": "2026-08-29T15:08:06Z",
+      "as_of": "2026-08-29T18:34:11Z",
       "bids": [
         {
           "basis": 0.2,
@@ -1616,7 +1616,7 @@
       "source_name": "Eagle Grove, IA"
     },
     "agp-emmetsburg-ia": {
-      "as_of": "2026-08-29T15:08:06Z",
+      "as_of": "2026-08-29T18:34:11Z",
       "bids": [
         {
           "basis": 0.2,
@@ -1687,7 +1687,7 @@
       "source_name": "Emmetsburg, IA"
     },
     "agp-fairfield-ne": {
-      "as_of": "2026-08-29T15:08:06Z",
+      "as_of": "2026-08-29T18:34:11Z",
       "bids": [
         {
           "basis": -0.3,
@@ -1713,7 +1713,7 @@
       "source_name": "Fairfield, NE"
     },
     "agp-hastings-ne-grain-terminal": {
-      "as_of": "2026-08-29T15:08:06Z",
+      "as_of": "2026-08-29T18:34:11Z",
       "bids": [
         {
           "basis": -0.35,
@@ -1757,7 +1757,7 @@
       "source_name": "Hastings, NE - Grain (Terminal)"
     },
     "agp-hastings-ne-soy-plant": {
-      "as_of": "2026-08-29T15:08:06Z",
+      "as_of": "2026-08-29T18:34:11Z",
       "bids": [
         {
           "basis": 0.0,
@@ -1819,7 +1819,7 @@
       "source_name": "Hastings, NE - Grain (Soy Plant)"
     },
     "agp-manning-ia": {
-      "as_of": "2026-08-29T15:08:06Z",
+      "as_of": "2026-08-29T18:34:11Z",
       "bids": [
         {
           "basis": 0.55,
@@ -1890,7 +1890,7 @@
       "source_name": "Manning, IA"
     },
     "agp-mason-city-ia": {
-      "as_of": "2026-08-29T15:08:06Z",
+      "as_of": "2026-08-29T18:34:11Z",
       "bids": [
         {
           "basis": 0.1,
@@ -1961,7 +1961,7 @@
       "source_name": "Mason City, IA"
     },
     "agp-sergeant-bluff-ia": {
-      "as_of": "2026-08-29T15:08:06Z",
+      "as_of": "2026-08-29T18:34:11Z",
       "bids": [
         {
           "basis": 0.35,
@@ -2032,7 +2032,7 @@
       "source_name": "Sergeant Bluff, IA"
     },
     "agp-sheldon-ia": {
-      "as_of": "2026-08-29T15:08:06Z",
+      "as_of": "2026-08-29T18:34:11Z",
       "bids": [
         {
           "basis": 0.5,
@@ -2103,7 +2103,7 @@
       "source_name": "Sheldon, IA"
     },
     "agp-st-joseph-mo": {
-      "as_of": "2026-08-29T15:08:06Z",
+      "as_of": "2026-08-29T18:34:11Z",
       "bids": [
         {
           "basis": 0.4,
@@ -2174,7 +2174,7 @@
       "source_name": "Saint Joseph, MO"
     },
     "butterfield-associates-grain-meadville-mo": {
-      "as_of": "2026-08-29T15:08:24Z",
+      "as_of": "2026-08-29T18:34:30Z",
       "bids": [
         {
           "cash": 4.62,
@@ -9389,7 +9389,7 @@
       "source_name": "CGB SCOTT CITY"
     },
     "chs-kasson-mn": {
-      "as_of": "2026-08-29T15:08:05Z",
+      "as_of": "2026-08-29T18:34:10Z",
       "bids": [
         {
           "basis": -0.83,
@@ -9485,7 +9485,7 @@
       "source_name": "Kasson"
     },
     "chs-oilseed-processing-fairmont-mn": {
-      "as_of": "2026-08-29T15:08:05Z",
+      "as_of": "2026-08-29T18:34:10Z",
       "bids": [
         {
           "basis": 0.0,
@@ -9654,7 +9654,7 @@
       "source_name": "Fairmont"
     },
     "chs-oilseed-processing-mankato-mn": {
-      "as_of": "2026-08-29T15:08:05Z",
+      "as_of": "2026-08-29T18:34:10Z",
       "bids": [
         {
           "basis": -0.2,
@@ -9821,7 +9821,7 @@
       "source_name": "Mankato"
     },
     "chs-pipestone-grain-mn": {
-      "as_of": "2026-08-29T15:08:05Z",
+      "as_of": "2026-08-29T18:34:10Z",
       "bids": [
         {
           "basis": -0.66,
@@ -9957,7 +9957,7 @@
       "source_name": "Pipestone"
     },
     "chs-savage-terminal-mn": {
-      "as_of": "2026-08-29T15:08:05Z",
+      "as_of": "2026-08-29T18:34:10Z",
       "bids": [
         {
           "basis": -0.55,
@@ -10181,7 +10181,7 @@
       "source_name": "Savage"
     },
     "chs-tracy-mn": {
-      "as_of": "2026-08-29T15:08:05Z",
+      "as_of": "2026-08-29T18:34:10Z",
       "bids": [
         {
           "basis": -0.73,
@@ -10317,7 +10317,7 @@
       "source_name": "Tracy"
     },
     "chs-winona-river-and-rail-mn": {
-      "as_of": "2026-08-29T15:08:05Z",
+      "as_of": "2026-08-29T18:34:10Z",
       "bids": [
         {
           "basis": -0.75,
@@ -16606,7 +16606,7 @@
       "source_name": "MG Waldbaum - Wakefield"
     },
     "elite-octane-atlantic-ethanol": {
-      "as_of": "2026-08-29T15:08:38Z",
+      "as_of": "2026-08-29T18:34:43Z",
       "bids": [
         {
           "basis": -0.3,
@@ -17192,8 +17192,2705 @@
       "source": "agricharts:farmerswin",
       "source_name": "Rushford"
     },
+    "five-star-cooperative-burchinal-ia": {
+      "as_of": "2026-08-29T18:34:58Z",
+      "bids": [
+        {
+          "basis": -0.48,
+          "cash": 4.88,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.48,
+          "cash": 4.88,
+          "delivery_end": "2026-09-30",
+          "delivery_label": "Sep 2026",
+          "delivery_start": "2026-09-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.46,
+          "cash": 4.9,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.36,
+          "cash": 5.0,
+          "delivery_end": "2026-12-31",
+          "delivery_label": "Dec 2026",
+          "delivery_start": "2026-12-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.44,
+          "cash": 5.07,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.42,
+          "cash": 5.09,
+          "delivery_end": "2027-02-28",
+          "delivery_label": "Feb 2027",
+          "delivery_start": "2027-02-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.4,
+          "cash": 5.11,
+          "delivery_end": "2027-03-31",
+          "delivery_label": "Mar 2027",
+          "delivery_start": "2027-03-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.4,
+          "cash": 5.17,
+          "delivery_end": "2027-04-30",
+          "delivery_label": "Apr 2027",
+          "delivery_start": "2027-04-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.38,
+          "cash": 5.19,
+          "delivery_end": "2027-05-31",
+          "delivery_label": "May 2027",
+          "delivery_start": "2027-05-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.38,
+          "cash": 5.19,
+          "delivery_end": "2027-06-30",
+          "delivery_label": "Jun 2027",
+          "delivery_start": "2027-06-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.38,
+          "cash": 5.19,
+          "delivery_end": "2027-07-31",
+          "delivery_label": "Jul 2027",
+          "delivery_start": "2027-07-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.42,
+          "cash": 4.85,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.32,
+          "cash": 4.95,
+          "delivery_end": "2027-12-31",
+          "delivery_label": "Dec 2027",
+          "delivery_start": "2027-12-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.25,
+          "cash": 12.63,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 12.88,
+          "futures_change": 0.2,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.66,
+          "cash": 12.22,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 12.88,
+          "futures_change": 0.2,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.63,
+          "cash": 12.39,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 13.02,
+          "futures_change": 0.1975,
+          "futures_month": "SF27",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.8,
+          "cash": 11.61,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 12.41,
+          "futures_change": 0.1475,
+          "futures_month": "SX27",
+          "grain": "soybeans"
+        }
+      ],
+      "name": "Five Star Cooperative Burchinal IA",
+      "source": "fivestar",
+      "source_name": "Burchinal"
+    },
+    "five-star-cooperative-dougherty-ia": {
+      "as_of": "2026-08-29T18:34:58Z",
+      "bids": [
+        {
+          "basis": -0.51,
+          "cash": 4.85,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.51,
+          "cash": 4.85,
+          "delivery_end": "2026-09-30",
+          "delivery_label": "Sep 2026",
+          "delivery_start": "2026-09-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.48,
+          "cash": 4.88,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.38,
+          "cash": 4.98,
+          "delivery_end": "2026-12-31",
+          "delivery_label": "Dec 2026",
+          "delivery_start": "2026-12-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.45,
+          "cash": 5.06,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.42,
+          "cash": 5.09,
+          "delivery_end": "2027-02-28",
+          "delivery_label": "Feb 2027",
+          "delivery_start": "2027-02-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.39,
+          "cash": 5.12,
+          "delivery_end": "2027-03-31",
+          "delivery_label": "Mar 2027",
+          "delivery_start": "2027-03-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.4,
+          "cash": 5.17,
+          "delivery_end": "2027-04-30",
+          "delivery_label": "Apr 2027",
+          "delivery_start": "2027-04-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.38,
+          "cash": 5.19,
+          "delivery_end": "2027-05-31",
+          "delivery_label": "May 2027",
+          "delivery_start": "2027-05-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.38,
+          "cash": 5.19,
+          "delivery_end": "2027-06-30",
+          "delivery_label": "Jun 2027",
+          "delivery_start": "2027-06-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.38,
+          "cash": 5.19,
+          "delivery_end": "2027-07-31",
+          "delivery_label": "Jul 2027",
+          "delivery_start": "2027-07-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.42,
+          "cash": 4.85,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.32,
+          "cash": 4.95,
+          "delivery_end": "2027-12-31",
+          "delivery_label": "Dec 2027",
+          "delivery_start": "2027-12-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.25,
+          "cash": 12.63,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 12.88,
+          "futures_change": 0.2,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.68,
+          "cash": 12.2,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 12.88,
+          "futures_change": 0.2,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.63,
+          "cash": 12.39,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 13.02,
+          "futures_change": 0.1975,
+          "futures_month": "SF27",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.8,
+          "cash": 11.61,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 12.41,
+          "futures_change": 0.1475,
+          "futures_month": "SX27",
+          "grain": "soybeans"
+        }
+      ],
+      "name": "Five Star Cooperative Dougherty IA",
+      "source": "fivestar",
+      "source_name": "Dougherty"
+    },
+    "five-star-cooperative-hanlontown-ia": {
+      "as_of": "2026-08-29T18:34:58Z",
+      "bids": [
+        {
+          "basis": -0.5,
+          "cash": 4.86,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.5,
+          "cash": 4.86,
+          "delivery_end": "2026-09-30",
+          "delivery_label": "Sep 2026",
+          "delivery_start": "2026-09-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.43,
+          "cash": 4.93,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.33,
+          "cash": 5.03,
+          "delivery_end": "2026-12-31",
+          "delivery_label": "Dec 2026",
+          "delivery_start": "2026-12-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.45,
+          "cash": 5.06,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.42,
+          "cash": 5.09,
+          "delivery_end": "2027-02-28",
+          "delivery_label": "Feb 2027",
+          "delivery_start": "2027-02-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.39,
+          "cash": 5.12,
+          "delivery_end": "2027-03-31",
+          "delivery_label": "Mar 2027",
+          "delivery_start": "2027-03-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.4,
+          "cash": 5.17,
+          "delivery_end": "2027-04-30",
+          "delivery_label": "Apr 2027",
+          "delivery_start": "2027-04-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.39,
+          "cash": 5.18,
+          "delivery_end": "2027-05-31",
+          "delivery_label": "May 2027",
+          "delivery_start": "2027-05-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.39,
+          "cash": 5.18,
+          "delivery_end": "2027-06-30",
+          "delivery_label": "Jun 2027",
+          "delivery_start": "2027-06-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.39,
+          "cash": 5.18,
+          "delivery_end": "2027-07-31",
+          "delivery_label": "Jul 2027",
+          "delivery_start": "2027-07-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.43,
+          "cash": 4.84,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.33,
+          "cash": 4.94,
+          "delivery_end": "2027-12-31",
+          "delivery_label": "Dec 2027",
+          "delivery_start": "2027-12-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.25,
+          "cash": 12.63,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 12.88,
+          "futures_change": 0.2,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.68,
+          "cash": 12.2,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 12.88,
+          "futures_change": 0.2,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.65,
+          "cash": 12.37,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 13.02,
+          "futures_change": 0.1975,
+          "futures_month": "SF27",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.8,
+          "cash": 11.61,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 12.41,
+          "futures_change": 0.1475,
+          "futures_month": "SX27",
+          "grain": "soybeans"
+        }
+      ],
+      "name": "Five Star Cooperative Hanlontown IA",
+      "source": "fivestar",
+      "source_name": "Hanlontown"
+    },
+    "five-star-cooperative-ionia-ia": {
+      "as_of": "2026-08-29T18:34:58Z",
+      "bids": [
+        {
+          "basis": -0.55,
+          "cash": 4.81,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.55,
+          "cash": 4.81,
+          "delivery_end": "2026-09-30",
+          "delivery_label": "Sep 2026",
+          "delivery_start": "2026-09-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.5,
+          "cash": 4.86,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.35,
+          "cash": 5.01,
+          "delivery_end": "2026-12-31",
+          "delivery_label": "Dec 2026",
+          "delivery_start": "2026-12-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.42,
+          "cash": 5.09,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.4,
+          "cash": 5.11,
+          "delivery_end": "2027-02-28",
+          "delivery_label": "Feb 2027",
+          "delivery_start": "2027-02-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.4,
+          "cash": 5.11,
+          "delivery_end": "2027-03-31",
+          "delivery_label": "Mar 2027",
+          "delivery_start": "2027-03-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.42,
+          "cash": 5.15,
+          "delivery_end": "2027-04-30",
+          "delivery_label": "Apr 2027",
+          "delivery_start": "2027-04-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.39,
+          "cash": 5.18,
+          "delivery_end": "2027-05-31",
+          "delivery_label": "May 2027",
+          "delivery_start": "2027-05-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.39,
+          "cash": 5.18,
+          "delivery_end": "2027-06-30",
+          "delivery_label": "Jun 2027",
+          "delivery_start": "2027-06-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.39,
+          "cash": 5.18,
+          "delivery_end": "2027-07-31",
+          "delivery_label": "Jul 2027",
+          "delivery_start": "2027-07-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.47,
+          "cash": 4.8,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.37,
+          "cash": 4.9,
+          "delivery_end": "2027-12-31",
+          "delivery_label": "Dec 2027",
+          "delivery_start": "2027-12-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.25,
+          "cash": 12.63,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 12.88,
+          "futures_change": 0.2,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.67,
+          "cash": 12.21,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 12.88,
+          "futures_change": 0.2,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.6,
+          "cash": 12.42,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 13.02,
+          "futures_change": 0.1975,
+          "futures_month": "SF27",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.64,
+          "cash": 12.46,
+          "delivery_end": "2027-04-30",
+          "delivery_label": "Apr 2027",
+          "delivery_start": "2027-04-01",
+          "futures": 13.1,
+          "futures_change": 0.1775,
+          "futures_month": "SK27",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.8,
+          "cash": 11.61,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 12.41,
+          "futures_change": 0.1475,
+          "futures_month": "SX27",
+          "grain": "soybeans"
+        }
+      ],
+      "name": "Five Star Cooperative Ionia IA",
+      "source": "fivestar",
+      "source_name": "Ionia"
+    },
+    "five-star-cooperative-klemme-ia": {
+      "as_of": "2026-08-29T18:34:58Z",
+      "bids": [
+        {
+          "basis": -0.43,
+          "cash": 4.93,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.43,
+          "cash": 4.93,
+          "delivery_end": "2026-09-30",
+          "delivery_label": "Sep 2026",
+          "delivery_start": "2026-09-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.42,
+          "cash": 4.94,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.3,
+          "cash": 5.06,
+          "delivery_end": "2026-12-31",
+          "delivery_label": "Dec 2026",
+          "delivery_start": "2026-12-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.39,
+          "cash": 5.12,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.36,
+          "cash": 5.15,
+          "delivery_end": "2027-02-28",
+          "delivery_label": "Feb 2027",
+          "delivery_start": "2027-02-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.33,
+          "cash": 5.18,
+          "delivery_end": "2027-03-31",
+          "delivery_label": "Mar 2027",
+          "delivery_start": "2027-03-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.36,
+          "cash": 5.21,
+          "delivery_end": "2027-04-30",
+          "delivery_label": "Apr 2027",
+          "delivery_start": "2027-04-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.33,
+          "cash": 5.24,
+          "delivery_end": "2027-05-31",
+          "delivery_label": "May 2027",
+          "delivery_start": "2027-05-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.33,
+          "cash": 5.24,
+          "delivery_end": "2027-06-30",
+          "delivery_label": "Jun 2027",
+          "delivery_start": "2027-06-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.33,
+          "cash": 5.24,
+          "delivery_end": "2027-07-31",
+          "delivery_label": "Jul 2027",
+          "delivery_start": "2027-07-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.4,
+          "cash": 4.87,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.3,
+          "cash": 4.97,
+          "delivery_end": "2027-12-31",
+          "delivery_label": "Dec 2027",
+          "delivery_start": "2027-12-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        }
+      ],
+      "name": "Five Star Cooperative Klemme IA",
+      "source": "fivestar",
+      "source_name": "Klemme"
+    },
+    "five-star-cooperative-lawler-ia": {
+      "as_of": "2026-08-29T18:34:58Z",
+      "bids": [
+        {
+          "basis": -0.55,
+          "cash": 4.81,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.55,
+          "cash": 4.81,
+          "delivery_end": "2026-09-30",
+          "delivery_label": "Sep 2026",
+          "delivery_start": "2026-09-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.47,
+          "cash": 4.89,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.35,
+          "cash": 5.01,
+          "delivery_end": "2026-12-31",
+          "delivery_label": "Dec 2026",
+          "delivery_start": "2026-12-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.4,
+          "cash": 5.11,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.38,
+          "cash": 5.13,
+          "delivery_end": "2027-02-28",
+          "delivery_label": "Feb 2027",
+          "delivery_start": "2027-02-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.38,
+          "cash": 5.13,
+          "delivery_end": "2027-03-31",
+          "delivery_label": "Mar 2027",
+          "delivery_start": "2027-03-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.39,
+          "cash": 5.18,
+          "delivery_end": "2027-04-30",
+          "delivery_label": "Apr 2027",
+          "delivery_start": "2027-04-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.37,
+          "cash": 5.2,
+          "delivery_end": "2027-05-31",
+          "delivery_label": "May 2027",
+          "delivery_start": "2027-05-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.38,
+          "cash": 5.19,
+          "delivery_end": "2027-06-30",
+          "delivery_label": "Jun 2027",
+          "delivery_start": "2027-06-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.38,
+          "cash": 5.19,
+          "delivery_end": "2027-07-31",
+          "delivery_label": "Jul 2027",
+          "delivery_start": "2027-07-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.45,
+          "cash": 4.82,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.35,
+          "cash": 4.92,
+          "delivery_end": "2027-12-31",
+          "delivery_label": "Dec 2027",
+          "delivery_start": "2027-12-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.25,
+          "cash": 12.63,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 12.88,
+          "futures_change": 0.2,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.67,
+          "cash": 12.21,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 12.88,
+          "futures_change": 0.2,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.6,
+          "cash": 12.42,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 13.02,
+          "futures_change": 0.1975,
+          "futures_month": "SF27",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.8,
+          "cash": 11.61,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 12.41,
+          "futures_change": 0.1475,
+          "futures_month": "SX27",
+          "grain": "soybeans"
+        }
+      ],
+      "name": "Five Star Cooperative Lawler IA",
+      "source": "fivestar",
+      "source_name": "Lawler"
+    },
+    "five-star-cooperative-lime-springs-ia": {
+      "as_of": "2026-08-29T18:34:58Z",
+      "bids": [
+        {
+          "basis": -0.62,
+          "cash": 4.74,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.62,
+          "cash": 4.74,
+          "delivery_end": "2026-09-30",
+          "delivery_label": "Sep 2026",
+          "delivery_start": "2026-09-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.56,
+          "cash": 4.8,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.42,
+          "cash": 4.94,
+          "delivery_end": "2026-12-31",
+          "delivery_label": "Dec 2026",
+          "delivery_start": "2026-12-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.5,
+          "cash": 5.01,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.48,
+          "cash": 5.03,
+          "delivery_end": "2027-02-28",
+          "delivery_label": "Feb 2027",
+          "delivery_start": "2027-02-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.46,
+          "cash": 5.05,
+          "delivery_end": "2027-03-31",
+          "delivery_label": "Mar 2027",
+          "delivery_start": "2027-03-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.48,
+          "cash": 5.09,
+          "delivery_end": "2027-04-30",
+          "delivery_label": "Apr 2027",
+          "delivery_start": "2027-04-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.46,
+          "cash": 5.11,
+          "delivery_end": "2027-05-31",
+          "delivery_label": "May 2027",
+          "delivery_start": "2027-05-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.46,
+          "cash": 5.11,
+          "delivery_end": "2027-06-30",
+          "delivery_label": "Jun 2027",
+          "delivery_start": "2027-06-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.46,
+          "cash": 5.11,
+          "delivery_end": "2027-07-31",
+          "delivery_label": "Jul 2027",
+          "delivery_start": "2027-07-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.52,
+          "cash": 4.75,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.42,
+          "cash": 4.85,
+          "delivery_end": "2027-12-31",
+          "delivery_label": "Dec 2027",
+          "delivery_start": "2027-12-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.35,
+          "cash": 12.53,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 12.88,
+          "futures_change": 0.2,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.75,
+          "cash": 12.13,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 12.88,
+          "futures_change": 0.2,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.65,
+          "cash": 12.37,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 13.02,
+          "futures_change": 0.1975,
+          "futures_month": "SF27",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.85,
+          "cash": 11.56,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 12.41,
+          "futures_change": 0.1475,
+          "futures_month": "SX27",
+          "grain": "soybeans"
+        }
+      ],
+      "name": "Five Star Cooperative Lime Springs IA",
+      "source": "fivestar",
+      "source_name": "Lime Springs"
+    },
+    "five-star-cooperative-nashua-ia": {
+      "as_of": "2026-08-29T18:34:58Z",
+      "bids": [
+        {
+          "basis": -0.55,
+          "cash": 4.81,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.55,
+          "cash": 4.81,
+          "delivery_end": "2026-09-30",
+          "delivery_label": "Sep 2026",
+          "delivery_start": "2026-09-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.48,
+          "cash": 4.88,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.36,
+          "cash": 5.0,
+          "delivery_end": "2026-12-31",
+          "delivery_label": "Dec 2026",
+          "delivery_start": "2026-12-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.42,
+          "cash": 5.09,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.4,
+          "cash": 5.11,
+          "delivery_end": "2027-02-28",
+          "delivery_label": "Feb 2027",
+          "delivery_start": "2027-02-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.4,
+          "cash": 5.11,
+          "delivery_end": "2027-03-31",
+          "delivery_label": "Mar 2027",
+          "delivery_start": "2027-03-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.4,
+          "cash": 5.17,
+          "delivery_end": "2027-04-30",
+          "delivery_label": "Apr 2027",
+          "delivery_start": "2027-04-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.38,
+          "cash": 5.19,
+          "delivery_end": "2027-05-31",
+          "delivery_label": "May 2027",
+          "delivery_start": "2027-05-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.38,
+          "cash": 5.19,
+          "delivery_end": "2027-06-30",
+          "delivery_label": "Jun 2027",
+          "delivery_start": "2027-06-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.38,
+          "cash": 5.19,
+          "delivery_end": "2027-07-31",
+          "delivery_label": "Jul 2027",
+          "delivery_start": "2027-07-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.43,
+          "cash": 4.84,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.33,
+          "cash": 4.94,
+          "delivery_end": "2027-12-31",
+          "delivery_label": "Dec 2027",
+          "delivery_start": "2027-12-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.2,
+          "cash": 12.68,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 12.88,
+          "futures_change": 0.2,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.65,
+          "cash": 12.23,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 12.88,
+          "futures_change": 0.2,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.58,
+          "cash": 12.44,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 13.02,
+          "futures_change": 0.1975,
+          "futures_month": "SF27",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.8,
+          "cash": 11.61,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 12.41,
+          "futures_change": 0.1475,
+          "futures_month": "SX27",
+          "grain": "soybeans"
+        }
+      ],
+      "name": "Five Star Cooperative Nashua IA",
+      "source": "fivestar",
+      "source_name": "Nashua"
+    },
+    "five-star-cooperative-new-hampton-ia": {
+      "as_of": "2026-08-29T18:34:58Z",
+      "bids": [
+        {
+          "basis": -0.53,
+          "cash": 4.83,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.53,
+          "cash": 4.83,
+          "delivery_end": "2026-09-30",
+          "delivery_label": "Sep 2026",
+          "delivery_start": "2026-09-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.46,
+          "cash": 4.9,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.3,
+          "cash": 5.06,
+          "delivery_end": "2026-12-31",
+          "delivery_label": "Dec 2026",
+          "delivery_start": "2026-12-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.37,
+          "cash": 5.14,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.35,
+          "cash": 5.16,
+          "delivery_end": "2027-02-28",
+          "delivery_label": "Feb 2027",
+          "delivery_start": "2027-02-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.33,
+          "cash": 5.18,
+          "delivery_end": "2027-03-31",
+          "delivery_label": "Mar 2027",
+          "delivery_start": "2027-03-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.36,
+          "cash": 5.21,
+          "delivery_end": "2027-04-30",
+          "delivery_label": "Apr 2027",
+          "delivery_start": "2027-04-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.33,
+          "cash": 5.24,
+          "delivery_end": "2027-05-31",
+          "delivery_label": "May 2027",
+          "delivery_start": "2027-05-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.33,
+          "cash": 5.24,
+          "delivery_end": "2027-06-30",
+          "delivery_label": "Jun 2027",
+          "delivery_start": "2027-06-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.33,
+          "cash": 5.24,
+          "delivery_end": "2027-07-31",
+          "delivery_label": "Jul 2027",
+          "delivery_start": "2027-07-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.42,
+          "cash": 4.85,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.32,
+          "cash": 4.95,
+          "delivery_end": "2027-12-31",
+          "delivery_label": "Dec 2027",
+          "delivery_start": "2027-12-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.25,
+          "cash": 12.63,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 12.88,
+          "futures_change": 0.2,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.67,
+          "cash": 12.21,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 12.88,
+          "futures_change": 0.2,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.6,
+          "cash": 12.42,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 13.02,
+          "futures_change": 0.1975,
+          "futures_month": "SF27",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.8,
+          "cash": 11.61,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 12.41,
+          "futures_change": 0.1475,
+          "futures_month": "SX27",
+          "grain": "soybeans"
+        }
+      ],
+      "name": "Five Star Cooperative New Hampton IA",
+      "source": "fivestar",
+      "source_name": "New Hampton"
+    },
+    "five-star-cooperative-north-washington-ia": {
+      "as_of": "2026-08-29T18:34:58Z",
+      "bids": [
+        {
+          "basis": -0.55,
+          "cash": 4.81,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.55,
+          "cash": 4.81,
+          "delivery_end": "2026-09-30",
+          "delivery_label": "Sep 2026",
+          "delivery_start": "2026-09-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.5,
+          "cash": 4.86,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.35,
+          "cash": 5.01,
+          "delivery_end": "2026-12-31",
+          "delivery_label": "Dec 2026",
+          "delivery_start": "2026-12-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.42,
+          "cash": 5.09,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.4,
+          "cash": 5.11,
+          "delivery_end": "2027-02-28",
+          "delivery_label": "Feb 2027",
+          "delivery_start": "2027-02-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.4,
+          "cash": 5.11,
+          "delivery_end": "2027-03-31",
+          "delivery_label": "Mar 2027",
+          "delivery_start": "2027-03-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.41,
+          "cash": 5.16,
+          "delivery_end": "2027-04-30",
+          "delivery_label": "Apr 2027",
+          "delivery_start": "2027-04-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.39,
+          "cash": 5.18,
+          "delivery_end": "2027-05-31",
+          "delivery_label": "May 2027",
+          "delivery_start": "2027-05-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.39,
+          "cash": 5.18,
+          "delivery_end": "2027-06-30",
+          "delivery_label": "Jun 2027",
+          "delivery_start": "2027-06-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.39,
+          "cash": 5.18,
+          "delivery_end": "2027-07-31",
+          "delivery_label": "Jul 2027",
+          "delivery_start": "2027-07-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.47,
+          "cash": 4.8,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.37,
+          "cash": 4.9,
+          "delivery_end": "2027-12-31",
+          "delivery_label": "Dec 2027",
+          "delivery_start": "2027-12-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.25,
+          "cash": 12.63,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 12.88,
+          "futures_change": 0.2,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.67,
+          "cash": 12.21,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 12.88,
+          "futures_change": 0.2,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.6,
+          "cash": 12.42,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 13.02,
+          "futures_change": 0.1975,
+          "futures_month": "SF27",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.8,
+          "cash": 11.61,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 12.41,
+          "futures_change": 0.1475,
+          "futures_month": "SX27",
+          "grain": "soybeans"
+        }
+      ],
+      "name": "Five Star Cooperative North Washington IA",
+      "source": "fivestar",
+      "source_name": "North Washington"
+    },
+    "five-star-cooperative-rockwell-ia": {
+      "as_of": "2026-08-29T18:34:58Z",
+      "bids": [
+        {
+          "basis": -0.48,
+          "cash": 4.88,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.48,
+          "cash": 4.88,
+          "delivery_end": "2026-09-30",
+          "delivery_label": "Sep 2026",
+          "delivery_start": "2026-09-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.45,
+          "cash": 4.91,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.35,
+          "cash": 5.01,
+          "delivery_end": "2026-12-31",
+          "delivery_label": "Dec 2026",
+          "delivery_start": "2026-12-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.44,
+          "cash": 5.07,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.42,
+          "cash": 5.09,
+          "delivery_end": "2027-02-28",
+          "delivery_label": "Feb 2027",
+          "delivery_start": "2027-02-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.4,
+          "cash": 5.11,
+          "delivery_end": "2027-03-31",
+          "delivery_label": "Mar 2027",
+          "delivery_start": "2027-03-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.39,
+          "cash": 5.18,
+          "delivery_end": "2027-04-30",
+          "delivery_label": "Apr 2027",
+          "delivery_start": "2027-04-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.37,
+          "cash": 5.2,
+          "delivery_end": "2027-05-31",
+          "delivery_label": "May 2027",
+          "delivery_start": "2027-05-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.37,
+          "cash": 5.2,
+          "delivery_end": "2027-06-30",
+          "delivery_label": "Jun 2027",
+          "delivery_start": "2027-06-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.37,
+          "cash": 5.2,
+          "delivery_end": "2027-07-31",
+          "delivery_label": "Jul 2027",
+          "delivery_start": "2027-07-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.4,
+          "cash": 4.87,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.3,
+          "cash": 4.97,
+          "delivery_end": "2027-12-31",
+          "delivery_label": "Dec 2027",
+          "delivery_start": "2027-12-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.25,
+          "cash": 12.63,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 12.88,
+          "futures_change": 0.2,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.64,
+          "cash": 12.24,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 12.88,
+          "futures_change": 0.2,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.61,
+          "cash": 12.41,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 13.02,
+          "futures_change": 0.1975,
+          "futures_month": "SF27",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.78,
+          "cash": 11.63,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 12.41,
+          "futures_change": 0.1475,
+          "futures_month": "SX27",
+          "grain": "soybeans"
+        }
+      ],
+      "name": "Five Star Cooperative Rockwell IA",
+      "source": "fivestar",
+      "source_name": "Rockwell"
+    },
+    "five-star-cooperative-scarville-ia": {
+      "as_of": "2026-08-29T18:34:58Z",
+      "bids": [
+        {
+          "basis": -0.58,
+          "cash": 4.78,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.58,
+          "cash": 4.78,
+          "delivery_end": "2026-09-30",
+          "delivery_label": "Sep 2026",
+          "delivery_start": "2026-09-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.46,
+          "cash": 4.9,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.36,
+          "cash": 5.0,
+          "delivery_end": "2026-12-31",
+          "delivery_label": "Dec 2026",
+          "delivery_start": "2026-12-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.47,
+          "cash": 5.04,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.45,
+          "cash": 5.06,
+          "delivery_end": "2027-02-28",
+          "delivery_label": "Feb 2027",
+          "delivery_start": "2027-02-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.43,
+          "cash": 5.08,
+          "delivery_end": "2027-03-31",
+          "delivery_label": "Mar 2027",
+          "delivery_start": "2027-03-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.46,
+          "cash": 5.11,
+          "delivery_end": "2027-04-30",
+          "delivery_label": "Apr 2027",
+          "delivery_start": "2027-04-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.44,
+          "cash": 5.13,
+          "delivery_end": "2027-05-31",
+          "delivery_label": "May 2027",
+          "delivery_start": "2027-05-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.44,
+          "cash": 5.13,
+          "delivery_end": "2027-06-30",
+          "delivery_label": "Jun 2027",
+          "delivery_start": "2027-06-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.44,
+          "cash": 5.13,
+          "delivery_end": "2027-07-31",
+          "delivery_label": "Jul 2027",
+          "delivery_start": "2027-07-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.48,
+          "cash": 4.79,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.38,
+          "cash": 4.89,
+          "delivery_end": "2027-12-31",
+          "delivery_label": "Dec 2027",
+          "delivery_start": "2027-12-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.3,
+          "cash": 12.58,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 12.88,
+          "futures_change": 0.2,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.7,
+          "cash": 12.18,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 12.88,
+          "futures_change": 0.2,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.68,
+          "cash": 12.34,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 13.02,
+          "futures_change": 0.1975,
+          "futures_month": "SF27",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.8,
+          "cash": 11.61,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 12.41,
+          "futures_change": 0.1475,
+          "futures_month": "SX27",
+          "grain": "soybeans"
+        }
+      ],
+      "name": "Five Star Cooperative Scarville IA",
+      "source": "fivestar",
+      "source_name": "Scarville"
+    },
+    "five-star-cooperative-sheffield-ia": {
+      "as_of": "2026-08-29T18:34:58Z",
+      "bids": [
+        {
+          "basis": -0.5,
+          "cash": 4.86,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.5,
+          "cash": 4.86,
+          "delivery_end": "2026-09-30",
+          "delivery_label": "Sep 2026",
+          "delivery_start": "2026-09-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.46,
+          "cash": 4.9,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.36,
+          "cash": 5.0,
+          "delivery_end": "2026-12-31",
+          "delivery_label": "Dec 2026",
+          "delivery_start": "2026-12-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.45,
+          "cash": 5.06,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.42,
+          "cash": 5.09,
+          "delivery_end": "2027-02-28",
+          "delivery_label": "Feb 2027",
+          "delivery_start": "2027-02-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.41,
+          "cash": 5.1,
+          "delivery_end": "2027-03-31",
+          "delivery_label": "Mar 2027",
+          "delivery_start": "2027-03-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.4,
+          "cash": 5.17,
+          "delivery_end": "2027-04-30",
+          "delivery_label": "Apr 2027",
+          "delivery_start": "2027-04-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.38,
+          "cash": 5.19,
+          "delivery_end": "2027-05-31",
+          "delivery_label": "May 2027",
+          "delivery_start": "2027-05-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.38,
+          "cash": 5.19,
+          "delivery_end": "2027-06-30",
+          "delivery_label": "Jun 2027",
+          "delivery_start": "2027-06-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.38,
+          "cash": 5.19,
+          "delivery_end": "2027-07-31",
+          "delivery_label": "Jul 2027",
+          "delivery_start": "2027-07-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.44,
+          "cash": 4.83,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.34,
+          "cash": 4.93,
+          "delivery_end": "2027-12-31",
+          "delivery_label": "Dec 2027",
+          "delivery_start": "2027-12-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.25,
+          "cash": 12.63,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 12.88,
+          "futures_change": 0.2,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.65,
+          "cash": 12.23,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 12.88,
+          "futures_change": 0.2,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.63,
+          "cash": 12.39,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 13.02,
+          "futures_change": 0.1975,
+          "futures_month": "SF27",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.8,
+          "cash": 11.61,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 12.41,
+          "futures_change": 0.1475,
+          "futures_month": "SX27",
+          "grain": "soybeans"
+        }
+      ],
+      "name": "Five Star Cooperative Sheffield IA",
+      "source": "fivestar",
+      "source_name": "Sheffield"
+    },
+    "five-star-cooperative-ventura-ia": {
+      "as_of": "2026-08-29T18:34:58Z",
+      "bids": [
+        {
+          "basis": -0.5,
+          "cash": 4.86,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.5,
+          "cash": 4.86,
+          "delivery_end": "2026-09-30",
+          "delivery_label": "Sep 2026",
+          "delivery_start": "2026-09-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.45,
+          "cash": 4.91,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.35,
+          "cash": 5.01,
+          "delivery_end": "2026-12-31",
+          "delivery_label": "Dec 2026",
+          "delivery_start": "2026-12-01",
+          "futures": 5.36,
+          "futures_change": 0.03,
+          "futures_month": "CZ26",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.44,
+          "cash": 5.07,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.42,
+          "cash": 5.09,
+          "delivery_end": "2027-02-28",
+          "delivery_label": "Feb 2027",
+          "delivery_start": "2027-02-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.4,
+          "cash": 5.11,
+          "delivery_end": "2027-03-31",
+          "delivery_label": "Mar 2027",
+          "delivery_start": "2027-03-01",
+          "futures": 5.51,
+          "futures_change": 0.04,
+          "futures_month": "CH27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.4,
+          "cash": 5.17,
+          "delivery_end": "2027-04-30",
+          "delivery_label": "Apr 2027",
+          "delivery_start": "2027-04-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.38,
+          "cash": 5.19,
+          "delivery_end": "2027-05-31",
+          "delivery_label": "May 2027",
+          "delivery_start": "2027-05-01",
+          "futures": 5.57,
+          "futures_change": 0.04,
+          "futures_month": "CK27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.38,
+          "cash": 5.19,
+          "delivery_end": "2027-06-30",
+          "delivery_label": "Jun 2027",
+          "delivery_start": "2027-06-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.38,
+          "cash": 5.19,
+          "delivery_end": "2027-07-31",
+          "delivery_label": "Jul 2027",
+          "delivery_start": "2027-07-01",
+          "futures": 5.57,
+          "futures_change": 0.0325,
+          "futures_month": "CN27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.42,
+          "cash": 4.85,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.32,
+          "cash": 4.95,
+          "delivery_end": "2027-12-31",
+          "delivery_label": "Dec 2027",
+          "delivery_start": "2027-12-01",
+          "futures": 5.27,
+          "futures_change": 0.015,
+          "futures_month": "CZ27",
+          "grain": "corn"
+        },
+        {
+          "basis": -0.25,
+          "cash": 12.63,
+          "delivery_end": "2026-08-31",
+          "delivery_label": "Aug 2026",
+          "delivery_start": "2026-08-01",
+          "futures": 12.88,
+          "futures_change": 0.2,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.64,
+          "cash": 12.24,
+          "delivery_end": "2026-10-31",
+          "delivery_label": "Oct 2026",
+          "delivery_start": "2026-10-01",
+          "futures": 12.88,
+          "futures_change": 0.2,
+          "futures_month": "SX26",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.63,
+          "cash": 12.39,
+          "delivery_end": "2027-01-31",
+          "delivery_label": "Jan 2027",
+          "delivery_start": "2027-01-01",
+          "futures": 13.02,
+          "futures_change": 0.1975,
+          "futures_month": "SF27",
+          "grain": "soybeans"
+        },
+        {
+          "basis": -0.8,
+          "cash": 11.61,
+          "delivery_end": "2027-10-31",
+          "delivery_label": "Oct 2027",
+          "delivery_start": "2027-10-01",
+          "futures": 12.41,
+          "futures_change": 0.1475,
+          "futures_month": "SX27",
+          "grain": "soybeans"
+        }
+      ],
+      "name": "Five Star Cooperative Ventura IA",
+      "source": "fivestar",
+      "source_name": "Ventura"
+    },
     "flint-hill-resources-poet-arthur-ethanol": {
-      "as_of": "2026-08-29T15:08:55Z",
+      "as_of": "2026-08-29T18:35:07Z",
       "bids": [
         {
           "basis": -0.4,
@@ -17311,7 +20008,7 @@
       "source_name": "Arthur, IA"
     },
     "flint-hills-poet-ethanol-menlo": {
-      "as_of": "2026-08-29T15:09:44Z",
+      "as_of": "2026-08-29T18:35:57Z",
       "bids": [
         {
           "basis": -0.3,
@@ -17429,7 +20126,7 @@
       "source_name": "Menlo, IA"
     },
     "flint-hills-resources-poet-shell-rock-ethanol": {
-      "as_of": "2026-08-29T15:10:01Z",
+      "as_of": "2026-08-29T18:36:13Z",
       "bids": [
         {
           "basis": -0.45,
@@ -20013,7 +22710,7 @@
       "source_name": "WODEN"
     },
     "golden-grain-ethanol-mason-city": {
-      "as_of": "2026-08-29T15:08:46Z",
+      "as_of": "2026-08-29T18:34:58Z",
       "bids": [
         {
           "basis": -0.35,
@@ -36220,7 +38917,7 @@
       "source_name": "Yetter"
     },
     "little-sioux-corn-processors-marcus-ethanol": {
-      "as_of": "2026-08-29T15:08:40Z",
+      "as_of": "2026-08-29T18:34:45Z",
       "bids": [
         {
           "basis": -0.43,
@@ -36448,7 +39145,7 @@
       "source_name": "Little Sioux Corn Processors"
     },
     "lucerne-feed-mill": {
-      "as_of": "2026-08-29T15:08:11Z",
+      "as_of": "2026-08-29T18:34:15Z",
       "bids": [
         {
           "basis": -0.55,
@@ -37415,7 +40112,7 @@
       "source_name": "Montrose"
     },
     "murphy-brown-nevada-mo-smithfield": {
-      "as_of": "2026-08-29T15:08:11Z",
+      "as_of": "2026-08-29T18:34:15Z",
       "bids": [
         {
           "basis": -0.2,
@@ -37432,7 +40129,7 @@
       "source_name": "Nevada"
     },
     "new-coop-afton": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.445,
@@ -37600,7 +40297,7 @@
       "source_name": "Afton"
     },
     "new-coop-algona": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -37768,7 +40465,7 @@
       "source_name": "Algona"
     },
     "new-coop-anita": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.485,
@@ -37936,7 +40633,7 @@
       "source_name": "Anita"
     },
     "new-coop-anthon": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.515,
@@ -38104,7 +40801,7 @@
       "source_name": "Anthon"
     },
     "new-coop-badger": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -38272,7 +40969,7 @@
       "source_name": "Badger"
     },
     "new-coop-barnum": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -38440,7 +41137,7 @@
       "source_name": "Barnum"
     },
     "new-coop-belmond": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.455,
@@ -38608,7 +41305,7 @@
       "source_name": "Belmond"
     },
     "new-coop-blairsburg": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -38776,7 +41473,7 @@
       "source_name": "Blairsburg"
     },
     "new-coop-blencoe": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.515,
@@ -38944,7 +41641,7 @@
       "source_name": "Blencoe"
     },
     "new-coop-blencoe-barge-site": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.515,
@@ -39112,7 +41809,7 @@
       "source_name": "Blencoe"
     },
     "new-coop-bode": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -39280,7 +41977,7 @@
       "source_name": "Bode"
     },
     "new-coop-britt": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -39448,7 +42145,7 @@
       "source_name": "Britt"
     },
     "new-coop-cainsville": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.535,
@@ -39616,7 +42313,7 @@
       "source_name": "Cainsville"
     },
     "new-coop-chariton": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.465,
@@ -39784,7 +42481,7 @@
       "source_name": "Chariton"
     },
     "new-coop-churdan": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -39952,7 +42649,7 @@
       "source_name": "Churdan"
     },
     "new-coop-clare": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -40120,7 +42817,7 @@
       "source_name": "Clare"
     },
     "new-coop-clearfield": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.505,
@@ -40288,7 +42985,7 @@
       "source_name": "Clearfield"
     },
     "new-coop-cooper": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.425,
@@ -40456,7 +43153,7 @@
       "source_name": "Cooper"
     },
     "new-coop-correctionville": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.515,
@@ -40624,7 +43321,7 @@
       "source_name": "Correctionville"
     },
     "new-coop-creston-1": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.445,
@@ -40792,7 +43489,7 @@
       "source_name": "Creston 1"
     },
     "new-coop-creston-2": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.395,
@@ -40880,7 +43577,7 @@
       "source_name": "Creston 2"
     },
     "new-coop-davis-city": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.505,
@@ -41048,7 +43745,7 @@
       "source_name": "Davis City"
     },
     "new-coop-dickens": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.515,
@@ -41216,7 +43913,7 @@
       "source_name": "Dickens"
     },
     "new-coop-dows": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -41384,7 +44081,7 @@
       "source_name": "Dows"
     },
     "new-coop-duncombe": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -41552,7 +44249,7 @@
       "source_name": "Duncombe"
     },
     "new-coop-essex": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.485,
@@ -41720,7 +44417,7 @@
       "source_name": "Essex"
     },
     "new-coop-everly": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.515,
@@ -41888,7 +44585,7 @@
       "source_name": "Everly"
     },
     "new-coop-fostoria": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.515,
@@ -42056,7 +44753,7 @@
       "source_name": "Fostoria"
     },
     "new-coop-garner": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -42224,7 +44921,7 @@
       "source_name": "Garner"
     },
     "new-coop-glidden": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -42392,7 +45089,7 @@
       "source_name": "Glidden"
     },
     "new-coop-greenville": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.515,
@@ -42560,7 +45257,7 @@
       "source_name": "Greenville"
     },
     "new-coop-gruver": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.455,
@@ -42728,7 +45425,7 @@
       "source_name": "Gruver"
     },
     "new-coop-hornick": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.515,
@@ -42896,7 +45593,7 @@
       "source_name": "Hornick"
     },
     "new-coop-humboldt": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -43064,7 +45761,7 @@
       "source_name": "Humboldt"
     },
     "new-coop-humeston": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.465,
@@ -43232,7 +45929,7 @@
       "source_name": "Humeston"
     },
     "new-coop-klemme": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -43400,7 +46097,7 @@
       "source_name": "Klemme"
     },
     "new-coop-knierim": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -43568,7 +46265,7 @@
       "source_name": "Knierim"
     },
     "new-coop-knoke": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -43736,7 +46433,7 @@
       "source_name": "Knoke"
     },
     "new-coop-lamoni": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.505,
@@ -43904,7 +46601,7 @@
       "source_name": "Lamoni"
     },
     "new-coop-lanesboro": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -44072,7 +46769,7 @@
       "source_name": "Lanesboro"
     },
     "new-coop-langdon": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.515,
@@ -44240,7 +46937,7 @@
       "source_name": "Langdon"
     },
     "new-coop-lanyon": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -44408,7 +47105,7 @@
       "source_name": "Lanyon"
     },
     "new-coop-lidderdale": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -44576,7 +47273,7 @@
       "source_name": "Lidderdale"
     },
     "new-coop-lohrville": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -44744,7 +47441,7 @@
       "source_name": "Lohrville"
     },
     "new-coop-luverne": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -44912,7 +47609,7 @@
       "source_name": "LuVerne"
     },
     "new-coop-mallard": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -45080,7 +47777,7 @@
       "source_name": "Mallard"
     },
     "new-coop-mapleton": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.515,
@@ -45248,7 +47945,7 @@
       "source_name": "Mapleton"
     },
     "new-coop-milford": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.515,
@@ -45416,7 +48113,7 @@
       "source_name": "Milford"
     },
     "new-coop-mortonmills": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.485,
@@ -45584,7 +48281,7 @@
       "source_name": "MortonMills"
     },
     "new-coop-mt-ayr": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.505,
@@ -45752,7 +48449,7 @@
       "source_name": "Mt. Ayr"
     },
     "new-coop-onawa": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.515,
@@ -45920,7 +48617,7 @@
       "source_name": "Onawa"
     },
     "new-coop-osceola": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.425,
@@ -46088,7 +48785,7 @@
       "source_name": "Osceola"
     },
     "new-coop-otho": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -46256,7 +48953,7 @@
       "source_name": "Otho"
     },
     "new-coop-palmer": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -46424,7 +49121,7 @@
       "source_name": "Palmer"
     },
     "new-coop-pierson": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.515,
@@ -46592,7 +49289,7 @@
       "source_name": "Pierson"
     },
     "new-coop-pomeroy": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -46760,7 +49457,7 @@
       "source_name": "Pomeroy"
     },
     "new-coop-rands": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -46928,7 +49625,7 @@
       "source_name": "Rands"
     },
     "new-coop-red-oak": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.425,
@@ -47096,7 +49793,7 @@
       "source_name": "Red Oak"
     },
     "new-coop-roelyn": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -47264,7 +49961,7 @@
       "source_name": "Roelyn"
     },
     "new-coop-rowan": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -47432,7 +50129,7 @@
       "source_name": "Rowan"
     },
     "new-coop-sloan": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.465,
@@ -47600,7 +50297,7 @@
       "source_name": "Sloan"
     },
     "new-coop-superior": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.515,
@@ -47768,7 +50465,7 @@
       "source_name": "Superior"
     },
     "new-coop-ute": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.515,
@@ -47936,7 +50633,7 @@
       "source_name": "Ute"
     },
     "new-coop-villisca": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.485,
@@ -48104,7 +50801,7 @@
       "source_name": "Villisca"
     },
     "new-coop-vincent": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -48272,7 +50969,7 @@
       "source_name": "Vincent"
     },
     "new-coop-washta": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.515,
@@ -48440,7 +51137,7 @@
       "source_name": "Washta"
     },
     "new-coop-west-bend": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -48608,7 +51305,7 @@
       "source_name": "West Bend"
     },
     "new-coop-whiting": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.515,
@@ -48776,7 +51473,7 @@
       "source_name": "Whiting"
     },
     "new-coop-whittemore": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -48944,7 +51641,7 @@
       "source_name": "Whittemore"
     },
     "new-coop-woolstock": {
-      "as_of": "2026-08-29T15:05:21Z",
+      "as_of": "2026-08-29T18:31:26Z",
       "bids": [
         {
           "basis": -0.495,
@@ -52397,7 +55094,7 @@
       "source_name": "WORTHINGTON"
     },
     "nexus-blooming-prairie-mn": {
-      "as_of": "2026-08-29T15:08:45Z",
+      "as_of": "2026-08-29T18:34:52Z",
       "bids": [
         {
           "basis": -0.53,
@@ -52625,7 +55322,7 @@
       "source_name": "Blooming Prairie, MN"
     },
     "nexus-carpenter-ia": {
-      "as_of": "2026-08-29T15:08:45Z",
+      "as_of": "2026-08-29T18:34:52Z",
       "bids": [
         {
           "basis": -0.41,
@@ -52853,7 +55550,7 @@
       "source_name": "Carpenter, IA"
     },
     "nexus-chapin-ia": {
-      "as_of": "2026-08-29T15:08:45Z",
+      "as_of": "2026-08-29T18:34:52Z",
       "bids": [
         {
           "basis": -0.33,
@@ -53081,7 +55778,7 @@
       "source_name": "Chapin, IA"
     },
     "nexus-denison-ia": {
-      "as_of": "2026-08-29T15:08:45Z",
+      "as_of": "2026-08-29T18:34:52Z",
       "bids": [
         {
           "basis": -0.3,
@@ -53309,7 +56006,7 @@
       "source_name": "Denison, IA"
     },
     "nexus-dewar-ia": {
-      "as_of": "2026-08-29T15:08:45Z",
+      "as_of": "2026-08-29T18:34:52Z",
       "bids": [
         {
           "basis": -0.35,
@@ -53537,7 +56234,7 @@
       "source_name": "Dewar, IA"
     },
     "nexus-elgin-ia": {
-      "as_of": "2026-08-29T15:08:45Z",
+      "as_of": "2026-08-29T18:34:52Z",
       "bids": [
         {
           "basis": -0.4,
@@ -53765,7 +56462,7 @@
       "source_name": "Elgin, IA"
     },
     "nexus-harlan-ia": {
-      "as_of": "2026-08-29T15:08:45Z",
+      "as_of": "2026-08-29T18:34:52Z",
       "bids": [
         {
           "basis": -0.3,
@@ -53993,7 +56690,7 @@
       "source_name": "Harlan, IA"
     },
     "nexus-manly-ia": {
-      "as_of": "2026-08-29T15:08:45Z",
+      "as_of": "2026-08-29T18:34:52Z",
       "bids": [
         {
           "basis": -0.35,
@@ -54221,7 +56918,7 @@
       "source_name": "Manly, IA"
     },
     "nexus-marble-rock-ia": {
-      "as_of": "2026-08-29T15:08:45Z",
+      "as_of": "2026-08-29T18:34:52Z",
       "bids": [
         {
           "basis": -0.35,
@@ -54449,7 +57146,7 @@
       "source_name": "Marble Rock, IA"
     },
     "nexus-northwood-ia": {
-      "as_of": "2026-08-29T15:08:45Z",
+      "as_of": "2026-08-29T18:34:52Z",
       "bids": [
         {
           "basis": -0.41,
@@ -54677,7 +57374,7 @@
       "source_name": "Northwood, IA"
     },
     "nexus-oelwein-ia": {
-      "as_of": "2026-08-29T15:08:45Z",
+      "as_of": "2026-08-29T18:34:52Z",
       "bids": [
         {
           "basis": -0.34,
@@ -54905,7 +57602,7 @@
       "source_name": "Oelwein, IA"
     },
     "nexus-rockford-ia": {
-      "as_of": "2026-08-29T15:08:45Z",
+      "as_of": "2026-08-29T18:34:52Z",
       "bids": [
         {
           "basis": -0.38,
@@ -55133,7 +57830,7 @@
       "source_name": "Rockford, IA"
     },
     "nexus-rudd-ia": {
-      "as_of": "2026-08-29T15:08:45Z",
+      "as_of": "2026-08-29T18:34:52Z",
       "bids": [
         {
           "basis": -0.38,
@@ -55361,7 +58058,7 @@
       "source_name": "Rudd, IA"
     },
     "nexus-stacyville-ia": {
-      "as_of": "2026-08-29T15:08:45Z",
+      "as_of": "2026-08-29T18:34:52Z",
       "bids": [
         {
           "basis": -0.39,
@@ -55589,7 +58286,7 @@
       "source_name": "Stacyville, IA"
     },
     "nexus-sumner-ia": {
-      "as_of": "2026-08-29T15:08:45Z",
+      "as_of": "2026-08-29T18:34:52Z",
       "bids": [
         {
           "basis": -0.45,
@@ -55817,7 +58514,7 @@
       "source_name": "Sumner, IA"
     },
     "nexus-toeterville-ia": {
-      "as_of": "2026-08-29T15:08:45Z",
+      "as_of": "2026-08-29T18:34:52Z",
       "bids": [
         {
           "basis": -0.39,
@@ -56701,7 +59398,7 @@
       "source_name": "Plymouth Energy-Merrill"
     },
     "poet-ashton-ethanol": {
-      "as_of": "2026-08-29T15:08:57Z",
+      "as_of": "2026-08-29T18:35:09Z",
       "bids": [
         {
           "basis": -0.16,
@@ -56789,7 +59486,7 @@
       "source_name": "Ashton, IA"
     },
     "poet-bingham-lake-mn-ethanol": {
-      "as_of": "2026-08-29T15:09:01Z",
+      "as_of": "2026-08-29T18:35:13Z",
       "bids": [
         {
           "basis": -0.4,
@@ -56977,7 +59674,7 @@
       "source_name": "Bingham Lake, MN"
     },
     "poet-biorefining-coon-rapids-ethanol": {
-      "as_of": "2026-08-29T15:09:08Z",
+      "as_of": "2026-08-29T18:35:21Z",
       "bids": [
         {
           "basis": -0.15,
@@ -57065,7 +59762,7 @@
       "source_name": "Coon Rapids, IA"
     },
     "poet-corning-ethanol": {
-      "as_of": "2026-08-29T15:09:11Z",
+      "as_of": "2026-08-29T18:35:23Z",
       "bids": [
         {
           "basis": -0.2,
@@ -57153,7 +59850,7 @@
       "source_name": "Corning, IA"
     },
     "poet-emmetsburg-ethanol": {
-      "as_of": "2026-08-29T15:09:12Z",
+      "as_of": "2026-08-29T18:35:25Z",
       "bids": [
         {
           "basis": -0.38,
@@ -57301,7 +59998,7 @@
       "source_name": "Emmetsburg, IA"
     },
     "poet-gowrie-ethanol": {
-      "as_of": "2026-08-29T15:09:23Z",
+      "as_of": "2026-08-29T18:35:35Z",
       "bids": [
         {
           "basis": -0.32,
@@ -57419,7 +60116,7 @@
       "source_name": "Gowrie, IA"
     },
     "poet-hanlontown-ethanol": {
-      "as_of": "2026-08-29T15:09:26Z",
+      "as_of": "2026-08-29T18:35:39Z",
       "bids": [
         {
           "basis": -0.22,
@@ -57477,7 +60174,7 @@
       "source_name": "Hanlontown, IA"
     },
     "poet-jewell-ethanol": {
-      "as_of": "2026-08-29T15:09:32Z",
+      "as_of": "2026-08-29T18:35:45Z",
       "bids": [
         {
           "basis": -0.32,
@@ -57595,7 +60292,7 @@
       "source_name": "Jewell, IA"
     },
     "poet-laddonia-mo-ethanol": {
-      "as_of": "2026-08-29T15:09:34Z",
+      "as_of": "2026-08-29T18:35:47Z",
       "bids": [
         {
           "basis": -0.22,
@@ -57693,7 +60390,7 @@
       "source_name": "Laddonia, MO"
     },
     "poet-lake-crystal-mn-ethanol": {
-      "as_of": "2026-08-29T15:09:37Z",
+      "as_of": "2026-08-29T18:35:49Z",
       "bids": [
         {
           "basis": -0.44,
@@ -57911,7 +60608,7 @@
       "source_name": "Lake Crystal, MN"
     },
     "poet-macon-mo-ethanol": {
-      "as_of": "2026-08-29T15:09:40Z",
+      "as_of": "2026-08-29T18:35:53Z",
       "bids": [
         {
           "basis": -0.27,
@@ -58019,7 +60716,7 @@
       "source_name": "Macon, MO"
     },
     "poet-preston-mn-ethanol": {
-      "as_of": "2026-08-29T15:09:54Z",
+      "as_of": "2026-08-29T18:36:08Z",
       "bids": [
         {
           "basis": -0.8,
@@ -60829,7 +63526,7 @@
       "source_name": "Siouxland Energy"
     },
     "smithfield-grain-feed-mill-allerton": {
-      "as_of": "2026-08-29T15:08:11Z",
+      "as_of": "2026-08-29T18:34:15Z",
       "bids": [
         {
           "basis": -0.45,
@@ -60855,7 +63552,7 @@
       "source_name": "Allerton"
     },
     "southeastern-grain-laclede-mo-smithfield": {
-      "as_of": "2026-08-29T15:08:11Z",
+      "as_of": "2026-08-29T18:34:15Z",
       "bids": [
         {
           "basis": -0.5,
@@ -62726,7 +65423,7 @@
       "source_name": "Vinton"
     },
     "the-scoular-company-emerson-ia": {
-      "as_of": "2026-08-29T15:08:09Z",
+      "as_of": "2026-08-29T18:34:14Z",
       "bids": [
         {
           "basis": -0.43,
@@ -63421,315 +66118,322 @@
   "sources": {
     "agricharts:agpartners": {
       "bids": 124,
-      "fetched_at": "2026-08-29T15:08:23Z",
+      "fetched_at": "2026-08-29T18:34:30Z",
       "label": "Ag Partners Cooperative",
       "locations": 22,
       "ok": true
     },
     "agricharts:buchheit": {
       "bids": 41,
-      "fetched_at": "2026-08-29T15:08:28Z",
+      "fetched_at": "2026-08-29T18:34:35Z",
       "label": "Buchheit",
       "locations": 4,
       "ok": true
     },
     "agricharts:butterfield": {
       "bids": 6,
-      "fetched_at": "2026-08-29T15:08:24Z",
+      "fetched_at": "2026-08-29T18:34:30Z",
       "label": "Butterfield & Associates Grain",
       "locations": 1,
       "ok": true
     },
     "agricharts:cargillus": {
       "bids": 1161,
-      "fetched_at": "2026-08-29T15:08:03Z",
+      "fetched_at": "2026-08-29T18:34:08Z",
       "label": "Cargill",
       "locations": 76,
       "ok": true
     },
     "agricharts:cgb": {
       "bids": 969,
-      "fetched_at": "2026-08-29T15:15:50Z",
+      "fetched_at": "2026-08-29T18:41:09Z",
       "label": "CGB",
       "locations": 90,
       "ok": true
     },
     "agricharts:coopfe": {
       "bids": 404,
-      "fetched_at": "2026-08-29T15:16:07Z",
+      "fetched_at": "2026-08-29T18:41:21Z",
       "label": "CFE",
       "locations": 20,
       "ok": true
     },
     "agricharts:craiggrain": {
       "bids": 8,
-      "fetched_at": "2026-08-29T15:08:26Z",
+      "fetched_at": "2026-08-29T18:34:32Z",
       "label": "Craig Supply & Grain",
       "locations": 1,
       "ok": true
     },
     "agricharts:cvacoop": {
       "bids": 616,
-      "fetched_at": "2026-08-29T15:05:04Z",
+      "fetched_at": "2026-08-29T18:31:11Z",
       "label": "Central Valley Ag",
       "locations": 55,
       "ok": true
     },
     "agricharts:faasfeed": {
       "bids": 8,
-      "fetched_at": "2026-08-29T15:08:13Z",
+      "fetched_at": "2026-08-29T18:34:18Z",
       "label": "Faas Feed & Grain",
       "locations": 2,
       "ok": true
     },
     "agricharts:farmerselevator": {
       "bids": 5,
-      "fetched_at": "2026-08-29T15:08:21Z",
+      "fetched_at": "2026-08-29T18:34:28Z",
       "label": "Farmers Elevator & Exchange",
       "locations": 1,
       "ok": true
     },
     "agricharts:farmerselevatorco": {
       "bids": 4,
-      "fetched_at": "2026-08-29T15:08:27Z",
+      "fetched_at": "2026-08-29T18:34:33Z",
       "label": "Farmers Elevator & Supply (Clinton)",
       "locations": 1,
       "ok": true
     },
     "agricharts:farmerswin": {
       "bids": 153,
-      "fetched_at": "2026-08-29T15:08:16Z",
+      "fetched_at": "2026-08-29T18:34:22Z",
       "label": "Farmers Win Coop",
       "locations": 19,
       "ok": true
     },
     "agricharts:goldeagle": {
       "bids": 183,
-      "fetched_at": "2026-08-29T15:05:08Z",
+      "fetched_at": "2026-08-29T18:31:14Z",
       "label": "Gold Eagle Co-op",
       "locations": 24,
       "ok": true
     },
     "agricharts:hartog": {
       "bids": 18,
-      "fetched_at": "2026-08-29T15:08:12Z",
+      "fetched_at": "2026-08-29T18:34:17Z",
       "label": "Hartog Elevator",
       "locations": 6,
       "ok": true
     },
     "agricharts:hullcoop": {
       "bids": 12,
-      "fetched_at": "2026-08-29T15:08:17Z",
+      "fetched_at": "2026-08-29T18:34:23Z",
       "label": "Hull Cooperative",
       "locations": 1,
       "ok": true
     },
     "agricharts:innovativeag": {
       "bids": 715,
-      "fetched_at": "2026-08-29T15:15:58Z",
+      "fetched_at": "2026-08-29T18:41:16Z",
       "label": "Innovative Ag Services",
       "locations": 46,
       "ok": true
     },
     "agricharts:jbslivepork": {
       "bids": 75,
-      "fetched_at": "2026-08-29T15:16:17Z",
+      "fetched_at": "2026-08-29T18:41:29Z",
       "label": "JBS Live Pork",
       "locations": 9,
       "ok": true
     },
     "agricharts:keycoop": {
       "bids": 315,
-      "fetched_at": "2026-08-29T15:15:34Z",
+      "fetched_at": "2026-08-29T18:40:56Z",
       "label": "Key Cooperative",
       "locations": 27,
       "ok": true
     },
     "agricharts:meadowland": {
       "bids": 17,
-      "fetched_at": "2026-08-29T15:08:14Z",
+      "fetched_at": "2026-08-29T18:34:19Z",
       "label": "Meadowland Farmers Coop",
       "locations": 1,
       "ok": true
     },
     "agricharts:midiowa": {
       "bids": 215,
-      "fetched_at": "2026-08-29T15:05:17Z",
+      "fetched_at": "2026-08-29T18:31:22Z",
       "label": "Mid Iowa Co-op",
       "locations": 30,
       "ok": true
     },
     "agricharts:midmissourienergy": {
       "bids": 7,
-      "fetched_at": "2026-08-29T15:08:20Z",
+      "fetched_at": "2026-08-29T18:34:27Z",
       "label": "Mid-Missouri Energy",
       "locations": 1,
       "ok": true
     },
     "agricharts:montrose": {
       "bids": 5,
-      "fetched_at": "2026-08-29T15:08:25Z",
+      "fetched_at": "2026-08-29T18:34:31Z",
       "label": "Montrose Grain and Supply",
       "locations": 1,
       "ok": true
     },
     "agricharts:newvision": {
       "bids": 306,
-      "fetched_at": "2026-08-29T15:08:43Z",
+      "fetched_at": "2026-08-29T18:34:48Z",
       "label": "New Vision Co-op",
       "locations": 22,
       "ok": true
     },
     "agricharts:nicoop": {
       "bids": 48,
-      "fetched_at": "2026-08-29T15:05:19Z",
+      "fetched_at": "2026-08-29T18:31:24Z",
       "label": "North Iowa Co-op",
       "locations": 4,
       "ok": true
     },
     "agricharts:plymouthenergy": {
       "bids": 616,
-      "fetched_at": "2026-08-29T15:08:37Z",
+      "fetched_at": "2026-08-29T18:34:42Z",
       "label": "Plymouth Energy",
       "locations": 55,
       "ok": true
     },
     "agricharts:procooperative": {
       "bids": 232,
-      "fetched_at": "2026-08-29T15:05:12Z",
+      "fetched_at": "2026-08-29T18:31:18Z",
       "label": "Pro Cooperative",
       "locations": 16,
       "ok": true
     },
     "agricharts:silveredgecoop": {
       "bids": 7,
-      "fetched_at": "2026-08-29T15:16:15Z",
+      "fetched_at": "2026-08-29T18:41:27Z",
       "label": "SilverEdge Cooperative",
       "locations": 1,
       "ok": true
     },
     "agricharts:siouxlandenergy": {
       "bids": 11,
-      "fetched_at": "2026-08-29T15:08:19Z",
+      "fetched_at": "2026-08-29T18:34:26Z",
       "label": "Siouxland Energy Cooperative",
       "locations": 1,
       "ok": true
     },
     "agricharts:statelinecoop": {
       "bids": 157,
-      "fetched_at": "2026-08-29T15:16:10Z",
+      "fetched_at": "2026-08-29T18:41:23Z",
       "label": "Stateline Cooperative",
       "locations": 11,
       "ok": true
     },
     "agricharts:tamabentoncoop": {
       "bids": 48,
-      "fetched_at": "2026-08-29T15:16:13Z",
+      "fetched_at": "2026-08-29T18:41:25Z",
       "label": "Tama-Benton Cooperative",
       "locations": 9,
       "ok": true
     },
     "agricharts:tworivers": {
       "bids": 48,
-      "fetched_at": "2026-08-29T15:16:14Z",
+      "fetched_at": "2026-08-29T18:41:26Z",
       "label": "Two Rivers Cooperative",
       "locations": 4,
       "ok": true
     },
     "agricharts:useunited": {
       "bids": 8,
-      "fetched_at": "2026-08-29T15:08:18Z",
+      "fetched_at": "2026-08-29T18:34:25Z",
       "label": "United Cooperatives (MO)",
       "locations": 2,
       "ok": true
     },
     "bushel:agp": {
       "bids": 87,
-      "fetched_at": "2026-08-29T15:08:06Z",
+      "fetched_at": "2026-08-29T18:34:11Z",
       "label": "AGP",
       "locations": 15,
       "ok": true
     },
     "bushel:chs": {
       "bids": 1373,
-      "fetched_at": "2026-08-29T15:08:05Z",
+      "fetched_at": "2026-08-29T18:34:10Z",
       "label": "CHS",
       "locations": 158,
       "ok": true
     },
     "bushel:scoular": {
       "bids": 182,
-      "fetched_at": "2026-08-29T15:08:09Z",
+      "fetched_at": "2026-08-29T18:34:14Z",
       "label": "The Scoular Company",
       "locations": 52,
       "ok": true
     },
     "bushel:smithfield": {
       "bids": 113,
-      "fetched_at": "2026-08-29T15:08:11Z",
+      "fetched_at": "2026-08-29T18:34:15Z",
       "label": "Smithfield",
       "locations": 42,
       "ok": true
     },
     "cihedging:eliteoctane": {
       "bids": 16,
-      "fetched_at": "2026-08-29T15:08:38Z",
+      "fetched_at": "2026-08-29T18:34:43Z",
       "label": "Elite Octane",
       "locations": 1,
       "ok": true
     },
     "cihedging:goldengrain": {
       "bids": 13,
-      "fetched_at": "2026-08-29T15:08:46Z",
+      "fetched_at": "2026-08-29T18:34:58Z",
       "label": "Golden Grain Energy",
       "locations": 1,
       "ok": true
     },
     "cihedging:littlesioux": {
       "bids": 20,
-      "fetched_at": "2026-08-29T15:08:40Z",
+      "fetched_at": "2026-08-29T18:34:45Z",
       "label": "Little Sioux Corn Processors",
       "locations": 1,
       "ok": true
     },
+    "fivestar": {
+      "bids": 291,
+      "fetched_at": "2026-08-29T18:34:58Z",
+      "label": "Five Star Cooperative",
+      "locations": 21,
+      "ok": true
+    },
     "gradable:adm": {
       "bids": 1413,
-      "fetched_at": "2026-08-29T15:15:28Z",
+      "fetched_at": "2026-08-29T18:40:52Z",
       "label": "ADM (Gradable)",
       "locations": 106,
       "ok": true
     },
     "gradable:poet": {
       "bids": 369,
-      "fetched_at": "2026-08-29T15:10:01Z",
+      "fetched_at": "2026-08-29T18:36:13Z",
       "label": "POET Biorefining",
       "locations": 35,
       "ok": true
     },
     "heartland": {
       "bids": 626,
-      "fetched_at": "2026-08-29T15:04:52Z",
+      "fetched_at": "2026-08-29T18:30:59Z",
       "label": "Heartland Co-op",
       "locations": 74,
       "ok": true
     },
     "landus": {
       "bids": 560,
-      "fetched_at": "2026-08-29T15:07:41Z",
+      "fetched_at": "2026-08-29T18:33:47Z",
       "label": "Landus Cooperative",
       "locations": 49,
       "ok": true
     },
     "newcoop": {
       "bids": 1103,
-      "fetched_at": "2026-08-29T15:05:21Z",
+      "fetched_at": "2026-08-29T18:31:26Z",
       "label": "NEW Cooperative",
       "locations": 76,
       "ok": true
     },
     "nexus": {
       "bids": 539,
-      "fetched_at": "2026-08-29T15:08:45Z",
+      "fetched_at": "2026-08-29T18:34:52Z",
       "label": "Nexus Cooperative",
       "locations": 35,
       "ok": true

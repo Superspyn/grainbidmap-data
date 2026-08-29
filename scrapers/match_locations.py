@@ -59,6 +59,7 @@ COMPANY_TO_SOURCE = {
     "New Coop": "newcoop",
     "Landus": "landus",
     "Nexus Cooperative": "nexus",
+    "Five Star Cooperative": "fivestar",
     "New Vision Co-op": "agricharts:newvision",
     # Name variants carried in by the Iowa DNR facility list, which spells
     # some co-ops differently from the map's own pins.
