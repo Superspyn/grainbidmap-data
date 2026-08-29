@@ -124,6 +124,15 @@ def classify_grain(*hints) -> str | None:
         if text in {"ZS", "S", "ZSE"} or re.fullmatch(r"ZS[FGHJKMNQUVXZ]\d{1,2}", text):
             return SOYBEANS
 
+        # Trade codes, used instead of names by some feeds - Scoular labels its
+        # commodities YC and YSB. Matched exactly, never as substrings: the
+        # neighbouring codes in the same feed are wheat and sorghum (HRWW, HWW,
+        # DNSW, SWW, SOR, BLY), and a loose match would sweep those in.
+        if text in {"YC", "WC", "#2YC", "US#2YC"}:
+            return CORN
+        if text in {"YSB", "YSB MINI", "SB", "#1YSB"}:
+            return SOYBEANS
+
         # Reject the derivative products before the substring match below can
         # mistake "SOYBEAN MEAL" or "HIGH MOISTURE CORN" for the cash commodity.
         if any(bad in text for bad in ("MEAL", "OIL", "HULL", "SEED", "MOISTURE", "SILAGE")):

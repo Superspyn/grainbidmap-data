@@ -169,3 +169,32 @@ class TestMisc:
     )
     def test_futures_month(self, raw, expected):
         assert futures_month_from_symbol(raw) == expected
+
+
+class TestTradeCodeCommodities:
+    """Scoular labels commodities with trade codes, not names.
+
+    The codes must match exactly. The same feed carries HRWW, HWW, DNSW, SWW,
+    SOR, BLY and Winter Canola, and a substring match would sweep those in as
+    corn or beans.
+    """
+
+    def test_corn_codes(self):
+        for code in ("YC", "yc", "#2YC", "US#2YC"):
+            assert classify_grain(code) == "corn"
+
+    def test_soybean_codes(self):
+        for code in ("YSB", "ysb", "YSB Mini", "#1YSB"):
+            assert classify_grain(code) == "soybeans"
+
+    def test_other_commodities_in_the_same_feed_are_rejected(self):
+        for code in ("HRWW", "HWW", "DNSW", "SWW", "SOR", "Milo", "BLY",
+                     "Winter Canola"):
+            assert classify_grain(code) is None, code
+
+    def test_named_specialty_soybeans_still_classify(self):
+        assert classify_grain("IP Soybeans") == "soybeans"
+
+    def test_derivatives_still_rejected(self):
+        assert classify_grain("Soybean Meal") is None
+        assert classify_grain("Corn Oil") is None

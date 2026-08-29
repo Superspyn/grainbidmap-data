@@ -93,6 +93,8 @@ COMPANY_TO_SOURCE = {
     "CHS": "bushel:chs",
     "AGP": "bushel:agp",
     "Smithfield": "bushel:smithfield",
+    "The Scoular Company": "bushel:scoular",
+    "Scoular": "bushel:scoular",
     "Golden Grain Energy": "cihedging:goldengrain",
     "POET": "gradable:poet",
     "Flint Hills Resources / POET": "gradable:poet",
