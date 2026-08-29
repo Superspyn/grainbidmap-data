@@ -22,40 +22,47 @@ the Backup/restore box moves them between machines.
 The Iowa Dept of Ag license portal (https://iowadeptag.my.site.com/s/searchlicense)
 is a public Salesforce site whose Apex controller answers guest requests, so
 `dev/fetch_nh3_licensees.py` asks it the same question the Search button does,
-once per county. Three scripts run in order:
+once per county. Four scripts run in order:
 
 ```bash
-python dev/fetch_nh3_licensees.py    # -> dev/nh3-licensees-raw.csv  (202 licensees, 8 counties)
-python dev/filter_nh3_dealers.py     # -> dev/nh3-dealers-filtered.csv (94 kept)
-python dev/geocode_nh3_dealers.py    # -> dev/nh3-dealers-geocoded.csv
-python dev/make_nh3_pins.py          # rewrites the nfDealers array in nh3-map.html
+python dev/fetch_nh3_licensees.py all   # -> dev/nh3-licensees-raw.csv    (2,524 licensees, all 99 counties)
+python dev/filter_nh3_dealers.py        # -> dev/nh3-dealers-filtered.csv (900 kept)
+python dev/geocode_nh3_dealers.py       # -> dev/nh3-dealers-geocoded.csv
+python dev/make_nh3_pins.py             # rewrites the nfDealers array in nh3-map.html
 ```
 
-Pass `all` to the first script for every Iowa county instead of the eight around
-Britt (Hancock, Winnebago, Worth, Cerro Gordo, Franklin, Wright, Humboldt,
-Kossuth). If it ever starts failing, the `fwuid` in `AURA_CONTEXT` has gone
-stale -- load the search page in a browser and copy the current one out of any
-`/s/sfsites/aura` request.
+Drop the `all` for just the eight counties around Britt. If the fetch ever
+starts failing, the `fwuid` in `AURA_CONTEXT` has gone stale -- load the search
+page in a browser and copy the current one out of any `/s/sfsites/aura` request.
+Two quirks are already handled: O'BRIEN county throws a SOQL error on their end
+(their query doesn't escape the apostrophe), and any county that fails is
+skipped rather than killing the run.
 
 **The portal has no NH3 license type** -- only Ag Lime / Egg / Feed / Fertilizer,
-and "Fertilizer License" covers everyone from co-op agronomy plants to Dollar
-General selling bagged lawn food. So `filter_nh3_dealers.py` drops retail chains,
-egg/hog operations, lawn-care outfits and single farms, then splits what's left:
+and "Fertilizer License" is the same license Dollar General holds for bagged lawn
+food. So `filter_nh3_dealers.py` sorts the statewide pull into four buckets:
 
-- **dealer** (74) -- co-op agronomy locations and ag retail chains that
-  customarily sell anhydrous. Plain blue pins.
-- **uncertain** (16) -- independents, custom applicators, liquid-fertilizer
-  specialists. Pinned, but the panel says to confirm they handle NH3.
-- **terminal** (4) -- Koch wholesale NH3 terminals. Purple pins, no quote box;
-  they're where the retailers load, not a place a farmer buys.
+- **dealer** (716) -- co-op agronomy locations and ag retailers that customarily
+  sell anhydrous. Plain pins.
+- **uncertain** (141) -- independents and custom applicators whose name reads
+  like an ag business. Pinned; the bubble says to confirm they handle NH3.
+- **terminal** (41) -- Koch/CF wholesale NH3 terminals. Purple pins, no quote
+  box; that's where retailers load, not where a farmer buys.
+- **exclude** (1,604, not mapped) -- Dollar General, Fareway, Hy-Vee, Walmart,
+  Menards, Home Depot, CVS, lawn-care outfits, egg and hog barns, feed mills,
+  wholesale manufacturers, and one-off licensees like a crop-dusting service.
 
-Geocoding is US Census batch first, Nominatim for rural addresses it misses,
-town centroid as a last resort (12 pins, flagged `approx: 1`, panel says the pin
-is on the town rather than the driveway).
+That leaves **898 pins**, 38 of them within 25 miles of Britt and 162 within 60.
+
+Geocoding is US Census batch first (in chunks of 250), Nominatim for rural
+addresses it misses, town centroid as a last resort -- 142 pins land there and
+carry `approx: 1`, which the bubble reports as "pin is on the town, not the
+driveway". Two rows are dropped outright for mangled city names in the state
+data ("FREDERICKSBG", "IDAGROVE").
 
 The list is a starting point, not a vetted NH3 directory -- the first call to
-each dealer tells you whether they handle it, and pins that don't can be deleted
-straight out of the `nfDealers` array.
+each dealer tells you whether they handle it, and pins that don't pan out can be
+deleted straight out of the `nfDealers` array.
 
 ---
 ## Setup (one time)
@@ -175,9 +182,9 @@ single request. Landus is the exception - it has no bulk endpoint, so it costs
 | Golden Grain Energy | 1 | CI Hedging widget API |
 | SilverEdge Cooperative | 1 | AgriCharts |
 
-**415 of 892 pins** carry live bids (~5,450 bid rows). The rest:
+**437 of 892 pins** carry live bids (~5,660 bid rows) from **44 sources**. The rest:
 
-- **398 pins are on companies with no adapter yet.** Biggest: MFA (59), AgState (16), River Valley Cooperative (13), Five Star Cooperative (7), Valero (7).
+- **374 pins are on companies with no adapter yet.** Biggest: MFA (59), AgState (16), River Valley Cooperative (13), Five Star Cooperative (7), Valero (7).
   This grew because 152 pins were added from the Iowa DNR grain facility list
   (see below) - most are small independents with no online bid page at all.
 - **59 pins matched a source that publishes no bid for them** — out-of-state and
@@ -208,6 +215,13 @@ error, so check the location count.
 
 Anything not on AgriCharts needs an adapter in `scrapers/adapters/` implementing
 the `Adapter` protocol in `adapters/base.py`.
+
+**Some co-ops self-host AgriCharts.** They serve `/markets/cash.php` from their
+own domain with no `*.agricharts.com` subdomain anywhere in the page, but the
+same `/inc/cashbids/cashbids-js.php` endpoint answers. Give the source a `base`
+URL instead of a `tenant` and nothing else changes. Ten of the current sources
+were found this way, by probing every uncovered company's own site for that
+endpoint — worth re-running when new pins are added.
 
 ### Cargill, and reading robots.txt per host
 
