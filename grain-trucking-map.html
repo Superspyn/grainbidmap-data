@@ -467,6 +467,80 @@
     margin-bottom: 4px;
   }
 
+  #grain-trucking-tool .gt-top-panel {
+    margin-top: 16px;
+    border-top: 1px solid var(--line);
+    padding-top: 14px;
+  }
+  #grain-trucking-tool .gt-top-panel[hidden] { display: none; }
+  #grain-trucking-tool .gt-top-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  #grain-trucking-tool .gt-top-tabs {
+    display: inline-flex;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+  #grain-trucking-tool .gt-top-tab {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    padding: 7px 16px;
+    cursor: pointer;
+  }
+  #grain-trucking-tool .gt-top-tab + .gt-top-tab { border-left: 1px solid var(--line); }
+  #grain-trucking-tool .gt-top-tab:hover { background: var(--green-pale); }
+  #grain-trucking-tool .gt-top-tab-on {
+    background: var(--green);
+    color: #fff;
+  }
+  #grain-trucking-tool .gt-top-tab-on:hover { background: var(--green); }
+  #grain-trucking-tool .gt-top-check {
+    font-size: 12px;
+    color: var(--ink-soft);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+  }
+  #grain-trucking-tool table.gt-top-table { min-width: 620px; }
+  #grain-trucking-tool table.gt-top-table td.gt-top-rank {
+    font-family: 'IBM Plex Mono', monospace;
+    text-align: right;
+    color: var(--ink-soft);
+    width: 1%;
+  }
+  #grain-trucking-tool table.gt-top-table td.gt-top-name { font-weight: 600; white-space: normal; }
+  #grain-trucking-tool table.gt-top-table td.gt-top-name .gt-top-co {
+    display: block;
+    font-weight: 400;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+  }
+  #grain-trucking-tool .gt-top-net {
+    font-family: 'IBM Plex Mono', monospace;
+    text-align: right;
+    font-weight: 700;
+    color: var(--green);
+  }
+  #grain-trucking-tool .gt-top-est { color: var(--ink-soft); }
+  #grain-trucking-tool .gt-top-empty {
+    padding: 14px 10px;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+  }
+
   #grain-trucking-tool .gt-legend {
     font-size: 12px;
     color: var(--ink-soft);
@@ -743,6 +817,44 @@
     </div>
     <div class="gt-bids-hint" id="gt-bids-hint"></div>
     <div class="gt-bids-hint">Bids are collected from each facility's public bid page for reference only and may be delayed &mdash; confirm with the elevator before hauling.</div>
+  </div>
+
+  <!-- Best bids across every elevator on the map. Ranks on net price after
+       hauling once a starting point is set, and on the posted bid before that.
+       Hidden until the feed lands, so nothing changes if it fails. -->
+  <div class="gt-top-panel" id="gt-top-panel" hidden>
+    <div class="gt-bids-head">
+      <span class="gt-bids-title">Best bids on the map</span>
+      <span class="gt-bids-asof" id="gt-top-asof"></span>
+    </div>
+    <div class="gt-top-controls">
+      <div class="gt-top-tabs" id="gt-top-tabs">
+        <button type="button" class="gt-top-tab gt-top-tab-on" data-grain="corn">Corn</button>
+        <button type="button" class="gt-top-tab" data-grain="soybeans">Soybeans</button>
+      </div>
+      <label class="gt-top-check">
+        <input type="checkbox" id="gt-top-filtered" checked>
+        Only companies shown on the map
+      </label>
+    </div>
+    <div class="gt-bids-info" id="gt-top-note"></div>
+    <div class="gt-bids-scroll">
+      <table class="gt-bids-table gt-top-table">
+        <thead>
+          <tr>
+            <th style="text-align:right;">#</th>
+            <th>Elevator</th>
+            <th>Delivery</th>
+            <th style="text-align:right;">Cash</th>
+            <th style="text-align:right;">Miles</th>
+            <th style="text-align:right;">Haul</th>
+            <th style="text-align:right;">Net</th>
+          </tr>
+        </thead>
+        <tbody id="gt-top-body"></tbody>
+      </table>
+    </div>
+    <div class="gt-bids-hint" id="gt-top-hint"></div>
   </div>
 
   <div class="gt-legend">
@@ -5934,6 +6046,13 @@
   var bidsAsOfEl = container.querySelector('#gt-bids-asof');
   var bidsInfoEl = container.querySelector('#gt-bids-info');
   var hintEl = container.querySelector('#gt-bids-hint');
+  var topPanel = container.querySelector('#gt-top-panel');
+  var topBody = container.querySelector('#gt-top-body');
+  var topTabs = container.querySelector('#gt-top-tabs');
+  var topNote = container.querySelector('#gt-top-note');
+  var topHint = container.querySelector('#gt-top-hint');
+  var topAsOfEl = container.querySelector('#gt-top-asof');
+  var topFilteredEl = container.querySelector('#gt-top-filtered');
 
   // --- Escape a narrow host column ----------------------------------------
   // Squarespace (and most CMS templates) drop this widget inside a content
@@ -6016,6 +6135,7 @@
         gtBids = data;
         // A route may already be on screen when the feed lands.
         if (selectedDestination) renderBids(selectedDestination.gtData);
+        renderTopBids();
       })
       .catch(function () { /* offline or blocked -- manual entry still works */ });
   }
@@ -6126,6 +6246,214 @@
     bidsPanel.hidden = false;
   }
 
+  // ====== Best bids on the map ======
+  // Ranks every pinned elevator that publishes a bid. Routing 450 elevators
+  // through the Directions API on every keystroke is not an option, so the
+  // distance here is a straight line scaled by a road-circuity factor. That is
+  // an estimate and is labelled as one; clicking a row runs the real route.
+  var GT_DEFAULT_CIRCUITY = 1.20;   // Iowa's section-road grid, roughly
+  var GT_DEFAULT_MPH = 45;
+  var gtCircuity = GT_DEFAULT_CIRCUITY;
+  var gtAvgMph = GT_DEFAULT_MPH;
+  var gtCalibrated = false;
+  var topGrain = 'corn';
+  // Bid from a best-bids row awaiting the route it triggered.
+  var pendingTopBid = null;
+
+  function straightLineMiles(a, b) {
+    var toRad = Math.PI / 180;
+    var dLat = (b.lat - a.lat) * toRad;
+    var dLng = (b.lng - a.lng) * toRad;
+    var s = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(a.lat * toRad) * Math.cos(b.lat * toRad) *
+      Math.sin(dLng / 2) * Math.sin(dLng / 2);
+    return 2 * 3958.8 * Math.asin(Math.min(1, Math.sqrt(s)));
+  }
+
+  // Every real route teaches us how much longer the roads are than the crow
+  // flies, and how fast the trip actually goes, for this particular area.
+  // Clamped so one odd route (a river crossing, a closure) cannot wreck the
+  // estimates for every other elevator.
+  function calibrateFromRoute(oPos, dPos, meters, seconds) {
+    var straight = straightLineMiles(
+      { lat: oPos.lat(), lng: oPos.lng() }, { lat: dPos.lat(), lng: dPos.lng() });
+    var roadMiles = meters / 1609.34;
+    if (straight > 1 && seconds > 0) {
+      var ratio = Math.min(1.8, Math.max(1.0, roadMiles / straight));
+      var mph = Math.min(70, Math.max(20, roadMiles / (seconds / 3600)));
+      // Blend toward the newest observation rather than jumping to it.
+      gtCircuity = gtCalibrated ? gtCircuity * 0.6 + ratio * 0.4 : ratio;
+      gtAvgMph = gtCalibrated ? gtAvgMph * 0.6 + mph * 0.4 : mph;
+      gtCalibrated = true;
+    }
+  }
+
+  // Nearest delivery period this elevator quotes for the grain. Comparing
+  // elevators needs one bid each, and the nearest window is the one a load
+  // leaving today would go against.
+  function nearestBidForGrain(entry, grain) {
+    var best = null;
+    entry.bids.forEach(function (b) {
+      if (b.grain !== grain) return;
+      if (b.cash === undefined || b.cash === null) return;
+      if (!best || (b.delivery_start || '') < (best.delivery_start || '')) best = b;
+    });
+    return best;
+  }
+
+  function originLatLng() {
+    if (!selectedOrigin) return null;
+    var p = selectedOrigin.getPosition();
+    return p ? { lat: p.lat(), lng: p.lng() } : null;
+  }
+
+  function collectTopBids(grain) {
+    if (!gtBids) return [];
+    var origin = originLatLng();
+    var onlyShown = topFilteredEl.checked && activeCompanies;
+    var rows = [];
+
+    markers.forEach(function (m) {
+      var data = m.gtData;
+      if (m === selectedOrigin) return;
+      if (onlyShown && !activeCompanies[data.company]) return;
+      var entry = bidsFor(data);
+      if (!entry) return;
+      var bid = nearestBidForGrain(entry, grain);
+      if (!bid) return;
+
+      var row = {
+        marker: m, data: data, entry: entry, bid: bid,
+        cash: Number(bid.cash), miles: null, haul: null, net: null
+      };
+      if (origin) {
+        row.miles = straightLineMiles(origin, { lat: data.lat, lng: data.lng }) * gtCircuity;
+        var costs = haulCosts(row.miles, (row.miles * 2) / gtAvgMph);
+        row.haul = costs.perBushel;
+        row.net = netPerBushel(costs, row.cash);
+      }
+      rows.push(row);
+    });
+
+    // Net is the honest ranking, but it needs both an origin and a truck
+    // capacity. Without those, fall back to the posted bid.
+    var byNet = rows.length > 0 && rows[0].net !== null;
+    rows.sort(function (a, b) {
+      return byNet ? (b.net - a.net) : (b.cash - a.cash);
+    });
+    rows.rankedByNet = byNet;
+    return rows;
+  }
+
+  function renderTopBids() {
+    // The feed can land before Google's map has built the markers this reads.
+    // Staying hidden is right then - gtInitMap calls back in once they exist.
+    if (!gtBids || !markers.length) { topPanel.hidden = true; return; }
+    topPanel.hidden = false;
+    topBody.innerHTML = '';
+
+    var rows = collectTopBids(topGrain);
+    var top = rows.slice(0, 10);
+    topAsOfEl.textContent = gtBids.generated_at ? 'as of ' + formatAsOf(gtBids.generated_at) : '';
+
+    if (!top.length) {
+      var tr = document.createElement('tr');
+      var td = document.createElement('td');
+      td.colSpan = 7;
+      td.className = 'gt-top-empty';
+      td.textContent = topFilteredEl.checked && activeCompanies
+        ? 'No ' + (topGrain === 'corn' ? 'corn' : 'soybean') + ' bids among the companies currently shown on the map.'
+        : 'No ' + (topGrain === 'corn' ? 'corn' : 'soybean') + ' bids in the feed yet.';
+      tr.appendChild(td);
+      topBody.appendChild(tr);
+      topNote.textContent = '';
+      topHint.textContent = '';
+      return;
+    }
+
+    top.forEach(function (row, i) {
+      var tr = document.createElement('tr');
+
+      function cell(text, cls) {
+        var td = document.createElement('td');
+        if (cls) td.className = cls;
+        td.textContent = text;
+        return td;
+      }
+
+      tr.appendChild(cell(String(i + 1), 'gt-top-rank'));
+
+      var nameTd = document.createElement('td');
+      nameTd.className = 'gt-top-name';
+      nameTd.appendChild(document.createTextNode(row.data.name));
+      if (row.data.company) {
+        var co = document.createElement('span');
+        co.className = 'gt-top-co';
+        co.textContent = row.data.company;
+        nameTd.appendChild(co);
+      }
+      tr.appendChild(nameTd);
+
+      tr.appendChild(cell(row.bid.delivery_label || '\u2014'));
+      tr.appendChild(cell(money(row.cash), 'gt-bids-cash'));
+      tr.appendChild(cell(row.miles === null ? '\u2014' : row.miles.toFixed(0), 'gt-bids-num gt-top-est'));
+      tr.appendChild(cell(row.haul === null ? '\u2014' : '$' + row.haul.toFixed(3), 'gt-bids-num gt-top-est'));
+      tr.appendChild(cell(row.net === null ? '\u2014' : '$' + row.net.toFixed(3), 'gt-top-net'));
+
+      tr.addEventListener('click', function () { routeToFromTop(row.marker, row.cash); });
+      topBody.appendChild(tr);
+    });
+
+    if (rows.rankedByNet) {
+      topNote.textContent = 'Ranked by net price per bushel after hauling from ' +
+        (selectedOrigin.gtData.name || 'your starting point') + '.';
+      topHint.textContent = 'Miles, haul and net are estimates \u2014 distance is a straight line scaled by ' +
+        gtCircuity.toFixed(2) + '\u00d7 for road routing' +
+        (gtCalibrated ? ' (calibrated from the routes you have run)' : ' (a typical figure until you run a route)') +
+        ', at ' + gtAvgMph.toFixed(0) + ' mph. Click any row to run the real route and get exact numbers.';
+    } else if (!selectedOrigin) {
+      topNote.textContent = 'Ranked by posted bid. Set a starting point to rank by net price after hauling instead.';
+      topHint.textContent = 'Click an empty spot on the map to drop your loadout pin, or use the locate button on the map.';
+    } else {
+      topNote.textContent = 'Ranked by posted bid \u2014 enter a truck capacity above to rank by net price after hauling.';
+      topHint.textContent = 'Click any row to run the real route to that elevator.';
+    }
+  }
+
+  // A click here always means "route to this one", never "make this my
+  // origin" - which is what handlePinClick would do once a route exists.
+  function routeToFromTop(marker, cash) {
+    if (!selectedOrigin) {
+      handlePinClick(marker);
+      return;
+    }
+    if (marker === selectedOrigin) return;
+    // Carry the bid that was on the row across into the calculator, so the
+    // exact net price replaces the estimate rather than coming up blank.
+    pendingTopBid = cash;
+    selectedDestination = marker;
+    showInfo(marker);
+    renderBids(marker.gtData);
+    statusText.textContent = selectedOrigin.gtData.name + ' \u2192 ' + marker.gtData.name;
+    computeRoute();
+    updateIcons();
+    // Send them to the exact numbers they just asked for, not back to the
+    // estimate they clicked.
+    if (resultsEl.scrollIntoView) resultsEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  topTabs.addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('.gt-top-tab') : null;
+    if (!btn) return;
+    topGrain = btn.getAttribute('data-grain');
+    Array.prototype.forEach.call(topTabs.children, function (b) {
+      b.classList.toggle('gt-top-tab-on', b === btn);
+    });
+    renderTopBids();
+  });
+
+  topFilteredEl.addEventListener('change', renderTopBids);
+
   var BARGE_ICON_SVG = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(
     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="34" viewBox="0 0 24 34">' +
     '<path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 22 12 22s12-13 12-22c0-6.6-5.4-12-12-12z" fill="#000000"/>' +
@@ -6181,6 +6509,7 @@
           m.setMap(visible ? map : null);
         }
       });
+      renderTopBids();
       var hiddenCount = companies.filter(function (c) { return !activeCompanies[c]; }).length;
       toggleLabel.textContent = hiddenCount > 0
         ? 'Filter by company (' + (companies.length - hiddenCount) + ' of ' + companies.length + ' shown)'
@@ -6305,6 +6634,10 @@
     map.addListener('click', function (e) {
       placeOrMoveTempPin(e.latLng);
     });
+
+    // Markers exist now, so the best-bids table can finally be built. If the
+    // feed has not landed yet, loadBids calls this again when it does.
+    renderTopBids();
   };
 
   function buildLocateControl() {
@@ -6517,6 +6850,7 @@
     if (directionsRenderer) directionsRenderer.setMap(null);
     statusText.textContent = 'Origin: ' + tempMarker.gtData.name + '  -  now click an elevator pin.';
     updateIcons();
+    renderTopBids();
   };
 
   window.gm_authFailure = function () {
@@ -6710,6 +7044,8 @@
       computeRoute();
     }
     updateIcons();
+    // The origin may have moved, so every estimated distance changes.
+    renderTopBids();
   }
 
   function clearDrawnRoute() {
@@ -6783,13 +7119,21 @@
     openMapsEl.href = 'https://www.google.com/maps/dir/?api=1&origin=' + oPos.lat + ',' + oPos.lng +
       '&destination=' + dPos.lat + ',' + dPos.lng + '&travelmode=driving';
     openMapsEl.classList.add('gt-visible');
-    bidInput.value = (destData.bid !== undefined) ? destData.bid : '';
+    // A best-bids row already told us which bid the user is pricing.
+    if (pendingTopBid !== null && !isNaN(pendingTopBid)) {
+      bidInput.value = Number(pendingTopBid).toFixed(4).replace(/0+$/, '').replace(/\.$/, '');
+    } else {
+      bidInput.value = (destData.bid !== undefined) ? destData.bid : '';
+    }
+    pendingTopBid = null;
     shrinkInput.value = (destData.shrinkPct !== undefined) ? destData.shrinkPct : '';
     // Mark the results visible first: renderBids reads that state to decide
     // which hint to show.
     resultsEl.classList.add('gt-visible');
     renderBids(destData);
     updateResults();
+    // This route just refined the circuity and speed estimates.
+    renderTopBids();
   }
 
   function computeRoute() {
@@ -6812,6 +7156,7 @@
       var leg = result.routes[0].legs[0];
       lastLegMeters = leg.distance.value;
       lastLegSeconds = leg.duration.value;
+      calibrateFromRoute(oPos, dPos, lastLegMeters, lastLegSeconds);
 
       var bridgeCount = 0;
       if (bridgeToggle.checked) {
@@ -6829,60 +7174,76 @@
     });
   }
 
+  // The cost model, in one place. The results panel prices the one route
+  // Google actually returned; the best-bids table prices every elevator off an
+  // estimated distance. They must agree, so both call this rather than each
+  // keeping their own copy of the arithmetic.
+  function haulCosts(oneWayMiles, roundTripHours) {
+    var roundTripMiles = oneWayMiles * 2;
+    var mpg = parseFloat(mpgInput.value) || 0;
+    var contractBu = parseFloat(contractbuInput.value) || 0;
+    var gallons = mpg > 0 ? roundTripMiles / mpg : 0;
+    var fuelCost = gallons * (parseFloat(dieselInput.value) || 0);
+    var laborCost = (parseFloat(laborInput.value) || 0) * roundTripHours;
+    var weartearCost = (parseFloat(weartearInput.value) || 0) * roundTripMiles;
+    var truckCap = parseFloat(capInput.value) || 0;
+    var totalCost = fuelCost + laborCost + weartearCost;
+    var fixedCostPerBu = contractBu > 0
+      ? ((parseFloat(insuranceInput.value) || 0) + (parseFloat(licenseInput.value) || 0)) / contractBu
+      : 0;
+    return {
+      oneWayMiles: oneWayMiles,
+      roundTripMiles: roundTripMiles,
+      roundTripHours: roundTripHours,
+      gallons: gallons,
+      fuelCost: fuelCost,
+      laborCost: laborCost,
+      weartearCost: weartearCost,
+      totalCost: totalCost,
+      truckCap: truckCap,
+      fixedCostPerBu: fixedCostPerBu,
+      // null rather than 0 when capacity is unset - a haul cost of zero and an
+      // unknown haul cost are different things and must not render the same.
+      perBushel: truckCap > 0 ? totalCost / truckCap + fixedCostPerBu : null
+    };
+  }
+
+  // Net price per bushel for a given bid. Shrink cuts the payable bushels but
+  // not the truckload hauled, which is why it divides by truckCap either way.
+  function netPerBushel(costs, bid) {
+    if (bid === null || bid === undefined || isNaN(bid) || !(costs.truckCap > 0)) return null;
+    var shrinkPct = parseFloat(shrinkInput.value);
+    var payableBu = costs.truckCap * (1 - (isNaN(shrinkPct) ? 0 : shrinkPct) / 100);
+    return (payableBu * bid - costs.totalCost) / costs.truckCap - costs.fixedCostPerBu;
+  }
+
   function updateResults() {
     if (!lastLegMeters) return;
-    var oneWayMiles = lastLegMeters / 1609.34;
-    var roundTripMiles = oneWayMiles * 2;
-    var roundTripHours = (lastLegSeconds * 2) / 3600;
-    var mpg = parseFloat(mpgInput.value) || 0;
-    var dieselPrice = parseFloat(dieselInput.value) || 0;
-    var truckCap = parseFloat(capInput.value) || 0;
-    var laborRate = parseFloat(laborInput.value) || 0;
-    var weartearRate = parseFloat(weartearInput.value) || 0;
-    var insuranceAnnual = parseFloat(insuranceInput.value) || 0;
-    var licenseAnnual = parseFloat(licenseInput.value) || 0;
-    var contractBu = parseFloat(contractbuInput.value) || 0;
+    var c = haulCosts(lastLegMeters / 1609.34, (lastLegSeconds * 2) / 3600);
 
-    var gallons = mpg > 0 ? roundTripMiles / mpg : 0;
-    var fuelCost = gallons * dieselPrice;
-    var laborCost = laborRate * roundTripHours;
-    var weartearCost = weartearRate * roundTripMiles;
-    var totalCost = fuelCost + laborCost + weartearCost;
-    var fixedCostPerBu = contractBu > 0 ? (insuranceAnnual + licenseAnnual) / contractBu : 0;
-
-    distanceEl.textContent = oneWayMiles.toFixed(1) + ' mi';
-    roundtripEl.textContent = roundTripMiles.toFixed(1) + ' mi';
+    distanceEl.textContent = c.oneWayMiles.toFixed(1) + ' mi';
+    roundtripEl.textContent = c.roundTripMiles.toFixed(1) + ' mi';
     drivetimeEl.textContent = formatDuration(lastLegSeconds * 2);
-    gallonsEl.textContent = gallons.toFixed(1) + ' gal';
-    fuelcostEl.textContent = '$' + fuelCost.toFixed(2);
-    laborcostEl.textContent = '$' + laborCost.toFixed(2);
-    weartearcostEl.textContent = '$' + weartearCost.toFixed(2);
-    totalcostEl.textContent = '$' + totalCost.toFixed(2);
-    fixedcostbuEl.textContent = fixedCostPerBu > 0 ? '$' + fixedCostPerBu.toFixed(4) + ' / bu' : '\u2014';
+    gallonsEl.textContent = c.gallons.toFixed(1) + ' gal';
+    fuelcostEl.textContent = '$' + c.fuelCost.toFixed(2);
+    laborcostEl.textContent = '$' + c.laborCost.toFixed(2);
+    weartearcostEl.textContent = '$' + c.weartearCost.toFixed(2);
+    totalcostEl.textContent = '$' + c.totalCost.toFixed(2);
+    fixedcostbuEl.textContent = c.fixedCostPerBu > 0 ? '$' + c.fixedCostPerBu.toFixed(4) + ' / bu' : '\u2014';
+    haulcostbuEl.textContent = c.perBushel === null ? '\u2014' : '$' + c.perBushel.toFixed(3) + ' / bu';
 
-    if (truckCap > 0) {
-      var haulCostPerBu = totalCost / truckCap + fixedCostPerBu;
-      haulcostbuEl.textContent = '$' + haulCostPerBu.toFixed(3) + ' / bu';
-    } else {
-      haulcostbuEl.textContent = '\u2014';
-    }
-
-    var bid = parseFloat(bidInput.value);
-    var shrinkPct = parseFloat(shrinkInput.value);
-    if (!isNaN(bid) && truckCap > 0) {
-      var shrinkFrac = (isNaN(shrinkPct) ? 0 : shrinkPct) / 100;
-      var payableBu = truckCap * (1 - shrinkFrac);
-      var grossRevenue = payableBu * bid;
-      var netRevenue = grossRevenue - totalCost;
-      var netPricePerBu = netRevenue / truckCap - fixedCostPerBu;
-      netpriceEl.textContent = '$' + netPricePerBu.toFixed(3) + ' / bu';
-    } else {
-      netpriceEl.textContent = '\u2014';
-    }
+    var net = netPerBushel(c, parseFloat(bidInput.value));
+    netpriceEl.textContent = net === null ? '\u2014' : '$' + net.toFixed(3) + ' / bu';
   }
 
   [dieselInput, mpgInput, capInput, laborInput, weartearInput, insuranceInput, licenseInput, contractbuInput, bidInput, shrinkInput].forEach(function (el) {
     el.addEventListener('input', updateResults);
+  });
+
+  // Every cost input feeds the net-price ranking too. The bid box does not -
+  // that is this elevator's bid, not the whole map's.
+  [dieselInput, mpgInput, capInput, laborInput, weartearInput, insuranceInput, licenseInput, contractbuInput, shrinkInput].forEach(function (el) {
+    el.addEventListener('input', renderTopBids);
   });
 
   // Typing a bid by hand overrides whatever row was picked from the table.
@@ -6908,6 +7269,7 @@
     if (tempMarker) { tempMarker.setMap(null); tempMarker = null; }
     statusText.textContent = 'Click a pin to begin.';
     updateIcons();
+    renderTopBids();
   });
 
   if (window.google && window.google.maps) {

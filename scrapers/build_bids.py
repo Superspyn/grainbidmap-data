@@ -22,6 +22,7 @@ import datetime as _dt
 import json
 import os
 import pathlib
+import statistics
 import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
@@ -158,6 +159,64 @@ def dedupe_bids(bids) -> list[dict]:
     return out
 
 
+# How many median-absolute-deviations from its own grain's median a cash price
+# may sit before it is treated as mislabelled. Deliberately loose: real basis
+# spread across a whole state is a handful of MADs, so only a row that is wrong
+# by a different order of magnitude trips this.
+OUTLIER_MADS = 20.0
+
+
+def drop_mislabelled_bids(out_locations: dict) -> list[str]:
+    """Remove cash prices that cannot belong to the grain they are filed under.
+
+    Gold Eagle publishes one row with the malformed contract symbol "ZCZ2Z".
+    It classifies as corn off its ``ZC`` root but carries a soybean price and
+    no basis or futures, so it ranked as the best corn bid in the state.
+
+    Rather than hard-code a plausible price band - which would be wrong in a
+    different market year - each row is compared against the median for its own
+    grain across this build. With thousands of rows per grain that median is
+    very hard to shift, and a genuine high bid sits a few MADs out while a
+    mislabelled one sits fifty.
+
+    Returns a description of every row dropped, so the build reports them
+    instead of quietly discarding data.
+    """
+    prices: dict[str, list[float]] = {}
+    for entry in out_locations.values():
+        for bid in entry.get("bids", []):
+            cash = bid.get("cash")
+            if cash is not None:
+                prices.setdefault(bid.get("grain"), []).append(float(cash))
+
+    bounds: dict[str, tuple[float, float]] = {}
+    for grain, values in prices.items():
+        if len(values) < 50:
+            continue    # too few to characterise; leave them alone
+        median = statistics.median(values)
+        mad = statistics.median([abs(v - median) for v in values])
+        if mad <= 0:
+            continue
+        bounds[grain] = (median - OUTLIER_MADS * mad, median + OUTLIER_MADS * mad)
+
+    dropped: list[str] = []
+    for pin_id, entry in out_locations.items():
+        kept = []
+        for bid in entry.get("bids", []):
+            cash = bid.get("cash")
+            lo_hi = bounds.get(bid.get("grain"))
+            if cash is not None and lo_hi and not (lo_hi[0] <= float(cash) <= lo_hi[1]):
+                dropped.append(
+                    f"{pin_id}: {bid.get('grain')} {bid.get('delivery_label')} "
+                    f"cash {cash} (symbol {bid.get('futures_month')}) outside "
+                    f"{lo_hi[0]:.2f}-{lo_hi[1]:.2f}"
+                )
+                continue
+            kept.append(bid)
+        entry["bids"] = kept
+    return dropped
+
+
 def assemble(results: dict, status: dict, previous: dict) -> dict:
     """Project scraped source data onto map pins, carrying forward stale sources."""
     pin_map = load_location_map()
@@ -192,6 +251,9 @@ def assemble(results: dict, status: dict, previous: dict) -> dict:
             carried = dict(previous_locations[pin_id])
             carried["stale"] = True
             out_locations[pin_id] = carried
+
+    for note in drop_mislabelled_bids(out_locations):
+        print(f"  dropped mislabelled bid - {note}", file=sys.stderr)
 
     # Sources that failed keep their previous status, flagged stale.
     previous_status = previous.get("sources", {})

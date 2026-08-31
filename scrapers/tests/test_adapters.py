@@ -721,3 +721,59 @@ class TestFiveStarContractMatch:
         assert self._board().match("corn", 9.99, 0.03) is None
         assert self._board().match("corn", None, 0.03) is None
         assert self._board().match("soybeans", 5.36, 0.03) is None
+
+
+class TestMislabelledBidGuard:
+    """One bad row ranks first in a "best bids" table, so it matters most.
+
+    Gold Eagle publishes a row with the malformed symbol "ZCZ2Z": it classifies
+    as corn off the ZC root but carries a soybean price and no basis or
+    futures, which made it the best corn bid in the state.
+    """
+
+    def _locations(self, extra=None):
+        from build_bids import drop_mislabelled_bids
+        # A realistic spread so the median and MAD are meaningful.
+        locs = {}
+        for i in range(60):
+            locs[f'corn-{i}'] = {'bids': [
+                {'grain': 'corn', 'cash': 4.80 + (i % 20) * 0.05, 'delivery_label': 'Oct 2026'}]}
+            locs[f'bean-{i}'] = {'bids': [
+                {'grain': 'soybeans', 'cash': 12.10 + (i % 20) * 0.06, 'delivery_label': 'Oct 2026'}]}
+        if extra:
+            locs.update(extra)
+        return locs, drop_mislabelled_bids
+
+    def test_soybean_price_filed_as_corn_is_dropped(self):
+        locs, drop = self._locations({'bad': {'bids': [
+            {'grain': 'corn', 'cash': 12.373, 'futures_month': 'ZCZ2Z',
+             'delivery_label': 'Aug 2026'}]}})
+        dropped = drop(locs)
+        assert len(dropped) == 1
+        assert 'bad' in dropped[0]
+        assert locs['bad']['bids'] == []
+
+    def test_a_genuinely_high_corn_bid_survives(self):
+        # The best real corn bid in the set, not an error.
+        locs, drop = self._locations({'high': {'bids': [
+            {'grain': 'corn', 'cash': 5.95, 'delivery_label': 'Oct 2026'}]}})
+        assert drop(locs) == []
+        assert len(locs['high']['bids']) == 1
+
+    def test_normal_rows_are_untouched(self):
+        locs, drop = self._locations()
+        assert drop(locs) == []
+        assert all(len(v['bids']) == 1 for v in locs.values())
+
+    def test_too_few_rows_to_judge_leaves_everything(self):
+        from build_bids import drop_mislabelled_bids
+        # Below the sample floor nothing is characterised, so nothing is cut.
+        locs = {'a': {'bids': [{'grain': 'corn', 'cash': 5.0}]},
+                'b': {'bids': [{'grain': 'corn', 'cash': 99.0}]}}
+        assert drop_mislabelled_bids(locs) == []
+        assert len(locs['b']['bids']) == 1
+
+    def test_missing_cash_is_not_treated_as_an_outlier(self):
+        locs, drop = self._locations({'nocash': {'bids': [
+            {'grain': 'corn', 'cash': None, 'delivery_label': 'Oct 2026'}]}})
+        assert drop(locs) == []
