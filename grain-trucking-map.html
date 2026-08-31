@@ -514,7 +514,7 @@
     gap: 6px;
     cursor: pointer;
   }
-  #grain-trucking-tool table.gt-top-table { min-width: 620px; }
+  #grain-trucking-tool table.gt-top-table { min-width: 700px; }
   #grain-trucking-tool table.gt-top-table td.gt-top-rank {
     font-family: 'IBM Plex Mono', monospace;
     text-align: right;
@@ -845,6 +845,7 @@
             <th style="text-align:right;">#</th>
             <th>Elevator</th>
             <th>Delivery</th>
+            <th style="text-align:right;">Basis</th>
             <th style="text-align:right;">Cash</th>
             <th style="text-align:right;">Miles</th>
             <th style="text-align:right;">Haul</th>
@@ -6359,7 +6360,7 @@
     if (!top.length) {
       var tr = document.createElement('tr');
       var td = document.createElement('td');
-      td.colSpan = 7;
+      td.colSpan = 8;
       td.className = 'gt-top-empty';
       td.textContent = topFilteredEl.checked && activeCompanies
         ? 'No ' + (topGrain === 'corn' ? 'corn' : 'soybean') + ' bids among the companies currently shown on the map.'
@@ -6395,6 +6396,9 @@
       tr.appendChild(nameTd);
 
       tr.appendChild(cell(row.bid.delivery_label || '\u2014'));
+      // Not every feed publishes a basis; signedMoney renders a dash for those
+      // rather than a misleading zero.
+      tr.appendChild(cell(signedMoney(row.bid.basis), 'gt-bids-num'));
       tr.appendChild(cell(money(row.cash), 'gt-bids-cash'));
       tr.appendChild(cell(row.miles === null ? '\u2014' : row.miles.toFixed(0), 'gt-bids-num gt-top-est'));
       tr.appendChild(cell(row.haul === null ? '\u2014' : '$' + row.haul.toFixed(3), 'gt-bids-num gt-top-est'));
