@@ -12,3 +12,10 @@ scrapers/.build/
 # Local splice/verification scratch
 .build/
 .scratch/
+
+# Google Places key for the local NH3 lookup - server-side key, never commit
+.places-key
+
+# Generated private map - contains field locations, never commit
+dev/.private-preview.html
+dev/.private-test.html
