@@ -194,6 +194,102 @@
       "confidence": 0.5,
       "method": "name"
     },
+    "agstate-alta-ia": {
+      "name": "AgState Alta IA",
+      "source": "agricharts:agstate",
+      "source_location_id": "25731",
+      "source_name": "Alta",
+      "confidence": 1.0,
+      "method": "geo(0.1km)"
+    },
+    "agstate-battle-creek-ia": {
+      "name": "AgState Battle Creek IA",
+      "source": "agricharts:agstate",
+      "source_location_id": "84015",
+      "source_name": "Battle Crk",
+      "confidence": 0.94,
+      "method": "geo(0.5km)"
+    },
+    "agstate-cleghorn-ia": {
+      "name": "AgState Cleghorn IA",
+      "source": "agricharts:agstate",
+      "source_location_id": "81793",
+      "source_name": "Cleghorn",
+      "confidence": 1.0,
+      "method": "geo(0.1km)"
+    },
+    "agstate-fonda-ia-approx": {
+      "name": "AgState Fonda IA (approx)",
+      "source": "agricharts:agstate",
+      "source_location_id": "25735",
+      "source_name": "Fonda",
+      "confidence": 1.0,
+      "method": "geo(0.1km)"
+    },
+    "agstate-galva-ia": {
+      "name": "AgState Galva IA",
+      "source": "agricharts:agstate",
+      "source_location_id": "81794",
+      "source_name": "Galva",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "agstate-granville-ia": {
+      "name": "AgState Granville IA",
+      "source": "agricharts:agstate",
+      "source_location_id": "81795",
+      "source_name": "Granville",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "agstate-holstein-ia": {
+      "name": "AgState Holstein IA",
+      "source": "agricharts:agstate",
+      "source_location_id": "81796",
+      "source_name": "Holstein",
+      "confidence": 1.0,
+      "method": "geo(0.3km)"
+    },
+    "agstate-hospers-ia": {
+      "name": "AgState Hospers IA",
+      "source": "agricharts:agstate",
+      "source_location_id": "25737",
+      "source_name": "Hospers",
+      "confidence": 1.0,
+      "method": "geo(0.1km)"
+    },
+    "agstate-maurice-ia": {
+      "name": "AgState Maurice IA",
+      "source": "agricharts:agstate",
+      "source_location_id": "25739",
+      "source_name": "Maurice",
+      "confidence": 1.0,
+      "method": "geo(0.4km)"
+    },
+    "agstate-nemaha-ia": {
+      "name": "AgState Nemaha IA",
+      "source": "agricharts:agstate",
+      "source_location_id": "81806",
+      "source_name": "Nemaha",
+      "confidence": 1.0,
+      "method": "geo(0.0km)"
+    },
+    "agstate-paullina-ia": {
+      "name": "AgState Paullina IA",
+      "source": "agricharts:agstate",
+      "source_location_id": "81807",
+      "source_name": "Paullina",
+      "confidence": 1.0,
+      "method": "geo(0.1km)"
+    },
+    "agstate-royal-ia": {
+      "name": "AgState Royal IA",
+      "source": "agricharts:agstate",
+      "source_location_id": "25740",
+      "source_name": "Royal",
+      "confidence": 1.0,
+      "method": "geo(0.1km)"
+    },
     "butterfield-associates-grain-meadville-mo": {
       "name": "Butterfield Associates Grain Meadville MO",
       "source": "agricharts:butterfield",
@@ -641,14 +737,6 @@
       "source_name": "Akron",
       "confidence": 1.0,
       "method": "geo(0.2km)"
-    },
-    "cva-bancroft-ne": {
-      "name": "CVA Bancroft NE",
-      "source": "agricharts:cvacoop",
-      "source_location_id": "13880",
-      "source_name": "Bancroft",
-      "confidence": 1.0,
-      "method": "geo(0.0km)"
     },
     "cva-bee-ne": {
       "name": "CVA Bee NE",
@@ -3053,7 +3141,7 @@
     "nexus-blooming-prairie-mn": {
       "name": "Nexus Blooming Prairie MN",
       "source": "nexus",
-      "source_location_id": "14:Blooming Prairie, MN",
+      "source_location_id": "11:Blooming Prairie, MN",
       "source_name": "Blooming Prairie, MN",
       "confidence": 1.0,
       "method": "name"
@@ -3061,7 +3149,7 @@
     "nexus-carpenter-ia": {
       "name": "Nexus Carpenter IA",
       "source": "nexus",
-      "source_location_id": "28:Carpenter, IA",
+      "source_location_id": "23:Carpenter, IA",
       "source_name": "Carpenter, IA",
       "confidence": 1.0,
       "method": "name"
@@ -3069,7 +3157,7 @@
     "nexus-chapin-ia": {
       "name": "Nexus Chapin IA",
       "source": "nexus",
-      "source_location_id": "15:Chapin, IA",
+      "source_location_id": "12:Chapin, IA",
       "source_name": "Chapin, IA",
       "confidence": 1.0,
       "method": "name"
@@ -3077,7 +3165,7 @@
     "nexus-denison-ia": {
       "name": "Nexus Denison IA",
       "source": "nexus",
-      "source_location_id": "7:Denison, IA",
+      "source_location_id": "5:Denison, IA",
       "source_name": "Denison, IA",
       "confidence": 1.0,
       "method": "name"
@@ -3085,7 +3173,7 @@
     "nexus-dewar-ia": {
       "name": "Nexus Dewar IA",
       "source": "nexus",
-      "source_location_id": "32:Dewar, IA",
+      "source_location_id": "27:Dewar, IA",
       "source_name": "Dewar, IA",
       "confidence": 1.0,
       "method": "name"
@@ -3093,7 +3181,7 @@
     "nexus-elgin-ia": {
       "name": "Nexus Elgin IA",
       "source": "nexus",
-      "source_location_id": "23:Elgin, IA",
+      "source_location_id": "20:Elgin, IA",
       "source_name": "Elgin, IA",
       "confidence": 1.0,
       "method": "name"
@@ -3101,7 +3189,7 @@
     "nexus-harlan-ia": {
       "name": "Nexus Harlan IA",
       "source": "nexus",
-      "source_location_id": "17:Harlan, IA",
+      "source_location_id": "13:Harlan, IA",
       "source_name": "Harlan, IA",
       "confidence": 1.0,
       "method": "name"
@@ -3109,7 +3197,7 @@
     "nexus-manly-ia": {
       "name": "Nexus Manly IA",
       "source": "nexus",
-      "source_location_id": "18:Manly, IA",
+      "source_location_id": "15:Manly, IA",
       "source_name": "Manly, IA",
       "confidence": 1.0,
       "method": "name"
@@ -3117,7 +3205,7 @@
     "nexus-marble-rock-ia": {
       "name": "Nexus Marble Rock IA",
       "source": "nexus",
-      "source_location_id": "25:Marble Rock, IA",
+      "source_location_id": "21:Marble Rock, IA",
       "source_name": "Marble Rock, IA",
       "confidence": 1.0,
       "method": "name"
@@ -3125,7 +3213,7 @@
     "nexus-northwood-ia": {
       "name": "Nexus Northwood IA",
       "source": "nexus",
-      "source_location_id": "29:Northwood, IA",
+      "source_location_id": "24:Northwood, IA",
       "source_name": "Northwood, IA",
       "confidence": 1.0,
       "method": "name"
@@ -3133,7 +3221,7 @@
     "nexus-oelwein-ia": {
       "name": "Nexus Oelwein IA",
       "source": "nexus",
-      "source_location_id": "5:Oelwein, IA",
+      "source_location_id": "3:Oelwein, IA",
       "source_name": "Oelwein, IA",
       "confidence": 1.0,
       "method": "name"
@@ -3141,7 +3229,7 @@
     "nexus-rockford-ia": {
       "name": "Nexus Rockford IA",
       "source": "nexus",
-      "source_location_id": "9:Rockford, IA",
+      "source_location_id": "7:Rockford, IA",
       "source_name": "Rockford, IA",
       "confidence": 1.0,
       "method": "name"
@@ -3149,7 +3237,7 @@
     "nexus-rudd-ia": {
       "name": "Nexus Rudd IA",
       "source": "nexus",
-      "source_location_id": "13:Rudd, IA",
+      "source_location_id": "10:Rudd, IA",
       "source_name": "Rudd, IA",
       "confidence": 1.0,
       "method": "name"
@@ -3157,7 +3245,7 @@
     "nexus-stacyville-ia": {
       "name": "Nexus Stacyville IA",
       "source": "nexus",
-      "source_location_id": "6:Stacyville, IA",
+      "source_location_id": "4:Stacyville, IA",
       "source_name": "Stacyville, IA",
       "confidence": 1.0,
       "method": "name"
@@ -3165,7 +3253,7 @@
     "nexus-sumner-ia": {
       "name": "Nexus Sumner IA",
       "source": "nexus",
-      "source_location_id": "12:Sumner, IA",
+      "source_location_id": "9:Sumner, IA",
       "source_name": "Sumner, IA",
       "confidence": 1.0,
       "method": "name"
@@ -3173,7 +3261,7 @@
     "nexus-toeterville-ia": {
       "name": "Nexus Toeterville IA",
       "source": "nexus",
-      "source_location_id": "22:Toeterville, IA",
+      "source_location_id": "19:Toeterville, IA",
       "source_name": "Toeterville, IA",
       "confidence": 1.0,
       "method": "name"
@@ -3638,15 +3726,6 @@
       "confidence": 0.25,
       "method": "name-ambiguous",
       "pin_id": "adm-marshall-mn"
-    },
-    {
-      "name": "Stateline Bancroft IA",
-      "source": "agricharts:statelinecoop",
-      "source_location_id": "954",
-      "source_name": "North Burt",
-      "confidence": 0.313,
-      "method": "geo(5.5km)",
-      "pin_id": "stateline-bancroft-ia"
     }
   ],
   "unmatched": [
@@ -4035,6 +4114,18 @@
       "method": "no-match"
     },
     {
+      "id": "cva-bancroft-ne",
+      "name": "CVA Bancroft NE",
+      "type": "coop",
+      "company": "CVA",
+      "lat": 42.0136432,
+      "lng": -96.5716934,
+      "url": "https://www.cvacoop.com/cash-bids",
+      "host": "www.cvacoop.com",
+      "source": "agricharts:cvacoop",
+      "method": "no-match"
+    },
+    {
       "id": "cva-columbus-ne",
       "name": "CVA Columbus NE",
       "type": "coop",
@@ -4347,6 +4438,18 @@
       "method": "no-match"
     },
     {
+      "id": "agstate-laurens-ia",
+      "name": "AgState Laurens IA",
+      "type": "coop",
+      "company": "AgState",
+      "lat": 42.848011,
+      "lng": -94.852942,
+      "url": "",
+      "host": "",
+      "source": "agricharts:agstate",
+      "method": "no-match"
+    },
+    {
       "id": "heartland-co-op-luzerne-ia-approx",
       "name": "Heartland CO-OP Luzerne IA (approx)",
       "type": "coop",
@@ -4371,6 +4474,18 @@
       "method": "no-match"
     },
     {
+      "id": "agstate-orange-city-ia",
+      "name": "AgState Orange City IA",
+      "type": "coop",
+      "company": "AgState",
+      "lat": 42.997463,
+      "lng": -96.061494,
+      "url": "",
+      "host": "",
+      "source": "agricharts:agstate",
+      "method": "no-match"
+    },
+    {
       "id": "landus-cooperative-paton-ia",
       "name": "LANDUS COOPERATIVE PATON IA",
       "type": "coop",
@@ -4380,6 +4495,18 @@
       "url": "",
       "host": "",
       "source": "landus",
+      "method": "no-match"
+    },
+    {
+      "id": "agstate-peterson-ia",
+      "name": "AgState Peterson IA",
+      "type": "coop",
+      "company": "AgState",
+      "lat": 42.916134,
+      "lng": -95.342416,
+      "url": "",
+      "host": "",
+      "source": "agricharts:agstate",
       "method": "no-match"
     },
     {
@@ -4452,6 +4579,18 @@
       "url": "https://www.nexus.coop/cash-bids/",
       "host": "www.nexus.coop",
       "source": "nexus",
+      "method": "no-match"
+    },
+    {
+      "id": "stateline-bancroft-ia",
+      "name": "Stateline Bancroft IA",
+      "type": "coop",
+      "company": "Stateline Cooperative",
+      "lat": 43.2932246,
+      "lng": -94.2200703,
+      "url": "https://statelinecoop.com/",
+      "host": "statelinecoop.com",
+      "source": "agricharts:statelinecoop",
       "method": "no-match"
     },
     {
@@ -4793,12 +4932,6 @@
       "host": ""
     },
     {
-      "id": "agstate-alta-ia",
-      "name": "AgState Alta IA",
-      "company": "AgState",
-      "host": ""
-    },
-    {
       "id": "howard-county-equity-coop-alta-vista-ia",
       "name": "Howard County Equity Coop Alta Vista IA",
       "company": "Howard County Equity Coop",
@@ -4826,12 +4959,6 @@
       "id": "west-side-grain-sales-corp-atkins-ia",
       "name": "West Side Grain Sales Corp Atkins IA",
       "company": "West Side Grain Sales Corp",
-      "host": ""
-    },
-    {
-      "id": "agstate-battle-creek-ia",
-      "name": "AgState Battle Creek IA",
-      "company": "AgState",
       "host": ""
     },
     {
@@ -4868,12 +4995,6 @@
       "id": "east-central-iowa-co-op-cedar-falls-ia",
       "name": "East Central Iowa CO-OP Cedar Falls IA",
       "company": "East Central Iowa CO-OP",
-      "host": ""
-    },
-    {
-      "id": "agstate-cleghorn-ia",
-      "name": "AgState Cleghorn IA",
-      "company": "AgState",
       "host": ""
     },
     {
@@ -4979,12 +5100,6 @@
       "host": ""
     },
     {
-      "id": "agstate-fonda-ia-approx",
-      "name": "AgState Fonda IA (approx)",
-      "company": "AgState",
-      "host": ""
-    },
-    {
       "id": "21st-century-cooperative-fontanelle-ia-approx",
       "name": "21st Century Cooperative Fontanelle IA (approx)",
       "company": "21st Century Cooperative",
@@ -5003,21 +5118,9 @@
       "host": ""
     },
     {
-      "id": "agstate-galva-ia",
-      "name": "AgState Galva IA",
-      "company": "AgState",
-      "host": ""
-    },
-    {
       "id": "new-cooperative-inc-george-ia",
       "name": "New Cooperative Inc. George IA",
       "company": "New Cooperative Inc.",
-      "host": ""
-    },
-    {
-      "id": "agstate-granville-ia",
-      "name": "AgState Granville IA",
-      "company": "AgState",
       "host": ""
     },
     {
@@ -5063,18 +5166,6 @@
       "host": ""
     },
     {
-      "id": "agstate-holstein-ia",
-      "name": "AgState Holstein IA",
-      "company": "AgState",
-      "host": ""
-    },
-    {
-      "id": "agstate-hospers-ia",
-      "name": "AgState Hospers IA",
-      "company": "AgState",
-      "host": ""
-    },
-    {
       "id": "chem-gro-of-houghton-inc-houghton-ia",
       "name": "Chem Gro of Houghton Inc Houghton IA",
       "company": "Chem Gro of Houghton Inc",
@@ -5114,12 +5205,6 @@
       "id": "south-central-cooperative-knoxville-ia",
       "name": "South Central Cooperative Knoxville IA",
       "company": "South Central Cooperative",
-      "host": ""
-    },
-    {
-      "id": "agstate-laurens-ia",
-      "name": "AgState Laurens IA",
-      "company": "AgState",
       "host": ""
     },
     {
@@ -5183,12 +5268,6 @@
       "host": "nelsongrain.com"
     },
     {
-      "id": "agstate-maurice-ia",
-      "name": "AgState Maurice IA",
-      "company": "AgState",
-      "host": ""
-    },
-    {
       "id": "river-valley-cooperative-mccausland-ia",
       "name": "River Valley Cooperative McCausland IA",
       "company": "River Valley Cooperative",
@@ -5219,12 +5298,6 @@
       "host": ""
     },
     {
-      "id": "agstate-nemaha-ia",
-      "name": "AgState Nemaha IA",
-      "company": "AgState",
-      "host": ""
-    },
-    {
       "id": "southeast-iowa-grain-new-london-ia",
       "name": "Southeast Iowa Grain New London IA",
       "company": "Southeast Iowa Grain",
@@ -5249,12 +5322,6 @@
       "host": ""
     },
     {
-      "id": "agstate-orange-city-ia",
-      "name": "AgState Orange City IA",
-      "company": "AgState",
-      "host": ""
-    },
-    {
       "id": "farmers-cooperative-elevator-ottosen-ia-approx",
       "name": "Farmers Cooperative Elevator Ottosen IA (approx)",
       "company": "Farmers Cooperative Elevator",
@@ -5270,18 +5337,6 @@
       "id": "cogdill-farm-supply-inc-panama-ia-approx",
       "name": "Cogdill Farm Supply Inc Panama IA (approx)",
       "company": "Cogdill Farm Supply Inc",
-      "host": ""
-    },
-    {
-      "id": "agstate-paullina-ia",
-      "name": "AgState Paullina IA",
-      "company": "AgState",
-      "host": ""
-    },
-    {
-      "id": "agstate-peterson-ia",
-      "name": "AgState Peterson IA",
-      "company": "AgState",
       "host": ""
     },
     {
@@ -5330,12 +5385,6 @@
       "id": "heart-of-iowa-cooperative-roland-ia",
       "name": "Heart of Iowa Cooperative Roland IA",
       "company": "Heart of Iowa Cooperative",
-      "host": ""
-    },
-    {
-      "id": "agstate-royal-ia",
-      "name": "AgState Royal IA",
-      "company": "AgState",
       "host": ""
     },
     {

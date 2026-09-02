@@ -60,6 +60,7 @@ COMPANY_TO_SOURCE = {
     "Landus": "landus",
     "Nexus Cooperative": "nexus",
     "Five Star Cooperative": "fivestar",
+    "AgState": "agricharts:agstate",
     "New Vision Co-op": "agricharts:newvision",
     # Name variants carried in by the Iowa DNR facility list, which spells
     # some co-ops differently from the map's own pins.
@@ -130,6 +131,18 @@ HOST_TO_SOURCE = {
 }
 
 MAX_MATCH_KM = 8.0
+
+# Past this, coordinates on their own are not enough. Neighbouring Iowa towns
+# sit five to eight kilometres apart and each has its own elevator, so an 8 km
+# radius can hand one town's pin the next town's bids: AgState publishes an
+# "Alton Term" and no Orange City at all, and the Orange City pin matched Alton
+# 4.9 km away at 0.39 confidence - just over the publish threshold. Beyond this
+# distance the name has to corroborate, or the pin is left unmatched.
+#
+# Only that one match in the whole set was both far and name-disagreeing; every
+# other geo match at 1.5 km or more scores 0.5 or better on name.
+GEO_NEEDS_NAME_KM = 2.5
+GEO_NAME_FLOOR = 0.3
 
 # Deliberately below the default publish threshold so a tie is never published.
 AMBIGUOUS_CONFIDENCE = 0.25
@@ -330,7 +343,14 @@ def match_pin(pin: dict, candidates: list[dict]) -> tuple[dict | None, float, st
             key=lambda t: t[0],
         )
         best_km, best = scored[0]
-        if best_km <= MAX_MATCH_KM:
+        geo_name = name_score(pin["name"], best["name"])
+        # Close enough that the coordinates speak for themselves, or far enough
+        # that the name has to back them up. Failing both, fall through to name
+        # matching, which will leave the pin unmatched rather than give it the
+        # next town's bids.
+        if best_km <= MAX_MATCH_KM and (
+            best_km <= GEO_NEEDS_NAME_KM or geo_name >= GEO_NAME_FLOOR
+        ):
             runner_up_km = scored[1][0] if len(scored) > 1 else float("inf")
             # Confidence falls off with distance, and drops further when a
             # second candidate sits at a comparable distance.
@@ -338,7 +358,7 @@ def match_pin(pin: dict, candidates: list[dict]) -> tuple[dict | None, float, st
             if runner_up_km < best_km * 2:
                 confidence *= 0.6
             # A strong name agreement rescues an otherwise marginal distance.
-            confidence = max(confidence, name_score(pin["name"], best["name"]))
+            confidence = max(confidence, geo_name)
             return best, round(min(confidence, 1.0), 3), "geo(%.1fkm)" % best_km
 
     # 2. Name similarity.

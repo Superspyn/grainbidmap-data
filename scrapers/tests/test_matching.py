@@ -185,3 +185,47 @@ class TestDeliveredBidGuard:
         assert self._check("Heartland Coop", "GREEN PLAINS - SHENANDOAH") == "Green Plains"
         # "Plains" alone is not Green Plains.
         assert self._check("Heartland Coop", "Plains, KS") is None
+
+
+class TestNeighbouringTownGuard:
+    """Coordinates alone must not hand a pin the next town's bids.
+
+    AgState publishes an "Alton Term" and no Orange City location at all. The
+    two towns are 4.9 km apart, inside the 8 km search radius, so the Orange
+    City pin matched Alton at 0.39 confidence - just over the publish
+    threshold - and would have shown Alton's bids on an Orange City pin.
+    """
+
+    @staticmethod
+    def pin(name, lat=42.0, lng=-93.0):
+        return {"name": name, "lat": lat, "lng": lng, "company": "", "host": ""}
+
+    def test_far_and_name_disagreeing_is_not_matched(self):
+        # 4.9 km north, and nothing in the name to back it up.
+        cands = [{"source_location_id": "1", "name": "Alton Term",
+                  "latitude": 42.0441, "longitude": -93.0}]
+        best, _conf, method = m.match_pin(self.pin("AgState Orange City IA"), cands)
+        assert best is None, method
+
+    def test_far_but_name_agreeing_still_matches(self):
+        # Same distance; the name corroborates, so geography is trusted. This
+        # is the real "CVA Tilden NE" -> "Tilden" case at 6.6 km.
+        cands = [{"source_location_id": "1", "name": "Tilden",
+                  "latitude": 42.0441, "longitude": -93.0}]
+        best, _conf, method = m.match_pin(self.pin("CVA Tilden NE"), cands)
+        assert best is not None and method.startswith("geo")
+
+    def test_close_enough_needs_no_name_agreement(self):
+        # Under the corroboration distance the coordinates speak for
+        # themselves - "Hawkeye Pride" style renames must keep working.
+        cands = [{"source_location_id": "1", "name": "Unrecognisable Name",
+                  "latitude": 42.009, "longitude": -93.0}]
+        best, _conf, method = m.match_pin(self.pin("Some Elevator"), cands)
+        assert best is not None and method.startswith("geo")
+
+    def test_partial_name_agreement_is_enough(self):
+        # "Stateline Cooperative Burt IA" -> "North Burt" at 5.1 km scores 0.5.
+        cands = [{"source_location_id": "1", "name": "North Burt",
+                  "latitude": 42.046, "longitude": -93.0}]
+        best, _conf, method = m.match_pin(self.pin("Stateline Cooperative Burt IA"), cands)
+        assert best is not None and method.startswith("geo")

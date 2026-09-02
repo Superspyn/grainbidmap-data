@@ -256,6 +256,17 @@ sources:
     # Valero and POET plants - those are Nexus's bids, not the plants' own, and
     # company scoping in match_locations.py keeps them off those pins.
 
+  - id: agricharts:agstate
+    adapter: agricharts
+    tenant: agstate
+    label: AgState
+    # 29 locations across northwest Iowa, all quoting. AgState is the 2021
+    # merger of ALCECO/Ag Partners and First Cooperative Association, so their
+    # own domain agstate.org gives nothing away - the bids live on this
+    # AgriCharts tenant. Note agstate.com is an unrelated parked domain, and
+    # the `agpartners` tenant already in this file is a different company
+    # (Ag Partners Cooperative of Kansas).
+
   - id: fivestar
     adapter: fivestar
     label: Five Star Cooperative
