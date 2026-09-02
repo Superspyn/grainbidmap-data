@@ -109,7 +109,14 @@ def sign_in(cfg: dict) -> dict:
 
     class Handler(http.server.BaseHTTPRequestHandler):
         def do_GET(self):  # noqa: N802
-            qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            path = urllib.parse.urlparse(self.path)
+            qs = urllib.parse.parse_qs(path.query)
+            # Browsers fetch /favicon.ico unprompted. Answering it must not
+            # count as the callback, or the real one arrives to a dead socket.
+            if "code" not in qs and "error" not in qs:
+                self.send_response(204)
+                self.end_headers()
+                return
             caught.update({k: v[0] for k, v in qs.items()})
             self.send_response(200)
             self.send_header("Content-Type", "text/html; charset=utf-8")
@@ -119,8 +126,16 @@ def sign_in(cfg: dict) -> dict:
         def log_message(self, *_args):
             pass
 
-    server = http.server.HTTPServer((parsed.hostname, parsed.port or 80), Handler)
-    threading.Thread(target=server.handle_request, daemon=True).start()
+    try:
+        server = http.server.HTTPServer((parsed.hostname, parsed.port or 80), Handler)
+    except OSError as exc:
+        sys.exit(
+            f"Could not listen on {cfg['redirect_uri']}: {exc}\n"
+            "  Something else may already be using that port."
+        )
+    # serve_forever rather than a single handle_request: the callback is not
+    # guaranteed to be the first request that arrives.
+    threading.Thread(target=server.serve_forever, daemon=True).start()
 
     url = AUTHORIZE + "?" + urllib.parse.urlencode({
         "response_type": "code",
@@ -135,17 +150,27 @@ def sign_in(cfg: dict) -> dict:
     print(f"  if it does not open, paste this in yourself:\n  {url}\n")
     webbrowser.open(url)
 
-    server.serve_forever  # noqa: B018 - handle_request above is the one shot
+    print("Waiting for the browser to come back (5 minutes)...")
     for _ in range(600):
         if caught:
             break
         threading.Event().wait(0.5)
+    server.shutdown()
+
     if not caught:
-        sys.exit("timed out waiting for the browser redirect")
+        sys.exit(
+            "Timed out waiting for the browser redirect.\n"
+            "  If Deere showed an error page, the redirect URI on your app at\n"
+            f"  developer.deere.com must match {cfg['redirect_uri']} exactly."
+        )
+    if "error" in caught:
+        sys.exit(f"Deere refused the sign-in: {caught.get('error')} "
+                 f"- {caught.get('error_description', '')}")
     if caught.get("state") != state:
         sys.exit("state mismatch - aborting rather than trusting that redirect")
     if "code" not in caught:
         sys.exit(f"sign-in failed: {caught}")
+    print("Got the callback, exchanging it for a token...")
 
     payload = {
         "grant_type": "authorization_code",
