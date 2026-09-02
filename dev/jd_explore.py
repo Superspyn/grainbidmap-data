@@ -105,6 +105,15 @@ def sign_in(cfg: dict) -> dict:
     state = secrets.token_urlsafe(16)
 
     parsed = urllib.parse.urlparse(cfg["redirect_uri"])
+    # An unparseable redirect_uri used to surface as a TypeError from deep
+    # inside socketserver, which says nothing about the actual problem.
+    if parsed.scheme not in ("http", "https") or not parsed.hostname:
+        sys.exit(
+            f"redirect_uri in {SECRETS} is not a URL:\n"
+            f"  {cfg['redirect_uri']!r}\n"
+            "  It should be exactly:  http://localhost:9090/callback\n"
+            "  Fix it with:  python dev/jd_setup.py"
+        )
     caught: dict = {}
 
     class Handler(http.server.BaseHTTPRequestHandler):

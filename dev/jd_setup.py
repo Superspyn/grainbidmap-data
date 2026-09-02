@@ -17,6 +17,7 @@ import json
 import os
 import pathlib
 import sys
+import urllib.parse
 
 SECRETS_DIR = pathlib.Path.home() / ".grain-map-secrets"
 PATH = SECRETS_DIR / "johndeere.json"
@@ -61,8 +62,20 @@ def main() -> None:
         cfg["client_secret"] = entered
 
     current_redirect = cfg.get("redirect_uri") or DEFAULT_REDIRECT
-    entered = input(f"Redirect URI [{current_redirect}]: ").strip()
-    cfg["redirect_uri"] = entered or current_redirect
+    print("\n(press Enter to accept the default - do not paste a command here)")
+    while True:
+        entered = input(f"Redirect URI [{current_redirect}]: ").strip()
+        candidate = entered or current_redirect
+        parsed = urllib.parse.urlparse(candidate)
+        # Anything that is not a URL gets rejected on the spot. A pasted shell
+        # command saved here once, and it surfaced much later as a TypeError
+        # from inside socketserver.
+        if parsed.scheme in ("http", "https") and parsed.hostname:
+            cfg["redirect_uri"] = candidate
+            break
+        print(f"  {candidate!r} is not a URL. Press Enter to use "
+              f"{DEFAULT_REDIRECT}")
+        current_redirect = DEFAULT_REDIRECT
 
     SECRETS_DIR.mkdir(parents=True, exist_ok=True)
     PATH.write_text(json.dumps(cfg, indent=2) + "\n", encoding="utf-8")
