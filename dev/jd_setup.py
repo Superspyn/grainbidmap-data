@@ -76,6 +76,15 @@ def ask(label: str, current: str | None, hidden: bool) -> str | None:
             print(f"  That looks like a command or a path, not a {label.lower()}.")
             print("  Paste the value from your app at developer.deere.com.")
             continue
+        # A hidden prompt shows nothing, so a second paste lands on the end of
+        # the first without any sign. Echo the length - it is the only clue
+        # available that does not reveal the value.
+        if hidden:
+            print(f"  read {len(entered)} characters"
+                  + ("  <- that looks long; paste it only once"
+                     if len(entered) > 120 else ""))
+            if not input("  is that right? [Y/n]: ").strip().lower() in ("", "y", "yes"):
+                continue
         return entered
 
 

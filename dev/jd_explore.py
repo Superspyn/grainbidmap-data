@@ -43,6 +43,7 @@ import pathlib
 import secrets
 import sys
 import threading
+import urllib.error
 import urllib.parse
 import urllib.request
 import webbrowser
@@ -187,12 +188,31 @@ def sign_in(cfg: dict) -> dict:
         "redirect_uri": cfg["redirect_uri"],
         "code_verifier": verifier,
     }
-    auth = None
+
+    # Try with the secret, then without. Deere's OAuth metadata lists "none"
+    # among the accepted token endpoint auth methods and advertises PKCE, so a
+    # public client works - which means a wrong or mistyped secret should not
+    # be the thing that blocks sign-in when PKCE alone would do.
+    attempts = []
     if cfg.get("client_secret"):
-        auth = (cfg["client_id"], cfg["client_secret"])
+        attempts.append(("client secret", dict(payload),
+                         (cfg["client_id"], cfg["client_secret"])))
+    attempts.append(("PKCE only", {**payload, "client_id": cfg["client_id"]}, None))
+
+    last_error = None
+    for label, body, auth in attempts:
+        try:
+            token = _post_form(TOKEN, body, auth)
+            if len(attempts) > 1 and label == "PKCE only":
+                print("  (the client secret was rejected; signed in with PKCE instead -"
+                      " re-check the secret in developer.deere.com)")
+            break
+        except urllib.error.HTTPError as exc:
+            detail = exc.read().decode("utf-8", "replace")[:200]
+            last_error = f"{label}: HTTP {exc.code} {detail}"
+            print(f"  {label} failed, trying the next method...")
     else:
-        payload["client_id"] = cfg["client_id"]
-    token = _post_form(TOKEN, payload, auth)
+        sys.exit(f"Could not exchange the code for a token.\n  {last_error}")
     TOKEN_CACHE.write_text(json.dumps(token, indent=1), encoding="utf-8")
     try:
         os.chmod(TOKEN_CACHE, 0o600)
