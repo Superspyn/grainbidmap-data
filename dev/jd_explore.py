@@ -121,6 +121,11 @@ def sign_in(cfg: dict) -> dict:
         def do_GET(self):  # noqa: N802
             path = urllib.parse.urlparse(self.path)
             qs = urllib.parse.parse_qs(path.query)
+            # Say what arrived. Silence here versus a request that arrived and
+            # was ignored are very different problems, and without this they
+            # look identical from the outside.
+            print(f"  <- request on {parsed.port}: {path.path} "
+                  f"[{', '.join(sorted(qs)) or 'no query'}]")
             # Browsers fetch /favicon.ico unprompted. Answering it must not
             # count as the callback, or the real one arrives to a dead socket.
             if "code" not in qs and "error" not in qs:
