@@ -109,6 +109,11 @@ PANEL_CSS = """
     display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
     font-size: 12px; color: var(--ink-soft); margin-top: 9px;
   }
+  #grain-trucking-tool .gt-field-hint {
+    cursor: default; font-size: 11px; color: var(--ink-soft);
+    text-transform: uppercase; letter-spacing: 0.05em; background: var(--bg);
+  }
+  #grain-trucking-tool .gt-field-hint:hover { background: var(--bg); }
 """
 
 PANEL_HTML = """
@@ -167,13 +172,52 @@ PANEL_JS = r"""
       search.value = f.n;
     }
 
+    function milesBetween(aLat, aLng, bLat, bLng) {
+      var toRad = Math.PI / 180;
+      var dLat = (bLat - aLat) * toRad, dLng = (bLng - aLng) * toRad;
+      var s = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(aLat * toRad) * Math.cos(bLat * toRad) *
+        Math.sin(dLng / 2) * Math.sin(dLng / 2);
+      return 2 * 3958.8 * Math.asin(Math.min(1, Math.sqrt(s)));
+    }
+
+    // With 223 fields, an empty box that shows nothing means you have to
+    // already know a name to begin. Showing the ones nearest whatever the map
+    // is looking at makes it usable without typing.
+    function nearestToView(limit) {
+      var centre = null;
+      if (typeof map !== 'undefined' && map && map.getCenter) {
+        var c = map.getCenter();
+        if (c) centre = { lat: c.lat(), lng: c.lng() };
+      }
+      if (!centre) return gtFields.slice(0, limit);
+      return gtFields.slice().sort(function (a, b) {
+        return milesBetween(centre.lat, centre.lng, a.y, a.x) -
+               milesBetween(centre.lat, centre.lng, b.y, b.x);
+      }).slice(0, limit);
+    }
+
     function render(query) {
       var q = String(query || '').trim().toLowerCase();
       list.innerHTML = '';
-      if (!q) { list.hidden = true; return; }
-      var hits = gtFields.filter(function (f) {
-        return f.n.toLowerCase().indexOf(q) !== -1;
-      }).slice(0, 40);
+      var hits;
+      if (!q) {
+        hits = nearestToView(12);
+        var head = document.createElement('div');
+        head.className = 'gt-field-item gt-field-hint';
+        head.textContent = 'Nearest to the map view - or start typing a name';
+        list.appendChild(head);
+      } else {
+        // Names that start with what was typed are what you meant; the rest
+        // are still worth offering, just below them.
+        var starts = [], contains = [];
+        gtFields.forEach(function (f) {
+          var n = f.n.toLowerCase();
+          if (n.indexOf(q) === 0) starts.push(f);
+          else if (n.indexOf(q) !== -1) contains.push(f);
+        });
+        hits = starts.concat(contains).slice(0, 40);
+      }
       if (!hits.length) {
         var none = document.createElement('div');
         none.className = 'gt-field-item';
@@ -197,7 +241,7 @@ PANEL_JS = r"""
     }
 
     search.addEventListener('input', function () { render(search.value); });
-    search.addEventListener('focus', function () { render(search.value); });
+    search.addEventListener('focus', function () { render(''); });
     document.addEventListener('click', function (e) {
       if (!panel.contains(e.target)) list.hidden = true;
     });
