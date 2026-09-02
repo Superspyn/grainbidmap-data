@@ -16,7 +16,7 @@ repo is public:
     {
       "client_id": "...",
       "client_secret": "...",
-      "redirect_uri": "http://localhost:9376/callback"
+      "redirect_uri": "http://localhost:9090/callback"
     }
 
 Register that exact redirect URI in your app at developer.deere.com. The
@@ -67,7 +67,7 @@ def load_config() -> dict:
             f"No John Deere credentials found.\n"
             f"  Create {SECRETS} containing:\n"
             '    {"client_id": "...", "client_secret": "...",\n'
-            '     "redirect_uri": "http://localhost:9376/callback"}\n'
+            '     "redirect_uri": "http://localhost:9090/callback"}\n'
             "  and register that redirect URI on your app at developer.deere.com."
         )
     # utf-8-sig: Notepad and PowerShell's Out-File both write a BOM, and the
