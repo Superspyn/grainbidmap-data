@@ -35,6 +35,8 @@ SECRETS = pathlib.Path.home() / ".grain-map-secrets"
 RELAY = SECRETS / "relay.json"
 STATE = SECRETS / "relay-state.json"
 
+USER_AGENT = "grain-map/1.0 (farm hauling map; contact github.com/Superspyn)"
+
 
 def load_relay() -> dict:
     if not RELAY.exists():
@@ -82,6 +84,10 @@ def main() -> None:
         cfg["url"], data=json.dumps(payload).encode(), method="PUT")
     request.add_header("Authorization", "Bearer " + cfg["push_token"])
     request.add_header("Content-Type", "application/json")
+    # Cloudflare rejects urllib's default agent with its own 1010 bot-signature
+    # error before the Worker ever runs, which reads as the token being wrong.
+    # Any honest agent is accepted; this one says who we are.
+    request.add_header("User-Agent", USER_AGENT)
     try:
         with urllib.request.urlopen(request, timeout=45) as response:
             result = response.read().decode()

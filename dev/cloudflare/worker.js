@@ -93,9 +93,13 @@ export default {
         headers: {
           ...headers,
           "Content-Type": "application/json",
-          // Deere republishes every ~15 minutes; there is nothing to gain
-          // from a fresher fetch than one minute.
-          "Cache-Control": "public, max-age=60",
+          // NOT publicly cacheable. This was "public, max-age=60" and a
+          // browser served the cached authorized response to a request
+          // carrying a WRONG token - the check never ran. A shared cache
+          // could have handed the positions to anyone. Vary is belt and
+          // braces on top of no-store.
+          "Cache-Control": "no-store, private",
+          "Vary": "Authorization",
         },
       });
     }

@@ -1,0 +1,19 @@
+# Cloudflare Worker config for the private truck-position relay.
+#
+# Deploy from this directory:
+#     npx wrangler deploy
+#
+# The KV namespace id is filled in by `wrangler kv namespace create FLEET`.
+# Secrets are NOT here - they go in with `wrangler secret put`, which stores
+# them on Cloudflare rather than in this file. This repo is public.
+
+name = "studer-fleet"
+main = "worker.js"
+compatibility_date = "2026-09-01"
+
+# Positions are private; nothing here should be indexed or discoverable.
+workers_dev = true
+
+[[kv_namespaces]]
+binding = "FLEET"
+id = "f2132773c2a84209a936da27de1c954d"
