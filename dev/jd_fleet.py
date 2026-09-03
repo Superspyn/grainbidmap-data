@@ -29,6 +29,7 @@ import sys
 import urllib.error
 import urllib.parse
 import urllib.request
+import xml.etree.ElementTree as ET
 
 SECRETS = pathlib.Path.home() / ".grain-map-secrets"
 CONFIG = SECRETS / "johndeere.json"
@@ -225,28 +226,75 @@ def field_boundary(token: str, field: dict) -> dict:
     return {"rings": [], "lat": None, "lon": None, "acres": None, "detail": None}
 
 
-def machine_position(token: str, machine_id: str):
-    """Last known position for one machine, or None.
+AEMP = "https://api.deere.com/fleet/{page}"
+AEMP_NS = {"i": "http://standards.iso.org/iso/15143/-3"}
 
-    Deere exposes this under the Machines API. The equipment listing endpoint
-    (/isg/equipment) does not carry positions, so this is a second call per
-    machine - which is why the result is cached to disk rather than fetched
-    per page view.
+# Road vehicles, by OEM. Everything else in the feed is farm equipment.
+SEMI_MAKES = {"MACK", "KENWORTH", "PETERBILT", "FREIGHTLINER",
+              "INTERNATIONAL", "VOLVO", "WESTERN STAR"}
+PICKUP_MAKES = {"CHEVROLET", "GMC", "FORD", "RAM", "DODGE", "TOYOTA", "NISSAN"}
+
+
+def fleet_positions(token: str) -> list[dict]:
+    """Every machine with a position, from the ISO 15143-3 (AEMP) feed.
+
+    This is a self-contained fleet feed: one call returns each machine with
+    its last known position, so it needs none of the /platform/machines routes
+    - which is the point, since every one of those answers 403 on this account
+    including the ones the console lists as approved.
+
+    Note the position timestamp is an ATTRIBUTE on <Location>, not a child
+    element; reading it as a child silently produced no ages at all.
     """
-    for path in (f"/platform/machines/{machine_id}/locations?lastKnown=true",
-                 f"/platform/machines/{machine_id}/locationHistory?lastKnown=true"):
-        status, body = api(token, path)
-        if status == 200 and isinstance(body, dict):
-            values = body.get("values") or []
-            if values:
-                v = values[0]
-                point = v.get("point") or {}
-                return {
-                    "lat": point.get("lat"),
-                    "lon": point.get("lon"),
-                    "timestamp": v.get("timestamp") or v.get("eventTimestamp"),
-                }
-    return None
+    out: list[dict] = []
+    page = 1
+    while page <= 50:
+        req = urllib.request.Request(AEMP.format(page=page))
+        req.add_header("Authorization", "Bearer " + token)
+        req.add_header("Accept", "application/xml")
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r:
+                xml = r.read().decode("utf-8", "replace")
+        except urllib.error.HTTPError as e:
+            if page == 1:
+                print(f"  AEMP feed: HTTP {e.code}")
+            break
+
+        root = ET.fromstring(xml)
+        found = root.findall(".//i:Equipment", AEMP_NS)
+        if not found:
+            break
+
+        for eq in found:
+            header = eq.find("i:EquipmentHeader", AEMP_NS)
+            if header is None:
+                continue
+            make = (header.findtext("i:OEMName", "", AEMP_NS) or "").strip()
+            kind = ("semi" if make.upper() in SEMI_MAKES else
+                    "pickup" if make.upper() in PICKUP_MAKES else "equipment")
+            loc = eq.find(".//i:Location", AEMP_NS)
+            lat = lon = ts = None
+            if loc is not None:
+                lat = loc.findtext("i:Latitude", None, AEMP_NS)
+                lon = loc.findtext("i:Longitude", None, AEMP_NS)
+                ts = loc.get("datetime")
+            out.append({
+                "name": (header.findtext("i:EquipmentID", "", AEMP_NS) or "").strip(),
+                "make": make,
+                "model": (header.findtext("i:Model", "", AEMP_NS) or "").strip(),
+                "vin": (header.findtext("i:SerialNumber", "", AEMP_NS) or "").strip(),
+                "kind": kind,
+                "lat": float(lat) if lat else None,
+                "lon": float(lon) if lon else None,
+                "at": ts,
+            })
+
+        nxt = [l for l in root.findall("i:Links", AEMP_NS)
+               if (l.findtext("i:rel", "", AEMP_NS) or "").lower() == "next"]
+        if not nxt:
+            break
+        page += 1
+    return out
 
 
 def main() -> None:
@@ -273,27 +321,15 @@ def main() -> None:
             entry.update(field_boundary(token, f))
             out["fields"].append(entry)
 
-        for m in api_all(token, f"/isg/equipment?organizationIds={oid}"):
-            kind = ((m.get("isgType") or {}).get("name")
-                    or (m.get("type") or {}).get("name") or "")
-            if kind.strip().lower() not in TRUCK_TYPES:
-                continue
-            entry = {
-                "org": oid,
-                "id": str(m.get("id")),
-                "name": m.get("name"),
-                "make": (m.get("make") or {}).get("name"),
-                "vin": m.get("serialNumber"),
-                "telematics": bool(m.get("telematicsCapable")),
-                "position": None,
-            }
-            if entry["telematics"]:
-                pos = machine_position(token, entry["id"])
-                if pos:
-                    entry["position"] = pos
-                else:
-                    refused += 1
-            out["trucks"].append(entry)
+    # The AEMP feed is account-wide rather than per organization, so it is
+    # read once rather than per org.
+    for m in fleet_positions(token):
+        if m["kind"] == "equipment":
+            continue        # tractors, planters, sprayers - not road vehicles
+        if m["lat"] is None or m["lon"] is None:
+            refused += 1
+            continue
+        out["trucks"].append(m)
 
     OUTPUT.write_text(json.dumps(out, indent=1), encoding="utf-8")
     try:
@@ -301,17 +337,33 @@ def main() -> None:
     except OSError:
         pass
 
-    located = sum(1 for t in out["trucks"] if t["position"])
+    semis = [t for t in out["trucks"] if t["kind"] == "semi"]
+    pickups = [t for t in out["trucks"] if t["kind"] == "pickup"]
     outlined = sum(1 for f in out["fields"] if f.get("rings"))
+
+    def freshest(vehicles):
+        ages = []
+        for v in vehicles:
+            if not v.get("at"):
+                continue
+            try:
+                t = _dt.datetime.fromisoformat(v["at"].replace("Z", "+00:00"))
+            except ValueError:
+                continue
+            ages.append((_dt.datetime.now(_dt.timezone.utc) - t).total_seconds() / 60)
+        if not ages:
+            return "no timestamps"
+        ages.sort()
+        return (f"freshest {ages[0]:.0f} min, "
+                f"median {ages[len(ages) // 2] / 60:.1f} h")
+
     print(f"wrote {OUTPUT}")
     print(f"  organizations {len(out['organizations'])}")
     print(f"  fields        {len(out['fields'])}  ({outlined} with a boundary)")
-    print(f"  trucks        {len(out['trucks'])}  ({located} with a position)")
+    print(f"  semis         {len(semis):3d}  {freshest(semis)}")
+    print(f"  pickups       {len(pickups):3d}  {freshest(pickups)}")
     if refused:
-        print(f"  {refused} telematics-capable trucks returned no position.")
-        print("  If that is all of them, the app is probably missing the")
-        print('  "Operations Center - Machines" API - request it on your app')
-        print("  at developer.deere.com, Access tab.")
+        print(f"  {refused} road vehicles had no position in the AEMP feed")
 
 
 if __name__ == "__main__":

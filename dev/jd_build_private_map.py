@@ -39,6 +39,27 @@ DATA_MARKER = "  // ====== Scraped cash bids ======"
 SETUP_MARKER = "  setupCompanyFilter();\n  loadBids();"
 
 
+def build_truck_js(trucks: list[dict]) -> str:
+    """Road vehicles with a position, as a compact JS array.
+
+    The report time goes in as-is: a truck that reported ten minutes ago and
+    one that reported last week must not look the same on the map.
+    """
+    rows = []
+    for t in trucks:
+        if t.get("lat") is None or t.get("lon") is None:
+            continue
+        rows.append("{" + ",".join([
+            "n:" + json.dumps(str(t.get("name") or "")),
+            "m:" + json.dumps(str(t.get("make") or "")),
+            "k:" + json.dumps(str(t.get("kind") or "")),
+            f"y:{round(float(t['lat']), 6)}",
+            f"x:{round(float(t['lon']), 6)}",
+            "t:" + json.dumps(str(t.get("at") or "")),
+        ]) + "}")
+    return "  var gtTrucks = [\n    " + ",\n    ".join(rows) + "\n  ];\n"
+
+
 def build_field_js(fields: list[dict], outlines: bool) -> str:
     rows = []
     for f in fields:
@@ -132,6 +153,16 @@ PANEL_HTML = """
     <div class="gt-field-note" id="gt-field-note">Pick a field &mdash; by name or
       by clicking its outline &mdash; to use it as your loadout point. Every haul
       cost and the best-bids table below are then calculated from there.</div>
+    <div class="gt-field-head" style="margin-top:12px;padding-top:11px;border-top:1px solid var(--line);">
+      <label class="gt-field-toggle" style="margin-top:0;">
+        <input type="checkbox" id="gt-truck-toggle" checked>
+        Show trucks on the map
+      </label>
+      <span class="gt-field-count" id="gt-truck-summary"></span>
+    </div>
+    <div class="gt-field-note">Green reported within the hour, amber today,
+      grey older. Positions are each vehicle&rsquo;s last report, not a live
+      feed &mdash; a parked truck stops reporting.</div>
   </div>
 """
 
@@ -290,6 +321,84 @@ PANEL_JS = r"""
       });
     }
   })();
+
+  // ====== Your trucks (private) ======
+  // Positions come from Deere's ISO 15143-3 fleet feed via the farm PC. They
+  // are a snapshot from whenever each vehicle last reported, NOT a live feed -
+  // a parked truck stops reporting entirely - so every marker states its age
+  // rather than implying it is current.
+  (function setupTrucks() {
+    if (typeof gtTrucks === 'undefined' || !gtTrucks.length) return;
+    var box = container.querySelector('#gt-truck-toggle');
+    var summary = container.querySelector('#gt-truck-summary');
+    var markers = [];
+
+    function ageMinutes(iso) {
+      if (!iso) return null;
+      var t = Date.parse(iso);
+      return isNaN(t) ? null : (Date.now() - t) / 60000;
+    }
+
+    function ageText(mins) {
+      if (mins === null) return 'no report time';
+      if (mins < 90) return Math.round(mins) + ' min ago';
+      if (mins < 60 * 48) return (mins / 60).toFixed(1) + ' h ago';
+      return Math.round(mins / 1440) + ' days ago';
+    }
+
+    // Colour by staleness, because "where is it now" and "where was it last
+    // week" are different questions and should not look alike.
+    function pin(mins) {
+      var base = 'https://maps.google.com/mapfiles/ms/icons/';
+      if (mins === null) return base + 'grey-dot.png';
+      if (mins <= 60) return base + 'green-dot.png';
+      if (mins <= 60 * 12) return base + 'yellow-dot.png';
+      return base + 'grey-dot.png';
+    }
+
+    function draw() {
+      if (markers.length || typeof map === 'undefined' || !map) return;
+      if (!window.google || !window.google.maps) return;
+      gtTrucks.forEach(function (t) {
+        var mins = ageMinutes(t.t);
+        var mk = new google.maps.Marker({
+          position: { lat: t.y, lng: t.x },
+          map: map,
+          icon: pin(mins),
+          title: t.n + '  (' + t.m + ')  -  ' + ageText(mins),
+          zIndex: 500
+        });
+        mk.addListener('click', function () {
+          var html = '<div style="font-family:inherit;font-size:13px">' +
+            '<strong>' + escapeHtml(t.n) + '</strong><br>' +
+            escapeHtml(t.m) + ' \u00b7 ' + escapeHtml(t.k) + '<br>' +
+            '<span style="color:#5B6350">reported ' + ageText(mins) + '</span></div>';
+          infoWindow.setContent(html);
+          infoWindow.open(map, mk);
+        });
+        markers.push(mk);
+      });
+      var fresh = gtTrucks.filter(function (t) {
+        var m = ageMinutes(t.t); return m !== null && m <= 60;
+      }).length;
+      if (summary) {
+        summary.textContent = gtTrucks.length + ' vehicles \u00b7 ' + fresh +
+          ' reported in the last hour';
+      }
+    }
+
+    var tries = 0;
+    (function wait() {
+      draw();
+      if (!markers.length && tries++ < 60) setTimeout(wait, 500);
+    })();
+
+    if (box) {
+      box.addEventListener('change', function () {
+        markers.forEach(function (m) { m.setMap(box.checked ? map : null); });
+      });
+    }
+  })();
 """
 
 
@@ -308,8 +417,12 @@ def main() -> None:
         if marker not in html:
             sys.exit(f"could not find an insertion point in {SOURCE}:\n  {marker!r}")
 
+    trucks = [t for t in fleet.get("trucks", [])
+              if t.get("lat") is not None and t.get("lon") is not None]
     html = html.replace(
-        DATA_MARKER, build_field_js(fields, outlines) + "\n" + DATA_MARKER, 1)
+        DATA_MARKER,
+        build_field_js(fields, outlines) + build_truck_js(trucks) + "\n" + DATA_MARKER,
+        1)
     html = html.replace(SETUP_MARKER, SETUP_MARKER + "\n" + PANEL_JS, 1)
     # The panel sits above the map, and its styles go with the rest.
     html = html.replace('  <div class="gt-map-wrap">',
@@ -325,6 +438,7 @@ def main() -> None:
     print(f"wrote {OUTPUT}  ({kb:,.0f} KB)")
     print(f"  {len(fields)} fields"
           + ("  with outlines" if outlines else "  (names, centroids, acres)"))
+    print(f"  {len(trucks)} trucks with a position")
     print()
     print("  Paste this into a PASSWORD-PROTECTED Squarespace page.")
     print("  It contains your field locations - do not put it on a public page,")
