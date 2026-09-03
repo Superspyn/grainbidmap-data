@@ -323,10 +323,43 @@ PANEL_JS = r"""
   })();
 
   // ====== Your trucks (private) ======
-  // Positions come from Deere's ISO 15143-3 fleet feed via the farm PC. They
-  // are a snapshot from whenever each vehicle last reported, NOT a live feed -
-  // a parked truck stops reporting entirely - so every marker states its age
-  // rather than implying it is current.
+  // Positions come from Deere's ISO 15143-3 fleet feed, pushed by the farm PC
+  // to a token-gated Cloudflare Worker. Deere republishes that feed about
+  // every fifteen minutes - measured, not assumed - so a position is typically
+  // ten to twenty minutes old. Every marker states its age rather than
+  // implying it is current, because a parked truck stops reporting entirely.
+  //
+  // GT_FLEET_URL and GT_FLEET_TOKEN are only ever written into the private,
+  // password-protected page. The token grants read access to truck positions
+  // and nothing else - it cannot write - but it must never reach a public page.
+  (function refreshTrucksFromRelay() {
+    if (typeof GT_FLEET_URL === 'undefined' || !GT_FLEET_URL) return;
+    if (!window.fetch) return;
+
+    function pull() {
+      fetch(GT_FLEET_URL, {
+        cache: 'no-store',
+        headers: { 'Authorization': 'Bearer ' + GT_FLEET_TOKEN }
+      })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (data) {
+          if (!data || !data.trucks || !data.trucks.length) return;
+          // The relay carries the same shape the generator bakes in, so the
+          // drawing code below does not care which one it got.
+          gtTrucks = data.trucks.map(function (t) {
+            return { n: t.name, m: t.make, k: t.kind, y: t.lat, x: t.lon, t: t.at };
+          });
+          if (window.gtRedrawTrucks) window.gtRedrawTrucks();
+        })
+        .catch(function () { /* keep whatever was baked in */ });
+    }
+
+    pull();
+    // Deere's snapshot moves every ~15 minutes; five is frequent enough to
+    // catch a new one promptly and still mostly return unchanged data.
+    setInterval(pull, 5 * 60 * 1000);
+  })();
+
   (function setupTrucks() {
     if (typeof gtTrucks === 'undefined' || !gtTrucks.length) return;
     var box = container.querySelector('#gt-truck-toggle');
@@ -393,6 +426,17 @@ PANEL_JS = r"""
       if (!markers.length && tries++ < 60) setTimeout(wait, 500);
     })();
 
+    // Called when the relay delivers a newer set: clear and redraw rather than
+    // moving markers, since vehicles can appear and disappear between pushes.
+    window.gtRedrawTrucks = function () {
+      markers.forEach(function (m) { m.setMap(null); });
+      markers.length = 0;
+      draw();
+      if (box && !box.checked) {
+        markers.forEach(function (m) { m.setMap(null); });
+      }
+    };
+
     if (box) {
       box.addEventListener('change', function () {
         markers.forEach(function (m) { m.setMap(box.checked ? map : null); });
@@ -419,9 +463,22 @@ def main() -> None:
 
     trucks = [t for t in fleet.get("trucks", [])
               if t.get("lat") is not None and t.get("lon") is not None]
+
+    # The relay, if configured, so the page can refresh positions on its own
+    # instead of waiting to be re-pasted. The baked-in trucks stay as the
+    # starting picture and as a fallback when the relay cannot be reached.
+    relay = SECRETS / "relay.json"
+    relay_js = "  var GT_FLEET_URL = '';\n  var GT_FLEET_TOKEN = '';\n"
+    if relay.exists():
+        cfg = json.loads(relay.read_text(encoding="utf-8-sig"))
+        if cfg.get("url") and cfg.get("read_token"):
+            relay_js = (f"  var GT_FLEET_URL = {json.dumps(cfg['url'])};\n"
+                        f"  var GT_FLEET_TOKEN = {json.dumps(cfg['read_token'])};\n")
+
     html = html.replace(
         DATA_MARKER,
-        build_field_js(fields, outlines) + build_truck_js(trucks) + "\n" + DATA_MARKER,
+        build_field_js(fields, outlines) + build_truck_js(trucks) + relay_js
+        + "\n" + DATA_MARKER,
         1)
     html = html.replace(SETUP_MARKER, SETUP_MARKER + "\n" + PANEL_JS, 1)
     # The panel sits above the map, and its styles go with the rest.

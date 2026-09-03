@@ -19,3 +19,5 @@ scrapers/.build/
 # Generated private map - contains field locations, never commit
 dev/.private-preview.html
 dev/.private-test.html
+dev/cloudflare/.wrangler/
+dev/cloudflare/node_modules/
