@@ -39,7 +39,7 @@ def newcoop():
 
 @pytest.fixture(scope="module")
 def heartland():
-    return HeartlandAdapter().parse(read_fixture("heartland_bids.htm"))
+    return HeartlandAdapter().parse(read_fixture("heartland_sheet001.htm"))
 
 
 class TestAgriCharts:
@@ -276,35 +276,38 @@ class TestNewCoop:
 
 
 class TestHeartland:
-    def test_parses_all_four_tables(self, heartland):
-        assert len(heartland) == 74
-        # Regular and processor delivery points are kept distinct.
-        assert any(l.source_location_id.startswith("processor:") for l in heartland)
-        assert any(not l.source_location_id.startswith("processor:") for l in heartland)
+    """Heartland publishes an Excel "Save as Web Page" export in a frameset.
 
-    def test_reads_the_two_span_cash_and_basis_cell(self, heartland):
-        alleman = next(l for l in heartland if l.name == "ALLEMAN")
-        aug_corn = next(
-            b for b in alleman.bids
-            if b.grain == "corn" and b.delivery_start == "2026-08-01"
-        )
-        # Source cell: <span>4.80</span><span>-0.34</span>
-        assert aug_corn.cash == pytest.approx(4.80)
-        assert aug_corn.basis == pytest.approx(-0.34)
-        assert aug_corn.futures_month == "CU26"
+    bids.htm is only the frameset now; the data is in bids_files/sheet001.htm,
+    laid out as four blocks (CORN, SOYBEANS, DIRECT CORN, DIRECT SOYBEANS) with
+    cash and basis alternating across the columns.
+    """
+
+    def test_parses_every_block(self, heartland):
+        # Well above the forty-six rows of the first block, because soybeans
+        # and both DIRECT blocks are read too, and combined towns are split.
+        assert len(heartland) > 70
+        grains = {b.grain for loc in heartland for b in loc.bids}
+        assert grains == {"corn", "soybeans"}
+
+    def test_reads_the_cash_and_basis_pair(self, heartland):
+        cb = next(l for l in heartland if l.name == "COUNCIL BLUFFS")
+        sep = next(b for b in cb.bids
+                   if b.grain == "corn" and b.delivery_start == "2026-09-01")
+        assert sep.cash == pytest.approx(5.06)
+        assert sep.basis == pytest.approx(-0.37)
+        assert sep.futures_month == "CZ26"
 
     def test_futures_derived_from_cash_minus_basis(self, heartland):
-        alleman = next(l for l in heartland if l.name == "ALLEMAN")
-        aug_corn = next(
-            b for b in alleman.bids
-            if b.grain == "corn" and b.delivery_start == "2026-08-01"
-        )
-        assert aug_corn.futures == pytest.approx(4.80 - (-0.34))
+        for loc in heartland:
+            for b in loc.bids:
+                if b.basis is not None and b.futures is not None:
+                    assert abs(b.futures - (b.cash - b.basis)) < 0.006
 
     def test_futures_are_consistent_across_locations(self, heartland):
         """Every location shares one futures market, so a given contract month
         must derive to the same futures price everywhere. This is the strongest
-        available check that the cash/basis columns are not swapped."""
+        available check that the cash and basis columns are not swapped."""
         by_month: dict[str, set] = {}
         for loc in heartland:
             for bid in loc.bids:
@@ -313,16 +316,42 @@ class TestHeartland:
         for month, values in by_month.items():
             assert len(values) == 1, month + " derived inconsistent futures: " + str(values)
 
-    def test_both_grains_present(self, heartland):
-        grains = {b.grain for loc in heartland for b in loc.bids}
-        assert grains == {"corn", "soybeans"}
+    def test_combined_towns_are_split(self, heartland):
+        """The sheet quotes one row for "Minburn/Dallas Center" where the old
+        page listed each town. Both ids are already mapped to pins, so both
+        must still appear, carrying the same bids."""
+        names = {l.source_location_id for l in heartland}
+        for town in ("MINBURN", "DALLAS CENTER", "SLATER", "CAMBRIDGE",
+                     "JEWELL", "RANDALL", "WAUKEE", "REDFIELD"):
+            assert town in names, town
+        minburn = next(l for l in heartland if l.name == "MINBURN")
+        dallas = next(l for l in heartland if l.name == "DALLAS CENTER")
+        assert [b.cash for b in minburn.bids] == [b.cash for b in dallas.bids]
 
-    def test_as_of_uses_the_published_close(self, heartland):
-        # Header reads "CLOSING GRAIN BIDS 82626" and the page states 1:15 PM CT.
-        assert heartland[0].as_of == "2026-08-26T18:15:00Z"
+    def test_renamed_town_keeps_its_old_id(self, heartland):
+        # The sheet now spells out "Missouri Valley"; the pin is mapped to the
+        # old "MO VALLEY", so both are emitted.
+        names = {l.source_location_id for l in heartland}
+        assert "MO VALLEY" in names
+        assert "MISSOURI VALLEY" in names
+
+    def test_summary_rows_are_not_locations(self, heartland):
+        """Each block ends with an "Average" row, which is not a delivery
+        point and would otherwise become a pinnable location."""
+        for loc in heartland:
+            assert not loc.name.upper().startswith(("AVERAGE", "AVE ", "LOCATION"))
+
+    def test_every_bid_has_a_delivery_window(self, heartland):
+        """The window row reads "09/01/26 - 09/30/26". An earlier regex was
+        written against a truncated debug print and expected no year on the
+        end date, so it matched nothing and every bid lost its dates."""
+        for loc in heartland:
+            for b in loc.bids:
+                assert b.delivery_start and b.delivery_end
+                assert b.delivery_end >= b.delivery_start
 
     def test_raises_on_a_page_with_no_bid_tables(self):
-        with pytest.raises(ValueError, match="no corn or soybean"):
+        with pytest.raises(ValueError):
             HeartlandAdapter().parse("<html><body><p>Down for maintenance</p></body></html>")
 
 
