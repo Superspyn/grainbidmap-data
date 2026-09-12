@@ -86,12 +86,31 @@ def main() -> None:
     address = sms_address({"phone": digits, "carrier": carrier})
     print(f"  -> texts will be sent to {address}\n")
 
-    gmail = ask("The Gmail address they are sent from", cfg.get("username"))
-    if "@" not in gmail:
-        sys.exit(f"'{gmail}' is not an email address.")
+    sender = ask("The email address they are sent from", cfg.get("username"))
+    if "@" not in sender:
+        sys.exit(f"'{sender}' is not an email address.")
 
-    print("\nGmail App Password - 16 letters, from myaccount.google.com/apppasswords")
-    print("(NOT your normal Gmail password. It will not be shown as you type.)")
+    # Gmail is the default, but app passwords are not available on every
+    # Google account - so any SMTP server will do, and a free relay such as
+    # Brevo or Mailjet is the way out when Google will not issue one.
+    default_host = cfg.get("smtp_host") or (
+        "smtp.gmail.com" if sender.lower().endswith(("@gmail.com", "@googlemail.com"))
+        else "")
+    host = ask("Mail server (press Enter for the default)", default_host)
+    if not host:
+        sys.exit("No mail server given. For Gmail that is smtp.gmail.com.")
+    port = ask("Mail server port", str(cfg.get("smtp_port") or 587))
+    if not port.isdigit():
+        sys.exit(f"'{port}' is not a port number.")
+
+    gmail = host.lower().endswith("gmail.com")
+    if gmail:
+        print("\nGmail App Password - 16 letters, from "
+              "myaccount.google.com/apppasswords")
+        print("(NOT your normal Gmail password. It will not be shown as you type.)")
+    else:
+        print(f"\nThe SMTP password for {sender} on {host}.")
+        print("(It will not be shown as you type.)")
     keep = " [press Enter to keep the saved one]" if cfg.get("app_password") else ""
     typed = getpass.getpass(f"App password{keep}: ").strip()
     if typed:
@@ -101,7 +120,8 @@ def main() -> None:
         # along with it and must not be counted.
         bare = re.sub(r"\s", "", typed)
         print(f"  (read {len(bare)} characters)")
-        if looks_like_an_account_password(typed):
+        # Only meaningful for Gmail; another relay's password can be anything.
+        if gmail and looks_like_an_account_password(typed):
             print("  Warning: that does not look like an App Password, which is"
                   " sixteen letters with no digits or symbols.")
             if input("  Save it anyway? [y/N]: ").strip().lower() != "y":
@@ -123,7 +143,9 @@ def main() -> None:
 
     out = {
         "provider": "email",
-        "username": gmail,
+        "smtp_host": host,
+        "smtp_port": int(port),
+        "username": sender,
         "app_password": app_password,
         "to": [{"phone": digits, "carrier": carrier}],
         "quiet_hours": quiet_hours,
@@ -136,7 +158,8 @@ def main() -> None:
         pass
 
     print(f"\nWrote {CONFIG}")
-    print(f"  texts to {address}, quiet {quiet_hours[0]}:00-{quiet_hours[1]}:00, "
+    print(f"  texts to {address} via {host}:{port}, "
+          f"quiet {quiet_hours[0]}:00-{quiet_hours[1]}:00, "
           f"at most {out['max_per_hour']} an hour")
     print("\nCheck it without sending anything:")
     print("  python dev/jd_notify.py --test --dry-run")
