@@ -15,8 +15,9 @@ Output goes outside the repo on purpose. This repo is public.
 
 By default only each field's name, centroid and acres are embedded - about
 20 KB, and everything the map needs to price a haul from that field. Pass
---outlines to include the thinned boundary shapes as well, which is nicer to
-look at and roughly a hundred times larger.
+--outlines to include the boundary shapes as well: Deere's geometry
+simplified to about a metre and polyline-encoded, with farmstead cutouts and
+waterways carried as holes rather than filled in.
 """
 from __future__ import annotations
 
@@ -60,6 +61,35 @@ def build_truck_js(trucks: list[dict]) -> str:
     return "  var gtTrucks = [\n    " + ",\n    ".join(rows) + "\n  ];\n"
 
 
+def signed_area(points: list[list[float]]) -> float:
+    """Shoelace on (lon, lat): negative is clockwise, the outer-ring sense."""
+    total = 0.0
+    for (lat1, lon1), (lat2, lon2) in zip(points, points[1:]):
+        total += lon1 * lat2 - lon2 * lat1
+    return total / 2.0
+
+
+def encode_ring(points: list[list[float]]) -> str:
+    """Google's polyline encoding, at six decimals rather than its usual five.
+
+    Five decimals is a 1.1 m grid and puts faint steps on curved edges; six
+    is 0.11 m. Each vertex costs a few characters instead of the twenty-odd
+    of a JSON pair, and the output is plain ASCII (characters 63 to 126).
+    """
+    out = []
+    prev_lat = prev_lon = 0
+    for lat, lon in points:
+        ilat, ilon = round(lat * 1e6), round(lon * 1e6)
+        for v in (ilat - prev_lat, ilon - prev_lon):
+            v = ~(v << 1) if v < 0 else v << 1
+            while v >= 0x20:
+                out.append(chr((0x20 | (v & 0x1F)) + 63))
+                v >>= 5
+            out.append(chr(v + 63))
+        prev_lat, prev_lon = ilat, ilon
+    return "".join(out)
+
+
 def build_field_js(fields: list[dict], outlines: bool) -> str:
     rows = []
     for f in fields:
@@ -69,12 +99,22 @@ def build_field_js(fields: list[dict], outlines: bool) -> str:
         acres = f.get("acres")
         parts = [f"n:{name}", f"y:{round(f['lat'], 6)}", f"x:{round(f['lon'], 6)}"]
         if acres:
-            parts.append(f"a:{acres}")
+            # Two decimals, as Operations Center shows it. Rounded here, at
+            # the end, from Deere's full-precision figure.
+            parts.append(f"a:{round(acres, 2)}")
         if outlines and f.get("rings"):
-            # Round to five decimals: about a metre, far finer than a field
-            # outline on a hauling map needs.
-            rings = [[[round(p[0], 5), round(p[1], 5)] for p in ring]
-                     for ring in f["rings"]]
+            # Each ring is its type letter (e = exterior, i = interior hole)
+            # followed by the encoded vertices. Wound the shapefile way -
+            # exterior clockwise, holes counter-clockwise - which Deere's own
+            # output does not keep to: 54 exteriors in one export came back
+            # counter-clockwise. The type label is what decides hole or not;
+            # the winding is just made consistent for the drawn copy.
+            rings = []
+            for ring in f["rings"]:
+                pts = ring["p"]
+                if (ring["t"] == "i") != (signed_area(pts) > 0):
+                    pts = pts[::-1]
+                rings.append(ring["t"] + encode_ring(pts))
             parts.append("r:" + json.dumps(rings, separators=(",", ":")))
         rows.append("{" + ",".join(parts) + "}")
     return "  var gtFields = [\n    " + ",\n    ".join(rows) + "\n  ];\n"
@@ -198,7 +238,7 @@ PANEL_JS = r"""
         el.classList.remove('gt-field-item-on');
       });
       note.textContent = 'Hauling from ' + f.n +
-        (f.a ? ' (' + f.a + ' acres)' : '') +
+        (f.a ? ' (' + f.a.toFixed(2) + ' acres)' : '') +
         ' \u2014 now pick an elevator, or use the best-bids table below.';
       list.hidden = true;
       search.value = f.n;
@@ -263,7 +303,7 @@ PANEL_JS = r"""
         name.textContent = f.n;
         var acres = document.createElement('span');
         acres.className = 'gt-field-acres';
-        acres.textContent = f.a ? f.a + ' ac' : '';
+        acres.textContent = f.a ? f.a.toFixed(2) + ' ac' : '';
         row.appendChild(name);
         row.appendChild(acres);
         row.addEventListener('click', function () { choose(f); });
@@ -282,28 +322,52 @@ PANEL_JS = r"""
     // Drawn once the map exists. Clicking a field selects it exactly as the
     // search list does, so the shape on the map and the name in the list are
     // the same control.
+    // Rings arrive polyline-encoded at six decimals (see encode_ring in the
+    // generator). Same scheme as Google's own, with 1e6 in place of 1e5.
+    function decodeRing(s) {
+      var pts = [], i = 0, lat = 0, lng = 0;
+      while (i < s.length) {
+        for (var k = 0; k < 2; k++) {
+          var result = 0, shift = 0, b;
+          do {
+            b = s.charCodeAt(i++) - 63;
+            result |= (b & 0x1f) << shift;
+            shift += 5;
+          } while (b >= 0x20);
+          var d = (result & 1) ? ~(result >> 1) : (result >> 1);
+          if (k === 0) lat += d; else lng += d;
+        }
+        pts.push({ lat: lat / 1e6, lng: lng / 1e6 });
+      }
+      return pts;
+    }
+
     var drawn = [];
     function drawOutlines() {
       if (drawn.length || typeof map === 'undefined' || !map) return;
       if (!window.google || !window.google.maps) return;
       gtFields.forEach(function (f) {
         if (!f.r || !f.r.length) return;
-        f.r.forEach(function (ring) {
-          var poly = new google.maps.Polygon({
-            paths: ring.map(function (p) { return { lat: p[0], lng: p[1] }; }),
-            strokeColor: '#9C6E1C', strokeOpacity: 0.9, strokeWeight: 1.5,
-            fillColor: '#C08A28', fillOpacity: 0.18,
-            map: map, zIndex: 1, clickable: true
-          });
-          poly.addListener('click', function () { choose(f); });
-          poly.addListener('mouseover', function () {
-            poly.setOptions({ fillOpacity: 0.35 });
-          });
-          poly.addListener('mouseout', function () {
-            poly.setOptions({ fillOpacity: 0.18 });
-          });
-          drawn.push(poly);
+        // One polygon per field with every ring as a path. Google fills
+        // multi-path polygons even-odd, so an interior ring is a hole - a
+        // farmstead cutout or a waterway shows as bare imagery instead of
+        // being painted over. The rings also keep Deere's orientation
+        // (exterior clockwise, holes counter-clockwise) for any renderer
+        // that goes by winding instead.
+        var poly = new google.maps.Polygon({
+          paths: f.r.map(function (ring) { return decodeRing(ring.slice(1)); }),
+          strokeColor: '#9C6E1C', strokeOpacity: 0.9, strokeWeight: 1.5,
+          fillColor: '#C08A28', fillOpacity: 0.18,
+          map: map, zIndex: 1, clickable: true
         });
+        poly.addListener('click', function () { choose(f); });
+        poly.addListener('mouseover', function () {
+          poly.setOptions({ fillOpacity: 0.35 });
+        });
+        poly.addListener('mouseout', function () {
+          poly.setOptions({ fillOpacity: 0.18 });
+        });
+        drawn.push(poly);
       });
     }
 
