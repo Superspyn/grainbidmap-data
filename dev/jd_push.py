@@ -29,6 +29,7 @@ import urllib.error
 import urllib.request
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import jd_idle  # noqa: E402
 from jd_fleet import fleet_positions, now_iso, refresh_token  # noqa: E402
 
 SECRETS = pathlib.Path.home() / ".grain-map-secrets"
@@ -61,6 +62,17 @@ def last_snapshot() -> str | None:
         return None
 
 
+def signature(road: list[dict], newest: str) -> str:
+    """What the page would draw differently. The newest report time alone is
+    not enough now that each truck also carries how long it has been stopped:
+    that can change - a heartbeat revealing a truck was already parked, or an
+    engine starting - on a snapshot Deere has not otherwise republished."""
+    return json.dumps([newest] + sorted(
+        f"{t.get('vin') or t.get('name')}|{t.get('since')}|"
+        f"{int(bool(t.get('moving')))}{int(bool(t.get('engine_on')))}"
+        f"{int(bool(t.get('since_min')))}" for t in road))
+
+
 def main() -> None:
     cfg = load_relay()
     token = refresh_token()
@@ -72,10 +84,15 @@ def main() -> None:
     if not road:
         sys.exit("no road vehicles with a position - nothing to push")
 
-    # The newest report in the batch stands in for the snapshot: if it has not
-    # moved, Deere has not republished and there is nothing new to send.
+    # Always track, even when nothing gets pushed. How long a truck has been
+    # stopped is accumulated from consecutive readings, so a skipped reading
+    # is a gap in the record - and this is the only thing reading the feed
+    # often enough to notice a truck move.
+    jd_idle.track(road)
+
     newest = max((v.get("at") or "") for v in road)
-    if newest and newest == last_snapshot():
+    sig = signature(road, newest)
+    if sig == last_snapshot():
         print(f"unchanged since {newest} - not pushing")
         return
 
@@ -95,14 +112,18 @@ def main() -> None:
         sys.exit(f"relay refused the push: HTTP {exc.code} "
                  f"{exc.read().decode()[:120]}")
 
-    STATE.write_text(json.dumps({"snapshot": newest}), encoding="utf-8")
+    STATE.write_text(json.dumps({"snapshot": sig}), encoding="utf-8")
     try:
         os.chmod(STATE, 0o600)
     except OSError:
         pass
 
     semis = sum(1 for v in road if v["kind"] == "semi")
+    moving = sum(1 for v in road if v.get("moving"))
+    idling = sum(1 for v in road if v.get("engine_on") and not v.get("moving"))
     print(f"pushed {len(road)} vehicles ({semis} semis), newest report {newest}")
+    print(f"  {moving} moving, {idling} idling with the engine on, "
+          f"{len(road) - moving} stopped")
     print(f"  relay said: {result}")
 
 
