@@ -23,6 +23,7 @@ from __future__ import annotations
 import base64
 import datetime as _dt
 import json
+import math
 import os
 import pathlib
 import sys
@@ -146,15 +147,33 @@ def connected_orgs(token: str) -> list[dict]:
 
 
 HECTARES_TO_ACRES = 2.4710538
+SQM_PER_ACRE = 4046.8564224
 
-# Deere's "simplified" boundary still runs to about 1,400 points per field -
-# survey grade, and 224 fields of it came to 16.8 MB. This map needs a field
-# outline only to recognise the shape; the centroid is what prices the haul.
-MAX_RING_POINTS = 48
+# Douglas-Peucker tolerance for the copy that gets drawn, in degrees of
+# latitude: 0.00001 is about 1.1 m. Deere's boundaries average several
+# hundred vertices a field and follow every creek bend; sampling every Nth
+# point (the previous approach, 48 a ring) turned those bends into a
+# staircase. At this tolerance roughly a third of the vertices survive and
+# the shape is indistinguishable from the source at field zoom. Acreage is
+# never computed from the simplified copy.
+DP_TOLERANCE_DEG = 0.00001
+
+# Six decimals is 0.11 m. Five (1.1 m) shows faint stepping on curves.
+COORD_DECIMALS = 6
+
+try:
+    from pyproj import Geod
+    _GEOD = Geod(ellps="WGS84")
+except ImportError:                 # validation only; the map still builds
+    _GEOD = None
 
 
 def _acres(measurement: dict | None) -> float | None:
-    """Deere reports area as valueAsDouble, usually in hectares."""
+    """Deere reports area as valueAsDouble, usually in hectares.
+
+    Full precision: Operations Center shows two decimals, and rounding each
+    field before summing drifts a 200-field total by whole acres.
+    """
     if not isinstance(measurement, dict):
         return None
     value = measurement.get("valueAsDouble")
@@ -166,34 +185,95 @@ def _acres(measurement: dict | None) -> float | None:
     if unit in ("ha", "hectare", "hectares"):
         value *= HECTARES_TO_ACRES
     elif unit in ("m2", "sqm", "square metre", "square meter"):
-        value *= 0.000247105
-    return round(value, 1)
+        value /= SQM_PER_ACRE
+    return value
 
 
-def _simplify(points: list[list[float]], keep: int = MAX_RING_POINTS) -> list[list[float]]:
-    """Thin a ring to at most `keep` points, preserving its shape.
+def _signed_area(points: list[list[float]]) -> float:
+    """Shoelace area in square degrees, on (lon, lat) so that the sign follows
+    the shapefile convention: negative is clockwise, an outer ring."""
+    total = 0.0
+    for (lat1, lon1), (lat2, lon2) in zip(points, points[1:]):
+        total += lon1 * lat2 - lon2 * lat1
+    return total / 2.0
 
-    Douglas-Peucker would be better but needs a tolerance tuned per field;
-    even spacing along the ring is predictable, keeps the closing point, and
-    is plenty for telling one field from another on a hauling map.
+
+def _is_hole(ring: dict, points: list[list[float]]) -> bool:
+    """Deere labels every ring exterior or interior. Trust that, and check it
+    against orientation: a farmstead cutout notched in from the edge shares
+    vertices with the outer ring, which is exactly where a point-in-polygon
+    test goes wrong, so containment is never used to decide this."""
+    kind = str(ring.get("type") or "").lower()
+    if kind in ("interior", "exterior"):
+        return kind == "interior"
+    return _signed_area(points) > 0     # counter-clockwise
+
+
+def douglas_peucker(points: list[list[float]], tol: float) -> list[list[float]]:
+    """Simplify one closed ring, keeping its endpoints and its orientation.
+
+    Longitude is scaled by cos(latitude) so the tolerance means the same
+    distance east-west as north-south. Iterative rather than recursive:
+    rings here reach 2,400 points.
     """
-    if len(points) <= keep:
+    n = len(points)
+    if n < 5:
         return points
-    step = len(points) / float(keep - 1)
-    thinned = [points[int(i * step)] for i in range(keep - 1)]
-    thinned.append(points[-1])
-    return thinned
+    scale = math.cos(math.radians(points[0][0]))
+    xs = [p[1] * scale for p in points]
+    ys = [p[0] for p in points]
+    keep = [False] * n
+    keep[0] = keep[-1] = True
+    stack = [(0, n - 1)]
+    while stack:
+        a, b = stack.pop()
+        if b - a < 2:
+            continue
+        ax, ay, bx, by = xs[a], ys[a], xs[b], ys[b]
+        dx, dy = bx - ax, by - ay
+        length = math.hypot(dx, dy)
+        worst, worst_i = 0.0, -1
+        for i in range(a + 1, b):
+            if length == 0.0:
+                d = math.hypot(xs[i] - ax, ys[i] - ay)
+            else:
+                d = abs(dy * xs[i] - dx * ys[i] + bx * ay - by * ax) / length
+            if d > worst:
+                worst, worst_i = d, i
+        if worst > tol:
+            keep[worst_i] = True
+            stack.append((a, worst_i))
+            stack.append((worst_i, b))
+    out = [p for p, k in zip(points, keep) if k]
+    # A closed ring needs at least a triangle plus its closing point. If the
+    # simplifier ate a tiny ring, the original is the honest answer.
+    return out if len(out) >= 4 else points
+
+
+def geodesic_acres(rings: list[dict]) -> float | None:
+    """Area on the WGS84 ellipsoid, holes subtracted. Validation only: the
+    acreage the map shows is Deere's own figure, this is how it is checked."""
+    if _GEOD is None:
+        return None
+    total = 0.0
+    for ring in rings:
+        pts = ring["p"]
+        area, _ = _GEOD.polygon_area_perimeter([p[1] for p in pts], [p[0] for p in pts])
+        total += -abs(area) if ring["t"] == "i" else abs(area)
+    return total / SQM_PER_ACRE
 
 
 def field_boundary(token: str, field: dict) -> dict:
     """Outline, centroid and acres for one field.
 
-    Prefers the simplified boundary: the full one runs to thousands of points
-    per field, which is detail a hauling map cannot show and would bloat the
-    page it gets embedded in.
+    Reads the full boundary, not Deere's "simplified" one: the two are within
+    a handful of vertices of each other, and the full one is the record the
+    acreage was computed from. Rings come back typed, in Deere's order, with
+    the exterior clockwise and the holes counter-clockwise as the shapefile
+    convention has it.
     """
     links = {l.get("rel"): l.get("uri") for l in field.get("links", [])}
-    for rel in ("simplifiedBoundaries", "boundaries"):
+    for rel in ("boundaries", "simplifiedBoundaries"):
         if rel not in links:
             continue
         status, body = api(token, links[rel])
@@ -204,23 +284,46 @@ def field_boundary(token: str, field: dict) -> dict:
             continue
         b = values[0]
 
-        rings = []
+        full, drawn = [], []
+        orientation_disagreed = 0
         for poly in b.get("multipolygons") or []:
             for ring in poly.get("rings") or []:
-                pts = [[round(p["lat"], 6), round(p["lon"], 6)]
-                       for p in ring.get("points") or []
+                pts = [[p["lat"], p["lon"]] for p in ring.get("points") or []
                        if p.get("lat") is not None and p.get("lon") is not None]
-                if len(pts) >= 3:
-                    rings.append(_simplify(pts))
-        if not rings:
+                if len(pts) < 3:
+                    continue
+                if pts[0] != pts[-1]:
+                    pts.append(pts[0])
+                hole = _is_hole(ring, pts)
+                if hole != (_signed_area(pts) > 0):
+                    orientation_disagreed += 1
+                kind = "i" if hole else "e"
+                full.append({"t": kind, "p": pts})
+                simplified = douglas_peucker(pts, DP_TOLERANCE_DEG)
+                drawn.append({"t": kind, "p": [[round(p[0], COORD_DECIMALS),
+                                                round(p[1], COORD_DECIMALS)]
+                                               for p in simplified]})
+        if not full:
             continue
 
         centroid = b.get("centroid") or {}
+        area = _acres(b.get("area"))
+        workable = _acres(b.get("workableArea"))
         return {
-            "rings": rings,
+            "rings": drawn,
             "lat": centroid.get("lat"),
             "lon": centroid.get("lon"),
-            "acres": _acres(b.get("workableArea")) or _acres(b.get("area")),
+            # Deere's figures, carried through as the authority. Which one the
+            # map shows is decided in the generator; both are kept so the
+            # geodesic check below can say which one they match.
+            "acres": workable if workable is not None else area,
+            "acres_boundary": area,
+            "acres_workable": workable,
+            "acres_geodesic": geodesic_acres(full),
+            "vertices": {"source": sum(len(r["p"]) for r in full),
+                         "drawn": sum(len(r["p"]) for r in drawn)},
+            "holes": sum(1 for r in full if r["t"] == "i"),
+            "orientation_disagreed": orientation_disagreed,
             "detail": rel,
         }
     return {"rings": [], "lat": None, "lon": None, "acres": None, "detail": None}
@@ -360,6 +463,35 @@ def main() -> None:
     print(f"wrote {OUTPUT}")
     print(f"  organizations {len(out['organizations'])}")
     print(f"  fields        {len(out['fields'])}  ({outlined} with a boundary)")
+
+    # The acreage check. Every hole-handling mistake this pipeline could make
+    # is invisible without it: two misclassified rings shift a 200-field total
+    # by a tenth of a percent and look like rounding.
+    checked = [f for f in out["fields"]
+               if f.get("acres_geodesic") is not None and f.get("acres")]
+    if checked:
+        src = sum(f["vertices"]["source"] for f in checked)
+        kept = sum(f["vertices"]["drawn"] for f in checked)
+        holes = sum(f["holes"] for f in checked)
+        flipped = sum(f["orientation_disagreed"] for f in checked)
+        print(f"  vertices      {src:,} in Deere's boundaries, {kept:,} drawn "
+              f"({100.0 * kept / src:.0f}%), {holes} holes"
+              + (f", {flipped} rings whose orientation disagreed with their type"
+                 if flipped else ""))
+        for label, key in (("boundary", "acres_boundary"), ("workable", "acres_workable")):
+            rows = [(f["acres_geodesic"], f[key]) for f in checked if f.get(key)]
+            if not rows:
+                continue
+            geo, deere = sum(r[0] for r in rows), sum(r[1] for r in rows)
+            errs = sorted(abs(g - d) / d * 100 for g, d in rows)
+            print(f"  geodesic vs Deere {label:8s} {geo:12,.2f} vs {deere:12,.2f} ac  "
+                  f"bias {100.0 * (geo - deere) / deere:+.4f}%  "
+                  f"median field {errs[len(errs) // 2]:.4f}%  worst {errs[-1]:.3f}%")
+        bad = [f for f in checked
+               if abs(f["acres_geodesic"] - f["acres"]) / f["acres"] > 0.005]
+        for f in bad:
+            print(f"    CHECK {f['name']}: geodesic {f['acres_geodesic']:.2f} "
+                  f"vs Deere {f['acres']:.2f} ac ({f['holes']} holes)")
     print(f"  semis         {len(semis):3d}  {freshest(semis)}")
     print(f"  pickups       {len(pickups):3d}  {freshest(pickups)}")
     if refused:
