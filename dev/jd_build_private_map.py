@@ -160,9 +160,10 @@ PANEL_HTML = """
       </label>
       <span class="gt-field-count" id="gt-truck-summary"></span>
     </div>
-    <div class="gt-field-note">Green reported within the hour, amber today,
-      grey older. Positions are each vehicle&rsquo;s last report, not a live
-      feed &mdash; a parked truck stops reporting.</div>
+    <div class="gt-field-note">Semi and pickup shapes by vehicle type; green
+      reported within the hour, amber today, grey older. Positions are each
+      vehicle&rsquo;s last report, not a live feed &mdash; a parked truck stops
+      reporting.</div>
   </div>
 """
 
@@ -381,12 +382,45 @@ PANEL_JS = r"""
 
     // Colour by staleness, because "where is it now" and "where was it last
     // week" are different questions and should not look alike.
-    function pin(mins) {
-      var base = 'https://maps.google.com/mapfiles/ms/icons/';
-      if (mins === null) return base + 'grey-dot.png';
-      if (mins <= 60) return base + 'green-dot.png';
-      if (mins <= 60 * 12) return base + 'yellow-dot.png';
-      return base + 'grey-dot.png';
+    function colourFor(mins) {
+      if (mins === null) return '#9AA08F';
+      if (mins <= 60) return '#3C8A3E';          // reported within the hour
+      if (mins <= 60 * 12) return '#C08A28';     // sometime today
+      return '#9AA08F';                          // older, or parked
+    }
+
+    // Drawn rather than pinned, so a truck reads as a truck against the 896
+    // elevator dots. Side-view silhouettes: a tractor-trailer for the Macks
+    // and Kenworths, a pickup for the duallys and half-tons. Deliberately
+    // generic shapes - not John Deere's logo, which is their trademark.
+    var SEMI = '<rect x="1" y="4" width="25" height="11" rx="1"/>' +
+               '<path d="M27 15V8h6l4 4h6v3z"/>';
+    var SEMI_WHEELS = '<circle cx="8" cy="17" r="2.6"/>' +
+                      '<circle cx="15" cy="17" r="2.6"/>' +
+                      '<circle cx="38" cy="17" r="2.6"/>';
+    var PICKUP = '<path d="M2 15v-5h7l4-5h8l2 5h11v5z"/>';
+    var PICKUP_WHEELS = '<circle cx="9" cy="17" r="2.6"/>' +
+                        '<circle cx="28" cy="17" r="2.6"/>';
+
+    function truckIcon(kind, mins) {
+      var semi = kind !== 'pickup';
+      var w = semi ? 46 : 36;
+      var colour = colourFor(mins);
+      // A white outline keeps the shape legible over dark aerial imagery.
+      var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w +
+        '" height="21" viewBox="0 0 ' + w + ' 21">' +
+        '<g fill="' + colour + '" stroke="#FFFFFF" stroke-width="1.6" ' +
+        'stroke-linejoin="round">' + (semi ? SEMI : PICKUP) + '</g>' +
+        '<g fill="' + colour + '" stroke="#FFFFFF" stroke-width="1.2">' +
+        (semi ? SEMI_WHEELS : PICKUP_WHEELS) + '</g>' +
+        '<g fill="#23281F">' + (semi ? SEMI_WHEELS : PICKUP_WHEELS) + '</g>' +
+        '</svg>';
+      return {
+        url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg),
+        scaledSize: new google.maps.Size(w, 21),
+        // Anchor under the wheels so the truck sits on its position.
+        anchor: new google.maps.Point(w / 2, 20)
+      };
     }
 
     function draw() {
@@ -397,9 +431,10 @@ PANEL_JS = r"""
         var mk = new google.maps.Marker({
           position: { lat: t.y, lng: t.x },
           map: map,
-          icon: pin(mins),
+          icon: truckIcon(t.k, mins),
           title: t.n + '  (' + t.m + ')  -  ' + ageText(mins),
-          zIndex: 500
+          // Fresher trucks sit on top where several are parked in one yard.
+          zIndex: 500 + (mins === null ? 0 : Math.max(0, 600 - Math.round(mins)))
         });
         mk.addListener('click', function () {
           var html = '<div style="font-family:inherit;font-size:13px">' +
