@@ -1,21 +1,36 @@
 """Text a phone when a truck has stood still for too long.
 
-Called by dev/jd_push.py whenever jd_trail finds a new long stop. Sends
-through Twilio, because it delivers a real SMS to any phone with no app to
-install.
+Called by dev/jd_push.py whenever jd_trail finds a new long stop. Two ways
+to send, both arriving as an ordinary text with no app to install.
 
-Credentials live OUTSIDE this public repo, in
-%USERPROFILE%\\.grain-map-secrets\\sms.json, and are written by hand:
+**email** - free, and the one to start with. Every US carrier accepts mail
+at a gateway address and turns it into a text, so this costs nothing beyond
+a Gmail app password. At roughly one alert a day that is the whole bill.
+Carriers have been quietly retiring these gateways, so if texts stop
+arriving, that is the first thing to suspect - switch to twilio.
+
+    {
+      "provider": "email",
+      "username": "you@gmail.com",
+      "app_password": "abcd efgh ijkl mnop",
+      "to": [{"phone": "5155559876", "carrier": "verizon"}],
+      "quiet_hours": [21, 6],
+      "max_per_hour": 6
+    }
+
+**twilio** - paid, and worth it if the gateway proves flaky. The trial
+credit covers years at this volume; the standing cost is the phone number.
 
     {
       "provider": "twilio",
       "account_sid": "AC...",
       "auth_token": "...",
       "from": "+15155550123",
-      "to": ["+15155559876"],
-      "quiet_hours": [21, 6],
-      "max_per_hour": 6
+      "to": ["+15155559876"]
     }
+
+Either way the file lives OUTSIDE this public repo, at
+%USERPROFILE%\\.grain-map-secrets\\sms.json, and is written by hand.
 
 `quiet_hours` is [start, end] in local time and may be omitted; a stop found
 inside it is recorded on the map but not texted, because a truck parked at
@@ -59,6 +74,48 @@ NEAR_PIN_M = 600.0
 NEAR_FIELD_M = 400.0
 
 
+# Carrier mail-to-SMS gateways, US. Mail to <number>@<domain> arrives as an
+# ordinary text. Free, and the reason the email provider exists.
+CARRIERS = {
+    "verizon": "vtext.com",
+    "att": "txt.att.net",
+    "at&t": "txt.att.net",
+    "tmobile": "tmomail.net",
+    "t-mobile": "tmomail.net",
+    "sprint": "messaging.sprintpcs.com",
+    "uscellular": "email.uscc.net",
+    "us cellular": "email.uscc.net",
+    "cricket": "sms.cricketwireless.net",
+    "boost": "sms.myboostmobile.com",
+    "googlefi": "msg.fi.google.com",
+    "google fi": "msg.fi.google.com",
+    "mint": "mailmymobile.net",
+    "consumer cellular": "mailmymobile.net",
+    "straight talk": "vtext.com",
+    "tracfone": "mmst5.tracfone.com",
+}
+
+REQUIRED = {
+    "twilio": ("account_sid", "auth_token", "from", "to"),
+    "email": ("username", "app_password", "to"),
+}
+
+
+def sms_address(entry) -> str | None:
+    """A gateway address from either a plain string or {phone, carrier}."""
+    if isinstance(entry, str):
+        return entry.strip() or None
+    if not isinstance(entry, dict):
+        return None
+    digits = re.sub(r"\D", "", str(entry.get("phone") or ""))
+    if len(digits) == 11 and digits.startswith("1"):
+        digits = digits[1:]
+    domain = CARRIERS.get(str(entry.get("carrier") or "").strip().lower())
+    if len(digits) != 10 or not domain:
+        return None
+    return f"{digits}@{domain}"
+
+
 def load_config() -> dict | None:
     if not CONFIG.exists():
         return None
@@ -67,12 +124,26 @@ def load_config() -> dict | None:
     except (json.JSONDecodeError, OSError) as exc:
         print(f"  (sms.json unreadable: {exc})")
         return None
-    for key in ("account_sid", "auth_token", "from", "to"):
+    provider = str(cfg.get("provider") or "twilio").strip().lower()
+    if provider not in REQUIRED:
+        print(f"  (sms.json has an unknown provider {provider!r} - not texting)")
+        return None
+    cfg["provider"] = provider
+    for key in REQUIRED[provider]:
         if not cfg.get(key):
-            print(f"  (sms.json is missing {key!r} - not texting)")
+            print(f"  (sms.json is missing {key!r} for provider "
+                  f"{provider} - not texting)")
             return None
-    if isinstance(cfg["to"], str):
+    if isinstance(cfg["to"], (str, dict)):
         cfg["to"] = [cfg["to"]]
+    if provider == "email":
+        resolved = [sms_address(entry) for entry in cfg["to"]]
+        bad = [e for e, r in zip(cfg["to"], resolved) if not r]
+        if bad:
+            print(f"  (cannot work out a text address for {bad} - "
+                  f"known carriers: {', '.join(sorted(set(CARRIERS)))})")
+            return None
+        cfg["to"] = resolved
     return cfg
 
 
@@ -161,8 +232,49 @@ def compose(stop: dict, where: str | None) -> str:
 
 def send(cfg: dict, body: str, dry_run: bool = False) -> bool:
     if dry_run:
-        print(f"  [dry run] would text: {body}")
+        print(f"  [dry run] would text via {cfg.get('provider')}: {body}")
         return True
+    return (send_email(cfg, body) if cfg.get("provider") == "email"
+            else send_twilio(cfg, body))
+
+
+def send_email(cfg: dict, body: str) -> bool:
+    """Through a carrier's mail-to-SMS gateway.
+
+    No subject line: gateways prepend it to the message body, so a subject
+    just eats into the 160 characters that actually get delivered.
+    """
+    import smtplib
+    from email.message import EmailMessage
+
+    host = cfg.get("smtp_host") or "smtp.gmail.com"
+    port = int(cfg.get("smtp_port") or 587)
+    ok = True
+    try:
+        with smtplib.SMTP(host, port, timeout=30) as server:
+            server.starttls()
+            server.login(cfg["username"], cfg["app_password"])
+            for address in cfg["to"]:
+                message = EmailMessage()
+                message["From"] = cfg["username"]
+                message["To"] = address
+                message.set_content(body)
+                try:
+                    server.send_message(message)
+                except Exception as exc:  # noqa: BLE001
+                    print(f"  (gateway refused {address}: {type(exc).__name__})")
+                    ok = False
+    except smtplib.SMTPAuthenticationError:
+        print("  (Gmail rejected the app password - it must be an App Password, "
+              "not the account password, and 2-step verification must be on)")
+        return False
+    except Exception as exc:  # noqa: BLE001
+        print(f"  (could not reach {host}: {type(exc).__name__}: {exc})")
+        return False
+    return ok
+
+
+def send_twilio(cfg: dict, body: str) -> bool:
     url = TWILIO.format(sid=urllib.parse.quote(cfg["account_sid"]))
     ok = True
     for number in cfg["to"]:
@@ -252,7 +364,8 @@ def main() -> None:
               if fleet.exists() else [])
     pins = load_pins(pathlib.Path(__file__).resolve().parent.parent
                      / "grain-trucking-map.html")
-    print(f"config ok: {len(cfg['to'])} recipient(s), "
+    print(f"config ok: provider {cfg['provider']}, {len(cfg['to'])} recipient(s) "
+          f"({', '.join(str(t) for t in cfg['to'])}), "
           f"{len(pins)} map pins and {len(fields)} fields for naming places")
     example = {"name": "Test Truck", "minutes": 17, "y": 43.0821, "x": -93.8239,
                "start": _dt.datetime.now(_dt.timezone.utc).isoformat()}
