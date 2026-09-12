@@ -1,0 +1,810 @@
+source,source_location,source_location_id,bids,src_lat,src_lon,nearest_free_pin,pin_id,name_similarity,km_to_pin
+agricharts:cargillus,"Iowa Falls, GOS",63320,11,42.51208,-93.26583,Cargill Iowa Falls IA,cargill-iowa-falls-ia,0.62,0.0
+agricharts:cvacoop,Bancroft,13880,1,42.013709,-96.571824,CVA Bancroft NE,cva-bancroft-ne,0.8,0.01
+agricharts:plymouthenergy,Bancroft,13880,1,42.013709,-96.571824,CVA Bancroft NE,cva-bancroft-ne,0.8,0.01
+agricharts:coopfe,CFE Sibley,87565,20,43.396857,-95.752532,Cooperative Elevator Association Sibley IA,cooperative-elevator-association-sibley-ia,0.57,0.02
+agricharts:midiowa,POET F.B.,79809,4,42.640969,-92.028716,Flint Hills Resources/Poet Faribanks Ethanol,flint-hills-resources-poet-faribanks-ethanol,0.32,0.03
+agricharts:nicoop,Plymouth,70857,10,43.245491,-93.121928,North Iowa Coop Plymouth,north-iowa-coop-plymouth,0.76,0.03
+agricharts:farmerswin,Poet Fairbank,79179,4,42.640952,-92.028758,Flint Hills Resources/Poet Faribanks Ethanol,flint-hills-resources-poet-faribanks-ethanol,0.49,0.03
+agricharts:innovativeag,Hubbard,4633,11,42.307203,-93.296009,Prairie Land Cooperative Hubbard IA (approx),prairie-land-cooperative-hubbard-ia-approx,0.52,0.04
+agricharts:coopfe,CFE Hartley,87554,20,43.176984,-95.477319,Cooperative Elevator Association Hartley IA,cooperative-elevator-association-hartley-ia,0.6,0.04
+agricharts:keycoop,Poet - IF,86100,6,42.505923,-93.282885,Flint Hills Resources/Poet Iowa falls Ethanol,flint-hills-resources-poet-iowa-falls-ethanol,0.32,0.05
+agricharts:innovativeag,Big River,4685,14,40.831702,-91.222159,Big River Resources West Burlington Ethanol,big-river-resources-west-burlington-ethanol,0.46,0.05
+agricharts:innovativeag,Poet Jewel,87784,11,42.505923,-93.282885,Flint Hills Resources/Poet Iowa falls Ethanol,flint-hills-resources-poet-iowa-falls-ethanol,0.3,0.05
+agricharts:innovativeag,Faulkner,4630,11,42.61444,-93.085806,Prairie Land Cooperative Faulkner IA,prairie-land-cooperative-faulkner-ia,0.55,0.06
+agricharts:innovativeag,Poet FBK,74558,13,42.640998,-92.029433,Flint Hills Resources/Poet Faribanks Ethanol,flint-hills-resources-poet-faribanks-ethanol,0.36,0.07
+agricharts:midiowa,CARGILL IA FALLS,71703,4,42.51201,-93.2649,Cargill Iowa Falls IA,cargill-iowa-falls-ia,0.84,0.08
+agricharts:agstate,Peterson,81808,13,42.91629,-95.34342,AgState Peterson IA,agstate-peterson-ia,0.67,0.08
+agricharts:coopfe,CFE George Downtown,88029,9,43.341999,-96.002689,New Cooperative Inc. George IA,new-cooperative-inc-george-ia,0.55,0.08
+agricharts:innovativeag,SF Ia Fall,27502,3,42.50943,-93.26902,Seaboard Foods Feed Mill Iowa Falls,seaboard-foods-feed-mill-iowa-falls,0.44,0.1
+agricharts:innovativeag,Ellsworth,4629,11,42.310191,-93.577482,Prairie Land Cooperative Ellsworth IA,prairie-land-cooperative-ellsworth-ia,0.58,0.11
+agricharts:tamabentoncoop,DS-Starch,3138,3,41.39975,-91.061724,Grain Processing Corporation,grain-processing-corporation,0.19,0.11
+agricharts:agstate,Larrabee,81798,13,42.86198,-95.5463,Landus Feed Partners LLC,landus-feed-partners-llc,0.35,0.12
+agricharts:keycoop,Cargill/IF,86092,7,42.512021,-93.267408,Cargill Iowa Falls IA,cargill-iowa-falls-ia,0.71,0.13
+agricharts:farmerswin,Granger,12594,8,43.372583,-92.125505,Winneshiek Cooperative Association Cresco IA,winneshiek-cooperative-association-cresco-ia,0.11,0.14
+agricharts:tamabentoncoop,DS-PEN,3137,3,41.968257,-91.665796,"Ingredion, Inc. Cedar Rapids Ethanol",ingredion-inc-cedar-rapids-ethanol,0.14,0.14
+agricharts:keycoop,Verbio,87744,7,42.024357,-93.517253,Verbio Nevada Ethanol,verbio-nevada-ethanol,0.63,0.16
+agricharts:cgb,CGB FAYETTE,20618,6,42.835735,-91.804705,Consolidated Grain & Barge CGB Fayette IA,consolidated-grain-barge-cgb-fayette-ia,0.54,0.17
+agricharts:farmerswin,Ridgeway,12597,8,43.295677,-91.987227,Winneshiek Cooperative Association Ridgeway IA,winneshiek-cooperative-association-ridgeway-ia,0.41,0.23
+agricharts:farmerswin,Hawkeye,12595,8,42.938442,-91.953577,Fredericksburg Farmers Coop Hawkeye IA,fredericksburg-farmers-coop-hawkeye-ia,0.48,0.28
+agricharts:farmerswin,Valero,12603,4,43.102316,-92.742209,Valero Renewables Floyd Ethanol,valero-renewables-floyd-ethanol,0.41,0.41
+agricharts:keycoop,Ag State,86086,5,42.777862,-94.949783,Valero Renewables - Albert City Ethanol,valero-renewables-albert-city-ethanol,0.18,0.41
+agricharts:innovativeag,Elma,4648,28,43.244535,-92.435856,Howard County Equity Coop Elma IA,howard-county-equity-coop-elma-ia,0.28,0.53
+agricharts:farmerswin,Sumner,12598,8,42.847382,-92.119794,Fredericksburg Farmers Coop Sumner IA,fredericksburg-farmers-coop-sumner-ia,0.44,0.65
+agricharts:agstate,A.C.,84205,13,42.781696,-94.945005,Valero Renewables - Albert City Ethanol,valero-renewables-albert-city-ethanol,0.19,0.7
+agricharts:coopfe,CFE Harris,87553,20,43.443648,-95.434143,Cooperative Elevator Association Harris IA,cooperative-elevator-association-harris-ia,0.57,0.7
+agricharts:innovativeag,Valero,4693,14,42.777894,-94.937795,Valero Renewables - Albert City Ethanol,valero-renewables-albert-city-ethanol,0.34,0.72
+agricharts:newvision,CHS Fairmont,84400,3,43.668605,-94.506688,Green Plains Fairmont MN Ethanol,green-plains-fairmont-mn-ethanol,0.61,0.77
+agricharts:innovativeag,Poet IF,80066,12,42.506979,-93.27197,Flint Hills Resources/Poet Iowa falls Ethanol,flint-hills-resources-poet-iowa-falls-ethanol,0.32,0.87
+agricharts:cvacoop,Cargill Sioux City,51220,7,42.50082,-96.39054,ADM Grain Company Sioux City IA,adm-grain-company-sioux-city-ia,0.75,1.07
+agricharts:plymouthenergy,Cargill Sioux City,51220,7,42.50082,-96.39054,ADM Grain Company Sioux City IA,adm-grain-company-sioux-city-ia,0.75,1.07
+agricharts:midiowa,CARGILL STARCH,66523,4,41.978699,-91.664612,"Ingredion, Inc. Cedar Rapids Ethanol",ingredion-inc-cedar-rapids-ethanol,0.28,1.19
+agricharts:farmerswin,Cresco East,12589,8,43.371061,-92.140118,Winneshiek Cooperative Association Cresco IA,winneshiek-cooperative-association-cresco-ia,0.34,1.33
+agricharts:buchheit,Dudley,54720,10,36.79672,-90.101495,Riceland Foods Dudley MO,riceland-foods-dudley-mo,0.44,1.47
+agricharts:agstate,Marcus,81802,6,42.82622,-95.79942,First Cooperative Association Marcus IA,first-cooperative-association-marcus-ia,0.4,1.53
+agricharts:midiowa,POET IA FALLS,79810,4,42.506212,-93.282898,Cargill Iowa Falls IA,cargill-iowa-falls-ia,0.5,1.54
+agricharts:innovativeag,Cargill CR,22958,15,41.969243,-91.648648,"Ingredion, Inc. Cedar Rapids Ethanol",ingredion-inc-cedar-rapids-ethanol,0.25,1.57
+agricharts:midiowa,CARGILL CEDAR RAPIDS,75163,4,41.983199,-91.668599,"Ingredion, Inc. Cedar Rapids Ethanol",ingredion-inc-cedar-rapids-ethanol,0.71,1.67
+agricharts:keycoop,Cargill/CR,86091,8,41.983398,-91.666719,"Ingredion, Inc. Cedar Rapids Ethanol",ingredion-inc-cedar-rapids-ethanol,0.25,1.69
+agricharts:tamabentoncoop,DS-CRG-CR,3080,3,41.969297,-91.645896,"Ingredion, Inc. Cedar Rapids Ethanol",ingredion-inc-cedar-rapids-ethanol,0.13,1.79
+agricharts:agstate,Ellsworth,25734,7,42.300921,-93.560122,Prairie Land Cooperative Ellsworth IA,prairie-land-cooperative-ellsworth-ia,0.58,1.87
+agricharts:midiowa,CEDAR FALLS,64471,4,42.550804,-92.420082,East Central Iowa CO-OP Cedar Falls IA,east-central-iowa-co-op-cedar-falls-ia,0.63,2.15
+agricharts:agstate,Hartley,25736,13,43.183616,-95.505696,Cooperative Elevator Association Hartley IA,cooperative-elevator-association-hartley-ia,0.54,2.42
+agricharts:farmerswin,Cresco,51092,8,43.370483,-92.093861,Winneshiek Cooperative Association Cresco IA,winneshiek-cooperative-association-cresco-ia,0.34,2.43
+agricharts:cvacoop,Bunge Council Bluffs,85910,8,41.153467,-95.81097,Southwest Iowa Renewable Energy Council Bluffs Ethanol,southwest-iowa-renewable-energy-council-bluffs-ethanol,0.58,2.45
+agricharts:plymouthenergy,Bunge Council Bluffs,85910,8,41.153467,-95.81097,Southwest Iowa Renewable Energy Council Bluffs Ethanol,southwest-iowa-renewable-energy-council-bluffs-ethanol,0.58,2.45
+agricharts:midiowa,JESUP,64473,8,42.452596,-92.054538,East Central Iowa CO-OP Jesup IA,east-central-iowa-co-op-jesup-ia,0.43,2.51
+agricharts:midiowa,MILL JUNCTION,49022,8,42.409015,-92.771908,Heartland Coop Holland,heartland-coop-holland,0.24,2.57
+agricharts:farmerswin,AGP - Mason City,12607,4,43.132102,-93.226923,Cartersville Elevator Mason City IA,cartersville-elevator-mason-city-ia,0.65,2.7
+agricharts:innovativeag,AGP Mason,78129,11,43.132798,-93.225964,Cartersville Elevator Mason City IA,cartersville-elevator-mason-city-ia,0.44,2.76
+agricharts:coopfe,CFE George,87552,20,43.317557,-95.997877,New Cooperative Inc. George IA,new-cooperative-inc-george-ia,0.8,2.81
+agricharts:innovativeag,Cargill IF,4695,10,41.575566,-93.557151,Heartland Coop 18th St Des Moines (Seasonal),heartland-coop-18th-st-des-moines-seasonal,0.16,2.9
+agricharts:cvacoop,ADM Columbus,85909,11,41.424601,-97.364843,CVA Columbus NE,cva-columbus-ne,0.83,2.91
+agricharts:plymouthenergy,ADM Columbus,85909,11,41.424601,-97.364843,CVA Columbus NE,cva-columbus-ne,0.83,2.91
+agricharts:cgb,CGB ALBANY,79608,9,41.794388,-90.208032,ADM Camanche Terminal IA,adm-camanche-terminal-ia,0.36,3.37
+agricharts:innovativeag,ADM Clint,4683,25,41.817341,-90.216166,ADM Camanche Terminal IA,adm-camanche-terminal-ia,0.57,3.66
+agricharts:keycoop,ADM - DSM,86088,11,41.621581,-93.585326,Heartland Coop 18th St Des Moines (Seasonal),heartland-coop-18th-st-des-moines-seasonal,0.34,3.78
+agricharts:farmerswin,Homeland,12602,4,43.066812,-92.157047,Homeland Energy Solutions Lawler Ethanol,homeland-energy-solutions-lawler-ethanol,0.48,4.02
+agricharts:innovativeag,Homeland,4692,14,43.066812,-92.157047,Homeland Energy Solutions Lawler Ethanol,homeland-energy-solutions-lawler-ethanol,0.48,4.02
+agricharts:cvacoop,Green Plains York,85908,5,40.897674,-97.544648,CVA York Office NE,cva-york-office-ne,0.38,4.04
+agricharts:plymouthenergy,Green Plains York,85908,5,40.897674,-97.544648,CVA York Office NE,cva-york-office-ne,0.38,4.04
+agricharts:newvision,ADM Mankato,84402,3,44.186526,-93.994638,Crystal Valley Cooperative Mankato MN,crystal-valley-cooperative-mankato-mn,0.55,4.17
+agricharts:midiowa,ADM DSM,71705,4,41.627706,-93.583004,Heartland Coop 18th St Des Moines (Seasonal),heartland-coop-18th-st-des-moines-seasonal,0.34,4.48
+agricharts:midiowa,KLOSTERMANN,85557,8,42.503896,-91.214273,Big River United Energy Dyersville Ethanol,big-river-united-energy-dyersville-ethanol,0.16,4.52
+agricharts:keycoop,Jewell,86096,5,42.306872,-93.633873,Prairie Land Cooperative Ellsworth IA,prairie-land-cooperative-ellsworth-ia,0.29,4.56
+agricharts:midiowa,ADM CEDAR RAPIDS,66521,4,41.929901,-91.691711,"Ingredion, Inc. Cedar Rapids Ethanol",ingredion-inc-cedar-rapids-ethanol,0.74,4.7
+agricharts:keycoop,ADM - CR,86087,10,41.92841,-91.688343,"Ingredion, Inc. Cedar Rapids Ethanol",ingredion-inc-cedar-rapids-ethanol,0.29,4.75
+agricharts:tamabentoncoop,DS-ADM,3077,3,41.927952,-91.687836,"Ingredion, Inc. Cedar Rapids Ethanol",ingredion-inc-cedar-rapids-ethanol,0.14,4.78
+agricharts:agstate,Alton Term,84206,13,42.993068,-96.001978,AgState Orange City IA,agstate-orange-city-ia,0.34,4.86
+agricharts:innovativeag,ADM CR,22956,15,41.926269,-91.686174,"Ingredion, Inc. Cedar Rapids Ethanol",ingredion-inc-cedar-rapids-ethanol,0.29,4.91
+agricharts:midiowa,JEWELL,75155,4,42.310734,-93.643248,Prairie Land Cooperative Ellsworth IA,prairie-land-cooperative-ellsworth-ia,0.29,5.31
+agricharts:agstate,Linn Grove,81800,13,42.89862,-95.27501,AgState Peterson IA,agstate-peterson-ia,0.08,5.83
+agricharts:keycoop,Lincolnway,86097,10,42.022488,-93.460106,Lincolnway Energy Nevada Ethanol,lincolnway-energy-nevada-ethanol,0.74,5.92
+agricharts:midiowa,WATERLOO,66118,4,42.53289,-92.36855,East Central Iowa CO-OP Cedar Falls IA,east-central-iowa-co-op-cedar-falls-ia,0.31,6.09
+agricharts:agpartners,AGP St Joe,54976,2,39.765686,-94.814655,Bartlett Grain St Joseph MO,bartlett-grain-st-joseph-mo,0.57,6.32
+agricharts:midiowa,LINCOLNWAY,75159,4,42.02282,-93.47253,Lincolnway Energy Nevada Ethanol,lincolnway-energy-nevada-ethanol,0.74,6.93
+agricharts:newvision,CHS Mankato,84401,3,44.156903,-94.029195,Crystal Valley Cooperative Mankato MN,crystal-valley-cooperative-mankato-mn,0.61,7.18
+agricharts:procooperative,AGP- EAGLE GROVE,74326,6,42.668781,-93.902814,Corn LP Goldfield Ethanol,corn-lp-goldfield-ethanol,0.25,7.25
+agricharts:midiowa,HAVERHILL,2476,8,41.942715,-92.958044,Heartland CO-OP Laurel IA,heartland-co-op-laurel-ia,0.32,7.27
+agricharts:cvacoop,Plymouth Energy-Merrill,83175,9,42.730977,-96.250078,CVA Le Mars IA,cva-le-mars-ia,0.3,7.3
+agricharts:hartog,Plessis - Corn,86196,3,43.233748,-95.54763,Valero Renewables Hartley Ethanol,valero-renewables-hartley-ethanol,0.27,7.31
+agricharts:hartog,Plessis - Beans,86428,3,43.233748,-95.54763,Valero Renewables Hartley Ethanol,valero-renewables-hartley-ethanol,0.26,7.31
+agricharts:innovativeag,AGP Eagle,22957,8,42.668015,-93.904191,Corn LP Goldfield Ethanol,corn-lp-goldfield-ethanol,0.31,7.33
+agricharts:innovativeag,Oran,4656,28,42.700011,-92.074068,Flint Hills Resources/Poet Faribanks Ethanol,flint-hills-resources-poet-faribanks-ethanol,0.2,7.57
+agricharts:midiowa,BUCKEYE,86387,8,42.416344,-93.376167,Farmers Cooperative Company Ackley IA,farmers-cooperative-company-ackley-ia,0.62,30.22
+agricharts:innovativeag,Lawn Hill,4635,11,42.295394,-93.171643,Heartland Coop Holland,heartland-coop-holland,0.54,32.66
+agricharts:jbslivepork,"Hedrick, IA Feed Mill",73264,10,41.497962,-92.092386,Heartland CO-OP Hartwick IA,heartland-co-op-hartwick-ia,0.56,38.28
+agricharts:agstate,Schaller,81810,13,42.50052,-95.29356,Farmers Cooperative Elevator Company Schleswig IA (approx),farmers-cooperative-elevator-company-schleswig-ia-approx,0.59,38.93
+agricharts:cgb,CGB PINCKNEYVILLE,20604,11,38.073462,-89.384524,Buchheit Perryville MO,buchheit-perryville-mo,0.56,59.57
+agricharts:newvision,MNSP Brewster,84399,4,43.705619,-95.455056,Pro Coop Estherville,pro-coop-estherville,0.5,60.03
+agricharts:farmerswin,Spring Grove,51095,8,43.562159,-91.641049,Warren Grain Co Spring Valley MN,warren-grain-co-spring-valley-mn,0.56,62.67
+agricharts:cargillus,"Blair, SSNA",50899,16,41.5205,-96.0792,Castana Grain Company IA,castana-grain-company-ia,0.47,63.2
+agricharts:cgb,CGB - NAUVOO,20593,17,40.556706,-91.393238,Glenwood Elevator MO,glenwood-elevator-mo,0.44,100.04
+agricharts:innovativeag,Owasa,4636,6,42.431716,-93.205179,Osage Cooperative Elevator IA,osage-cooperative-elevator-ia,0.6,100.05
+agricharts:midiowa,HUDSON,64475,8,42.407819,-92.454465,United Coop Stonega IA,united-coop-stonega-ia,0.5,103.62
+agricharts:farmerswin,Poet Shell Rock,79180,4,42.739542,-92.618555,POET Glenville MN Ethanol,poet-glenville-mn-ethanol,0.55,108.3
+agricharts:innovativeag,GardenCity,74559,11,42.245613,-93.394581,Farmers Feed & Grain Charles City IA,farmers-feed-grain-charles-city-ia,0.64,109.5
+agricharts:innovativeag,Alden,4625,11,42.506141,-93.38097,Farmers Cooperative Company Linden IA,farmers-cooperative-company-linden-ia,0.73,120.79
+agricharts:cgb,CGB - RIVER LANDING,41261,14,40.872767,-91.033058,River Valley Olin IA,river-valley-olin-ia,0.53,124.47
+agricharts:jbslivepork,"Morning Sun, IA Elevator",85375,8,41.089493,-91.249629,Nemo Feed Baring MO,nemo-feed-baring-mo,0.55,126.1
+agricharts:innovativeag,Union,4639,11,42.24716,-93.059474,Farmers Cooperative Produce Co West Union IA,farmers-cooperative-produce-co-west-union-ia,0.56,129.18
+agricharts:cgb,CGB - FERRIS,20595,17,40.470174,-91.169447,CE Grain Farber MO,ce-grain-farber-mo,0.53,136.11
+agricharts:plymouthenergy,Oyens,22686,13,42.818994,-96.058455,Farmers Cooperative Elevator Ottosen IA (approx),farmers-cooperative-elevator-ottosen-ia-approx,0.5,137.29
+agricharts:coopfe,CFE Ashton,87550,20,43.310316,-95.78971,Castana Grain Company IA,castana-grain-company-ia,0.59,137.77
+agricharts:faasfeed,North English,20956,4,41.560911,-92.164672,US AG Center Inc Allison IA,us-ag-center-inc-allison-ia,0.42,142.12
+agricharts:plymouthenergy,Hooper,13901,2,41.611424,-96.552194,Koster Grain Inc IA,koster-grain-inc-ia,0.5,144.42
+agricharts:cvacoop,AGP David City,85877,8,41.27483,-97.144573,ADM Grain Company Sioux City IA,adm-grain-company-sioux-city-ia,0.57,150.7
+agricharts:plymouthenergy,AGP David City,85877,8,41.27483,-97.144573,ADM Grain Company Sioux City IA,adm-grain-company-sioux-city-ia,0.57,150.7
+agricharts:tamabentoncoop,DS-SHELLROCK,83113,3,42.712272,-92.584111,Stateline Lone Rock IA,stateline-lone-rock-ia,0.52,152.39
+agricharts:midiowa,EDDY,75700,4,41.141335,-92.640234,Farmers Cooperative Company Ackley IA,farmers-cooperative-company-ackley-ia,0.4,161.03
+agricharts:agpartners,Rulo,86976,5,40.053698,-95.428882,Chula Farmers Co-Op MO,chula-farmers-co-op-mo,0.44,167.01
+agricharts:innovativeag,Farley,4649,28,42.44959,-91.021189,Farmers Cooperative Company Ackley IA,farmers-cooperative-company-ackley-ia,0.67,167.51
+agricharts:agstate,Sheldon N,84018,13,43.180006,-95.857348,Heartland Coop Logan (Seasonal),heartland-coop-logan-seasonal,0.5,169.16
+agricharts:cgb,CGB SAVAGE,20648,18,44.768366,-93.353301,Osage Cooperative Elevator IA,osage-cooperative-elevator-ia,0.53,170.27
+agricharts:cargillus,"Savage, CAH",29135,29,44.782987,-93.359641,Osage Cooperative Elevator IA,osage-cooperative-elevator-ia,0.53,171.97
+agricharts:innovativeag,Central Cy,4645,28,42.197439,-91.525268,South Central Cooperative Melcher IA,south-central-cooperative-melcher-ia,0.72,178.88
+agricharts:cgb,CGB - MEEKERS LANDING,79619,18,40.96919,-90.95836,Feeders Grain Bowling Green MO,feeders-grain-bowling-green-mo,0.5,181.12
+agricharts:cvacoop,Cargill Blair,13887,10,41.537941,-96.102467,Cargill Fort Dodge Ethanol,cargill-fort-dodge-ethanol,0.58,183.01
+agricharts:plymouthenergy,Cargill Blair,13887,10,41.537941,-96.102467,Cargill Fort Dodge Ethanol,cargill-fort-dodge-ethanol,0.58,183.01
+agricharts:agpartners,Wamego,84368,5,39.200404,-96.29887,Cameron Co-Op MO,cameron-co-op-mo,0.62,186.93
+agricharts:jbslivepork,"Richland, IA  Elevator",85374,5,41.185093,-91.992951,Chula Farmers Co-Op MO,chula-farmers-co-op-mo,0.62,188.15
+agricharts:innovativeag,BungePDC,18976,16,43.065069,-91.15732,Bunge Joice IA,bunge-joice-ia,0.63,188.8
+agricharts:midiowa,POET S.R.,79811,4,42.737604,-92.617134,Koster Grain Inc. Stuart IA,koster-grain-inc-stuart-ia,0.48,195.51
+agricharts:agstate,Newell,60129,7,42.607595,-95.012404,New Coop Arispe,new-coop-arispe,0.5,195.51
+agricharts:innovativeag,Poet SR,4690,13,42.739353,-92.618475,Koster Grain Inc. Stuart IA,koster-grain-inc-stuart-ia,0.5,195.57
+agricharts:midiowa,SHELL ROCK SOY PROC,82509,4,42.729703,-92.62831,Bullock AG Service Inc Preston IA,bullock-ag-service-inc-preston-ia,0.52,197.88
+agricharts:agpartners,Denton,86972,5,39.732212,-95.269884,Dalton Elevator MO,dalton-elevator-mo,0.67,198.95
+agricharts:innovativeag,Cleves,4628,11,42.471915,-93.042284,Farmers Cooperative Elevator Company Schleswig IA (approx),farmers-cooperative-elevator-company-schleswig-ia-approx,0.53,199.62
+agricharts:statelinecoop,Blue Earth,7239,13,43.635279,-94.090048,Berne Cooperative Anthon IA,berne-cooperative-anthon-ia,0.55,200.34
+agricharts:cvacoop,ADM Fremont,82179,8,41.43133,-96.49803,AGP Rosemont NE,agp-rosemont-ne,0.7,202.04
+agricharts:plymouthenergy,ADM Fremont,82179,8,41.43133,-96.49803,AGP Rosemont NE,agp-rosemont-ne,0.7,202.04
+agricharts:plymouthenergy,Benedict,13884,12,41.007138,-97.606424,Berne Cooperative Anthon IA,berne-cooperative-anthon-ia,0.5,210.71
+agricharts:statelinecoop,Emmetsburg-AGP,961,6,43.096141,-94.652109,Farmers Cooperative Company Macksburg IA,farmers-cooperative-company-macksburg-ia,0.52,212.75
+agricharts:agstate,Emmetsburg,84017,13,43.11011,-94.67417,Farmers Cooperative Company Macksburg IA,farmers-cooperative-company-macksburg-ia,0.63,214.61
+agricharts:plymouthenergy,Waco,13927,14,40.894365,-97.460125,CVA Lincoln KS,cva-lincoln-ks,0.4,214.73
+agricharts:agpartners,Willis,86983,5,39.723276,-95.506829,Farmers Cooperative Windsor MO,farmers-cooperative-windsor-mo,0.46,215.93
+agricharts:innovativeag,Viserion,4686,21,43.023212,-91.176061,Verbio Nevada Ethanol,verbio-nevada-ethanol,0.57,221.84
+agricharts:farmerswin,Viserion,79915,2,43.023167,-91.175916,Verbio Nevada Ethanol,verbio-nevada-ethanol,0.57,221.85
+agricharts:coopfe,CFE Germantown,87566,10,42.952393,-95.782159,Nexus Grafton IA,nexus-grafton-ia,0.59,224.78
+agricharts:cvacoop,Wakefield,13928,12,42.256839,-96.862105,Farmers Cooperative Company Greenfield IA,farmers-cooperative-company-greenfield-ia,0.63,227.0
+agricharts:plymouthenergy,Wakefield,13928,12,42.256839,-96.862105,Farmers Cooperative Company Greenfield IA,farmers-cooperative-company-greenfield-ia,0.63,227.0
+agricharts:keycoop,Pine Lake,86788,8,42.471899,-93.042264,Ag Partners Lake City MN,ag-partners-lake-city-mn,0.59,227.73
+agricharts:midiowa,PINELAKE,75160,4,42.45969,-93.05801,Ag Partners Lake City MN,ag-partners-lake-city-mn,0.54,229.38
+agricharts:tamabentoncoop,DS-Pine Lake,83775,3,42.459189,-93.057178,Ag Partners Lake City MN,ag-partners-lake-city-mn,0.53,229.42
+agricharts:midiowa,LAPORTE CITY,64477,8,42.31332,-92.183887,Farmers Cooperative Company Sac City IA (approx),farmers-cooperative-company-sac-city-ia-approx,0.6,230.69
+agricharts:cgb,CGB - SUEZ,87792,4,41.088317,-90.588467,Fredericksburg Farmers Coop Sumner IA,fredericksburg-farmers-coop-sumner-ia,0.41,232.66
+agricharts:plymouthenergy,Rising City,13914,12,41.198546,-97.296011,Farmers Cooperative Company Sac City IA (approx),farmers-cooperative-company-sac-city-ia-approx,0.63,234.9
+agricharts:innovativeag,ShRk Soypr,82907,13,42.729956,-92.627106,The Scoular Company Elk Horn IA,the-scoular-company-elk-horn-ia,0.46,237.35
+agricharts:farmerswin,SRSP,83110,4,42.729956,-92.626977,New Coop Arispe,new-coop-arispe,0.43,237.86
+agricharts:agstate,Kingsley,81797,13,42.586908,-95.967698,Farmers Cooperative Company Ackley IA,farmers-cooperative-company-ackley-ia,0.57,238.16
+agricharts:cvacoop,ADM Lincoln,13875,8,40.866901,-96.619429,CVA Lincoln KS,cva-lincoln-ks,0.82,241.52
+agricharts:plymouthenergy,ADM Lincoln,13875,8,40.866901,-96.619429,CVA Lincoln KS,cva-lincoln-ks,0.82,241.52
+agricharts:cvacoop,AGP Hastings,13877,7,40.589731,-98.340966,The Scoular Company Hastings IA,the-scoular-company-hastings-ia,0.71,244.15
+agricharts:plymouthenergy,AGP Hastings,13877,7,40.589731,-98.340966,The Scoular Company Hastings IA,the-scoular-company-hastings-ia,0.71,244.15
+agricharts:midiowa,BEAMAN,2469,8,42.218153,-92.821853,Berne Cooperative Mapleton IA,berne-cooperative-mapleton-ia,0.5,244.81
+agricharts:innovativeag,BungeDBQ,17320,18,42.501566,-90.65506,Bunge Joice IA,bunge-joice-ia,0.53,246.89
+agricharts:keycoop,Eddyville,86093,13,41.141623,-92.641023,Farmers Feed & Grain Company Inc Riceville IA,farmers-feed-grain-company-inc-riceville-ia,0.67,246.98
+agricharts:hartog,Ritter - Corn,86195,3,43.244192,-95.775392,Little Cedar Cooperative Elevator IA,little-cedar-cooperative-elevator-ia,0.61,247.19
+agricharts:innovativeag,Elkader,4647,28,42.853874,-91.405416,Landus Perry,landus-perry,0.53,247.38
+agricharts:farmerswin,F'Burg,12592,8,42.959138,-92.203033,Farmers Cooperative Company Macksburg IA,farmers-cooperative-company-macksburg-ia,0.53,253.57
+agricharts:cargillus,"Atchison, CAH",45236,5,39.513183,-95.204464,Chinn Feed Mill Clarence MO,chinn-feed-mill-clarence-mo,0.54,254.69
+agricharts:innovativeag,Williams,4640,11,42.488948,-93.546998,Phillips Farms Kahoka MO,phillips-farms-kahoka-mo,0.48,269.58
+agricharts:agpartners,Vliets,86981,5,39.715382,-96.333487,Farmers Cooperative Company Linden IA,farmers-cooperative-company-linden-ia,0.5,276.09
+agricharts:cargillus,"Topeka - Crossroads, CAH",63900,12,39.09035,-95.743067,Opal Foods Neosho MO,opal-foods-neosho-mo,0.53,277.21
+agricharts:plymouthenergy,Humphrey,13903,12,41.692667,-97.483794,Landus Perry,landus-perry,0.4,279.86
+agricharts:jbslivepork,"Oakville, IA Elevator",85067,12,41.100959,-91.044628,Farmers Feed & Grain Company Inc Riceville IA,farmers-feed-grain-company-inc-riceville-ia,0.59,280.33
+agricharts:cvacoop,AGP Sergeant Bluff,85911,7,42.337511,-96.349643,AGP Rosemont NE,agp-rosemont-ne,0.53,283.35
+agricharts:plymouthenergy,AGP Sergeant Bluff,85911,7,42.337511,-96.349643,AGP Rosemont NE,agp-rosemont-ne,0.53,283.35
+agricharts:plymouthenergy,Tilden,13924,12,42.04721,-97.833863,Farmers Cooperative Company Linden IA,farmers-cooperative-company-linden-ia,0.67,298.72
+agricharts:cgb,CGB - BURNSIDE,20594,17,40.289995,-91.103219,McBride Grain MO,mcbride-grain-mo,0.63,304.24
+agricharts:cgb,CGB - LITTLE YORK,87791,8,41.034416,-90.745497,Little Cedar Cooperative Elevator IA,little-cedar-cooperative-elevator-ia,0.59,307.62
+agricharts:jbslivepork,"Bushnell, IL Feed Mill",85373,8,40.550198,-90.518833,US AG Center Inc Allison IA,us-ag-center-inc-allison-ia,0.48,309.21
+agricharts:newvision,POET Ashton,84396,3,43.272398,-95.808852,Farmers Cooperative Produce Co Fort Atkinson IA,farmers-cooperative-produce-co-fort-atkinson-ia,0.56,314.34
+agricharts:agpartners,Hiawatha,86973,5,39.846046,-95.543899,ADM Carthage MO,adm-carthage-mo,0.5,315.09
+agricharts:cvacoop,Siouxland Ethanol,82797,7,42.452999,-96.595018,CVA Courtland KS,cva-courtland-ks,0.55,316.56
+agricharts:plymouthenergy,Siouxland Ethanol,82797,7,42.452999,-96.595018,CVA Courtland KS,cva-courtland-ks,0.55,316.56
+agricharts:midiowa,SINCLAIR,81965,4,42.573456,-92.729482,Chinn Feed Mill Clarence MO,chinn-feed-mill-clarence-mo,0.55,317.38
+agricharts:plymouthenergy,Elgin,13891,12,41.984743,-98.085185,Farmers Cooperative Company Linden IA,farmers-cooperative-company-linden-ia,0.55,318.56
+agricharts:agpartners,Axtell,86968,5,39.873387,-96.25811,LANDUS COOPERATIVE MAXWELL IA,landus-cooperative-maxwell-ia,0.5,328.39
+agricharts:plymouthenergy,Polk,13913,12,41.079765,-97.782453,Pro Coop Milford,pro-coop-milford,0.4,330.62
+agricharts:agpartners,Corning,84296,5,39.659473,-96.032007,Nemo Feed Baring MO,nemo-feed-baring-mo,0.56,331.68
+agricharts:plymouthenergy,Petersburg,13911,11,41.852219,-98.081956,Farmers Cooperative Company Macksburg IA,farmers-cooperative-company-macksburg-ia,0.53,332.19
+agricharts:plymouthenergy,East Hub,13890,12,41.886841,-96.463219,Chula Farmers Co-Op MO,chula-farmers-co-op-mo,0.5,332.71
+agricharts:plymouthenergy,Tamora,13922,18,40.894812,-97.226574,United Coop Kamrar IA,united-coop-kamrar-ia,0.53,334.87
+agricharts:cgb,CGB - WAKITA,23804,3,36.885653,-97.923602,CVA Narka KS,cva-narka-ks,0.53,344.66
+agricharts:cargillus,"Emery, CAH",52342,12,43.61543,-97.66685,Peterson Grain Waseca MN,peterson-grain-waseca-mn,0.5,347.4
+agricharts:plymouthenergy,Laurel,74199,15,42.438135,-97.107341,Heartland CO-OP Laurel IA,heartland-co-op-laurel-ia,0.55,350.51
+agricharts:innovativeag,Bettendorf,86144,20,41.522925,-90.495802,Farmers Cooperative Elevator Ottosen IA (approx),farmers-cooperative-elevator-ottosen-ia-approx,0.47,354.26
+agricharts:innovativeag,Aplington,85817,11,42.583582,-92.870221,Dalton Elevator MO,dalton-elevator-mo,0.67,354.42
+agricharts:cgb,CGB FLAGG,20574,4,41.895821,-89.140288,CE Grain Farber MO,ce-grain-farber-mo,0.44,354.78
+agricharts:cvacoop,Green Plains Central City,85907,7,41.109888,-97.970691,Green Plains Superior Ethanol,green-plains-superior-ethanol,0.7,357.82
+agricharts:plymouthenergy,Green Plains Central City,85907,7,41.109888,-97.970691,Green Plains Superior Ethanol,green-plains-superior-ethanol,0.7,357.82
+agricharts:cargillus,"Wahpeton, SSNA",41075,21,46.34056,-96.6429,Peterson Grain Waseca MN,peterson-grain-waseca-mn,0.57,358.87
+agricharts:agpartners,Powhattan,20558,5,39.732221,-95.269865,Farmers Cooperative Elevator Ottosen IA (approx),farmers-cooperative-elevator-ottosen-ia-approx,0.5,359.66
+agricharts:cargillus,"Napa Junction, CAH",82233,7,42.94263,-97.43698,CVA The Junction Linn KS,cva-the-junction-linn-ks,0.65,360.44
+agricharts:hartog,Ritter - Beans,86429,3,43.244192,-95.775392,River Valley Ryan IA,river-valley-ryan-ia,0.55,364.21
+agricharts:farmerswin,Bremer,12588,8,42.772768,-92.393148,Cameron Co-Op MO,cameron-co-op-mo,0.46,370.76
+agricharts:cgb,CGB FREEPORT,20570,5,42.29534,-89.605414,CE Grain Farber MO,ce-grain-farber-mo,0.57,372.94
+agricharts:innovativeag,Cuba City,4644,14,42.595232,-90.426474,Farmers Cooperative Company Sac City IA (approx),farmers-cooperative-company-sac-city-ia-approx,0.71,374.34
+agricharts:farmerswin,Mabel,12596,8,43.5151,-91.790227,ADM La Belle MO,adm-la-belle-mo,0.59,377.89
+agricharts:coopfe,CFE Hudson,87556,20,43.129218,-96.453649,Farmers Cooperative Produce Co West Union IA,farmers-cooperative-produce-co-west-union-ia,0.52,377.99
+agricharts:agpartners,Belvue,86970,5,39.216358,-96.17973,ADM La Belle MO,adm-la-belle-mo,0.44,378.3
+agricharts:cargillus,"Gibbon, CAH",59460,21,40.742599,-98.858009,Farmers Cooperative Company Diagonal IA,farmers-cooperative-company-diagonal-ia,0.44,380.51
+agricharts:newvision,AGP Sheldon,84403,2,43.182059,-95.856081,AGP Rosemont NE,agp-rosemont-ne,0.7,383.29
+agricharts:innovativeag,Golden Gr,78128,14,42.199245,-91.526437,Golden Triangle Energy Craig MO Ethanol,golden-triangle-energy-craig-mo-ethanol,0.6,391.42
+agricharts:cgb,CGB CLAYTON,20619,15,42.894385,-91.132814,Schmitz Grain Slayton MN,schmitz-grain-slayton-mn,0.62,392.26
+agricharts:keycoop,Mid Iowa - Sinclair,86786,3,42.573456,-92.729482,Mid Missouri Agri Services Alma MO,mid-missouri-agri-services-alma-mo,0.54,392.82
+agricharts:plymouthenergy,Akron,22687,13,42.82526,-96.565364,Cameron Co-Op MO,cameron-co-op-mo,0.67,394.42
+agricharts:cgb,CGB WALTON,20577,3,41.719392,-89.437914,Dalton Elevator MO,dalton-elevator-mo,0.62,395.79
+agricharts:plymouthenergy,Bee,13883,4,41.00732,-97.06039,Bunge Joice IA,bunge-joice-ia,0.43,396.06
+agricharts:agpartners,Robinson,86975,5,39.815847,-95.409564,F.J. Krob & Company Solon IA,f-j-krob-company-solon-ia,0.55,396.52
+agricharts:plymouthenergy,Ulysses,13925,14,41.070838,-97.202013,LANDUS COOPERATIVE Kesley IA (approx),landus-cooperative-kesley-ia-approx,0.4,396.99
+agricharts:cvacoop,Cargill Albion,82918,9,41.68332,-97.983876,Cargill Iowa Falls IA,cargill-iowa-falls-ia,0.62,399.97
+agricharts:plymouthenergy,Cargill Albion,82918,9,41.68332,-97.983876,Cargill Iowa Falls IA,cargill-iowa-falls-ia,0.62,399.97
+agricharts:agpartners,St Marys,86979,5,39.19515,-96.07327,CVA Le Mars IA,cva-le-mars-ia,0.53,400.36
+agricharts:coopfe,CFE Rock Rapids,87562,20,43.43318,-96.169101,"Ingredion, Inc. Cedar Rapids Ethanol",ingredion-inc-cedar-rapids-ethanol,0.54,402.24
+agricharts:agpartners,Topeka A,86980,5,39.064284,-95.665857,United Coop Kamrar IA,united-coop-kamrar-ia,0.48,404.3
+agricharts:cgb,CGB - WAGONER,20621,2,35.959042,-95.490168,CVA Clay Center KS,cva-clay-center-ks,0.46,406.95
+agricharts:plymouthenergy,Shelby,13917,14,41.194265,-97.422123,LANDUS COOPERATIVE Kesley IA (approx),landus-cooperative-kesley-ia-approx,0.42,407.36
+agricharts:plymouthenergy,Bow Valley,13885,12,42.744128,-97.256185,Warren Grain Co Spring Valley MN,warren-grain-co-spring-valley-mn,0.53,407.61
+agricharts:cgb,CGB - FALLS CITY,87617,12,40.046888,-95.601325,Farmers Feed & Grain Charles City IA,farmers-feed-grain-charles-city-ia,0.69,415.57
+agricharts:plymouthenergy,Stromsburg,13921,17,41.109715,-97.595515,Troy Elevator Inc Blakesburg IA,troy-elevator-inc-blakesburg-ia,0.64,416.52
+agricharts:agstate,Marathon,81801,13,42.86232,-94.98217,Dalton Elevator MO,dalton-elevator-mo,0.57,419.81
+agricharts:cvacoop,Daykin Milling LLC,85865,6,40.321416,-97.25412,Stover Milling Co MO,stover-milling-co-mo,0.57,422.44
+agricharts:plymouthenergy,Daykin Milling LLC,85865,6,40.321416,-97.25412,Stover Milling Co MO,stover-milling-co-mo,0.57,422.44
+agricharts:cgb,CGB - LARCHLAND,87790,17,40.82155,-90.657113,Bolivar Farmers Exchange MO,bolivar-farmers-exchange-mo,0.55,428.49
+agricharts:plymouthenergy,Bradshaw,53364,18,40.882372,-97.741557,ADM Marshall MN,adm-marshall-mn,0.5,430.25
+agricharts:buchheit,Campbell,86486,9,36.51424,-90.100873,ADM La Belle MO,adm-la-belle-mo,0.6,430.89
+agricharts:agpartners,White Cloud,86982,5,39.977813,-95.294337,Little Cedar Cooperative Elevator IA,little-cedar-cooperative-elevator-ia,0.52,434.27
+agricharts:hartog,Sanborn - Beans,86430,3,43.180459,-95.652176,Nemo Feed Baring MO,nemo-feed-baring-mo,0.5,435.72
+agricharts:procooperative,AGP- EMMETSBURG,74325,7,43.099503,-94.652783,AGP Rosemont NE,agp-rosemont-ne,0.54,438.97
+agricharts:cgb,CGB HICKMAN,81115,7,36.566066,-89.215838,Chinn Feed Mill Clarence MO,chinn-feed-mill-clarence-mo,0.48,441.44
+agricharts:cgb,CGB - SMITHSHIRE,27545,17,40.792684,-90.781227,Pro Coop Estherville,pro-coop-estherville,0.41,442.92
+agricharts:coopfe,CFE Inwood,87557,20,43.305478,-96.432456,Glenwood Elevator MO,glenwood-elevator-mo,0.67,444.62
+agricharts:innovativeag,Waukon,4658,28,43.244125,-91.485037,Dalton Elevator MO,dalton-elevator-mo,0.5,445.78
+agricharts:cgb,CGB - BILLINGS,25548,3,36.535109,-97.438056,Stover Milling Co MO,stover-milling-co-mo,0.54,446.85
+agricharts:plymouthenergy,Hampton,13900,18,40.877355,-97.884321,Dalton Elevator MO,dalton-elevator-mo,0.62,447.34
+agricharts:agpartners,Sabetha,86977,5,39.906161,-95.786201,Osage Cooperative Elevator IA,osage-cooperative-elevator-ia,0.5,449.48
+agricharts:coopfe,CFE Larchwood,87558,20,43.451154,-96.434213,Glenwood Elevator MO,glenwood-elevator-mo,0.48,455.9
+agricharts:midiowa,CONRAD,2470,8,42.223386,-92.874885,CVA Narka KS,cva-narka-ks,0.53,456.95
+agricharts:agpartners,Centralia,86971,5,39.722093,-96.129752,East Central Iowa CO-OP Jesup IA,east-central-iowa-co-op-jesup-ia,0.67,457.94
+agricharts:cargillus,"Wichita, GOS",63213,7,37.71009,-97.32787,Wiota Elevator Inc Wiota IA,wiota-elevator-inc-wiota-ia,0.55,460.63
+agricharts:innovativeag,Masonville,78125,28,42.480562,-91.592166,MFA Plant Foods Owensville MO,mfa-plant-foods-owensville-mo,0.67,461.21
+agricharts:cargillus,"Indianapolis, SSNA",49647,5,39.7747,-86.1923,Duffe Grain Inc. Atalissa IA,duffe-grain-inc-atalissa-ia,0.52,464.63
+agricharts:plymouthenergy,St Edward,13919,12,41.569377,-97.865758,Little Cedar Cooperative Elevator IA,little-cedar-cooperative-elevator-ia,0.57,467.06
+agricharts:plymouthenergy,Fullerton,13893,14,41.372179,-97.965144,Dalton Elevator MO,dalton-elevator-mo,0.53,475.06
+agricharts:plymouthenergy,MG Waldbaum - Bloomfield,86775,4,42.593929,-97.704296,Troy Elevator Inc Bloomfield IA,troy-elevator-inc-bloomfield-ia,0.59,484.63
+agricharts:cgb,CGB JOLIET,81116,3,41.488293,-88.115098,Bunge Joice IA,bunge-joice-ia,0.57,484.86
+agricharts:cgb,CGB RIVERSIDE,20617,13,39.084814,-84.57221,McBride Grain MO,mcbride-grain-mo,0.6,484.91
+agricharts:cvacoop,Husker Ag Plainview,85906,9,42.350194,-97.707463,Doane Grain Services Plainview MN,doane-grain-services-plainview-mn,0.65,490.77
+agricharts:cargillus,"Madison, CAH",5830,25,45.0082,-96.19492,Farmers Cooperative Company Diagonal IA,farmers-cooperative-company-diagonal-ia,0.53,490.77
+agricharts:plymouthenergy,Husker Ag Plainview,85906,9,42.350194,-97.707463,Doane Grain Services Plainview MN,doane-grain-services-plainview-mn,0.65,490.77
+agricharts:cargillus,"Albion, CAH",64036,25,41.69081,-98.00318,Dalton Elevator MO,dalton-elevator-mo,0.5,494.31
+agricharts:agpartners,Baileyville,86969,5,39.843114,-96.187731,Farmers Feed & Grain Company Inc Riceville IA,farmers-feed-grain-company-inc-riceville-ia,0.7,494.34
+agricharts:cargillus,"Wakeeney, CAH",45452,5,39.01071,-99.834677,Berne Cooperative Anthon IA,berne-cooperative-anthon-ia,0.5,502.71
+agricharts:midiowa,GREEN MOUNTAIN,2475,8,42.101961,-92.818853,AGP Rosemont NE,agp-rosemont-ne,0.54,505.85
+agricharts:plymouthenergy,Hordville,13902,11,41.077586,-97.887597,Farmers Feed & Grain Company Inc Riceville IA,farmers-feed-grain-company-inc-riceville-ia,0.67,507.37
+agricharts:plymouthenergy,Scribner,13916,12,41.666111,-96.66817,CE Grain Farber MO,ce-grain-farber-mo,0.59,507.62
+agricharts:cvacoop,Norfolk Crush LLC,85878,8,42.0776,-97.407108,Moberly Natural Crush MO,moberly-natural-crush-mo,0.53,510.08
+agricharts:plymouthenergy,Norfolk Crush LLC,85878,8,42.0776,-97.407108,Moberly Natural Crush MO,moberly-natural-crush-mo,0.53,510.08
+agricharts:cvacoop,Sandhills Renewable Energy LLC,87543,8,42.517735,-98.957307,Valero Renewables Floyd Ethanol,valero-renewables-floyd-ethanol,0.57,510.95
+agricharts:plymouthenergy,Sandhills Renewable Energy LLC,87543,8,42.517735,-98.957307,Valero Renewables Floyd Ethanol,valero-renewables-floyd-ethanol,0.57,510.95
+agricharts:cgb,NORTH DAKOTA SOYBEAN PROCESSORS LLC,84359,21,46.891042,-97.241602,Quad County Corn Processors Galva Ethanol,quad-county-corn-processors-galva-ethanol,0.59,511.56
+agricharts:plymouthenergy,Hinton,22685,13,42.626849,-96.289715,Hankins Grain Clinton MO,hankins-grain-clinton-mo,0.57,517.18
+agricharts:cgb,CGB - WAKA,23209,1,36.281456,-101.048352,CVA Narka KS,cva-narka-ks,0.59,517.27
+agricharts:cargillus,"Carleton (NE), CAH",63808,24,40.29968,-97.67662,Farmers Feed & Grain Charles City IA,farmers-feed-grain-charles-city-ia,0.58,517.4
+agricharts:cgb,CGB -  FRIARS POINT,51680,7,34.378474,-90.633226,Rose Acre Farms Hawk Point MO,rose-acre-farms-hawk-point-mo,0.57,517.47
+agricharts:agpartners,Seneca,86978,6,39.834908,-96.054615,Peterson Grain Waseca MN,peterson-grain-waseca-mn,0.48,520.52
+agricharts:plymouthenergy,Utica,13926,12,40.894779,-97.34389,Duffe Grain Inc. Atalissa IA,duffe-grain-inc-atalissa-ia,0.42,521.79
+agricharts:cargillus,"Hutchinson East, CAH",63508,14,38.0556,-97.8844,Chinn Feed Mill Clarence MO,chinn-feed-mill-clarence-mo,0.57,522.67
+agricharts:plymouthenergy,Royal,13915,17,42.331425,-98.174717,Troy Elevator Inc Pulaski IA,troy-elevator-inc-pulaski-ia,0.47,523.76
+agricharts:cargillus,"Hutchinson West, CAH",48427,14,38.054569,-97.901886,Chinn Feed Mill Clarence MO,chinn-feed-mill-clarence-mo,0.57,524.13
+agricharts:cargillus,"Alberta, CAH",5744,25,45.57431,-96.04789,Heartland Coop Lacona,heartland-coop-lacona,0.52,532.77
+agricharts:agpartners,Padonia,86974,5,39.853498,-95.526934,Farmers Win Coop Caledonia MN,farmers-win-coop-caledonia-mn,0.6,535.49
+agricharts:cgb,CGB HOMER,79614,13,40.042261,-87.956464,Cameron Co-Op MO,cameron-co-op-mo,0.5,536.7
+agricharts:midiowa,MIDWAY,3473,8,42.09744,-92.586263,McBride Grain MO,mcbride-grain-mo,0.46,538.33
+agricharts:plymouthenergy,Monroe,13906,18,41.473434,-97.600007,Hassard Elevator Monroe City MO,hassard-elevator-monroe-city-mo,0.48,540.49
+agricharts:cgb,CGB HENNEPIN,21922,25,41.255,-89.346409,Berne Cooperative Mapleton IA,berne-cooperative-mapleton-ia,0.46,544.3
+agricharts:agstate,Webb,81813,13,42.94974,-95.01047,W A Rootes Tebbetts MO,w-a-rootes-tebbetts-mo,0.35,545.62
+agricharts:midiowa,LISCOMB,2472,8,42.186787,-93.006645,CVA Lincoln KS,cva-lincoln-ks,0.44,557.29
+agricharts:cgb,CGB - OQUAWKA,20586,14,40.941547,-90.953601,CVA Narka KS,cva-narka-ks,0.5,558.45
+agricharts:cgb,CGB - RENFROW,25575,2,36.923431,-97.654749,Farmers Cooperative Company Greenfield IA,farmers-cooperative-company-greenfield-ia,0.48,560.52
+agricharts:cgb,CGB OWENSBORO,81119,11,37.80183,-87.15173,Farmers Cooperative Windsor MO,farmers-cooperative-windsor-mo,0.5,563.13
+agricharts:cargillus,"Owensboro Grain, GOS",85571,22,37.774941,-87.102496,Farmers Cooperative Windsor MO,farmers-cooperative-windsor-mo,0.5,567.92
+agricharts:cargillus,"Salina, CAH",60842,15,38.85747,-97.66803,Stateline Bancroft IA,stateline-bancroft-ia,0.5,571.55
+agricharts:coopfe,CFE Allendorf,87548,20,43.413668,-95.64386,CE Grain Farber MO,ce-grain-farber-mo,0.55,572.53
+agricharts:cgb,CGB - YORKWOOD,87793,16,41.043695,-90.745322,CVA York Office NE,cva-york-office-ne,0.52,574.95
+agricharts:cgb,CGB - VAN BUREN,20651,2,35.44,-94.35,CVA Courtland KS,cva-courtland-ks,0.54,574.98
+agricharts:cvacoop,Gresham,13898,3,41.029927,-97.402671,Gerkens Feed and Grain Wabasha MN,gerkens-feed-and-grain-wabasha-mn,0.46,575.39
+agricharts:plymouthenergy,Gresham,13898,3,41.029927,-97.402671,Gerkens Feed and Grain Wabasha MN,gerkens-feed-and-grain-wabasha-mn,0.46,575.39
+agricharts:coopfe,CFE Bigelow,87551,20,43.500331,-95.697853,CE Grain Farber MO,ce-grain-farber-mo,0.5,582.81
+agricharts:coopfe,CFE Hawarden,87555,20,42.991899,-96.486371,CE Grain Farber MO,ce-grain-farber-mo,0.57,583.92
+agricharts:cargillus,"Ogallah, CAH",5889,9,39.04259,-99.67869,Heartland Coop Lacona,heartland-coop-lacona,0.44,585.68
+agricharts:cgb,CGB MT VERNON,20613,11,37.924488,-87.866692,Cameron Co-Op MO,cameron-co-op-mo,0.6,587.31
+agricharts:cargillus,"Topeka - Gordon, CAH",53413,12,39.077735,-95.691652,Peterson Grain Waseca MN,peterson-grain-waseca-mn,0.5,587.76
+agricharts:cargillus,"Bloomingburg, CAH",57168,17,39.59702,-83.3903,Bowman Milling Pocahontas MO,bowman-milling-pocahontas-mo,0.44,591.23
+agricharts:agstate,Aurelia,81789,13,42.709884,-95.437121,Farmers Market Bolivar MO,farmers-market-bolivar-mo,0.57,595.3
+agricharts:coopfe,CFE Rushmore,87564,20,43.618305,-95.801361,CE Grain Farber MO,ce-grain-farber-mo,0.48,598.29
+agricharts:cgb,CGB OLNEY,20600,13,38.710177,-88.087279,Farmers Cooperative Company Ackley IA,farmers-cooperative-company-ackley-ia,0.53,598.85
+agricharts:coopfe,CFE Rock Valley,87563,20,43.202645,-96.294147,Heiman Rockville MO,heiman-rockville-mo,0.65,600.37
+agricharts:coopfe,CFE Alvord,87549,20,43.341511,-96.303489,CE Grain Farber MO,ce-grain-farber-mo,0.53,601.05
+agricharts:cargillus,"West Memphis, CAH",63238,12,35.137302,-90.15674,Phillips Farms Kahoka MO,phillips-farms-kahoka-mo,0.44,607.15
+agricharts:innovativeag,Monona,4654,28,43.054279,-91.389381,MFA Feed Mill Lebanon MO,mfa-feed-mill-lebanon-mo,0.47,607.45
+agricharts:coopfe,CFE Lester,87560,10,43.433032,-96.390259,CE Grain Farber MO,ce-grain-farber-mo,0.53,613.28
+agricharts:cgb,CGB JEFFERSONVILLE,20610,12,38.315692,-85.668705,A G Co-Op Services Boonville MO,a-g-co-op-services-boonville-mo,0.6,616.68
+agricharts:cgb,CGB WEST MEMPHIS,20650,8,35.135553,-90.150479,Prairieland FS Memphis MO,prairieland-fs-memphis-mo,0.48,617.06
+agricharts:cargillus,"Decatur, CAH",6612,19,42.10895,-85.97066,Moberly Natural Crush MO,moberly-natural-crush-mo,0.5,620.12
+agricharts:cgb,CGB - ENID,23781,4,36.404929,-97.88279,Farmers Cooperative Company Greenfield IA,farmers-cooperative-company-greenfield-ia,0.56,620.96
+agricharts:cargillus,"Beardsley(SD), CAH",82023,7,43.29582,-97.98141,River Valley Cooperative Donahue IA,river-valley-cooperative-donahue-ia,0.48,624.79
+agricharts:jbslivepork,"Smithton, MO Feed Mill",73266,5,38.683653,-93.092913,Schmitz Grain Slayton MN,schmitz-grain-slayton-mn,0.61,630.71
+agricharts:innovativeag,CGB Clay,4688,17,42.894385,-91.132814,CVA Clay Center KS,cva-clay-center-ks,0.52,637.25
+agricharts:cargillus,"Linden, CAH",63999,19,40.196278,-86.906955,Farmers Cooperative Company Linden IA,farmers-cooperative-company-linden-ia,0.75,638.87
+agricharts:plymouthenergy,81-20,86504,14,42.370748,-97.420696,MFA Coop 130 Rhineland MO,mfa-coop-130-rhineland-mo,0.18,642.87
+agricharts:cvacoop,Niewohner Feedlot,82110,2,41.78514,-97.986872,Main Street Feeds Monett MO,main-street-feeds-monett-mo,0.49,643.74
+agricharts:plymouthenergy,Niewohner Feedlot,82110,2,41.78514,-97.986872,Main Street Feeds Monett MO,main-street-feeds-monett-mo,0.49,643.74
+agricharts:cgb,CGB UNIONTOWN,21931,15,37.773123,-87.932928,Farmers Cooperative Produce Co West Union IA,farmers-cooperative-produce-co-west-union-ia,0.54,662.98
+agricharts:cargillus,"Shelton, CAH",46839,21,40.77999,-98.7361,Heartland Coop Claude TX,heartland-coop-claude-tx,0.52,670.84
+agricharts:cargillus,"Hammond, SSNA",37865,11,41.69292,-87.51411,Heartland Coop Neola,heartland-coop-neola,0.52,674.54
+agricharts:cgb,CGB BOCKER RUFF LLC,81111,11,42.002685,-89.591331,CVA York Office NE,cva-york-office-ne,0.47,677.92
+agricharts:buchheit,Biehle,2716,12,37.604632,-89.840811,Farmers Feed & Grain Company Inc Riceville IA,farmers-feed-grain-company-inc-riceville-ia,0.53,679.88
+agricharts:cgb,CGB DYERSBURG,81112,8,36.110581,-89.612441,Farmers Cooperative Company Macksburg IA,farmers-cooperative-company-macksburg-ia,0.55,692.27
+agricharts:plymouthenergy,Ainsworth,74433,8,42.54413,-99.86203,Farmers Cooperative Windsor MO,farmers-cooperative-windsor-mo,0.62,696.31
+agricharts:cgb,CGB LYLES STATION,20611,15,38.371031,-87.656887,LANDUS COOPERATIVE PATON IA,landus-cooperative-paton-ia,0.48,700.55
+agricharts:cargillus,"Cargill, CAH (Dlvd AC Grain LLC, Dana, IN)",5762,15,39.81152,-87.49127,Cogdill Farm Supply Inc Panama IA (approx),cogdill-farm-supply-inc-panama-ia-approx,0.49,704.98
+agricharts:cgb,CGB FITHIAN,79757,3,40.114411,-87.87354,Castana Grain Company IA,castana-grain-company-ia,0.44,707.4
+agricharts:cgb,CGB - CERES,26335,2,36.457757,-97.282438,CVA Le Mars IA,cva-le-mars-ia,0.5,710.33
+agricharts:cargillus,"Hickman A (Ashland), CAH",63621,6,36.56896,-89.1988,Green Plains Shenandoah Ethanol,green-plains-shenandoah-ethanol,0.5,711.09
+agricharts:cargillus,"Ord (NE), CAH",63870,25,41.59563,-98.92221,ADM Camanche Terminal IA,adm-camanche-terminal-ia,0.53,720.19
+agricharts:cgb,CGB -  PORT 33,20622,5,36.165341,-95.620029,CHS Inc Davenport IA,chs-inc-davenport-ia,0.5,728.5
+agricharts:cargillus,"Tipton, CAH",52734,19,40.28358,-85.99821,Peterson Grain Waseca MN,peterson-grain-waseca-mn,0.48,739.62
+agricharts:coopfe,CFE Lake Park,87559,20,43.453052,-95.319635,Scoular Purdy MO,scoular-purdy-mo,0.46,753.04
+agricharts:plymouthenergy,MG Waldbaum - Wakefield,28840,3,42.256839,-96.862086,Foster Feed Bakersfield MO,foster-feed-bakersfield-mo,0.51,755.69
+agricharts:cargillus,"Dayton, SSNA",37717,8,39.82021,-84.16902,Dalton Elevator MO,dalton-elevator-mo,0.59,756.81
+agricharts:cargillus,"Lafayette, GOS",63023,14,40.40457,-86.90411,Central United Cooperative Lafayette MN,central-united-cooperative-lafayette-mn,0.49,761.06
+agricharts:cgb,CGB - CARNEGIE,25551,2,35.082766,-98.603071,Chinn Feed Mill Clarence MO,chinn-feed-mill-clarence-mo,0.54,763.65
+agricharts:cargillus,"Lima, CAH",77160,21,40.76,-84.15,Little Cedar Cooperative Elevator IA,little-cedar-cooperative-elevator-ia,0.5,765.01
+agricharts:cgb,CGB BENTON,20603,11,37.99376,-88.918812,Berne Cooperative Anthon IA,berne-cooperative-anthon-ia,0.55,765.82
+agricharts:cargillus,"LaCrosse, CAH",52100,18,43.83738,-91.262,Andrews Farm Seed Carthage MO,andrews-farm-seed-carthage-mo,0.47,774.35
+agricharts:cgb,CGB - ORIENTA,25574,2,36.272971,-98.480431,McBride Grain MO,mcbride-grain-mo,0.56,781.92
+agricharts:buchheit,Morehouse,2717,11,36.846116,-89.692534,Farmers Cooperative Elevator Ottosen IA (approx),farmers-cooperative-elevator-ottosen-ia-approx,0.5,782.29
+agricharts:cargillus,"Cincinnati Kellogg, CAH",53479,15,39.047397,-84.399798,South Central Cooperative Melcher IA,south-central-cooperative-melcher-ia,0.43,788.99
+agricharts:cargillus,"Milford, CAH",61207,10,41.432,-85.826,Pro Coop Milford,pro-coop-milford,0.64,793.78
+agricharts:cgb,CGB -  WEBBERS FALLS,20620,2,35.513674,-95.133325,Cargill Iowa Falls IA,cargill-iowa-falls-ia,0.57,794.68
+agricharts:cgb,CGB WATERLOO,81120,13,41.429793,-84.969309,Cameron Co-Op MO,cameron-co-op-mo,0.53,804.36
+agricharts:cargillus,"Cincinnati River Road, CAH",5772,18,39.097409,-84.657792,Lincolnway Energy Nevada Ethanol,lincolnway-energy-nevada-ethanol,0.43,805.25
+agricharts:cgb,CGB - PINE BLUFF,79621,22,34.294116,-91.997299,CHS Inc Buffalo IA (approx),chs-inc-buffalo-ia-approx,0.48,805.69
+agricharts:cgb,CGB - VIDALIA,79688,12,31.804168,-91.488352,MFA Exchange Vandalia MO,mfa-exchange-vandalia-mo,0.56,834.36
+agricharts:cargillus,"Hales Point, CAH",49789,8,35.89564,-89.63611,Farmers Feed & Grain Charles City IA,farmers-feed-grain-charles-city-ia,0.59,839.66
+agricharts:cgb,CGB BIRDS POINT,20655,9,36.969424,-89.164506,AGP Rosemont NE,agp-rosemont-ne,0.52,879.59
+agricharts:cgb,CGB OSCEOLA,21927,10,35.6882,-90.0129,AGP Rosemont NE,agp-rosemont-ne,0.52,892.18
+agricharts:cgb,CGB - SHATTUCK,26044,4,36.27311,-99.876455,Heartland CO-OP Hartwick IA,heartland-co-op-hartwick-ia,0.4,893.33
+agricharts:cgb,CGB - DESOTO LANDING,82291,12,33.693714,-91.229439,CVA Courtland KS,cva-courtland-ks,0.52,900.22
+agricharts:cargillus,"Circleville, CAH",63640,14,39.60317,-82.94912,Farmers Feed & Grain Company Inc Riceville IA,farmers-feed-grain-company-inc-riceville-ia,0.58,901.74
+agricharts:cargillus,"Chillicothe, CAH",63819,16,39.329416,-82.960039,Little Cedar Cooperative Elevator IA,little-cedar-cooperative-elevator-ia,0.52,930.41
+agricharts:cargillus,"O'Neill, CAH",63511,25,42.44934,-98.620022,Bowman Milling Pocahontas MO,bowman-milling-pocahontas-mo,0.5,941.68
+agricharts:cgb,CGB ELIZABETHTOWN,20607,7,39.135931,-85.813504,Highwater Ethanol Lamberton MN,highwater-ethanol-lamberton-mn,0.5,969.99
+agricharts:cgb,CGB - TALLULAH PORT,79686,3,32.640401,-91.165489,CHS Inc Davenport IA,chs-inc-davenport-ia,0.47,982.14
+agricharts:cgb,CGB - TUNICA,21929,10,34.739634,-90.439836,Bunge Joice IA,bunge-joice-ia,0.48,993.11
+agricharts:cgb,CGB - VICKSBURG,79687,10,32.660071,-90.873419,Farmers Cooperative Company Macksburg IA,farmers-cooperative-company-macksburg-ia,0.64,995.45
+heartland,MISSOURI VALLEY,MISSOURI VALLEY,10,,,Warren Grain Co Spring Valley MN,warren-grain-co-spring-valley-mn,0.57,
+heartland,EARLHAM FEED MILL,EARLHAM FEED MILL,1,,,Heartland Coop Rhea TX (Seasonal),heartland-coop-rhea-tx-seasonal,0.57,
+heartland,RUNNELLS,RUNNELLS,5,,,Farmers Feed & Grain Company Inc Riceville IA,farmers-feed-grain-company-inc-riceville-ia,0.47,
+heartland,MINGO,MINGO,10,,,Nemo Feed Baring MO,nemo-feed-baring-mo,0.5,
+heartland,CEDAR RAPIDS ADM,CEDAR RAPIDS ADM,5,,,"Ingredion, Inc. Cedar Rapids Ethanol",ingredion-inc-cedar-rapids-ethanol,0.63,
+heartland,CEDAR RAPIDS INGREDION,CEDAR RAPIDS INGREDION,4,,,"Ingredion, Inc. Cedar Rapids Ethanol",ingredion-inc-cedar-rapids-ethanol,0.55,
+heartland,CEDAR RAPIDS CARGILL,CEDAR RAPIDS CARGILL,5,,,"Ingredion, Inc. Cedar Rapids Ethanol",ingredion-inc-cedar-rapids-ethanol,0.57,
+heartland,EDDYVILLE,EDDYVILLE,5,,,Farmers Feed & Grain Company Inc Riceville IA,farmers-feed-grain-company-inc-riceville-ia,0.67,
+heartland,ROQUETTE,ROQUETTE,4,,,Farmers Cooperative Elevator Ottosen IA (approx),farmers-cooperative-elevator-ottosen-ia-approx,0.53,
+heartland,POET -GOWRIE,POET -GOWRIE,4,,,POET Glenville MN Ethanol,poet-glenville-mn-ethanol,0.64,
+heartland,JEWELL AREA PROCESSOR,JEWELL AREA PROCESSOR,4,,,Neelyville Farm Center MO,neelyville-farm-center-mo,0.51,
+heartland,POET - IF,POET - IF,4,,,POET Glenville MN Ethanol,poet-glenville-mn-ethanol,0.57,
+heartland,POET - MENLO,POET - MENLO,4,,,POET Glenville MN Ethanol,poet-glenville-mn-ethanol,0.67,
+heartland,POET- SHELL ROCK,POET- SHELL ROCK,4,,,POET Glenville MN Ethanol,poet-glenville-mn-ethanol,0.55,
+heartland,VERBIO,VERBIO,4,,,Verbio Nevada Ethanol,verbio-nevada-ethanol,0.63,
+heartland,LINCOLNWAY - NEVADA,LINCOLNWAY - NEVADA,4,,,Lincolnway Energy Nevada Ethanol,lincolnway-energy-nevada-ethanol,1.0,
+heartland,LDC-GRAND JUNCTION,LDC-GRAND JUNCTION,5,,,CVA The Junction Linn KS,cva-the-junction-linn-ks,0.63,
+heartland,GREEN PLAINS SHENANDOAH,GREEN PLAINS SHENANDOAH,3,,,Green Plains Shenandoah Ethanol,green-plains-shenandoah-ethanol,1.0,
+heartland,SIRE,SIRE,5,,,Osage Cooperative Elevator IA,osage-cooperative-elevator-ia,0.44,
+heartland,CARGILL - BLAIR,CARGILL - BLAIR,5,,,Cargill Fort Dodge Ethanol,cargill-fort-dodge-ethanol,0.58,
+heartland,ADM - DSM,ADM - DSM,5,,,ADM Camanche Terminal IA,adm-camanche-terminal-ia,0.53,
+heartland,CARGILL - CR,CARGILL - CR,5,,,Cargill Fort Dodge Ethanol,cargill-fort-dodge-ethanol,0.64,
+heartland,CARGILL - IF,CARGILL - IF,5,,,Cargill Iowa Falls IA,cargill-iowa-falls-ia,0.71,
+heartland,SHELL ROCK SOY PROCESSING,SHELL ROCK SOY PROCESSING,5,,,Bullock AG Service Inc Preston IA,bullock-ag-service-inc-preston-ia,0.54,
+heartland,AGP EAGLE GROVE,AGP EAGLE GROVE,2,,,AGP Rosemont NE,agp-rosemont-ne,0.52,
+heartland,AGP MANNING,AGP MANNING,2,,,AGP Rosemont NE,agp-rosemont-ne,0.52,
+heartland,BUNGE - COUNCIL BLUFFS,BUNGE - COUNCIL BLUFFS,5,,,Southwest Iowa Renewable Energy Council Bluffs Ethanol,southwest-iowa-renewable-energy-council-bluffs-ethanol,0.58,
+newcoop,Morton Mills,MORTON MILLS,15,,,Stover Milling Co MO,stover-milling-co-mo,0.54,
+landus,Emmetsburg,151,6,,,Farmers Cooperative Company Macksburg IA,farmers-cooperative-company-macksburg-ia,0.63,
+landus,Waverly,152,12,,,Farmers Cooperative Company Ackley IA,farmers-cooperative-company-ackley-ia,0.46,
+bushel:chs,Mitchell,96201bd3-98ce-4522-9969-16bd13b811bd,5,,,Farmers Feed & Grain Company Inc Riceville IA,farmers-feed-grain-company-inc-riceville-ia,0.59,
+bushel:chs,ADM Cedar Rapids,a12278a9-e243-4b2e-bd01-1f162413de19,15,,,"Ingredion, Inc. Cedar Rapids Ethanol",ingredion-inc-cedar-rapids-ethanol,0.74,
+bushel:chs,ADM Clinton,43b9a5fa-7b7c-41f9-9f72-5ff68bd878a4,9,,,Hankins Grain Clinton MO,hankins-grain-clinton-mo,0.69,
+bushel:chs,AGP - Hastings,3e32de25-9a0e-4060-a61b-b151ce03a85c,1,,,The Scoular Company Hastings IA,the-scoular-company-hastings-ia,0.71,
+bushel:chs,AGP Aberdeen,7466c374-68ee-4163-a834-aea826abf8ae,3,,,AgState Laurens IA,agstate-laurens-ia,0.52,
+bushel:chs,Absolute Energy,763c2bfb-10d8-44ca-9f4d-50e3a6647964,14,,,Absolute Energy mona Ethanol,absolute-energy-mona-ethanol,0.76,
+bushel:chs,Ada,ee691429-3936-40d1-9432-90c1cedaf308,8,,,Dalton Elevator MO,dalton-elevator-mo,0.44,
+bushel:chs,Akron,f9f376f4-78a6-4d95-be4a-95c6fcb11d1b,1,,,Cameron Co-Op MO,cameron-co-op-mo,0.67,
+bushel:chs,Alma,901ea5c4-8c67-4066-b4cd-4f9d1033e1da,8,,,CVA Le Mars IA,cva-le-mars-ia,0.53,
+bushel:chs,Amherst,d0965ee4-14ff-4c35-8d8a-3029eb446284,3,,,Cameron Co-Op MO,cameron-co-op-mo,0.57,
+bushel:chs,Annawan,a0256892-a004-4f5b-94d8-e46d3d0e8204,15,,,CVA Narka KS,cva-narka-ks,0.5,
+bushel:chs,Ashley,b07ab73c-a2e3-46d0-a9ed-7e9d2d2952ed,5,,,Farmers Cooperative Company Ackley IA,farmers-cooperative-company-ackley-ia,0.67,
+bushel:chs,Baltic,c002140e-6e5b-4a07-8f7e-6b825eff290e,2,,,Dalton Elevator MO,dalton-elevator-mo,0.5,
+bushel:chs,Beltrami,f5f964e7-67f1-4902-8836-04ede180c65f,8,,,Heartland Coop Rampa TX,heartland-coop-rampa-tx,0.43,
+bushel:chs,Bertrand,c8e58b85-7b27-4df9-857e-83dbe4e1fa50,8,,,Heartland Coop Rhea TX (Seasonal),heartland-coop-rhea-tx-seasonal,0.55,
+bushel:chs,Blunt,7980b132-4517-4907-8921-7def40a92760,1,,,Absolute Energy mona Ethanol,absolute-energy-mona-ethanol,0.44,
+bushel:chs,Bowbells,43a55f1a-3ede-4104-937e-bf1b61fe4a83,2,,,Moberly Natural Crush MO,moberly-natural-crush-mo,0.41,
+bushel:chs,Brandon,1e9f8d72-252c-4b22-bbe9-33cb77a81e8a,12,,,Berne Cooperative Anthon IA,berne-cooperative-anthon-ia,0.63,
+bushel:chs,Bridgeport Ethanol,3aa2a11d-0162-4430-b842-e02da9d3eec3,2,,,McBride Grain MO,mcbride-grain-mo,0.59,
+bushel:chs,Bruce Elevator,6f1ba13a-1313-4983-abe0-56adc8bef5f4,2,,,Bunge Joice IA,bunge-joice-ia,0.5,
+bushel:chs,Brule,35a38000-656f-4063-bf76-b06d0483fc58,3,,,McBride Grain MO,mcbride-grain-mo,0.5,
+bushel:chs,Brush,d587eef6-418b-4f9c-b643-c63c7bf0a48e,1,,,Moberly Natural Crush MO,moberly-natural-crush-mo,0.38,
+bushel:chs,Byers,6175d7cc-cd25-4889-b5e3-d25ad9bdeab3,1,,,CE Grain Farber MO,ce-grain-farber-mo,0.43,
+bushel:chs,CHS Cahokia,c7d7c0c9-c4fa-4978-9d5b-46a9b3e9f64e,30,,,CHS Inc Buffalo IA (approx),chs-inc-buffalo-ia-approx,0.55,
+bushel:chs,Callaway,22951fb9-7ed5-4a7a-9bfd-3752faadaeb1,8,,,Castana Grain Company IA,castana-grain-company-ia,0.53,
+bushel:chs,Calvin,7f7da1ca-ae99-40d6-b4ae-4f1458d6505a,6,,,CVA Lincoln KS,cva-lincoln-ks,0.59,
+bushel:chs,Canton,df041d28-a081-4cd6-a4bd-28b4f2be11e8,12,,,Ursa Farmers Co-Op Canton MO,ursa-farmers-co-op-canton-mo,0.71,
+bushel:chs,Carrollton,436226d7-bd02-4e97-aa4a-ff670e0b719d,8,,,Show Me Ethanol Carrollton MO,show-me-ethanol-carrollton-mo,0.71,
+bushel:chs,Cavalier,8c3152b5-533a-4506-bd93-e713a7dcdc72,16,,,CVA Le Mars IA,cva-le-mars-ia,0.63,
+bushel:chs,Chamberlain,988613f1-d047-4682-b95d-454552d8a149,5,,,Cameron Co-Op MO,cameron-co-op-mo,0.67,
+bushel:chs,Cheyenne Wells,35c27107-e683-40e1-9ec3-88d34f424373,2,,,US AG Center Inc Allison IA,us-ag-center-inc-allison-ia,0.52,
+bushel:chs,Chokio,c75e7428-b7e0-4215-bdc9-998d9be9e78e,23,,,Farmers Cooperative Elevator Company Schleswig IA (approx),farmers-cooperative-elevator-company-schleswig-ia-approx,0.4,
+bushel:chs,Claire City,2f81c55c-3f28-44a8-a165-2f27b9c6a21e,17,,,Farmers Feed & Grain Charles City IA,farmers-feed-grain-charles-city-ia,0.7,
+bushel:chs,"Collins, Mississippi",80772e62-3bae-4b9c-af6a-f55bb36e0b7f,4,,,LifeLine Foods St Joseph MO Ethanol,lifeline-foods-st-joseph-mo-ethanol,0.42,
+bushel:chs,Corn Inc,aae5ef4f-bd32-45e4-be25-375eb693492a,1,,,Cameron Co-Op MO,cameron-co-op-mo,0.55,
+bushel:chs,Corsica,8db4d688-0d14-48a6-a5c1-b11b9a6aebe0,5,,,Osage Cooperative Elevator IA,osage-cooperative-elevator-ia,0.5,
+bushel:chs,Crookston Terminal,c787891f-d534-4020-9b07-28766520b38c,8,,,Farmers Cooperative Elevator Ottosen IA (approx),farmers-cooperative-elevator-ottosen-ia-approx,0.5,
+bushel:chs,Davenport,cd751c5a-6f29-4ced-b62e-36550307fd99,24,,,CHS Inc Davenport IA,chs-inc-davenport-ia,0.82,
+bushel:chs,Delivered Tharaldson,2a590a2b-1aed-4a7a-9f9c-a9fdccc5f5cb,1,,,SilverEdge Strawberry Point IA,silveredge-strawberry-point-ia,0.51,
+bushel:chs,Devils Lake,caeb5ce4-9592-4552-953f-f957820dbe9f,10,,,Farmers Feed & Grain Company Inc Riceville IA,farmers-feed-grain-company-inc-riceville-ia,0.6,
+bushel:chs,Drayton,e218ab05-f430-4095-80bb-766d44cd80b4,16,,,Dalton Elevator MO,dalton-elevator-mo,0.77,
+bushel:chs,Dupree,b37393bc-d46c-4b08-b4eb-d0f13090ad7e,5,,,Landus Feed Partners LLC,landus-feed-partners-llc,0.48,
+bushel:chs,Edgeley,5d19d7b7-c3dd-4d2d-aee7-2404ab1cfd7e,17,,,New Cooperative Inc. George IA,new-cooperative-inc-george-ia,0.47,
+bushel:chs,Edmore,111d39a6-c4d3-4417-8b33-6851259c956c,10,,,New Cooperative Inc. George IA,new-cooperative-inc-george-ia,0.5,
+bushel:chs,Elkton,63092f30-11aa-435d-9384-84d7ae0cb30b,12,,,Dalton Elevator MO,dalton-elevator-mo,0.67,
+bushel:chs,Elm Creek,ad58af6a-9eba-4823-b473-85f9e933d12f,8,,,ADM Carthage MO,adm-carthage-mo,0.48,
+bushel:chs,Erskine,1fc37d60-db73-4c68-8d74-252ffac63930,8,,,Verbio Nevada Ethanol,verbio-nevada-ethanol,0.5,
+bushel:chs,Fairfax,8488f6c9-c846-4525-93aa-9f0dc1107c95,4,,,LANDUS COOPERATIVE EXIRA IA,landus-cooperative-exira-ia,0.42,
+bushel:chs,Fergus Falls South (8¢ Dump fee),323fe9d6-59ef-4b89-a448-762b81fb27ac,14,,,River Valley Cooperative Donahue IA,river-valley-cooperative-donahue-ia,0.47,
+bushel:chs,Fleming,277cb67f-8e05-47a6-9bd4-e7a5f1464abe,1,,,Nemo Feed Baring MO,nemo-feed-baring-mo,0.56,
+bushel:chs,Frederick,4b83c408-7651-41ea-93c2-46d48cfc5531,1,,,Fredericksburg Farmers Coop Sumner IA,fredericksburg-farmers-coop-sumner-ia,0.6,
+bushel:chs,French,1aaefc54-35e1-4476-a3d8-bb27efa8d52a,23,,,Berne Cooperative Anthon IA,berne-cooperative-anthon-ia,0.44,
+bushel:chs,Futures-Only,49162b99-8080-4170-ab71-4164d4e8bb28,11,,,Ursa Farmers Co-Op Canton MO,ursa-farmers-co-op-canton-mo,0.52,
+bushel:chs,GPC Muscatine,4adb8921-8134-42ed-b3bb-6f1d2d0b23c2,22,,,Producers Cooperative Association Liberal MO,producers-cooperative-association-liberal-mo,0.48,
+bushel:chs,Galchutt,a5a94076-9079-4889-af27-cf9600bfa8e2,17,,,Chula Farmers Co-Op MO,chula-farmers-co-op-mo,0.46,
+bushel:chs,Garrison,b5b4d675-8268-491d-869b-6351487b0b99,4,,,Cameron Co-Op MO,cameron-co-op-mo,0.53,
+bushel:chs,Gettysburg,fac1ca2b-1d60-48fe-946d-ef294c6fb42c,5,,,D Tone Feed Grain Plattsburg MO,d-tone-feed-grain-plattsburg-mo,0.59,
+bushel:chs,Glasston,dcb6d655-82ea-4d8a-9dbe-0d7e342c23e3,16,,,LANDUS COOPERATIVE SCRANTON IA,landus-cooperative-scranton-ia,0.61,
+bushel:chs,Glendive,4aa8f721-6c09-47f0-a9d1-6db09a655d81,1,,,Glenwood Elevator MO,glenwood-elevator-mo,0.62,
+bushel:chs,Glenwood,5c3b3e32-899a-4c41-b349-459fcdad0c50,23,,,Glenwood Elevator MO,glenwood-elevator-mo,1.0,
+bushel:chs,Greenbush,cac7af05-e954-4ece-b1bd-27cc804fac92,4,,,Farmers Cooperative Company Greenfield IA,farmers-cooperative-company-greenfield-ia,0.53,
+bushel:chs,Grygla,794e8938-2e47-4844-8192-18239897493f,4,,,Troy Elevator Inc Pulaski IA,troy-elevator-inc-pulaski-ia,0.44,
+bushel:chs,Gwinner,28008e5a-df8e-4031-9b0f-5a9e4d71601f,17,,,Farmers Cooperative Windsor MO,farmers-cooperative-windsor-mo,0.57,
+bushel:chs,Hannaford,b94b14c8-c844-468f-90ec-590c4c732786,11,,,AG Vantage FS Inc Oxford IA,ag-vantage-fs-inc-oxford-ia,0.54,
+bushel:chs,Harwood,44726a83-316d-4ac7-b4b3-68dae29d0a87,17,,,Glenwood Elevator MO,glenwood-elevator-mo,0.53,
+bushel:chs,Havana/Beardstown,c85b7389-9aeb-4dc0-83b4-9934f576063b,21,,,Heartland Coop Bernstein TX,heartland-coop-bernstein-tx,0.61,
+bushel:chs,Haxtun,039c9e43-5f88-487c-818e-8759f3861a9b,3,,,Dalton Elevator MO,dalton-elevator-mo,0.5,
+bushel:chs,Hazel,20136448-469d-43cd-b619-95989ff54f62,8,,,Heartland Coop Neola,heartland-coop-neola,0.4,
+bushel:chs,Herman,0fcfc5cb-6f07-45c7-babb-32cb0d1ce4d6,22,,,Heartland CO-OP Gilman IA,heartland-co-op-gilman-ia,0.55,
+bushel:chs,Hinton,5dfe644d-d55b-4075-9ef4-6ed071a91cc9,1,,,Hankins Grain Clinton MO,hankins-grain-clinton-mo,0.57,
+bushel:chs,Holdrege Shuttle,623c8de5-4c43-478c-8efd-6e23e64ea7b9,8,,,Homeland Energy Solutions Lawler Ethanol,homeland-energy-solutions-lawler-ethanol,0.49,
+bushel:chs,Holdrege West,fb9219ba-91ff-480b-95e7-d0523558da0a,8,,,Bolivar Farmers Exchange MO,bolivar-farmers-exchange-mo,0.5,
+bushel:chs,Holyoke,4dad5a9f-fcc3-4255-a08e-c6f792617a7a,3,,,Oakley Grain Foristell MO,oakley-grain-foristell-mo,0.43,
+bushel:chs,Holyoke Shuttle,1c1fb313-c332-4e45-8e44-0e708884649d,1,,,Homeland Energy Solutions Lawler Ethanol,homeland-energy-solutions-lawler-ethanol,0.45,
+bushel:chs,Hyde,a8e2ee6a-bc90-48ad-9941-30aee5ac5442,1,,,Farmers Cooperative Company Linden IA,farmers-cooperative-company-linden-ia,0.4,
+bushel:chs,Idalia,45a44681-bcb6-422f-8a67-b30e26cf5c64,3,,,Farmers Win Coop Caledonia MN,farmers-win-coop-caledonia-mn,0.53,
+bushel:chs,Idalia West,24986f04-49aa-4dca-89d0-7cd230232001,1,,,Farmers Win Coop Caledonia MN,farmers-win-coop-caledonia-mn,0.53,
+bushel:chs,Ingredion,1af786d2-9708-4475-a5e4-065081f6bc78,4,,,Ingredion North Kansas City MO,ingredion-north-kansas-city-mo,0.6,
+bushel:chs,Isabel,09ab53d6-06d2-4404-aae3-7e653ec43f25,5,,,Osage Cooperative Elevator IA,osage-cooperative-elevator-ia,0.55,
+bushel:chs,Joliet Container Mkt,e67ba8c2-d421-42e5-a3ea-b76db07d6d98,6,,,Farmers Coop Association Ainsworth IA,farmers-coop-association-ainsworth-ia,0.49,
+bushel:chs,Julesburg,556bac41-5995-4755-8801-6c1e4e67daae,1,,,Troy Elevator Inc Blakesburg IA,troy-elevator-inc-blakesburg-ia,0.58,
+bushel:chs,Kanaranzi,6316b9aa-8e1d-4ec5-9c07-601cc76a70c1,2,,,CVA Narka KS,cva-narka-ks,0.56,
+bushel:chs,Kennedy,8b0f806e-feed-44c3-bfe9-c6c7fc953b9c,16,,,Farmers Cooperative Company Greenfield IA,farmers-cooperative-company-greenfield-ia,0.47,
+bushel:chs,Kindred Terminal,a67075f3-bdb1-4013-8df8-68698e28c3f0,17,,,Farmers Cooperative Company Linden IA,farmers-cooperative-company-linden-ia,0.62,
+bushel:chs,Kingfisher,02b3f54a-7a70-4d90-b68a-a95777e6fdf1,2,,,Koster Grain Inc IA,koster-grain-inc-ia,0.5,
+bushel:chs,Lakota,64446a4a-c951-4648-96b9-fdc31482e196,10,,,Koster Grain Inc IA,koster-grain-inc-ia,0.5,
+bushel:chs,Langdon,d8bdd763-42c2-41a1-a163-396d818df08b,10,,,LANDUS COOPERATIVE PATON IA,landus-cooperative-paton-ia,0.63,
+bushel:chs,Lankin,8922de77-9fad-4fe3-96df-03c159413057,10,,,LANDUS COOPERATIVE IRWIN IA,landus-cooperative-irwin-ia,0.56,
+bushel:chs,Lemmon Terminal,812c7649-2fb3-43d9-9165-37afaa26e8c2,2,,,Absolute Energy mona Ethanol,absolute-energy-mona-ethanol,0.53,
+bushel:chs,Long Prairie,689f3af6-be82-491d-8213-68fe58423c37,23,,,Prairie Home Co-Op MO,prairie-home-co-op-mo,0.58,
+bushel:chs,Loomis,dc30b37b-5d3f-4945-a02e-d5d6911c1c12,8,,,Troy Elevator Inc Bloomfield IA,troy-elevator-inc-bloomfield-ia,0.48,
+bushel:chs,Lowder,0b3adcef-66ed-4b70-95e9-71e02235c934,9,,,Farmers Cooperative Company Linden IA,farmers-cooperative-company-linden-ia,0.5,
+bushel:chs,Lowry,cf0338e9-4cb6-4dfb-830e-dabd9261d499,23,,,Pro Coop Milford,pro-coop-milford,0.38,
+bushel:chs,Luverne,e9c55567-b326-45e9-8003-e5c379aa7cf6,12,,,Gevo Agri-Energy Luverne MN,gevo-agri-energy-luverne-mn,0.58,
+bushel:chs,Macon,4e28d9ed-c8a4-4d83-ad6a-f3771e92bc9a,1,,,Dalton Elevator MO,dalton-elevator-mo,0.55,
+bushel:chs,Magnolia,50bf4aa2-7382-42c7-9c7a-e685f29a22aa,12,,,Farmers Market Bolivar MO,farmers-market-bolivar-mo,0.55,
+bushel:chs,Mahnomen,3a3352a4-1c10-4922-be73-0cd37e03e699,8,,,Cameron Co-Op MO,cameron-co-op-mo,0.53,
+bushel:chs,Manvel,78476b80-15fd-4acc-b6c9-230fd2731e51,16,,,Heiman Rockville MO,heiman-rockville-mo,0.45,
+bushel:chs,Marshall,10b2684c-a76b-445d-9628-ea01044e8c31,6,,,ADM Marshall MN,adm-marshall-mn,0.8,
+bushel:chs,Meredith Rd Elburn,0a45fdc0-62ac-45be-a9e8-3510c1561ea0,14,,,Heartland Coop Howe NE (Auburn),heartland-coop-howe-ne-auburn,0.51,
+bushel:chs,Merritt Bunker,1d08117f-6186-4747-9e60-7ed60521e7f8,1,,,Little Cedar Cooperative Elevator IA,little-cedar-cooperative-elevator-ia,0.46,
+bushel:chs,Milton,cc604cde-1749-4397-8753-9636f626332d,10,,,Dalton Elevator MO,dalton-elevator-mo,0.67,
+bushel:chs,Minot,7eeb9607-7218-4ae7-a339-7ec8a0c5add2,4,,,Farmers Cooperative Windsor MO,farmers-cooperative-windsor-mo,0.5,
+bushel:chs,Mooreton,7d8e6764-6b2e-42d8-805f-14aa16a8a3c0,3,,,Farmers Cooperative Elevator Ottosen IA (approx),farmers-cooperative-elevator-ottosen-ia-approx,0.53,
+bushel:chs,Morris,8df590fd-be6a-4bef-8c61-e2684c7e2663,22,,,Nemo Feed Baring MO,nemo-feed-baring-mo,0.47,
+bushel:chs,Morris,6f7e42d6-398c-40ea-a1a9-aa5053b20b11,23,,,Nemo Feed Baring MO,nemo-feed-baring-mo,0.47,
+bushel:chs,Napoleon,bd0b2b2a-4a0b-408a-8ab3-e3f95773923b,11,,,Berne Cooperative Mapleton IA,berne-cooperative-mapleton-ia,0.64,
+bushel:chs,Nestle Davenport,2e713a1d-5c19-4d4f-bfef-cfa0e4454c21,11,,,CHS Inc Davenport IA,chs-inc-davenport-ia,0.76,
+bushel:chs,New Haven,208f503f-0804-4ce2-9b61-e5e9f69687c5,1,,,New Coop Arispe,new-coop-arispe,0.63,
+bushel:chs,New Salem,b38a24e8-d58b-4432-8d3b-547ab5150f35,2,,,New Coop Arispe,new-coop-arispe,0.63,
+bushel:chs,Newark,49e50433-44c6-4612-8f57-6126ab9fae4c,14,,,New Coop Arispe,new-coop-arispe,0.62,
+bushel:chs,Norma,8baa16bd-4931-4385-adb6-5b2808f33232,1,,,Farmers Cooperative Windsor MO,farmers-cooperative-windsor-mo,0.5,
+bushel:chs,Oklee,7b7e32be-f5d3-4249-915e-5ff08fc1705b,8,,,Farmers Cooperative Company Ackley IA,farmers-cooperative-company-ackley-ia,0.55,
+bushel:chs,Onida,b1feb746-d636-4ef1-ab0a-f4fa557ae189,3,,,Farmers Cooperative Company Diagonal IA,farmers-cooperative-company-diagonal-ia,0.46,
+bushel:chs,Ostrander,ee5bcd18-9b30-4aee-b05b-8e23165003f9,6,,,Koster Grain Inc IA,koster-grain-inc-ia,0.67,
+bushel:chs,Otis,85bdc06a-a5ab-404c-9fce-707839311d58,1,,,Farmers Cooperative Elevator Ottosen IA (approx),farmers-cooperative-elevator-ottosen-ia-approx,0.55,
+bushel:chs,Ottawa River Mkt,98791c4f-9722-48e4-99cc-9bdc0a0a18dc,2,,,Southeast Iowa Grain Yarmouth IA,southeast-iowa-grain-yarmouth-ia,0.46,
+bushel:chs,Overton,9186907a-1e35-4392-97fa-e6ce55f74b58,8,,,Farmers Cooperative Elevator Ottosen IA (approx),farmers-cooperative-elevator-ottosen-ia-approx,0.57,
+bushel:chs,Peru Marketstreet,b43bcddc-9fab-4f45-97c6-7b89ffa2fbc8,22,,,TeStrake Bros. Inc Lone Tree IA,testrake-bros-inc-lone-tree-ia,0.5,
+bushel:chs,Philip,de6d1cb9-b270-4622-8e48-0bda424c0f53,2,,,Phillips Farms Kahoka MO,phillips-farms-kahoka-mo,0.44,
+bushel:chs,Pierre,4c8d590d-6b43-41dc-abbe-0b37816f4ef7,2,,,Landus Perry,landus-perry,0.44,
+bushel:chs,Quincy Elevator,921495bb-80de-497e-ae60-015ef655ccd4,2,,,ADM Quincy IL,adm-quincy-il,0.75,
+bushel:chs,Rochelle,bba4240b-02c6-4c07-b10c-d3aa1adb3244,14,,,Farmers Feed & Grain Company Inc Riceville IA,farmers-feed-grain-company-inc-riceville-ia,0.71,
+bushel:chs,Roseau,b982d4c4-9300-44d8-a33a-aea3525349bb,4,,,Osage Cooperative Elevator IA,osage-cooperative-elevator-ia,0.55,
+bushel:chs,Rt. 47 Terminal,492bb16e-2c43-4c3d-8f84-01ce728a9a65,3,,,Heartland Coop Rhea TX (Seasonal),heartland-coop-rhea-tx-seasonal,0.32,
+bushel:chs,Ruthton,8bf864a9-a142-409e-bf36-46e0bfcc3b0b,12,,,Farmers Cooperative Elevator Ottosen IA (approx),farmers-cooperative-elevator-ottosen-ia-approx,0.57,
+bushel:chs,Sarles,9f4a6fcf-849e-4491-a8ae-ba6ca957402c,6,,,Farmers Feed & Grain Charles City IA,farmers-feed-grain-charles-city-ia,0.56,
+bushel:chs,Selby,0de6caf4-7a40-4d20-b949-a42f1519082c,5,,,LANDUS COOPERATIVE Kesley IA (approx),landus-cooperative-kesley-ia-approx,0.44,
+bushel:chs,Selkirk,41eb538f-9e6c-494d-8d4d-59c64653e2d2,2,,,Koster Grain Inc IA,koster-grain-inc-ia,0.46,
+bushel:chs,Seneca,72f972ff-c9ad-4682-a42b-a69ac090aaca,22,,,Peterson Grain Waseca MN,peterson-grain-waseca-mn,0.48,
+bushel:chs,Sharon Springs,e430038f-4ee9-4415-bf3c-a49fd67d82b2,2,,,Warren Grain Co Spring Valley MN,warren-grain-co-spring-valley-mn,0.59,
+bushel:chs,Shipman,77fb8afc-b44f-4837-88b9-a0cdf8661f90,8,,,Schmitz Grain Slayton MN,schmitz-grain-slayton-mn,0.45,
+bushel:chs,Smithfield,155e77e6-38ac-4168-95db-add458ae92bc,4,,,Smith Fertilizer & Grain Albia IA,smith-fertilizer-grain-albia-ia,0.56,
+bushel:chs,Stateline,b2d642d8-57c0-4a99-8103-a9394fdb8494,1,,,Stateline Bancroft IA,stateline-bancroft-ia,0.67,
+bushel:chs,Sterling,63123b1c-e47b-43f3-8282-a0b4e50cd65a,12,,,Stover Milling Co MO,stover-milling-co-mo,0.73,
+bushel:chs,Steward,8a7b86d1-6621-4286-99b6-2a541d81180a,14,,,Koster Grain Inc IA,koster-grain-inc-ia,0.62,
+bushel:chs,Strasburg,4334825e-edf2-4906-beb3-f4ad58da1ec4,5,,,Troy Elevator Inc Blakesburg IA,troy-elevator-inc-blakesburg-ia,0.67,
+bushel:chs,Tribune,28fa49a5-f7d9-44b7-a939-4ea716911608,2,,,Premium Feed & Grain Brunsville IA (approx),premium-feed-grain-brunsville-ia-approx,0.48,
+bushel:chs,Ulen,28b68669-7406-4284-9eb5-e7c6b7c29a58,8,,,Farmers Cooperative Company Linden IA,farmers-cooperative-company-linden-ia,0.6,
+bushel:chs,Underwood (13¢ Dump fee),288c3760-735b-4c4f-8c16-3fddb9ccc639,23,,,Ag Partners Goodhue MN,ag-partners-goodhue-mn,0.43,
+bushel:chs,Wagner,99a49ed3-6426-4aa0-8a66-6fa7d6a61010,5,,,Osage Cooperative Elevator IA,osage-cooperative-elevator-ia,0.55,
+bushel:chs,Wallace,dc9efd40-ac6d-4c0b-a578-84e3d97359aa,2,,,Koster Grain Inc. Wall Lake IA,koster-grain-inc-wall-lake-ia,0.52,
+bushel:chs,Warren,3e3fb43d-f958-420b-9c54-9940518e5dff,8,,,New Coop Arispe,new-coop-arispe,0.5,
+bushel:chs,Weskan,d313e1f1-8f2a-42b5-83d6-9ecbce2c8fb2,2,,,Castana Grain Company IA,castana-grain-company-ia,0.46,
+bushel:chs,Wheeler Elevator ML,5080085f-09f3-4c58-a4f8-0c0ea8f029c7,2,,,Hostetler Feed Mill Buffalo MO,hostetler-feed-mill-buffalo-mo,0.52,
+bushel:chs,Wiley,bd44e558-af9f-4a64-ae29-327b8dfacb31,4,,,Farmers Cooperative Company Ackley IA,farmers-cooperative-company-ackley-ia,0.55,
+bushel:chs,Wilmot,b7e09416-15c3-4069-9458-c510a8ee63c7,23,,,North Iowa Coop Plymouth,north-iowa-coop-plymouth,0.53,
+bushel:chs,Winner,c6fa0851-aafc-41d7-85a4-33d35833c773,4,,,Farmers Cooperative Windsor MO,farmers-cooperative-windsor-mo,0.62,
+bushel:chs,Worthing Ag Grain,716fb348-bb2a-48ce-b740-2a2d150c188f,12,,,MFA Worth Co Sheridan MO,mfa-worth-co-sheridan-mo,0.54,
+bushel:chs,Wykoff,4cbca115-feba-45f0-abe2-0cd47bce9659,6,,,CVA York Office NE,cva-york-office-ne,0.48,
+bushel:chs,Yuma,d08a8028-411f-4429-b7bf-c3505601b896,3,,,Chula Farmers Co-Op MO,chula-farmers-co-op-mo,0.44,
+bushel:chs,Yuma Shuttle,5a551937-1807-412a-8f1e-fa554394bfa0,1,,,MFA Farmers Elevator Argyle MO,mfa-farmers-elevator-argyle-mo,0.45,
+bushel:scoular,AGP Manning,4db7b453-e4f1-4e1a-89fa-0037eef4a2fb,6,,,AGP Rosemont NE,agp-rosemont-ne,0.52,
+bushel:scoular,Bunge - Council Bluffs,fdbce277-285c-402a-8f1a-7f2ae144c99d,10,,,Southwest Iowa Renewable Energy Council Bluffs Ethanol,southwest-iowa-renewable-energy-council-bluffs-ethanol,0.58,
+bushel:scoular,"Levant, KS",9f6a1da5-1ae3-42c6-9a65-6dcc9262f1d3,2,,,Farmers Cooperative Company Linden IA,farmers-cooperative-company-linden-ia,0.5,
+bushel:scoular,"Adrian, MO",0e391301-5f25-4f3d-856d-7c0bd6b15e0a,2,,,Farmers Cooperative Company Diagonal IA,farmers-cooperative-company-diagonal-ia,0.57,
+bushel:scoular,"Big Springs, NE",52a91e19-7c35-4e50-bcd2-ae7fde08aac3,3,,,Purina Mills Springfield MO,purina-mills-springfield-mo,0.46,
+bushel:scoular,"Brandon, NE",b689fbce-59a8-49fc-af88-aa9acd11a98c,3,,,Berne Cooperative Anthon IA,berne-cooperative-anthon-ia,0.63,
+bushel:scoular,"Brewster, KS",f5e35cdc-b40d-475b-949a-a260b3d9a18b,3,,,Koster Grain Inc IA,koster-grain-inc-ia,0.57,
+bushel:scoular,"Butterfield, MO",85e8a7f1-04b7-44c7-9c94-0fb563d67223,2,,,Farmers Ag Grain Supply Deerfield MO,farmers-ag-grain-supply-deerfield-mo,0.59,
+bushel:scoular,"Goodland Crush, KS",5b631e3b-aec5-4216-8e4e-8f46613641fa,2,,,Moberly Natural Crush MO,moberly-natural-crush-mo,0.51,
+bushel:scoular,"Charleston, SC – Wando Welch Terminal",b917aa38-1412-4723-8e38-fe53de44a471,4,,,Bartlett KCT Kansas City MO,bartlett-kct-kansas-city-mo,0.49,
+bushel:scoular,"Cheyenne County, KS",bc96cbcf-edb6-4d54-9d9a-ecc08904ec8d,2,,,Cedar County Cooperative Tipton IA,cedar-county-cooperative-tipton-ia,0.53,
+bushel:scoular,"Coolidge, KS",3bc473b6-8707-4202-8107-4e33b64a7b8f,1,,,Farmers Cooperative Company Linden IA,farmers-cooperative-company-linden-ia,0.57,
+bushel:scoular,"Corley, IA",b4be6ae0-43d1-45b8-9268-c45490f6b5ca,1,,,Farmers Cooperative Company Ackley IA,farmers-cooperative-company-ackley-ia,0.67,
+bushel:scoular,"Covington, OH",9d21b5e3-af88-4c2b-b789-4ee18b7eda1b,5,,,Farmers Coop Association Ainsworth IA,farmers-coop-association-ainsworth-ia,0.48,
+bushel:scoular,"Cullison, KS",d9bfcc8e-e09a-4929-9c7b-0851456983d0,2,,,US AG Center Inc Allison IA,us-ag-center-inc-allison-ia,0.56,
+bushel:scoular,"Downs, KS",60c57649-4511-4804-a468-3d37ce295e5a,4,,,Dalton Elevator MO,dalton-elevator-mo,0.55,
+bushel:scoular,"Fremont, NE",421396b6-a11f-4f3c-b0db-459969334a7f,4,,,AGP Rosemont NE,agp-rosemont-ne,0.63,
+bushel:scoular,"Goodland, KS",9662e217-c42b-4f98-81d7-d36303c23dc6,2,,,New Cooperative Inc. Moorland IA (approx),new-cooperative-inc-moorland-ia-approx,0.6,
+bushel:scoular,"Grainton, NE",3e4c4590-78c1-4827-a871-caf64dd1df93,8,,,Ursa Farmers Co-Op Canton MO,ursa-farmers-co-op-canton-mo,0.63,
+bushel:scoular,"Greensburg, KS",efe09a7d-9f2a-477e-91ab-1ed57c0d849b,2,,,Troy Elevator Inc Blakesburg IA,troy-elevator-inc-blakesburg-ia,0.56,
+bushel:scoular,"Griswold, IA",710f1059-702c-46d4-9fc1-ec7758a450f5,2,,,Farmers Cooperative Company Greenfield IA,farmers-cooperative-company-greenfield-ia,0.56,
+bushel:scoular,"Hancock, IA",b16dc745-8e54-4f33-99e7-a264fdf2955b,12,,,Heiman Rockville MO,heiman-rockville-mo,0.52,
+bushel:scoular,"Idalia, CO",567594a3-c746-409d-84b3-99b632371061,2,,,Farmers Win Coop Caledonia MN,farmers-win-coop-caledonia-mn,0.53,
+bushel:scoular,"Jerome, ID",b24b6661-caf7-450f-b7ea-173438dd71d7,1,,,Pro Coop Milford,pro-coop-milford,0.5,
+bushel:scoular,"Julesburg, CO",8734001f-07b2-48f0-9f15-55a87aa324fc,5,,,Troy Elevator Inc Blakesburg IA,troy-elevator-inc-blakesburg-ia,0.58,
+bushel:scoular,"Lake City, FL",76e464db-f21f-4e63-849f-c03b267789aa,3,,,Farmers Cooperative Company Sac City IA (approx),farmers-cooperative-company-sac-city-ia-approx,0.6,
+bushel:scoular,"Lamar, NE",534a34f7-aa88-404d-807e-ae95232c4c48,5,,,CVA Le Mars IA,cva-le-mars-ia,0.5,
+bushel:scoular,"Lincoln, KS",92591bc9-cf6d-48f1-b131-a66b334dacfc,4,,,CVA Lincoln KS,cva-lincoln-ks,0.78,
+bushel:scoular,Madrid Ethanol,8cbc60b5-92df-4d0d-9b94-26985d6d3eec,10,,,McBride Grain MO,mcbride-grain-mo,0.62,
+bushel:scoular,"Madrid, NE",846f0a15-107a-4e6e-b144-865d0e677a93,5,,,McBride Grain MO,mcbride-grain-mo,0.62,
+bushel:scoular,"Minneapolis, KS",ae4085f8-0133-4a2e-b7bc-1b91adf8f9ab,4,,,"Ingredion, Inc. Cedar Rapids Ethanol",ingredion-inc-cedar-rapids-ethanol,0.48,
+bushel:scoular,"Monument, KS",498b96a1-9a42-42aa-8f64-b544955bef33,1,,,Farmers Cooperative Company Linden IA,farmers-cooperative-company-linden-ia,0.43,
+bushel:scoular,"North Grant, NE",4ff60ece-033a-4a13-b7f9-788a231b5b16,5,,,Ursa Farmers Co-Op Canton MO,ursa-farmers-co-op-canton-mo,0.5,
+bushel:scoular,"Oakley, KS",5df8a0ca-2ce0-4767-b867-5be2276b0c03,1,,,Farmers Cooperative Company Ackley IA,farmers-cooperative-company-ackley-ia,0.83,
+bushel:scoular,"Palmyra, IL",b12b4222-3488-463c-8946-5269217c999d,2,,,Farmers Cooperative Company Ackley IA,farmers-cooperative-company-ackley-ia,0.46,
+bushel:scoular,"Paxton, NE",ff0aee0b-e6ce-4294-b3e4-e373321589a8,5,,,Dalton Elevator MO,dalton-elevator-mo,0.67,
+bushel:scoular,"Pisgah, IL",764ba5fa-8e55-497a-a1fc-cf2cee85d887,2,,,Farmers Cooperative Company Diagonal IA,farmers-cooperative-company-diagonal-ia,0.43,
+bushel:scoular,"Pittsburg, KS",af7fce8f-8496-40b9-bd20-4cf304d1c37c,2,,,D Tone Feed Grain Plattsburg MO,d-tone-feed-grain-plattsburg-mo,0.62,
+bushel:scoular,"Pratt, KS",b83dc76a-8b57-49e4-9ea2-acdaf474a6c7,2,,,Ursa Farmers Co-Op Canton MO,ursa-farmers-co-op-canton-mo,0.38,
+bushel:scoular,"Russellville, KY - Walnut Grove Farms",dceea153-1499-4f7f-997a-da5d35bfb0a3,5,,,Crystal Valley Cooperative Mankato MN,crystal-valley-cooperative-mankato-mn,0.46,
+bushel:scoular,"Salina, KS",aa9f7aec-40c3-40c2-ba87-690e7bc701bf,4,,,Castana Grain Company IA,castana-grain-company-ia,0.62,
+bushel:scoular,"Sidney, NE",640bb736-51b7-42bc-803b-93aa9ffe896b,2,,,Farmers Cooperative Company Linden IA,farmers-cooperative-company-linden-ia,0.5,
+bushel:scoular,"South Grant, NE",51d3957b-639a-4dba-9391-2f60c77f2056,3,,,Ursa Farmers Co-Op Canton MO,ursa-farmers-co-op-canton-mo,0.5,
+bushel:scoular,"Tribune, KS",faffa027-6d59-4ccf-ae54-bc0a6ba733e5,1,,,Premium Feed & Grain Brunsville IA (approx),premium-feed-grain-brunsville-ia-approx,0.48,
+bushel:scoular,"Trousdale, KS",ace1773e-ed42-4198-9322-b08246a7166e,2,,,Osage Cooperative Elevator IA,osage-cooperative-elevator-ia,0.57,
+bushel:scoular,"Venango, NE",dc7eedd3-4e33-4ae9-9f59-672f820cd896,5,,,Berne Cooperative Anthon IA,berne-cooperative-anthon-ia,0.53,
+bushel:scoular,"Wallace, NE",e2d3c317-b9f2-4670-bd7c-071041d70d64,5,,,Koster Grain Inc. Wall Lake IA,koster-grain-inc-wall-lake-ia,0.52,
+bushel:scoular,"Waverly, IL (Shuttle)",5a06fc0d-6ab9-4893-8f8a-a7e7134ab052,3,,,River Valley Cooperative Donahue IA,river-valley-cooperative-donahue-ia,0.51,
+bushel:scoular,"Waverly, IL (Elevator)",84c5916e-a955-45f9-a424-b8548bae9bf8,1,,,Farmers Cooperative Company Ackley IA,farmers-cooperative-company-ackley-ia,0.46,
+bushel:scoular,"Windsor, VA",ac550ad4-9a63-4a3d-a75f-d260bc0246e4,3,,,Farmers Cooperative Windsor MO,farmers-cooperative-windsor-mo,0.82,
+bushel:scoular,"Winona, KS",23b481e6-d85d-4bfa-91ca-14d1ecbda9e0,1,,,Farmers Win Coop Caledonia MN,farmers-win-coop-caledonia-mn,0.63,
+bushel:smithfield,Algona,88b4e204-66b4-4883-9754-86481f695e6a,9,,,Farmers Cooperative Company Diagonal IA,farmers-cooperative-company-diagonal-ia,0.71,
+bushel:smithfield,Bentonville,0002f604-ab95-4a9f-bd56-e6836ae52ea4,2,,,South Central Cooperative Knoxville IA,south-central-cooperative-knoxville-ia,0.64,
+bushel:smithfield,Bethany East,e070c6c1-c449-4cc6-a790-1076680a1220,2,,,Berne Cooperative Anthon IA,berne-cooperative-anthon-ia,0.53,
+bushel:smithfield,Bethany West,a119dfb3-9b18-445d-9bb0-3f45e387a8a9,2,,,Berne Cooperative Anthon IA,berne-cooperative-anthon-ia,0.53,
+bushel:smithfield,Bladenboro,7120650d-2dba-4ae8-97da-db14f0b814eb,1,,,Glenwood Elevator MO,glenwood-elevator-mo,0.56,
+bushel:smithfield,Bladenboro Feed Mill,4e2caf67-54ff-4dcf-a4e8-69b797729d4c,1,,,Glenwood Elevator MO,glenwood-elevator-mo,0.56,
+bushel:smithfield,Blue Ridge,23fb0ef5-eef9-4a2f-b40b-3b09c2fe4254,2,,,McBride Grain MO,mcbride-grain-mo,0.59,
+bushel:smithfield,Chadbourn,62b99628-3bf8-437e-8250-321df90e325d,2,,,CVA Courtland KS,cva-courtland-ks,0.55,
+bushel:smithfield,Circle 4 Farms,e4c8c544-95cc-40f4-84f2-ac5d3fdc1398,1,,,CVA Le Mars IA,cva-le-mars-ia,0.56,
+bushel:smithfield,Clarkton,fcc520be-8507-44d9-aa43-a0f5e657d4e4,2,,,Cameron Co-Op MO,cameron-co-op-mo,0.67,
+bushel:smithfield,Clinton,2918624e-4c88-4ce6-a1d4-6d57fff042bf,3,,,CVA Lincoln KS,cva-lincoln-ks,0.67,
+bushel:smithfield,Coffey,65308932-3586-4c72-86ba-fc0b5d22351c,3,,,Farmers Cooperative Company Ackley IA,farmers-cooperative-company-ackley-ia,0.5,
+bushel:smithfield,Creswell,cd68d07a-f32d-47b3-8e3c-7f4c6728843d,2,,,Cartersville Elevator Inc. Rockwell IA,cartersville-elevator-inc-rockwell-ia,0.55,
+bushel:smithfield,Darlington,74cb680d-ddf2-4f9d-a971-aea3bc79f2a2,2,,,Dalton Elevator MO,dalton-elevator-mo,0.75,
+bushel:smithfield,Deep Run JHC,16f01830-0367-433a-a96b-8138b968af0a,1,,,ADM Quincy IL,adm-quincy-il,0.45,
+bushel:smithfield,Gilman City,f23ddf0f-8e37-4055-8d46-808b948e81f2,2,,,Farmers Cooperative Company Sac City IA (approx),farmers-cooperative-company-sac-city-ia-approx,0.63,
+bushel:smithfield,Hamer,ba5516a6-01ec-4456-9e07-8ddb02dc7baf,2,,,Cameron Co-Op MO,cameron-co-op-mo,0.67,
+bushel:smithfield,Harpster,4c12f43d-9169-4cf5-9f37-70f91ed5b2e1,1,,,Koster Grain Inc IA,koster-grain-inc-ia,0.57,
+bushel:smithfield,Hobbsville,28bb35ac-c6ac-4ebf-bd29-ed949151254e,3,,,Heiman Rockville MO,heiman-rockville-mo,0.54,
+bushel:smithfield,Jones County,fdaae712-3529-4f52-84c6-7c7c499f185f,3,,,AG Vantage FS Inc Coulter IA (approx),ag-vantage-fs-inc-coulter-ia-approx,0.53,
+bushel:smithfield,Kinston,b06a9dc8-33ea-4d00-9be2-1cd8c7c0b9de,3,,,Hankins Grain Clinton MO,hankins-grain-clinton-mo,0.64,
+bushel:smithfield,LaGrange,279db04a-1b56-4aa8-adec-b18c314ed90c,3,,,Bolivar Farmers Exchange MO,bolivar-farmers-exchange-mo,0.58,
+bushel:smithfield,Lake City,10c9e773-5657-49d3-af61-665330e8ed53,2,,,Farmers Cooperative Company Sac City IA (approx),farmers-cooperative-company-sac-city-ia-approx,0.71,
+bushel:smithfield,Lapaz,3532cef7-a225-44a5-854d-8a53759e0284,1,,,LANDUS COOPERATIVE PATON IA,landus-cooperative-paton-ia,0.47,
+bushel:smithfield,Laurinburg,f79d5356-349c-4798-9b1c-570647156c4c,1,,,LANDUS COOPERATIVE IRWIN IA,landus-cooperative-irwin-ia,0.55,
+bushel:smithfield,Morgans Corner,44dd571b-748c-4a39-ac60-d47051ec0aad,3,,,Landus Feed Partners LLC,landus-feed-partners-llc,0.55,
+bushel:smithfield,Morral,1124edb1-a342-4b82-b480-06a178530691,1,,,New Cooperative Inc. Moorland IA (approx),new-cooperative-inc-moorland-ia-approx,0.44,
+bushel:smithfield,Mt. Olive,d8e8fa16-4190-4127-8445-f79d8429f218,3,,,Farmers Market Bolivar MO,farmers-market-bolivar-mo,0.64,
+bushel:smithfield,Nichols,d662a74c-8812-44e7-b998-d61547f2118a,2,,,Farmers Cooperative Elevator Company Schleswig IA (approx),farmers-cooperative-elevator-company-schleswig-ia-approx,0.5,
+bushel:smithfield,Petersburg,95e8831e-e975-40eb-841b-aa8249c8a9ff,2,,,Farmers Cooperative Company Macksburg IA,farmers-cooperative-company-macksburg-ia,0.53,
+bushel:smithfield,Red Springs,c11348b2-4046-4b9f-bea0-aef944c07264,3,,,Red Wing Grain MN,red-wing-grain-mn,0.74,
+bushel:smithfield,Rose Hill,5bcaee10-7487-4bbd-9e9e-c934c233d125,1,,,Pro Coop Estherville,pro-coop-estherville,0.58,
+bushel:smithfield,Trenton,a79219e1-6838-4226-abfc-347d85bb1cd4,2,,,Berne Cooperative Anthon IA,berne-cooperative-anthon-ia,0.63,
+bushel:smithfield,Walstonburg,3277006e-2fb3-485d-9370-3ba16cc94e93,3,,,Farmers Cooperative Company Macksburg IA,farmers-cooperative-company-macksburg-ia,0.6,
+bushel:smithfield,Warsaw,b6b35d38-f297-479f-8116-092351bcdce0,1,,,New Coop Arispe,new-coop-arispe,0.5,
+bushel:smithfield,Waverly,9eb0fe09-e416-4363-9cda-5fd394f49727,3,,,Farmers Cooperative Company Ackley IA,farmers-cooperative-company-ackley-ia,0.46,
+bushel:smithfield,Weeksville,f12442d7-fd36-4bb2-b777-7280dd3c9794,3,,,Farmers Feed & Grain Company Inc Riceville IA,farmers-feed-grain-company-inc-riceville-ia,0.63,
+bushel:smithfield,Yuma,21403f64-e4c8-4eaf-9e70-0eb7e679596c,1,,,Chula Farmers Co-Op MO,chula-farmers-co-op-mo,0.44,
+agricharts:agpartners,Topeka B,87663,1,,,Farmers Cooperative Elevator Ottosen IA (approx),farmers-cooperative-elevator-ottosen-ia-approx,0.4,
+nexus,Wells,0:Wells,17,,,Farmers Feed & Grain Company Inc Riceville IA,farmers-feed-grain-company-inc-riceville-ia,0.43,
+nexus,"Alden, MN","1:Alden, MN",18,,,Farmers Cooperative Company Linden IA,farmers-cooperative-company-linden-ia,0.73,
+nexus,"GOLDEN GRAIN, IA","2:GOLDEN GRAIN, IA",3,,,Farmers Cooperative Company Linden IA,farmers-cooperative-company-linden-ia,0.67,
+nexus,"Emmons, MN","6:Emmons, MN",18,,,Nemo Feed Baring MO,nemo-feed-baring-mo,0.47,
+nexus,"Adams, MN","8:Adams, MN",18,,,ADM Camanche Terminal IA,adm-camanche-terminal-ia,0.47,
+nexus,"Valero Charles City, IA","14:Valero Charles City, IA",3,,,Valero Renewables Charles City Ethanol,valero-renewables-charles-city-ethanol,0.78,
+nexus,"Oakland, MN","16:Oakland, MN",18,,,New Cooperative Inc. Moorland IA (approx),new-cooperative-inc-moorland-ia-approx,0.53,
+nexus,"Lansing, MN","17:Lansing, MN",18,,,LANDUS COOPERATIVE IRWIN IA,landus-cooperative-irwin-ia,0.63,
+nexus,"London, MN","18:London, MN",18,,,Farmers Cooperative Company Linden IA,farmers-cooperative-company-linden-ia,0.67,
+nexus,"Poet Fairbank, IA","22:Poet Fairbank, IA",3,,,CE Grain Farber MO,ce-grain-farber-mo,0.55,
+nexus,Minnesota Lake,25:Minnesota Lake,18,,,Five Star Cooperative Swaledale IA,five-star-cooperative-swaledale-ia,0.55,
+nexus,"Leroy, MN","26:Leroy, MN",18,,,Farmers Cooperative Company Ackley IA,farmers-cooperative-company-ackley-ia,0.55,
+nexus,"Brownsdale, MN","28:Brownsdale, MN",9,,,Osage Cooperative Elevator IA,osage-cooperative-elevator-ia,0.53,
+nexus,"AGP Manning, IA","29:AGP Manning, IA",2,,,AGP Rosemont NE,agp-rosemont-ne,0.52,
+nexus,"AGP Mason City, IA","30:AGP Mason City, IA",2,,,Cartersville Elevator Mason City IA,cartersville-elevator-mason-city-ia,0.65,
+nexus,"Cargill Iowa Falls, IA","31:Cargill Iowa Falls, IA",2,,,Cargill Iowa Falls IA,cargill-iowa-falls-ia,1.0,
+nexus,"Shellrock, IA","33:Shellrock, IA",2,,,Stateline Lone Rock IA,stateline-lone-rock-ia,0.57,
+nexus,"Rose Creek, MN","34:Rose Creek, MN",9,,,Barry's Elevator Clarence MO,barry-s-elevator-clarence-mo,0.54,
+nexus,"AGP Eagle Grove, IA","35:AGP Eagle Grove, IA",2,,,AGP Rosemont NE,agp-rosemont-ne,0.52,
+fivestar,GGE Mason City,GQBXA2MQE7LI9S5S68MR,12,,,Cartersville Elevator Mason City IA,cartersville-elevator-mason-city-ia,0.65,
+fivestar,Reicks View Milling,HPCOCZ61LM2MZWDDQK53,6,,,Stover Milling Co MO,stover-milling-co-mo,0.55,
+fivestar,Valero Charles City,NZ6F449OARWDDL25KDKF,6,,,Valero Renewables Charles City Ethanol,valero-renewables-charles-city-ethanol,0.78,
+fivestar,Homeland,UR05LGPV0A4LC30QBELH,11,,,Heartland Coop Rhea TX (Seasonal),heartland-coop-rhea-tx-seasonal,0.55,
+fivestar,Christensen Farms FC,ZV9TUAG0VHMW909TXSNY,8,,,Christensen feed mill forest city,christensen-feed-mill-forest-city,0.79,
+fivestar,Shell Rock Soy Processing,HHPR8IAYWYNV3OOVPC4I,6,,,Bullock AG Service Inc Preston IA,bullock-ag-service-inc-preston-ia,0.54,
+fivestar,AGP Mason City,QL7SU64ZQU8LAJDN3GC9,3,,,Cartersville Elevator Mason City IA,cartersville-elevator-mason-city-ia,0.65,
+gradable:poet,"Albert Lea, MN",331848537,9,,,Valero Welcome MN Ethanol,valero-welcome-mn-ethanol,0.58,
+gradable:poet,"Alexandria, IN",331847579,9,,,LANDUS COOPERATIVE IRWIN IA,landus-cooperative-irwin-ia,0.56,
+gradable:poet,"Big Stone City, SD",331845223,5,,,AgState Orange City IA,agstate-orange-city-ia,0.67,
+gradable:poet,"Caro, MI",331847035,8,,,Cameron Co-Op MO,cameron-co-op-mo,0.57,
+gradable:poet,"Chancellor, SD",331846432,11,,,CHS Inc Davenport IA,chs-inc-davenport-ia,0.52,
+gradable:poet,"Cloverdale, IN",331847705,13,,,River Valley Olin IA,river-valley-olin-ia,0.6,
+gradable:poet,"Fairbank, IA",331847344,9,,,MFA Feed Mill Lebanon MO,mfa-feed-mill-lebanon-mo,0.53,
+gradable:poet,"Fairmont, NE",331847619,14,,,AGP Rosemont NE,agp-rosemont-ne,0.6,
+gradable:poet,"Fostoria, OH",331847641,9,,,Foster Elevator Foster MO,foster-elevator-foster-mo,0.5,
+gradable:poet,"Groton, SD",331847160,10,,,Farmers Cooperative Elevator Ottosen IA (approx),farmers-cooperative-elevator-ottosen-ia-approx,0.62,
+gradable:poet,"Hudson, SD",331847138,12,,,United Coop Stonega IA,united-coop-stonega-ia,0.5,
+gradable:poet,"Iowa Falls, IA",331847137,12,,,Cargill Iowa Falls IA,cargill-iowa-falls-ia,0.71,
+gradable:poet,"Leipsic, OH",331847578,11,,,Phillips Farms Kahoka MO,phillips-farms-kahoka-mo,0.39,
+gradable:poet,"Marion, OH",331847642,8,,,Cameron Co-Op MO,cameron-co-op-mo,0.5,
+gradable:poet,"Mitchell, SD",331847487,9,,,Farmers Feed & Grain Company Inc Riceville IA,farmers-feed-grain-company-inc-riceville-ia,0.59,
+gradable:poet,"North Manchester, IN",331847643,10,,,Stover Milling Co MO,stover-milling-co-mo,0.52,
+gradable:poet,"Obion, TN",331848608,7,,,Cooperative Elevator Association Hartley IA,cooperative-elevator-association-hartley-ia,0.44,
+gradable:poet,"Portland, IN",331847514,10,,,Heartland Coop Bovina TX,heartland-coop-bovina-tx,0.67,
+gradable:poet,"Scotland, SD",331846454,6,,,CVA Courtland KS,cva-courtland-ks,0.67,
+gradable:poet,"Shelbyville, IN",356380820,14,,,Heartland Coop Belle Plaine (Seasonal),heartland-coop-belle-plaine-seasonal,0.56,
+gradable:adm,"Altamont, IL",331847432,8,,,Dalton Elevator MO,dalton-elevator-mo,0.71,
+gradable:adm,"Attica, IN",331847413,27,,,CVA Lincoln KS,cva-lincoln-ks,0.5,
+gradable:adm,Bacres Grain,601162399,6,,,Farmers Cooperative Company Ackley IA,farmers-cooperative-company-ackley-ia,0.5,
+gradable:adm,Beech Grove (Elevator),331847857,39,,,New Cooperative Inc. George IA,new-cooperative-inc-george-ia,0.48,
+gradable:adm,"Blenheim, ON",331848804,2,,,Berne Cooperative Anthon IA,berne-cooperative-anthon-ia,0.52,
+gradable:adm,"Burlington, IA",331845785,19,,,Ursa Farmers Co-Op Canton MO,ursa-farmers-co-op-canton-mo,0.57,
+gradable:adm,"Charleston, MO",371713678,13,,,Farmers Feed & Grain Charles City IA,farmers-feed-grain-charles-city-ia,0.73,
+gradable:adm,"Clinton, IA (Corn Processing)",331846859,14,,,Quad County Corn Processors Galva Ethanol,quad-county-corn-processors-galva-ethanol,0.61,
+gradable:adm,"Columbus, NE (Corn Processing)",331847009,12,,,Quad County Corn Processors Galva Ethanol,quad-county-corn-processors-galva-ethanol,0.6,
+gradable:adm,"Columbus, OH",331846375,10,,,CVA Columbus NE,cva-columbus-ne,0.7,
+gradable:adm,"Copeland, KS",331847426,3,,,CVA Courtland KS,cva-courtland-ks,0.57,
+gradable:adm,"Country Store, KS",462718719,3,,,United Coop Stonega IA,united-coop-stonega-ia,0.59,
+gradable:adm,"Creve Coeur, IL",331847132,25,,,CVA Courtland KS,cva-courtland-ks,0.58,
+gradable:adm,"Curran, IL",331847073,11,,,Chula Farmers Co-Op MO,chula-farmers-co-op-mo,0.55,
+gradable:adm,"Decatur, IL (Corn Processing)",331847072,8,,,Quad County Corn Processors Galva Ethanol,quad-county-corn-processors-galva-ethanol,0.61,
+gradable:adm,"Decatur, IL (Soy Processing)",638325236,13,,,Cedar County Cooperative Tipton IA,cedar-county-cooperative-tipton-ia,0.49,
+gradable:adm,"Des Moines, IA",331845050,13,,,Heartland Coop 18th St Des Moines (Seasonal),heartland-coop-18th-st-des-moines-seasonal,0.53,
+gradable:adm,"Dodge City, KS (Terminal)",331847735,2,,,Hillside Grain Golden City MO,hillside-grain-golden-city-mo,0.6,
+gradable:adm,"Enid, OK (Elevator)",331847378,3,,,United Coop Kamrar IA,united-coop-kamrar-ia,0.5,
+gradable:adm,"Enola, NE",853063525,18,,,Heartland Coop Neola,heartland-coop-neola,0.5,
+gradable:adm,"Evansville, IN (1st Ave.)",331846045,21,,,Cartersville Elevator Mason City IA,cartersville-elevator-mason-city-ia,0.5,
+gradable:adm,"Evansville, IN (Broadway)",500234521,21,,,Cartersville Elevator Inc. Rockwell IA,cartersville-elevator-inc-rockwell-ia,0.51,
+gradable:adm,"Evansville, IN (Ohio St.)",331847212,21,,,Cartersville Elevator Mason City IA,cartersville-elevator-mason-city-ia,0.55,
+gradable:adm,"Evansville, IN (River South)",500234520,21,,,Cartersville Elevator Mason City IA,cartersville-elevator-mason-city-ia,0.52,
+gradable:adm,"Farina, IL",331845962,8,,,MFA Coop 130 Rhineland MO,mfa-coop-130-rhineland-mo,0.52,
+gradable:adm,"Fostoria, OH",331847375,9,,,Foster Elevator Foster MO,foster-elevator-foster-mo,0.5,
+gradable:adm,"Frankfort, IN",331847373,9,,,MFA Worth Co Sheridan MO,mfa-worth-co-sheridan-mo,0.53,
+gradable:adm,"Fremont, NE (Elevator)",331847419,22,,,AGP Rosemont NE,agp-rosemont-ne,0.63,
+gradable:adm,"Fremont, NE (Lincoln Premium Poultry)",627924936,11,,,Base Line Grain Golden City MO,base-line-grain-golden-city-mo,0.46,
+gradable:adm,"Fremont, NE (Soy Processing)",331847170,12,,,Quad County Corn Processors Galva Ethanol,quad-county-corn-processors-galva-ethanol,0.51,
+gradable:adm,"Fullerton, NE",331848296,10,,,Dalton Elevator MO,dalton-elevator-mo,0.53,
+gradable:adm,"Grand Ledge, MI",331846182,11,,,Heartland CO-OP Luzerne IA (approx),heartland-co-op-luzerne-ia-approx,0.52,
+gradable:adm,Green Bison Soy Processing,625346093,22,,,Green Plains Superior Ethanol,green-plains-superior-ethanol,0.51,
+gradable:adm,"Gulfport, IL",586967695,19,,,Cargill Fort Dodge Ethanol,cargill-fort-dodge-ethanol,0.46,
+gradable:adm,"Havana, IL",331845413,21,,,Castana Grain Company IA,castana-grain-company-ia,0.62,
+gradable:adm,"Hebron, ND",331848344,5,,,Verbio Nevada Ethanol,verbio-nevada-ethanol,0.55,
+gradable:adm,"Helena, AR",331847381,12,,,CVA Le Mars IA,cva-le-mars-ia,0.5,
+gradable:adm,"Heloise, TN",853059046,16,,,Farmers Cooperative Elevator Ottosen IA (approx),farmers-cooperative-elevator-ottosen-ia-approx,0.47,
+gradable:adm,"Henderson, KY",331847806,16,,,The Andersons Denison Ethanol,the-andersons-denison-ethanol,0.55,
+gradable:adm,"Hennepin, IL",331846857,25,,,Heartland Coop Bernstein TX,heartland-coop-bernstein-tx,0.52,
+gradable:adm,"Hensler, ND",331848343,5,,,Heartland Coop Malvern,heartland-coop-malvern,0.52,
+gradable:adm,"Hoopeston, IL",331847106,27,,,Farmers Cooperative Elevator Ottosen IA (approx),farmers-cooperative-elevator-ottosen-ia-approx,0.5,
+gradable:adm,"Hume, IL",331847422,12,,,Chula Farmers Co-Op MO,chula-farmers-co-op-mo,0.44,
+gradable:adm,"Hutchinson, KS",331847185,3,,,Hankins Grain Clinton MO,hankins-grain-clinton-mo,0.48,
+gradable:adm,"Jackson, TN",587208009,14,,,AGP Rosemont NE,agp-rosemont-ne,0.45,
+gradable:adm,"Lacon, IL",331845093,25,,,Dalton Elevator MO,dalton-elevator-mo,0.55,
+gradable:adm,"Laotto, IN",643247767,26,,,Farmers Cooperative Elevator Ottosen IA (approx),farmers-cooperative-elevator-ottosen-ia-approx,0.62,
+gradable:adm,"Leoti, KS",462718718,6,,,Glenwood Elevator MO,glenwood-elevator-mo,0.46,
+gradable:adm,"Lincoln, NE (Elevator)",331845581,9,,,CVA Lincoln KS,cva-lincoln-ks,0.78,
+gradable:adm,"Lincoln, NE (Soy Processing)",331845580,12,,,Lincolnway Energy Nevada Ethanol,lincolnway-energy-nevada-ethanol,0.51,
+gradable:adm,"Livingston Point, KY",331847146,18,,,Base Line Grain Golden City MO,base-line-grain-golden-city-mo,0.5,
+gradable:adm,"Logansport, IN",331847227,26,,,Landus Feed Partners LLC,landus-feed-partners-llc,0.57,
+gradable:adm,"Macon, IL",331845089,12,,,Dalton Elevator MO,dalton-elevator-mo,0.55,
+gradable:adm,"Maidstone, ON",371712419,2,,,The Andersons Denison Ethanol,the-andersons-denison-ethanol,0.55,
+gradable:adm,"Mankato, MN (Soy Processing)",331846476,13,,,Lohman Producers Exchange MO,lohman-producers-exchange-mo,0.51,
+gradable:adm,"Marshall, MN (Corn Processing)",331845203,11,,,Heartland Corn Products Winthrop MN,heartland-corn-products-winthrop-mn,0.57,
+gradable:adm,"Marshall, MN (South House)",331848294,7,,,ADM Marshall MN,adm-marshall-mn,0.62,
+gradable:adm,"Memphis, TN",331847380,12,,,Hankins Grain Clinton MO,hankins-grain-clinton-mo,0.48,
+gradable:adm,"Mendota, IL (In Town)",331847937,20,,,Heartland CO-OP Blairstown IA,heartland-co-op-blairstown-ia,0.51,
+gradable:adm,"Mendota, IL (Northern Crossing Rail)",331847010,8,,,Northern AG Service Inc West Union IA,northern-ag-service-inc-west-union-ia,0.46,
+gradable:adm,"Montezuma, KS",331847740,3,,,Koster Grain Inc. Stuart IA,koster-grain-inc-stuart-ia,0.45,
+gradable:adm,"Montpelier, IN",331846058,37,,,Smith Fertilizer & Grain Albia IA,smith-fertilizer-grain-albia-ia,0.51,
+gradable:adm,"Morris, IL",331847370,26,,,Nemo Feed Baring MO,nemo-feed-baring-mo,0.47,
+gradable:adm,"Mound City, IL",331845993,16,,,ADM Grain Company Sioux City IA,adm-grain-company-sioux-city-ia,0.67,
+gradable:adm,"Mt. Auburn, IL",331846528,12,,,Farmers Cooperative Company Macksburg IA,farmers-cooperative-company-macksburg-ia,0.56,
+gradable:adm,"Mt. Vernon, IN (Elevator)",331847211,22,,,Stover Milling Co MO,stover-milling-co-mo,0.54,
+gradable:adm,"Newburgh, IN",331846061,15,,,Nemo Feed Baring MO,nemo-feed-baring-mo,0.55,
+gradable:adm,"New Haven, IN",331848402,37,,,New Coop Arispe,new-coop-arispe,0.55,
+gradable:adm,"Newman Grove, NE",331848295,12,,,Heiman Rockville MO,heiman-rockville-mo,0.64,
+gradable:adm,"Niantic, IL",331847117,12,,,Berne Cooperative Anthon IA,berne-cooperative-anthon-ia,0.42,
+gradable:adm,"Oakland, IL",331847423,12,,,New Cooperative Inc. Moorland IA (approx),new-cooperative-inc-moorland-ia-approx,0.53,
+gradable:adm,"Ottawa, IL (North Side)",331847372,25,,,Farmers Cooperative Elevator Ottosen IA (approx),farmers-cooperative-elevator-ottosen-ia-approx,0.56,
+gradable:adm,"Ottawa, IL (South)",362438608,25,,,Wiota Elevator Inc Wiota IA,wiota-elevator-inc-wiota-ia,0.47,
+gradable:adm,"Ottawa Lake, MI",331846187,8,,,Koster Grain Inc. Wall Lake IA,koster-grain-inc-wall-lake-ia,0.6,
+gradable:adm,"Paducah, KY",331846174,14,,,LANDUS COOPERATIVE Kesley IA (approx),landus-cooperative-kesley-ia-approx,0.52,
+gradable:adm,"Panhandle, OK",331847420,3,,,MFA Exchange Ionia MO,mfa-exchange-ionia-mo,0.47,
+gradable:adm,"Parr, IN",331848384,25,,,Red Wing Grain MN,red-wing-grain-mn,0.53,
+gradable:adm,"Patoka, IL",331847424,6,,,Dalton Elevator MO,dalton-elevator-mo,0.5,
+gradable:adm,"Plains, KS",331847742,3,,,Farmers Cooperative Company Linden IA,farmers-cooperative-company-linden-ia,0.5,
+gradable:adm,"Quincy, IL (Barge Dock)",638325229,11,,,Bunge Joice IA,bunge-joice-ia,0.5,
+gradable:adm,"Quincy, IL (Soy Processing)",331846008,11,,,Quad County Corn Processors Galva Ethanol,quad-county-corn-processors-galva-ethanol,0.56,
+gradable:adm,"Rockport, IN",331847080,16,,,Farmers Cooperative Produce Co Fort Atkinson IA,farmers-cooperative-produce-co-fort-atkinson-ia,0.56,
+gradable:adm,"Sauget, IL",331848192,20,,,Osage Cooperative Elevator IA,osage-cooperative-elevator-ia,0.73,
+gradable:adm,"Shobonier, IL",331847433,6,,,Cooperative Elevator Association Sibley IA,cooperative-elevator-association-sibley-ia,0.44,
+gradable:adm,"Silver Grove, KY",331847520,15,,,SilverEdge Delhi IA,silveredge-delhi-ia,0.58,
+gradable:adm,"Snover, MI",331846191,14,,,Stover Milling Co MO,stover-milling-co-mo,0.7,
+gradable:adm,"Spring Valley, IL",331846858,25,,,Warren Grain Co Spring Valley MN,warren-grain-co-spring-valley-mn,0.79,
+gradable:adm,"State Line, OK",449359758,3,,,Stateline Lone Rock IA,stateline-lone-rock-ia,0.75,
+gradable:adm,"St. Cloud, MN",331848342,19,,,Heartland Coop Claude TX,heartland-coop-claude-tx,0.5,
+gradable:adm,"St. Paul, MN (Elevator D)",331848305,14,,,Koster Grain Inc. Wall Lake IA,koster-grain-inc-wall-lake-ia,0.48,
+gradable:adm,"Sullivan, IL",331847434,12,,,Chula Farmers Co-Op MO,chula-farmers-co-op-mo,0.46,
+gradable:adm,"Swanington, IN",331847415,24,,,CVA The Junction Linn KS,cva-the-junction-linn-ks,0.53,
+gradable:adm,"Taylorville, IL",331847749,12,,,CVA Leonardville KS,cva-leonardville-ks,0.67,
+gradable:adm,"Toledo, OH",331847377,8,,,Valero Welcome MN Ethanol,valero-welcome-mn-ethanol,0.43,
+gradable:adm,"Tuscola, IL",331846027,12,,,Scoular Purdy MO,scoular-purdy-mo,0.5,
+gradable:adm,"Valdosta, GA",331845856,6,,,Castana Grain Company IA,castana-grain-company-ia,0.56,
+gradable:adm,"Vidalia, LA",632357030,5,,,CVA Le Mars IA,cva-le-mars-ia,0.48,
+gradable:adm,"Webberville, MI",331846192,12,,,Pro Coop Estherville,pro-coop-estherville,0.55,
+gradable:adm,"Windsor, ON",371712385,10,,,Farmers Cooperative Windsor MO,farmers-cooperative-windsor-mo,0.82,
+gradable:adm,"Winona, MN",331847213,14,,,Farmers Win Coop Caledonia MN,farmers-win-coop-caledonia-mn,0.63,
+gradable:adm,"Wisner, NE",331847892,22,,,Farmers Cooperative Windsor MO,farmers-cooperative-windsor-mo,0.62,
+agricharts:cgb,CGB - DEEP SOUTH DIRECT HAUL,85980,1,,,Corn LP Goldfield Ethanol,corn-lp-goldfield-ethanol,0.43,
+agricharts:cgb,CGB QTI,81238,5,,,McBride Grain MO,mcbride-grain-mo,0.43,
+agricharts:cgb,CGB SEMO MILLING,87690,11,,,Stover Milling Co MO,stover-milling-co-mo,0.67,
+agricharts:innovativeag,Bear Rvr M,87656,1,,,Heartland Coop Gruver TX,heartland-coop-gruver-tx,0.54,
+agricharts:jbslivepork,Futures Only,87376,14,,,Ursa Farmers Co-Op Canton MO,ursa-farmers-co-op-canton-mo,0.52,
+agricharts:cgb,CGB -  HELENA NORTH (RIVER),51759,14,34.520371,-90.585568,Heartland Coop Gruver TX,heartland-coop-gruver-tx,0.56,999.45
+agricharts:cgb,CGB CONNERSVILLE,20606,6,39.645294,-85.133168,CVA Leonardville KS,cva-leonardville-ks,0.62,1005.82
+agricharts:cargillus,"Sidney, GOS",5864,14,40.27546,-84.19193,Farmers Cooperative Society Boyden IA,farmers-cooperative-society-boyden-ia,0.5,1031.18
+agricharts:cgb,CGB -  OLD TOWN,53999,14,34.367218,-90.769033,Absolute Energy mona Ethanol,absolute-energy-mona-ethanol,0.48,1032.57
+agricharts:cgb,CGB - ROSEDALE,79620,11,33.824526,-91.019828,Five Star Cooperative Swaledale IA,five-star-cooperative-swaledale-ia,0.52,1037.1
+agricharts:cgb,CGB GRAND TOWER,81113,10,37.663868,-89.512091,Heartland Coop Hoover TX (Seasonal),heartland-coop-hoover-tx-seasonal,0.52,1049.35
+agricharts:cgb,CGB AURORA,20608,13,39.06012,-84.898007,CVA Narka KS,cva-narka-ks,0.53,1078.7
+agricharts:cgb,CGB - GREENVILLE,79612,13,33.748156,-91.032897,POET Glenville MN Ethanol,poet-glenville-mn-ethanol,0.64,1110.32
+agricharts:agstate,Sutherland,25742,13,42.97466,-95.496086,Heartland Coop Rhea TX (Seasonal),heartland-coop-rhea-tx-seasonal,0.58,1125.2
+agricharts:cargillus,"Guntersville, GOS",60825,7,34.34681,-86.28954,Cartersville Elevator Inc. Rockwell IA,cartersville-elevator-inc-rockwell-ia,0.59,1133.05
+agricharts:cgb,CGB - YAZOO CITY,82785,9,32.840507,-90.442115,Farmers Cooperative Company Sac City IA (approx),farmers-cooperative-company-sac-city-ia-approx,0.55,1137.96
+agricharts:cargillus,"Bailey, GOS",50948,5,35.530265,-78.28135,Oakley Grain Foristell MO,oakley-grain-foristell-mo,0.54,1179.44
+agricharts:cargillus,"Harrisonburg, TRKY",60805,4,38.454739,-78.867903,Fredericksburg Farmers Coop Hawkeye IA,fredericksburg-farmers-coop-hawkeye-ia,0.56,1208.6
+agricharts:cgb,CGB - MAYERSVILLE,79618,11,32.917218,-91.060425,Guardian Energy Janesville MN,guardian-energy-janesville-mn,0.59,1265.23
+agricharts:cargillus,"Gainesville, GOS",7339,7,34.28987,-83.81025,Guardian Energy Janesville MN,guardian-energy-janesville-mn,0.65,1381.83
+agricharts:cgb,CGB - JONESVILLE,79710,14,31.634296,-91.814069,Guardian Energy Janesville MN,guardian-energy-janesville-mn,0.67,1396.94
+agricharts:cargillus,"Barber, GOS",79022,2,35.72176,-80.64484,Ag Partners Goodhue MN,ag-partners-goodhue-mn,0.54,1400.86
+agricharts:cargillus,"Fayetteville2, GOS",75729,8,35.08797,-78.84583,Cartersville Elevator Inc. Rockwell IA,cartersville-elevator-inc-rockwell-ia,0.53,1517.24
