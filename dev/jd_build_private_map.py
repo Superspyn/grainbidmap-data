@@ -57,6 +57,12 @@ def build_truck_js(trucks: list[dict]) -> str:
             f"y:{round(float(t['lat']), 6)}",
             f"x:{round(float(t['lon']), 6)}",
             "t:" + json.dumps(str(t.get("at") or "")),
+            # s: when it stopped where it is. q: that is a lower bound, not a
+            # known arrival. g: moving. e: engine running while stopped.
+            "s:" + json.dumps(str(t.get("since") or "")),
+            "q:" + ("1" if t.get("since_min") else "0"),
+            "g:" + ("1" if t.get("moving") else "0"),
+            "e:" + ("1" if t.get("engine_on") else "0"),
         ]) + "}")
     return "  var gtTrucks = [\n    " + ",\n    ".join(rows) + "\n  ];\n"
 
@@ -159,6 +165,14 @@ PANEL_CSS = """
   #grain-trucking-tool .gt-field-item:last-child { border-bottom: none; }
   #grain-trucking-tool .gt-field-item:hover { background: var(--green-pale); }
   #grain-trucking-tool .gt-field-item-on { background: var(--green-pale); }
+  #grain-trucking-tool .gt-truck-key {
+    display: inline-flex; align-items: center; gap: 4px;
+    margin-right: 10px; white-space: nowrap;
+  }
+  #grain-trucking-tool .gt-truck-key i {
+    width: 9px; height: 9px; border-radius: 2px;
+    border: 1px solid rgba(255,255,255,0.85); flex: none;
+  }
   #grain-trucking-tool .gt-field-acres {
     font-family: 'IBM Plex Mono', monospace; color: var(--ink-soft);
     white-space: nowrap;
@@ -200,10 +214,16 @@ PANEL_HTML = """
       </label>
       <span class="gt-field-count" id="gt-truck-summary"></span>
     </div>
-    <div class="gt-field-note">Semi and pickup shapes by vehicle type; green
-      reported within the hour, amber today, grey older. Positions are each
-      vehicle&rsquo;s last report, not a live feed &mdash; a parked truck stops
-      reporting.</div>
+    <div class="gt-field-note">
+      <span class="gt-truck-key"><i style="background:#3F8F3F"></i>moving</span>
+      <span class="gt-truck-key"><i style="background:#D2901F"></i>idling, engine on</span>
+      <span class="gt-truck-key"><i style="background:#C0392B"></i>stopped</span>
+      <span class="gt-truck-key"><i style="background:#98A08C"></i>not reporting</span>
+      <br>Click a truck for how long it has sat. That is time since it last
+      <em>moved</em> &mdash; these trackers report no engine data, so a truck
+      shut off and one idling look the same unless it reports operating hours.
+      Positions are each vehicle&rsquo;s last report, roughly ten to twenty
+      minutes behind.</div>
   </div>
 """
 
@@ -412,7 +432,9 @@ PANEL_JS = r"""
           // The relay carries the same shape the generator bakes in, so the
           // drawing code below does not care which one it got.
           gtTrucks = data.trucks.map(function (t) {
-            return { n: t.name, m: t.make, k: t.kind, y: t.lat, x: t.lon, t: t.at };
+            return { n: t.name, m: t.make, k: t.kind, y: t.lat, x: t.lon,
+                     t: t.at, s: t.since, q: t.since_min ? 1 : 0,
+                     g: t.moving ? 1 : 0, e: t.engine_on ? 1 : 0 };
           });
           if (window.gtRedrawTrucks) window.gtRedrawTrucks();
         })
@@ -444,47 +466,107 @@ PANEL_JS = r"""
       return Math.round(mins / 1440) + ' days ago';
     }
 
-    // Colour by staleness, because "where is it now" and "where was it last
-    // week" are different questions and should not look alike.
-    function colourFor(mins) {
-      if (mins === null) return '#9AA08F';
-      if (mins <= 60) return '#3C8A3E';          // reported within the hour
-      if (mins <= 60 * 12) return '#C08A28';     // sometime today
-      return '#9AA08F';                          // older, or parked
+    function durationText(mins) {
+      if (mins === null) return 'unknown';
+      if (mins < 1) return 'under a minute';
+      if (mins < 60) return Math.round(mins) + ' min';
+      var h = Math.floor(mins / 60), m = Math.round(mins % 60);
+      if (h < 24) return h + ' h' + (m ? ' ' + m + ' min' : '');
+      var d = Math.floor(h / 24), rh = h % 24;
+      return d + (d === 1 ? ' day' : ' days') + (rh ? ' ' + rh + ' h' : '');
     }
 
-    // Drawn rather than pinned, so a truck reads as a truck against the 896
-    // elevator dots. Side-view silhouettes: a tractor-trailer for the Macks
-    // and Kenworths, a pickup for the duallys and half-tons. Deliberately
-    // generic shapes - not John Deere's logo, which is their trademark.
-    var SEMI = '<rect x="1" y="4" width="25" height="11" rx="1"/>' +
-               '<path d="M27 15V8h6l4 4h6v3z"/>';
-    var SEMI_WHEELS = '<circle cx="8" cy="17" r="2.6"/>' +
-                      '<circle cx="15" cy="17" r="2.6"/>' +
-                      '<circle cx="38" cy="17" r="2.6"/>';
-    var PICKUP = '<path d="M2 15v-5h7l4-5h8l2 5h11v5z"/>';
-    var PICKUP_WHEELS = '<circle cx="9" cy="17" r="2.6"/>' +
-                        '<circle cx="28" cy="17" r="2.6"/>';
+    // Four states, which is as much as the feed can honestly support.
+    // "stopped" means the position has not changed - not that the engine is
+    // off, which these trackers do not report. "idling" is the exception:
+    // operating hours climbing on a truck that has not moved does mean the
+    // engine is running.
+    //
+    // An old report is NOT stale. These trackers sleep while parked, so a
+    // timestamp frozen three days ago means the truck has sat in the yard
+    // for three days - the position is exactly right. Grey is only for a
+    // tracker that has gone quiet long enough that the truck has probably
+    // moved without it.
+    var QUIET_DAYS = 14;
 
-    function truckIcon(kind, mins) {
-      var semi = kind !== 'pickup';
-      var w = semi ? 46 : 36;
-      var colour = colourFor(mins);
-      // A white outline keeps the shape legible over dark aerial imagery.
+    function stateOf(t) {
+      var reported = ageMinutes(t.t);
+      if (reported === null || reported > 60 * 24 * QUIET_DAYS) return 'stale';
+      if (t.g) return 'moving';
+      if (t.e) return 'idling';
+      return 'stopped';
+    }
+
+    var STATE_COLOUR = {
+      moving:  '#3F8F3F',   // on the road
+      idling:  '#D2901F',   // engine running, not going anywhere
+      stopped: '#C0392B',   // parked
+      stale:   '#98A08C'    // no report in over a day, position unreliable
+    };
+
+    // Side-view silhouettes, so a truck reads as a truck against the 896
+    // elevator dots: a tractor and box for the Macks and Kenworths, a pickup
+    // for the duallys and half-tons. Drawn here rather than taken from
+    // Operations Center - these are my own shapes in the same style.
+    var SEMI = '<path d="M3 16.5V11h5l3.5-5.5H19v11z"/>' +
+               '<path d="M20.5 16.5V4H39v12.5z"/>';
+    var SEMI_GLASS = '<path d="M12.6 10.4l2-3.5H18v3.5z"/>';
+    var SEMI_WHEELS = '<circle cx="8.5" cy="17.5" r="3.3"/>' +
+                      '<circle cx="27" cy="17.5" r="3.3"/>' +
+                      '<circle cx="34.5" cy="17.5" r="3.3"/>';
+    var PICKUP = '<path d="M2 14.5V10h4l3.5-5.5H18l2 5h11v5z"/>';
+    var PICKUP_GLASS = '<path d="M10.5 9.6l2.1-3.8h4.6l.6 3.8z"/>';
+    var PICKUP_WHEELS = '<circle cx="8" cy="15.5" r="3"/>' +
+                        '<circle cx="25" cy="15.5" r="3"/>';
+
+    function truckIcon(t) {
+      var semi = t.k !== 'pickup';
+      var w = semi ? 42 : 34, h = semi ? 22 : 20;
+      var colour = STATE_COLOUR[stateOf(t)];
+      // A white outline keeps the shape legible over dark aerial imagery;
+      // the body is stroked before it is filled so the outline sits outside.
       var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w +
-        '" height="21" viewBox="0 0 ' + w + ' 21">' +
-        '<g fill="' + colour + '" stroke="#FFFFFF" stroke-width="1.6" ' +
-        'stroke-linejoin="round">' + (semi ? SEMI : PICKUP) + '</g>' +
-        '<g fill="' + colour + '" stroke="#FFFFFF" stroke-width="1.2">' +
+        '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '">' +
+        '<g fill="' + colour + '" stroke="#FFFFFF" stroke-width="1.7" ' +
+        'stroke-linejoin="round" paint-order="stroke">' +
+        (semi ? SEMI : PICKUP) + (semi ? SEMI_WHEELS : PICKUP_WHEELS) +
+        '</g>' +
+        '<g fill="#2A3124" fill-opacity="0.55">' +
+        (semi ? SEMI_GLASS : PICKUP_GLASS) + '</g>' +
+        '<g fill="#2A3124">' +
         (semi ? SEMI_WHEELS : PICKUP_WHEELS) + '</g>' +
-        '<g fill="#23281F">' + (semi ? SEMI_WHEELS : PICKUP_WHEELS) + '</g>' +
+        '<g fill="#FFFFFF" fill-opacity="0.9">' +
+        (semi ? '<circle cx="8.5" cy="17.5" r="1.1"/>' +
+                '<circle cx="27" cy="17.5" r="1.1"/>' +
+                '<circle cx="34.5" cy="17.5" r="1.1"/>'
+              : '<circle cx="8" cy="15.5" r="1"/>' +
+                '<circle cx="25" cy="15.5" r="1"/>') + '</g>' +
         '</svg>';
       return {
         url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg),
-        scaledSize: new google.maps.Size(w, 21),
+        scaledSize: new google.maps.Size(w, h),
         // Anchor under the wheels so the truck sits on its position.
-        anchor: new google.maps.Point(w / 2, 20)
+        anchor: new google.maps.Point(w / 2, h - 1)
       };
+    }
+
+    // "Moving" first, then whatever has been sitting the shortest time: in a
+    // yard with a dozen trucks in it, the one that just arrived is the one
+    // worth seeing on top.
+    function stoppedMinutes(t) {
+      return t.s ? ageMinutes(t.s) : ageMinutes(t.t);
+    }
+
+    function stoppedText(t) {
+      var state = stateOf(t);
+      if (state === 'moving') return 'moving';
+      var mins = stoppedMinutes(t);
+      if (mins === null) return 'stopped, for how long is unknown';
+      var word = state === 'idling' ? 'idling' : 'stopped';
+      // A lower bound is said as one. The pusher can only prove a truck has
+      // been parked since it started watching; the truck may have been
+      // there far longer.
+      return word + ' ' + (t.q ? 'at least ' : '') + durationText(mins);
     }
 
     function draw() {
@@ -492,30 +574,50 @@ PANEL_JS = r"""
       if (!window.google || !window.google.maps) return;
       gtTrucks.forEach(function (t) {
         var mins = ageMinutes(t.t);
+        var stopped = stoppedMinutes(t);
+        var state = stateOf(t);
         var mk = new google.maps.Marker({
           position: { lat: t.y, lng: t.x },
           map: map,
-          icon: truckIcon(t.k, mins),
-          title: t.n + '  (' + t.m + ')  -  ' + ageText(mins),
-          // Fresher trucks sit on top where several are parked in one yard.
-          zIndex: 500 + (mins === null ? 0 : Math.max(0, 600 - Math.round(mins)))
+          icon: truckIcon(t),
+          title: t.n + '  (' + t.m + ')  -  ' + stoppedText(t) +
+                 '  -  reported ' + ageText(mins),
+          zIndex: 500 + (state === 'moving' ? 700 :
+                   stopped === null ? 0 : Math.max(0, 600 - Math.round(stopped)))
         });
         mk.addListener('click', function () {
           var html = '<div style="font-family:inherit;font-size:13px">' +
             '<strong>' + escapeHtml(t.n) + '</strong><br>' +
             escapeHtml(t.m) + ' \u00b7 ' + escapeHtml(t.k) + '<br>' +
-            '<span style="color:#5B6350">reported ' + ageText(mins) + '</span></div>';
+            '<span style="color:' + STATE_COLOUR[state] + ';font-weight:600">' +
+            escapeHtml(stoppedText(t)) + '</span><br>' +
+            '<span style="color:#5B6350">last reported ' + ageText(mins) +
+            (state === 'idling' ? '<br>engine running - operating hours are ' +
+              'still climbing' : '') +
+            (state === 'stale' ? '<br>nothing reported in over ' + QUIET_DAYS +
+              ' days, so this position may be out of date' : '') +
+            '</span></div>';
           infoWindow.setContent(html);
           infoWindow.open(map, mk);
         });
         markers.push(mk);
       });
-      var fresh = gtTrucks.filter(function (t) {
-        var m = ageMinutes(t.t); return m !== null && m <= 60;
-      }).length;
       if (summary) {
-        summary.textContent = gtTrucks.length + ' vehicles \u00b7 ' + fresh +
-          ' reported in the last hour';
+        var counts = { moving: 0, idling: 0, stopped: 0, stale: 0 };
+        gtTrucks.forEach(function (t) { counts[stateOf(t)]++; });
+        var bits = [gtTrucks.length + ' vehicles'];
+        if (counts.moving) bits.push(counts.moving + ' moving');
+        if (counts.idling) bits.push(counts.idling + ' idling');
+        if (counts.stopped) bits.push(counts.stopped + ' stopped');
+        if (counts.stale) bits.push(counts.stale + ' not reporting');
+        var longest = null;
+        gtTrucks.forEach(function (t) {
+          if (stateOf(t) === 'moving') return;
+          var m = stoppedMinutes(t);
+          if (m !== null && (longest === null || m > longest)) longest = m;
+        });
+        if (longest !== null) bits.push('longest sat ' + durationText(longest));
+        summary.textContent = bits.join(' \u00b7 ');
       }
     }
 

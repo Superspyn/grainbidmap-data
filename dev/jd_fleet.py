@@ -32,6 +32,9 @@ import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import jd_idle  # noqa: E402
+
 SECRETS = pathlib.Path.home() / ".grain-map-secrets"
 CONFIG = SECRETS / "johndeere.json"
 TOKEN_CACHE = SECRETS / "johndeere-token.json"
@@ -381,6 +384,14 @@ def fleet_positions(token: str) -> list[dict]:
                 lat = loc.findtext("i:Latitude", None, AEMP_NS)
                 lon = loc.findtext("i:Longitude", None, AEMP_NS)
                 ts = loc.get("datetime")
+            # Operating hours, when the tracker reports them. On these trucks
+            # they are mostly 0.00 - they are aftermarket trackers, not Deere
+            # machines with engine data - but where the figure does move it is
+            # the only evidence of an engine actually running, which is what
+            # separates idling from merely parked. None of the 37 road
+            # vehicles carries CumulativeIdleHours at all.
+            hours = eq.find("i:CumulativeOperatingHours", AEMP_NS)
+            hour_val = hours.findtext("i:Hour", None, AEMP_NS) if hours is not None else None
             out.append({
                 "name": (header.findtext("i:EquipmentID", "", AEMP_NS) or "").strip(),
                 "make": make,
@@ -390,6 +401,8 @@ def fleet_positions(token: str) -> list[dict]:
                 "lat": float(lat) if lat else None,
                 "lon": float(lon) if lon else None,
                 "at": ts,
+                "hours": float(hour_val) if hour_val else None,
+                "hours_at": hours.get("datetime") if hours is not None else None,
             })
 
         nxt = [l for l in root.findall("i:Links", AEMP_NS)
@@ -433,6 +446,11 @@ def main() -> None:
             refused += 1
             continue
         out["trucks"].append(m)
+
+    # How long each one has been stopped, from the running record kept by the
+    # pusher. Reading it here too means a hand-built page carries the same
+    # figures the live relay serves.
+    jd_idle.track(out["trucks"])
 
     OUTPUT.write_text(json.dumps(out, indent=1), encoding="utf-8")
     try:
