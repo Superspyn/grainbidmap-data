@@ -219,11 +219,13 @@ PANEL_HTML = """
       <span class="gt-truck-key"><i style="background:#D2901F"></i>idling, engine on</span>
       <span class="gt-truck-key"><i style="background:#C0392B"></i>stopped</span>
       <span class="gt-truck-key"><i style="background:#98A08C"></i>not reporting</span>
-      <br>Click a truck for how long it has sat. That is time since it last
-      <em>moved</em> &mdash; these trackers report no engine data, so a truck
-      shut off and one idling look the same unless it reports operating hours.
-      Positions are each vehicle&rsquo;s last report, roughly ten to twenty
-      minutes behind.</div>
+      <br>Click a truck for how long it has sat, worked out from its position
+      history. That is time since it last <em>moved</em>: Deere holds no
+      engine data for these trucks &mdash; every one reports its engine as
+      never having run &mdash; so a truck shut off and one idling look alike.
+      &ldquo;At least&rdquo; means the history ran out before it found the
+      truck somewhere else. Positions are each vehicle&rsquo;s last report,
+      roughly ten to twenty minutes behind.</div>
   </div>
 """
 

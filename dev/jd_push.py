@@ -30,7 +30,8 @@ import urllib.request
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import jd_idle  # noqa: E402
-from jd_fleet import fleet_positions, now_iso, refresh_token  # noqa: E402
+from jd_fleet import (api, connected_orgs, equipment_index,  # noqa: E402
+                      fleet_positions, now_iso, refresh_token)
 
 SECRETS = pathlib.Path.home() / ".grain-map-secrets"
 RELAY = SECRETS / "relay.json"
@@ -84,11 +85,24 @@ def main() -> None:
     if not road:
         sys.exit("no road vehicles with a position - nothing to push")
 
-    # Always track, even when nothing gets pushed. How long a truck has been
-    # stopped is accumulated from consecutive readings, so a skipped reading
-    # is a gap in the record - and this is the only thing reading the feed
-    # often enough to notice a truck move.
+    # Always track, even when nothing gets pushed. A truck seen to move
+    # between two readings gets an exact arrival time for free, and this is
+    # the only thing reading the feed often enough to catch that.
     jd_idle.track(road)
+
+    # Then pin down the ones the feed cannot date, from position history.
+    # A few per run: the work shrinks to nothing as trucks are either
+    # refined or observed moving.
+    try:
+        index = equipment_index(token, [str(o["id"]) for o in connected_orgs(token)])
+        refined = jd_idle.refine(api, token, road, index)
+        if refined:
+            jd_idle.track(road)      # re-annotate from what history settled
+    except Exception as exc:  # noqa: BLE001
+        # History is an improvement, not a dependency. Losing it must not
+        # stop positions reaching the map.
+        print(f"  (history refinement skipped: {type(exc).__name__}: {exc})")
+        refined = 0
 
     newest = max((v.get("at") or "") for v in road)
     sig = signature(road, newest)
@@ -121,9 +135,12 @@ def main() -> None:
     semis = sum(1 for v in road if v["kind"] == "semi")
     moving = sum(1 for v in road if v.get("moving"))
     idling = sum(1 for v in road if v.get("engine_on") and not v.get("moving"))
+    exact = sum(1 for v in road if not v.get("since_min"))
     print(f"pushed {len(road)} vehicles ({semis} semis), newest report {newest}")
     print(f"  {moving} moving, {idling} idling with the engine on, "
           f"{len(road) - moving} stopped")
+    print(f"  {exact}/{len(road)} have an exact stopped-since time"
+          f"{f', {refined} refined from history this run' if refined else ''}")
     print(f"  relay said: {result}")
 
 
