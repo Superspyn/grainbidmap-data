@@ -264,9 +264,16 @@ def send_email(cfg: dict, body: str) -> bool:
                 except Exception as exc:  # noqa: BLE001
                     print(f"  (gateway refused {address}: {type(exc).__name__})")
                     ok = False
-    except smtplib.SMTPAuthenticationError:
-        print("  (Gmail rejected the app password - it must be an App Password, "
-              "not the account password, and 2-step verification must be on)")
+    except smtplib.SMTPAuthenticationError as exc:
+        # Quote the server verbatim. The generic advice here was wrong at
+        # least once - the password was a real App Password and the actual
+        # complaint was something else entirely - and a swallowed error
+        # leaves nothing to act on.
+        detail = exc.smtp_error
+        if isinstance(detail, bytes):
+            detail = detail.decode("utf-8", "replace")
+        print(f"  (mail server rejected the login: {exc.smtp_code} "
+              f"{' '.join(str(detail).split())[:300]})")
         return False
     except Exception as exc:  # noqa: BLE001
         print(f"  (could not reach {host}: {type(exc).__name__}: {exc})")
@@ -372,8 +379,16 @@ def main() -> None:
     where = place_name(example["y"], example["x"], fields, pins)
     print(f"nearest named place to the example: {where or '(nothing within range)'}")
     if "--test" in sys.argv:
-        send(cfg, "Grain map test: " + compose(example, where), dry)
-        print("sent" if not dry else "dry run only - nothing left this machine")
+        # Report what actually happened. This printed "sent" regardless of
+        # the result, which is the worst possible thing for a test command
+        # to do - it said the alerts were working when they were not.
+        ok = send(cfg, "Grain map test: " + compose(example, where), dry)
+        if dry:
+            print("dry run only - nothing left this machine")
+        elif ok:
+            print("sent - it should arrive within a minute or two")
+        else:
+            sys.exit("NOT sent. Nothing was delivered; see the error above.")
     else:
         print("add --test to send one, --dry-run to only print it")
 
