@@ -34,6 +34,7 @@ import xml.etree.ElementTree as ET
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import jd_idle  # noqa: E402
+import jd_trail  # noqa: E402
 
 SECRETS = pathlib.Path.home() / ".grain-map-secrets"
 CONFIG = SECRETS / "johndeere.json"
@@ -489,8 +490,11 @@ def main() -> None:
         index = equipment_index(token, [str(o["id"]) for o in orgs])
         if jd_idle.refine(api, token, out["trucks"], index, budget=40):
             jd_idle.track(out["trucks"])
+        jd_trail.update(api, token, out["trucks"], index, budget=40)
+        out["stops"] = jd_trail.recent_events(24)
+        out["stop_minutes"] = jd_trail.IDLE_MIN
     except Exception as exc:  # noqa: BLE001
-        print(f"  (history refinement skipped: {type(exc).__name__}: {exc})")
+        print(f"  (history/trail step skipped: {type(exc).__name__}: {exc})")
 
     OUTPUT.write_text(json.dumps(out, indent=1), encoding="utf-8")
     try:
@@ -552,6 +556,10 @@ def main() -> None:
                   f"vs Deere {f['acres']:.2f} ac ({f['holes']} holes)")
     print(f"  semis         {len(semis):3d}  {freshest(semis)}")
     print(f"  pickups       {len(pickups):3d}  {freshest(pickups)}")
+    trails = sum(1 for t in out["trucks"] if t.get("trail"))
+    print(f"  trails        {trails:3d} vehicles with a path in the last "
+          f"{jd_trail.TRAIL_HOURS} h, {len(out.get('stops') or [])} stop(s) "
+          f"over {jd_trail.IDLE_MIN:.0f} min")
     if refused:
         print(f"  {refused} road vehicles had no position in the AEMP feed")
 
