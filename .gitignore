@@ -21,3 +21,4 @@ dev/.private-preview.html
 dev/.private-test.html
 dev/cloudflare/.wrangler/
 dev/cloudflare/node_modules/
+dev/.icon-preview.html
