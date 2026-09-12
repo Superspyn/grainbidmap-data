@@ -18,12 +18,22 @@ seven days of real breadcrumbs:
     gap to the next breadcrumb, while stopped   median 27 s, p90 508 s
 
 While the tracker is awake it reports every half-minute or so whether or not
-the truck is rolling. When the truck is parked the tracker sleeps and the
-gap stretches to hours. Treating one long sleep as a single stationary run
-called overnight parking a 72-hour idle. So a run is broken whenever the gap
-exceeds GAP_MIN, which leaves only stretches where the tracker was awake and
-reporting steadily and the truck was not moving. Over the same seven days
-that is 6 stops of 10 minutes or more - about one a day - rather than 51.
+the truck is rolling. When the truck is parked the tracker sleeps and the gap
+stretches to hours.
+
+That sleep is the whole difficulty, because it is ambiguous on its own: the
+truck either sat where it was, or drove somewhere unobserved and came back.
+Breaking the run on every long gap resolved it the wrong way - it discarded
+the sleep, and the sleep IS the stop, so no stop was ever reported at all.
+Asking instead whether the truck MOVED across the gap resolves it correctly,
+and the data separates cleanly. Over a day of real breadcrumbs:
+
+    gap where the truck stayed put      moved 8 m, 9 m, 18 m     -> a stop
+    gap where the truck went somewhere  moved 73 m ... 2,041 m   -> not a stop
+
+So a run survives a quiet stretch when the truck is in the same place on
+either side of it, and breaks when it is not. Overnight parking then reports
+as one long stop rather than as nothing, which is the honest answer.
 
 This still cannot prove the engine was running: Deere holds no engine data
 for these trucks (see jd_idle). A truck reporting every 27 seconds while
@@ -37,6 +47,7 @@ from __future__ import annotations
 
 import datetime as _dt
 import json
+import math
 import os
 import pathlib
 
@@ -45,13 +56,23 @@ STATE = pathlib.Path.home() / ".grain-map-secrets" / "trails.json"
 # How much of the path to keep and show.
 TRAIL_HOURS = 24
 
-# Below this the truck is not moving. Breadcrumb speed is km/h, and a
-# stationary GPS reports a few tenths.
+# Breadcrumb speed is km/h. It is kept for drawing the trail, but it is NOT
+# what decides whether the truck is moving, because on this hardware it
+# disagrees with the ground: two of the three real stops in a day of data
+# carry 2.4 km/h on the last point before the truck sat still for twenty
+# minutes and travelled eight metres. Displacement is the measurement;
+# reported speed is a derived number that can be wrong.
 MOVING_KMH = 1.5
 
-# Break a stationary run when the tracker goes quiet for longer than this:
-# past it, the silence is a sleeping tracker rather than a waiting truck.
+# Past this the tracker has gone quiet rather than merely reported slowly,
+# and the question becomes whether the truck moved while it slept.
 GAP_MIN = 5.0
+
+# How far a parked truck's GPS wanders. Measured across every quiet stretch
+# in a day of breadcrumbs: the ones where the truck stayed put came back 8 to
+# 18 m away, the nearest one that had actually driven was 73 m. Anywhere in
+# that gap works; 60 m sits in it with room on both sides.
+SAME_SPOT_M = 60.0
 
 # Report a stop at least this long. The farmer asked for ten minutes.
 IDLE_MIN = 10.0
@@ -141,9 +162,23 @@ def fetch_breadcrumbs(api, token: str, principal_id, since: _dt.datetime,
     return rows
 
 
+def _metres(a: dict, b: dict) -> float:
+    r = 6371008.8
+    p1, p2 = math.radians(a["y"]), math.radians(b["y"])
+    h = (math.sin((p2 - p1) / 2) ** 2
+         + math.cos(p1) * math.cos(p2)
+         * math.sin(math.radians(b["x"] - a["x"]) / 2) ** 2)
+    return 2 * r * math.asin(min(1.0, math.sqrt(h)))
+
+
 def find_stops(points: list[dict]) -> list[dict]:
-    """Stretches of at least IDLE_MIN where the truck was not moving and the
-    tracker was still reporting steadily."""
+    """Stretches of at least IDLE_MIN where the truck did not move.
+
+    A quiet stretch only ends the stop if the truck is somewhere else when
+    the tracker wakes up. If it is in the same place, it sat there the whole
+    time and the silence counts towards the stop - which is what makes a
+    parked truck reportable at all, since a parked truck stops reporting.
+    """
     stops, run = [], []
 
     def close(run):
@@ -156,15 +191,15 @@ def find_stops(points: list[dict]) -> list[dict]:
                           "y": run[-1]["y"], "x": run[-1]["x"]})
 
     for p in points:
-        moving = p["s"] > MOVING_KMH
-        gap_too_big = False
-        if run:
-            previous, current = _parse(run[-1]["t"]), _parse(p["t"])
-            if previous and current:
-                gap_too_big = (current - previous).total_seconds() / 60 > GAP_MIN
-        if moving or gap_too_big:
+        if not run:
+            run = [p]
+            continue
+        # Did it end up somewhere else? That is the whole test, and it reads
+        # the same whether the previous breadcrumb was forty seconds ago or
+        # seven hours ago - which is why the tracker's sleep stops mattering.
+        if _metres(run[-1], p) > SAME_SPOT_M:
             close(run)
-            run = [] if moving else [p]
+            run = [p]
         else:
             run.append(p)
     close(run)
