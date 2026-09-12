@@ -172,7 +172,7 @@ def find_stops(points: list[dict]) -> list[dict]:
 
 
 def update(api, token: str, trucks: list[dict], index: dict,
-           budget: int = 20) -> tuple[int, int]:
+           budget: int = 20) -> tuple[int, list[dict]]:
     """Refresh trails and long stops. Returns (trucks fetched, new stops).
 
     Each truck is asked only for breadcrumbs newer than the last one already
@@ -183,7 +183,8 @@ def update(api, token: str, trucks: list[dict], index: dict,
     now = _dt.datetime.now(_dt.timezone.utc)
     cutoff = now - _dt.timedelta(hours=TRAIL_HOURS)
     seen = {e["id"] + e["start"] for e in data["events"]}
-    fetched = new_stops = 0
+    fetched = 0
+    new_stops: list[dict] = []
 
     for truck in trucks:
         key = _key(truck)
@@ -223,9 +224,10 @@ def update(api, token: str, trucks: list[dict], index: dict,
             if marker in seen:
                 continue
             seen.add(marker)
-            data["events"].append({"id": key, "name": truck.get("name"),
-                                   "kind": truck.get("kind"), **stop})
-            new_stops += 1
+            event = {"id": key, "name": truck.get("name"),
+                     "kind": truck.get("kind"), **stop}
+            data["events"].append(event)
+            new_stops.append(event)
 
     horizon = now - _dt.timedelta(days=EVENT_DAYS)
     data["events"] = [e for e in data["events"]

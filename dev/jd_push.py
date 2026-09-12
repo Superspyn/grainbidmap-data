@@ -30,6 +30,7 @@ import urllib.request
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import jd_idle  # noqa: E402
+import jd_notify  # noqa: E402
 import jd_trail  # noqa: E402
 from jd_fleet import (api, connected_orgs, equipment_index,  # noqa: E402
                       fleet_positions, now_iso, refresh_token)
@@ -39,6 +40,11 @@ RELAY = SECRETS / "relay.json"
 STATE = SECRETS / "relay-state.json"
 
 USER_AGENT = "grain-map/1.0 (farm hauling map; contact github.com/Superspyn)"
+
+# Map pins, read once, so an alert can say "stopped at Heartland Alden"
+# rather than quoting latitude and longitude at someone in a truck.
+PINS = jd_notify.load_pins(
+    pathlib.Path(__file__).resolve().parent.parent / "grain-trucking-map.html")
 
 
 def load_relay() -> dict:
@@ -95,7 +101,8 @@ def main() -> None:
     # Then pin down the ones the feed cannot date, from position history.
     # A few per run: the work shrinks to nothing as trucks are either
     # refined or observed moving.
-    refined = crumbed = stops = 0
+    refined = crumbed = 0
+    stops: list[dict] = []
     try:
         index = equipment_index(token, [str(o["id"]) for o in connected_orgs(token)])
         refined = jd_idle.refine(api, token, road, index)
@@ -103,6 +110,12 @@ def main() -> None:
             jd_idle.track(road)      # re-annotate from what history settled
         # Breadcrumbs: the path driven, and any long stop along it.
         crumbed, stops = jd_trail.update(api, token, road, index)
+        if stops:
+            # Only the stops found on THIS run. jd_trail dedupes, so one
+            # already reported never comes round again.
+            texted = jd_notify.notify_stops(stops, PINS)
+            if texted:
+                print(f"  texted {texted} stop(s)")
     except Exception as exc:  # noqa: BLE001
         # History and trails are improvements, not dependencies. Losing them
         # must not stop positions reaching the map.
@@ -148,7 +161,7 @@ def main() -> None:
     print(f"  {exact}/{len(road)} have an exact stopped-since time"
           f"{f', {refined} refined from history this run' if refined else ''}")
     print(f"  breadcrumbs read for {crumbed} vehicles"
-          f"{f', {stops} new stop(s) over {jd_trail.IDLE_MIN:.0f} min' if stops else ''}"
+          f"{f', {len(stops)} new stop(s) over {jd_trail.IDLE_MIN:.0f} min' if stops else ''}"
           f"; {len(payload['stops'])} stop(s) in the last 24 h")
     print(f"  relay said: {result}")
 
