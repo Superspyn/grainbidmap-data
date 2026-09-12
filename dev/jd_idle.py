@@ -1,30 +1,32 @@
 """How long each truck has been sitting still.
 
-Deere's fleet feed cannot answer this on its own, which is worth stating
-plainly because it looks like it should. Measured against this account:
+Two sources, because neither alone is right.
 
-  * No road vehicle carries CumulativeIdleHours. Of 99 machines in the feed
-    32 do, and they are all Deere farm equipment - none of the 37 trucks.
-  * CumulativeOperatingHours is present on all 37 but reads 0.00 on 30 of
-    them. These are aftermarket trackers, not engine ECUs.
-  * The <Location> timestamp is "when a position was last reported", not
-    "when it last moved". Over one five-hour window, 33 of 37 trucks had a
-    frozen timestamp - the tracker sleeps while parked - and 4 kept
-    heartbeating hourly with 0-23 m of GPS wander.
+**Position history** (`/platform/machines/{principalId}/locationHistory`) is
+the authority. It returns every reported position, newest first, and walking
+back to the first one more than 60 m away gives the exact moment a truck
+arrived where it stands. This is what `refine()` does.
 
-So the duration has to be accumulated by watching. This module keeps a small
-state file beside the credentials and is called on every push, every five
-minutes, which is what turns a series of snapshots into "stopped 3 h ago".
+**The ISO 15143-3 fleet feed** is the cheap one: a single call returns every
+vehicle's latest position, which is what the five-minute push reads. But its
+`<Location>` timestamp is "last position *reported*", not "last *moved*",
+and the gap between those is not small. Measured against history:
 
-For a sleeping tracker the answer is exact from the first run, because a
-frozen timestamp already says when the truck stopped. For a heartbeater the
-first run can only say "at least this long", which is flagged rather than
-presented as fact and becomes exact once it next moves under observation.
+    16 Mack North        feed said 5 days     actually 12 days
+    West Crew            feed said 1 hour     actually 19.5 hours
+    Anthony Mack 3       feed said 11 days    actually 20+ days
 
-This measures STOPPED, not engine idling: with no engine data on these
-trucks the two cannot be told apart, except for the few that report
-operating hours, where hours climbing on a truck that has not moved does
-mean the engine is running.
+So the feed alone understates, sometimes by a week. It is used to notice
+movement between refinements, never to establish a duration on its own.
+
+On engine idling: there is none to be had for these trucks. The
+`hoursOfOperation` API works and is readable - Deere machines come back with
+five or six engine-ON periods each - but all 39 road vehicles return a
+single engine-OFF period running from the day the tracker was fitted to now,
+and `engineHours` reads 0.00. These are position-only aftermarket trackers.
+So this measures STOPPED, not idling, and says so. The one exception is kept
+for the day a truck does report: operating hours climbing on a vehicle that
+has not moved is a running engine.
 
 State lives at %USERPROFILE%\\.grain-map-secrets\\idle-state.json, outside
 this public repo, and holds nothing but positions and timestamps.
@@ -51,14 +53,20 @@ JITTER_M = 60.0
 # republish interval.
 MOVING_LATCH_MIN = 20.0
 
-# On a first sighting a recent position report is ambiguous: the truck may
-# have just arrived, or be a heartbeater that parked days ago. Older than
-# this and no heartbeat can explain it, so it is an arrival time.
-SEED_TRUST_MIN = 120.0
+# How far back refine() will look, and how hard it will page. A truck parked
+# a fortnight produces a few hundred points, which fits in two or three
+# pages of 250.
+HISTORY_DAYS = 21
+MAX_PAGES = 6
+
+# Re-check a truck whose arrival time is still only a lower bound this often.
+# Once history or an observed move has pinned it, it is not looked up again
+# until it next moves.
+REFINE_EVERY_H = 6.0
 
 # Operating hours climbing while the truck has not moved means the engine is
-# running and the truck is not: idling, in the sense Operations Center means
-# it. A hundredth of an hour is the smallest step the feed reports.
+# running and the truck is not. A hundredth of an hour is the smallest step
+# the feed reports.
 HOURS_EPSILON = 0.005
 
 
@@ -71,7 +79,7 @@ def _key(truck: dict) -> str:
     return str(truck.get("vin") or "").strip() or str(truck.get("name") or "").strip()
 
 
-def _metres(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
+def metres(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
     dlat = (lat2 - lat1) * 111_320.0
     dlon = (lon2 - lon1) * 111_320.0 * math.cos(math.radians((lat1 + lat2) / 2))
     return math.hypot(dlat, dlon)
@@ -109,6 +117,104 @@ def _save(vehicles: dict, now_iso: str) -> None:
         pass
 
 
+def last_moved(api, token: str, principal_id, lat: float, lon: float,
+               days: int = HISTORY_DAYS) -> tuple[str | None, bool]:
+    """When the vehicle arrived where it is now, from position history.
+
+    Returns (iso_time, exact). Walks the history newest-first and stops at
+    the first point more than JITTER_M from where it stands; the point after
+    that - the oldest one still at this spot - is the arrival.
+
+    exact is False when the search ran out of history without finding a
+    departure, which only supports "at least this long".
+    """
+    from jd_fleet import LOCATION_HISTORY     # imported here to avoid a cycle
+
+    now = _dt.datetime.now(_dt.timezone.utc)
+    url = LOCATION_HISTORY.format(
+        pid=principal_id,
+        start=(now - _dt.timedelta(days=days)).strftime("%Y-%m-%dT%H:%M:%S.000Z"),
+        end=now.strftime("%Y-%m-%dT%H:%M:%S.000Z"))
+
+    oldest_here = None
+    for _ in range(MAX_PAGES):
+        status, body = api(token, url)
+        if status != 200 or not isinstance(body, dict):
+            break
+        values = body.get("values") or []
+        for point in values:
+            p = point.get("point") or {}
+            if p.get("lat") is None or p.get("lon") is None:
+                continue
+            if metres(lat, lon, p["lat"], p["lon"]) > JITTER_M:
+                # It was somewhere else at this reading, so it arrived at
+                # the reading after this one.
+                return oldest_here, True
+            oldest_here = point.get("eventTimestamp") or oldest_here
+        nxt = [l.get("uri") for l in body.get("links", [])
+               if l.get("rel") == "nextPage"]
+        if not nxt or not values:
+            break
+        url = nxt[0]
+
+    # No departure found in the window: it has been here at least as long as
+    # the oldest reading we saw, and possibly far longer.
+    return oldest_here, False
+
+
+def refine(api, token: str, trucks: list[dict], index: dict,
+           budget: int = 8) -> int:
+    """Pin down arrival times from position history, cheapest-first.
+
+    Only trucks whose time is still a lower bound are looked up, at most
+    `budget` of them per run, and each at most every REFINE_EVERY_H hours.
+    A truck seen to move under observation is already exact and is never
+    looked up again until it next moves - so this settles down to nothing
+    once the fleet has been watched for a while.
+    """
+    was = _load()
+    now = _dt.datetime.now(_dt.timezone.utc)
+    now_iso = now.isoformat(timespec="seconds").replace("+00:00", "Z")
+
+    due = []
+    for truck in trucks:
+        key = _key(truck)
+        record = was.get(key)
+        if not record or record.get("exact"):
+            continue
+        if truck.get("lat") is None or truck.get("lon") is None:
+            continue
+        machine = index.get(str(truck.get("vin") or "").strip())
+        if not machine:
+            continue
+        age = _minutes_since(record.get("refined_at"), now)
+        if age is not None and age < REFINE_EVERY_H * 60:
+            continue
+        due.append((age is None, truck, key, record, machine))
+
+    # Never refined before goes first, so a new truck is pinned down on the
+    # run after it appears rather than waiting behind re-checks.
+    due.sort(key=lambda d: not d[0])
+    done = 0
+    for _, truck, key, record, machine in due[:budget]:
+        arrived, exact = last_moved(api, token, machine["principal_id"],
+                                    truck["lat"], truck["lon"])
+        record["refined_at"] = now_iso
+        if arrived:
+            # History can only ever push the arrival earlier than the feed's
+            # own last-report time, never later.
+            if not record.get("since") or arrived < record["since"] or exact:
+                record["since"] = arrived
+            record["exact"] = exact
+            record["source"] = "history"
+        was[key] = record
+        done += 1
+
+    if done:
+        _save(was, now_iso)
+    return done
+
+
 def track(trucks: list[dict], persist: bool = True) -> list[dict]:
     """Annotate each truck with how long it has been stopped.
 
@@ -133,20 +239,24 @@ def track(trucks: list[dict], persist: bool = True) -> list[dict]:
         prior = was.get(key)
 
         if prior is None:
-            # First sighting. The position report time is the best evidence
-            # available of when it got there, and its age says how far to
-            # trust that: an old report can only mean a sleeping tracker.
-            age = _minutes_since(at, now)
+            # First sighting. The report time is a lower bound and nothing
+            # more - it is when a position was last *reported*, which for a
+            # silent tracker is roughly the arrival and for a heartbeating
+            # one is not. Guessing from its age was wrong by a week on one
+            # truck here, so nothing is called exact until history or an
+            # observed move says so.
             record = {"lat": lat, "lon": lon, "since": at or now_iso,
                       "anchor_at": at, "hours": hours, "engine_at": None,
-                      "moved_at": None,
-                      "since_min": age is None or age < SEED_TRUST_MIN}
-        elif _metres(prior["lat"], prior["lon"], lat, lon) > JITTER_M:
+                      "moved_at": None, "refined_at": None,
+                      "exact": False, "source": "seed"}
+        elif metres(prior["lat"], prior["lon"], lat, lon) > JITTER_M:
             # It moved, under observation. The clock restarts from this
-            # report, and there is nothing provisional about that.
+            # report and there is nothing provisional about that - this is
+            # the one case that needs no history lookup at all.
             record = {"lat": lat, "lon": lon, "since": at or now_iso,
                       "anchor_at": at, "hours": hours, "engine_at": None,
-                      "moved_at": now_iso, "since_min": False}
+                      "moved_at": now_iso, "refined_at": None, "exact": True,
+                      "source": "observed"}
         else:
             # Same spot. Hold the arrival time; only the evidence changes.
             record = dict(prior)
@@ -156,17 +266,21 @@ def track(trucks: list[dict], persist: bool = True) -> list[dict]:
                 record["engine_at"] = now_iso
             if hours is not None:
                 record["hours"] = hours
-            # A report time that keeps advancing on the spot is the
-            # heartbeating case: this truck was parked before we started
-            # watching, so the arrival time stays a lower bound.
-            if at and record.get("anchor_at") and at != record["anchor_at"]:
-                record["since_min"] = True
-            record.setdefault("since_min", False)
+            # A report time still advancing on the spot means the tracker is
+            # heartbeating, so the feed's timestamp is a heartbeat and not
+            # an arrival - which disproves the first-sighting guess that it
+            # was one. It says nothing against an arrival established by
+            # history or by watching the truck move, so those stand.
+            if (at and record.get("anchor_at") and at != record["anchor_at"]
+                    and record.get("source") == "seed"):
+                record["exact"] = False
+            record.setdefault("exact", False)
+            record.setdefault("source", "seed")
 
         moved_age = _minutes_since(record.get("moved_at"), now)
         vehicles[key] = record
         truck["since"] = record["since"]
-        truck["since_min"] = bool(record.get("since_min"))
+        truck["since_min"] = not record.get("exact")
         truck["moving"] = moved_age is not None and moved_age <= MOVING_LATCH_MIN
         truck["engine_on"] = record.get("engine_at") is not None
 

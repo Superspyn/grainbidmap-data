@@ -332,6 +332,39 @@ def field_boundary(token: str, field: dict) -> dict:
     return {"rings": [], "lat": None, "lon": None, "acres": None, "detail": None}
 
 
+# The machine records, which the ISO feed does not give. Note the path: the
+# organization's own "machines" link points at /isg/equipment, NOT at
+# /platform/organizations/{id}/machines - that one answers 403 and looks for
+# all the world like a permissions problem. Always follow the link the API
+# advertises rather than guessing a path from the docs.
+EQUIPMENT = "https://api.deere.com/isg/equipment?organizationIds={org}"
+
+# Position history, keyed by principalId from the equipment record - not by
+# the equipment's own id, which 404s here.
+LOCATION_HISTORY = ("https://api.deere.com/platform/machines/{pid}/locationHistory"
+                    "?startDate={start}&endDate={end}&itemLimit=250")
+
+
+def equipment_index(token: str, orgs: list[str]) -> dict:
+    """Serial number -> machine record, across the given organizations.
+
+    The ISO feed identifies a vehicle by serial number and the platform API
+    by principalId; this is the join between them. All 37 road vehicles
+    match on serial.
+    """
+    index: dict = {}
+    for oid in orgs:
+        status, body = api(token, EQUIPMENT.format(org=oid))
+        if status != 200 or not isinstance(body, dict):
+            continue
+        for m in body.get("values", []):
+            serial = str(m.get("serialNumber") or "").strip()
+            if serial and m.get("principalId"):
+                index[serial] = {"principal_id": m["principalId"],
+                                 "name": m.get("name"), "org": oid}
+    return index
+
+
 AEMP = "https://api.deere.com/fleet/{page}"
 AEMP_NS = {"i": "http://standards.iso.org/iso/15143/-3"}
 
@@ -449,8 +482,15 @@ def main() -> None:
 
     # How long each one has been stopped, from the running record kept by the
     # pusher. Reading it here too means a hand-built page carries the same
-    # figures the live relay serves.
+    # figures the live relay serves. The budget is larger than the pusher's
+    # because this is run by hand, not every five minutes.
     jd_idle.track(out["trucks"])
+    try:
+        index = equipment_index(token, [str(o["id"]) for o in orgs])
+        if jd_idle.refine(api, token, out["trucks"], index, budget=40):
+            jd_idle.track(out["trucks"])
+    except Exception as exc:  # noqa: BLE001
+        print(f"  (history refinement skipped: {type(exc).__name__}: {exc})")
 
     OUTPUT.write_text(json.dumps(out, indent=1), encoding="utf-8")
     try:
