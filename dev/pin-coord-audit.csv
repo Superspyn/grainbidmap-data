@@ -1,0 +1,207 @@
+pin_id,pin_name,source,source_name,km,pin_lat,pin_lng,src_lat,src_lon
+cgb-louisiana-mo,CGB Louisiana MO,agricharts:cgb,CGB - LOUISIANA,971.001,39.4402895,-91.0351856,30.741405,-90.098713
+faas-feed-grain-inc-webster-ia,Faas Feed & Grain Inc Webster IA,agricharts:faasfeed,Webster/Keswick,180.406,41.438358,-92.169077,42.47037,-93.85256
+hull-coop-sheldon-feed-mill-ia,Hull Coop Sheldon Feed Mill IA,agricharts:hullcoop,Hull,22.132,43.1826827,-95.8571631,43.186532,-96.130085
+meadowland-farmers-coop-wabasso-mn,Meadowland Farmers Coop Wabasso MN,agricharts:meadowland,Meadowland,18.944,44.4025009,-95.2579322,44.2322,-95.26456
+cgb-lagrange-mo,CGB LaGrange MO,agricharts:cgb,CGB - LAGRANGE,18.691,40.046167,-91.4978683,40.206289,-91.430993
+cgb-cottonwood-point-caruthersville-mo,CGB Cottonwood Point Caruthersville MO,agricharts:cgb,CGB CARUTHERSVILLE,17.376,36.2294061,-89.7019028,36.073637,-89.686445
+meadowland-farmers-coop-walnut-grove-mn,Meadowland Farmers Coop Walnut Grove MN,agricharts:meadowland,Meadowland,15.041,44.2219352,-95.4527816,44.2322,-95.26456
+ctlc-naples-il,CTLC Naples IL,agricharts:cgb,CGB - NAPLES,9.649,39.7508658,-90.612222,39.825584,-90.554798
+cva-tilden-ne,CVA Tilden NE,agricharts:cvacoop,Tilden,6.595,41.9879064,-97.8352795,42.04721,-97.833863
+gold-eagle-coop-hawkeye-pride,Gold-Eagle Coop Hawkeye Pride,agricharts:goldeagle,HAWKEYE PRIDE,6.09,42.948471,-93.9116793,42.99226,-93.956644
+cva-bloomfield-ne,CVA Bloomfield NE,agricharts:cvacoop,MG Waldbaum - Bloomfield,6.015,42.5974388,-97.6309738,42.593929,-97.704296
+cva-east-hub-oakland-ne,CVA East Hub Oakland NE,agricharts:cvacoop,East Hub,5.852,41.8343401,-96.4681826,41.886841,-96.463219
+stateline-cooperative-burt-ia,Stateline Cooperative Burt IA,agricharts:statelinecoop,North Burt,5.135,43.1976447,-94.2191728,43.243801,-94.221168
+cva-royal-ne,CVA Royal NE,agricharts:cvacoop,Royal,4.013,42.332227,-98.1259044,42.331425,-98.174717
+key-coop-legrand-ia,Key Coop LeGrand IA,agricharts:keycoop,LeGrand,3.426,41.978744,-92.764425,41.963943,-92.728079
+pro-coop-gilmore-city-elevator,Pro Coop Gilmore City Elevator,agricharts:procooperative,GILMORE CITY.IA,2.732,42.727892,-94.4422874,42.748987,-94.459446
+gold-eagle-coop-clarion-annex,Gold-Eagle Coop Clarion Annex,agricharts:goldeagle,CLARION,2.518,42.7589116,-93.7347134,42.736265,-93.735034
+mid-missouri-energy-malta-bend-ethanol,Mid-Missouri Energy Malta Bend Ethanol,agricharts:midmissourienergy,"Mid-Missouri Energy, LLC",2.47,39.1963746,-93.3824659,39.19306,-93.354128
+cargill-eddyville,Cargill Eddyville,agricharts:cargillus,"Eddyville, SSNA",1.758,41.141337,-92.641603,41.15533,-92.63184
+key-coop-zearing-grain-site-ia,Key Coop Zearing Grain Site IA,agricharts:keycoop,Zearing,1.643,42.171273,-93.284273,42.16001,-93.297168
+gold-eagle-coop-titonka-north,Gold-Eagle Coop Titonka North,agricharts:goldeagle,TITONKA,1.297,43.2428903,-94.0278771,43.235312,-94.040056
+stateline-cylinder-ia,Stateline Cylinder IA,agricharts:statelinecoop,Cylinder,1.217,43.0867565,-94.5511468,43.097703,-94.5511
+farmers-win-coop-rushford-mn,Farmers Win Coop Rushford MN,agricharts:farmerswin,Rushford,1.108,43.8060038,-91.7631288,43.81358,-91.754163
+stateline-lakota-ia,Stateline Lakota IA,agricharts:statelinecoop,Lakota,1.027,43.3852676,-94.0731515,43.384745,-94.085838
+cva-monroe-ne,CVA Monroe NE,agricharts:cvacoop,Monroe,0.995,41.4745544,-97.5881565,41.473434,-97.600007
+cva-humphrey-ne,CVA Humphrey NE,agricharts:cvacoop,Humphrey,0.991,41.6934051,-97.4719009,41.692667,-97.483794
+north-iowa-coop-portland,North Iowa Coop Portland,agricharts:nicoop,Portland,0.848,43.12417,-93.13167,43.129001,-93.123591
+gold-eagle-coop-eagle-grove-feedmill,Gold-Eagle Coop Eagle Grove Feedmill,agricharts:goldeagle,EAGLE GROVE,0.776,42.6710459,-93.9045057,42.664469,-93.901337
+cva-hooper-ne,CVA Hooper NE,agricharts:cvacoop,Hooper,0.634,41.612105,-96.5597713,41.611424,-96.552194
+cgb-enfield-il,CGB Enfield IL,agricharts:cgb,CGB ENFIELD,0.605,38.0988625,-88.344394,38.099607,-88.337547
+gold-eagle-coop-thompson,Gold-Eagle Coop Thompson,agricharts:goldeagle,THOMPSON,0.569,43.3713445,-93.7735556,43.37643,-93.774331
+cfe-feed-mill-ocheyedan,CFE Feed Mill Ocheyedan,agricharts:coopfe,CFE Ocheyedan,0.565,43.4195022,-95.5285797,43.417409,-95.534959
+innovative-ag-services-co-independence-ia,Innovative AG Services Co Independence IA,agricharts:innovativeag,Independen,0.508,42.478377,-91.887918,42.478432,-91.894109
+montrose-grain-supply-mo,Montrose Grain Supply MO,agricharts:montrose,Montrose,0.507,38.2613063,-93.9775483,38.258054,-93.981622
+agstate-battle-creek-ia,AgState Battle Creek IA,agricharts:agstate,Battle Crk,0.479,42.318127,-95.594238,42.31536,-95.5987
+ag-partners-cooperative-tarkio-mo,Ag Partners Cooperative Tarkio MO,agricharts:agpartners,Tarkio,0.362,40.4405821,-95.3755127,40.437802,-95.377732
+cva-stromsburg-ne,CVA Stromsburg NE,agricharts:cvacoop,Stromsburg,0.359,41.1122607,-97.5981476,41.109715,-97.595515
+agstate-maurice-ia,AgState Maurice IA,agricharts:agstate,Maurice,0.356,42.967837,-96.176728,42.964941,-96.178594
+key-coop-nevada-ia,Key Coop Nevada IA,agricharts:keycoop,Nevada,0.316,42.026286,-93.504469,42.024071,-93.502079
+cva-wakefield-ne,CVA Wakefield NE,agricharts:cvacoop,MG Waldbaum - Wakefield,0.294,42.2593676,-96.8610434,42.256839,-96.862086
+key-coop-st-anthony-ia,Key Coop St Anthony IA,agricharts:keycoop,St Anthony,0.293,42.125663,-93.195425,42.126622,-93.19874
+cva-st-edward-ne,CVA St Edward NE,agricharts:cvacoop,St Edward,0.288,41.5676574,-97.8631744,41.569377,-97.865758
+cgb-niota-il,CGB Niota IL,agricharts:cgb,CGB - COLUSA,0.282,40.5690404,-91.1673086,40.571568,-91.167591
+agstate-holstein-ia,AgState Holstein IA,agricharts:agstate,Holstein,0.272,42.489157,-95.545008,42.49093,-95.54273
+gold-eagle-coop-leland,Gold-Eagle Coop Leland,agricharts:goldeagle,Leland,0.272,43.3371775,-93.6352157,43.338252,-93.638234
+siouxland-energy-cooperative-sioux-center-ethanol,Siouxland Energy Cooperative Sioux Center Ethanol,agricharts:siouxlandenergy,Siouxland Energy,0.271,43.0882568,-96.2300109,43.087237,-96.22698
+key-coop-newton-rail-center-ia,Key Coop Newton Rail Center IA,agricharts:keycoop,NewtonRail,0.267,41.732473,-93.014715,41.731266,-93.017502
+cva-akron-ia,CVA Akron IA,agricharts:cvacoop,Akron,0.226,42.8261364,-96.5628672,42.82526,-96.565364
+cargill-gibson-city-il-dlvd-bunge,Cargill Gibson City IL (Dlvd Bunge),agricharts:cargillus,"Cargill, CAH (Dlvd Bunge, Gibson City, IL)",0.222,40.46354,-88.38407,40.461604,-88.384697
+gold-eagle-coop-thor,Gold-Eagle Coop Thor,agricharts:goldeagle,THOR,0.214,42.6913104,-94.0492525,42.68939,-94.049258
+innovative-ag-services-co-manchester-ia,Innovative AG Services Co Manchester IA,agricharts:innovativeag,Manchester,0.207,42.47444,-91.464771,42.472633,-91.464145
+pro-coop-graettinger,Pro Coop Graettinger,agricharts:procooperative,GRAETTINGER.IA,0.205,43.2400761,-94.7489491,43.241859,-94.748316
+hartog-elevator-inc-sanborn-ia,Hartog Elevator Inc Sanborn IA,agricharts:hartog,Sanborn - Corn,0.204,43.180505,-95.654873,43.1803,-95.652368
+key-cooperative-roland-ia,Key Cooperative Roland IA,agricharts:keycoop,S-14,0.198,42.1583557,-93.4653167,42.157923,-93.462991
+key-coop-grinnell-elevator-ia,Key Coop Grinnell Elevator IA,agricharts:keycoop,Grinnell,0.197,41.727729,-92.723759,41.727906,-92.726124
+cva-81-20-mclean-ne,CVA 81-20 McLean NE,agricharts:cvacoop,81-20,0.194,42.3723049,-97.4217739,42.370748,-97.420696
+cargill-bloomington-il,Cargill Bloomington IL,agricharts:cargillus,"Bloomington, GOS",0.19,40.47889,-89.01656,40.477181,-89.016615
+cva-oyens-ia,CVA Oyens IA,agricharts:cvacoop,Oyens,0.188,42.8179223,-96.0566761,42.818994,-96.058455
+gold-eagle-coop-hardy,Gold-Eagle Coop Hardy,agricharts:goldeagle,HARDY,0.187,42.8100598,-94.0514869,42.808396,-94.051155
+pro-coop-ayrshire,Pro Coop Ayrshire,agricharts:procooperative,AYRSHIRE.IA,0.184,43.0397036,-94.8546951,43.039082,-94.852598
+pro-coop-bradgate-elevator,Pro Coop Bradgate Elevator,agricharts:procooperative,BRADGATE.IA,0.173,42.8022244,-94.419837,42.803027,-94.418027
+farmers-elevator-exchange-monroe-city-mo,Farmers Elevator & Exchange Monroe City MO,agricharts:farmerselevator,Farmers Elevator & Exchange,0.17,39.6518471,-91.7381342,39.650326,-91.737929
+cva-tamora-ne,CVA Tamora NE,agricharts:cvacoop,Tamora,0.164,40.8938986,-97.2250424,40.894812,-97.226574
+new-vision-co-op-windom-mn,New Vision Co-op Windom MN,agricharts:newvision,WINDOM,0.15,43.8715188,-95.1122297,43.872583,-95.11108
+cva-hordville-ne,CVA Hordville NE,agricharts:cvacoop,Hordville,0.144,41.0766029,-97.8887176,41.077586,-97.887597
+cva-hampton-ne,CVA Hampton NE,agricharts:cvacoop,Hampton,0.142,40.8786275,-97.8843706,40.877355,-97.884321
+silveredge-cooperative-edgewood-ia,SilverEdge Cooperative Edgewood IA,agricharts:silveredgecoop,Edgewood,0.141,42.644872,-91.368376,42.645218,-91.370039
+agstate-hospers-ia,AgState Hospers IA,agricharts:agstate,Hospers,0.14,43.072771,-95.906408,43.07352,-95.905024
+tama-benton-clutier-ia,Tama-Benton Clutier IA,agricharts:tamabentoncoop,Clutier,0.139,42.077919,-92.4045486,42.076748,-92.403968
+agstate-alta-ia,AgState Alta IA,agricharts:agstate,Alta,0.137,42.675857,-95.303999,42.67464,-95.30423
+united-cooperatives-osborn-mo,United Cooperatives Osborn MO,agricharts:useunited,Osborn,0.136,39.7472928,-94.3558105,39.748393,-94.356516
+gold-eagle-coop-eagle-grove,Gold-Eagle Coop Eagle Grove,agricharts:goldeagle,EAGLE GROVE,0.133,42.6642619,-93.8997333,42.664469,-93.901337
+cgb-dorena-east-prairie-mo,CGB Dorena East Prairie MO,agricharts:cgb,CGB DORENA,0.132,36.5915443,-89.2124589,36.590358,-89.212342
+cgb-dallas-city-il,CGB Dallas City IL,agricharts:cgb,CGB - DALLAS CITY,0.131,40.6358642,-91.1741057,40.636241,-91.17264
+hull-cooperative-association-ia,Hull Cooperative Association IA,agricharts:hullcoop,Hull,0.13,43.1876228,-96.1306484,43.186532,-96.130085
+pro-coop-terril,Pro Coop Terril,agricharts:procooperative,TERRIL.IA,0.127,43.3014778,-94.9697162,43.302575,-94.96927
+cva-ainsworth-ne,CVA Ainsworth NE,agricharts:cvacoop,Ainsworth,0.121,42.5451971,-99.8617648,42.54413,-99.86203
+agstate-royal-ia,AgState Royal IA,agricharts:agstate,Royal,0.113,43.066178,-95.283789,43.066983,-95.284648
+cva-bow-valley-ne,CVA Bow Valley NE,agricharts:cvacoop,Bow Valley,0.11,42.7431558,-97.2564589,42.744128,-97.256185
+cargill-gibson-city-il,Cargill Gibson City IL,agricharts:cargillus,"Gibson City, CAH",0.109,40.46038,-88.38632,40.460698,-88.385099
+gold-eagle-coop-goldfield,Gold-Eagle Coop Goldfield,agricharts:goldeagle,GOLDFIELD,0.104,42.7357139,-93.9157104,42.734971,-93.914946
+agstate-cleghorn-ia,AgState Cleghorn IA,agricharts:agstate,Cleghorn,0.102,42.812793,-95.71264,42.81188,-95.71275
+north-iowa-coop-thornton,North Iowa Coop Thornton,agricharts:nicoop,Thornton,0.101,42.9437132,-93.38013,42.944022,-93.378962
+pro-coop-rolfe-grain-elevator,Pro Coop Rolfe Grain Elevator,agricharts:procooperative,ROLFE.IA,0.099,42.8130611,-94.5308156,42.813725,-94.530003
+stateline-ledyard-ia,Stateline Ledyard IA,agricharts:statelinecoop,Ledyard,0.098,43.4220619,-94.1625976,43.422936,-94.162492
+tama-benton-cooperative-dysart-ia,Tama-Benton Cooperative Dysart IA,agricharts:tamabentoncoop,Dysart,0.098,42.1727109,-92.3052036,42.17305,-92.306297
+cva-bee-ne,CVA Bee NE,agricharts:cvacoop,Bee,0.097,41.0064768,-97.0600908,41.00732,-97.06039
+gold-eagle-coop-hutchins,gold eagle coop hutchins,agricharts:goldeagle,HUTCHINS,0.097,43.091631,-93.883394,43.092157,-93.882435
+gold-eagle-coop-wesley,Gold-Eagle Coop Wesley,agricharts:goldeagle,WESLEY,0.094,43.0884584,-93.9920092,43.088615,-93.993147
+key-coop-new-sharon-ia,Key Coop New Sharon IA,agricharts:keycoop,New Sharon,0.094,41.45342,-92.647881,41.453944,-92.64876
+agstate-paullina-ia,AgState Paullina IA,agricharts:agstate,Paullina,0.093,42.98144,-95.687933,42.9807,-95.68846
+pine-lake-corn-processors,Pine Lake Corn Processors,agricharts:innovativeag,Pine Lake,0.089,42.459127,-93.0573,42.459718,-93.05803
+ctlc-east-hannibal-il,CTLC East Hannibal IL,agricharts:cgb,CGB - EAST HANNIBAL,0.088,39.7275581,-91.3602371,39.72835,-91.360323
+gold-eagle-coop-clarion,Gold-Eagle Coop Clarion,agricharts:goldeagle,CLARION,0.088,42.7354747,-93.7350155,42.736265,-93.735034
+farmers-win-coop-houston-mn,Farmers Win Coop Houston MN,agricharts:farmerswin,Houston,0.084,43.7663739,-91.568293,43.765628,-91.568423
+agstate-fonda-ia-approx,AgState Fonda IA (approx),agricharts:agstate,Fonda,0.08,42.581372,-94.845992,42.58065,-94.84602
+key-coop-kelley-ia,Key Coop Kelley IA,agricharts:keycoop,Kelley,0.079,41.950915,-93.638017,41.951467,-93.637423
+north-iowa-coop-clear-lake,North Iowa Coop Clear Lake,agricharts:nicoop,Clear Lake,0.079,43.1436525,-93.3710354,43.143355,-93.370145
+pro-coop-pocahontas-elevator,Pro Coop Pocahontas Elevator,agricharts:procooperative,POCAHONTAS.IA,0.078,42.7328688,-94.6692356,42.733566,-94.669183
+stateline-cooperative-marna-blue-earth-mn,Stateline Cooperative Marna Blue Earth MN,agricharts:statelinecoop,Marna,0.075,43.6057866,-94.0069472,43.60573,-94.007872
+cva-hinton-ia,CVA Hinton IA,agricharts:cvacoop,Hinton,0.073,42.626715,-96.2905903,42.626849,-96.289715
+key-coop-gilbert-ia,Key Coop Gilbert IA,agricharts:keycoop,Gilbert,0.068,42.10857,-93.64913,42.109183,-93.649057
+meadowland-farmers-coop-lamberton-mn,Meadowland Farmers Coop Lamberton MN,agricharts:meadowland,Meadowland,0.068,44.2325514,-95.2638656,44.2322,-95.26456
+two-rivers-otley-ia,Two Rivers Otley IA,agricharts:tworivers,OTLEY,0.063,41.4643707,-93.0347213,41.464772,-93.035247
+pro-coop-wallingford,Pro Coop Wallingford,agricharts:procooperative,WALLINGFORD.IA,0.062,43.3203279,-94.7952148,43.319819,-94.794901
+cva-waco-ne,CVA Waco NE,agricharts:cvacoop,Waco,0.061,40.8948524,-97.4604547,40.894365,-97.460125
+cva-utica-ne,CVA Utica NE,agricharts:cvacoop,Utica,0.06,40.8951329,-97.3433498,40.894779,-97.34389
+pro-coop-ruthven,Pro Coop Ruthven,agricharts:procooperative,RUTHVEN.IA,0.059,43.1304838,-94.9008021,43.130985,-94.900579
+pro-coop-pioneer,Pro Coop Pioneer,agricharts:procooperative,PIONEER.IA,0.058,42.6538621,-94.3924703,42.653687,-94.391805
+cargill-kansas-city-mo-2306-rochester,Cargill Kansas City MO 2306 Rochester,agricharts:cargillus,"Kansas City, GOS",0.054,39.1211445,-94.5553479,39.120949,-94.55478
+new-vision-co-op-brewster-mn,New Vision Co-op Brewster MN,agricharts:newvision,BREWSTER,0.054,43.6890296,-95.4837112,43.688557,-95.483861
+gold-eagle-coop-forest-city,Gold-Eagle Coop Forest City,agricharts:goldeagle,Forest City,0.053,43.2644959,-93.6340137,43.264026,-93.633944
+butterfield-associates-grain-meadville-mo,Butterfield Associates Grain Meadville MO,agricharts:butterfield,Butterfield,0.052,39.7853397,-93.3026296,39.78522,-93.302042
+key-coop-zearing-ia,Key Coop Zearing IA,agricharts:keycoop,Zearing,0.052,42.160405,-93.296831,42.16001,-93.297168
+two-rivers-cooperative-pella-ia,Two Rivers Cooperative Pella IA,agricharts:tworivers,PELLA,0.048,41.3966564,-92.9045672,41.396259,-92.904801
+gold-eagle-coop-renwick,Gold-Eagle Coop Renwick,agricharts:goldeagle,RENWICK,0.046,42.8276431,-93.9802126,42.827918,-93.979799
+jbs-live-pork-centralia-mo,JBS Live Pork Centralia MO,agricharts:jbslivepork,"Centralia, MO Feed Mill",0.046,39.2208408,-92.1636788,39.220437,-92.163811
+ctlc-mound-city-il,CTLC Mound City IL,agricharts:cgb,CGB MOUND CITY,0.045,37.0900425,-89.1573766,37.09045,-89.157346
+gold-eagle-coop-titonka,Gold-Eagle Coop Titonka,agricharts:goldeagle,TITONKA,0.045,43.2349322,-94.0402599,43.235312,-94.040056
+craig-supply-grain-mo,Craig Supply Grain MO,agricharts:craiggrain,Craig Grain,0.044,40.1918634,-95.3743983,40.192211,-95.374144
+stateline-ringsted-ia,Stateline Ringsted IA,agricharts:statelinecoop,Ringsted,0.043,43.2958199,-94.5080065,43.296045,-94.507575
+gold-eagle-coop-woden,Gold-Eagle Coop Woden,agricharts:goldeagle,WODEN,0.042,43.2335266,-93.9103374,43.233866,-93.910111
+agstate-galva-ia,AgState Galva IA,agricharts:agstate,Galva,0.04,42.507887,-95.417348,42.50793,-95.41783
+agstate-nemaha-ia,AgState Nemaha IA,agricharts:agstate,Nemaha,0.04,42.516897,-95.088847,42.51713,-95.08922
+cva-ulysses-ne,CVA Ulysses NE,agricharts:cvacoop,Ulysses,0.04,41.0705881,-97.2023602,41.070838,-97.202013
+cva-rising-city-ne,CVA Rising City NE,agricharts:cvacoop,Rising City,0.039,41.1985312,-97.2955399,41.198546,-97.296011
+gold-eagle-coop-kiester-mn,Gold-Eagle Coop Kiester MN,agricharts:goldeagle,Kiester,0.037,43.5352579,-93.7121194,43.534941,-93.712
+gold-eagle-coop-kanawha,Gold-Eagle Coop Kanawha,agricharts:goldeagle,KANAWHA,0.035,42.9341872,-93.7913902,42.934505,-93.791411
+cva-bradshaw-ne,CVA Bradshaw NE,agricharts:cvacoop,Bradshaw,0.034,40.8822721,-97.7419415,40.882372,-97.741557
+cva-elgin-ne,CVA Elgin NE,agricharts:cvacoop,Elgin,0.034,41.9846112,-98.0848124,41.984743,-98.085185
+gold-eagle-coop-livermore,Gold-Eagle Coop Livermore,agricharts:goldeagle,LIVERMORE,0.032,42.8698329,-94.1852398,42.869615,-94.185497
+cgb-portageville-mo,CGB Portageville MO,agricharts:cgb,CGB LINDA,0.031,36.4116172,-89.539772,36.411893,-89.539729
+gold-eagle-coop-holmes,Gold-Eagle Coop Holmes,agricharts:goldeagle,HOLMES,0.03,42.737536,-93.831656,42.737804,-93.831656
+stateline-swea-city-ia,Stateline Swea City IA,agricharts:statelinecoop,Swea City,0.03,43.3864497,-94.3101441,43.386293,-94.309837
+cgb-semo-port-scott-city-mo,CGB Semo Port Scott City MO,agricharts:cgb,CGB SCOTT CITY,0.026,37.2464782,-89.49184,37.246712,-89.491882
+stateline-armstrong-ia,Stateline Armstrong IA,agricharts:statelinecoop,Armstrong,0.026,43.3931787,-94.4800233,43.393373,-94.479835
+farmers-elevator-supply-clinton-mo,Farmers Elevator Supply Clinton MO,agricharts:farmerselevatorco,Clinton,0.023,38.3654459,-93.7775586,38.365542,-93.777325
+cva-laurel-ne,CVA Laurel NE,agricharts:cvacoop,Laurel,0.022,42.4379386,-97.1073074,42.438135,-97.107341
+cva-shelby-ne,CVA Shelby NE,agricharts:cvacoop,Shelby,0.022,41.1940698,-97.4221266,41.194265,-97.422123
+pro-coop-manson,Pro Coop Manson,agricharts:procooperative,MANSON.IA,0.022,42.5277974,-94.5324806,42.527688,-94.532255
+mid-iowa-milling-mid-state-milling-state-center,Mid-Iowa Milling Mid-State Milling State Center,agricharts:midiowa,STATE CENTER,0.019,42.0180212,-93.1689009,42.017932,-93.169099
+key-coop-grinnell-feed-mill-ia,Key Coop Grinnell Feed Mill IA,agricharts:keycoop,Grin Mill,0.018,41.720044,-92.722204,41.719965,-92.722015
+key-coop-newton-ia,Key Coop Newton IA,agricharts:keycoop,Newton,0.018,41.716172,-93.066354,41.716318,-93.066248
+key-coop-sully-ia,Key Coop Sully IA,agricharts:keycoop,Sully,0.017,41.576776,-92.847701,41.576672,-92.847854
+mid-iowa-milling-edgewood-feed-mill,Mid-Iowa Milling Edgewood Feed Mill,agricharts:midiowa,EDGEWOOD,0.016,42.643445,-91.4110745,42.643417,-91.410888
+plymouth-energy-merrill-ethanol,Plymouth Energy Merrill Ethanol,agricharts:plymouthenergy,Plymouth Energy-Merrill,0.016,42.7308349,-96.2500457,42.730977,-96.250078
+new-vision-co-op-worthington-mn,New Vision Co-op Worthington MN,agricharts:newvision,WORTHINGTON,0.015,43.6300276,-95.5744947,43.630158,-95.574463
+cva-benedict-ne,CVA Benedict NE,agricharts:cvacoop,Benedict,0.014,41.0070419,-97.6065292,41.007138,-97.606424
+jbs-live-pork-fairfax-mo,JBS Live Pork Fairfax MO,agricharts:jbslivepork,"Mill 240 at Tarkio, MO Feed Mill",0.012,40.3792476,-95.2352732,40.379279,-95.235133
+two-rivers-monroe-ia,Two Rivers Monroe IA,agricharts:tworivers,MONROE,0.011,41.5192221,-93.1022444,41.519143,-93.102323
+cargill-gilman-il,Cargill Gilman IL,agricharts:cargillus,"Gilman, CAH",0.01,40.75826,-87.99543,40.758179,-87.99547
+two-rivers-tracy-ia,Two Rivers Tracy IA,agricharts:tworivers,TRACY,0.01,41.2697198,-92.8684773,41.269803,-92.868513
+cgb-dwight-il,CGB Dwight IL,agricharts:cgb,CGB DWIGHT,0.008,41.0953699,-88.346361,41.095403,-88.346279
+cva-scribner-ne,CVA Scribner NE,agricharts:cvacoop,Scribner,0.008,41.6660435,-96.6681395,41.666111,-96.66817
+united-cooperatives-plattsburg-mo,United Cooperatives Plattsburg MO,agricharts:useunited,Plattsburg,0.005,39.56768,-94.4550431,39.567721,-94.455069
+ctlc-cahokia-il,CTLC Cahokia IL,agricharts:cgb,CGB - CAHOKIA,0.004,38.5814821,-90.2077668,38.581513,-90.20779
+ctlc-gladstone-il,CTLC Gladstone IL,agricharts:cgb,CGB - GLADSTONE BLUFF,0.004,40.8627119,-90.9674943,40.862683,-90.967516
+gold-eagle-coop-galbraith-lu-verne,Gold-Eagle Coop Galbraith Lu Verne,agricharts:goldeagle,GALBRAITH,0.004,42.9807796,-94.1644388,42.98081,-94.16446
+stateline-fenton-ia,Stateline Fenton IA,agricharts:statelinecoop,Fenton,0.004,43.2184305,-94.4273955,43.218464,-94.427391
+gold-eagle-coop-galt-feed-mill,Gold-Eagle Coop Galt Feed Mill,agricharts:goldeagle,GALT FEED MILL,0.003,42.6710929,-93.6361999,42.671113,-93.636186
+pro-coop-havelock,Pro Coop Havelock,agricharts:procooperative,HAVELOCK.IA,0.003,42.8310733,-94.7034159,42.831051,-94.703435
+tama-benton-vinton-ia,Tama-Benton Vinton IA,agricharts:tamabentoncoop,Vinton,0.003,42.1640697,-92.0398978,42.1641,-92.039906
+key-coop-story-city-ia,Key Coop Story City IA,agricharts:keycoop,Story City,0.002,42.188317,-93.600311,42.188333,-93.600314
+key-coop-barnes-city-ia,Key Coop Barnes City IA,agricharts:keycoop,Barnes Cty,0.001,41.509316,-92.46906,41.509321,-92.469061
+cargill-beardstown-il,Cargill Beardstown IL,agricharts:cargillus,"Beardstown, CAH",0.0,40.0153,-90.44167,40.0153,-90.44167
+cargill-bettendorf-ia,Cargill Bettendorf IA,agricharts:cargillus,"Bettendorf, CAH",0.0,41.55317,-90.48899,41.55317,-90.48899
+cargill-buffalo-island-charleston-mo,Cargill Buffalo Island Charleston MO,agricharts:cargillus,"Buffalo Island, CAH",0.0,37.02832,-89.36364,37.02832,-89.36364
+cargill-cedar-rapids-east-ia,Cargill Cedar Rapids East IA,agricharts:cargillus,"Cedar Rapids East, GOS",0.0,41.982814,-91.668679,41.982814,-91.668679
+cargill-cedar-rapids-mill-ia,Cargill Cedar Rapids Mill IA,agricharts:cargillus,"Cedar Rapids, SSNA",0.0,41.969667,-91.647614,41.969667,-91.647614
+cargill-east-st-louis-il,Cargill East St Louis IL,agricharts:cargillus,"East St. Louis, CAH",0.0,38.62749,-90.17501,38.62749,-90.17501
+cargill-eddyville-ia,Cargill Eddyville IA,agricharts:cargillus,"Eddyville, SSNA",0.0,41.15533,-92.63184,41.15533,-92.63184
+cargill-florence-pittsfield-il,Cargill Florence Pittsfield IL,agricharts:cargillus,"Florence, CAH",0.0,39.62427,-90.60862,39.62427,-90.60862
+cargill-forest-city-mo,Cargill Forest City MO,agricharts:cargillus,"Forest City (MO), CAH",0.0,39.98686,-95.18142,39.98686,-95.18142
+cargill-frederick-beardstown-il,Cargill Frederick Beardstown IL,agricharts:cargillus,"Frederick, CAH",0.0,40.05338,-90.433324,40.05338,-90.433324
+cargill-havana-il,Cargill Havana IL,agricharts:cargillus,"Havana, CAH",0.0,40.29762,-90.06646,40.29762,-90.06646
+cargill-kansas-city-mo,Cargill Kansas City MO,agricharts:cargillus,"Kansas City, GOS",0.0,39.120949,-94.55478,39.120949,-94.55478
+cargill-keithsburg-il,Cargill Keithsburg IL,agricharts:cargillus,"Keithsburg, CAH",0.0,41.102526,-90.942807,41.102526,-90.942807
+cargill-lacon-il,Cargill Lacon IL,agricharts:cargillus,"Lacon, CAH",0.0,41.020578,-89.414581,41.020578,-89.414581
+cargill-meredosia-il,Cargill Meredosia IL,agricharts:cargillus,"Meredosia, CAH",0.0,39.83072,-90.56076,39.83072,-90.56076
+cargill-muscatine-ia,Cargill Muscatine IA,agricharts:cargillus,"Muscatine, CAH",0.0,41.40808,-91.06328,41.40808,-91.06328
+cargill-new-boston-il,Cargill New Boston IL,agricharts:cargillus,"New Boston, CAH",0.0,41.20924,-90.99504,41.20924,-90.99504
+cargill-new-madrid-mo,Cargill New Madrid MO,agricharts:cargillus,"New Madrid, CAH",0.0,36.56832,-89.57639,36.56832,-89.57639
+cargill-paris-mill-il,Cargill Paris Mill IL,agricharts:cargillus,"Paris Mill, SSNA",0.0,39.604775,-87.702785,39.604775,-87.702785
+cargill-sioux-city-ia,Cargill Sioux City IA,agricharts:cargillus,"Sioux City, GOS",0.0,42.53004,-96.36101,42.53004,-96.36101
+cargill-spring-valley-south-granville-il,Cargill Spring Valley South Granville IL,agricharts:cargillus,"Spring Valley South, CAH",0.0,41.34018,-89.21825,41.34018,-89.21825
+cgb-mt-carroll-il,CGB Mt Carroll IL,agricharts:cgb,CGB MT CARROLL,0.0,42.0814489,-89.9872328,42.081449,-89.987233
+cva-fullerton-ne,CVA Fullerton NE,agricharts:cvacoop,Fullerton,0.0,41.3721793,-97.9651444,41.372179,-97.965144
+cva-petersburg-ne,CVA Petersburg NE,agricharts:cvacoop,Petersburg,0.0,41.852219,-98.0819559,41.852219,-98.081956
+cva-polk-ne,CVA Polk NE,agricharts:cvacoop,Polk,0.0,41.0797654,-97.7824526,41.079765,-97.782453
+gold-eagle-coop-corwith,Gold-Eagle Coop Corwith,agricharts:goldeagle,CORWITH,0.0,42.9930178,-93.9558268,42.993018,-93.955827
+innovative-ag-services-monticello-ia,Innovative Ag Services Monticello IA,agricharts:innovativeag,Monticello,0.0,42.2108354,-91.1901327,42.210835,-91.190133
+new-vision-co-op-adrian-mn,New Vision Co-op Adrian MN,agricharts:newvision,ADRIAN,0.0,43.750008,-95.949912,43.750008,-95.949912
+new-vision-co-op-beaver-creek-mn,New Vision Co-op Beaver Creek MN,agricharts:newvision,BEAVER CREEK,0.0,43.614118,-96.364836,43.614118,-96.364836
+new-vision-co-op-dundee-mn,New Vision Co-op Dundee MN,agricharts:newvision,DUNDEE,0.0,43.846214,-95.467499,43.846214,-95.467499
+new-vision-co-op-ellsworth-mn,New Vision Co-op Ellsworth MN,agricharts:newvision,ELLSWORTH,0.0,43.519315,-96.018158,43.519315,-96.018158
+new-vision-co-op-heron-lake-mn,New Vision Co-op Heron Lake MN,agricharts:newvision,HERON LAKE,0.0,43.796709,-95.320179,43.796709,-95.320179
+new-vision-co-op-hills-terminal-mn,New Vision Co-op Hills Terminal MN,agricharts:newvision,HILLS TERMINAL,0.0,43.546156,-96.368311,43.546156,-96.368311
+new-vision-co-op-jeffers-mn,New Vision Co-op Jeffers MN,agricharts:newvision,JEFFERS,0.0,44.055011,-95.193718,44.055011,-95.193718
+new-vision-co-op-magnolia-mn,New Vision Co-op Magnolia MN,agricharts:newvision,MAGNOLIA,0.0,43.644475,-96.098437,43.644475,-96.098437
+new-vision-co-op-mankato-mn,New Vision Co-op Mankato MN,agricharts:newvision,MANKATO,0.0,44.2030036,-93.9935634,44.203004,-93.993563
+new-vision-co-op-miloma-mn,New Vision Co-op Miloma MN,agricharts:newvision,MILOMA,0.0,43.767921,-95.363265,43.767921,-95.363265
+new-vision-co-op-mountain-lake-mn,New Vision Co-op Mountain Lake MN,agricharts:newvision,MOUNTAIN LAKE,0.0,43.944954,-94.875967,43.944954,-94.875967
+new-vision-co-op-reading-mn,New Vision Co-op Reading MN,agricharts:newvision,READING,0.0,43.704115,-95.711664,43.704115,-95.711664
+new-vision-co-op-wilmont-mn,New Vision Co-op Wilmont MN,agricharts:newvision,WILMONT,0.0,43.765935,-95.82809,43.765935,-95.82809
+pro-coop-plover-elevator,Pro Coop Plover Elevator,agricharts:procooperative,PLOVER.IA,0.0,42.8787647,-94.6217657,42.878765,-94.621766
+pro-coop-rutland,Pro Coop Rutland,agricharts:procooperative,RUTLAND.IA,0.0,42.7607626,-94.292403,42.760763,-94.292403

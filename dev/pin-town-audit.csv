@@ -1,0 +1,798 @@
+pin_id,pin_name,town,state,km,lat,lng
+landus-hamlin,Landus Hamlin,hamlin,KS,205.5,41.675415,-94.882385
+new-coop-luverne,New Coop LuVerne,luverne,MN,191.14,42.9076764,-94.0876817
+gold-eagle-coop-hawkeye-pride,Gold-Eagle Coop Hawkeye Pride,hawkeye,IA,159.65,42.948471,-93.9116793
+landus-grant,Landus Grant,grant,IA,132.84,42.168056,-94.162245
+landus-cooperative-grant-ia-approx,Landus Cooperative Grant IA (approx),grant,IA,130.89,42.16615,-94.204581
+mfa-agri-services-labelle-mo-novelty,MFA Agri Services LaBelle MO Novelty,novelty,MO,28.19,40.1143637,-91.9038564
+cgb-dorena-east-prairie-mo,CGB Dorena East Prairie MO,east prairie,MO,25.85,36.5915443,-89.2124589
+andrews-farm-seed-carthage-mo,Andrews Farm Seed Carthage MO,carthage,MO,17.68,37.2280387,-94.1535949
+shawneetown-feed-seed-jackson-mo,Shawneetown Feed Seed Jackson MO,jackson,MO,17.38,37.5352821,-89.675888
+cgb-portageville-mo,CGB Portageville MO,portageville,MO,14.41,36.4116172,-89.539772
+jbs-live-pork-fairfax-mo,JBS Live Pork Fairfax MO,fairfax,MO,14.0,40.3792476,-95.2352732
+majestic-milling-exeter-mo,Majestic Milling Exeter MO,exeter,MO,13.34,36.7454716,-94.0568908
+new-vision-co-op-adrian-mn,New Vision Co-op Adrian MN,adrian,MN,13.02,43.750008,-95.949912
+christensen-feed-mill-forest-city,Christensen feed mill forest city,forest city,IA,12.94,43.287281,-93.790921
+nutraag-versailles-mo,NutraAg Versailles MO,versailles,MO,12.75,38.4937609,-92.7214486
+cargill-buffalo-island-charleston-mo,Cargill Buffalo Island Charleston MO,charleston,MO,12.66,37.02832,-89.36364
+landus-fort-dodge,Landus Fort Dodge,fort dodge,IA,12.57,42.615859,-94.229005
+river-valley-wilton-ia,River Valley Wilton IA,wilton,IA,11.8,41.6704547,-90.9343508
+chs-inc-davenport-ia,CHS Inc Davenport IA,davenport,IA,11.65,41.46417,-90.669296
+base-line-grain-golden-city-mo,Base Line Grain Golden City MO,golden city,MO,11.37,37.2917371,-94.1061458
+cgb-niota-il,CGB Niota IL,niota,IL,11.35,40.5690404,-91.1673086
+cargill-fort-dodge-ia,Cargill Fort Dodge IA,fort dodge,IA,11.33,42.51274,-94.31387
+cargill-fort-dodge-ethanol,Cargill Fort Dodge Ethanol,fort dodge,IA,11.25,42.508409,-94.312932
+roth-grains-harrisonville-mo,Roth Grains Harrisonville MO,harrisonville,MO,10.99,38.643209,-94.2210234
+trioak-foods-inc-mount-pleasant-ia,TriOak Foods Inc Mount Pleasant IA,mount pleasant,IA,10.98,41.059667,-91.568057
+valero-renewables-fort-dodge-ethanol,"Valero Renewables Fort Dodge, Ethanol",fort dodge,IA,10.45,42.511893,-94.303171
+nelson-grain-inc-marshalltown-ia,Nelson Grain Inc. Marshalltown IA,marshalltown,IA,10.43,42.004298,-93.025827
+agp-sergeant-bluff-ia,AGP Sergeant Bluff IA,sergeant bluff,IA,10.39,42.3046724,-96.3649393
+gold-eagle-coop-galbraith-lu-verne,Gold-Eagle Coop Galbraith Lu Verne,lu verne,IA,10.31,42.9807796,-94.1644388
+peterson-grain-waseca-mn,Peterson Grain Waseca MN,waseca,MN,9.84,44.0736506,-93.3812983
+louis-dreyfus-commodities-kansas-city-mo,Louis Dreyfus Commodities Kansas City MO,kansas city,MO,9.68,39.039007,-94.5874212
+landus-conrad-seasonal,Landus Conrad (Seasonal),conrad,IA,9.2,42.301757,-92.909958
+phillips-farms-kahoka-mo,Phillips Farms Kahoka MO,kahoka,MO,9.11,40.4363115,-91.8250954
+letterman-feed-niangua-mo,Letterman Feed Niangua MO,niangua,MO,9.07,37.4692811,-92.8477181
+georges-inc-cassville-mo,Georges Inc Cassville MO,cassville,MO,8.76,36.7453803,-93.9196934
+stateline-cooperative-marna-blue-earth-mn,Stateline Cooperative Marna Blue Earth MN,blue earth,MN,8.48,43.6057866,-94.0069472
+martin-rice-bernie-mo,Martin Rice Bernie MO,bernie,MO,8.47,36.6565266,-89.8775927
+heartland-coop-monroe,Heartland Coop Monroe,monroe,IA,8.37,41.4641043,-93.0349426
+mfa-hamilton-rail-facility-mo,MFA Hamilton Rail Facility MO,hamilton,MO,8.27,39.7341918,-93.9064178
+heartland-coop-amarillo-lakeside-tx,Heartland Coop Amarillo Lakeside TX,amarillo,TX,7.99,35.2048071,-101.7455619
+twillman-feed-services-kingdom-city-mo,Twillman Feed Services Kingdom City MO,kingdom city,MO,7.71,38.9206475,-91.8530763
+chs-inc-buffalo-ia-approx,CHS Inc Buffalo IA (approx),buffalo,IA,7.52,41.465002,-90.678721
+heartland-coop-wever,Heartland Coop Wever,wever,IA,7.48,40.6454362,-91.1886078
+southwest-iowa-renewable-energy-council-bluffs-ethanol,Southwest Iowa Renewable Energy Council Bluffs Ethanol,council bluffs,IA,7.42,41.172632,-95.825328
+poet-macon-mo-ethanol,POET Macon MO Ethanol,macon,MO,7.37,39.7479262,-92.3847198
+saale-farm-grain-west-alton-mo,Saale Farm Grain West Alton MO,west alton,MO,7.12,38.8838996,-90.2817001
+heartland-coop-pickering-gilman,Heartland Coop Pickering (Gilman),gilman,IA,6.95,41.937401,-92.817578
+valero-renewables-charles-city-ethanol,Valero Renewables Charles City Ethanol,charles city,IA,6.69,43.0986272,-92.7425146
+river-valley-cooperative-davenport-ia,River Valley Cooperative Davenport IA,davenport,IA,6.65,41.612133,-90.5735855
+adm-new-madrid-mo-portageville,ADM New Madrid MO Portageville,new madrid,MO,6.63,36.5286437,-89.569405
+lincolnway-energy-nevada-ethanol,Lincolnway Energy Nevada Ethanol,nevada,IA,6.61,42.011212,-93.390095
+landus-rushville,Landus Rushville,rushville,IN,6.45,39.676088,-85.435965
+cgb-dwight-il,CGB Dwight IL,dwight,IL,6.36,41.0953699,-88.346361
+cedar-county-cooperative-west-branch-ia,Cedar County Cooperative West Branch IA,west branch,IA,6.33,41.723018,-91.346637
+lakeview-farms-middletown-mo,Lakeview Farms Middletown MO,middletown,MO,6.33,39.1499557,-91.4818939
+cgb-cottonwood-point-caruthersville-mo,CGB Cottonwood Point Caruthersville MO,caruthersville,MO,6.21,36.2294061,-89.7019028
+hostetler-feed-mill-buffalo-mo,Hostetler Feed Mill Buffalo MO,buffalo,MO,6.21,37.5938505,-93.1242908
+cva-tilden-ne,CVA Tilden NE,tilden,NE,6.19,41.9879064,-97.8352795
+adm-deerfield-mo,ADM Deerfield MO,deerfield,MO,6.19,37.834429,-94.5779299
+nexus-oelwein-ia,Nexus Oelwein IA,oelwein,IA,6.13,42.7150986,-91.9588422
+landus-boone,Landus Boone,boone,IA,6.12,42.050838,-93.798462
+hassard-elevator-monroe-city-mo,Hassard Elevator Monroe City MO,monroe city,MO,6.08,39.6594664,-91.6617744
+midam-grains-polo-mo,MidAm Grains Polo MO,polo,MO,6.03,39.4974749,-94.0352031
+landus-perry,Landus Perry,perry,IA,5.9,41.887609,-94.118057
+scoular-purdy-mo,Scoular Purdy MO,purdy,MO,5.85,36.766584,-93.912339
+poet-corning-ethanol,Poet Corning Ethanol,corning,IA,5.74,40.965207,-94.79694
+landus-atlantic-grain,Landus Atlantic - Grain,atlantic,IA,5.48,41.440005,-95.002295
+stokes-mayberry-gin-malden-mo,Stokes Mayberry Gin Malden MO,malden,MO,5.32,36.5575083,-89.9727146
+adm-cedar-rapids-ethanol,ADM Cedar Rapids Ethanol,cedar rapids,IA,5.08,41.92062,-91.687458
+bartlett-kct-kansas-city-mo,Bartlett KCT Kansas City MO,kansas city,MO,5.08,39.1538694,-94.5123923
+siouxland-energy-cooperative-sioux-center-ethanol,Siouxland Energy Cooperative Sioux Center Ethanol,sioux center,IA,5.07,43.0882568,-96.2300109
+cartersville-elevator-mason-city-ia,Cartersville Elevator Mason City IA,mason city,IA,4.98,43.1374727,-93.2593586
+the-andersons-denison-ethanol,The Andersons Denison Ethanol,denison,IA,4.96,41.988475,-95.399576
+rose-acre-farms-hawk-point-mo,Rose Acre Farms Hawk Point MO,hawk point,MO,4.91,39.0153406,-91.1272443
+purina-mills-springfield-mo,Purina Mills Springfield MO,springfield,MO,4.85,37.2250813,-93.3311871
+cva-the-junction-linn-ks,CVA The Junction Linn KS,linn,KS,4.82,39.713961,-97.0529118
+cargill-frederick-beardstown-il,Cargill Frederick Beardstown IL,beardstown,IL,4.82,40.05338,-90.433324
+cgb-semo-port-scott-city-mo,CGB Semo Port Scott City MO,scott city,MO,4.73,37.2464782,-89.49184
+chs-winona-river-and-rail-mn,CHS Winona River and Rail MN,winona,MN,4.71,44.0451698,-91.6097183
+cargill-nestle-purina-davenport-ia,Cargill Nestle Purina Davenport IA,davenport,IA,4.69,41.5147,-90.6076
+poet-gowrie-ethanol,poet Gowrie Ethanol,gowrie,IA,4.64,42.319626,-94.288529
+chs-pipestone-grain-mn,CHS Pipestone Grain MN,pipestone,MN,4.6,43.9603775,-96.3405679
+christensen-farms-feed-mill-sleepy-eye-mn,Christensen Farms Feed Mill Sleepy Eye MN,sleepy eye,MN,4.57,44.3110865,-94.6686789
+new-coop-blencoe-barge-site,New Coop Blencoe Barge Site,blencoe,IA,4.56,41.918484,-96.134887
+key-coop-newton-rail-center-ia,Key Coop Newton Rail Center IA,newton,IA,4.55,41.732473,-93.014715
+cargill-sioux-city-ia,Cargill Sioux City IA,sioux city,IA,4.53,42.53004,-96.36101
+riceland-foods-poplar-bluff-mo,Riceland Foods Poplar Bluff MO,poplar bluff,MO,4.53,36.7228839,-90.4210538
+heartland-coop-council-bluffs,Heartland Coop Council Bluffs,council bluffs,IA,4.5,41.2403943,-95.9067085
+chs-oilseed-processing-mankato-mn,CHS Oilseed Processing Mankato MN,mankato,MN,4.5,44.1568573,-94.0292354
+adm-clinton-bean-terminal-ia,ADM Clinton Bean Terminal IA,clinton,IA,4.48,41.8267589,-90.1929616
+heartland-coop-newton,Heartland Coop Newton,newton,IA,4.47,41.7340722,-93.0590203
+poet-lake-crystal-mn-ethanol,POET Lake Crystal MN Ethanol,lake crystal,MN,4.43,44.1009277,-94.2742273
+jbs-live-pork-feed-mill-fremont-ia,JBS Live Pork Feed Mill Fremont IA,fremont,IA,4.41,41.1778242,-92.4080101
+chs-oilseed-processing-fairmont-mn,CHS Oilseed Processing Fairmont MN,fairmont,MN,4.4,43.6702461,-94.5058593
+cva-le-mars-ia,CVA Le Mars IA,le mars,IA,4.38,42.7938859,-96.2243303
+bethlehem-feed-mill-rocky-comfort-mo,Bethlehem Feed Mill Rocky Comfort MO,rocky comfort,MO,4.35,36.7211837,-94.1313323
+cargill-new-boston-il,Cargill New Boston IL,new boston,IL,4.34,41.20924,-90.99504
+homeland-energy-solutions-lawler-ethanol,Homeland Energy Solutions Lawler Ethanol,lawler,IA,4.31,43.072361,-92.205918
+golden-grain-ethanol-mason-city,golden grain ethanol mason city,mason city,IA,4.3,43.116958,-93.230325
+new-coop-rowan,New Coop Rowan,rowan,IA,4.3,42.7444303,-93.4979433
+agp-hastings-ne-soy-plant,AGP Hastings NE Soy Plant,hastings,NE,4.3,40.5912619,-98.3397847
+poet-ashton-ethanol,POET Ashton Ethanol,ashton,IA,4.22,43.2743718,-95.8109368
+heartland-coop-elkhart-seasonal,Heartland Coop Elkhart (Seasonal),elkhart,IA,4.22,41.7563606,-93.5266008
+poet-biorefining-coon-rapids-ethanol,POET Biorefining - Coon Rapids Ethanol,coon rapids,IA,4.2,41.861262,-94.631023
+agp-aberdeen-sd,AGP Aberdeen SD,aberdeen,SD,4.19,45.4775663,-98.4175704
+new-vision-co-op-mountain-lake-mn,New Vision Co-op Mountain Lake MN,mountain lake,MN,4.18,43.944954,-94.875967
+verbio-nevada-ethanol,Verbio Nevada Ethanol,nevada,IA,4.14,42.0237972,-93.519083
+cva-81-20-mclean-ne,CVA 81-20 McLean NE,mclean,NE,4.12,42.3723049,-97.4217739
+flint-hills-resources-poet-shell-rock-ethanol,Flint Hills Resources/Poet Shell Rock Ethanol,shell rock,IA,4.09,42.73769,-92.617938
+agp-hastings-ne-grain-terminal,AGP Hastings NE Grain Terminal,hastings,NE,4.09,40.5644493,-98.4146728
+heartland-coop-fairfield,Heartland Coop Fairfield,fairfield,IA,4.07,41.0045525,-91.9182253
+big-river-resources-west-burlington-ethanol,Big River Resources West Burlington Ethanol,west burlington,IA,4.05,40.831346,-91.221867
+heartland-coop-logan-seasonal,Heartland Coop Logan (Seasonal),logan,IA,3.97,41.6608865,-95.7481375
+cargill-bloomington-il,Cargill Bloomington IL,bloomington,IL,3.96,40.47889,-89.01656
+big-river-united-energy-dyersville-ethanol,Big River United Energy Dyersville Ethanol,dyersville,IA,3.94,42.487263,-91.16402
+adm-quincy-il,ADM Quincy IL,quincy,IL,3.94,39.9064367,-91.4088825
+valero-renewables-st-lakota,"Valero Renewables St. Lakota,",lakota,IA,3.92,43.384084,-94.14419
+adm-animal-nutrition-springfield-mo,ADM Animal Nutrition Springfield MO,springfield,MO,3.92,37.2269421,-93.308987
+adm-carthage-mo,ADM Carthage MO,carthage,MO,3.87,37.1820633,-94.3092873
+new-vision-co-op-mankato-mn,New Vision Co-op Mankato MN,mankato,MN,3.8,44.2030036,-93.9935634
+mfa-agri-services-neosho-mo,MFA Agri Services Neosho MO,neosho,MO,3.79,36.8687346,-94.3644205
+show-me-ethanol-carrollton-mo,Show Me Ethanol Carrollton MO,carrollton,MO,3.77,39.364465,-93.4512081
+straightway-farm-service-jackson-mo,Straightway Farm Service Jackson MO,jackson,MO,3.74,37.3836665,-89.6961019
+little-sioux-corn-processors-marcus-ethanol,Little Sioux Corn Processors Marcus Ethanol,marcus,IA,3.71,42.8211455,-95.7614275
+riverside-rice-caruthersville-mo,Riverside Rice Caruthersville MO,caruthersville,MO,3.7,36.2051913,-89.6955971
+oakley-grain-foristell-mo,Oakley Grain Foristell MO,foristell,MO,3.67,38.7815447,-90.9634857
+ray-carroll-grain-growers-carrollton-mo,Ray-Carroll Grain Growers Carrollton MO,carrollton,MO,3.65,39.3662539,-93.4527928
+gold-eagle-coop-galt-feed-mill,Gold-Eagle Coop Galt Feed Mill,galt,IA,3.59,42.6710929,-93.6361999
+green-plains-fairmont-mn-ethanol,Green Plains Fairmont MN Ethanol,fairmont,MN,3.57,43.6648242,-94.498718
+adm-clinton-ethanol,ADM Clinton Ethanol,clinton,IA,3.52,41.817541,-90.216456
+cargill-spring-valley-south-granville-il,Cargill Spring Valley South Granville IL,spring valley,IL,3.49,41.34018,-89.21825
+highwater-ethanol-lamberton-mn,Highwater Ethanol Lamberton MN,lamberton,MN,3.4,44.2305646,-95.3102448
+mfa-agri-services-pattonsburg-mo,MFA Agri Services Pattonsburg MO,pattonsburg,MO,3.33,40.048127,-94.1371527
+valero-renewables-floyd-ethanol,Valero Renewables Floyd Ethanol,floyd,IA,3.29,43.098633,-92.742659
+landus-pleasant-hill,Landus Pleasant Hill,pleasant hill,IA,3.29,41.571749,-93.520183
+key-cooperative-roland-ia,Key Cooperative Roland IA,roland,IA,3.22,42.1583557,-93.4653167
+mfa-agri-services-jefferson-city-mo,MFA Agri Services Jefferson City MO,jefferson city,MO,3.19,38.5961399,-92.1749069
+elite-octane-atlantic-ethanol,Elite Octane Atlantic Ethanol,atlantic,IA,3.17,41.420705,-95.030973
+quad-county-corn-processors-galva-ethanol,Quad County Corn Processors Galva Ethanol,galva,IA,3.14,42.4777413,-95.4126646
+cva-bow-valley-ne,CVA Bow Valley NE,bow valley,NE,3.1,42.7431558,-97.2564589
+key-coop-newton-ia,Key Coop Newton IA,newton,IA,3.08,41.716172,-93.066354
+agp-david-city-ne,AGP David City NE,david city,NE,3.07,41.276611,-97.1461066
+ricketts-farm-service-salisbury-mo,Ricketts Farm Service Salisbury MO,salisbury,MO,3.07,39.4117889,-92.8349075
+key-coop-nevada-ia,Key Coop Nevada IA,nevada,IA,3.04,42.026286,-93.504469
+silveredge-strawberry-point-ia,SilverEdge Strawberry Point IA,strawberry point,IA,3.04,42.6897342,-91.5698295
+gold-eagle-coop-clarion-annex,Gold-Eagle Coop Clarion Annex,clarion,IA,3.02,42.7589116,-93.7347134
+cargill-new-madrid-mo,Cargill New Madrid MO,new madrid,MO,3.02,36.56832,-89.57639
+heart-of-missouri-mfa-agri-services-boonville-mo,Heart of Missouri MFA Agri Services Boonville MO,boonville,MO,2.97,38.9467832,-92.7748925
+united-cooperative-webster-city-ia,United Cooperative Webster City IA,webster city,IA,2.96,42.4705665,-93.8525396
+mfa-agriservice-gallatin-mo,MFA AgriService Gallatin MO,gallatin,MO,2.94,39.9283959,-93.9388199
+mfa-plant-foods-owensville-mo,MFA Plant Foods Owensville MO,owensville,MO,2.94,38.3331298,-91.5248718
+hillside-grain-golden-city-mo,Hillside Grain Golden City MO,golden city,MO,2.94,37.3919618,-94.0618357
+guardian-energy-janesville-mn,Guardian Energy Janesville MN,janesville,MN,2.85,44.1119588,-93.675687
+adm-marshall-mn,ADM Marshall MN,marshall,MN,2.84,44.474297,-95.783535
+agp-emmetsburg-ia,AGP Emmetsburg IA,emmetsburg,IA,2.77,43.0993231,-94.6527617
+silveredge-cooperative-edgewood-ia,SilverEdge Cooperative Edgewood IA,edgewood,IA,2.77,42.644872,-91.368376
+jbs-live-pork-centralia-mo,JBS Live Pork Centralia MO,centralia,MO,2.77,39.2208408,-92.1636788
+agp-mason-city-ia,AGP Mason City IA,mason city,IA,2.76,43.133273,-93.2266272
+poet-emmetsburg-ethanol,poet Emmetsburg Ethanol,emmetsburg,IA,2.74,43.097457,-94.655582
+crystal-valley-cooperative-mankato-mn,Crystal Valley Cooperative Mankato MN,mankato,MN,2.69,44.177467,-93.9438925
+nemo-feed-baring-mo,Nemo Feed Baring MO,baring,MO,2.68,40.220993,-92.210826
+cartersville-elevator-inc-rockwell-ia,Cartersville Elevator Inc. Rockwell IA,rockwell,IA,2.65,42.995138,-93.212267
+cargill-cedar-rapids-mill-ia,Cargill Cedar Rapids Mill IA,cedar rapids,IA,2.62,41.969667,-91.647614
+inland-cape-rice-scott-city-mo,Inland Cape Rice Scott City MO,scott city,MO,2.62,37.2411121,-89.5587316
+louis-dreyfus-commodities-grand-junction-ethanol,Louis Dreyfus Commodities Grand Junction Ethanol,grand junction,IA,2.57,42.055754,-94.242306
+east-central-iowa-co-op-cedar-falls-ia,East Central Iowa CO-OP Cedar Falls IA,cedar falls,IA,2.56,42.540428,-92.442195
+new-coop-osceola,New Coop Osceola,osceola,IA,2.55,41.0454198,-93.763058
+new-coop-anthon,New Coop Anthon,anthon,IA,2.52,42.3698448,-95.883646
+ce-grain-farber-mo,CE Grain Farber MO,farber,MO,2.5,39.2812528,-91.549067
+heartland-coop-18th-st-des-moines-seasonal,Heartland Coop 18th St Des Moines (Seasonal),des moines,IA,2.48,41.5876072,-93.5881395
+landus-mitchellville,Landus Mitchellville,mitchellville,IA,2.47,41.688378,-93.375053
+cedar-county-cooperative-tipton-ia,Cedar County Cooperative Tipton IA,tipton,IA,2.47,41.771678,-91.098617
+cal-maine-hatchery-dexter-mo,Cal Maine Hatchery Dexter MO,dexter,MO,2.44,36.7940418,-89.9356434
+chs-savage-terminal-mn,CHS Savage Terminal MN,savage,MN,2.42,44.7802972,-93.3572882
+cva-columbus-ne,CVA Columbus NE,columbus,NE,2.41,41.4291907,-97.330466
+heartland-coop-waukee,Heartland Coop Waukee,waukee,IA,2.4,41.6120111,-93.8851312
+central-farm-service-wells-mn,Central Farm Service Wells MN,wells,MN,2.35,43.7614707,-93.7476119
+cva-york-office-ne,CVA York Office NE,york,NE,2.33,40.8913255,-97.5919225
+cgb-louisiana-mo,CGB Louisiana MO,louisiana,MO,2.31,39.4402895,-91.0351856
+mfa-agri-services-chillicothe-mo,MFA Agri Services Chillicothe MO,chillicothe,MO,2.31,39.7759826,-93.5432013
+adm-camanche-terminal-ia,ADM Camanche Terminal IA,camanche,IA,2.3,41.795051,-90.2486639
+murphy-brown-nevada-mo-smithfield,Murphy-Brown Nevada MO Smithfield,nevada,MO,2.3,37.8633556,-94.3383705
+five-star-cooperative-new-hampton-ia,Five Star Cooperative New Hampton IA,new hampton,IA,2.28,43.0763,-92.320231
+ag-coop-services-otterville-mo,Ag Coop Services Otterville MO,otterville,MO,2.25,38.6840331,-92.9935745
+heartland-coop-pampa-tx,Heartland Coop Pampa TX,pampa,TX,2.24,35.5277161,-100.9652908
+key-coop-kelley-ia,Key Coop Kelley IA,kelley,IA,2.23,41.950915,-93.638017
+cargill-eddyville,Cargill Eddyville,eddyville,IA,2.21,41.141337,-92.641603
+innovative-ag-services-monticello-ia,Innovative Ag Services Monticello IA,monticello,IA,2.21,42.2108354,-91.1901327
+innovative-ag-services-co-independence-ia,Innovative AG Services Co Independence IA,independence,IA,2.19,42.478377,-91.887918
+new-vision-co-op-hills-terminal-mn,New Vision Co-op Hills Terminal MN,hills,MN,2.19,43.546156,-96.368311
+mfa-agri-services-versailles-mo,MFA Agri Services Versailles MO,versailles,MO,2.16,38.444871,-92.8260222
+new-coop-otho,New Coop Otho,otho,IA,2.13,42.4267231,-94.1746475
+mfa-agri-services-martinsburg-mo,MFA Agri Services Martinsburg MO,martinsburg,MO,2.09,39.107389,-91.6700566
+mfa-agri-services-california-mo,MFA Agri Services California MO,california,MO,2.09,38.6366024,-92.5897459
+cargill-cedar-rapids-east-ia,Cargill Cedar Rapids East IA,cedar rapids,IA,2.07,41.982814,-91.668679
+valero-renewables-hartley-ethanol,Valero Renewables Hartley Ethanol,hartley,IA,2.06,43.1770499,-95.5020076
+a-g-co-op-services-boonville-mo,A G Co-Op Services Boonville MO,boonville,MO,2.06,38.9591692,-92.7225775
+five-star-cooperative-sheffield-ia,Five Star Cooperative Sheffield IA,sheffield,IA,2.05,42.895937,-93.230281
+new-coop-creston-2,New Coop Creston 2,creston,IA,2.03,41.0611105,-94.3405468
+new-vision-co-op-worthington-mn,New Vision Co-op Worthington MN,worthington,MN,2.03,43.6300276,-95.5744947
+flint-hills-resources-poet-iowa-falls-ethanol,Flint Hills Resources/Poet Iowa falls Ethanol,iowa falls,IA,2.02,42.505592,-93.282414
+stateline-lakota-ia,Stateline Lakota IA,lakota,IA,2.01,43.3852676,-94.0731515
+new-coop-mapleton,New Coop Mapleton,mapleton,IA,2.0,42.1849119,-95.7958103
+green-plains-shenandoah-ethanol,Green Plains Shenandoah Ethanol,shenandoah,IA,1.99,40.755078,-95.395382
+west-central-agri-services-adrian-mo,West Central Agri Services Adrian MO,adrian,MO,1.99,38.3802196,-94.3529244
+river-valley-cooperative-eldridge-ia,River Valley Cooperative Eldridge IA,eldridge,IA,1.96,41.656576,-90.583558
+pro-coop-milford,Pro Coop Milford,milford,IA,1.93,43.3246863,-95.149996
+heartland-coop-missouri-valley,Heartland Coop Missouri Valley,missouri valley,IA,1.91,41.560452,-95.8797546
+five-star-cooperative-ventura-ia,Five Star Cooperative Ventura IA,ventura,IA,1.91,43.14322,-93.4789
+heartland-coop-marengo,Heartland Coop Marengo,marengo,IA,1.9,41.7896475,-92.0469152
+landus-cooperative-boone-ia,Landus Cooperative Boone IA,boone,IA,1.89,42.065937,-93.876602
+heartland-coop-treynor-seasonal,Heartland Coop Treynor (Seasonal),treynor,IA,1.88,41.233444,-95.584019
+ray-carroll-grain-growers-brunswick-mo,Ray-Carroll Grain Growers Brunswick MO,brunswick,MO,1.88,39.4313308,-93.1484379
+viserion-grain-caruthersville-mo,Viserion Grain Caruthersville MO,caruthersville,MO,1.88,36.1946299,-89.6541136
+key-coop-new-sharon-ia,Key Coop New Sharon IA,new sharon,IA,1.87,41.45342,-92.647881
+mfa-exchange-kirksville-mo,MFA Exchange Kirksville MO,kirksville,MO,1.87,40.2122611,-92.5866317
+heartland-coop-dallas-center,Heartland Coop Dallas Center,dallas center,IA,1.86,41.6835212,-93.9584579
+new-vision-co-op-magnolia-mn,New Vision Co-op Magnolia MN,magnolia,MN,1.86,43.644475,-96.098437
+ingredion-north-kansas-city-mo,Ingredion North Kansas City MO,north kansas city,MO,1.85,39.124316,-94.573238
+troy-elevator-inc-bloomfield-ia,Troy Elevator Inc Bloomfield IA,bloomfield,IA,1.83,40.763597,-92.406747
+flint-hills-poet-ethanol-menlo,Flint Hills/Poet ethanol Menlo,menlo,IA,1.82,41.523724,-94.382023
+cargill-bettendorf-ia,Cargill Bettendorf IA,bettendorf,IA,1.82,41.55317,-90.48899
+earth-touch-gallatin-mo,Earth Touch Gallatin MO,gallatin,MO,1.81,39.9198294,-93.981295
+hankins-grain-clinton-mo,Hankins Grain Clinton MO,clinton,MO,1.79,38.3866767,-93.7738113
+new-vision-co-op-brewster-mn,New Vision Co-op Brewster MN,brewster,MN,1.79,43.6890296,-95.4837112
+consumers-coop-coralville-ia,Consumers Coop Coralville IA,coralville,IA,1.77,41.691828,-91.615907
+key-coop-zearing-grain-site-ia,Key Coop Zearing Grain Site IA,zearing,IA,1.74,42.171273,-93.284273
+al-corn-clean-fuel-claremont-mn,Al-Corn Clean Fuel Claremont MN,claremont,MN,1.74,44.0505947,-93.0175358
+d-tone-feed-grain-plattsburg-mo,D Tone Feed Grain Plattsburg MO,plattsburg,MO,1.71,39.5686688,-94.4568759
+new-coop-chariton,New Coop Chariton,chariton,IA,1.7,41.0249169,-93.3272505
+new-coop-milford,New Coop Milford,milford,IA,1.7,43.3265131,-95.1475272
+key-coop-grinnell-feed-mill-ia,Key Coop Grinnell Feed Mill IA,grinnell,IA,1.7,41.720044,-92.722204
+buchheit-perryville-mo,Buchheit Perryville MO,perryville,MO,1.7,37.714054,-89.8879183
+poet-glenville-mn-ethanol,POET Glenville MN Ethanol,glenville,MN,1.7,43.5761731,-93.3020426
+poet-preston-mn-ethanol,POET Preston MN Ethanol,preston,MN,1.7,43.686569,-92.091217
+nelson-grain-marshalltown-ia,Nelson Grain Marshalltown IA,marshalltown,IA,1.69,42.0494674,-92.9080375
+poet-hanlontown-ethanol,poet hanlontown ethanol,hanlontown,IA,1.68,43.292221,-93.392686
+smithfield-grain-feed-mill-allerton,Smithfield grain feed mill Allerton,allerton,IA,1.68,40.722954,-93.364125
+pro-coop-ayrshire,Pro Coop Ayrshire,ayrshire,IA,1.68,43.0397036,-94.8546951
+mfa-agri-services-trenton-mo,MFA Agri Services Trenton MO,trenton,MO,1.67,40.0934771,-93.6138509
+mid-missouri-energy-malta-bend-ethanol,Mid-Missouri Energy Malta Bend Ethanol,malta bend,MO,1.66,39.1963746,-93.3824659
+new-coop-barnum,New Coop Barnum,barnum,IA,1.66,42.5111808,-94.3847594
+united-cooperatives-plattsburg-mo,United Cooperatives Plattsburg MO,plattsburg,MO,1.66,39.56768,-94.4550431
+cargill-paris-mill-il,Cargill Paris Mill IL,paris,IL,1.64,39.604775,-87.702785
+farmers-cooperative-company-greenfield-ia,Farmers Cooperative Company Greenfield IA,greenfield,IA,1.61,41.305066,-94.439993
+smith-fertilizer-grain-centerville-ia,Smith Fertilizer & Grain Centerville IA,centerville,IA,1.6,40.7189075,-92.859698
+gerkens-feed-and-grain-wabasha-mn,Gerkens Feed and Grain Wabasha MN,wabasha,MN,1.59,44.3838362,-92.036612
+landus-gowrie,Landus Gowrie,gowrie,IA,1.58,42.274734,-94.270988
+mfa-agri-services-sedalia-mo,MFA Agri Services Sedalia MO,sedalia,MO,1.58,38.6925697,-93.2403259
+heartland-corn-products-winthrop-mn,Heartland Corn Products Winthrop MN,winthrop,MN,1.58,44.5424751,-94.3401045
+new-coop-belmond,New Coop Belmond,belmond,IA,1.55,42.8341346,-93.6174415
+cva-clay-center-ks,CVA Clay Center KS,clay center,KS,1.54,39.3767662,-97.1443405
+heartland-coop-avon-carlisle,Heartland Coop Avon (Carlisle),carlisle,IA,1.53,41.5251407,-93.5068071
+valero-welcome-mn-ethanol,Valero Welcome MN Ethanol,welcome,MN,1.53,43.6624496,-94.5890535
+mfa-agri-services-hangleys-macon-mo,MFA Agri Services Hangleys Macon MO,macon,MO,1.48,39.7554206,-92.4685058
+heartland-coop-nebraska-city-ne,Heartland Coop Nebraska City NE,nebraska city,NE,1.47,40.6768091,-95.8442549
+landus-greene,Landus Greene,greene,IA,1.47,42.907342,-92.81382
+landus-jefferson,Landus Jefferson,jefferson,IA,1.45,42.028156,-94.368858
+landus-mcleansboro,Landus McLeansboro,mcleansboro,IL,1.45,38.101851,-88.546236
+mfa-agri-services-clark-mo,MFA Agri Services Clark MO,clark,MO,1.44,39.2804539,-92.3427775
+river-valley-ag-exchange-marshall-mo,River Valley Ag Exchange Marshall MO,marshall,MO,1.44,39.1274357,-93.1973081
+new-coop-humboldt,New Coop Humboldt,humboldt,IA,1.43,42.7218034,-94.2075426
+north-iowa-cooperative-plymouth-ia,North Iowa Cooperative Plymouth IA,plymouth,IA,1.42,43.234628,-93.130217
+farmers-win-coop-caledonia-mn,Farmers Win Coop Caledonia MN,caledonia,MN,1.42,43.6220283,-91.5060119
+cva-bloomfield-ne,CVA Bloomfield NE,bloomfield,NE,1.41,42.5974388,-97.6309738
+innovative-ag-services-co-manchester-ia,Innovative AG Services Co Manchester IA,manchester,IA,1.41,42.47444,-91.464771
+land-o-lakes-purina-feed-plant-montgomery-city-mo,Land O Lakes Purina Feed Plant Montgomery City MO,montgomery city,MO,1.41,38.9834198,-91.5133161
+two-rivers-cooperative-pella-ia,Two Rivers Cooperative Pella IA,pella,IA,1.4,41.3966564,-92.9045672
+mfa-agri-services-salem-mo,MFA Agri Services Salem MO,salem,MO,1.4,37.6350021,-91.5200355
+mfa-agri-services-kahoka-mo,MFA Agri Services Kahoka MO,kahoka,MO,1.4,40.420664,-91.7026199
+nexus-sumner-ia,Nexus Sumner IA,sumner,IA,1.39,42.8478904,-92.080257
+opal-foods-neosho-mo,Opal Foods Neosho MO,neosho,MO,1.39,36.8352416,-94.3948235
+sullivan-county-farm-supply-milan-mo,Sullivan County Farm Supply Milan MO,milan,MO,1.38,40.1908316,-93.123216
+cva-laurel-ne,CVA Laurel NE,laurel,NE,1.37,42.4379386,-97.1073074
+adm-grain-company-sioux-city-ia,ADM Grain Company Sioux City IA,sioux city,IA,1.37,42.504249,-96.378298
+meadowland-farmers-coop-walnut-grove-mn,Meadowland Farmers Coop Walnut Grove MN,walnut grove,MN,1.35,44.2219352,-95.4527816
+central-region-cooperative-sleepy-eye-mn,Central Region Cooperative Sleepy Eye MN,sleepy eye,MN,1.34,44.296875,-94.7401733
+new-coop-algona,New Coop Algona,algona,IA,1.33,43.0649186,-94.22671659999999
+ray-carroll-grain-growers-richmond-mo,Ray-Carroll Grain Growers Richmond MO,richmond,MO,1.33,39.2782235,-93.9876029
+landus-collins,Landus Collins,collins,IA,1.29,41.890903,-93.310525
+poet-bingham-lake-mn-ethanol,POET Bingham Lake MN Ethanol,bingham lake,MN,1.29,43.9016212,-95.0569091
+absolute-energy-mona-ethanol,Absolute Energy mona Ethanol,mona,IA,1.28,43.497523,-92.953569
+heartland-coop-madrid-seasonal,Heartland Coop Madrid (Seasonal),madrid,IA,1.28,41.875282,-93.8050898
+cargill-muscatine-ia,Cargill Muscatine IA,muscatine,IA,1.28,41.40808,-91.06328
+mfa-northwest-agri-services-maryville-mo,MFA Northwest Agri Services Maryville MO,maryville,MO,1.28,40.3468574,-94.8560062
+gold-eagle-coop-titonka-north,Gold-Eagle Coop Titonka North,titonka,IA,1.27,43.2428903,-94.0278771
+new-coop-creston-1,New Coop Creston 1,creston,IA,1.27,41.059407,-94.3495787
+smith-fertilizer-grain-pleasantville-ia,Smith Fertilizer & Grain Pleasantville IA,pleasantville,IA,1.27,41.398407,-93.273207
+agp-manning-ia,AGP Manning IA,manning,IA,1.26,41.9201213,-95.0702825
+chinn-feed-mill-clarence-mo,Chinn Feed Mill Clarence MO,clarence,MO,1.26,39.7424979,-92.2454451
+nexus-grafton-ia,Nexus Grafton IA,grafton,IA,1.25,43.3411556,-93.0630288
+nexus-blooming-prairie-mn,Nexus Blooming Prairie MN,blooming prairie,MN,1.25,43.858254,-93.049212
+cva-humphrey-ne,CVA Humphrey NE,humphrey,NE,1.23,41.6934051,-97.4719009
+new-coop-lohrville,New Coop Lohrville,lohrville,IA,1.23,42.269238,-94.5369681
+heartland-coop-gruver-tx,Heartland Coop Gruver TX,gruver,TX,1.22,36.2714912,-101.4070582
+fredericksburg-farmers-coop-sumner-ia,Fredericksburg Farmers Coop Sumner IA,sumner,IA,1.21,42.847668,-92.111857
+mfa-agri-services-king-city-mo,MFA Agri Services King City MO,king city,MO,1.21,40.0398979,-94.5276794
+farmers-feed-grain-charles-city-ia,Farmers Feed & Grain Charles City IA,charles city,IA,1.18,43.0753693,-92.673399
+ursa-farmers-co-op-canton-mo,Ursa Farmers Co-Op Canton MO,canton,MO,1.18,40.1212959,-91.5175552
+hull-coop-sheldon-feed-mill-ia,Hull Coop Sheldon Feed Mill IA,sheldon,IA,1.17,43.1826827,-95.8571631
+consumers-oil-company-maryville-mo,Consumers Oil Company Maryville MO,maryville,MO,1.17,40.3451466,-94.8566822
+mfa-agri-services-lamar-mo,MFA Agri Services Lamar MO,lamar,MO,1.17,37.4848645,-94.2717111
+plymouth-energy-merrill-ethanol,Plymouth Energy Merrill Ethanol,merrill,IA,1.16,42.7308349,-96.2500457
+heartland-coop-cambridge,Heartland Coop Cambridge,cambridge,IA,1.16,41.8932442,-93.5283462
+agriland-fs-burlington-junction-mo,AGRILAND FS Burlington Junction MO,burlington junction,MO,1.16,40.4411044,-95.0550585
+nexus-manly-ia,Nexus Manly IA,manly,IA,1.15,43.2976217,-93.2069242
+seaboard-foods-feed-mill-iowa-falls,Seaboard Foods Feed Mill Iowa Falls,iowa falls,IA,1.14,42.5094239,-93.2702292
+key-coop-story-city-ia,Key Coop Story City IA,story city,IA,1.14,42.188317,-93.600311
+farmers-win-coop-houston-mn,Farmers Win Coop Houston MN,houston,MN,1.14,43.7663739,-91.568293
+heartland-coop-howe-ne-auburn,Heartland Coop Howe NE (Auburn),auburn,NE,1.13,40.3947236,-95.8322191
+landus-early,Landus Early,early,IA,1.13,42.451664,-95.147293
+tama-benton-vinton-ia,Tama-Benton Vinton IA,vinton,IA,1.13,42.1640697,-92.0398978
+farmers-win-coop-rushford-mn,Farmers Win Coop Rushford MN,rushford,MN,1.11,43.8060038,-91.7631288
+mfa-agri-services-bethany-mo,MFA Agri Services Bethany MO,bethany,MO,1.1,40.2778396,-94.0269317
+river-valley-sperry-ia,River Valley Sperry IA,sperry,IA,1.09,40.956195,-91.1536588
+prairieland-fs-memphis-mo,Prairieland FS Memphis MO,memphis,MO,1.09,40.4525818,-92.1629954
+five-star-cooperative-lawler-ia,Five Star Cooperative Lawler IA,lawler,IA,1.08,43.076188,-92.140897
+ricketts-farm-service-shelbina-mo,Ricketts Farm Service Shelbina MO,shelbina,MO,1.08,39.6929907,-92.027045
+cargill-beardstown-il,Cargill Beardstown IL,beardstown,IL,1.07,40.0153,-90.44167
+agp-sheldon-ia,AGP Sheldon IA,sheldon,IA,1.06,43.1820069,-95.8560847
+gevo-agri-energy-luverne-mn,Gevo Agri-Energy Luverne MN,luverne,MN,1.06,43.6473541,-96.2250213
+river-valley-dewitt-ia,River Valley DeWitt IA,dewitt,IA,1.05,41.8146463,-90.5374611
+21st-century-cooperative-greenfield-ia,21st Century Cooperative Greenfield IA,greenfield,IA,1.04,41.296832,-94.462699
+first-cooperative-association-marcus-ia,First Cooperative Association Marcus IA,marcus,IA,1.04,42.826707,-95.818228
+heartland-coop-belle-plaine-seasonal,Heartland Coop Belle Plaine (Seasonal),belle plaine,IA,1.03,41.8938852,-92.2880096
+river-valley-mfa-agri-services-odessa-mo,River Valley MFA Agri Services Odessa MO,odessa,MO,1.03,39.0013746,-93.9547884
+chs-tracy-mn,CHS Tracy MN,tracy,MN,1.02,44.2311752,-95.6210079
+berne-cooperative-mapleton-ia,Berne Cooperative Mapleton IA,mapleton,IA,1.01,42.158302,-95.792271
+koster-grain-inc-stuart-ia,Koster Grain Inc. Stuart IA,stuart,IA,1.01,41.504707,-94.307388
+cva-fullerton-ne,CVA Fullerton NE,fullerton,NE,1.0,41.3721793,-97.9651444
+warren-grain-co-spring-valley-mn,Warren Grain Co Spring Valley MN,spring valley,MN,1.0,43.6958241,-92.3975005
+doane-grain-services-plainview-mn,Doane Grain Services Plainview MN,plainview,MN,1.0,44.1655511,-92.1816748
+heartland-coop-indianola,Heartland Coop Indianola,indianola,IA,0.99,41.3671929,-93.5550834
+ag-vantage-fs-inc-hansell-ia,AG Vantage FS Inc Hansell IA,hansell,IA,0.99,42.748853,-93.104341
+river-valley-mfa-agri-services-higginsville-mo,River Valley MFA Agri Services Higginsville MO,higginsville,MO,0.99,39.0726437,-93.7195812
+north-iowa-coop-clear-lake,North Iowa Coop Clear Lake,clear lake,IA,0.98,43.1436525,-93.3710354
+ingredion-inc-cedar-rapids-ethanol,"Ingredion, Inc. Cedar Rapids Ethanol",cedar rapids,IA,0.97,41.96818,-91.667533
+green-plains-superior-ethanol,Green Plains Superior Ethanol,superior,IA,0.97,43.43124,-94.9581604
+new-coop-clearfield,New Coop Clearfield,clearfield,IA,0.96,40.7964851,-94.4730038
+feeders-grain-bowling-green-mo,Feeders Grain Bowling Green MO,bowling green,MO,0.96,39.3516862,-91.2091821
+ag-partners-lake-city-mn,Ag Partners Lake City MN,lake city,MN,0.96,44.4417383,-92.2701707
+cooperative-elevator-association-harris-ia,Cooperative Elevator Association Harris IA,harris,IA,0.94,43.444728,-95.425568
+adm-mexico-mo,ADM Mexico MO,mexico,MO,0.94,39.1680908,-91.8805541
+cargill-gibson-city-il,Cargill Gibson City IL,gibson city,IL,0.94,40.46038,-88.38632
+ctlc-gladstone-il,CTLC Gladstone IL,gladstone,IL,0.94,40.8627119,-90.9674943
+foster-feed-bakersfield-mo,Foster Feed Bakersfield MO,bakersfield,MO,0.94,36.5194816,-92.1424255
+chs-kasson-mn,CHS Kasson MN,kasson,MN,0.94,44.0285971,-92.7587398
+general-mills-kansas-city-mo,General Mills Kansas City MO,kansas city,MO,0.93,39.1194992,-94.5449371
+river-valley-olin-ia,River Valley Olin IA,olin,IA,0.92,41.9891838,-91.1421727
+cva-monroe-ne,CVA Monroe NE,monroe,NE,0.91,41.4745544,-97.5881565
+west-side-grain-sales-corp-vinton-ia,West Side Grain Sales Corp Vinton IA,vinton,IA,0.91,42.16445,-92.015357
+mfa-agri-services-albany-mo,MFA Agri Services Albany MO,albany,MO,0.91,40.2432289,-94.3423004
+cooperative-elevator-association-sibley-ia,Cooperative Elevator Association Sibley IA,sibley,IA,0.9,43.396962,-95.752301
+midwest-soya-international-mason-city-ia,Midwest Soya International Mason City IA,mason city,IA,0.9,43.15487,-93.19276
+river-valley-cooperative-lost-nation-ia,River Valley Cooperative Lost Nation IA,lost nation,IA,0.89,41.970838,-90.808337
+cva-hooper-ne,CVA Hooper NE,hooper,NE,0.88,41.612105,-96.5597713
+new-coop-everly,New Coop Everly,everly,IA,0.86,43.1653267,-95.328086
+mfa-agri-services-lebanon-mo,MFA Agri Services Lebanon MO,lebanon,MO,0.86,37.6794369,-92.6629672
+heartland-coop-bovina-tx,Heartland Coop Bovina TX,bovina,TX,0.85,34.5190731,-102.8929843
+heartland-coop-groom-tx,Heartland Coop Groom TX,groom,TX,0.85,35.2004204,-101.1084672
+gold-eagle-coop-forest-city,Gold-Eagle Coop Forest City,forest city,IA,0.85,43.2644959,-93.6340137
+nicholas-ag-columbus-junction-ia,Nicholas Ag Columbus Junction IA,columbus junction,IA,0.85,41.286056,-91.360704
+mfa-agri-services-maysville-mo,MFA Agri Services Maysville MO,maysville,MO,0.85,39.8796457,-94.3627273
+mfa-agri-services-marshfield-mo,MFA Agri Services Marshfield MO,marshfield,MO,0.85,37.3361206,-92.9052429
+penn-pak-greenfield-mo,Penn Pak Greenfield MO,greenfield,MO,0.85,37.4097184,-93.8483061
+f-j-krob-company-solon-ia,F.J. Krob & Company Solon IA,solon,IA,0.84,41.800203,-91.494158
+key-coop-grinnell-elevator-ia,Key Coop Grinnell Elevator IA,grinnell,IA,0.84,41.727729,-92.723759
+farmers-cooperative-company-sac-city-ia-approx,Farmers Cooperative Company Sac City IA (approx),sac city,IA,0.83,42.424847,-94.988001
+cgb-dallas-city-il,CGB Dallas City IL,dallas city,IL,0.83,40.6358642,-91.1741057
+monroe-county-service-company-paris-mo,Monroe County Service Company Paris MO,paris,MO,0.83,39.4692278,-92.0167962
+cva-wakefield-ne,CVA Wakefield NE,wakefield,NE,0.82,42.2593676,-96.8610434
+nexus-harlan-ia,Nexus Harlan IA,harlan,IA,0.82,41.6491212,-95.3169625
+central-missouri-agriservice-marshall-mo,Central Missouri AgriService Marshall MO,marshall,MO,0.82,39.1224668,-93.2015509
+21st-century-cooperative-fontanelle-ia-approx,21st Century Cooperative Fontanelle IA (approx),fontanelle,IA,0.81,41.289664,-94.569892
+mfa-agri-services-milan-mo,MFA Agri Services Milan MO,milan,MO,0.81,40.2016702,-93.1146609
+new-coop-red-oak,New Coop Red Oak,red oak,IA,0.8,41.0169671,-95.2331702
+mfa-agri-service-corydon-ia,MFA Agri Service Corydon IA,corydon,IA,0.8,40.756107,-93.308367
+nexus-rockford-ia,Nexus Rockford IA,rockford,IA,0.8,43.0532884,-92.9574196
+heart-of-missouri-mfa-agri-services-glasgow-mo,Heart of Missouri MFA Agri Services Glasgow MO,glasgow,MO,0.8,39.2242713,-92.8302325
+nexus-denison-ia,Nexus Denison IA,denison,IA,0.79,42.0109524,-95.3590154
+river-valley-stanwood-ia,River Valley Stanwood IA,stanwood,IA,0.79,41.8913636,-91.1393421
+cargill-iowa-falls-ia,Cargill Iowa Falls IA,iowa falls,IA,0.79,42.51208,-93.26583
+cva-stromsburg-ne,CVA Stromsburg NE,stromsburg,NE,0.78,41.1122607,-97.5981476
+cargill-havana-il,Cargill Havana IL,havana,IL,0.78,40.29762,-90.06646
+schmitz-grain-slayton-mn,Schmitz Grain Slayton MN,slayton,MN,0.78,43.9941717,-95.7502897
+mfa-exchange-meta-mo,MFA Exchange Meta MO,meta,MO,0.77,38.3125412,-92.1743897
+poet-laddonia-mo-ethanol,POET Laddonia MO Ethanol,laddonia,MO,0.76,39.2495378,-91.6410122
+cva-hinton-ia,CVA Hinton IA,hinton,IA,0.76,42.626715,-96.2905903
+crystal-valley-cooperative-jackson-mn,Crystal Valley Cooperative Jackson MN,jackson,MN,0.76,43.6279398,-94.9797045
+heartland-coop-woodward,Heartland Coop Woodward,woodward,IA,0.75,41.8590277,-93.9173014
+northern-ag-service-inc-west-union-ia,Northern AG Service Inc West Union IA,west union,IA,0.74,42.953392,-91.807864
+cargill-lacon-il,Cargill Lacon IL,lacon,IL,0.74,41.020578,-89.414581
+crystal-valley-cooperative-lake-crystal-mn,Crystal Valley Cooperative Lake Crystal MN,lake crystal,MN,0.74,44.108235,-94.227536
+valero-renewables-albert-city-ethanol,Valero Renewables - Albert City Ethanol,albert city,IA,0.73,42.775461,-94.946011
+mid-iowa-milling-edgewood-feed-mill,Mid-Iowa Milling Edgewood Feed Mill,edgewood,IA,0.73,42.643445,-91.4110745
+farmers-cooperative-company-ackley-ia,Farmers Cooperative Company Ackley IA,ackley,IA,0.73,42.555474,-93.059535
+cargill-forest-city-mo,Cargill Forest City MO,forest city,MO,0.73,39.98686,-95.18142
+mfa-feed-mill-lebanon-mo,MFA Feed Mill Lebanon MO,lebanon,MO,0.73,37.6780978,-92.6631874
+ag-partners-cooperative-tarkio-mo,Ag Partners Cooperative Tarkio MO,tarkio,MO,0.73,40.4405821,-95.3755127
+new-coop-cainsville,New Coop Cainsville,cainsville,MO,0.72,40.4389889,-93.7661907
+mfa-farm-home-buffalo-mo,MFA Farm Home Buffalo MO,buffalo,MO,0.72,37.6398491,-93.1011526
+heartland-coop-mitchellville,Heartland Coop Mitchellville,mitchellville,IA,0.71,41.6673046,-93.3573609
+agstate-orange-city-ia,AgState Orange City IA,orange city,IA,0.7,42.997463,-96.061494
+ctlc-mound-city-il,CTLC Mound City IL,mound city,IL,0.7,37.0900425,-89.1573766
+prairieland-fs-pilot-grove-mo,Prairieland FS Pilot Grove MO,pilot grove,MO,0.7,38.8682483,-92.9167606
+agp-dawson-mn,AGP Dawson MN,dawson,MN,0.69,44.9327566,-96.0573448
+winneshiek-cooperative-association-decorah-ia,Winneshiek Cooperative Association Decorah IA,decorah,IA,0.69,43.30421,-91.777018
+central-commodities-stanberry-mo,Central Commodities Stanberry MO,stanberry,MO,0.69,40.2127988,-94.5445599
+smith-fertilizer-grain-albia-ia,Smith Fertilizer & Grain Albia IA,albia,IA,0.68,41.029116,-92.811135
+cfe-feed-mill-ocheyedan,CFE Feed Mill Ocheyedan,ocheyedan,IA,0.67,43.4195022,-95.5285797
+landus-ralston-soyplus,Landus Ralston SoyPlus,ralston,IA,0.67,42.042035,-94.637379
+five-star-cooperative-nashua-ia,Five Star Cooperative Nashua IA,nashua,IA,0.66,42.951459,-92.534507
+river-valley-ryan-ia,River Valley Ryan IA,ryan,IA,0.66,42.3468862,-91.4817823
+silveredge-delhi-ia,SilverEdge Delhi IA,delhi,IA,0.66,42.4294053,-91.3315495
+heartland-coop-colo,Heartland Coop Colo,colo,IA,0.65,42.0181458,-93.3123707
+heartland-coop-woodbine,Heartland Coop Woodbine,woodbine,IA,0.65,41.7331076,-95.7044722
+new-coop-hornick,New Coop Hornick,hornick,IA,0.65,42.2232053,-96.0958455
+smith-fertilizer-grain-knoxville-ia,Smith Fertilizer & Grain Knoxville IA,knoxville,IA,0.65,41.323367,-93.106807
+landus-cooperative-maxwell-ia,LANDUS COOPERATIVE MAXWELL IA,maxwell,IA,0.65,41.886036,-93.399063
+heartland-coop-montezuma,Heartland Coop Montezuma,montezuma,IA,0.63,41.5865352,-92.5219017
+pro-coop-manson,Pro Coop Manson,manson,IA,0.63,42.5277974,-94.5324806
+landus-rake,Landus Rake,rake,IA,0.63,43.48622,-93.919384
+south-central-cooperative-knoxville-ia,South Central Cooperative Knoxville IA,knoxville,IA,0.63,41.323405,-93.106353
+cargill-keithsburg-il,Cargill Keithsburg IL,keithsburg,IL,0.63,41.102526,-90.942807
+new-coop-humeston,New coop Humeston,humeston,IA,0.62,40.855941,-93.50107
+nexus-stacyville-ia,Nexus Stacyville IA,stacyville,IA,0.62,43.4437575,-92.7883336
+winneshiek-cooperative-association-cresco-ia,Winneshiek Cooperative Association Cresco IA,cresco,IA,0.61,43.372281,-92.123761
+ag-vantage-fs-inc-sheffield-ia,AG Vantage FS Inc Sheffield IA,sheffield,IA,0.61,42.893184,-93.211534
+ray-carroll-grain-growers-hardin-mo,Ray-Carroll Grain Growers Hardin MO,hardin,MO,0.61,39.2709391,-93.8256989
+golden-triangle-energy-craig-mo-ethanol,Golden Triangle Energy Craig MO Ethanol,craig,MO,0.6,40.1896432,-95.3681495
+farmers-cooperative-elevator-company-schleswig-ia-approx,Farmers Cooperative Elevator Company Schleswig IA (approx),schleswig,IA,0.6,42.166399,-95.434886
+farmers-cooperative-produce-co-west-union-ia,Farmers Cooperative Produce Co West Union IA,west union,IA,0.6,42.954962,-91.807939
+united-farmers-cooperative-winthrop-mn,United Farmers Cooperative Winthrop MN,winthrop,MN,0.6,44.541231,-94.352543
+new-vision-co-op-windom-mn,New Vision Co-op Windom MN,windom,MN,0.6,43.8715188,-95.1122297
+lucerne-feed-mill,Lucerne feed mill,lucerne,MO,0.59,40.467039,-93.286357
+bunge-joice-ia,Bunge Joice IA,joice,IA,0.59,43.36103,-93.45139
+cgb-enfield-il,CGB Enfield IL,enfield,IL,0.59,38.0988625,-88.344394
+farmers-ag-grain-supply-deerfield-mo,Farmers Ag Grain Supply Deerfield MO,deerfield,MO,0.59,37.8424425,-94.502996
+heartland-coop-claude-tx,Heartland Coop Claude TX,claude,TX,0.58,35.1120148,-101.3600179
+gold-eagle-coop-clarion,Gold-Eagle Coop Clarion,clarion,IA,0.58,42.7354747,-93.7350155
+cargill-florence-pittsfield-il,Cargill Florence Pittsfield IL,florence,IL,0.58,39.62427,-90.60862
+stateline-cooperative-buffalo-center-ia,StateLine Cooperative Buffalo Center IA,buffalo center,IA,0.57,43.385139,-93.946857
+mfa-agri-services-montgomery-city-mo,MFA Agri Services Montgomery City MO,montgomery city,MO,0.57,38.9770093,-91.5078245
+heartland-coop-alleman-seasonal,Heartland Coop Alleman (Seasonal),alleman,IA,0.56,41.8200506,-93.6106984
+heartland-coop-neola,Heartland Coop Neola,neola,IA,0.56,41.4468888,-95.6188087
+north-iowa-coop-thornton,North Iowa Coop Thornton,thornton,IA,0.56,42.9437132,-93.38013
+consolidated-grain-barge-cgb-fayette-ia,Consolidated Grain & Barge CGB Fayette IA,fayette,IA,0.56,42.836748,-91.803067
+farmers-elevator-exchange-monroe-city-mo,Farmers Elevator & Exchange Monroe City MO,monroe city,MO,0.56,39.6518471,-91.7381342
+west-central-agriservices-chilhowee-mo,West Central Agriservices Chilhowee MO,chilhowee,MO,0.56,38.5840907,-93.853187
+corn-lp-goldfield-ethanol,Corn LP Goldfield Ethanol,goldfield,IA,0.55,42.7336654,-93.9117202
+heartland-coop-earlham,Heartland Coop Earlham,earlham,IA,0.55,41.4905389,-94.1263098
+gold-eagle-coop-eagle-grove-feedmill,Gold-Eagle Coop Eagle Grove Feedmill,eagle grove,IA,0.55,42.6710459,-93.9045057
+cargill-gibson-city-il-dlvd-bunge,Cargill Gibson City IL (Dlvd Bunge),gibson city,IL,0.55,40.46354,-88.38407
+flint-hill-resources-poet-arthur-ethanol,Flint Hill Resources/poet Arthur Ethanol,arthur,IA,0.54,42.331522,-95.350883
+heartland-coop-brooklyn,Heartland Coop Brooklyn,brooklyn,IA,0.54,41.7279163,-92.4484728
+new-coop-villisca,New Coop Villisca,villisca,IA,0.54,40.9258786,-94.984743
+southeast-iowa-grain-new-london-ia,Southeast Iowa Grain New London IA,new london,IA,0.54,40.927375,-91.398169
+ctlc-naples-il,CTLC Naples IL,naples,IL,0.54,39.7508658,-90.612222
+pro-coop-pocahontas-elevator,Pro Coop Pocahontas Elevator,pocahontas,IA,0.53,42.7328688,-94.6692356
+new-coop-davis-city,New Coop Davis City,davis city,IA,0.53,40.635266,-93.8120416
+nexus-elgin-ia,Nexus Elgin IA,elgin,IA,0.53,42.957088,-91.6414204
+cargill-gilman-il,Cargill Gilman IL,gilman,IL,0.53,40.75826,-87.99543
+green-valley-seed-kahoka-mo,Green Valley Seed Kahoka MO,kahoka,MO,0.53,40.4283,-91.7199
+cva-polk-ne,CVA Polk NE,polk,NE,0.52,41.0797654,-97.7824526
+landus-ida-grove,Landus Ida Grove,ida grove,IA,0.52,42.346668,-95.477669
+heartland-co-op-blairstown-ia,Heartland CO-OP Blairstown IA,blairstown,IA,0.52,41.910323,-92.084549
+landus-cooperative-exira-ia,LANDUS COOPERATIVE EXIRA IA,exira,IA,0.52,41.591046,-94.887583
+orrick-mfa-agri-services-mo,Orrick MFA Agri Services MO,orrick,MO,0.52,39.2132036,-94.1201543
+interstate-mills-owatonna-mn,Interstate Mills Owatonna MN,owatonna,MN,0.52,44.0897085,-93.2259878
+heartland-coop-grundy-center,Heartland Coop Grundy Center,grundy center,IA,0.51,42.3668934,-92.7695136
+landus-adair,Landus Adair,adair,IA,0.51,41.500419,-94.637979
+gold-eagle-coop-hutchins,gold eagle coop hutchins,hutchins,IA,0.5,43.091631,-93.883394
+north-iowa-coop-portland,North Iowa Coop Portland,portland,IA,0.5,43.12417,-93.13167
+pro-coop-estherville,Pro Coop Estherville,estherville,IA,0.5,43.4007247,-94.8402935
+cva-ainsworth-ne,CVA Ainsworth NE,ainsworth,NE,0.5,42.5451971,-99.8617648
+gold-eagle-coop-corwith,Gold-Eagle Coop Corwith,corwith,IA,0.5,42.9930178,-93.9558268
+new-coop-onawa,New Coop Onawa,onawa,IA,0.5,42.0220529,-96.0921543
+heiman-agri-services-butler-mo,Heiman Agri-Services Butler MO,butler,MO,0.5,38.2603474,-94.3451497
+heartland-coop-reinbeck,Heartland Coop Reinbeck,reinbeck,IA,0.49,42.326887,-92.593535
+landus-rockwell-city,Landus Rockwell City,rockwell city,IA,0.49,42.394297,-94.631753
+agstate-battle-creek-ia,AgState Battle Creek IA,battle creek,IA,0.49,42.318127,-95.594238
+nexus-toeterville-ia,Nexus Toeterville IA,toeterville,IA,0.49,43.443877,-92.8910278
+consumers-oil-supply-braymer-mo,Consumers Oil Supply Braymer MO,braymer,MO,0.49,39.5860284,-93.794388
+pro-coop-terril,Pro Coop Terril,terril,IA,0.48,43.3014778,-94.9697162
+cva-akron-ia,CVA Akron IA,akron,IA,0.48,42.8261364,-96.5628672
+landus-odebolt,Landus Odebolt,odebolt,IA,0.48,42.311988,-95.24858
+new-coop-sloan,New Coop Sloan,sloan,IA,0.48,42.2303484,-96.2294006
+mfa-coop-130-rhineland-mo,MFA Coop 130 Rhineland MO,rhineland,MO,0.48,38.7185234,-91.5185322
+landus-bradford,Landus Bradford,bradford,IA,0.47,42.632793,-93.250336
+agstate-alta-ia,AgState Alta IA,alta,IA,0.47,42.675857,-95.303999
+agstate-maurice-ia,AgState Maurice IA,maurice,IA,0.47,42.967837,-96.176728
+bullock-ag-service-inc-preston-ia,Bullock AG Service Inc Preston IA,preston,IA,0.47,42.052834,-90.39983
+five-star-cooperative-rockwell-ia,Five Star Cooperative Rockwell IA,rockwell,IA,0.47,42.984186,-93.187624
+mid-iowa-milling-mid-state-milling-state-center,Mid-Iowa Milling Mid-State Milling State Center,state center,IA,0.46,42.0180212,-93.1689009
+pro-coop-gilmore-city-elevator,Pro Coop Gilmore City Elevator,gilmore city,IA,0.46,42.727892,-94.4422874
+howard-county-equity-coop-elma-ia,Howard County Equity Coop Elma IA,elma,IA,0.46,43.249333,-92.436007
+five-star-cooperative-ionia-ia,Five Star Cooperative Ionia IA,ionia,IA,0.46,43.034483,-92.453039
+united-farmers-mercantile-coop-stanton-ia,United Farmers Mercantile Coop Stanton IA,stanton,IA,0.46,40.9771,-95.102818
+river-valley-walcott-ia,River Valley Walcott IA,walcott,IA,0.46,41.5856305,-90.7754181
+cargill-eddyville-ia,Cargill Eddyville IA,eddyville,IA,0.46,41.15533,-92.63184
+w-a-rootes-tebbetts-mo,W A Rootes Tebbetts MO,tebbetts,MO,0.46,38.6190807,-91.9609179
+heartland-coop-victor,Heartland Coop Victor,victor,IA,0.45,41.731386,-92.3001071
+gold-eagle-coop-leland,Gold-Eagle Coop Leland,leland,IA,0.45,43.3371775,-93.6352157
+landus-panora-will-call,Landus Panora (Will Call),panora,IA,0.45,41.694629,-94.361263
+prairie-land-cooperative-hubbard-ia-approx,Prairie Land Cooperative Hubbard IA (approx),hubbard,IA,0.45,42.307253,-93.29654
+nicholson-edwards-grain-primghar-ia,Nicholson & Edwards Grain Primghar IA,primghar,IA,0.45,43.08925,-95.616843
+heiman-true-value-holden-mo,Heiman True Value Holden MO,holden,MO,0.45,38.7170208,-93.9868461
+heart-land-coop-millerton,heart land coop millerton,millerton,IA,0.44,40.848111,-93.311253
+butterfield-associates-grain-meadville-mo,Butterfield Associates Grain Meadville MO,meadville,MO,0.44,39.7853397,-93.3026296
+cva-bradshaw-ne,CVA Bradshaw NE,bradshaw,NE,0.43,40.8822721,-97.7419415
+landus-wellsburg,Landus Wellsburg,wellsburg,IA,0.43,42.437743,-92.926081
+new-coop-dows,New Coop Dows,dows,IA,0.43,42.6562934,-93.4975838
+new-coop-klemme,New Coop Klemme,klemme,IA,0.43,43.0066373,-93.6045889
+the-scoular-company-elk-horn-ia,The Scoular Company Elk Horn IA,elk horn,IA,0.43,41.589265,-95.061191
+landus-yale-will-call,Landus Yale (Will Call),yale,IA,0.42,41.775849,-94.35281
+koster-grain-inc-wall-lake-ia,Koster Grain Inc. Wall Lake IA,wall lake,IA,0.42,42.271107,-95.093048
+stateline-ledyard-ia,Stateline Ledyard IA,ledyard,IA,0.42,43.4220619,-94.1625976
+heartland-coop-kellogg,Heartland Coop Kellogg,kellogg,IA,0.41,41.7143519,-92.9076893
+heartland-coop-luther,Heartland Coop Luther,luther,IA,0.41,41.9673107,-93.8226231
+heartland-coop-winterset,Heartland Coop Winterset,winterset,IA,0.41,41.3476182,-94.0141445
+agstate-laurens-ia,AgState Laurens IA,laurens,IA,0.41,42.848011,-94.852942
+agstate-paullina-ia,AgState Paullina IA,paullina,IA,0.41,42.98144,-95.687933
+nexus-northwood-ia,Nexus Northwood IA,northwood,IA,0.41,43.4470971,-93.2130794
+landus-casey-seasonal,Landus Casey (Seasonal),casey,IA,0.4,41.504825,-94.518068
+landus-farnhamville,Landus Farnhamville,farnhamville,IA,0.4,42.274315,-94.403867
+new-coop-essex,New Coop Essex,essex,IA,0.4,40.8361618,-95.3069547
+river-valley-cooperative-mccausland-ia,River Valley Cooperative McCausland IA,mccausland,IA,0.4,41.746058,-90.442607
+heart-of-iowa-cooperative-roland-ia,Heart of Iowa Cooperative Roland IA,roland,IA,0.4,42.168837,-93.500024
+cva-bancroft-ne,CVA Bancroft NE,bancroft,NE,0.39,42.0136432,-96.5716934
+landus-lake-city-seasonal,Landus Lake City (Seasonal),lake city,IA,0.39,42.265718,-94.727129
+west-side-grain-sales-corp-atkins-ia,West Side Grain Sales Corp Atkins IA,atkins,IA,0.39,41.99718,-91.861088
+five-star-cooperative-dougherty-ia,Five Star Cooperative Dougherty IA,dougherty,IA,0.39,42.923448,-93.04044
+winneshiek-cooperative-association-ridgeway-ia,Winneshiek Cooperative Association Ridgeway IA,ridgeway,IA,0.39,43.297758,-91.987677
+agp-fairfield-ne,AGP Fairfield NE,fairfield,NE,0.39,40.4288063,-98.1028137
+stateline-cylinder-ia,Stateline Cylinder IA,cylinder,IA,0.39,43.0867565,-94.5511468
+cva-hampton-ne,CVA Hampton NE,hampton,NE,0.38,40.8786275,-97.8843706
+cva-courtland-ks,CVA Courtland KS,courtland,KS,0.38,39.7809576,-97.8994485
+landus-bayard,Landus Bayard,bayard,IA,0.38,41.852932,-94.554202
+landus-new-hartford,Landus New Hartford,new hartford,IA,0.38,42.564813,-92.62178
+new-coop-churdan,New Coop Churdan,churdan,IA,0.37,42.1519262,-94.4744169
+new-coop-lamoni,New Coop Lamoni,lamoni,IA,0.37,40.6224726,-93.9326997
+river-valley-cooperative-donahue-ia,River Valley Cooperative Donahue IA,donahue,IA,0.37,41.694759,-90.673755
+key-coop-gilbert-ia,Key Coop Gilbert IA,gilbert,IA,0.37,42.10857,-93.64913
+main-street-feeds-monett-mo,Main Street Feeds Monett MO,monett,MO,0.37,36.9182817,-93.9283039
+mfa-exchange-hamilton-mo,MFA Exchange Hamilton MO,hamilton,MO,0.37,39.7448233,-93.998472
+meadowland-farmers-coop-lamberton-mn,Meadowland Farmers Coop Lamberton MN,lamberton,MN,0.37,44.2325514,-95.2638656
+heartland-coop-conroy,Heartland Coop Conroy,conroy,IA,0.36,41.7298431,-91.9981792
+pro-coop-graettinger,Pro Coop Graettinger,graettinger,IA,0.36,43.2400761,-94.7489491
+cva-tamora-ne,CVA Tamora NE,tamora,NE,0.36,40.8938986,-97.2250424
+cva-glen-elder-ks,CVA Glen Elder KS,glen elder,KS,0.36,39.4974598,-98.3087984
+gold-eagle-coop-thor,Gold-Eagle Coop Thor,thor,IA,0.36,42.6913104,-94.0492525
+landus-newell,Landus Newell,newell,IA,0.36,42.606489,-95.004067
+new-coop-duncombe,New Coop Duncombe,duncombe,IA,0.36,42.4711588,-93.9928647
+new-coop-lidderdale,New Coop Lidderdale,lidderdale,IA,0.36,42.1248639,-94.78085
+landus-cooperative-plainfield-ia,LANDUS COOPERATIVE PLAINFIELD IA,plainfield,IA,0.36,42.841708,-92.537707
+crystal-valley-cooperative-trimont-mn,Crystal Valley Cooperative Trimont MN,trimont,MN,0.36,43.7616673,-94.7205989
+heartland-coop-redfield,Heartland Coop Redfield,redfield,IA,0.35,41.5873349,-94.1964259
+cva-shelby-ne,CVA Shelby NE,shelby,NE,0.35,41.1940698,-97.4221266
+landus-boxholm,Landus Boxholm,boxholm,IA,0.35,42.176783,-94.105842
+landus-dike,Landus Dike,dike,IA,0.35,42.462376,-92.629051
+new-coop-garner,New Coop Garner,garner,IA,0.35,43.1009012,-93.5989402
+new-coop-pomeroy,New Coop Pomeroy,pomeroy,IA,0.35,42.5524706,-94.6820934
+agp-eagle-grove-ia,AGP Eagle Grove IA,eagle grove,IA,0.35,42.668881,-93.904999
+premium-feed-grain-brunsville-ia-approx,Premium Feed & Grain Brunsville IA (approx),brunsville,IA,0.35,42.809882,-96.270386
+landus-cooperative-scranton-ia,LANDUS COOPERATIVE SCRANTON IA,scranton,IA,0.35,42.017657,-94.545468
+smart-bros-farms-tebbetts-mo,Smart Bros Farms Tebbetts MO,tebbetts,MO,0.35,38.6201999,-91.9583767
+heartland-coop-malvern,Heartland Coop Malvern,malvern,IA,0.34,41.0044085,-95.5880552
+heartland-coop-slater,Heartland Coop Slater,slater,IA,0.34,41.8836338,-93.6898254
+heartland-coop-traer,Heartland Coop Traer,traer,IA,0.34,42.1919217,-92.4667465
+heartland-coop-white-deer-tx,Heartland Coop White Deer TX,white deer,TX,0.34,35.4353241,-101.1729354
+cva-hordville-ne,CVA Hordville NE,hordville,NE,0.34,41.0766029,-97.8887176
+landus-manilla,Landus Manilla,manilla,IA,0.34,41.889529,-95.235276
+new-coop-arispe,New Coop Arispe,arispe,IA,0.34,40.9511087,-94.2219213
+cogdill-farm-supply-inc-dunlap-ia,Cogdill Farm Supply Inc Dunlap IA,dunlap,IA,0.34,41.854922,-95.603074
+crystal-valley-cooperative-vernon-center-mn,Crystal Valley Cooperative Vernon Center MN,vernon center,MN,0.34,43.9649696,-94.1646881
+heartland-coop-prairie-city,Heartland Coop Prairie City,prairie city,IA,0.33,41.5978634,-93.2370141
+new-coop-blairsburg,New Coop Blairsburg,blairsburg,IA,0.33,42.4812431,-93.6417864
+maxyield-cooperative-spencer-ia,MAXYIELD COOPERATIVE SPENCER IA,spencer,IA,0.33,43.144523,-95.150547
+southeast-iowa-grain-yarmouth-ia,Southeast Iowa Grain Yarmouth IA,yarmouth,IA,0.33,41.027348,-91.323217
+tama-benton-cooperative-dysart-ia,Tama-Benton Cooperative Dysart IA,dysart,IA,0.33,42.1727109,-92.3052036
+stateline-swea-city-ia,Stateline Swea City IA,swea city,IA,0.33,43.3864497,-94.3101441
+mfa-exchange-chamois-mo,MFA Exchange Chamois MO,chamois,MO,0.33,38.6758497,-91.7703756
+gold-eagle-coop-eagle-grove,Gold-Eagle Coop Eagle Grove,eagle grove,IA,0.32,42.6642619,-93.8997333
+gold-eagle-coop-woden,Gold-Eagle Coop Woden,woden,IA,0.32,43.2335266,-93.9103374
+new-coop-woolstock,New Coop Woolstock,woolstock,IA,0.32,42.5672354,-93.8451184
+farmers-cooperative-company-diagonal-ia,Farmers Cooperative Company Diagonal IA,diagonal,IA,0.32,40.808644,-94.339445
+united-western-coop-dunlap-ia,United Western Coop Dunlap IA,dunlap,IA,0.32,41.851584,-95.605746
+ray-carroll-grain-growers-norborne-mo,Ray-Carroll Grain Growers Norborne MO,norborne,MO,0.32,39.3023225,-93.6796979
+riceland-foods-dudley-mo,Riceland Foods Dudley MO,dudley,MO,0.32,36.7887078,-90.0883092
+heartland-coop-modale,Heartland Coop Modale,modale,IA,0.31,41.6195045,-96.008828
+heartland-coop-river-sioux-seasonal,Heartland Coop River Sioux (Seasonal),river sioux,IA,0.31,41.8032945,-96.0444135
+west-side-grain-sales-corp-newhall-ia,West Side Grain Sales Corp Newhall IA,newhall,IA,0.31,41.995698,-91.965337
+nexus-cooperative-charles-city-ia,Nexus Cooperative Charles City IA,charles city,IA,0.31,43.0675035,-92.673695
+nexus-marble-rock-ia,Nexus Marble Rock IA,marble rock,IA,0.31,42.9655861,-92.8641874
+cargill-meredosia-il,Cargill Meredosia IL,meredosia,IL,0.31,39.83072,-90.56076
+mfa-agri-services-bernie-mo,MFA Agri Services Bernie MO,bernie,MO,0.31,36.6719765,-89.9672513
+new-coop-dickens,New Coop Dickens,dickens,IA,0.3,43.1311441,-95.0221809
+troy-elevator-inc-pulaski-ia,Troy Elevator Inc Pulaski IA,pulaski,IA,0.3,40.696977,-92.273247
+agri-way-partners-wayland-ia-approx,Agri-Way Partners Wayland IA (approx),wayland,IA,0.3,41.147206,-91.660831
+agp-chester-ne,AGP Chester NE,chester,NE,0.3,40.0075909,-97.6191323
+stateline-armstrong-ia,Stateline Armstrong IA,armstrong,IA,0.3,43.3931787,-94.4800233
+mid-missouri-agri-services-alma-mo,Mid Missouri Agri Services Alma MO,alma,MO,0.3,39.0949515,-93.5448152
+barry-s-elevator-clarence-mo,Barry's Elevator Clarence MO,clarence,MO,0.3,39.7416132,-92.2572303
+united-cooperatives-osborn-mo,United Cooperatives Osborn MO,osborn,MO,0.3,39.7472928,-94.3558105
+pro-coop-havelock,Pro Coop Havelock,havelock,IA,0.29,42.8310733,-94.7034159
+new-coop-correctionville,New Coop Correctionville,correctionville,IA,0.29,42.476137,-95.7861147
+heartland-co-op-chelsea-ia-approx,Heartland CO-OP Chelsea IA (approx),chelsea,IA,0.29,41.917864,-92.394723
+northeast-iowa-cooperative-winthrop-ia-approx,Northeast Iowa Cooperative Winthrop IA (approx),winthrop,IA,0.29,42.472974,-91.735557
+ray-carroll-sumner-mo,Ray-Carroll Sumner MO,sumner,MO,0.29,39.6564152,-93.2467935
+heart-of-missouri-mfa-agri-services-salisbury-mo,Heart of Missouri MFA Agri Services Salisbury MO,salisbury,MO,0.29,39.4249966,-92.8049769
+mfa-worth-co-sheridan-mo,MFA Worth Co Sheridan MO,sheridan,MO,0.29,40.5181922,-94.6114616
+heartland-coop-washburn,Heartland Coop Washburn,washburn,IA,0.28,42.4126725,-92.2656612
+new-coop-washta,New Coop Washta,washta,IA,0.28,42.5752672,-95.7167462
+agstate-holstein-ia,AgState Holstein IA,holstein,IA,0.28,42.489157,-95.545008
+testrake-bros-inc-lone-tree-ia,TeStrake Bros. Inc Lone Tree IA,lone tree,IA,0.28,41.488191,-91.427931
+heartland-coop-holland,Heartland Coop Holland,holland,IA,0.27,42.397665,-92.7991165
+gold-eagle-coop-titonka,Gold-Eagle Coop Titonka,titonka,IA,0.27,43.2349322,-94.0402599
+landus-templeton,Landus Templeton,templeton,IA,0.27,41.919888,-94.942841
+prairie-land-cooperative-ellsworth-ia,Prairie Land Cooperative Ellsworth IA,ellsworth,IA,0.27,42.310667,-93.578648
+adm-la-belle-mo,ADM La Belle MO,la belle,MO,0.27,40.1179655,-91.9174724
+new-vision-co-op-beaver-creek-mn,New Vision Co-op Beaver Creek MN,beaver creek,MN,0.27,43.614118,-96.364836
+new-vision-co-op-wilmont-mn,New Vision Co-op Wilmont MN,wilmont,MN,0.27,43.765935,-95.82809
+cva-waco-ne,CVA Waco NE,waco,NE,0.26,40.8948524,-97.4604547
+landus-churdan-seasonal,Landus Churdan (Seasonal),churdan,IA,0.26,42.155418,-94.480481
+new-coop-badger,New Coop Badger,badger,IA,0.26,42.6158415,-94.1467427
+new-coop-glidden,New Coop Glidden,glidden,IA,0.26,42.0554548,-94.7272437
+farmers-coop-association-ainsworth-ia,Farmers Coop Association Ainsworth IA,ainsworth,IA,0.26,41.28854,-91.551833
+fredericksburg-farmers-coop-frederika-ia,Fredericksburg Farmers Coop Frederika IA,frederika,IA,0.26,42.881658,-92.308237
+cogdill-farm-supplu-inc-logan-ia,Cogdill Farm Supplu Inc Logan IA,logan,IA,0.26,41.644006,-95.788818
+key-coop-barnes-city-ia,Key Coop Barnes City IA,barnes city,IA,0.26,41.509316,-92.46906
+new-vision-co-op-dundee-mn,New Vision Co-op Dundee MN,dundee,MN,0.26,43.846214,-95.467499
+heartland-coop-melbourne,Heartland Coop Melbourne,melbourne,IA,0.25,41.9414928,-93.099343
+pro-coop-wallingford,Pro Coop Wallingford,wallingford,IA,0.25,43.3203279,-94.7952148
+cva-scribner-ne,CVA Scribner NE,scribner,NE,0.25,41.6660435,-96.6681395
+gold-eagle-coop-livermore,Gold-Eagle Coop Livermore,livermore,IA,0.25,42.8698329,-94.1852398
+new-coop-bode,New Coop Bode,bode,IA,0.25,42.8697841,-94.2880486
+new-coop-lanesboro,New Coop Lanesboro,lanesboro,IA,0.25,42.1844279,-94.6913689
+farmers-cooperative-produce-co-fort-atkinson-ia,Farmers Cooperative Produce Co Fort Atkinson IA,fort atkinson,IA,0.25,43.146448,-91.933807
+agstate-galva-ia,AgState Galva IA,galva,IA,0.25,42.507887,-95.417348
+the-scoular-company-hastings-ia,The Scoular Company Hastings IA,hastings,IA,0.25,41.025642,-95.497701
+agstate-nemaha-ia,AgState Nemaha IA,nemaha,IA,0.25,42.516897,-95.088847
+pro-coop-plover-elevator,Pro Coop Plover Elevator,plover,IA,0.24,42.8787647,-94.6217657
+pro-coop-rutland,Pro Coop Rutland,rutland,IA,0.24,42.7607626,-94.292403
+cva-elgin-ne,CVA Elgin NE,elgin,NE,0.24,41.9846112,-98.0848124
+cva-oyens-ia,CVA Oyens IA,oyens,IA,0.24,42.8179223,-96.0566761
+landus-beaver,Landus Beaver,beaver,IA,0.24,42.036323,-94.141181
+agstate-hospers-ia,AgState Hospers IA,hospers,IA,0.24,43.072771,-95.906408
+east-central-iowa-co-op-jesup-ia,East Central Iowa CO-OP Jesup IA,jesup,IA,0.24,42.474343,-92.062706
+stateline-cooperative-burt-ia,Stateline Cooperative Burt IA,burt,IA,0.24,43.1976447,-94.2191728
+mfa-farmers-elevator-argyle-mo,MFA Farmers Elevator Argyle MO,argyle,MO,0.24,38.2940098,-92.0233686
+heartland-coop-elberon,Heartland Coop Elberon,elberon,IA,0.23,42.0072743,-92.3145221
+heartland-coop-mondamin,Heartland Coop Mondamin,mondamin,IA,0.23,41.7112448,-96.0236898
+the-scoular-company-emerson-ia,The Scoular Company Emerson IA,emerson,IA,0.23,41.016044,-95.403532
+five-star-cooperative-burchinal-ia,Five Star Cooperative Burchinal IA,burchinal,IA,0.23,43.062966,-93.277245
+mfa-agri-services-hale-mo,MFA Agri Services Hale MO,hale,MO,0.23,39.602984,-93.343043
+mfa-exchange-ionia-mo,MFA Exchange Ionia MO,ionia,MO,0.23,38.50168,-93.3235045
+southeastern-grain-laclede-mo-smithfield,Southeastern Grain Laclede MO Smithfield,laclede,MO,0.23,39.7853502,-93.1704077
+heartland-coop-guernsey,Heartland Coop Guernsey,guernsey,IA,0.22,41.652533,-92.346441
+heartland-coop-stanhope,Heartland Coop Stanhope,stanhope,IA,0.22,42.2872505,-93.797372
+new-coop-afton,New Coop Afton,afton,IA,0.22,41.0290611,-94.19710680000001
+berne-cooperative-anthon-ia,Berne Cooperative Anthon IA,anthon,IA,0.22,42.387983,-95.868201
+troy-elevator-inc-blakesburg-ia,Troy Elevator Inc Blakesburg IA,blakesburg,IA,0.22,40.960572,-92.632782
+landus-cooperative-paton-ia,LANDUS COOPERATIVE PATON IA,paton,IA,0.22,42.165828,-94.253288
+five-star-cooperative-hanlontown-ia,Five Star Cooperative Hanlontown IA,hanlontown,IA,0.22,43.282871,-93.378257
+faas-feed-grain-inc-webster-ia,Faas Feed & Grain Inc Webster IA,webster,IA,0.22,41.438358,-92.169077
+mfa-agri-services-guilford-mo,MFA Agri Services Guilford MO,guilford,MO,0.22,40.1687812,-94.7385635
+ag-partners-goodhue-mn,Ag Partners Goodhue MN,goodhue,MN,0.22,44.399554,-92.622674
+new-coop-britt,New Coop Britt,britt,IA,0.21,43.10023,-93.802095
+heartland-coop-henderson,Heartland Coop Henderson,henderson,IA,0.21,41.1417109,-95.4311031
+landus-rippey-will-call,Landus Rippey (Will Call),rippey,IA,0.21,41.935641,-94.199643
+farmers-cooperative-company-macksburg-ia,Farmers Cooperative Company Macksburg IA,macksburg,IA,0.21,41.214794,-94.182561
+ag-vantage-fs-inc-welton-ia,AG Vantage FS Inc Welton IA,welton,IA,0.21,41.909794,-90.59647
+stateline-lone-rock-ia,Stateline Lone Rock IA,lone rock,IA,0.21,43.2191779,-94.3242274
+west-central-ag-services-centerview-mo,West Central Ag Services Centerview MO,centerview,MO,0.21,38.7441852,-93.844896
+river-valley-mfa-lexington-mo,River Valley MFA Lexington MO,lexington,MO,0.21,39.1812606,-93.8669835
+new-coop-palmer,New Coop Palmer,palmer,IA,0.2,42.6303282,-94.6008932
+howard-county-equity-coop-alta-vista-ia,Howard County Equity Coop Alta Vista IA,alta vista,IA,0.2,43.198436,-92.416331
+cassen-s-mill-corp-keswick-ia,Cassen's Mill Corp. Keswick IA,keswick,IA,0.2,41.454451,-92.240685
+five-star-cooperative-klemme-ia,Five Star Cooperative Klemme IA,klemme,IA,0.2,43.008617,-93.603361
+five-star-cooperative-lime-springs-ia,Five Star Cooperative Lime Springs IA,lime springs,IA,0.2,43.448874,-92.281965
+five-star-cooperative-swaledale-ia,Five Star Cooperative Swaledale IA,swaledale,IA,0.2,42.977625,-93.313655
+stateline-bancroft-ia,Stateline Bancroft IA,bancroft,IA,0.2,43.2932246,-94.2200703
+mid-missouri-agri-services-sweet-springs-mo,Mid-Missouri Agri Services Sweet Springs MO,sweet springs,MO,0.2,38.9659271,-93.4173736
+mfa-agri-services-browning-mo,MFA Agri Services Browning MO,browning,MO,0.2,40.0361763,-93.1620862
+meadowland-farmers-coop-wabasso-mn,Meadowland Farmers Coop Wabasso MN,wabasso,MN,0.2,44.4025009,-95.2579322
+gold-eagle-coop-thompson,Gold-Eagle Coop Thompson,thompson,IA,0.19,43.3713445,-93.7735556
+new-coop-superior,New Coop Superior,superior,IA,0.19,43.4319493,-94.946586
+ag-vantage-fs-inc-coulter-ia-approx,AG Vantage FS Inc Coulter IA (approx),coulter,IA,0.19,42.734365,-93.36857
+cooperative-elevator-association-hartley-ia,Cooperative Elevator Association Hartley IA,hartley,IA,0.19,43.17736,-95.47713
+heartland-co-op-hartwick-ia,Heartland CO-OP Hartwick IA,hartwick,IA,0.19,41.786619,-92.343414
+farmers-coop-association-libertyville-ia-approx,Farmers Coop Association Libertyville IA (approx),libertyville,IA,0.19,40.959689,-92.050807
+ag-vantage-fs-inc-oxford-ia,AG Vantage FS Inc Oxford IA,oxford,IA,0.19,41.721102,-91.790792
+agstate-royal-ia,AgState Royal IA,royal,IA,0.19,43.066178,-95.283789
+show-me-mfa-agri-services-centralia-mo,Show-Me MFA Agri Services Centralia MO,centralia,MO,0.19,39.2124098,-92.1335596
+mfa-coop-association-280-freeburg-mo,MFA Coop Association 280 Freeburg MO,freeburg,MO,0.19,38.314413,-91.922235
+pro-coop-ruthven,Pro Coop Ruthven,ruthven,IA,0.18,43.1304838,-94.9008021
+cva-ulysses-ne,CVA Ulysses NE,ulysses,NE,0.18,41.0705881,-97.2023602
+cva-narka-ks,CVA Narka KS,narka,KS,0.18,39.960884,-97.4282073
+gold-eagle-coop-goldfield,Gold-Eagle Coop Goldfield,goldfield,IA,0.18,42.7357139,-93.9157104
+new-coop-greenville,New Coop Greenville,greenville,IA,0.18,43.0163727,-95.1481371
+new-coop-pierson,New Coop Pierson,pierson,IA,0.18,42.5436335,-95.868724
+sperry-union-store-inc-mediapolis-ia,Sperry Union Store Inc Mediapolis IA,mediapolis,IA,0.18,41.008738,-91.161847
+farmers-cooperative-elevator-ottosen-ia-approx,Farmers Cooperative Elevator Ottosen IA (approx),ottosen,IA,0.18,42.896516,-94.377398
+nexus-chapin-ia,Nexus Chapin IA,chapin,IA,0.18,42.8364993,-93.2207066
+tama-benton-clutier-ia,Tama-Benton Clutier IA,clutier,IA,0.18,42.077919,-92.4045486
+heiman-rockville-mo,Heiman Rockville MO,rockville,MO,0.18,38.0708994,-94.0799001
+heartland-coop-lacona,Heartland Coop Lacona,lacona,IA,0.17,41.1898018,-93.3870152
+heartland-coop-randall,Heartland Coop Randall,randall,IA,0.17,42.2358742,-93.6039781
+cva-petersburg-ne,CVA Petersburg NE,petersburg,NE,0.17,41.852219,-98.0819559
+cva-utica-ne,CVA Utica NE,utica,NE,0.17,40.8951329,-97.3433498
+landus-aredale-seasonal,Landus Aredale (Seasonal),aredale,IA,0.17,42.834724,-93.005501
+landus-bricelyn-seasonal,Landus Bricelyn (Seasonal),bricelyn,MN,0.17,43.55956,-93.811757
+new-coop-mallard,New Coop Mallard,mallard,IA,0.17,42.9409422,-94.6837668
+new-coop-vincent,New Coop Vincent,vincent,IA,0.17,42.5928854,-94.0204082
+new-coop-whittemore,New Coop Whittemore,whittemore,IA,0.17,43.0649007,-94.4252747
+us-ag-center-inc-allison-ia,US AG Center Inc Allison IA,allison,IA,0.17,42.750517,-92.795018
+five-star-cooperative-scarville-ia,Five Star Cooperative Scarville IA,scarville,IA,0.17,43.469553,-93.619144
+key-coop-zearing-ia,Key Coop Zearing IA,zearing,IA,0.17,42.160405,-93.296831
+nexus-rudd-ia,Nexus Rudd IA,rudd,IA,0.17,43.1277093,-92.9039909
+bichsel-spreading-services-leonard-mo,Bichsel Spreading Services Leonard MO,leonard,MO,0.17,39.8953945,-92.1834785
+bowman-milling-pocahontas-mo,Bowman Milling Pocahontas MO,pocahontas,MO,0.17,37.5001044,-89.6400484
+north-iowa-coop-plymouth,North Iowa Coop Plymouth,plymouth,IA,0.16,43.245233,-93.12202
+gold-eagle-coop-kiester-mn,Gold-Eagle Coop Kiester MN,kiester,MN,0.16,43.5352579,-93.7121194
+new-coop-knierim,New Coop Knierim,knierim,IA,0.16,42.4549058,-94.4561907
+cogdill-farm-supply-inc-dow-city-ia,Cogdill Farm Supply Inc Dow City IA,dow city,IA,0.16,41.928887,-95.493898
+agp-cowles-ne,AGP Cowles NE,cowles,NE,0.16,40.1722355,-98.4475575
+key-coop-sully-ia,Key Coop Sully IA,sully,IA,0.16,41.576776,-92.847701
+united-coop-kamrar-ia,United Coop Kamrar IA,kamrar,IA,0.16,42.390999,-93.7286162
+cargill-kansas-city-mo,Cargill Kansas City MO,kansas city,MO,0.16,39.120949,-94.55478
+new-vision-co-op-jeffers-mn,New Vision Co-op Jeffers MN,jeffers,MN,0.16,44.055011,-95.193718
+cva-bee-ne,CVA Bee NE,bee,NE,0.15,41.0064768,-97.0600908
+gold-eagle-coop-kanawha,Gold-Eagle Coop Kanawha,kanawha,IA,0.15,42.9341872,-93.7913902
+landus-dawson-will-call,Landus Dawson (Will Call),dawson,IA,0.15,41.842273,-94.221755
+chem-gro-of-houghton-inc-hillsboro-ia,Chem Gro of Houghton Inc Hillsboro IA,hillsboro,IA,0.15,40.836529,-91.712941
+new-vision-co-op-heron-lake-mn,New Vision Co-op Heron Lake MN,heron lake,MN,0.15,43.796709,-95.320179
+cva-rising-city-ne,CVA Rising City NE,rising city,NE,0.14,41.1985312,-97.2955399
+landus-latimer,Landus Latimer,latimer,IA,0.14,42.763945,-93.366453
+new-coop-anita,New Coop Anita,anita,IA,0.14,41.4445536,-94.76463969999999
+new-coop-blencoe,New Coop Blencoe,blencoe,IA,0.14,41.9299801,-96.0836537
+new-coop-clare,New Coop Clare,clare,IA,0.14,42.5886729,-94.3448263
+new-coop-gruver,New Coop Gruver,gruver,IA,0.14,43.3932914,-94.7052597
+new-coop-west-bend,New Coop West Bend,west bend,IA,0.14,42.9600129,-94.4439709
+heartland-co-op-laurel-ia,Heartland CO-OP Laurel IA,laurel,IA,0.14,41.883519,-92.920734
+agstate-peterson-ia,AgState Peterson IA,peterson,IA,0.14,42.916134,-95.342416
+cargill-kansas-city-mo-2306-rochester,Cargill Kansas City MO 2306 Rochester,kansas city,MO,0.14,39.1211445,-94.5553479
+mfa-agri-services-laddonia-mo,MFA Agri Services Laddonia MO,laddonia,MO,0.14,39.2427552,-91.6441849
+central-farm-service-truman-mn,Central Farm Service Truman MN,truman,MN,0.14,43.8275993,-94.4382582
+new-vision-co-op-ellsworth-mn,New Vision Co-op Ellsworth MN,ellsworth,MN,0.14,43.519315,-96.018158
+landus-somers-seasonal,Landus Somers (Seasonal),somers,IA,0.13,42.378799,-94.432518
+duffe-grain-inc-atalissa-ia,Duffe Grain Inc. Atalissa IA,atalissa,IA,0.13,41.571157,-91.167851
+farmers-cooperative-company-linden-ia,Farmers Cooperative Company Linden IA,linden,IA,0.13,41.642447,-94.268528
+agri-center-of-henry-county-inc-olds-ia,Agri-Center of Henry County Inc. Olds IA,olds,IA,0.13,41.134211,-91.545564
+five-star-cooperative-north-washington-ia,Five Star Cooperative North Washington IA,north washington,IA,0.13,43.116089,-92.415899
+two-rivers-monroe-ia,Two Rivers Monroe IA,monroe,IA,0.13,41.5192221,-93.1022444
+heartland-coop-lincoln,Heartland Coop Lincoln,lincoln,IA,0.12,42.2627367,-92.6937886
+cva-east-hub-oakland-ne,CVA East Hub Oakland NE,oakland,NE,0.12,41.8343401,-96.4681826
+gold-eagle-coop-renwick,Gold-Eagle Coop Renwick,renwick,IA,0.12,42.8276431,-93.9802126
+new-coop-ute,New Coop Ute,ute,IA,0.12,42.0499317,-95.7071017
+new-cooperative-inc-george-ia,New Cooperative Inc. George IA,george,IA,0.12,43.342655,-96.002224
+farmers-feed-grain-company-inc-riceville-ia,Farmers Feed & Grain Company Inc Riceville IA,riceville,IA,0.12,43.361738,-92.551807
+west-side-grain-sales-corp-van-horne-ia,West Side Grain Sales Corp Van Horne IA,van horne,IA,0.12,42.007455,-92.09059
+heartland-coop-randolph,Heartland Coop Randolph,randolph,IA,0.11,40.8721723,-95.5647326
+cva-royal-ne,CVA Royal NE,royal,NE,0.11,42.332227,-98.1259044
+cva-leonardville-ks,CVA Leonardville KS,leonardville,KS,0.11,39.3630716,-96.8592655
+landus-yetter,Landus Yetter,yetter,IA,0.11,42.315144,-94.843103
+new-coop-fostoria,New Coop Fostoria,fostoria,IA,0.11,43.243073,-95.153556
+heartland-co-op-luzerne-ia-approx,Heartland CO-OP Luzerne IA (approx),luzerne,IA,0.11,41.906034,-92.181362
+new-cooperative-inc-moorland-ia-approx,New Cooperative Inc. Moorland IA (approx),moorland,IA,0.11,42.44156,-94.294018
+hartog-elevator-inc-sanborn-ia,Hartog Elevator Inc Sanborn IA,sanborn,IA,0.11,43.180505,-95.654873
+f-j-krob-co-rowley-ia,F.J. Krob & Co Rowley IA,rowley,IA,0.11,42.3694591,-91.8438841
+central-united-cooperative-lafayette-mn,Central United Cooperative Lafayette MN,lafayette,MN,0.11,44.4477977,-94.3935839
+pro-coop-bradgate-elevator,Pro Coop Bradgate Elevator,bradgate,IA,0.1,42.8022244,-94.419837
+cva-benedict-ne,CVA Benedict NE,benedict,NE,0.1,41.0070419,-97.6065292
+gold-eagle-coop-wesley,Gold-Eagle Coop Wesley,wesley,IA,0.1,43.0884584,-93.9920092
+heartland-co-op-gilman-ia,Heartland CO-OP Gilman IA,gilman,IA,0.1,41.879218,-92.786998
+landus-cooperative-irwin-ia,LANDUS COOPERATIVE IRWIN IA,irwin,IA,0.1,41.789333,-95.207306
+west-side-grain-sales-corp-shellsburg-ia,West Side Grain Sales Corp Shellsburg IA,shellsburg,IA,0.1,42.09201,-91.871699
+stateline-ringsted-ia,Stateline Ringsted IA,ringsted,IA,0.1,43.2958199,-94.5080065
+pro-coop-rolfe-grain-elevator,Pro Coop Rolfe Grain Elevator,rolfe,IA,0.09,42.8130611,-94.5308156
+agstate-granville-ia,AgState Granville IA,granville,IA,0.09,42.986063,-95.874392
+fredericksburg-farmers-coop-hawkeye-ia,Fredericksburg Farmers Coop Hawkeye IA,hawkeye,IA,0.09,42.938598,-91.950167
+heartland-coop-dexter,Heartland Coop Dexter,dexter,IA,0.08,41.5156934,-94.2284725
+chem-gro-of-houghton-inc-salem-ia,Chem Gro of Houghton Inc Salem IA,salem,IA,0.08,40.852817,-91.620167
+nexus-carpenter-ia,Nexus Carpenter IA,carpenter,IA,0.08,43.4148482,-93.0181131
+mfa-exchange-vandalia-mo,MFA Exchange Vandalia MO,vandalia,MO,0.08,39.3077305,-91.4902299
+new-coop-whiting,New Coop Whiting,whiting,IA,0.06,42.1271528,-96.1513466
+ag-vantage-fs-inc-low-moor-ia,AG Vantage FS Inc Low Moor IA,low moor,IA,0.06,41.80238,-90.354812
+mfa-producers-grain-walker-mo,MFA Producers Grain Walker MO,walker,MO,0.06,37.8992108,-94.2316769
+heartland-coop-minburn,Heartland Coop Minburn,minburn,IA,0.05,41.7571136,-94.0285314
+agstate-fonda-ia-approx,AgState Fonda IA (approx),fonda,IA,0.05,42.581372,-94.845992
+farmers-cooperative-society-boyden-ia,Farmers Cooperative Society Boyden IA,boyden,IA,0.04,43.189438,-96.002852
+stateline-fenton-ia,Stateline Fenton IA,fenton,IA,0.04,43.2184305,-94.4273955
+heartland-coop-malcom,Heartland Coop Malcom,malcom,IA,0.03,41.7058189,-92.5551327
+gold-eagle-coop-hardy,Gold-Eagle Coop Hardy,hardy,IA,0.03,42.8100598,-94.0514869
+agstate-cleghorn-ia,AgState Cleghorn IA,cleghorn,IA,0.03,42.812793,-95.71264
+cogdill-farm-supply-inc-panama-ia-approx,Cogdill Farm Supply Inc Panama IA (approx),panama,IA,0.03,41.726175,-95.4757
+united-coop-stratford-ia,United Coop Stratford IA,stratford,IA,0.02,42.2697177,-93.9276379

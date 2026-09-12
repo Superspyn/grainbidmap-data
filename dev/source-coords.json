@@ -1,0 +1,2978 @@
+{
+ "agricharts:cvacoop": {
+  "86504": {
+   "name": "81-20",
+   "lat": 42.370748,
+   "lon": -97.420696
+  },
+  "85909": {
+   "name": "ADM Columbus",
+   "lat": 41.424601,
+   "lon": -97.364843
+  },
+  "82179": {
+   "name": "ADM Fremont",
+   "lat": 41.43133,
+   "lon": -96.49803
+  },
+  "13875": {
+   "name": "ADM Lincoln",
+   "lat": 40.866901,
+   "lon": -96.619429
+  },
+  "85877": {
+   "name": "AGP David City",
+   "lat": 41.27483,
+   "lon": -97.144573
+  },
+  "13877": {
+   "name": "AGP Hastings",
+   "lat": 40.589731,
+   "lon": -98.340966
+  },
+  "85911": {
+   "name": "AGP Sergeant Bluff",
+   "lat": 42.337511,
+   "lon": -96.349643
+  },
+  "74433": {
+   "name": "Ainsworth",
+   "lat": 42.54413,
+   "lon": -99.86203
+  },
+  "22687": {
+   "name": "Akron",
+   "lat": 42.82526,
+   "lon": -96.565364
+  },
+  "13880": {
+   "name": "Bancroft",
+   "lat": 42.013709,
+   "lon": -96.571824
+  },
+  "13883": {
+   "name": "Bee",
+   "lat": 41.00732,
+   "lon": -97.06039
+  },
+  "13884": {
+   "name": "Benedict",
+   "lat": 41.007138,
+   "lon": -97.606424
+  },
+  "13885": {
+   "name": "Bow Valley",
+   "lat": 42.744128,
+   "lon": -97.256185
+  },
+  "53364": {
+   "name": "Bradshaw",
+   "lat": 40.882372,
+   "lon": -97.741557
+  },
+  "85910": {
+   "name": "Bunge Council Bluffs",
+   "lat": 41.153467,
+   "lon": -95.81097
+  },
+  "82918": {
+   "name": "Cargill Albion",
+   "lat": 41.68332,
+   "lon": -97.983876
+  },
+  "13887": {
+   "name": "Cargill Blair",
+   "lat": 41.537941,
+   "lon": -96.102467
+  },
+  "51220": {
+   "name": "Cargill Sioux City",
+   "lat": 42.50082,
+   "lon": -96.39054
+  },
+  "85865": {
+   "name": "Daykin Milling LLC",
+   "lat": 40.321416,
+   "lon": -97.25412
+  },
+  "13890": {
+   "name": "East Hub",
+   "lat": 41.886841,
+   "lon": -96.463219
+  },
+  "13891": {
+   "name": "Elgin",
+   "lat": 41.984743,
+   "lon": -98.085185
+  },
+  "13893": {
+   "name": "Fullerton",
+   "lat": 41.372179,
+   "lon": -97.965144
+  },
+  "85907": {
+   "name": "Green Plains Central City",
+   "lat": 41.109888,
+   "lon": -97.970691
+  },
+  "85908": {
+   "name": "Green Plains York",
+   "lat": 40.897674,
+   "lon": -97.544648
+  },
+  "13898": {
+   "name": "Gresham",
+   "lat": 41.029927,
+   "lon": -97.402671
+  },
+  "13900": {
+   "name": "Hampton",
+   "lat": 40.877355,
+   "lon": -97.884321
+  },
+  "22685": {
+   "name": "Hinton",
+   "lat": 42.626849,
+   "lon": -96.289715
+  },
+  "13901": {
+   "name": "Hooper",
+   "lat": 41.611424,
+   "lon": -96.552194
+  },
+  "13902": {
+   "name": "Hordville",
+   "lat": 41.077586,
+   "lon": -97.887597
+  },
+  "13903": {
+   "name": "Humphrey",
+   "lat": 41.692667,
+   "lon": -97.483794
+  },
+  "85906": {
+   "name": "Husker Ag Plainview",
+   "lat": 42.350194,
+   "lon": -97.707463
+  },
+  "74199": {
+   "name": "Laurel",
+   "lat": 42.438135,
+   "lon": -97.107341
+  },
+  "86775": {
+   "name": "MG Waldbaum - Bloomfield",
+   "lat": 42.593929,
+   "lon": -97.704296
+  },
+  "28840": {
+   "name": "MG Waldbaum - Wakefield",
+   "lat": 42.256839,
+   "lon": -96.862086
+  },
+  "13906": {
+   "name": "Monroe",
+   "lat": 41.473434,
+   "lon": -97.600007
+  },
+  "82110": {
+   "name": "Niewohner Feedlot",
+   "lat": 41.78514,
+   "lon": -97.986872
+  },
+  "85878": {
+   "name": "Norfolk Crush LLC",
+   "lat": 42.0776,
+   "lon": -97.407108
+  },
+  "22686": {
+   "name": "Oyens",
+   "lat": 42.818994,
+   "lon": -96.058455
+  },
+  "13911": {
+   "name": "Petersburg",
+   "lat": 41.852219,
+   "lon": -98.081956
+  },
+  "83175": {
+   "name": "Plymouth Energy-Merrill",
+   "lat": 42.730977,
+   "lon": -96.250078
+  },
+  "13913": {
+   "name": "Polk",
+   "lat": 41.079765,
+   "lon": -97.782453
+  },
+  "13914": {
+   "name": "Rising City",
+   "lat": 41.198546,
+   "lon": -97.296011
+  },
+  "13915": {
+   "name": "Royal",
+   "lat": 42.331425,
+   "lon": -98.174717
+  },
+  "87543": {
+   "name": "Sandhills Renewable Energy LLC",
+   "lat": 42.517735,
+   "lon": -98.957307
+  },
+  "13916": {
+   "name": "Scribner",
+   "lat": 41.666111,
+   "lon": -96.66817
+  },
+  "13917": {
+   "name": "Shelby",
+   "lat": 41.194265,
+   "lon": -97.422123
+  },
+  "82797": {
+   "name": "Siouxland Ethanol",
+   "lat": 42.452999,
+   "lon": -96.595018
+  },
+  "13919": {
+   "name": "St Edward",
+   "lat": 41.569377,
+   "lon": -97.865758
+  },
+  "13921": {
+   "name": "Stromsburg",
+   "lat": 41.109715,
+   "lon": -97.595515
+  },
+  "13922": {
+   "name": "Tamora",
+   "lat": 40.894812,
+   "lon": -97.226574
+  },
+  "13924": {
+   "name": "Tilden",
+   "lat": 42.04721,
+   "lon": -97.833863
+  },
+  "13925": {
+   "name": "Ulysses",
+   "lat": 41.070838,
+   "lon": -97.202013
+  },
+  "13926": {
+   "name": "Utica",
+   "lat": 40.894779,
+   "lon": -97.34389
+  },
+  "13927": {
+   "name": "Waco",
+   "lat": 40.894365,
+   "lon": -97.460125
+  },
+  "13928": {
+   "name": "Wakefield",
+   "lat": 42.256839,
+   "lon": -96.862105
+  }
+ },
+ "agricharts:goldeagle": {
+  "66453": {
+   "name": "CLARION",
+   "lat": 42.736265,
+   "lon": -93.735034
+  },
+  "51962": {
+   "name": "CORWITH",
+   "lat": 42.993018,
+   "lon": -93.955827
+  },
+  "51970": {
+   "name": "EAGLE GROVE",
+   "lat": 42.664469,
+   "lon": -93.901337
+  },
+  "85536": {
+   "name": "Forest City",
+   "lat": 43.264026,
+   "lon": -93.633944
+  },
+  "79740": {
+   "name": "GALBRAITH",
+   "lat": 42.98081,
+   "lon": -94.16446
+  },
+  "85078": {
+   "name": "GALT FEED MILL",
+   "lat": 42.671113,
+   "lon": -93.636186
+  },
+  "51963": {
+   "name": "GOLDFIELD",
+   "lat": 42.734971,
+   "lon": -93.914946
+  },
+  "51964": {
+   "name": "HARDY",
+   "lat": 42.808396,
+   "lon": -94.051155
+  },
+  "77449": {
+   "name": "HAWKEYE PRIDE",
+   "lat": 42.99226,
+   "lon": -93.956644
+  },
+  "66470": {
+   "name": "HOLMES",
+   "lat": 42.737804,
+   "lon": -93.831656
+  },
+  "66472": {
+   "name": "HUTCHINS",
+   "lat": 43.092157,
+   "lon": -93.882435
+  },
+  "66474": {
+   "name": "KANAWHA",
+   "lat": 42.934505,
+   "lon": -93.791411
+  },
+  "85537": {
+   "name": "Kiester",
+   "lat": 43.534941,
+   "lon": -93.712
+  },
+  "85538": {
+   "name": "Leland",
+   "lat": 43.338252,
+   "lon": -93.638234
+  },
+  "51965": {
+   "name": "LIVERMORE",
+   "lat": 42.869615,
+   "lon": -94.185497
+  },
+  "51966": {
+   "name": "RENWICK",
+   "lat": 42.827918,
+   "lon": -93.979799
+  },
+  "85835": {
+   "name": "THOMPSON",
+   "lat": 43.37643,
+   "lon": -93.774331
+  },
+  "51967": {
+   "name": "THOR",
+   "lat": 42.68939,
+   "lon": -94.049258
+  },
+  "51968": {
+   "name": "TITONKA",
+   "lat": 43.235312,
+   "lon": -94.040056
+  },
+  "51969": {
+   "name": "WESLEY",
+   "lat": 43.088615,
+   "lon": -93.993147
+  },
+  "66476": {
+   "name": "WODEN",
+   "lat": 43.233866,
+   "lon": -93.910111
+  }
+ },
+ "agricharts:procooperative": {
+  "21297": {
+   "name": "AYRSHIRE.IA",
+   "lat": 43.039082,
+   "lon": -94.852598
+  },
+  "21298": {
+   "name": "BRADGATE.IA",
+   "lat": 42.803027,
+   "lon": -94.418027
+  },
+  "21299": {
+   "name": "GILMORE CITY.IA",
+   "lat": 42.748987,
+   "lon": -94.459446
+  },
+  "21300": {
+   "name": "GRAETTINGER.IA",
+   "lat": 43.241859,
+   "lon": -94.748316
+  },
+  "21301": {
+   "name": "HAVELOCK.IA",
+   "lat": 42.831051,
+   "lon": -94.703435
+  },
+  "21302": {
+   "name": "MANSON.IA",
+   "lat": 42.527688,
+   "lon": -94.532255
+  },
+  "21304": {
+   "name": "PIONEER.IA",
+   "lat": 42.653687,
+   "lon": -94.391805
+  },
+  "21305": {
+   "name": "PLOVER.IA",
+   "lat": 42.878765,
+   "lon": -94.621766
+  },
+  "21306": {
+   "name": "POCAHONTAS.IA",
+   "lat": 42.733566,
+   "lon": -94.669183
+  },
+  "21307": {
+   "name": "ROLFE.IA",
+   "lat": 42.813725,
+   "lon": -94.530003
+  },
+  "21308": {
+   "name": "RUTHVEN.IA",
+   "lat": 43.130985,
+   "lon": -94.900579
+  },
+  "21309": {
+   "name": "RUTLAND.IA",
+   "lat": 42.760763,
+   "lon": -94.292403
+  },
+  "21310": {
+   "name": "TERRIL.IA",
+   "lat": 43.302575,
+   "lon": -94.96927
+  },
+  "21942": {
+   "name": "WALLINGFORD.IA",
+   "lat": 43.319819,
+   "lon": -94.794901
+  },
+  "74325": {
+   "name": "AGP- EMMETSBURG",
+   "lat": 43.099503,
+   "lon": -94.652783
+  },
+  "74326": {
+   "name": "AGP- EAGLE GROVE",
+   "lat": 42.668781,
+   "lon": -93.902814
+  }
+ },
+ "agricharts:midiowa": {
+  "66521": {
+   "name": "ADM CEDAR RAPIDS",
+   "lat": 41.929901,
+   "lon": -91.691711
+  },
+  "71705": {
+   "name": "ADM DSM",
+   "lat": 41.627706,
+   "lon": -93.583004
+  },
+  "2469": {
+   "name": "BEAMAN",
+   "lat": 42.218153,
+   "lon": -92.821853
+  },
+  "86387": {
+   "name": "BUCKEYE",
+   "lat": 42.416344,
+   "lon": -93.376167
+  },
+  "75163": {
+   "name": "CARGILL CEDAR RAPIDS",
+   "lat": 41.983199,
+   "lon": -91.668599
+  },
+  "71703": {
+   "name": "CARGILL IA FALLS",
+   "lat": 42.51201,
+   "lon": -93.2649
+  },
+  "66523": {
+   "name": "CARGILL STARCH",
+   "lat": 41.978699,
+   "lon": -91.664612
+  },
+  "64471": {
+   "name": "CEDAR FALLS",
+   "lat": 42.550804,
+   "lon": -92.420082
+  },
+  "2470": {
+   "name": "CONRAD",
+   "lat": 42.223386,
+   "lon": -92.874885
+  },
+  "75700": {
+   "name": "EDDY",
+   "lat": 41.141335,
+   "lon": -92.640234
+  },
+  "87420": {
+   "name": "EDGEWOOD",
+   "lat": 42.643417,
+   "lon": -91.410888
+  },
+  "2475": {
+   "name": "GREEN MOUNTAIN",
+   "lat": 42.101961,
+   "lon": -92.818853
+  },
+  "2476": {
+   "name": "HAVERHILL",
+   "lat": 41.942715,
+   "lon": -92.958044
+  },
+  "64475": {
+   "name": "HUDSON",
+   "lat": 42.407819,
+   "lon": -92.454465
+  },
+  "64473": {
+   "name": "JESUP",
+   "lat": 42.452596,
+   "lon": -92.054538
+  },
+  "75155": {
+   "name": "JEWELL",
+   "lat": 42.310734,
+   "lon": -93.643248
+  },
+  "85557": {
+   "name": "KLOSTERMANN",
+   "lat": 42.503896,
+   "lon": -91.214273
+  },
+  "64477": {
+   "name": "LAPORTE CITY",
+   "lat": 42.31332,
+   "lon": -92.183887
+  },
+  "75159": {
+   "name": "LINCOLNWAY",
+   "lat": 42.02282,
+   "lon": -93.47253
+  },
+  "2472": {
+   "name": "LISCOMB",
+   "lat": 42.186787,
+   "lon": -93.006645
+  },
+  "3473": {
+   "name": "MIDWAY",
+   "lat": 42.09744,
+   "lon": -92.586263
+  },
+  "49022": {
+   "name": "MILL JUNCTION",
+   "lat": 42.409015,
+   "lon": -92.771908
+  },
+  "75160": {
+   "name": "PINELAKE",
+   "lat": 42.45969,
+   "lon": -93.05801
+  },
+  "79809": {
+   "name": "POET F.B.",
+   "lat": 42.640969,
+   "lon": -92.028716
+  },
+  "79810": {
+   "name": "POET IA FALLS",
+   "lat": 42.506212,
+   "lon": -93.282898
+  },
+  "79811": {
+   "name": "POET S.R.",
+   "lat": 42.737604,
+   "lon": -92.617134
+  },
+  "82509": {
+   "name": "SHELL ROCK SOY PROC",
+   "lat": 42.729703,
+   "lon": -92.62831
+  },
+  "81965": {
+   "name": "SINCLAIR",
+   "lat": 42.573456,
+   "lon": -92.729482
+  },
+  "84738": {
+   "name": "STATE CENTER",
+   "lat": 42.017932,
+   "lon": -93.169099
+  },
+  "66118": {
+   "name": "WATERLOO",
+   "lat": 42.53289,
+   "lon": -92.36855
+  }
+ },
+ "agricharts:nicoop": {
+  "70859": {
+   "name": "Thornton",
+   "lat": 42.944022,
+   "lon": -93.378962
+  },
+  "70858": {
+   "name": "Portland",
+   "lat": 43.129001,
+   "lon": -93.123591
+  },
+  "70857": {
+   "name": "Plymouth",
+   "lat": 43.245491,
+   "lon": -93.121928
+  },
+  "70856": {
+   "name": "Clear Lake",
+   "lat": 43.143355,
+   "lon": -93.370145
+  }
+ },
+ "agricharts:cargillus": {
+  "5744": {
+   "name": "Alberta, CAH",
+   "lat": 45.57431,
+   "lon": -96.04789
+  },
+  "64036": {
+   "name": "Albion, CAH",
+   "lat": 41.69081,
+   "lon": -98.00318
+  },
+  "45236": {
+   "name": "Atchison, CAH",
+   "lat": 39.513183,
+   "lon": -95.204464
+  },
+  "50948": {
+   "name": "Bailey, GOS",
+   "lat": 35.530265,
+   "lon": -78.28135
+  },
+  "79022": {
+   "name": "Barber, GOS",
+   "lat": 35.72176,
+   "lon": -80.64484
+  },
+  "82023": {
+   "name": "Beardsley(SD), CAH",
+   "lat": 43.29582,
+   "lon": -97.98141
+  },
+  "5827": {
+   "name": "Beardstown, CAH",
+   "lat": 40.0153,
+   "lon": -90.44167
+  },
+  "66457": {
+   "name": "Bettendorf, CAH",
+   "lat": 41.55317,
+   "lon": -90.48899
+  },
+  "50899": {
+   "name": "Blair, SSNA",
+   "lat": 41.5205,
+   "lon": -96.0792
+  },
+  "57168": {
+   "name": "Bloomingburg, CAH",
+   "lat": 39.59702,
+   "lon": -83.3903
+  },
+  "62677": {
+   "name": "Bloomington, GOS",
+   "lat": 40.477181,
+   "lon": -89.016615
+  },
+  "22918": {
+   "name": "Buffalo Island, CAH",
+   "lat": 37.02832,
+   "lon": -89.36364
+  },
+  "5762": {
+   "name": "Cargill, CAH (Dlvd AC Grain LLC, Dana, IN)",
+   "lat": 39.81152,
+   "lon": -87.49127
+  },
+  "9847": {
+   "name": "Cargill, CAH (Dlvd Bunge, Gibson City, IL)",
+   "lat": 40.461604,
+   "lon": -88.384697
+  },
+  "63808": {
+   "name": "Carleton (NE), CAH",
+   "lat": 40.29968,
+   "lon": -97.67662
+  },
+  "56950": {
+   "name": "Cedar Rapids East, GOS",
+   "lat": 41.982814,
+   "lon": -91.668679
+  },
+  "37646": {
+   "name": "Cedar Rapids, SSNA",
+   "lat": 41.969667,
+   "lon": -91.647614
+  },
+  "63819": {
+   "name": "Chillicothe, CAH",
+   "lat": 39.329416,
+   "lon": -82.960039
+  },
+  "53479": {
+   "name": "Cincinnati Kellogg, CAH",
+   "lat": 39.047397,
+   "lon": -84.399798
+  },
+  "5772": {
+   "name": "Cincinnati River Road, CAH",
+   "lat": 39.097409,
+   "lon": -84.657792
+  },
+  "63640": {
+   "name": "Circleville, CAH",
+   "lat": 39.60317,
+   "lon": -82.94912
+  },
+  "37717": {
+   "name": "Dayton, SSNA",
+   "lat": 39.82021,
+   "lon": -84.16902
+  },
+  "6612": {
+   "name": "Decatur, CAH",
+   "lat": 42.10895,
+   "lon": -85.97066
+  },
+  "62683": {
+   "name": "East St. Louis, CAH",
+   "lat": 38.62749,
+   "lon": -90.17501
+  },
+  "37655": {
+   "name": "Eddyville, SSNA",
+   "lat": 41.15533,
+   "lon": -92.63184
+  },
+  "52342": {
+   "name": "Emery, CAH",
+   "lat": 43.61543,
+   "lon": -97.66685
+  },
+  "75729": {
+   "name": "Fayetteville2, GOS",
+   "lat": 35.08797,
+   "lon": -78.84583
+  },
+  "5826": {
+   "name": "Florence, CAH",
+   "lat": 39.62427,
+   "lon": -90.60862
+  },
+  "25351": {
+   "name": "Forest City (MO), CAH",
+   "lat": 39.98686,
+   "lon": -95.18142
+  },
+  "64714": {
+   "name": "Frederick, CAH",
+   "lat": 40.05338,
+   "lon": -90.433324
+  },
+  "7339": {
+   "name": "Gainesville, GOS",
+   "lat": 34.28987,
+   "lon": -83.81025
+  },
+  "59460": {
+   "name": "Gibbon, CAH",
+   "lat": 40.742599,
+   "lon": -98.858009
+  },
+  "64092": {
+   "name": "Gibson City, CAH",
+   "lat": 40.460698,
+   "lon": -88.385099
+  },
+  "63684": {
+   "name": "Gilman, CAH",
+   "lat": 40.758179,
+   "lon": -87.99547
+  },
+  "60825": {
+   "name": "Guntersville, GOS",
+   "lat": 34.34681,
+   "lon": -86.28954
+  },
+  "49789": {
+   "name": "Hales Point, CAH",
+   "lat": 35.89564,
+   "lon": -89.63611
+  },
+  "37865": {
+   "name": "Hammond, SSNA",
+   "lat": 41.69292,
+   "lon": -87.51411
+  },
+  "60805": {
+   "name": "Harrisonburg, TRKY",
+   "lat": 38.454739,
+   "lon": -78.867903
+  },
+  "64026": {
+   "name": "Havana, CAH",
+   "lat": 40.29762,
+   "lon": -90.06646
+  },
+  "63621": {
+   "name": "Hickman A (Ashland), CAH",
+   "lat": 36.56896,
+   "lon": -89.1988
+  },
+  "63508": {
+   "name": "Hutchinson East, CAH",
+   "lat": 38.0556,
+   "lon": -97.8844
+  },
+  "48427": {
+   "name": "Hutchinson West, CAH",
+   "lat": 38.054569,
+   "lon": -97.901886
+  },
+  "49647": {
+   "name": "Indianapolis, SSNA",
+   "lat": 39.7747,
+   "lon": -86.1923
+  },
+  "63320": {
+   "name": "Iowa Falls, GOS",
+   "lat": 42.51208,
+   "lon": -93.26583
+  },
+  "63226": {
+   "name": "Kansas City, GOS",
+   "lat": 39.120949,
+   "lon": -94.55478
+  },
+  "64724": {
+   "name": "Keithsburg, CAH",
+   "lat": 41.102526,
+   "lon": -90.942807
+  },
+  "16898": {
+   "name": "Lacon, CAH",
+   "lat": 41.020578,
+   "lon": -89.414581
+  },
+  "52100": {
+   "name": "LaCrosse, CAH",
+   "lat": 43.83738,
+   "lon": -91.262
+  },
+  "63023": {
+   "name": "Lafayette, GOS",
+   "lat": 40.40457,
+   "lon": -86.90411
+  },
+  "77160": {
+   "name": "Lima, CAH",
+   "lat": 40.76,
+   "lon": -84.15
+  },
+  "63999": {
+   "name": "Linden, CAH",
+   "lat": 40.196278,
+   "lon": -86.906955
+  },
+  "5830": {
+   "name": "Madison, CAH",
+   "lat": 45.0082,
+   "lon": -96.19492
+  },
+  "60266": {
+   "name": "Meredosia, CAH",
+   "lat": 39.83072,
+   "lon": -90.56076
+  },
+  "61207": {
+   "name": "Milford, CAH",
+   "lat": 41.432,
+   "lon": -85.826
+  },
+  "5842": {
+   "name": "Muscatine, CAH",
+   "lat": 41.40808,
+   "lon": -91.06328
+  },
+  "82233": {
+   "name": "Napa Junction, CAH",
+   "lat": 42.94263,
+   "lon": -97.43698
+  },
+  "5843": {
+   "name": "New Boston, CAH",
+   "lat": 41.20924,
+   "lon": -90.99504
+  },
+  "63624": {
+   "name": "New Madrid, CAH",
+   "lat": 36.56832,
+   "lon": -89.57639
+  },
+  "63511": {
+   "name": "O'Neill, CAH",
+   "lat": 42.44934,
+   "lon": -98.620022
+  },
+  "5889": {
+   "name": "Ogallah, CAH",
+   "lat": 39.04259,
+   "lon": -99.67869
+  },
+  "63870": {
+   "name": "Ord (NE), CAH",
+   "lat": 41.59563,
+   "lon": -98.92221
+  },
+  "85571": {
+   "name": "Owensboro Grain, GOS",
+   "lat": 37.774941,
+   "lon": -87.102496
+  },
+  "49579": {
+   "name": "Paris Mill, SSNA",
+   "lat": 39.604775,
+   "lon": -87.702785
+  },
+  "60842": {
+   "name": "Salina, CAH",
+   "lat": 38.85747,
+   "lon": -97.66803
+  },
+  "29135": {
+   "name": "Savage, CAH",
+   "lat": 44.782987,
+   "lon": -93.359641
+  },
+  "46839": {
+   "name": "Shelton, CAH",
+   "lat": 40.77999,
+   "lon": -98.7361
+  },
+  "5864": {
+   "name": "Sidney, GOS",
+   "lat": 40.27546,
+   "lon": -84.19193
+  },
+  "63418": {
+   "name": "Sioux City, GOS",
+   "lat": 42.53004,
+   "lon": -96.36101
+  },
+  "60796": {
+   "name": "Spring Valley South, CAH",
+   "lat": 41.34018,
+   "lon": -89.21825
+  },
+  "52734": {
+   "name": "Tipton, CAH",
+   "lat": 40.28358,
+   "lon": -85.99821
+  },
+  "63900": {
+   "name": "Topeka - Crossroads, CAH",
+   "lat": 39.09035,
+   "lon": -95.743067
+  },
+  "53413": {
+   "name": "Topeka - Gordon, CAH",
+   "lat": 39.077735,
+   "lon": -95.691652
+  },
+  "41075": {
+   "name": "Wahpeton, SSNA",
+   "lat": 46.34056,
+   "lon": -96.6429
+  },
+  "45452": {
+   "name": "Wakeeney, CAH",
+   "lat": 39.01071,
+   "lon": -99.834677
+  },
+  "63238": {
+   "name": "West Memphis, CAH",
+   "lat": 35.137302,
+   "lon": -90.15674
+  },
+  "63213": {
+   "name": "Wichita, GOS",
+   "lat": 37.71009,
+   "lon": -97.32787
+  }
+ },
+ "agricharts:hartog": {
+  "86196": {
+   "name": "Plessis - Corn",
+   "lat": 43.233748,
+   "lon": -95.54763
+  },
+  "86195": {
+   "name": "Ritter - Corn",
+   "lat": 43.244192,
+   "lon": -95.775392
+  },
+  "52033": {
+   "name": "Sanborn - Corn",
+   "lat": 43.1803,
+   "lon": -95.652368
+  },
+  "86428": {
+   "name": "Plessis - Beans",
+   "lat": 43.233748,
+   "lon": -95.54763
+  },
+  "86429": {
+   "name": "Ritter - Beans",
+   "lat": 43.244192,
+   "lon": -95.775392
+  },
+  "86430": {
+   "name": "Sanborn - Beans",
+   "lat": 43.180459,
+   "lon": -95.652176
+  }
+ },
+ "agricharts:faasfeed": {
+  "20956": {
+   "name": "North English",
+   "lat": 41.560911,
+   "lon": -92.164672
+  },
+  "62149": {
+   "name": "Webster/Keswick",
+   "lat": 42.47037,
+   "lon": -93.85256
+  }
+ },
+ "agricharts:meadowland": {
+  "21330": {
+   "name": "Meadowland",
+   "lat": 44.2322,
+   "lon": -95.26456
+  }
+ },
+ "agricharts:farmerswin": {
+  "12607": {
+   "name": "AGP - Mason City",
+   "lat": 43.132102,
+   "lon": -93.226923
+  },
+  "12588": {
+   "name": "Bremer",
+   "lat": 42.772768,
+   "lon": -92.393148
+  },
+  "51092": {
+   "name": "Cresco",
+   "lat": 43.370483,
+   "lon": -92.093861
+  },
+  "12589": {
+   "name": "Cresco East",
+   "lat": 43.371061,
+   "lon": -92.140118
+  },
+  "12592": {
+   "name": "F'Burg",
+   "lat": 42.959138,
+   "lon": -92.203033
+  },
+  "12594": {
+   "name": "Granger",
+   "lat": 43.372583,
+   "lon": -92.125505
+  },
+  "12595": {
+   "name": "Hawkeye",
+   "lat": 42.938442,
+   "lon": -91.953577
+  },
+  "12602": {
+   "name": "Homeland",
+   "lat": 43.066812,
+   "lon": -92.157047
+  },
+  "51093": {
+   "name": "Houston",
+   "lat": 43.765628,
+   "lon": -91.568423
+  },
+  "12596": {
+   "name": "Mabel",
+   "lat": 43.5151,
+   "lon": -91.790227
+  },
+  "79179": {
+   "name": "Poet Fairbank",
+   "lat": 42.640952,
+   "lon": -92.028758
+  },
+  "79180": {
+   "name": "Poet Shell Rock",
+   "lat": 42.739542,
+   "lon": -92.618555
+  },
+  "12597": {
+   "name": "Ridgeway",
+   "lat": 43.295677,
+   "lon": -91.987227
+  },
+  "51094": {
+   "name": "Rushford",
+   "lat": 43.81358,
+   "lon": -91.754163
+  },
+  "51095": {
+   "name": "Spring Grove",
+   "lat": 43.562159,
+   "lon": -91.641049
+  },
+  "83110": {
+   "name": "SRSP",
+   "lat": 42.729956,
+   "lon": -92.626977
+  },
+  "12598": {
+   "name": "Sumner",
+   "lat": 42.847382,
+   "lon": -92.119794
+  },
+  "12603": {
+   "name": "Valero",
+   "lat": 43.102316,
+   "lon": -92.742209
+  },
+  "79915": {
+   "name": "Viserion",
+   "lat": 43.023167,
+   "lon": -91.175916
+  }
+ },
+ "agricharts:hullcoop": {
+  "3420": {
+   "name": "Hull",
+   "lat": 43.186532,
+   "lon": -96.130085
+  }
+ },
+ "agricharts:useunited": {
+  "84957": {
+   "name": "Osborn",
+   "lat": 39.748393,
+   "lon": -94.356516
+  },
+  "85059": {
+   "name": "Plattsburg",
+   "lat": 39.567721,
+   "lon": -94.455069
+  }
+ },
+ "agricharts:siouxlandenergy": {
+  "20505": {
+   "name": "Siouxland Energy",
+   "lat": 43.087237,
+   "lon": -96.22698
+  }
+ },
+ "agricharts:midmissourienergy": {
+  "16430": {
+   "name": "Mid-Missouri Energy, LLC",
+   "lat": 39.19306,
+   "lon": -93.354128
+  }
+ },
+ "agricharts:farmerselevator": {
+  "16641": {
+   "name": "Farmers Elevator & Exchange",
+   "lat": 39.650326,
+   "lon": -91.737929
+  }
+ },
+ "agricharts:agpartners": {
+  "54976": {
+   "name": "AGP St Joe",
+   "lat": 39.765686,
+   "lon": -94.814655
+  },
+  "86968": {
+   "name": "Axtell",
+   "lat": 39.873387,
+   "lon": -96.25811
+  },
+  "86969": {
+   "name": "Baileyville",
+   "lat": 39.843114,
+   "lon": -96.187731
+  },
+  "86970": {
+   "name": "Belvue",
+   "lat": 39.216358,
+   "lon": -96.17973
+  },
+  "86971": {
+   "name": "Centralia",
+   "lat": 39.722093,
+   "lon": -96.129752
+  },
+  "84296": {
+   "name": "Corning",
+   "lat": 39.659473,
+   "lon": -96.032007
+  },
+  "86972": {
+   "name": "Denton",
+   "lat": 39.732212,
+   "lon": -95.269884
+  },
+  "86973": {
+   "name": "Hiawatha",
+   "lat": 39.846046,
+   "lon": -95.543899
+  },
+  "86974": {
+   "name": "Padonia",
+   "lat": 39.853498,
+   "lon": -95.526934
+  },
+  "20558": {
+   "name": "Powhattan",
+   "lat": 39.732221,
+   "lon": -95.269865
+  },
+  "86975": {
+   "name": "Robinson",
+   "lat": 39.815847,
+   "lon": -95.409564
+  },
+  "86976": {
+   "name": "Rulo",
+   "lat": 40.053698,
+   "lon": -95.428882
+  },
+  "86977": {
+   "name": "Sabetha",
+   "lat": 39.906161,
+   "lon": -95.786201
+  },
+  "86978": {
+   "name": "Seneca",
+   "lat": 39.834908,
+   "lon": -96.054615
+  },
+  "86979": {
+   "name": "St Marys",
+   "lat": 39.19515,
+   "lon": -96.07327
+  },
+  "20565": {
+   "name": "Tarkio",
+   "lat": 40.437802,
+   "lon": -95.377732
+  },
+  "86980": {
+   "name": "Topeka A",
+   "lat": 39.064284,
+   "lon": -95.665857
+  },
+  "86981": {
+   "name": "Vliets",
+   "lat": 39.715382,
+   "lon": -96.333487
+  },
+  "84368": {
+   "name": "Wamego",
+   "lat": 39.200404,
+   "lon": -96.29887
+  },
+  "86982": {
+   "name": "White Cloud",
+   "lat": 39.977813,
+   "lon": -95.294337
+  },
+  "86983": {
+   "name": "Willis",
+   "lat": 39.723276,
+   "lon": -95.506829
+  }
+ },
+ "agricharts:butterfield": {
+  "36163": {
+   "name": "Butterfield",
+   "lat": 39.78522,
+   "lon": -93.302042
+  }
+ },
+ "agricharts:montrose": {
+  "36052": {
+   "name": "Montrose",
+   "lat": 38.258054,
+   "lon": -93.981622
+  }
+ },
+ "agricharts:craiggrain": {
+  "36046": {
+   "name": "Craig Grain",
+   "lat": 40.192211,
+   "lon": -95.374144
+  }
+ },
+ "agricharts:farmerselevatorco": {
+  "80217": {
+   "name": "Clinton",
+   "lat": 38.365542,
+   "lon": -93.777325
+  }
+ },
+ "agricharts:buchheit": {
+  "2716": {
+   "name": "Biehle",
+   "lat": 37.604632,
+   "lon": -89.840811
+  },
+  "86486": {
+   "name": "Campbell",
+   "lat": 36.51424,
+   "lon": -90.100873
+  },
+  "54720": {
+   "name": "Dudley",
+   "lat": 36.79672,
+   "lon": -90.101495
+  },
+  "2717": {
+   "name": "Morehouse",
+   "lat": 36.846116,
+   "lon": -89.692534
+  }
+ },
+ "agricharts:plymouthenergy": {
+  "86504": {
+   "name": "81-20",
+   "lat": 42.370748,
+   "lon": -97.420696
+  },
+  "85909": {
+   "name": "ADM Columbus",
+   "lat": 41.424601,
+   "lon": -97.364843
+  },
+  "82179": {
+   "name": "ADM Fremont",
+   "lat": 41.43133,
+   "lon": -96.49803
+  },
+  "13875": {
+   "name": "ADM Lincoln",
+   "lat": 40.866901,
+   "lon": -96.619429
+  },
+  "85877": {
+   "name": "AGP David City",
+   "lat": 41.27483,
+   "lon": -97.144573
+  },
+  "13877": {
+   "name": "AGP Hastings",
+   "lat": 40.589731,
+   "lon": -98.340966
+  },
+  "85911": {
+   "name": "AGP Sergeant Bluff",
+   "lat": 42.337511,
+   "lon": -96.349643
+  },
+  "74433": {
+   "name": "Ainsworth",
+   "lat": 42.54413,
+   "lon": -99.86203
+  },
+  "22687": {
+   "name": "Akron",
+   "lat": 42.82526,
+   "lon": -96.565364
+  },
+  "13880": {
+   "name": "Bancroft",
+   "lat": 42.013709,
+   "lon": -96.571824
+  },
+  "13883": {
+   "name": "Bee",
+   "lat": 41.00732,
+   "lon": -97.06039
+  },
+  "13884": {
+   "name": "Benedict",
+   "lat": 41.007138,
+   "lon": -97.606424
+  },
+  "13885": {
+   "name": "Bow Valley",
+   "lat": 42.744128,
+   "lon": -97.256185
+  },
+  "53364": {
+   "name": "Bradshaw",
+   "lat": 40.882372,
+   "lon": -97.741557
+  },
+  "85910": {
+   "name": "Bunge Council Bluffs",
+   "lat": 41.153467,
+   "lon": -95.81097
+  },
+  "82918": {
+   "name": "Cargill Albion",
+   "lat": 41.68332,
+   "lon": -97.983876
+  },
+  "13887": {
+   "name": "Cargill Blair",
+   "lat": 41.537941,
+   "lon": -96.102467
+  },
+  "51220": {
+   "name": "Cargill Sioux City",
+   "lat": 42.50082,
+   "lon": -96.39054
+  },
+  "85865": {
+   "name": "Daykin Milling LLC",
+   "lat": 40.321416,
+   "lon": -97.25412
+  },
+  "13890": {
+   "name": "East Hub",
+   "lat": 41.886841,
+   "lon": -96.463219
+  },
+  "13891": {
+   "name": "Elgin",
+   "lat": 41.984743,
+   "lon": -98.085185
+  },
+  "13893": {
+   "name": "Fullerton",
+   "lat": 41.372179,
+   "lon": -97.965144
+  },
+  "85907": {
+   "name": "Green Plains Central City",
+   "lat": 41.109888,
+   "lon": -97.970691
+  },
+  "85908": {
+   "name": "Green Plains York",
+   "lat": 40.897674,
+   "lon": -97.544648
+  },
+  "13898": {
+   "name": "Gresham",
+   "lat": 41.029927,
+   "lon": -97.402671
+  },
+  "13900": {
+   "name": "Hampton",
+   "lat": 40.877355,
+   "lon": -97.884321
+  },
+  "22685": {
+   "name": "Hinton",
+   "lat": 42.626849,
+   "lon": -96.289715
+  },
+  "13901": {
+   "name": "Hooper",
+   "lat": 41.611424,
+   "lon": -96.552194
+  },
+  "13902": {
+   "name": "Hordville",
+   "lat": 41.077586,
+   "lon": -97.887597
+  },
+  "13903": {
+   "name": "Humphrey",
+   "lat": 41.692667,
+   "lon": -97.483794
+  },
+  "85906": {
+   "name": "Husker Ag Plainview",
+   "lat": 42.350194,
+   "lon": -97.707463
+  },
+  "74199": {
+   "name": "Laurel",
+   "lat": 42.438135,
+   "lon": -97.107341
+  },
+  "86775": {
+   "name": "MG Waldbaum - Bloomfield",
+   "lat": 42.593929,
+   "lon": -97.704296
+  },
+  "28840": {
+   "name": "MG Waldbaum - Wakefield",
+   "lat": 42.256839,
+   "lon": -96.862086
+  },
+  "13906": {
+   "name": "Monroe",
+   "lat": 41.473434,
+   "lon": -97.600007
+  },
+  "82110": {
+   "name": "Niewohner Feedlot",
+   "lat": 41.78514,
+   "lon": -97.986872
+  },
+  "85878": {
+   "name": "Norfolk Crush LLC",
+   "lat": 42.0776,
+   "lon": -97.407108
+  },
+  "22686": {
+   "name": "Oyens",
+   "lat": 42.818994,
+   "lon": -96.058455
+  },
+  "13911": {
+   "name": "Petersburg",
+   "lat": 41.852219,
+   "lon": -98.081956
+  },
+  "83175": {
+   "name": "Plymouth Energy-Merrill",
+   "lat": 42.730977,
+   "lon": -96.250078
+  },
+  "13913": {
+   "name": "Polk",
+   "lat": 41.079765,
+   "lon": -97.782453
+  },
+  "13914": {
+   "name": "Rising City",
+   "lat": 41.198546,
+   "lon": -97.296011
+  },
+  "13915": {
+   "name": "Royal",
+   "lat": 42.331425,
+   "lon": -98.174717
+  },
+  "87543": {
+   "name": "Sandhills Renewable Energy LLC",
+   "lat": 42.517735,
+   "lon": -98.957307
+  },
+  "13916": {
+   "name": "Scribner",
+   "lat": 41.666111,
+   "lon": -96.66817
+  },
+  "13917": {
+   "name": "Shelby",
+   "lat": 41.194265,
+   "lon": -97.422123
+  },
+  "82797": {
+   "name": "Siouxland Ethanol",
+   "lat": 42.452999,
+   "lon": -96.595018
+  },
+  "13919": {
+   "name": "St Edward",
+   "lat": 41.569377,
+   "lon": -97.865758
+  },
+  "13921": {
+   "name": "Stromsburg",
+   "lat": 41.109715,
+   "lon": -97.595515
+  },
+  "13922": {
+   "name": "Tamora",
+   "lat": 40.894812,
+   "lon": -97.226574
+  },
+  "13924": {
+   "name": "Tilden",
+   "lat": 42.04721,
+   "lon": -97.833863
+  },
+  "13925": {
+   "name": "Ulysses",
+   "lat": 41.070838,
+   "lon": -97.202013
+  },
+  "13926": {
+   "name": "Utica",
+   "lat": 40.894779,
+   "lon": -97.34389
+  },
+  "13927": {
+   "name": "Waco",
+   "lat": 40.894365,
+   "lon": -97.460125
+  },
+  "13928": {
+   "name": "Wakefield",
+   "lat": 42.256839,
+   "lon": -96.862105
+  }
+ },
+ "agricharts:newvision": {
+  "84402": {
+   "name": "ADM Mankato",
+   "lat": 44.186526,
+   "lon": -93.994638
+  },
+  "46899": {
+   "name": "ADRIAN",
+   "lat": 43.750008,
+   "lon": -95.949912
+  },
+  "84403": {
+   "name": "AGP Sheldon",
+   "lat": 43.182059,
+   "lon": -95.856081
+  },
+  "18652": {
+   "name": "BEAVER CREEK",
+   "lat": 43.614118,
+   "lon": -96.364836
+  },
+  "46894": {
+   "name": "BREWSTER",
+   "lat": 43.688557,
+   "lon": -95.483861
+  },
+  "84400": {
+   "name": "CHS Fairmont",
+   "lat": 43.668605,
+   "lon": -94.506688
+  },
+  "84401": {
+   "name": "CHS Mankato",
+   "lat": 44.156903,
+   "lon": -94.029195
+  },
+  "46900": {
+   "name": "DUNDEE",
+   "lat": 43.846214,
+   "lon": -95.467499
+  },
+  "46901": {
+   "name": "ELLSWORTH",
+   "lat": 43.519315,
+   "lon": -96.018158
+  },
+  "46895": {
+   "name": "HERON LAKE",
+   "lat": 43.796709,
+   "lon": -95.320179
+  },
+  "18650": {
+   "name": "HILLS TERMINAL",
+   "lat": 43.546156,
+   "lon": -96.368311
+  },
+  "46902": {
+   "name": "JEFFERS",
+   "lat": 44.055011,
+   "lon": -95.193718
+  },
+  "20359": {
+   "name": "MAGNOLIA",
+   "lat": 43.644475,
+   "lon": -96.098437
+  },
+  "83898": {
+   "name": "MANKATO",
+   "lat": 44.203004,
+   "lon": -93.993563
+  },
+  "41203": {
+   "name": "MILOMA",
+   "lat": 43.767921,
+   "lon": -95.363265
+  },
+  "84399": {
+   "name": "MNSP Brewster",
+   "lat": 43.705619,
+   "lon": -95.455056
+  },
+  "46896": {
+   "name": "MOUNTAIN LAKE",
+   "lat": 43.944954,
+   "lon": -94.875967
+  },
+  "84396": {
+   "name": "POET Ashton",
+   "lat": 43.272398,
+   "lon": -95.808852
+  },
+  "46904": {
+   "name": "READING",
+   "lat": 43.704115,
+   "lon": -95.711664
+  },
+  "46905": {
+   "name": "WILMONT",
+   "lat": 43.765935,
+   "lon": -95.82809
+  },
+  "46898": {
+   "name": "WINDOM",
+   "lat": 43.872583,
+   "lon": -95.11108
+  },
+  "46897": {
+   "name": "WORTHINGTON",
+   "lat": 43.630158,
+   "lon": -95.574463
+  }
+ },
+ "agricharts:agstate": {
+  "84205": {
+   "name": "A.C.",
+   "lat": 42.781696,
+   "lon": -94.945005
+  },
+  "25731": {
+   "name": "Alta",
+   "lat": 42.67464,
+   "lon": -95.30423
+  },
+  "84206": {
+   "name": "Alton Term",
+   "lat": 42.993068,
+   "lon": -96.001978
+  },
+  "81789": {
+   "name": "Aurelia",
+   "lat": 42.709884,
+   "lon": -95.437121
+  },
+  "84015": {
+   "name": "Battle Crk",
+   "lat": 42.31536,
+   "lon": -95.5987
+  },
+  "81793": {
+   "name": "Cleghorn",
+   "lat": 42.81188,
+   "lon": -95.71275
+  },
+  "25734": {
+   "name": "Ellsworth",
+   "lat": 42.300921,
+   "lon": -93.560122
+  },
+  "84017": {
+   "name": "Emmetsburg",
+   "lat": 43.11011,
+   "lon": -94.67417
+  },
+  "25735": {
+   "name": "Fonda",
+   "lat": 42.58065,
+   "lon": -94.84602
+  },
+  "81794": {
+   "name": "Galva",
+   "lat": 42.50793,
+   "lon": -95.41783
+  },
+  "25736": {
+   "name": "Hartley",
+   "lat": 43.183616,
+   "lon": -95.505696
+  },
+  "81796": {
+   "name": "Holstein",
+   "lat": 42.49093,
+   "lon": -95.54273
+  },
+  "25737": {
+   "name": "Hospers",
+   "lat": 43.07352,
+   "lon": -95.905024
+  },
+  "81797": {
+   "name": "Kingsley",
+   "lat": 42.586908,
+   "lon": -95.967698
+  },
+  "81798": {
+   "name": "Larrabee",
+   "lat": 42.86198,
+   "lon": -95.5463
+  },
+  "81800": {
+   "name": "Linn Grove",
+   "lat": 42.89862,
+   "lon": -95.27501
+  },
+  "81801": {
+   "name": "Marathon",
+   "lat": 42.86232,
+   "lon": -94.98217
+  },
+  "81802": {
+   "name": "Marcus",
+   "lat": 42.82622,
+   "lon": -95.79942
+  },
+  "25739": {
+   "name": "Maurice",
+   "lat": 42.964941,
+   "lon": -96.178594
+  },
+  "81806": {
+   "name": "Nemaha",
+   "lat": 42.51713,
+   "lon": -95.08922
+  },
+  "60129": {
+   "name": "Newell",
+   "lat": 42.607595,
+   "lon": -95.012404
+  },
+  "81807": {
+   "name": "Paullina",
+   "lat": 42.9807,
+   "lon": -95.68846
+  },
+  "81808": {
+   "name": "Peterson",
+   "lat": 42.91629,
+   "lon": -95.34342
+  },
+  "25740": {
+   "name": "Royal",
+   "lat": 43.066983,
+   "lon": -95.284648
+  },
+  "81810": {
+   "name": "Schaller",
+   "lat": 42.50052,
+   "lon": -95.29356
+  },
+  "84018": {
+   "name": "Sheldon N",
+   "lat": 43.180006,
+   "lon": -95.857348
+  },
+  "25742": {
+   "name": "Sutherland",
+   "lat": 42.97466,
+   "lon": -95.496086
+  },
+  "81813": {
+   "name": "Webb",
+   "lat": 42.94974,
+   "lon": -95.01047
+  }
+ },
+ "agricharts:keycoop": {
+  "86087": {
+   "name": "ADM - CR",
+   "lat": 41.92841,
+   "lon": -91.688343
+  },
+  "86088": {
+   "name": "ADM - DSM",
+   "lat": 41.621581,
+   "lon": -93.585326
+  },
+  "86086": {
+   "name": "Ag State",
+   "lat": 42.777862,
+   "lon": -94.949783
+  },
+  "86090": {
+   "name": "Barnes Cty",
+   "lat": 41.509321,
+   "lon": -92.469061
+  },
+  "86091": {
+   "name": "Cargill/CR",
+   "lat": 41.983398,
+   "lon": -91.666719
+  },
+  "86092": {
+   "name": "Cargill/IF",
+   "lat": 42.512021,
+   "lon": -93.267408
+  },
+  "86093": {
+   "name": "Eddyville",
+   "lat": 41.141623,
+   "lon": -92.641023
+  },
+  "21264": {
+   "name": "Gilbert",
+   "lat": 42.109183,
+   "lon": -93.649057
+  },
+  "86095": {
+   "name": "Grin Mill",
+   "lat": 41.719965,
+   "lon": -92.722015
+  },
+  "21265": {
+   "name": "Grinnell",
+   "lat": 41.727906,
+   "lon": -92.726124
+  },
+  "86096": {
+   "name": "Jewell",
+   "lat": 42.306872,
+   "lon": -93.633873
+  },
+  "21267": {
+   "name": "Kelley",
+   "lat": 41.951467,
+   "lon": -93.637423
+  },
+  "21268": {
+   "name": "LeGrand",
+   "lat": 41.963943,
+   "lon": -92.728079
+  },
+  "86097": {
+   "name": "Lincolnway",
+   "lat": 42.022488,
+   "lon": -93.460106
+  },
+  "86786": {
+   "name": "Mid Iowa - Sinclair",
+   "lat": 42.573456,
+   "lon": -92.729482
+  },
+  "21269": {
+   "name": "Nevada",
+   "lat": 42.024071,
+   "lon": -93.502079
+  },
+  "21270": {
+   "name": "New Sharon",
+   "lat": 41.453944,
+   "lon": -92.64876
+  },
+  "21271": {
+   "name": "Newton",
+   "lat": 41.716318,
+   "lon": -93.066248
+  },
+  "86099": {
+   "name": "NewtonRail",
+   "lat": 41.731266,
+   "lon": -93.017502
+  },
+  "86788": {
+   "name": "Pine Lake",
+   "lat": 42.471899,
+   "lon": -93.042264
+  },
+  "86100": {
+   "name": "Poet - IF",
+   "lat": 42.505923,
+   "lon": -93.282885
+  },
+  "25247": {
+   "name": "S-14",
+   "lat": 42.157923,
+   "lon": -93.462991
+  },
+  "35610": {
+   "name": "St Anthony",
+   "lat": 42.126622,
+   "lon": -93.19874
+  },
+  "21273": {
+   "name": "Story City",
+   "lat": 42.188333,
+   "lon": -93.600314
+  },
+  "31822": {
+   "name": "Sully",
+   "lat": 41.576672,
+   "lon": -92.847854
+  },
+  "87744": {
+   "name": "Verbio",
+   "lat": 42.024357,
+   "lon": -93.517253
+  },
+  "21275": {
+   "name": "Zearing",
+   "lat": 42.16001,
+   "lon": -93.297168
+  }
+ },
+ "agricharts:cgb": {
+  "51680": {
+   "name": "CGB -  FRIARS POINT",
+   "lat": 34.378474,
+   "lon": -90.633226
+  },
+  "51759": {
+   "name": "CGB -  HELENA NORTH (RIVER)",
+   "lat": 34.520371,
+   "lon": -90.585568
+  },
+  "53999": {
+   "name": "CGB -  OLD TOWN",
+   "lat": 34.367218,
+   "lon": -90.769033
+  },
+  "20622": {
+   "name": "CGB -  PORT 33",
+   "lat": 36.165341,
+   "lon": -95.620029
+  },
+  "20620": {
+   "name": "CGB -  WEBBERS FALLS",
+   "lat": 35.513674,
+   "lon": -95.133325
+  },
+  "25548": {
+   "name": "CGB - BILLINGS",
+   "lat": 36.535109,
+   "lon": -97.438056
+  },
+  "20594": {
+   "name": "CGB - BURNSIDE",
+   "lat": 40.289995,
+   "lon": -91.103219
+  },
+  "20605": {
+   "name": "CGB - CAHOKIA",
+   "lat": 38.581513,
+   "lon": -90.20779
+  },
+  "25551": {
+   "name": "CGB - CARNEGIE",
+   "lat": 35.082766,
+   "lon": -98.603071
+  },
+  "26335": {
+   "name": "CGB - CERES",
+   "lat": 36.457757,
+   "lon": -97.282438
+  },
+  "20592": {
+   "name": "CGB - COLUSA",
+   "lat": 40.571568,
+   "lon": -91.167591
+  },
+  "20591": {
+   "name": "CGB - DALLAS CITY",
+   "lat": 40.636241,
+   "lon": -91.17264
+  },
+  "82291": {
+   "name": "CGB - DESOTO LANDING",
+   "lat": 33.693714,
+   "lon": -91.229439
+  },
+  "79610": {
+   "name": "CGB - EAST HANNIBAL",
+   "lat": 39.72835,
+   "lon": -91.360323
+  },
+  "23781": {
+   "name": "CGB - ENID",
+   "lat": 36.404929,
+   "lon": -97.88279
+  },
+  "87617": {
+   "name": "CGB - FALLS CITY",
+   "lat": 40.046888,
+   "lon": -95.601325
+  },
+  "20595": {
+   "name": "CGB - FERRIS",
+   "lat": 40.470174,
+   "lon": -91.169447
+  },
+  "27546": {
+   "name": "CGB - GLADSTONE BLUFF",
+   "lat": 40.862683,
+   "lon": -90.967516
+  },
+  "79612": {
+   "name": "CGB - GREENVILLE",
+   "lat": 33.748156,
+   "lon": -91.032897
+  },
+  "79710": {
+   "name": "CGB - JONESVILLE",
+   "lat": 31.634296,
+   "lon": -91.814069
+  },
+  "79615": {
+   "name": "CGB - LAGRANGE",
+   "lat": 40.206289,
+   "lon": -91.430993
+  },
+  "87790": {
+   "name": "CGB - LARCHLAND",
+   "lat": 40.82155,
+   "lon": -90.657113
+  },
+  "87791": {
+   "name": "CGB - LITTLE YORK",
+   "lat": 41.034416,
+   "lon": -90.745497
+  },
+  "79617": {
+   "name": "CGB - LOUISIANA",
+   "lat": 30.741405,
+   "lon": -90.098713
+  },
+  "79618": {
+   "name": "CGB - MAYERSVILLE",
+   "lat": 32.917218,
+   "lon": -91.060425
+  },
+  "79619": {
+   "name": "CGB - MEEKERS LANDING",
+   "lat": 40.96919,
+   "lon": -90.95836
+  },
+  "20596": {
+   "name": "CGB - NAPLES",
+   "lat": 39.825584,
+   "lon": -90.554798
+  },
+  "20593": {
+   "name": "CGB - NAUVOO",
+   "lat": 40.556706,
+   "lon": -91.393238
+  },
+  "20586": {
+   "name": "CGB - OQUAWKA",
+   "lat": 40.941547,
+   "lon": -90.953601
+  },
+  "25574": {
+   "name": "CGB - ORIENTA",
+   "lat": 36.272971,
+   "lon": -98.480431
+  },
+  "79621": {
+   "name": "CGB - PINE BLUFF",
+   "lat": 34.294116,
+   "lon": -91.997299
+  },
+  "25575": {
+   "name": "CGB - RENFROW",
+   "lat": 36.923431,
+   "lon": -97.654749
+  },
+  "41261": {
+   "name": "CGB - RIVER LANDING",
+   "lat": 40.872767,
+   "lon": -91.033058
+  },
+  "79620": {
+   "name": "CGB - ROSEDALE",
+   "lat": 33.824526,
+   "lon": -91.019828
+  },
+  "26044": {
+   "name": "CGB - SHATTUCK",
+   "lat": 36.27311,
+   "lon": -99.876455
+  },
+  "27545": {
+   "name": "CGB - SMITHSHIRE",
+   "lat": 40.792684,
+   "lon": -90.781227
+  },
+  "87792": {
+   "name": "CGB - SUEZ",
+   "lat": 41.088317,
+   "lon": -90.588467
+  },
+  "79686": {
+   "name": "CGB - TALLULAH PORT",
+   "lat": 32.640401,
+   "lon": -91.165489
+  },
+  "21929": {
+   "name": "CGB - TUNICA",
+   "lat": 34.739634,
+   "lon": -90.439836
+  },
+  "20651": {
+   "name": "CGB - VAN BUREN",
+   "lat": 35.44,
+   "lon": -94.35
+  },
+  "79687": {
+   "name": "CGB - VICKSBURG",
+   "lat": 32.660071,
+   "lon": -90.873419
+  },
+  "79688": {
+   "name": "CGB - VIDALIA",
+   "lat": 31.804168,
+   "lon": -91.488352
+  },
+  "20621": {
+   "name": "CGB - WAGONER",
+   "lat": 35.959042,
+   "lon": -95.490168
+  },
+  "23209": {
+   "name": "CGB - WAKA",
+   "lat": 36.281456,
+   "lon": -101.048352
+  },
+  "23804": {
+   "name": "CGB - WAKITA",
+   "lat": 36.885653,
+   "lon": -97.923602
+  },
+  "82785": {
+   "name": "CGB - YAZOO CITY",
+   "lat": 32.840507,
+   "lon": -90.442115
+  },
+  "87793": {
+   "name": "CGB - YORKWOOD",
+   "lat": 41.043695,
+   "lon": -90.745322
+  },
+  "79608": {
+   "name": "CGB ALBANY",
+   "lat": 41.794388,
+   "lon": -90.208032
+  },
+  "20608": {
+   "name": "CGB AURORA",
+   "lat": 39.06012,
+   "lon": -84.898007
+  },
+  "20603": {
+   "name": "CGB BENTON",
+   "lat": 37.99376,
+   "lon": -88.918812
+  },
+  "20655": {
+   "name": "CGB BIRDS POINT",
+   "lat": 36.969424,
+   "lon": -89.164506
+  },
+  "81111": {
+   "name": "CGB BOCKER RUFF LLC",
+   "lat": 42.002685,
+   "lon": -89.591331
+  },
+  "21912": {
+   "name": "CGB CARUTHERSVILLE",
+   "lat": 36.073637,
+   "lon": -89.686445
+  },
+  "20619": {
+   "name": "CGB CLAYTON",
+   "lat": 42.894385,
+   "lon": -91.132814
+  },
+  "20606": {
+   "name": "CGB CONNERSVILLE",
+   "lat": 39.645294,
+   "lon": -85.133168
+  },
+  "20656": {
+   "name": "CGB DORENA",
+   "lat": 36.590358,
+   "lon": -89.212342
+  },
+  "20582": {
+   "name": "CGB DWIGHT",
+   "lat": 41.095403,
+   "lon": -88.346279
+  },
+  "81112": {
+   "name": "CGB DYERSBURG",
+   "lat": 36.110581,
+   "lon": -89.612441
+  },
+  "20607": {
+   "name": "CGB ELIZABETHTOWN",
+   "lat": 39.135931,
+   "lon": -85.813504
+  },
+  "20602": {
+   "name": "CGB ENFIELD",
+   "lat": 38.099607,
+   "lon": -88.337547
+  },
+  "20618": {
+   "name": "CGB FAYETTE",
+   "lat": 42.835735,
+   "lon": -91.804705
+  },
+  "79757": {
+   "name": "CGB FITHIAN",
+   "lat": 40.114411,
+   "lon": -87.87354
+  },
+  "20574": {
+   "name": "CGB FLAGG",
+   "lat": 41.895821,
+   "lon": -89.140288
+  },
+  "20570": {
+   "name": "CGB FREEPORT",
+   "lat": 42.29534,
+   "lon": -89.605414
+  },
+  "81113": {
+   "name": "CGB GRAND TOWER",
+   "lat": 37.663868,
+   "lon": -89.512091
+  },
+  "21922": {
+   "name": "CGB HENNEPIN",
+   "lat": 41.255,
+   "lon": -89.346409
+  },
+  "81115": {
+   "name": "CGB HICKMAN",
+   "lat": 36.566066,
+   "lon": -89.215838
+  },
+  "79614": {
+   "name": "CGB HOMER",
+   "lat": 40.042261,
+   "lon": -87.956464
+  },
+  "20610": {
+   "name": "CGB JEFFERSONVILLE",
+   "lat": 38.315692,
+   "lon": -85.668705
+  },
+  "81116": {
+   "name": "CGB JOLIET",
+   "lat": 41.488293,
+   "lon": -88.115098
+  },
+  "79616": {
+   "name": "CGB LINDA",
+   "lat": 36.411893,
+   "lon": -89.539729
+  },
+  "20611": {
+   "name": "CGB LYLES STATION",
+   "lat": 38.371031,
+   "lon": -87.656887
+  },
+  "21924": {
+   "name": "CGB MOUND CITY",
+   "lat": 37.09045,
+   "lon": -89.157346
+  },
+  "86753": {
+   "name": "CGB MT CARROLL",
+   "lat": 42.081449,
+   "lon": -89.987233
+  },
+  "20613": {
+   "name": "CGB MT VERNON",
+   "lat": 37.924488,
+   "lon": -87.866692
+  },
+  "20600": {
+   "name": "CGB OLNEY",
+   "lat": 38.710177,
+   "lon": -88.087279
+  },
+  "21927": {
+   "name": "CGB OSCEOLA",
+   "lat": 35.6882,
+   "lon": -90.0129
+  },
+  "81119": {
+   "name": "CGB OWENSBORO",
+   "lat": 37.80183,
+   "lon": -87.15173
+  },
+  "20604": {
+   "name": "CGB PINCKNEYVILLE",
+   "lat": 38.073462,
+   "lon": -89.384524
+  },
+  "20617": {
+   "name": "CGB RIVERSIDE",
+   "lat": 39.084814,
+   "lon": -84.57221
+  },
+  "20648": {
+   "name": "CGB SAVAGE",
+   "lat": 44.768366,
+   "lon": -93.353301
+  },
+  "21928": {
+   "name": "CGB SCOTT CITY",
+   "lat": 37.246712,
+   "lon": -89.491882
+  },
+  "21931": {
+   "name": "CGB UNIONTOWN",
+   "lat": 37.773123,
+   "lon": -87.932928
+  },
+  "20577": {
+   "name": "CGB WALTON",
+   "lat": 41.719392,
+   "lon": -89.437914
+  },
+  "81120": {
+   "name": "CGB WATERLOO",
+   "lat": 41.429793,
+   "lon": -84.969309
+  },
+  "20650": {
+   "name": "CGB WEST MEMPHIS",
+   "lat": 35.135553,
+   "lon": -90.150479
+  },
+  "84359": {
+   "name": "NORTH DAKOTA SOYBEAN PROCESSORS LLC",
+   "lat": 46.891042,
+   "lon": -97.241602
+  }
+ },
+ "agricharts:innovativeag": {
+  "4683": {
+   "name": "ADM Clint",
+   "lat": 41.817341,
+   "lon": -90.216166
+  },
+  "22956": {
+   "name": "ADM CR",
+   "lat": 41.926269,
+   "lon": -91.686174
+  },
+  "22957": {
+   "name": "AGP Eagle",
+   "lat": 42.668015,
+   "lon": -93.904191
+  },
+  "78129": {
+   "name": "AGP Mason",
+   "lat": 43.132798,
+   "lon": -93.225964
+  },
+  "4625": {
+   "name": "Alden",
+   "lat": 42.506141,
+   "lon": -93.38097
+  },
+  "85817": {
+   "name": "Aplington",
+   "lat": 42.583582,
+   "lon": -92.870221
+  },
+  "86144": {
+   "name": "Bettendorf",
+   "lat": 41.522925,
+   "lon": -90.495802
+  },
+  "4685": {
+   "name": "Big River",
+   "lat": 40.831702,
+   "lon": -91.222159
+  },
+  "17320": {
+   "name": "BungeDBQ",
+   "lat": 42.501566,
+   "lon": -90.65506
+  },
+  "18976": {
+   "name": "BungePDC",
+   "lat": 43.065069,
+   "lon": -91.15732
+  },
+  "22958": {
+   "name": "Cargill CR",
+   "lat": 41.969243,
+   "lon": -91.648648
+  },
+  "4695": {
+   "name": "Cargill IF",
+   "lat": 41.575566,
+   "lon": -93.557151
+  },
+  "4645": {
+   "name": "Central Cy",
+   "lat": 42.197439,
+   "lon": -91.525268
+  },
+  "4688": {
+   "name": "CGB Clay",
+   "lat": 42.894385,
+   "lon": -91.132814
+  },
+  "4628": {
+   "name": "Cleves",
+   "lat": 42.471915,
+   "lon": -93.042284
+  },
+  "4644": {
+   "name": "Cuba City",
+   "lat": 42.595232,
+   "lon": -90.426474
+  },
+  "4647": {
+   "name": "Elkader",
+   "lat": 42.853874,
+   "lon": -91.405416
+  },
+  "4629": {
+   "name": "Ellsworth",
+   "lat": 42.310191,
+   "lon": -93.577482
+  },
+  "4648": {
+   "name": "Elma",
+   "lat": 43.244535,
+   "lon": -92.435856
+  },
+  "4649": {
+   "name": "Farley",
+   "lat": 42.44959,
+   "lon": -91.021189
+  },
+  "4630": {
+   "name": "Faulkner",
+   "lat": 42.61444,
+   "lon": -93.085806
+  },
+  "74559": {
+   "name": "GardenCity",
+   "lat": 42.245613,
+   "lon": -93.394581
+  },
+  "78128": {
+   "name": "Golden Gr",
+   "lat": 42.199245,
+   "lon": -91.526437
+  },
+  "4692": {
+   "name": "Homeland",
+   "lat": 43.066812,
+   "lon": -92.157047
+  },
+  "4633": {
+   "name": "Hubbard",
+   "lat": 42.307203,
+   "lon": -93.296009
+  },
+  "82228": {
+   "name": "Independen",
+   "lat": 42.478432,
+   "lon": -91.894109
+  },
+  "4635": {
+   "name": "Lawn Hill",
+   "lat": 42.295394,
+   "lon": -93.171643
+  },
+  "4653": {
+   "name": "Manchester",
+   "lat": 42.472633,
+   "lon": -91.464145
+  },
+  "78125": {
+   "name": "Masonville",
+   "lat": 42.480562,
+   "lon": -91.592166
+  },
+  "4654": {
+   "name": "Monona",
+   "lat": 43.054279,
+   "lon": -91.389381
+  },
+  "4655": {
+   "name": "Monticello",
+   "lat": 42.210835,
+   "lon": -91.190133
+  },
+  "4656": {
+   "name": "Oran",
+   "lat": 42.700011,
+   "lon": -92.074068
+  },
+  "4636": {
+   "name": "Owasa",
+   "lat": 42.431716,
+   "lon": -93.205179
+  },
+  "4637": {
+   "name": "Pine Lake",
+   "lat": 42.459718,
+   "lon": -93.05803
+  },
+  "74558": {
+   "name": "Poet FBK",
+   "lat": 42.640998,
+   "lon": -92.029433
+  },
+  "80066": {
+   "name": "Poet IF",
+   "lat": 42.506979,
+   "lon": -93.27197
+  },
+  "87784": {
+   "name": "Poet Jewel",
+   "lat": 42.505923,
+   "lon": -93.282885
+  },
+  "4690": {
+   "name": "Poet SR",
+   "lat": 42.739353,
+   "lon": -92.618475
+  },
+  "27502": {
+   "name": "SF Ia Fall",
+   "lat": 42.50943,
+   "lon": -93.26902
+  },
+  "82907": {
+   "name": "ShRk Soypr",
+   "lat": 42.729956,
+   "lon": -92.627106
+  },
+  "4639": {
+   "name": "Union",
+   "lat": 42.24716,
+   "lon": -93.059474
+  },
+  "4693": {
+   "name": "Valero",
+   "lat": 42.777894,
+   "lon": -94.937795
+  },
+  "4686": {
+   "name": "Viserion",
+   "lat": 43.023212,
+   "lon": -91.176061
+  },
+  "4658": {
+   "name": "Waukon",
+   "lat": 43.244125,
+   "lon": -91.485037
+  },
+  "4640": {
+   "name": "Williams",
+   "lat": 42.488948,
+   "lon": -93.546998
+  }
+ },
+ "agricharts:coopfe": {
+  "87548": {
+   "name": "CFE Allendorf",
+   "lat": 43.413668,
+   "lon": -95.64386
+  },
+  "87549": {
+   "name": "CFE Alvord",
+   "lat": 43.341511,
+   "lon": -96.303489
+  },
+  "87550": {
+   "name": "CFE Ashton",
+   "lat": 43.310316,
+   "lon": -95.78971
+  },
+  "87551": {
+   "name": "CFE Bigelow",
+   "lat": 43.500331,
+   "lon": -95.697853
+  },
+  "87552": {
+   "name": "CFE George",
+   "lat": 43.317557,
+   "lon": -95.997877
+  },
+  "88029": {
+   "name": "CFE George Downtown",
+   "lat": 43.341999,
+   "lon": -96.002689
+  },
+  "87566": {
+   "name": "CFE Germantown",
+   "lat": 42.952393,
+   "lon": -95.782159
+  },
+  "87553": {
+   "name": "CFE Harris",
+   "lat": 43.443648,
+   "lon": -95.434143
+  },
+  "87554": {
+   "name": "CFE Hartley",
+   "lat": 43.176984,
+   "lon": -95.477319
+  },
+  "87555": {
+   "name": "CFE Hawarden",
+   "lat": 42.991899,
+   "lon": -96.486371
+  },
+  "87556": {
+   "name": "CFE Hudson",
+   "lat": 43.129218,
+   "lon": -96.453649
+  },
+  "87557": {
+   "name": "CFE Inwood",
+   "lat": 43.305478,
+   "lon": -96.432456
+  },
+  "87559": {
+   "name": "CFE Lake Park",
+   "lat": 43.453052,
+   "lon": -95.319635
+  },
+  "87558": {
+   "name": "CFE Larchwood",
+   "lat": 43.451154,
+   "lon": -96.434213
+  },
+  "87560": {
+   "name": "CFE Lester",
+   "lat": 43.433032,
+   "lon": -96.390259
+  },
+  "87561": {
+   "name": "CFE Ocheyedan",
+   "lat": 43.417409,
+   "lon": -95.534959
+  },
+  "87562": {
+   "name": "CFE Rock Rapids",
+   "lat": 43.43318,
+   "lon": -96.169101
+  },
+  "87563": {
+   "name": "CFE Rock Valley",
+   "lat": 43.202645,
+   "lon": -96.294147
+  },
+  "87564": {
+   "name": "CFE Rushmore",
+   "lat": 43.618305,
+   "lon": -95.801361
+  },
+  "87565": {
+   "name": "CFE Sibley",
+   "lat": 43.396857,
+   "lon": -95.752532
+  }
+ },
+ "agricharts:statelinecoop": {
+  "947": {
+   "name": "Armstrong",
+   "lat": 43.393373,
+   "lon": -94.479835
+  },
+  "7239": {
+   "name": "Blue Earth",
+   "lat": 43.635279,
+   "lon": -94.090048
+  },
+  "957": {
+   "name": "Cylinder",
+   "lat": 43.097703,
+   "lon": -94.5511
+  },
+  "961": {
+   "name": "Emmetsburg-AGP",
+   "lat": 43.096141,
+   "lon": -94.652109
+  },
+  "949": {
+   "name": "Fenton",
+   "lat": 43.218464,
+   "lon": -94.427391
+  },
+  "951": {
+   "name": "Lakota",
+   "lat": 43.384745,
+   "lon": -94.085838
+  },
+  "953": {
+   "name": "Ledyard",
+   "lat": 43.422936,
+   "lon": -94.162492
+  },
+  "84300": {
+   "name": "Marna",
+   "lat": 43.60573,
+   "lon": -94.007872
+  },
+  "954": {
+   "name": "North Burt",
+   "lat": 43.243801,
+   "lon": -94.221168
+  },
+  "955": {
+   "name": "Ringsted",
+   "lat": 43.296045,
+   "lon": -94.507575
+  },
+  "956": {
+   "name": "Swea City",
+   "lat": 43.386293,
+   "lon": -94.309837
+  }
+ },
+ "agricharts:tamabentoncoop": {
+  "3074": {
+   "name": "Dysart",
+   "lat": 42.17305,
+   "lon": -92.306297
+  },
+  "3075": {
+   "name": "Clutier",
+   "lat": 42.076748,
+   "lon": -92.403968
+  },
+  "3076": {
+   "name": "Vinton",
+   "lat": 42.1641,
+   "lon": -92.039906
+  },
+  "3080": {
+   "name": "DS-CRG-CR",
+   "lat": 41.969297,
+   "lon": -91.645896
+  },
+  "3138": {
+   "name": "DS-Starch",
+   "lat": 41.39975,
+   "lon": -91.061724
+  },
+  "3077": {
+   "name": "DS-ADM",
+   "lat": 41.927952,
+   "lon": -91.687836
+  },
+  "3137": {
+   "name": "DS-PEN",
+   "lat": 41.968257,
+   "lon": -91.665796
+  },
+  "83113": {
+   "name": "DS-SHELLROCK",
+   "lat": 42.712272,
+   "lon": -92.584111
+  },
+  "83775": {
+   "name": "DS-Pine Lake",
+   "lat": 42.459189,
+   "lon": -93.057178
+  }
+ },
+ "agricharts:tworivers": {
+  "85831": {
+   "name": "MONROE",
+   "lat": 41.519143,
+   "lon": -93.102323
+  },
+  "85832": {
+   "name": "OTLEY",
+   "lat": 41.464772,
+   "lon": -93.035247
+  },
+  "85833": {
+   "name": "PELLA",
+   "lat": 41.396259,
+   "lon": -92.904801
+  },
+  "85834": {
+   "name": "TRACY",
+   "lat": 41.269803,
+   "lon": -92.868513
+  }
+ },
+ "agricharts:silveredgecoop": {
+  "2895": {
+   "name": "Edgewood",
+   "lat": 42.645218,
+   "lon": -91.370039
+  }
+ },
+ "agricharts:jbslivepork": {
+  "73264": {
+   "name": "Hedrick, IA Feed Mill",
+   "lat": 41.497962,
+   "lon": -92.092386
+  },
+  "73265": {
+   "name": "Centralia, MO Feed Mill",
+   "lat": 39.220437,
+   "lon": -92.163811
+  },
+  "73266": {
+   "name": "Smithton, MO Feed Mill",
+   "lat": 38.683653,
+   "lon": -93.092913
+  },
+  "85373": {
+   "name": "Bushnell, IL Feed Mill",
+   "lat": 40.550198,
+   "lon": -90.518833
+  },
+  "85067": {
+   "name": "Oakville, IA Elevator",
+   "lat": 41.100959,
+   "lon": -91.044628
+  },
+  "73269": {
+   "name": "Mill 240 at Tarkio, MO Feed Mill",
+   "lat": 40.379279,
+   "lon": -95.235133
+  },
+  "85375": {
+   "name": "Morning Sun, IA Elevator",
+   "lat": 41.089493,
+   "lon": -91.249629
+  },
+  "85374": {
+   "name": "Richland, IA  Elevator",
+   "lat": 41.185093,
+   "lon": -91.992951
+  }
+ }
+}
