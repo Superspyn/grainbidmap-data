@@ -25,6 +25,9 @@ import json
 import pathlib
 import sys
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from jd_trail import TRAIL_HOURS  # noqa: E402
+
 SECRETS = pathlib.Path.home() / ".grain-map-secrets"
 FLEET = SECRETS / "fleet.json"
 OUTPUT = SECRETS / "private-map.html"
@@ -63,8 +66,29 @@ def build_truck_js(trucks: list[dict]) -> str:
             "q:" + ("1" if t.get("since_min") else "0"),
             "g:" + ("1" if t.get("moving") else "0"),
             "e:" + ("1" if t.get("engine_on") else "0"),
+            # p: the path driven in the last 24 h, for the map to draw.
+            "p:" + json.dumps([[round(a, 5), round(b, 5)]
+                               for a, b in (t.get("trail") or [])],
+                              separators=(",", ":")),
         ]) + "}")
     return "  var gtTrucks = [\n    " + ",\n    ".join(rows) + "\n  ];\n"
+
+
+def build_stops_js(stops: list[dict], threshold: float) -> str:
+    """Stops longer than the threshold, newest first."""
+    rows = []
+    for s in stops:
+        rows.append("{" + ",".join([
+            "n:" + json.dumps(str(s.get("name") or "")),
+            "k:" + json.dumps(str(s.get("kind") or "")),
+            "a:" + json.dumps(str(s.get("start") or "")),
+            "z:" + json.dumps(str(s.get("end") or "")),
+            f"m:{int(s.get('minutes') or 0)}",
+            f"y:{round(float(s.get('y') or 0), 6)}",
+            f"x:{round(float(s.get('x') or 0), 6)}",
+        ]) + "}")
+    return ("  var gtStops = [\n    " + ",\n    ".join(rows) + "\n  ];\n"
+            + f"  var gtStopMinutes = {int(threshold)};\n")
 
 
 def signed_area(points: list[list[float]]) -> float:
@@ -165,6 +189,22 @@ PANEL_CSS = """
   #grain-trucking-tool .gt-field-item:last-child { border-bottom: none; }
   #grain-trucking-tool .gt-field-item:hover { background: var(--green-pale); }
   #grain-trucking-tool .gt-field-item-on { background: var(--green-pale); }
+  #grain-trucking-tool .gt-stop-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 8px; margin: 11px 0 5px; padding-top: 9px;
+    border-top: 1px solid var(--line);
+  }
+  #grain-trucking-tool .gt-stop-list {
+    max-height: 148px; overflow-y: auto;
+  }
+  #grain-trucking-tool .gt-stop-item {
+    display: flex; justify-content: space-between; gap: 10px;
+    padding: 5px 7px; border-radius: 5px; font-size: 12px; cursor: pointer;
+  }
+  #grain-trucking-tool .gt-stop-item:hover { background: var(--surface-2, #efeae0); }
+  #grain-trucking-tool .gt-stop-mins { color: #C0392B; font-weight: 600; flex: none; }
+  #grain-trucking-tool .gt-stop-when { color: #5B6350; flex: none; }
+  #grain-trucking-tool .gt-stop-none { padding: 5px 7px; font-size: 12px; color: #5B6350; }
   #grain-trucking-tool .gt-truck-key {
     display: inline-flex; align-items: center; gap: 4px;
     margin-right: 10px; white-space: nowrap;
@@ -225,7 +265,13 @@ PANEL_HTML = """
       never having run &mdash; so a truck shut off and one idling look alike.
       &ldquo;At least&rdquo; means the history ran out before it found the
       truck somewhere else. Positions are each vehicle&rsquo;s last report,
-      roughly ten to twenty minutes behind.</div>
+      roughly ten to twenty minutes behind. Click a truck to draw the path it
+      drove in the last 24 hours.</div>
+    <div class="gt-stop-head">
+      <span class="gt-field-title" style="font-size:12px">Long stops</span>
+      <span class="gt-field-count" id="gt-stop-count"></span>
+    </div>
+    <div class="gt-stop-list" id="gt-stop-list"></div>
   </div>
 """
 
@@ -436,9 +482,18 @@ PANEL_JS = r"""
           gtTrucks = data.trucks.map(function (t) {
             return { n: t.name, m: t.make, k: t.kind, y: t.lat, x: t.lon,
                      t: t.at, s: t.since, q: t.since_min ? 1 : 0,
-                     g: t.moving ? 1 : 0, e: t.engine_on ? 1 : 0 };
+                     g: t.moving ? 1 : 0, e: t.engine_on ? 1 : 0,
+                     p: t.trail || [] };
           });
+          if (data.stops) {
+            gtStops = data.stops.map(function (s) {
+              return { n: s.name, k: s.kind, a: s.start, z: s.end,
+                       m: s.minutes, y: s.y, x: s.x };
+            });
+            if (data.stop_minutes) gtStopMinutes = data.stop_minutes;
+          }
           if (window.gtRedrawTrucks) window.gtRedrawTrucks();
+          if (window.gtRenderStops) window.gtRenderStops();
         })
         .catch(function () { /* keep whatever was baked in */ });
     }
@@ -571,6 +626,40 @@ PANEL_JS = r"""
       return word + ' ' + (t.q ? 'at least ' : '') + durationText(mins);
     }
 
+    // ---- trail ----------------------------------------------------------
+    // One truck's path at a time. Every trail at once is 24 hours of
+    // breadcrumbs from a dozen vehicles over the same few roads, which
+    // reads as scribble; clicking the truck you care about does not.
+    var trail = null, trailHead = null, trailFor = null;
+
+    function clearTrail() {
+      if (trail) { trail.setMap(null); trail = null; }
+      if (trailHead) { trailHead.setMap(null); trailHead = null; }
+      trailFor = null;
+    }
+
+    function showTrail(t) {
+      clearTrail();
+      if (!t.p || t.p.length < 2) return false;
+      var path = t.p.map(function (p) { return { lat: p[0], lng: p[1] }; });
+      trail = new google.maps.Polyline({
+        path: path, map: map, zIndex: 400,
+        strokeColor: '#1F6F8B', strokeOpacity: 0.9, strokeWeight: 3
+      });
+      // Where the path starts, so the direction of travel is readable.
+      trailHead = new google.maps.Marker({
+        position: path[0], map: map, zIndex: 401,
+        title: t.n + ' - start of the last ' + GT_TRAIL_HOURS + ' h',
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE, scale: 5,
+          fillColor: '#1F6F8B', fillOpacity: 0.95,
+          strokeColor: '#FFFFFF', strokeWeight: 2
+        }
+      });
+      trailFor = t.n;
+      return true;
+    }
+
     function draw() {
       if (markers.length || typeof map === 'undefined' || !map) return;
       if (!window.google || !window.google.maps) return;
@@ -588,6 +677,10 @@ PANEL_JS = r"""
                    stopped === null ? 0 : Math.max(0, 600 - Math.round(stopped)))
         });
         mk.addListener('click', function () {
+          // Clicking the truck whose trail is already up puts it away.
+          var had = trailFor === t.n;
+          var drew = false;
+          if (had) clearTrail(); else drew = showTrail(t);
           var html = '<div style="font-family:inherit;font-size:13px">' +
             '<strong>' + escapeHtml(t.n) + '</strong><br>' +
             escapeHtml(t.m) + ' \u00b7 ' + escapeHtml(t.k) + '<br>' +
@@ -598,6 +691,11 @@ PANEL_JS = r"""
               'still climbing' : '') +
             (state === 'stale' ? '<br>nothing reported in over ' + QUIET_DAYS +
               ' days, so this position may be out of date' : '') +
+            '<br>' + (drew
+              ? 'path of the last ' + GT_TRAIL_HOURS + ' h shown - click ' +
+                'the truck again to hide it'
+              : had ? 'path hidden'
+                    : 'no movement recorded in the last ' + GT_TRAIL_HOURS + ' h') +
             '</span></div>';
           infoWindow.setContent(html);
           infoWindow.open(map, mk);
@@ -632,9 +730,15 @@ PANEL_JS = r"""
     // Called when the relay delivers a newer set: clear and redraw rather than
     // moving markers, since vehicles can appear and disappear between pushes.
     window.gtRedrawTrucks = function () {
+      var was = trailFor;
+      clearTrail();
       markers.forEach(function (m) { m.setMap(null); });
       markers.length = 0;
       draw();
+      // Keep the trail the user was looking at, now with the newer points.
+      if (was) {
+        gtTrucks.forEach(function (t) { if (t.n === was) showTrail(t); });
+      }
       if (box && !box.checked) {
         markers.forEach(function (m) { m.setMap(null); });
       }
@@ -643,8 +747,74 @@ PANEL_JS = r"""
     if (box) {
       box.addEventListener('change', function () {
         markers.forEach(function (m) { m.setMap(box.checked ? map : null); });
+        if (!box.checked) clearTrail();
       });
     }
+
+    // ---- long stops -----------------------------------------------------
+    // A truck standing still for more than gtStopMinutes while its tracker
+    // was still reporting every half-minute. See dev/jd_trail.py for why
+    // that is the test rather than "speed was zero": a parked truck's
+    // tracker sleeps, and treating one long sleep as a stop turned a night
+    // in the yard into a 72-hour idle.
+    var stopList = container.querySelector('#gt-stop-list');
+    var stopCount = container.querySelector('#gt-stop-count');
+
+    function localTime(iso) {
+      var t = Date.parse(iso);
+      if (isNaN(t)) return '';
+      var d = new Date(t), now = new Date();
+      var hhmm = d.toLocaleTimeString(undefined,
+        { hour: 'numeric', minute: '2-digit' });
+      if (d.toDateString() === now.toDateString()) return hhmm;
+      return d.toLocaleDateString(undefined,
+        { month: 'short', day: 'numeric' }) + ' ' + hhmm;
+    }
+
+    window.gtRenderStops = function () {
+      if (!stopList) return;
+      var stops = (typeof gtStops === 'undefined') ? [] : gtStops;
+      var threshold = (typeof gtStopMinutes === 'undefined') ? 10 : gtStopMinutes;
+      stopList.innerHTML = '';
+      if (stopCount) {
+        stopCount.textContent = stops.length
+          ? stops.length + ' over ' + threshold + ' min in 24 h'
+          : 'none over ' + threshold + ' min in 24 h';
+      }
+      if (!stops.length) {
+        var none = document.createElement('div');
+        none.className = 'gt-stop-none';
+        none.textContent = 'No truck has stood still for more than ' +
+          threshold + ' minutes in the last 24 hours.';
+        stopList.appendChild(none);
+        return;
+      }
+      stops.forEach(function (s) {
+        var row = document.createElement('div');
+        row.className = 'gt-stop-item';
+        var who = document.createElement('span');
+        who.textContent = s.n;
+        var mins = document.createElement('span');
+        mins.className = 'gt-stop-mins';
+        mins.textContent = durationText(s.m);
+        var when = document.createElement('span');
+        when.className = 'gt-stop-when';
+        when.textContent = localTime(s.a);
+        row.appendChild(who);
+        row.appendChild(mins);
+        row.appendChild(when);
+        row.title = s.n + ' stood still ' + durationText(s.m) +
+          ' from ' + localTime(s.a) + ' to ' + localTime(s.z);
+        row.addEventListener('click', function () {
+          if (typeof map === 'undefined' || !map || !s.y) return;
+          map.panTo(new google.maps.LatLng(s.y, s.x));
+          if (map.getZoom() < 14) map.setZoom(14);
+        });
+        stopList.appendChild(row);
+      });
+    };
+
+    window.gtRenderStops();
   })();
 """
 
@@ -680,8 +850,11 @@ def main() -> None:
 
     html = html.replace(
         DATA_MARKER,
-        build_field_js(fields, outlines) + build_truck_js(trucks) + relay_js
-        + "\n" + DATA_MARKER,
+        build_field_js(fields, outlines) + build_truck_js(trucks)
+        + build_stops_js(fleet.get("stops") or [],
+                         fleet.get("stop_minutes") or 10)
+        + f"  var GT_TRAIL_HOURS = {TRAIL_HOURS};\n"
+        + relay_js + "\n" + DATA_MARKER,
         1)
     html = html.replace(SETUP_MARKER, SETUP_MARKER + "\n" + PANEL_JS, 1)
     # The panel sits above the map, and its styles go with the rest.

@@ -30,6 +30,7 @@ import urllib.request
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import jd_idle  # noqa: E402
+import jd_trail  # noqa: E402
 from jd_fleet import (api, connected_orgs, equipment_index,  # noqa: E402
                       fleet_positions, now_iso, refresh_token)
 
@@ -71,7 +72,8 @@ def signature(road: list[dict], newest: str) -> str:
     return json.dumps([newest] + sorted(
         f"{t.get('vin') or t.get('name')}|{t.get('since')}|"
         f"{int(bool(t.get('moving')))}{int(bool(t.get('engine_on')))}"
-        f"{int(bool(t.get('since_min')))}" for t in road))
+        f"{int(bool(t.get('since_min')))}|{len(t.get('trail') or [])}"
+        for t in road))
 
 
 def main() -> None:
@@ -93,16 +95,18 @@ def main() -> None:
     # Then pin down the ones the feed cannot date, from position history.
     # A few per run: the work shrinks to nothing as trucks are either
     # refined or observed moving.
+    refined = crumbed = stops = 0
     try:
         index = equipment_index(token, [str(o["id"]) for o in connected_orgs(token)])
         refined = jd_idle.refine(api, token, road, index)
         if refined:
             jd_idle.track(road)      # re-annotate from what history settled
+        # Breadcrumbs: the path driven, and any long stop along it.
+        crumbed, stops = jd_trail.update(api, token, road, index)
     except Exception as exc:  # noqa: BLE001
-        # History is an improvement, not a dependency. Losing it must not
-        # stop positions reaching the map.
-        print(f"  (history refinement skipped: {type(exc).__name__}: {exc})")
-        refined = 0
+        # History and trails are improvements, not dependencies. Losing them
+        # must not stop positions reaching the map.
+        print(f"  (history/trail step skipped: {type(exc).__name__}: {exc})")
 
     newest = max((v.get("at") or "") for v in road)
     sig = signature(road, newest)
@@ -110,7 +114,9 @@ def main() -> None:
         print(f"unchanged since {newest} - not pushing")
         return
 
-    payload = {"generated_at": now_iso(), "newest_report": newest, "trucks": road}
+    payload = {"generated_at": now_iso(), "newest_report": newest, "trucks": road,
+               "stops": jd_trail.recent_events(24),
+               "stop_minutes": jd_trail.IDLE_MIN}
     request = urllib.request.Request(
         cfg["url"], data=json.dumps(payload).encode(), method="PUT")
     request.add_header("Authorization", "Bearer " + cfg["push_token"])
@@ -141,6 +147,9 @@ def main() -> None:
           f"{len(road) - moving} stopped")
     print(f"  {exact}/{len(road)} have an exact stopped-since time"
           f"{f', {refined} refined from history this run' if refined else ''}")
+    print(f"  breadcrumbs read for {crumbed} vehicles"
+          f"{f', {stops} new stop(s) over {jd_trail.IDLE_MIN:.0f} min' if stops else ''}"
+          f"; {len(payload['stops'])} stop(s) in the last 24 h")
     print(f"  relay said: {result}")
 
 
