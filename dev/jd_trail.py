@@ -8,8 +8,8 @@ here possible, and neither is possible from the ISO fleet feed.
 Two things come out of one fetch:
 
 * the **trail** - the path driven, for the map to draw
-* **long stops** - a run of near-zero-speed points, which is as close to
-  "idling" as this fleet's hardware allows
+* **long stops** - where the truck stood still, each one classified as
+  idling or parked from the engine's own voltage
 
 Why a stop is not simply "speed was zero for ten minutes", measured over
 seven days of real breadcrumbs:
@@ -35,10 +35,21 @@ So a run survives a quiet stretch when the truck is in the same place on
 either side of it, and breaks when it is not. Overnight parking then reports
 as one long stop rather than as nothing, which is the honest answer.
 
-This still cannot prove the engine was running: Deere holds no engine data
-for these trucks (see jd_idle). A truck reporting every 27 seconds while
-stationary is almost certainly running, but the wording on the map says
-"stopped", not "idling", because that is what was actually measured.
+A stop is not yet idling, and the difference is the whole point: a truck
+with the key out is not burning anything. It was believed this could not be
+told apart, because `engineHours` is frozen (6,220 readings for one truck,
+every one of them 0.9) and `hoursOfOperation` returns a single engine-off
+period since the tracker was fitted. Both of those are indeed dead.
+
+The engine is in `deviceStateReports`, as `batteryVoltage`. An alternator
+holds the system at 13.2-14.5 V; a battery on its own sits at 12.3-12.9 V;
+cranking dips to 11.8 V. The two populations do not overlap, and shutdown
+and restart are timestamped to the second, so engine-on periods reconstruct
+exactly and `idling` means stationary while one of them was running.
+
+Do not substitute `engineState` for this. Deere sets it to 1 on a start and
+leaves it 0 for the rest of the trip, so on its own it calls a moving truck
+switched off.
 
 State lives at %USERPROFILE%\\.grain-map-secrets\\trails.json, outside this
 public repo.
@@ -76,6 +87,22 @@ SAME_SPOT_M = 60.0
 
 # Report a stop at least this long. The farmer asked for ten minutes.
 IDLE_MIN = 10.0
+
+# An alternator holds the system above this; a battery sitting on its own
+# falls below it. Measured on these trucks: engine running reads 13.2 to
+# 14.5 V, engine off reads 12.3 to 12.9 V, and cranking dips to 11.8 V. The
+# threshold sits in a gap with a quarter-volt of clearance on either side.
+#
+# This matters more than it looks. Without it every stop reads as idling,
+# and all three stops on the day this was written were a truck parked with
+# the key out - so every alert would have been wrong.
+ENGINE_ON_VOLTS = 13.1
+
+# Deere reports engineState 1 on a start. It does not report a matching 0 on
+# shutdown; what marks shutdown is terminalPowerState stepping 0 -> 1 -> 2 as
+# the tracker drops to battery. Voltage is the reliable one of the three, so
+# it decides, and these two are used only to place the moment precisely.
+TERMINAL_ON_BATTERY = 2
 
 # Keep stops for a week, and never let the file grow without bound.
 EVENT_DAYS = 7
@@ -171,6 +198,84 @@ def _metres(a: dict, b: dict) -> float:
     return 2 * r * math.asin(min(1.0, math.sqrt(h)))
 
 
+def read_engine_rows(values: list[dict]) -> list[dict]:
+    """Device state reports -> {t, volts, on}, oldest first.
+
+    `on` is decided by voltage because that is the physical measurement.
+    engineState corroborates it but cannot stand alone: Deere sets it to 1
+    on a start and leaves it 0 for the whole of a running trip, so trusting
+    it would call every moving truck switched off.
+    """
+    rows = []
+    for r in values or []:
+        when, volts = r.get("time"), r.get("batteryVoltage")
+        if not when or volts is None:
+            continue
+        rows.append({"t": when, "volts": round(float(volts), 2),
+                     "on": float(volts) >= ENGINE_ON_VOLTS
+                           or r.get("engineState") == 1})
+    rows.sort(key=lambda r: r["t"])
+    return rows
+
+
+def fetch_engine(api, token: str, principal_id, limit: int = 200) -> list[dict]:
+    """Engine state over time for one machine."""
+    url = (f"https://api.deere.com/platform/machines/{principal_id}"
+           f"/deviceStateReports?itemLimit={limit}")
+    status, body = api(token, url)
+    if status != 200 or not isinstance(body, dict):
+        return []
+    return read_engine_rows(body.get("values") or [])
+
+
+def engine_runs(reports: list[dict]) -> list[tuple[str, str]]:
+    """Periods the engine was running, as (start, end) timestamps.
+
+    A run opens on the first report showing power and closes on the first
+    showing none. The closing report is the shutdown itself - voltage has
+    already fallen by the time it is sent - so the run ends there rather
+    than at the last report that still showed the alternator.
+    """
+    runs, start = [], None
+    for r in reports:
+        if r["on"] and start is None:
+            start = r["t"]
+        elif not r["on"] and start is not None:
+            runs.append((start, r["t"]))
+            start = None
+    if start is not None:
+        runs.append((start, reports[-1]["t"]))
+    return runs
+
+
+def _overlap_minutes(a_start, a_end, b_start, b_end) -> float:
+    lo, hi = max(a_start, b_start), min(a_end, b_end)
+    return max(0.0, (hi - lo).total_seconds() / 60)
+
+
+def classify_stops(stops: list[dict], reports: list[dict]) -> list[dict]:
+    """Split each stop into engine-running and engine-off time.
+
+    Adds `idle_min` - stationary with the engine running, which is idling in
+    the sense Operations Center means and the farmer asked for - and `engine`,
+    one of "idling", "parked" or "unknown". Without device reports covering
+    the stop it stays "unknown" and idle_min is None, because a stop that
+    cannot be classified must not be reported as idling.
+    """
+    runs = [(_parse(a), _parse(b)) for a, b in engine_runs(reports)]
+    runs = [(a, b) for a, b in runs if a and b]
+    covered = [( _parse(r["t"]) ) for r in reports]
+    for stop in stops:
+        a, b = _parse(stop["start"]), _parse(stop["end"])
+        if not a or not b or not any(a <= c <= b for c in covered):
+            stop["idle_min"], stop["engine"] = None, "unknown"
+            continue
+        idle = sum(_overlap_minutes(a, b, ra, rb) for ra, rb in runs)
+        stop["idle_min"] = round(idle)
+        stop["engine"] = "idling" if idle >= IDLE_MIN else "parked"
+    return stops
+
+
 def find_stops(points: list[dict]) -> list[dict]:
     """Stretches of at least IDLE_MIN where the truck did not move.
 
@@ -254,11 +359,14 @@ def update(api, token: str, trucks: list[dict], index: dict,
         record["to"] = points[-1]["t"] if points else _iso(now)
         data["vehicles"][key] = record
 
-        for stop in find_stops(points):
-            marker = key + stop["start"]
-            if marker in seen:
-                continue
-            seen.add(marker)
+        fresh = [s for s in find_stops(points) if key + s["start"] not in seen]
+        if fresh:
+            # Only worth a second request when there is something to classify,
+            # and one request covers every stop this truck has.
+            classify_stops(fresh, fetch_engine(api, token,
+                                               machine["principal_id"]))
+        for stop in fresh:
+            seen.add(key + stop["start"])
             event = {"id": key, "name": truck.get("name"),
                      "kind": truck.get("kind"), **stop}
             data["events"].append(event)

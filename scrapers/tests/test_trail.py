@@ -89,3 +89,71 @@ def test_moving_truck_produces_nothing():
     points = [pt(f"08:{m:02d}:00", 43.10000 + 0.006 * m, -93.80000, 55.0)
               for m in range(0, 40)]
     assert jd_trail.find_stops(points) == []
+
+
+# --- engine state -------------------------------------------------------
+#
+# Every voltage below is a real reading off these trucks on 2026-09-12.
+
+def rep(t, volts, engine_state=0):
+    """A device state report in the shape Deere actually sends."""
+    return {"time": f"2026-09-12T{t}.000Z", "batteryVoltage": volts,
+            "engineState": engine_state}
+
+
+def reps(*rows):
+    return jd_trail.read_engine_rows(list(rows))
+
+
+def test_threshold_sits_in_the_gap_between_the_two_populations():
+    """Engine off read 12.32-12.97 V across the fleet that day; engine on
+    read 13.20-14.53. The threshold has to fall between, with room."""
+    assert 12.97 < jd_trail.ENGINE_ON_VOLTS < 13.20
+
+
+def test_engine_runs_pair_up_starts_and_shutdowns():
+    runs = jd_trail.engine_runs(reps(
+        rep("12:10:50", 14.48),               # alternator
+        rep("12:11:17", 12.32),               # shutting down
+        rep("12:11:50", 12.53),
+        rep("12:23:27", 13.90, 1),            # restarted
+        rep("12:40:00", 12.60),
+    ))
+    assert runs == [("2026-09-12T12:10:50.000Z", "2026-09-12T12:11:17.000Z"),
+                    ("2026-09-12T12:23:27.000Z", "2026-09-12T12:40:00.000Z")]
+
+
+def test_parked_stop_is_not_idling():
+    """Red Impala East, 18:48. Sat 21 minutes, engine ran for one of them."""
+    stops = [{"start": "2026-09-12T18:48:15.000Z",
+              "end": "2026-09-12T19:09:12.000Z", "minutes": 21}]
+    jd_trail.classify_stops(stops, reps(
+        rep("18:48:45", 14.53),
+        rep("18:49:11", 12.68),
+        rep("18:49:44", 12.59),
+        rep("19:04:13", 12.79),
+        rep("19:08:00", 12.78),
+    ))
+    assert stops[0]["engine"] == "parked"
+    assert stops[0]["idle_min"] < jd_trail.IDLE_MIN
+
+
+def test_engine_running_throughout_is_idling():
+    stops = [{"start": "2026-09-12T14:00:00.000Z",
+              "end": "2026-09-12T14:30:00.000Z", "minutes": 30}]
+    jd_trail.classify_stops(stops, reps(
+        rep("13:59:00", 14.10),
+        rep("14:15:00", 14.20),
+        rep("14:31:00", 12.60),
+    ))
+    assert stops[0]["engine"] == "idling"
+    assert stops[0]["idle_min"] == 30
+
+
+def test_stop_with_no_device_reports_is_unknown_not_idling():
+    """The one that must never be guessed: no evidence is not evidence."""
+    stops = [{"start": "2026-09-12T14:00:00.000Z",
+              "end": "2026-09-12T14:30:00.000Z", "minutes": 30}]
+    jd_trail.classify_stops(stops, reps(rep("09:00:00", 14.10)))
+    assert stops[0]["engine"] == "unknown"
+    assert stops[0]["idle_min"] is None
