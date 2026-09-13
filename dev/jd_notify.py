@@ -212,7 +212,13 @@ def in_quiet_hours(cfg: dict, when: _dt.datetime) -> bool:
 
 
 def compose(stop: dict, where: str | None) -> str:
-    minutes = int(stop.get("minutes") or 0)
+    # Say "idling" only where the engine was measured running, and quote the
+    # engine-on minutes rather than the length of the stop: a truck that sat
+    # 40 minutes and ran for 12 of them idled for 12.
+    idling = stop.get("engine") == "idling"
+    word = "idling" if idling else "stopped"
+    minutes = int((stop.get("idle_min") if idling else None)
+                  or stop.get("minutes") or 0)
     length = (f"{minutes} min" if minutes < 60
               else f"{minutes // 60} h {minutes % 60} min")
     when = stop.get("start") or ""
@@ -225,7 +231,7 @@ def compose(stop: dict, where: str | None) -> str:
                      .astimezone().strftime("%I:%M %p").lstrip("0"))
         except (ValueError, TypeError):
             local = "?"
-    return (f"{stop.get('name')} stopped {length} from {local}"
+    return (f"{stop.get('name')} {word} {length} from {local}"
             + (f" at {where}" if where else "")
             + f" ({stop.get('y'):.4f},{stop.get('x'):.4f})")
 
@@ -318,9 +324,24 @@ def load_fields() -> list[dict]:
 def notify_stops(stops: list[dict], pins: list[dict],
                  fields: list[dict] | None = None,
                  dry_run: bool = False) -> int:
-    """Text each new stop. Returns how many messages went out."""
+    """Text each new stop where the engine was running. Returns how many
+    messages went out.
+
+    A stop with the key out is not idling, and texting about one is worse
+    than staying quiet: on the day this filter was added, all three stops in
+    the fleet were engine-off parking, so every alert would have claimed a
+    truck was burning fuel while it sat cold. A stop that could not be
+    classified is not texted either - "unknown" is not a reason to guess.
+    """
     cfg = load_config()
     if not cfg or not stops:
+        return 0
+    idling = [s for s in stops if s.get("engine") == "idling"]
+    if len(idling) < len(stops):
+        skipped = len(stops) - len(idling)
+        print(f"  ({skipped} stop(s) with the engine off - on the map, not texted)")
+    stops = idling
+    if not stops:
         return 0
     if fields is None:
         fields = load_fields()

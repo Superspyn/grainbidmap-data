@@ -84,6 +84,12 @@ def build_stops_js(stops: list[dict], threshold: float) -> str:
             "a:" + json.dumps(str(s.get("start") or "")),
             "z:" + json.dumps(str(s.get("end") or "")),
             f"m:{int(s.get('minutes') or 0)}",
+            # e is the engine verdict, i the minutes it actually ran. A stop
+            # with no device reports covering it stays "unknown" and must
+            # read that way on the map rather than defaulting to parked.
+            "e:" + json.dumps(str(s.get("engine") or "unknown")),
+            "i:" + ("null" if s.get("idle_min") is None
+                    else str(int(s["idle_min"]))),
             f"y:{round(float(s.get('y') or 0), 6)}",
             f"x:{round(float(s.get('x') or 0), 6)}",
         ]) + "}")
@@ -204,6 +210,11 @@ PANEL_CSS = """
   #grain-trucking-tool .gt-stop-item:hover { background: var(--surface-2, #efeae0); }
   #grain-trucking-tool .gt-stop-mins { color: #C0392B; font-weight: 600; flex: none; }
   #grain-trucking-tool .gt-stop-when { color: #5B6350; flex: none; }
+  #grain-trucking-tool .gt-stop-tag { flex: none; font-size: 10.5px;
+    padding: 1px 5px; border-radius: 8px; letter-spacing: .02em; }
+  #grain-trucking-tool .gt-stop-idling { background: #F6E0C0; color: #8A5A12; }
+  #grain-trucking-tool .gt-stop-parked { background: #E3E7DC; color: #5B6350; }
+  #grain-trucking-tool .gt-stop-unknown { background: #EDEDED; color: #777; }
   #grain-trucking-tool .gt-stop-none { padding: 5px 7px; font-size: 12px; color: #5B6350; }
   #grain-trucking-tool .gt-truck-key {
     display: inline-flex; align-items: center; gap: 4px;
@@ -796,15 +807,25 @@ PANEL_JS = r"""
         who.textContent = s.n;
         var mins = document.createElement('span');
         mins.className = 'gt-stop-mins';
-        mins.textContent = durationText(s.m);
+        // Idling is the one that costs fuel, so it leads with the minutes
+        // the engine actually ran, not the length of the stop.
+        mins.textContent = (s.e === 'idling')
+          ? durationText(s.i) + ' idling' : durationText(s.m);
+        var tag = document.createElement('span');
+        tag.className = 'gt-stop-tag gt-stop-' + (s.e || 'unknown');
+        tag.textContent = (s.e === 'idling') ? 'engine on'
+          : (s.e === 'parked') ? 'parked' : 'engine unknown';
         var when = document.createElement('span');
         when.className = 'gt-stop-when';
         when.textContent = localTime(s.a);
         row.appendChild(who);
         row.appendChild(mins);
+        row.appendChild(tag);
         row.appendChild(when);
         row.title = s.n + ' stood still ' + durationText(s.m) +
-          ' from ' + localTime(s.a) + ' to ' + localTime(s.z);
+          ' from ' + localTime(s.a) + ' to ' + localTime(s.z) +
+          (s.e === 'idling' ? ', engine running for ' + durationText(s.i)
+           : s.e === 'parked' ? ', engine off' : ', engine state not reported');
         row.addEventListener('click', function () {
           if (typeof map === 'undefined' || !map || !s.y) return;
           map.panTo(new google.maps.LatLng(s.y, s.x));
