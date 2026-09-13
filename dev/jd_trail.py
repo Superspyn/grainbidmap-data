@@ -104,6 +104,11 @@ ENGINE_ON_VOLTS = 13.1
 # it decides, and these two are used only to place the moment precisely.
 TERMINAL_ON_BATTERY = 2
 
+# How recent a voltage reading has to be to mean "running right now". The
+# tracker reports every few minutes while awake and hourly once the truck is
+# parked, so anything older than this is not evidence of a running engine.
+ENGINE_FRESH_MIN = 20.0
+
 # Keep stops for a week, and never let the file grow without bound.
 EVENT_DAYS = 7
 MAX_EVENTS = 400
@@ -359,12 +364,19 @@ def update(api, token: str, trucks: list[dict], index: dict,
         record["to"] = points[-1]["t"] if points else _iso(now)
         data["vehicles"][key] = record
 
+        # One device-state request per truck we were going to read anyway.
+        # It does double duty: it classifies any new stop, and its newest row
+        # is whether the engine is running right now - which is what tells
+        # "idling" from "stopped" on the map.
+        reports = fetch_engine(api, token, machine["principal_id"])
+        if reports:
+            record["engine_on"] = bool(reports[-1]["on"])
+            record["engine_at"] = reports[-1]["t"]
+            record["volts"] = reports[-1]["volts"]
+
         fresh = [s for s in find_stops(points) if key + s["start"] not in seen]
         if fresh:
-            # Only worth a second request when there is something to classify,
-            # and one request covers every stop this truck has.
-            classify_stops(fresh, fetch_engine(api, token,
-                                               machine["principal_id"]))
+            classify_stops(fresh, reports)
         for stop in fresh:
             seen.add(key + stop["start"])
             event = {"id": key, "name": truck.get("name"),
@@ -381,6 +393,18 @@ def update(api, token: str, trucks: list[dict], index: dict,
     for truck in trucks:
         record = data["vehicles"].get(_key(truck))
         truck["trail"] = [[p["y"], p["x"]] for p in record["points"]] if record else []
+        if record and record.get("engine_at"):
+            # Voltage read while the truck was last awake. It goes stale the
+            # same way a position does, so it is only trusted as "running
+            # now" while it is recent - otherwise the truck is stopped, which
+            # is what a tracker that has gone back to sleep means anyway.
+            seen_at = _parse(record["engine_at"])
+            fresh_enough = (seen_at is not None
+                            and (now - seen_at).total_seconds() / 60
+                            <= ENGINE_FRESH_MIN)
+            truck["engine_on"] = bool(record.get("engine_on")) and fresh_enough
+            truck["volts"] = record.get("volts")
+            truck["engine_at"] = record["engine_at"]
     return fetched, new_stops
 
 
