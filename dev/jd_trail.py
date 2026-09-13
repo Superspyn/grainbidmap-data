@@ -109,6 +109,11 @@ TERMINAL_ON_BATTERY = 2
 # parked, so anything older than this is not evidence of a running engine.
 ENGINE_FRESH_MIN = 20.0
 
+# Breadcrumbs arrive every 30-40 s while a truck is rolling, so a speed older
+# than this is not what the truck is doing now. Tighter than the voltage
+# window because speed changes by the second and a stale one reads as a lie.
+SPEED_FRESH_MIN = 10.0
+
 # Keep stops for a week, and never let the file grow without bound.
 EVENT_DAYS = 7
 MAX_EVENTS = 400
@@ -393,6 +398,17 @@ def update(api, token: str, trucks: list[dict], index: dict,
     for truck in trucks:
         record = data["vehicles"].get(_key(truck))
         truck["trail"] = [[p["y"], p["x"]] for p in record["points"]] if record else []
+        if record and record.get("points"):
+            # Speed off the newest breadcrumb. Deere reports it as km1hr-1 -
+            # the unit is on the field and was checked against ground covered
+            # between points, which agreed. It is only carried while it is
+            # fresh, for the same reason the voltage is: a breadcrumb from an
+            # hour ago says how fast the truck WAS going.
+            newest = record["points"][-1]
+            at = _parse(newest["t"])
+            if at is not None and (now - at).total_seconds() / 60 <= SPEED_FRESH_MIN:
+                truck["speed_kmh"] = newest["s"]
+                truck["speed_at"] = newest["t"]
         if record and record.get("engine_at"):
             # Voltage read while the truck was last awake. It goes stale the
             # same way a position does, so it is only trusted as "running

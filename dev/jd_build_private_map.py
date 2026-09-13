@@ -66,6 +66,11 @@ def build_truck_js(trucks: list[dict]) -> str:
             "q:" + ("1" if t.get("since_min") else "0"),
             "g:" + ("1" if t.get("moving") else "0"),
             "e:" + ("1" if t.get("engine_on") else "0"),
+            # v: km/h off the newest breadcrumb, null when there is no recent
+            # one. Converted to mph for display, not here, so the stored
+            # value stays the unit Deere actually sends.
+            "v:" + ("null" if t.get("speed_kmh") is None
+                    else str(round(float(t["speed_kmh"]), 1))),
             # p: the path driven in the last 24 h, for the map to draw.
             "p:" + json.dumps([[round(a, 5), round(b, 5)]
                                for a, b in (t.get("trail") or [])],
@@ -307,7 +312,8 @@ PANEL_HTML = """
       truck for how long it has sat and to draw the path it drove in the last
       24 hours. &ldquo;At least&rdquo; means the history ran out before it
       found the truck somewhere else. Positions are each vehicle&rsquo;s last
-      report, roughly ten to twenty minutes behind.</div>
+      report, roughly ten to twenty minutes behind, and a speed is only shown
+      while its reading is under ten minutes old.</div>
     <div class="gt-stop-head">
       <span class="gt-field-title" style="font-size:12px">Long stops</span>
       <span class="gt-field-count" id="gt-stop-count"></span>
@@ -524,6 +530,7 @@ PANEL_JS = r"""
             return { n: t.name, m: t.make, k: t.kind, y: t.lat, x: t.lon,
                      t: t.at, s: t.since, q: t.since_min ? 1 : 0,
                      g: t.moving ? 1 : 0, e: t.engine_on ? 1 : 0,
+                     v: (typeof t.speed_kmh === 'number') ? t.speed_kmh : null,
                      p: t.trail || [] };
           });
           if (data.stops) {
@@ -655,9 +662,27 @@ PANEL_JS = r"""
       return t.s ? ageMinutes(t.s) : ageMinutes(t.t);
     }
 
+    // Deere sends km/h (the unit is on the field: km1hr-1). Shown in mph,
+    // since that is what the speedometer in the truck says.
+    function mph(kmh) {
+      return Math.round(kmh / 1.609344);
+    }
+
+    function speedText(t) {
+      if (typeof t.v !== 'number') return null;
+      // Below a walking pace the reading is GPS noise, not motion - these
+      // trackers report 2.4 km/h on a truck that has not moved in twenty
+      // minutes - so it is not dressed up as a speed.
+      if (t.v < 3) return null;
+      return mph(t.v) + ' mph';
+    }
+
     function stoppedText(t) {
       var state = stateOf(t);
-      if (state === 'moving') return 'moving';
+      if (state === 'moving') {
+        var sp = speedText(t);
+        return sp ? 'moving, ' + sp : 'moving';
+      }
       var mins = stoppedMinutes(t);
       if (mins === null) return 'stopped, for how long is unknown';
       var word = state === 'idling' ? 'idling' : 'stopped';
@@ -826,7 +851,8 @@ PANEL_JS = r"""
         var how = document.createElement('span');
         how.className = 'gt-truck-for';
         var mins = stoppedMinutes(t);
-        how.textContent = state === 'moving' ? 'moving'
+        how.textContent = state === 'moving'
+          ? (speedText(t) || 'moving')
           : (mins === null ? STATE_WORD[state]
              : (t.q ? 'at least ' : '') + durationText(mins));
         row.appendChild(dot);
