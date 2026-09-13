@@ -210,6 +210,26 @@ PANEL_CSS = """
   #grain-trucking-tool .gt-stop-item:hover { background: var(--surface-2, #efeae0); }
   #grain-trucking-tool .gt-stop-mins { color: #C0392B; font-weight: 600; flex: none; }
   #grain-trucking-tool .gt-stop-when { color: #5B6350; flex: none; }
+  #grain-trucking-tool .gt-truck-filter { margin: 7px 0 0; }
+  #grain-trucking-tool .gt-truck-filter select {
+    width: 100%; padding: 5px 7px; font-size: 12px; font-family: inherit;
+    color: var(--ink); background: #fff; border: 1px solid var(--line);
+    border-radius: 5px; }
+  #grain-trucking-tool .gt-truck-list {
+    max-height: 168px; overflow-y: auto; margin-top: 5px; }
+  #grain-trucking-tool .gt-truck-item {
+    display: flex; gap: 7px; align-items: baseline; padding: 3px 7px;
+    font-size: 12px; border-radius: 4px; cursor: pointer; }
+  #grain-trucking-tool .gt-truck-item:hover { background: #EFF2EA; }
+  #grain-trucking-tool .gt-truck-item i {
+    width: 8px; height: 8px; border-radius: 50%; flex: none; }
+  #grain-trucking-tool .gt-truck-item .gt-truck-name {
+    flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis;
+    white-space: nowrap; }
+  #grain-trucking-tool .gt-truck-item .gt-truck-for {
+    color: #5B6350; flex: none; }
+  #grain-trucking-tool .gt-truck-empty {
+    padding: 5px 7px; font-size: 12px; color: #5B6350; }
   #grain-trucking-tool .gt-stop-tag { flex: none; font-size: 10.5px;
     padding: 1px 5px; border-radius: 8px; letter-spacing: .02em; }
   #grain-trucking-tool .gt-stop-idling { background: #F6E0C0; color: #8A5A12; }
@@ -265,19 +285,29 @@ PANEL_HTML = """
       </label>
       <span class="gt-field-count" id="gt-truck-summary"></span>
     </div>
+    <div class="gt-truck-filter">
+      <select id="gt-truck-state">
+        <option value="all">All vehicles</option>
+        <option value="moving">Moving</option>
+        <option value="idling">Idling &mdash; engine on, not moving</option>
+        <option value="stopped">Stopped &mdash; engine off</option>
+        <option value="stale">Not reporting</option>
+      </select>
+    </div>
+    <div class="gt-truck-list" id="gt-truck-list"></div>
     <div class="gt-field-note">
       <span class="gt-truck-key"><i style="background:#3F8F3F"></i>moving</span>
       <span class="gt-truck-key"><i style="background:#D2901F"></i>idling, engine on</span>
       <span class="gt-truck-key"><i style="background:#C0392B"></i>stopped</span>
       <span class="gt-truck-key"><i style="background:#98A08C"></i>not reporting</span>
-      <br>Click a truck for how long it has sat, worked out from its position
-      history. That is time since it last <em>moved</em>: Deere holds no
-      engine data for these trucks &mdash; every one reports its engine as
-      never having run &mdash; so a truck shut off and one idling look alike.
-      &ldquo;At least&rdquo; means the history ran out before it found the
-      truck somewhere else. Positions are each vehicle&rsquo;s last report,
-      roughly ten to twenty minutes behind. Click a truck to draw the path it
-      drove in the last 24 hours.</div>
+      <br>Idling and stopped are told apart by the tracker&rsquo;s battery
+      voltage: an alternator holds 13.2&ndash;14.5&thinsp;V, a battery on its
+      own sits near 12.6&thinsp;V. Deere&rsquo;s own engine-hours field is
+      dead on these trucks, so this is measured rather than reported. Click a
+      truck for how long it has sat and to draw the path it drove in the last
+      24 hours. &ldquo;At least&rdquo; means the history ran out before it
+      found the truck somewhere else. Positions are each vehicle&rsquo;s last
+      report, roughly ten to twenty minutes behind.</div>
     <div class="gt-stop-head">
       <span class="gt-field-title" style="font-size:12px">Long stops</span>
       <span class="gt-field-count" id="gt-stop-count"></span>
@@ -672,6 +702,11 @@ PANEL_JS = r"""
     }
 
     function draw() {
+      // These two are plain DOM and owe nothing to Google Maps, so they are
+      // built before the early returns: if the Maps script is slow or
+      // blocked, you can still read which trucks are idling.
+      renderTruckList();
+      renderSummary();
       if (markers.length || typeof map === 'undefined' || !map) return;
       if (!window.google || !window.google.maps) return;
       gtTrucks.forEach(function (t) {
@@ -680,7 +715,9 @@ PANEL_JS = r"""
         var state = stateOf(t);
         var mk = new google.maps.Marker({
           position: { lat: t.y, lng: t.x },
-          map: map,
+          // A marker is only put on the map when it matches whatever the
+          // dropdown is filtered to, so the list and the map never disagree.
+          map: (chosenState() === 'all' || chosenState() === state) ? map : null,
           icon: truckIcon(t),
           title: t.n + '  (' + t.m + ')  -  ' + stoppedText(t) +
                  '  -  reported ' + ageText(mins),
@@ -711,25 +748,111 @@ PANEL_JS = r"""
           infoWindow.setContent(html);
           infoWindow.open(map, mk);
         });
+        mk.gtState = state;
         markers.push(mk);
       });
-      if (summary) {
-        var counts = { moving: 0, idling: 0, stopped: 0, stale: 0 };
-        gtTrucks.forEach(function (t) { counts[stateOf(t)]++; });
-        var bits = [gtTrucks.length + ' vehicles'];
-        if (counts.moving) bits.push(counts.moving + ' moving');
-        if (counts.idling) bits.push(counts.idling + ' idling');
-        if (counts.stopped) bits.push(counts.stopped + ' stopped');
-        if (counts.stale) bits.push(counts.stale + ' not reporting');
-        var longest = null;
-        gtTrucks.forEach(function (t) {
-          if (stateOf(t) === 'moving') return;
-          var m = stoppedMinutes(t);
-          if (m !== null && (longest === null || m > longest)) longest = m;
-        });
-        if (longest !== null) bits.push('longest sat ' + durationText(longest));
-        summary.textContent = bits.join(' \u00b7 ');
+    }
+
+    function renderSummary() {
+      if (!summary) return;
+      var counts = { moving: 0, idling: 0, stopped: 0, stale: 0 };
+      gtTrucks.forEach(function (t) { counts[stateOf(t)]++; });
+      var bits = [gtTrucks.length + ' vehicles'];
+      if (counts.moving) bits.push(counts.moving + ' moving');
+      if (counts.idling) bits.push(counts.idling + ' idling');
+      if (counts.stopped) bits.push(counts.stopped + ' stopped');
+      if (counts.stale) bits.push(counts.stale + ' not reporting');
+      var longest = null;
+      gtTrucks.forEach(function (t) {
+        if (stateOf(t) === 'moving') return;
+        var m = stoppedMinutes(t);
+        if (m !== null && (longest === null || m > longest)) longest = m;
+      });
+      if (longest !== null) bits.push('longest sat ' + durationText(longest));
+      summary.textContent = bits.join(' \u00b7 ');
+    }
+
+    // ---- the state list -------------------------------------------------
+    // The dropdown answers "which ones are idling right now" without hunting
+    // across the map for amber trucks. Picking a state also hides the others
+    // from the map, so the two always agree about what is being looked at.
+    var stateSelect = container.querySelector('#gt-truck-state');
+    var truckList = container.querySelector('#gt-truck-list');
+
+    function chosenState() {
+      return stateSelect ? stateSelect.value : 'all';
+    }
+
+    var STATE_WORD = { moving: 'moving', idling: 'idling',
+                       stopped: 'stopped', stale: 'not reporting' };
+
+    function renderTruckList() {
+      if (!truckList) return;
+      var want = chosenState();
+      var rows = gtTrucks.filter(function (t) {
+        return want === 'all' || stateOf(t) === want;
+      });
+      // Moving first, then the one that has been sitting the shortest: the
+      // truck that just pulled up is the one worth seeing at the top.
+      rows.sort(function (a, b) {
+        var sa = stateOf(a), sb = stateOf(b);
+        if (sa !== sb) {
+          var order = { moving: 0, idling: 1, stopped: 2, stale: 3 };
+          return order[sa] - order[sb];
+        }
+        var ma = stoppedMinutes(a), mb = stoppedMinutes(b);
+        if (ma === null) return 1;
+        if (mb === null) return -1;
+        return ma - mb;
+      });
+      truckList.innerHTML = '';
+      if (!rows.length) {
+        var none = document.createElement('div');
+        none.className = 'gt-truck-empty';
+        none.textContent = want === 'all' ? 'No vehicles reporting.'
+          : 'No vehicle is ' + (STATE_WORD[want] || want) + ' right now.';
+        truckList.appendChild(none);
+        return;
       }
+      rows.forEach(function (t) {
+        var state = stateOf(t);
+        var row = document.createElement('div');
+        row.className = 'gt-truck-item';
+        var dot = document.createElement('i');
+        dot.style.background = STATE_COLOUR[state];
+        var name = document.createElement('span');
+        name.className = 'gt-truck-name';
+        name.textContent = t.n;
+        var how = document.createElement('span');
+        how.className = 'gt-truck-for';
+        var mins = stoppedMinutes(t);
+        how.textContent = state === 'moving' ? 'moving'
+          : (mins === null ? STATE_WORD[state]
+             : (t.q ? 'at least ' : '') + durationText(mins));
+        row.appendChild(dot);
+        row.appendChild(name);
+        row.appendChild(how);
+        row.title = t.n + ' \u00b7 ' + stoppedText(t);
+        row.addEventListener('click', function () {
+          if (typeof map === 'undefined' || !map || !t.y) return;
+          map.panTo(new google.maps.LatLng(t.y, t.x));
+          if (map.getZoom() < 13) map.setZoom(13);
+          showTrail(t);
+        });
+        truckList.appendChild(row);
+      });
+    }
+
+    if (stateSelect) {
+      stateSelect.addEventListener('change', function () {
+        renderTruckList();
+        // Keep the map showing exactly what the list shows.
+        var want = chosenState();
+        markers.forEach(function (m) {
+          m.setMap((box && !box.checked) ? null
+                   : (want === 'all' || m.gtState === want) ? map : null);
+        });
+      });
     }
 
     var tries = 0;
@@ -757,7 +880,13 @@ PANEL_JS = r"""
 
     if (box) {
       box.addEventListener('change', function () {
-        markers.forEach(function (m) { m.setMap(box.checked ? map : null); });
+        // Turning the trucks back on restores the dropdown's selection, not
+        // all of them - otherwise the map would show more than the list.
+        var want = chosenState();
+        markers.forEach(function (m) {
+          m.setMap(box.checked && (want === 'all' || m.gtState === want)
+                   ? map : null);
+        });
         if (!box.checked) clearTrail();
       });
     }
