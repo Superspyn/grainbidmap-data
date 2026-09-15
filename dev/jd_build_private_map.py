@@ -265,6 +265,50 @@ PANEL_CSS = """
     text-transform: uppercase; letter-spacing: 0.05em; background: var(--bg);
   }
   #grain-trucking-tool .gt-field-hint:hover { background: var(--bg); }
+  #grain-trucking-tool .gt-box-buttons { display: flex; gap: 6px; margin-top: 8px; }
+  #grain-trucking-tool .gt-box-btn {
+    font: inherit; font-size: 12px; padding: 6px 10px; cursor: pointer;
+    border: 1px solid #3F8F3F; border-radius: 5px; color: #fff; background: #3F8F3F;
+  }
+  #grain-trucking-tool .gt-box-btn:hover { background: #357A35; }
+  #grain-trucking-tool .gt-box-btn-quiet {
+    color: var(--ink-soft); background: #fff; border-color: var(--line);
+  }
+  #grain-trucking-tool .gt-box-btn-quiet:hover { background: var(--bg); }
+  #grain-trucking-tool .gt-box-result {
+    margin-top: 8px; padding: 8px 9px; border: 1px solid var(--line);
+    border-radius: 6px; background: var(--bg);
+  }
+  #grain-trucking-tool .gt-box-total { font-size: 13px; font-weight: 600; }
+  #grain-trucking-tool .gt-box-total span {
+    font-family: 'IBM Plex Mono', monospace; font-size: 16px; color: #2E6B2E;
+  }
+  #grain-trucking-tool .gt-box-gross { font-size: 11.5px; color: var(--ink-soft); margin-top: 2px; }
+  #grain-trucking-tool .gt-box-yield {
+    display: flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 12px;
+  }
+  #grain-trucking-tool .gt-box-yield input {
+    width: 76px; padding: 4px 6px; font: inherit; font-size: 13px;
+    font-family: 'IBM Plex Mono', monospace; border: 1px solid var(--line);
+    border-radius: 4px; color: var(--ink); background: #fff;
+  }
+  #grain-trucking-tool .gt-box-bushels { font-size: 13px; margin-top: 6px; }
+  #grain-trucking-tool .gt-box-bushels b {
+    font-family: 'IBM Plex Mono', monospace; font-size: 16px; color: #2E6B2E;
+  }
+  #grain-trucking-tool .gt-box-bushels .gt-box-loads {
+    display: block; font-size: 11.5px; color: var(--ink-soft); margin-top: 1px;
+  }
+  #grain-trucking-tool .gt-box-list { max-height: 150px; overflow-y: auto; margin-top: 7px; }
+  #grain-trucking-tool .gt-box-item {
+    display: flex; gap: 8px; align-items: baseline; padding: 2px 4px; font-size: 12px;
+    cursor: pointer; border-radius: 3px;
+  }
+  #grain-trucking-tool .gt-box-item:hover { background: #E8ECE0; }
+  #grain-trucking-tool .gt-box-item span:first-child {
+    flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  #grain-trucking-tool .gt-box-part { color: var(--ink-soft); font-size: 11px; white-space: nowrap; }
 """
 
 PANEL_HTML = """
@@ -283,6 +327,31 @@ PANEL_HTML = """
     <div class="gt-field-note" id="gt-field-note">Pick a field &mdash; by name or
       by clicking its outline &mdash; to use it as your loadout point. Every haul
       cost and the best-bids table below are then calculated from there.</div>
+    <div class="gt-field-head" style="margin-top:12px;padding-top:11px;border-top:1px solid var(--line);">
+      <span class="gt-field-title">Bushels in a box</span>
+      <span class="gt-field-count" id="gt-box-count"></span>
+    </div>
+    <div class="gt-box-buttons">
+      <button type="button" class="gt-box-btn" id="gt-box-start">Drop a box on the map</button>
+      <button type="button" class="gt-box-btn gt-box-btn-quiet" id="gt-box-clear" hidden>Clear</button>
+    </div>
+    <div class="gt-box-result" id="gt-box-result" hidden>
+      <div class="gt-box-total"><span id="gt-box-acres">0</span> acres of your fields inside</div>
+      <div class="gt-box-gross" id="gt-box-gross"></div>
+      <div class="gt-box-yield">
+        <label for="gt-box-yield">Yield estimate</label>
+        <input type="number" id="gt-box-yield" min="0" step="1" inputmode="decimal" placeholder="e.g. 210">
+        <span>bu/ac</span>
+      </div>
+      <div class="gt-box-bushels" id="gt-box-bushels"></div>
+      <div class="gt-box-list" id="gt-box-list"></div>
+    </div>
+    <div class="gt-field-note">Like the snipping tool, but for acres: drop a
+      box, then drag its corners or slide it over the ground you want to
+      count. It adds up your fields inside the box &mdash; a whole field counts
+      in full, a field the edge cuts through counts only the part inside.
+      Put in a yield and that becomes bushels, and loads at the truck
+      capacity set above.</div>
     <div class="gt-field-head" style="margin-top:12px;padding-top:11px;border-top:1px solid var(--line);">
       <label class="gt-field-toggle" style="margin-top:0;">
         <input type="checkbox" id="gt-truck-toggle" checked>
@@ -480,8 +549,11 @@ PANEL_JS = r"""
           poly.setOptions({ fillOpacity: 0.35 });
         });
         poly.addListener('mouseout', function () {
-          poly.setOptions({ fillOpacity: 0.18 });
+          // Back to whichever fill it had: brighter while a measuring box
+          // is counting it, the usual wash otherwise.
+          poly.setOptions({ fillOpacity: f._inBox ? 0.42 : 0.18 });
         });
+        f._poly = poly;
         drawn.push(poly);
       });
     }
@@ -500,6 +572,267 @@ PANEL_JS = r"""
         drawn.forEach(function (p) { p.setMap(toggle.checked ? map : null); });
       });
     }
+
+    // ---- bushels in a box ------------------------------------------------
+    // A rectangle you drag over the map; the acres of your fields inside it,
+    // and at a yield you type, the bushels. It works from the same boundary
+    // rings the outlines are drawn from, so what is counted is exactly what
+    // is on the screen.
+    //
+    // Each ring is clipped to the box (Sutherland-Hodgman - exact for a
+    // rectangle, since the box's edges are lines of constant latitude and
+    // longitude). Exterior rings add, holes subtract, and the clipped area
+    // over the unclipped area is the share of the field inside the box. That
+    // share times Deere's own acreage is what is reported, so a field wholly
+    // inside comes out at the figure Operations Center shows for it, to the
+    // cent, and only a field cut by the edge is ever pro-rated.
+    (function setupBox() {
+      var startBtn = container.querySelector('#gt-box-start');
+      var clearBtn = container.querySelector('#gt-box-clear');
+      var result = container.querySelector('#gt-box-result');
+      var acresOut = container.querySelector('#gt-box-acres');
+      var grossOut = container.querySelector('#gt-box-gross');
+      var countOut = container.querySelector('#gt-box-count');
+      var yieldIn = container.querySelector('#gt-box-yield');
+      var bushelsOut = container.querySelector('#gt-box-bushels');
+      var listOut = container.querySelector('#gt-box-list');
+      if (!startBtn || !result) return;
+
+      var SQM_PER_ACRE = 4046.8564224;
+      var rect = null, pending = false, lastRows = [], lastAcres = 0;
+
+      // Metres per degree at a latitude: a flat local frame is fine here,
+      // since the ratio is what matters for fields and the gross box figure
+      // only needs to be within a fraction of a percent.
+      function frame(lat) {
+        var rad = Math.PI / 180;
+        return { kx: 111320 * Math.cos(lat * rad), ky: 111132 };
+      }
+
+      function ringArea(pts, fr) {
+        var s = 0;
+        for (var i = 0, n = pts.length; i < n; i++) {
+          var a = pts[i], b = pts[(i + 1) % n];
+          s += (a.lng * fr.kx) * (b.lat * fr.ky) - (b.lng * fr.kx) * (a.lat * fr.ky);
+        }
+        return Math.abs(s) / 2;
+      }
+
+      // Clip a ring to the box, one edge at a time.
+      function clipRing(pts, box) {
+        var edges = [
+          function (p) { return p.lat >= box.s; },
+          function (p) { return p.lat <= box.n; },
+          function (p) { return p.lng >= box.w; },
+          function (p) { return p.lng <= box.e; }
+        ];
+        var lines = [
+          function (p, q) { var t = (box.s - p.lat) / (q.lat - p.lat); return { lat: box.s, lng: p.lng + t * (q.lng - p.lng) }; },
+          function (p, q) { var t = (box.n - p.lat) / (q.lat - p.lat); return { lat: box.n, lng: p.lng + t * (q.lng - p.lng) }; },
+          function (p, q) { var t = (box.w - p.lng) / (q.lng - p.lng); return { lng: box.w, lat: p.lat + t * (q.lat - p.lat) }; },
+          function (p, q) { var t = (box.e - p.lng) / (q.lng - p.lng); return { lng: box.e, lat: p.lat + t * (q.lat - p.lat) }; }
+        ];
+        var out = pts;
+        for (var k = 0; k < 4 && out.length; k++) {
+          var inside = edges[k], cross = lines[k], inp = out;
+          out = [];
+          for (var i = 0, n = inp.length; i < n; i++) {
+            var cur = inp[i], prev = inp[(i + n - 1) % n];
+            var curIn = inside(cur), prevIn = inside(prev);
+            if (curIn) {
+              if (!prevIn) out.push(cross(prev, cur));
+              out.push(cur);
+            } else if (prevIn) {
+              out.push(cross(prev, cur));
+            }
+          }
+        }
+        return out;
+      }
+
+      // Decoded rings and each field's extent, worked out once and kept.
+      function prepared(f) {
+        if (f._rings) return f;
+        f._rings = f.r.map(function (r) { return { hole: r.charAt(0) === 'i', pts: decodeRing(r.slice(1)) }; });
+        var s = 90, n = -90, w = 180, e = -180;
+        f._rings.forEach(function (r) {
+          r.pts.forEach(function (p) {
+            if (p.lat < s) s = p.lat; if (p.lat > n) n = p.lat;
+            if (p.lng < w) w = p.lng; if (p.lng > e) e = p.lng;
+          });
+        });
+        f._ext = { s: s, n: n, w: w, e: e };
+        var fr = frame(f.y), full = 0;
+        f._rings.forEach(function (r) { full += (r.hole ? -1 : 1) * ringArea(r.pts, fr); });
+        f._full = full;
+        return f;
+      }
+
+      function measure() {
+        pending = false;
+        if (!rect) return;
+        var b = rect.getBounds();
+        if (!b) return;
+        var box = { s: b.getSouthWest().lat(), n: b.getNorthEast().lat(),
+                    w: b.getSouthWest().lng(), e: b.getNorthEast().lng() };
+        var rows = [], total = 0;
+        gtFields.forEach(function (f) {
+          var was = !!f._inBox;
+          f._inBox = false;
+          if (!f.r || !f.r.length) return;
+          prepared(f);
+          var x = f._ext;
+          if (x.n < box.s || x.s > box.n || x.e < box.w || x.w > box.e) {
+            if (was && f._poly) f._poly.setOptions({ fillOpacity: 0.18 });
+            return;
+          }
+          var fr = frame(f.y), inside = 0;
+          f._rings.forEach(function (r) {
+            var c = clipRing(r.pts, box);
+            if (c.length > 2) inside += (r.hole ? -1 : 1) * ringArea(c, fr);
+          });
+          if (inside <= 0 || f._full <= 0) {
+            if (was && f._poly) f._poly.setOptions({ fillOpacity: 0.18 });
+            return;
+          }
+          var share = Math.min(1, inside / f._full);
+          // Deere's figure when it is there; the boundary's own area if not.
+          var acres = f.a ? f.a * share : inside / SQM_PER_ACRE;
+          if (acres < 0.05) {
+            if (was && f._poly) f._poly.setOptions({ fillOpacity: 0.18 });
+            return;
+          }
+          f._inBox = true;
+          if (f._poly) f._poly.setOptions({ fillOpacity: 0.42 });
+          rows.push({ f: f, acres: acres, share: share });
+          total += acres;
+        });
+        rows.sort(function (a, c) { return c.acres - a.acres; });
+        lastRows = rows;
+        lastAcres = total;
+
+        var gross = ringArea([
+          { lat: box.s, lng: box.w }, { lat: box.s, lng: box.e },
+          { lat: box.n, lng: box.e }, { lat: box.n, lng: box.w }
+        ], frame((box.s + box.n) / 2)) / SQM_PER_ACRE;
+
+        acresOut.textContent = total.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+        grossOut.textContent = 'The box covers ' +
+          gross.toLocaleString(undefined, { maximumFractionDigits: 0 }) + ' acres of ground; ' +
+          rows.length + (rows.length === 1 ? ' field' : ' fields') + ' of yours ' +
+          (rows.length === 1 ? 'is' : 'are') + ' in it.';
+        countOut.textContent = rows.length ? rows.length + ' fields' : '';
+
+        listOut.innerHTML = '';
+        rows.forEach(function (r) {
+          var row = document.createElement('div');
+          row.className = 'gt-box-item';
+          var name = document.createElement('span');
+          name.textContent = r.f.n;
+          var part = document.createElement('span');
+          part.className = 'gt-box-part';
+          part.textContent = r.share < 0.995 && r.f.a
+            ? Math.round(r.share * 100) + '% of ' + r.f.a.toFixed(1) : '';
+          var ac = document.createElement('span');
+          ac.className = 'gt-field-acres';
+          ac.textContent = r.acres.toFixed(1) + ' ac';
+          row.appendChild(name);
+          row.appendChild(part);
+          row.appendChild(ac);
+          row.addEventListener('click', function () {
+            map.panTo(new google.maps.LatLng(r.f.y, r.f.x));
+          });
+          listOut.appendChild(row);
+        });
+        bushels();
+      }
+
+      function bushels() {
+        var y = parseFloat(yieldIn.value);
+        if (!(y > 0) || !lastAcres) {
+          bushelsOut.innerHTML = '';
+          return;
+        }
+        var bu = lastAcres * y;
+        var html = '<b>' + Math.round(bu).toLocaleString() + '</b> bushels at ' +
+          y.toLocaleString() + ' bu/ac';
+        var capEl = document.getElementById('gt-cap');
+        var cap = capEl ? parseFloat(capEl.value) : NaN;
+        if (cap > 0) {
+          var loads = bu / cap;
+          html += '<span class="gt-box-loads">about ' +
+            loads.toLocaleString(undefined, { maximumFractionDigits: 1 }) +
+            ' loads at ' + cap.toLocaleString() + ' bu a truck</span>';
+        }
+        bushelsOut.innerHTML = html;
+        try { localStorage.setItem('gt-box-yield', String(y)); } catch (e) {}
+      }
+
+      function schedule() {
+        // bounds_changed fires for every pixel of a drag; one pass per
+        // frame is plenty.
+        if (pending) return;
+        pending = true;
+        (window.requestAnimationFrame || setTimeout)(measure);
+      }
+
+      function start() {
+        if (!window.google || !window.google.maps || typeof map === 'undefined' || !map) {
+          grossOut.textContent = 'The map is still loading - try again in a moment.';
+          result.hidden = false;
+          return;
+        }
+        var v = map.getBounds();
+        if (!v) return;
+        // A box through the middle of whatever is on screen, sized so the
+        // handles are easy to grab, and re-centred on every press so the
+        // button also brings a box back from wherever it was left.
+        var sw = v.getSouthWest(), ne = v.getNorthEast();
+        var dLat = (ne.lat() - sw.lat()) * 0.22, dLng = (ne.lng() - sw.lng()) * 0.22;
+        var c = map.getCenter();
+        var bounds = new google.maps.LatLngBounds(
+          { lat: c.lat() - dLat, lng: c.lng() - dLng },
+          { lat: c.lat() + dLat, lng: c.lng() + dLng });
+        if (!rect) {
+          rect = new google.maps.Rectangle({
+            bounds: bounds, map: map, editable: true, draggable: true,
+            strokeColor: '#1F5E1F', strokeOpacity: 0.95, strokeWeight: 2,
+            fillColor: '#3F8F3F', fillOpacity: 0.08, zIndex: 50
+          });
+          rect.addListener('bounds_changed', schedule);
+        } else {
+          rect.setBounds(bounds);
+        }
+        result.hidden = false;
+        clearBtn.hidden = false;
+        startBtn.textContent = 'Re-centre the box';
+        measure();
+      }
+
+      function clear() {
+        if (rect) { rect.setMap(null); rect = null; }
+        gtFields.forEach(function (f) {
+          if (f._inBox && f._poly) f._poly.setOptions({ fillOpacity: 0.18 });
+          f._inBox = false;
+        });
+        lastRows = []; lastAcres = 0;
+        result.hidden = true;
+        clearBtn.hidden = true;
+        countOut.textContent = '';
+        startBtn.textContent = 'Drop a box on the map';
+      }
+
+      try {
+        var saved = localStorage.getItem('gt-box-yield');
+        if (saved && parseFloat(saved) > 0) yieldIn.value = saved;
+      } catch (e) {}
+
+      startBtn.addEventListener('click', start);
+      clearBtn.addEventListener('click', clear);
+      yieldIn.addEventListener('input', bushels);
+      var capEl = document.getElementById('gt-cap');
+      if (capEl) capEl.addEventListener('input', bushels);
+    })();
   })();
 
   // ====== Your trucks (private) ======
