@@ -26,7 +26,6 @@ from __future__ import annotations
 import csv
 import difflib
 import json
-import math
 import pathlib
 import re
 import sys
@@ -37,19 +36,13 @@ sys.path.insert(0, str(ROOT / "scrapers"))
 import build_bids  # noqa: E402
 import match_locations  # noqa: E402
 
+km = match_locations.haversine_km
+
 MAP = ROOT / "scrapers" / "config" / "location_map.json"
 REPORT = ROOT / "dev" / "coverage-gaps.csv"
 
 NEAR_KM = 8.0          # same threshold match_locations uses for a pin match
 NAME_FLOOR = 0.55      # how alike two names must read to be worth proposing
-
-
-def km(lat1, lon1, lat2, lon2) -> float:
-    r = 6371.0088
-    p1, p2 = math.radians(lat1), math.radians(lat2)
-    a = (math.sin((p2 - p1) / 2) ** 2
-         + math.cos(p1) * math.cos(p2) * math.sin(math.radians(lon2 - lon1) / 2) ** 2)
-    return 2 * r * math.asin(min(1.0, math.sqrt(a)))
 
 
 def simplify(name: str) -> str:

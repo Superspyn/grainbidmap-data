@@ -22,7 +22,6 @@ with the aerial imagery in front of you.
 from __future__ import annotations
 
 import json
-import math
 import pathlib
 import sys
 
@@ -32,6 +31,8 @@ sys.path.insert(0, str(ROOT / "scrapers"))
 import build_bids  # noqa: E402
 import match_locations  # noqa: E402
 
+km = match_locations.haversine_km
+
 CACHE = ROOT / "dev" / "source-coords.json"
 REPORT = ROOT / "dev" / "pin-coord-audit.csv"
 
@@ -40,18 +41,6 @@ REPORT = ROOT / "dev" / "pin-coord-audit.csv"
 # the pin is the scale, so small gaps are not evidence of anything.
 LOOK_KM = 1.0
 WRONG_KM = 3.0
-
-
-def km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
-    """Great-circle distance. The pins span Iowa to Missouri, so the flat
-    approximation is fine, but this is cheap and has no error to explain."""
-    r = 6371.0088
-    p1, p2 = math.radians(lat1), math.radians(lat2)
-    dp = p2 - p1
-    dl = math.radians(lon2 - lon1)
-    a = (math.sin(dp / 2) ** 2
-         + math.cos(p1) * math.cos(p2) * math.sin(dl / 2) ** 2)
-    return 2 * r * math.asin(min(1.0, math.sqrt(a)))
 
 
 def fetch_source_coords() -> dict:
