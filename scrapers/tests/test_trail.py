@@ -91,6 +91,27 @@ def test_moving_truck_produces_nothing():
     assert jd_trail.find_stops(points) == []
 
 
+def test_creeping_truck_is_not_a_stop():
+    """A semi inching up a scale line: 40 m every 35 s for 15 minutes. Each
+    hop is under the jitter radius, but it ends up 1 km from where it
+    started - measured against the anchor, it left the spot at once."""
+    points = []
+    for i in range(26):
+        s = i * 35
+        points.append({"t": f"2026-09-12T09:{s // 60:02d}:{s % 60:02d}.000Z",
+                       "y": 43.10000 + i * 0.00036, "x": -93.80000, "s": 4.0})
+    assert jd_trail.find_stops(points) == []
+
+
+def test_parked_truck_with_gps_wander_is_one_stop():
+    """Twenty crumbs over an hour, each a few metres off the last."""
+    points = [{"t": f"2026-09-12T09:{3 * i:02d}:00.000Z",
+               "y": 43.10000 + (i % 3) * 0.00005, "x": -93.80000 + (i % 2) * 0.00008,
+               "s": 0.0} for i in range(20)]
+    stops = jd_trail.find_stops(points)
+    assert len(stops) == 1 and stops[0]["minutes"] == 57
+
+
 # --- engine state -------------------------------------------------------
 #
 # Every voltage below is a real reading off these trucks on 2026-09-12.
@@ -150,10 +171,118 @@ def test_engine_running_throughout_is_idling():
     assert stops[0]["idle_min"] == 30
 
 
-def test_stop_with_no_device_reports_is_unknown_not_idling():
+def test_stop_that_began_before_the_record_is_unknown_not_idling():
     """The one that must never be guessed: no evidence is not evidence."""
     stops = [{"start": "2026-09-12T14:00:00.000Z",
               "end": "2026-09-12T14:30:00.000Z", "minutes": 30}]
-    jd_trail.classify_stops(stops, reps(rep("09:00:00", 14.10)))
+    jd_trail.classify_stops(stops, reps(rep("15:00:00", 14.10)))
     assert stops[0]["engine"] == "unknown"
     assert stops[0]["idle_min"] is None
+    jd_trail.classify_stops(stops, [])
+    assert stops[0]["engine"] == "unknown"
+
+
+def test_stop_bracketed_by_alternator_readings_is_idling():
+    """No report lands inside the 14-minute window, but the engine was on
+    at 09:57 and still on at 10:19: the state cannot have changed without a
+    shutdown report. This is the exact alert that was being dropped."""
+    stops = [{"start": "2026-09-12T10:00:00.000Z",
+              "end": "2026-09-12T10:14:00.000Z", "minutes": 14}]
+    jd_trail.classify_stops(stops, reps(
+        rep("09:57:00", 14.10), rep("10:19:00", 14.10), rep("10:40:00", 12.60)))
+    assert stops[0]["engine"] == "idling"
+    assert stops[0]["idle_min"] == 14
+
+
+def test_open_engine_run_covers_a_stop_past_the_last_heartbeat():
+    """Last report showed the alternator at 10:05; the stop runs to 10:30
+    with no shutdown report. No shutdown report means still running."""
+    stops = [{"start": "2026-09-12T10:00:00.000Z",
+              "end": "2026-09-12T10:30:00.000Z", "minutes": 30}]
+    jd_trail.classify_stops(stops, reps(rep("09:50:00", 14.20), rep("10:05:00", 14.10)))
+    assert stops[0]["engine"] == "idling"
+    assert stops[0]["idle_min"] == 30
+
+
+def test_unreadable_report_time_is_dropped_not_crashed():
+    rows = jd_trail.read_engine_rows([
+        {"time": "2026-09-12 10:00:00 CDT", "batteryVoltage": 14.1},
+        rep("10:01:00", 14.1)])
+    assert [r["t"] for r in rows] == ["2026-09-12T10:01:00.000Z"]
+
+
+# --- the stop log ---------------------------------------------------------
+
+def _now():
+    import datetime as dt
+    return dt.datetime(2026, 9, 12, 20, 0, tzinfo=dt.timezone.utc)
+
+
+def test_prune_keeps_the_newest_stops_not_the_oldest():
+    events = [{"id": "t", "start": f"2026-09-{d:02d}T10:00:00Z",
+               "end": f"2026-09-{d:02d}T10:30:00Z"} for d in range(6, 13)]
+    events = events * 80                        # 560 entries, over the cap
+    kept = jd_trail.prune(events, _now())
+    assert len(kept) == jd_trail.MAX_EVENTS
+    assert kept[0]["end"] == "2026-09-12T10:30:00Z"      # newest first
+    assert all(e["end"] >= "2026-09-07T10:30:00Z" for e in kept)
+
+
+def test_prune_drops_stops_older_than_a_week():
+    old = {"id": "t", "start": "2026-09-01T10:00:00Z", "end": "2026-09-01T10:30:00Z"}
+    new = {"id": "t", "start": "2026-09-12T10:00:00Z", "end": "2026-09-12T10:30:00Z"}
+    assert jd_trail.prune([old, new], _now()) == [new]
+
+
+def _stop(start, end, y=43.1, x=-93.8, **more):
+    m = {"start": f"2026-09-12T{start}:00.000Z", "end": f"2026-09-12T{end}:00.000Z",
+         "y": y, "x": x, "engine": "parked", "idle_min": 0}
+    m.update(more)
+    import datetime as dt
+    a = dt.datetime.fromisoformat(m["start"].replace("Z", "+00:00"))
+    b = dt.datetime.fromisoformat(m["end"].replace("Z", "+00:00"))
+    m["minutes"] = round((b - a).total_seconds() / 60)
+    return m
+
+
+def test_ongoing_stop_grows_instead_of_freezing():
+    events = []
+    truck = {"name": "Red 1Ton", "kind": "pickup"}
+    e, new = jd_trail.remember(events, "vin1", truck, _stop("18:00", "18:10"))
+    assert new and e["minutes"] == 10
+    e2, new = jd_trail.remember(events, "vin1", truck, _stop("18:00", "23:30"))
+    assert not new and e2 is e and len(events) == 1
+    assert e["minutes"] == 330
+
+
+def test_stop_seen_again_with_a_later_start_is_the_same_stop():
+    """The 24-hour trail window slid past the first breadcrumb."""
+    events = []
+    truck = {"name": "Red 1Ton", "kind": "pickup"}
+    jd_trail.remember(events, "vin1", truck, _stop("18:00", "23:00"))
+    _, new = jd_trail.remember(events, "vin1", truck, _stop("19:45", "23:30"))
+    assert not new and len(events) == 1
+    assert events[0]["start"] == "2026-09-12T18:00:00.000Z"
+    assert events[0]["end"] == "2026-09-12T23:30:00.000Z"
+
+
+def test_same_time_different_spot_or_truck_is_a_different_stop():
+    events = []
+    truck = {"name": "Red 1Ton", "kind": "pickup"}
+    jd_trail.remember(events, "vin1", truck, _stop("18:00", "18:30"))
+    jd_trail.remember(events, "vin1", truck, _stop("18:00", "18:30", y=43.2))
+    jd_trail.remember(events, "vin2", truck, _stop("18:00", "18:30"))
+    assert len(events) == 3
+
+
+def test_stop_that_turns_idling_is_flagged_once():
+    events = []
+    truck = {"name": "Red 1Ton", "kind": "pickup"}
+    e, _ = jd_trail.remember(events, "vin1", truck, _stop("18:00", "18:12"))
+    assert not e.get("_now_idling")
+    e, _ = jd_trail.remember(events, "vin1", truck,
+                             _stop("18:00", "18:25", engine="idling", idle_min=13))
+    assert e["_now_idling"]
+    e, _ = jd_trail.remember(events, "vin1", truck,
+                             _stop("18:00", "18:40", engine="idling", idle_min=28))
+    assert not e["_now_idling"]

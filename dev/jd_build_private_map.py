@@ -936,20 +936,30 @@ PANEL_JS = r"""
       })
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (data) {
-          if (!data || !data.trucks || !data.trucks.length) return;
+          if (!data) return;
           // The relay carries the same shape the generator bakes in, so the
-          // drawing code below does not care which one it got.
-          gtTrucks = data.trucks.map(function (t) {
-            return { n: t.name, m: t.make, k: t.kind, y: t.lat, x: t.lon,
-                     t: t.at, s: t.since, q: t.since_min ? 1 : 0,
-                     g: t.moving ? 1 : 0, e: t.engine_on ? 1 : 0,
-                     v: (typeof t.speed_kmh === 'number') ? t.speed_kmh : null,
-                     p: t.trail || [] };
-          });
-          if (data.stops) {
+          // drawing code below does not care which one it got. An empty
+          // truck list is the Worker saying its store is blank, not that
+          // the fleet vanished, so the baked trucks stay; the stops are
+          // updated regardless, because they are a separate window.
+          if (data.trucks && data.trucks.length) {
+            gtTrucks = data.trucks.map(function (t) {
+              return { n: t.name, m: t.make, k: t.kind, y: t.lat, x: t.lon,
+                       t: t.at, s: t.since, q: t.since_min ? 1 : 0,
+                       g: t.moving ? 1 : 0, e: t.engine_on ? 1 : 0,
+                       v: (typeof t.speed_kmh === 'number') ? t.speed_kmh : null,
+                       p: t.trail || [] };
+            });
+          }
+          if (data.stops && data.stops.map) {
+            // e and i are the engine verdict and engine-on minutes. They
+            // were missed here once, and every stop on the page read
+            // "engine unknown" five seconds after it loaded.
             gtStops = data.stops.map(function (s) {
               return { n: s.name, k: s.kind, a: s.start, z: s.end,
-                       m: s.minutes, y: s.y, x: s.x };
+                       m: s.minutes, e: s.engine || 'unknown',
+                       i: (typeof s.idle_min === 'number') ? s.idle_min : null,
+                       y: s.y, x: s.x };
             });
             if (data.stop_minutes) gtStopMinutes = data.stop_minutes;
           }
@@ -966,7 +976,10 @@ PANEL_JS = r"""
   })();
 
   (function setupTrucks() {
-    if (typeof gtTrucks === 'undefined' || !gtTrucks.length) return;
+    // Not `|| !gtTrucks.length`: this block is where the relay's redraw
+    // hooks are defined, so a page built on a day the feed had no positions
+    // would never draw the trucks the relay delivered five seconds later.
+    if (typeof gtTrucks === 'undefined') return;
     var box = container.querySelector('#gt-truck-toggle');
     var summary = container.querySelector('#gt-truck-summary');
     var markers = [];
@@ -1153,9 +1166,7 @@ PANEL_JS = r"""
         var state = stateOf(t);
         var mk = new google.maps.Marker({
           position: { lat: t.y, lng: t.x },
-          // A marker is only put on the map when it matches whatever the
-          // dropdown is filtered to, so the list and the map never disagree.
-          map: (chosenState() === 'all' || chosenState() === state) ? map : null,
+          map: null,                    // applyVisibility() decides, below
           icon: truckIcon(t),
           title: t.n + '  (' + t.m + ')  -  ' + stoppedText(t) +
                  '  -  reported ' + ageText(mins),
@@ -1189,6 +1200,7 @@ PANEL_JS = r"""
         mk.gtState = state;
         markers.push(mk);
       });
+      applyVisibility();
     }
 
     function renderSummary() {
@@ -1219,6 +1231,16 @@ PANEL_JS = r"""
 
     function chosenState() {
       return stateSelect ? stateSelect.value : 'all';
+    }
+
+    // The one rule for whether a marker is on the map: the trucks toggle,
+    // then the dropdown. It was written four times in four handlers, and
+    // the copy in draw() had forgotten the toggle.
+    function applyVisibility() {
+      var want = chosenState(), on = !box || box.checked;
+      markers.forEach(function (m) {
+        m.setMap(on && (want === 'all' || m.gtState === want) ? map : null);
+      });
     }
 
     var STATE_WORD = { moving: 'moving', idling: 'idling',
@@ -1285,12 +1307,7 @@ PANEL_JS = r"""
     if (stateSelect) {
       stateSelect.addEventListener('change', function () {
         renderTruckList();
-        // Keep the map showing exactly what the list shows.
-        var want = chosenState();
-        markers.forEach(function (m) {
-          m.setMap((box && !box.checked) ? null
-                   : (want === 'all' || m.gtState === want) ? map : null);
-        });
+        applyVisibility();            // the map shows exactly what the list shows
       });
     }
 
@@ -1312,20 +1329,11 @@ PANEL_JS = r"""
       if (was) {
         gtTrucks.forEach(function (t) { if (t.n === was) showTrail(t); });
       }
-      if (box && !box.checked) {
-        markers.forEach(function (m) { m.setMap(null); });
-      }
     };
 
     if (box) {
       box.addEventListener('change', function () {
-        // Turning the trucks back on restores the dropdown's selection, not
-        // all of them - otherwise the map would show more than the list.
-        var want = chosenState();
-        markers.forEach(function (m) {
-          m.setMap(box.checked && (want === 'all' || m.gtState === want)
-                   ? map : null);
-        });
+        applyVisibility();            // back on means the dropdown's pick, not all
         if (!box.checked) clearTrail();
       });
     }

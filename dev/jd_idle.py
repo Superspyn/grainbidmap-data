@@ -222,7 +222,7 @@ def track(trucks: list[dict], persist: bool = True) -> list[dict]:
       since        ISO time it arrived where it is now, best estimate
       since_min    True when `since` is a lower bound, not a known arrival
       moving       True when it has changed position recently
-      engine_on    True when operating hours rose while it sat still
+      (engine_on is jd_trail's, from voltage - not set here)
     """
     was = _load()
     now = _dt.datetime.now(_dt.timezone.utc)
@@ -261,9 +261,6 @@ def track(trucks: list[dict], persist: bool = True) -> list[dict]:
             # Same spot. Hold the arrival time; only the evidence changes.
             record = dict(prior)
             record.update({"lat": lat, "lon": lon})
-            if (hours is not None and prior.get("hours") is not None
-                    and hours - prior["hours"] > HOURS_EPSILON):
-                record["engine_at"] = now_iso
             if hours is not None:
                 record["hours"] = hours
             # A report time still advancing on the spot means the tracker is
@@ -282,7 +279,10 @@ def track(trucks: list[dict], persist: bool = True) -> list[dict]:
         truck["since"] = record["since"]
         truck["since_min"] = not record.get("exact")
         truck["moving"] = moved_age is not None and moved_age <= MOVING_LATCH_MIN
-        truck["engine_on"] = record.get("engine_at") is not None
+        # engine_on is NOT set here. It once came from operating hours
+        # climbing, a field that is dead on these trackers, and the latch
+        # was never cleared - so a truck that ticked one hour read as idling
+        # until it moved. jd_trail owns it now, from battery voltage.
 
     if persist:
         _save(vehicles, now_iso)

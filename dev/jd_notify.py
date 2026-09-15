@@ -350,7 +350,15 @@ def notify_stops(stops: list[dict], pins: list[dict],
     hour_ago = now - _dt.timedelta(hours=1)
     recent = [s for s in state["sent"]
               if _dt.datetime.fromisoformat(s.replace("Z", "+00:00")) >= hour_ago]
-    cap = int(cfg.get("max_per_hour") or DEFAULT_MAX_PER_HOUR)
+    # An explicit 0 is "texts off", and must not fall through to the default
+    # - `or` would have turned it into six an hour.
+    raw_cap = cfg.get("max_per_hour")
+    cap = DEFAULT_MAX_PER_HOUR if raw_cap is None else int(raw_cap)
+    if cap <= 0:
+        print(f"  ({len(stops)} stop(s), but max_per_hour is 0 - texting is off)")
+        state["sent"] = recent
+        _save_state(state)
+        return 0
 
     if in_quiet_hours(cfg, now):
         print(f"  ({len(stops)} stop(s) inside quiet hours - not texting)")

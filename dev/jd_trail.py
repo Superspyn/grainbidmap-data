@@ -67,22 +67,16 @@ STATE = pathlib.Path.home() / ".grain-map-secrets" / "trails.json"
 # How much of the path to keep and show.
 TRAIL_HOURS = 24
 
-# Breadcrumb speed is km/h. It is kept for drawing the trail, but it is NOT
-# what decides whether the truck is moving, because on this hardware it
-# disagrees with the ground: two of the three real stops in a day of data
-# carry 2.4 km/h on the last point before the truck sat still for twenty
-# minutes and travelled eight metres. Displacement is the measurement;
-# reported speed is a derived number that can be wrong.
-MOVING_KMH = 1.5
-
-# Past this the tracker has gone quiet rather than merely reported slowly,
-# and the question becomes whether the truck moved while it slept.
-GAP_MIN = 5.0
-
 # How far a parked truck's GPS wanders. Measured across every quiet stretch
 # in a day of breadcrumbs: the ones where the truck stayed put came back 8 to
 # 18 m away, the nearest one that had actually driven was 73 m. Anywhere in
 # that gap works; 60 m sits in it with room on both sides.
+#
+# Breadcrumb speed is deliberately not part of this. It is kept for drawing
+# the trail, but on this hardware it disagrees with the ground: two of the
+# three real stops in a day of data carry 2.4 km/h on the last point before
+# the truck sat still for twenty minutes and travelled eight metres.
+# Displacement is the measurement; reported speed is a derived number.
 SAME_SPOT_M = 60.0
 
 # Report a stop at least this long. The farmer asked for ten minutes.
@@ -98,16 +92,15 @@ IDLE_MIN = 10.0
 # the key out - so every alert would have been wrong.
 ENGINE_ON_VOLTS = 13.1
 
-# Deere reports engineState 1 on a start. It does not report a matching 0 on
-# shutdown; what marks shutdown is terminalPowerState stepping 0 -> 1 -> 2 as
-# the tracker drops to battery. Voltage is the reliable one of the three, so
-# it decides, and these two are used only to place the moment precisely.
-TERMINAL_ON_BATTERY = 2
-
-# How recent a voltage reading has to be to mean "running right now". The
-# tracker reports every few minutes while awake and hourly once the truck is
-# parked, so anything older than this is not evidence of a running engine.
-ENGINE_FRESH_MIN = 20.0
+# How old a voltage reading may be and still mean "running right now". The
+# tracker heartbeats about hourly while awake, and a shutdown always sends
+# its own reports (terminalPowerState stepping 0 -> 1 -> 2 as it drops to
+# battery), so a reading that showed the alternator stays true until either
+# a shutdown report or a missed heartbeat. An hour plus slack covers both.
+# This was 20 minutes, which was shorter than the 30-minute gap between
+# re-reads of a standing truck - so an idling truck could hold the state
+# for at most two pushes in three, and usually none.
+ENGINE_FRESH_MIN = 65.0
 
 # Breadcrumbs arrive every 30-40 s while a truck is rolling, so a speed older
 # than this is not what the truck is doing now. Tighter than the voltage
@@ -124,8 +117,10 @@ MAX_EVENTS = 400
 FETCH_IF_REPORTED_WITHIN_H = TRAIL_HOURS
 
 # A truck that is moving is worth re-reading every push; one standing still
-# is not, and this is what keeps the request count sane - a few moving
-# vehicles per push instead of twenty.
+# with the engine off is not, and this is what keeps the request count sane
+# - a few vehicles per push instead of twenty. A standing truck whose engine
+# was last seen RUNNING is re-read every push too: that is the one state
+# the map exists to show, and it can end any minute.
 STOPPED_REFRESH_MIN = 30.0
 
 
@@ -219,8 +214,8 @@ def read_engine_rows(values: list[dict]) -> list[dict]:
     rows = []
     for r in values or []:
         when, volts = r.get("time"), r.get("batteryVoltage")
-        if not when or volts is None:
-            continue
+        if not when or volts is None or _parse(when) is None:
+            continue                # a time that cannot be read is no evidence
         rows.append({"t": when, "volts": round(float(volts), 2),
                      "on": float(volts) >= ENGINE_ON_VOLTS
                            or r.get("engineState") == 1})
@@ -268,19 +263,43 @@ def classify_stops(stops: list[dict], reports: list[dict]) -> list[dict]:
 
     Adds `idle_min` - stationary with the engine running, which is idling in
     the sense Operations Center means and the farmer asked for - and `engine`,
-    one of "idling", "parked" or "unknown". Without device reports covering
-    the stop it stays "unknown" and idle_min is None, because a stop that
-    cannot be classified must not be reported as idling.
+    one of "idling", "parked" or "unknown".
+
+    The engine record is a set of intervals, so a stop is decidable wherever
+    the record reaches: the state cannot change between two reports without
+    a report, and a shutdown always sends one. Only a stop the record does
+    not reach into at all - it ended before the oldest report on hand - is
+    "unknown", with idle_min None, because a stop that cannot be classified
+    must not be reported as idling. A stop the record joins partway through
+    gets its engine minutes counted from there, a lower bound, which errs
+    toward "parked" and so toward not texting.
+
+    (An earlier version wanted a report to land strictly INSIDE the stop,
+    which called a 14-minute stop bracketed by two alternator readings
+    unknown and dropped the exact alert this exists to send. The version
+    after that wanted the record to begin before the stop, which threw out
+    a real 21-minute stop whose first report came 30 seconds in.)
     """
+    for stop in stops:
+        stop["idle_min"], stop["engine"] = None, "unknown"
+    if not reports:
+        return stops
+    oldest = _parse(reports[0]["t"])
     runs = [(_parse(a), _parse(b)) for a, b in engine_runs(reports)]
     runs = [(a, b) for a, b in runs if a and b]
-    covered = [( _parse(r["t"]) ) for r in reports]
+    still_running = bool(reports[-1]["on"])
     for stop in stops:
         a, b = _parse(stop["start"]), _parse(stop["end"])
-        if not a or not b or not any(a <= c <= b for c in covered):
-            stop["idle_min"], stop["engine"] = None, "unknown"
+        if not a or not b or oldest is None or b < oldest:
             continue
-        idle = sum(_overlap_minutes(a, b, ra, rb) for ra, rb in runs)
+        idle = 0.0
+        for i, (ra, rb) in enumerate(runs):
+            # The newest run has no shutdown report yet, so it is still going
+            # - including through the rest of a stop that outlasts the last
+            # heartbeat.
+            if still_running and i == len(runs) - 1:
+                rb = max(rb, b)
+            idle += _overlap_minutes(a, b, ra, rb)
         stop["idle_min"] = round(idle)
         stop["engine"] = "idling" if idle >= IDLE_MIN else "parked"
     return stops
@@ -293,6 +312,13 @@ def find_stops(points: list[dict]) -> list[dict]:
     the tracker wakes up. If it is in the same place, it sat there the whole
     time and the silence counts towards the stop - which is what makes a
     parked truck reportable at all, since a parked truck stops reporting.
+
+    "Somewhere else" is measured from where the stop began, not from the
+    previous breadcrumb. Against the previous breadcrumb, a semi creeping up
+    a scale line at 40 m a crumb never moved "far enough" and a kilometre of
+    queue became one long idle. Against the anchor, it leaves the spot on
+    the second crumb. A real stop's GPS wanders 8-18 m over hours, so the
+    anchor holds.
     """
     stops, run = [], []
 
@@ -312,13 +338,65 @@ def find_stops(points: list[dict]) -> list[dict]:
         # Did it end up somewhere else? That is the whole test, and it reads
         # the same whether the previous breadcrumb was forty seconds ago or
         # seven hours ago - which is why the tracker's sleep stops mattering.
-        if _metres(run[-1], p) > SAME_SPOT_M:
+        if _metres(run[0], p) > SAME_SPOT_M:
             close(run)
             run = [p]
         else:
             run.append(p)
     close(run)
     return stops
+
+
+def remember(events: list[dict], key: str, truck: dict, stop: dict) -> tuple[dict, bool]:
+    """Fold a stop into the log. Returns (event, is_new).
+
+    The same truck, at the same spot, over an overlapping time is the same
+    stop - still going, or seen again after the 24-hour trail window slid
+    past its first breadcrumb and gave it a later start. Either way the
+    existing entry is brought up to date rather than a second one written.
+    Keyed on the start timestamp, as this once was, a truck parked all night
+    read "10 min" until morning, and a stop that outlived the window was
+    logged and texted twice.
+
+    A stop that has only now been found idling is marked with a private
+    `_now_idling` flag so the caller can text it once; the flag is not
+    saved.
+    """
+    a, b = _parse(stop["start"]), _parse(stop["end"])
+    for e in events:
+        if e.get("id") != key:
+            continue
+        ea, eb = _parse(e.get("start")), _parse(e.get("end"))
+        if not (a and b and ea and eb) or a > eb or b < ea:
+            continue
+        if _metres(e, stop) > SAME_SPOT_M:
+            continue
+        start, end = min(a, ea), max(b, eb)
+        was_idling = e.get("engine") == "idling"
+        e.update({"start": stop["start"] if a <= ea else e["start"],
+                  "end": stop["end"] if b >= eb else e["end"],
+                  "minutes": round((end - start).total_seconds() / 60),
+                  "y": stop["y"], "x": stop["x"],
+                  "engine": stop.get("engine", "unknown"),
+                  "idle_min": stop.get("idle_min")})
+        e["_now_idling"] = e["engine"] == "idling" and not was_idling
+        return e, False
+    event = {"id": key, "name": truck.get("name"), "kind": truck.get("kind"),
+             **stop}
+    events.append(event)
+    return event, True
+
+
+def prune(events: list[dict], now: _dt.datetime) -> list[dict]:
+    """Newest first, a week deep, never more than MAX_EVENTS.
+
+    The cap is applied AFTER sorting newest-first, so it is the oldest that
+    fall off. With the slice before the sort, the file held its oldest week
+    and threw away every new stop once it was full."""
+    horizon = now - _dt.timedelta(days=EVENT_DAYS)
+    kept = [e for e in events if (_parse(e.get("end")) or now) >= horizon]
+    kept.sort(key=lambda e: e.get("end") or "", reverse=True)
+    return kept[:MAX_EVENTS]
 
 
 def update(api, token: str, trucks: list[dict], index: dict,
@@ -332,7 +410,6 @@ def update(api, token: str, trucks: list[dict], index: dict,
     data = _load()
     now = _dt.datetime.now(_dt.timezone.utc)
     cutoff = now - _dt.timedelta(hours=TRAIL_HOURS)
-    seen = {e["id"] + e["start"] for e in data["events"]}
     fetched = 0
     new_stops: list[dict] = []
 
@@ -349,9 +426,10 @@ def update(api, token: str, trucks: list[dict], index: dict,
         if stale and not record["points"]:
             continue                       # parked for days, nothing to draw
         checked = _parse(record.get("checked"))
-        if (not truck.get("moving") and checked is not None
+        if (not truck.get("moving") and not record.get("engine_on")
+                and checked is not None
                 and (now - checked).total_seconds() / 60 < STOPPED_REFRESH_MIN):
-            continue                       # standing still; its path has not changed
+            continue                       # standing still, engine off; nothing has changed
         if fetched >= budget:
             continue
         record["checked"] = _iso(now)
@@ -379,25 +457,24 @@ def update(api, token: str, trucks: list[dict], index: dict,
             record["engine_at"] = reports[-1]["t"]
             record["volts"] = reports[-1]["volts"]
 
-        fresh = [s for s in find_stops(points) if key + s["start"] not in seen]
-        if fresh:
-            classify_stops(fresh, reports)
-        for stop in fresh:
-            seen.add(key + stop["start"])
-            event = {"id": key, "name": truck.get("name"),
-                     "kind": truck.get("kind"), **stop}
-            data["events"].append(event)
-            new_stops.append(event)
+        # Every stop on the trail, every time: an ongoing one keeps growing
+        # and can turn from parked to idling. `remember` decides which are
+        # new, and which have only now become worth a text.
+        for stop in classify_stops(find_stops(points), reports):
+            event, is_new = remember(data["events"], key, truck, stop)
+            if is_new or event.pop("_now_idling", False):
+                new_stops.append(event)
+            event.pop("_now_idling", None)
 
-    horizon = now - _dt.timedelta(days=EVENT_DAYS)
-    data["events"] = [e for e in data["events"]
-                      if (_parse(e.get("end")) or now) >= horizon][-MAX_EVENTS:]
-    data["events"].sort(key=lambda e: e.get("end") or "", reverse=True)
+    data["events"] = prune(data["events"], now)
     _save(data)
 
     for truck in trucks:
         record = data["vehicles"].get(_key(truck))
         truck["trail"] = [[p["y"], p["x"]] for p in record["points"]] if record else []
+        # Owned here and nowhere else. jd_idle used to write this from an
+        # operating-hours field that is dead on these trackers.
+        truck["engine_on"] = False
         if record and record.get("points"):
             # Speed off the newest breadcrumb. Deere reports it as km1hr-1 -
             # the unit is on the field and was checked against ground covered
