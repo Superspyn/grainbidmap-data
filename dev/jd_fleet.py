@@ -447,6 +447,45 @@ def fleet_positions(token: str) -> list[dict]:
     return out
 
 
+def crop_word(code) -> str | None:
+    """Deere's crop codes as a farmer says them. CORN_WET is corn for grain
+    (harvested at field moisture, as against CORN_SILAGE); the soybean code
+    has been seen as SOYBEANS. Anything else keeps its code, lower-cased."""
+    c = str(code or "").upper().strip()
+    if not c:
+        return None
+    if c.startswith("CORN"):
+        return "corn"
+    if c.startswith("SOY"):
+        return "soybeans"
+    return c.lower().replace("_", " ")
+
+
+def field_crop(token: str, oid: str, fid: str, season: int | None = None) -> dict:
+    """What the latest seeding pass put in the ground this season.
+
+    The org-wide fieldOperations query is refused (403) for these accounts,
+    but every field record links to its own operations, and those answer.
+    Only a seeding pass is trusted for the crop: a harvest pass on one field
+    read BARLEY in a year it was planted to corn, so what came off is not
+    taken as what went in. Before planting there is no pass yet for the
+    season, and last season's crop is returned, marked with its year.
+    """
+    season = season or _dt.datetime.now().year
+    for year in (season, season - 1):
+        ops = api_all(token, f"/platform/organizations/{oid}/fields/{fid}"
+                             f"/fieldOperations?cropSeason={year}")
+        seed = [o for o in ops
+                if str(o.get("fieldOperationType") or "").lower() == "seeding"
+                and o.get("cropName")]
+        if seed:
+            seed.sort(key=lambda o: o.get("startDate") or "")
+            last = seed[-1]
+            return {"crop": crop_word(last["cropName"]), "crop_code": last["cropName"],
+                    "crop_season": year, "planted": last.get("startDate")}
+    return {}
+
+
 def main() -> None:
     token = refresh_token()
     orgs = connected_orgs(token)
@@ -469,6 +508,11 @@ def main() -> None:
                 continue            # placeholder rows Deere carries
             entry = {"org": oid, "id": f.get("id"), "name": f.get("name")}
             entry.update(field_boundary(token, f))
+            try:
+                entry.update(field_crop(token, oid, f.get("id")))
+            except Exception as exc:  # noqa: BLE001
+                # A crop is a label on the map, not the map. Say so and go on.
+                print(f"    (no crop for {f.get('name')}: {type(exc).__name__})")
             out["fields"].append(entry)
 
     # The AEMP feed is account-wide rather than per organization, so it is
