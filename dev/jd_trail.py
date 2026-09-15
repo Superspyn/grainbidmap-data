@@ -363,6 +363,7 @@ def remember(events: list[dict], key: str, truck: dict, stop: dict) -> tuple[dic
     saved.
     """
     a, b = _parse(stop["start"]), _parse(stop["end"])
+    matches = []
     for e in events:
         if e.get("id") != key:
             continue
@@ -371,20 +372,36 @@ def remember(events: list[dict], key: str, truck: dict, stop: dict) -> tuple[dic
             continue
         if _metres(e, stop) > SAME_SPOT_M:
             continue
-        start, end = min(a, ea), max(b, eb)
-        was_idling = e.get("engine") == "idling"
-        e.update({"start": stop["start"] if a <= ea else e["start"],
-                  "end": stop["end"] if b >= eb else e["end"],
-                  "minutes": round((end - start).total_seconds() / 60),
-                  "y": stop["y"], "x": stop["x"],
-                  "engine": stop.get("engine", "unknown"),
-                  "idle_min": stop.get("idle_min")})
-        e["_now_idling"] = e["engine"] == "idling" and not was_idling
-        return e, False
-    event = {"id": key, "name": truck.get("name"), "kind": truck.get("kind"),
-             **stop}
-    events.append(event)
-    return event, True
+        matches.append(e)
+    if not matches:
+        event = {"id": key, "name": truck.get("name"), "kind": truck.get("kind"),
+                 **stop}
+        events.append(event)
+        return event, True
+
+    # Every match is the same stop. More than one means the start-keyed
+    # version of this wrote duplicates when the window slid; they are
+    # folded into the earliest and dropped, so the log heals itself.
+    matches.sort(key=lambda e: e.get("start") or "")
+    e, dups = matches[0], matches[1:]
+    for dup in dups:
+        events.remove(dup)
+    was_idling = any(m.get("engine") == "idling" for m in matches)
+    ea = _parse(e["start"])
+    # The earlier start is the truth - the trail window can only cut a
+    # start short, never invent an earlier one. The NEW end is the truth -
+    # the trail always holds the latest crumbs, so it knows whether the
+    # stop is still going or when it ended, and a stored end from an older,
+    # looser measurement must not outlive it.
+    start, end = min(a, ea), b
+    e.update({"start": stop["start"] if a <= ea else e["start"],
+              "end": stop["end"],
+              "minutes": round((end - start).total_seconds() / 60),
+              "y": stop["y"], "x": stop["x"],
+              "engine": stop.get("engine", "unknown"),
+              "idle_min": stop.get("idle_min")})
+    e["_now_idling"] = e["engine"] == "idling" and not was_idling
+    return e, False
 
 
 def prune(events: list[dict], now: _dt.datetime) -> list[dict]:
