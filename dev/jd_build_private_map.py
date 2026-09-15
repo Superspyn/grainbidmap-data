@@ -143,6 +143,12 @@ def build_field_js(fields: list[dict], outlines: bool) -> str:
             # Two decimals, as Operations Center shows it. Rounded here, at
             # the end, from Deere's full-precision figure.
             parts.append(f"a:{round(acres, 2)}")
+        if f.get("crop"):
+            # c: what the latest planting pass put in; cs: the season it is
+            # from, so the page can say when it is last year's.
+            parts.append("c:" + json.dumps(str(f["crop"])))
+            if f.get("crop_season"):
+                parts.append(f"cs:{int(f['crop_season'])}")
         if outlines and f.get("rings"):
             # Each ring is its type letter (e = exterior, i = interior hole)
             # followed by the encoded vertices. Wound the shapefile way -
@@ -265,6 +271,18 @@ PANEL_CSS = """
     text-transform: uppercase; letter-spacing: 0.05em; background: var(--bg);
   }
   #grain-trucking-tool .gt-field-hint:hover { background: var(--bg); }
+  #grain-trucking-tool .gt-crop-key { margin-top: 6px; font-size: 11.5px; color: var(--ink-soft); }
+  #grain-trucking-tool .gt-crop-note { display: block; margin-top: 2px; font-size: 11px; }
+  #grain-trucking-tool .gt-crop-tag {
+    flex: none; font-size: 10.5px; padding: 1px 6px; border-radius: 8px;
+    letter-spacing: .02em; white-space: nowrap;
+  }
+  #grain-trucking-tool .gt-crop-corn { background: #F3E3C3; color: #7A5210; }
+  #grain-trucking-tool .gt-crop-soybeans { background: #D7EADF; color: #245A3C; }
+  #grain-trucking-tool .gt-crop-other { background: #E6E8E1; color: #5B6350; }
+  #grain-trucking-tool .gt-box-split { font-size: 11.5px; color: var(--ink-soft); margin-top: 2px; }
+  #grain-trucking-tool .gt-box-bushels .gt-box-line { display: block; font-size: 12px; margin-top: 1px; }
+  #grain-trucking-tool .gt-box-bushels .gt-box-line b { font-size: 13px; }
   #grain-trucking-tool .gt-box-buttons { display: flex; gap: 6px; margin-top: 8px; }
   #grain-trucking-tool .gt-box-btn {
     font: inherit; font-size: 12px; padding: 6px 10px; cursor: pointer;
@@ -324,6 +342,12 @@ PANEL_HTML = """
       <input type="checkbox" id="gt-field-outlines" checked>
       Show field outlines on the map
     </label>
+    <div class="gt-crop-key" id="gt-crop-key">
+      <span class="gt-truck-key"><i style="background:#C08A28"></i>corn</span>
+      <span class="gt-truck-key"><i style="background:#4F9A6E"></i>soybeans</span>
+      <span class="gt-truck-key"><i style="background:#98A08C"></i>no planting pass</span>
+      <span class="gt-crop-note">from this season&rsquo;s planting pass in Operations Center</span>
+    </div>
     <div class="gt-field-note" id="gt-field-note">Pick a field &mdash; by name or
       by clicking its outline &mdash; to use it as your loadout point. Every haul
       cost and the best-bids table below are then calculated from there.</div>
@@ -338,9 +362,15 @@ PANEL_HTML = """
     <div class="gt-box-result" id="gt-box-result" hidden>
       <div class="gt-box-total"><span id="gt-box-acres">0</span> acres of your fields inside</div>
       <div class="gt-box-gross" id="gt-box-gross"></div>
+      <div class="gt-box-split" id="gt-box-split"></div>
       <div class="gt-box-yield">
-        <label for="gt-box-yield">Yield estimate</label>
-        <input type="number" id="gt-box-yield" min="0" step="1" inputmode="decimal" placeholder="e.g. 210">
+        <label for="gt-box-yield-corn">Corn yield</label>
+        <input type="number" id="gt-box-yield-corn" min="0" step="1" inputmode="decimal" placeholder="e.g. 210">
+        <span>bu/ac</span>
+      </div>
+      <div class="gt-box-yield">
+        <label for="gt-box-yield-beans">Bean yield</label>
+        <input type="number" id="gt-box-yield-beans" min="0" step="1" inputmode="decimal" placeholder="e.g. 60">
         <span>bu/ac</span>
       </div>
       <div class="gt-box-bushels" id="gt-box-bushels"></div>
@@ -349,9 +379,10 @@ PANEL_HTML = """
     <div class="gt-field-note">Like the snipping tool, but for acres: drop a
       box, then drag its corners or slide it over the ground you want to
       count. It adds up your fields inside the box &mdash; a whole field counts
-      in full, a field the edge cuts through counts only the part inside.
-      Put in a yield and that becomes bushels, and loads at the truck
-      capacity set above.</div>
+      in full, a field the edge cuts through counts only the part inside
+      &mdash; and splits them by what Operations Center says was planted. A
+      corn yield and a bean yield turn that into bushels of each, and loads
+      at the truck capacity set above.</div>
     <div class="gt-field-head" style="margin-top:12px;padding-top:11px;border-top:1px solid var(--line);">
       <label class="gt-field-toggle" style="margin-top:0;">
         <input type="checkbox" id="gt-truck-toggle" checked>
@@ -405,8 +436,27 @@ PANEL_JS = r"""
     if (!panel || typeof gtFields === 'undefined') return;
 
     var acresTotal = gtFields.reduce(function (t, f) { return t + (f.a || 0); }, 0);
+    var cropTally = { corn: 0, soybeans: 0 };
+    gtFields.forEach(function (f) { if (cropTally.hasOwnProperty(f.c)) cropTally[f.c]++; });
     count.textContent = gtFields.length + ' fields \u00b7 ' +
-      acresTotal.toLocaleString(undefined, { maximumFractionDigits: 0 }) + ' acres';
+      acresTotal.toLocaleString(undefined, { maximumFractionDigits: 0 }) + ' acres' +
+      ((cropTally.corn || cropTally.soybeans)
+        ? ' \u00b7 ' + cropTally.corn + ' corn, ' + cropTally.soybeans + ' beans' : '');
+
+    // Crop as a small tag, wherever a field is listed. The word comes from
+    // the page data as Deere gave it; only corn and soybeans get a colour.
+    function cropKey(f) {
+      return f.c === 'corn' ? 'corn' : f.c === 'soybeans' ? 'soybeans' : 'other';
+    }
+    function cropTag(f) {
+      var tag = document.createElement('span');
+      tag.className = 'gt-crop-tag gt-crop-' + cropKey(f);
+      tag.textContent = f.c ? (f.c === 'soybeans' ? 'beans' : f.c) +
+        (f.cs && f.cs !== new Date().getFullYear() ? ' (' + f.cs + ')' : '') : 'no crop';
+      return tag;
+    }
+    var CROP_FILL = { corn: '#C08A28', soybeans: '#4F9A6E', other: '#98A08C' };
+    var CROP_LINE = { corn: '#9C6E1C', soybeans: '#2F6E4B', other: '#6E7565' };
 
     function choose(f) {
       // Wait for the map: the picker renders before Google's script lands.
@@ -489,6 +539,7 @@ PANEL_JS = r"""
         acres.className = 'gt-field-acres';
         acres.textContent = f.a ? f.a.toFixed(2) + ' ac' : '';
         row.appendChild(name);
+        row.appendChild(cropTag(f));
         row.appendChild(acres);
         row.addEventListener('click', function () { choose(f); });
         list.appendChild(row);
@@ -540,8 +591,8 @@ PANEL_JS = r"""
         // that goes by winding instead.
         var poly = new google.maps.Polygon({
           paths: f.r.map(function (ring) { return decodeRing(ring.slice(1)); }),
-          strokeColor: '#9C6E1C', strokeOpacity: 0.9, strokeWeight: 1.5,
-          fillColor: '#C08A28', fillOpacity: 0.18,
+          strokeColor: CROP_LINE[cropKey(f)], strokeOpacity: 0.9, strokeWeight: 1.5,
+          fillColor: CROP_FILL[cropKey(f)], fillOpacity: 0.18,
           map: map, zIndex: 1, clickable: true
         });
         poly.addListener('click', function () { choose(f); });
@@ -593,13 +644,16 @@ PANEL_JS = r"""
       var acresOut = container.querySelector('#gt-box-acres');
       var grossOut = container.querySelector('#gt-box-gross');
       var countOut = container.querySelector('#gt-box-count');
-      var yieldIn = container.querySelector('#gt-box-yield');
+      var yieldCorn = container.querySelector('#gt-box-yield-corn');
+      var yieldBeans = container.querySelector('#gt-box-yield-beans');
+      var splitOut = container.querySelector('#gt-box-split');
       var bushelsOut = container.querySelector('#gt-box-bushels');
       var listOut = container.querySelector('#gt-box-list');
       if (!startBtn || !result) return;
 
       var SQM_PER_ACRE = 4046.8564224;
       var rect = null, pending = false, lastRows = [], lastAcres = 0;
+      var lastBy = { corn: 0, soybeans: 0, other: 0 };
 
       // Metres per degree at a latitude: a flat local frame is fine here,
       // since the ratio is what matters for fields and the gross box figure
@@ -675,7 +729,7 @@ PANEL_JS = r"""
         if (!b) return;
         var box = { s: b.getSouthWest().lat(), n: b.getNorthEast().lat(),
                     w: b.getSouthWest().lng(), e: b.getNorthEast().lng() };
-        var rows = [], total = 0;
+        var rows = [], total = 0, byCrop = { corn: 0, soybeans: 0, other: 0 };
         gtFields.forEach(function (f) {
           var was = !!f._inBox;
           f._inBox = false;
@@ -706,10 +760,12 @@ PANEL_JS = r"""
           if (f._poly) f._poly.setOptions({ fillOpacity: 0.42 });
           rows.push({ f: f, acres: acres, share: share });
           total += acres;
+          byCrop[cropKey(f)] += acres;
         });
         rows.sort(function (a, c) { return c.acres - a.acres; });
         lastRows = rows;
         lastAcres = total;
+        lastBy = byCrop;
 
         var gross = ringArea([
           { lat: box.s, lng: box.w }, { lat: box.s, lng: box.e },
@@ -722,6 +778,11 @@ PANEL_JS = r"""
           rows.length + (rows.length === 1 ? ' field' : ' fields') + ' of yours ' +
           (rows.length === 1 ? 'is' : 'are') + ' in it.';
         countOut.textContent = rows.length ? rows.length + ' fields' : '';
+        var bits = [];
+        if (byCrop.corn) bits.push('corn ' + byCrop.corn.toFixed(1));
+        if (byCrop.soybeans) bits.push('beans ' + byCrop.soybeans.toFixed(1));
+        if (byCrop.other) bits.push('no planting pass ' + byCrop.other.toFixed(1));
+        splitOut.textContent = bits.length > 1 || byCrop.other ? bits.join(' ' + String.fromCharCode(183) + ' ') + ' ac' : '';
 
         listOut.innerHTML = '';
         rows.forEach(function (r) {
@@ -729,6 +790,8 @@ PANEL_JS = r"""
           row.className = 'gt-box-item';
           var name = document.createElement('span');
           name.textContent = r.f.n;
+          row.appendChild(name);
+          row.appendChild(cropTag(r.f));
           var part = document.createElement('span');
           part.className = 'gt-box-part';
           part.textContent = r.share < 0.995 && r.f.a
@@ -736,7 +799,6 @@ PANEL_JS = r"""
           var ac = document.createElement('span');
           ac.className = 'gt-field-acres';
           ac.textContent = r.acres.toFixed(1) + ' ac';
-          row.appendChild(name);
           row.appendChild(part);
           row.appendChild(ac);
           row.addEventListener('click', function () {
@@ -748,24 +810,39 @@ PANEL_JS = r"""
       }
 
       function bushels() {
-        var y = parseFloat(yieldIn.value);
-        if (!(y > 0) || !lastAcres) {
+        // One yield per crop. Acres with no planting pass are listed but
+        // never turned into bushels - there is nothing honest to multiply
+        // them by.
+        var yc = parseFloat(yieldCorn.value), yb = parseFloat(yieldBeans.value);
+        var buCorn = (yc > 0) ? lastBy.corn * yc : 0;
+        var buBeans = (yb > 0) ? lastBy.soybeans * yb : 0;
+        var bu = buCorn + buBeans;
+        if (!bu) {
           bushelsOut.innerHTML = '';
           return;
         }
-        var bu = lastAcres * y;
-        var html = '<b>' + Math.round(bu).toLocaleString() + '</b> bushels at ' +
-          y.toLocaleString() + ' bu/ac';
+        var lines = [];
+        if (buCorn) lines.push('<span class="gt-box-line"><b>' +
+          Math.round(buCorn).toLocaleString() + '</b> bu corn at ' + yc.toLocaleString() + '</span>');
+        if (buBeans) lines.push('<span class="gt-box-line"><b>' +
+          Math.round(buBeans).toLocaleString() + '</b> bu beans at ' + yb.toLocaleString() + '</span>');
+        var html = lines.join('');
+        if (buCorn && buBeans) {
+          html += '<span class="gt-box-line"><b>' + Math.round(bu).toLocaleString() +
+            '</b> bushels together</span>';
+        }
         var capEl = document.getElementById('gt-cap');
         var cap = capEl ? parseFloat(capEl.value) : NaN;
         if (cap > 0) {
-          var loads = bu / cap;
           html += '<span class="gt-box-loads">about ' +
-            loads.toLocaleString(undefined, { maximumFractionDigits: 1 }) +
+            (bu / cap).toLocaleString(undefined, { maximumFractionDigits: 1 }) +
             ' loads at ' + cap.toLocaleString() + ' bu a truck</span>';
         }
         bushelsOut.innerHTML = html;
-        try { localStorage.setItem('gt-box-yield', String(y)); } catch (e) {}
+        try {
+          if (yc > 0) localStorage.setItem('gt-box-yield-corn', String(yc));
+          if (yb > 0) localStorage.setItem('gt-box-yield-beans', String(yb));
+        } catch (e) {}
       }
 
       function schedule() {
@@ -823,13 +900,16 @@ PANEL_JS = r"""
       }
 
       try {
-        var saved = localStorage.getItem('gt-box-yield');
-        if (saved && parseFloat(saved) > 0) yieldIn.value = saved;
+        var sc = localStorage.getItem('gt-box-yield-corn');
+        var sb = localStorage.getItem('gt-box-yield-beans');
+        if (sc && parseFloat(sc) > 0) yieldCorn.value = sc;
+        if (sb && parseFloat(sb) > 0) yieldBeans.value = sb;
       } catch (e) {}
 
       startBtn.addEventListener('click', start);
       clearBtn.addEventListener('click', clear);
-      yieldIn.addEventListener('input', bushels);
+      yieldCorn.addEventListener('input', bushels);
+      yieldBeans.addEventListener('input', bushels);
       var capEl = document.getElementById('gt-cap');
       if (capEl) capEl.addEventListener('input', bushels);
     })();
