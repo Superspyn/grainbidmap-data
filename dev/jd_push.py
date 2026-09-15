@@ -70,16 +70,22 @@ def last_snapshot() -> str | None:
         return None
 
 
-def signature(road: list[dict], newest: str) -> str:
+def signature(road: list[dict], newest: str, stops: list[dict]) -> str:
     """What the page would draw differently. The newest report time alone is
     not enough now that each truck also carries how long it has been stopped:
     that can change - a heartbeat revealing a truck was already parked, or an
-    engine starting - on a snapshot Deere has not otherwise republished."""
+    engine starting - on a snapshot Deere has not otherwise republished.
+
+    The stop list is part of it too. It is a rolling 24-hour window, so it
+    changes on its own while every truck sits unchanged overnight - and
+    without it here, last evening's stops stayed on the page all morning."""
     return json.dumps([newest] + sorted(
         f"{t.get('vin') or t.get('name')}|{t.get('since')}|"
         f"{int(bool(t.get('moving')))}{int(bool(t.get('engine_on')))}"
         f"{int(bool(t.get('since_min')))}|{len(t.get('trail') or [])}"
-        for t in road))
+        for t in road) + sorted(
+        f"{s.get('id')}|{s.get('start')}|{s.get('end')}|{s.get('engine')}|{s.get('idle_min')}"
+        for s in stops))
 
 
 def main() -> None:
@@ -122,13 +128,14 @@ def main() -> None:
         print(f"  (history/trail step skipped: {type(exc).__name__}: {exc})")
 
     newest = max((v.get("at") or "") for v in road)
-    sig = signature(road, newest)
+    recent = jd_trail.recent_events(24)
+    sig = signature(road, newest, recent)
     if sig == last_snapshot():
         print(f"unchanged since {newest} - not pushing")
         return
 
     payload = {"generated_at": now_iso(), "newest_report": newest, "trucks": road,
-               "stops": jd_trail.recent_events(24),
+               "stops": recent,
                "stop_minutes": jd_trail.IDLE_MIN}
     request = urllib.request.Request(
         cfg["url"], data=json.dumps(payload).encode(), method="PUT")
