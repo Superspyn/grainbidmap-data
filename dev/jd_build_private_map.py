@@ -320,6 +320,31 @@ PANEL_CSS = """
     flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
   #grain-trucking-tool .gt-box-part { color: var(--ink-soft); font-size: 11px; white-space: nowrap; }
+  #grain-trucking-tool .gt-box-btn-on { background: #1F5E1F; border-color: #1F5E1F; color: #fff; }
+  #grain-trucking-tool .gt-sel-hint {
+    margin-top: 6px; padding: 5px 8px; font-size: 11.5px; color: #1F5E1F;
+    background: #E6F0E6; border-radius: 5px;
+  }
+  #grain-trucking-tool .gt-sel-contract select {
+    padding: 4px 5px; font: inherit; font-size: 12px; border: 1px solid var(--line);
+    border-radius: 4px; background: #fff; color: var(--ink);
+  }
+  #grain-trucking-tool .gt-sel-contract input { width: 92px; }
+  #grain-trucking-tool .gt-sel-contract-out {
+    font-size: 12px; margin-top: 5px; line-height: 1.45; color: #2E6B2E;
+  }
+  #grain-trucking-tool .gt-sel-contract-out.gt-sel-short { color: #A23B2A; }
+  #grain-trucking-tool .gt-box-x {
+    flex: none; color: var(--ink-soft); font-size: 13px; padding: 0 3px; cursor: pointer;
+  }
+  #grain-trucking-tool .gt-box-x:hover { color: #A23B2A; }
+  #grain-trucking-tool .gt-haul {
+    margin-top: 9px; padding-top: 8px; border-top: 1px solid var(--line);
+  }
+  #grain-trucking-tool .gt-haul-head { font-size: 12.5px; margin-bottom: 6px; }
+  #grain-trucking-tool .gt-haul-status { font-size: 11.5px; color: var(--ink-soft); margin-top: 5px; }
+  #grain-trucking-tool .gt-haul-summary { margin-top: 5px; }
+  #grain-trucking-tool .gt-haul-warn { color: #8A5A12; }
 """
 
 PANEL_HTML = """
@@ -345,15 +370,18 @@ PANEL_HTML = """
       by clicking its outline &mdash; to use it as your loadout point. Every haul
       cost and the best-bids table below are then calculated from there.</div>
     <div class="gt-field-head" style="margin-top:12px;padding-top:11px;border-top:1px solid var(--line);">
-      <span class="gt-field-title">Bushels in a box</span>
+      <span class="gt-field-title">Select fields</span>
       <span class="gt-field-count" id="gt-box-count"></span>
     </div>
     <div class="gt-box-buttons">
-      <button type="button" class="gt-box-btn" id="gt-box-start">Drop a box on the map</button>
+      <button type="button" class="gt-box-btn gt-box-btn-quiet" id="gt-sel-pick">Pick fields on the map</button>
+      <button type="button" class="gt-box-btn" id="gt-box-start">Drop a box</button>
       <button type="button" class="gt-box-btn gt-box-btn-quiet" id="gt-box-clear" hidden>Clear</button>
     </div>
+    <div class="gt-sel-hint" id="gt-sel-hint" hidden>Click a field outline to add it; click it
+      again to take it out. Press <em>Done picking</em> when you have them.</div>
     <div class="gt-box-result" id="gt-box-result" hidden>
-      <div class="gt-box-total"><span id="gt-box-acres">0</span> acres of your fields inside</div>
+      <div class="gt-box-total"><span id="gt-box-acres">0</span> acres selected</div>
       <div class="gt-box-gross" id="gt-box-gross"></div>
       <div class="gt-box-split" id="gt-box-split"></div>
       <div class="gt-box-yield">
@@ -367,15 +395,32 @@ PANEL_HTML = """
         <span>bu/ac</span>
       </div>
       <div class="gt-box-bushels" id="gt-box-bushels"></div>
+      <div class="gt-box-yield gt-sel-contract">
+        <label for="gt-sel-contract">Contract</label>
+        <select id="gt-sel-crop"><option value="corn">corn</option><option value="soybeans">beans</option></select>
+        <input type="number" id="gt-sel-contract" min="0" step="1000" inputmode="numeric" placeholder="bushels">
+        <span>bu</span>
+      </div>
+      <div class="gt-sel-contract-out" id="gt-sel-contract-out"></div>
       <div class="gt-box-list" id="gt-box-list"></div>
+      <div class="gt-haul" id="gt-haul" hidden>
+        <div class="gt-haul-head">Haul cost to <b id="gt-haul-dest"></b></div>
+        <button type="button" class="gt-box-btn" id="gt-haul-run">Route every selected field</button>
+        <div class="gt-haul-status" id="gt-haul-status"></div>
+        <div class="gt-box-bushels gt-haul-summary" id="gt-haul-summary"></div>
+        <div class="gt-box-list" id="gt-haul-list"></div>
+      </div>
     </div>
-    <div class="gt-field-note">Like the snipping tool, but for acres: drop a
-      box, then drag its corners or slide it over the ground you want to
-      count. It adds up your fields inside the box &mdash; a whole field counts
-      in full, a field the edge cuts through counts only the part inside
-      &mdash; and splits them by what Operations Center says was planted. A
-      corn yield and a bean yield turn that into bushels of each, and loads
-      at the truck capacity set above.</div>
+    <div class="gt-field-note">Build a selection by clicking fields, by
+      dropping a box and dragging it over the ground you want, or both. A
+      clicked field counts whole; a field the box&rsquo;s edge cuts through
+      counts only the part inside. The acres are split by what Operations
+      Center says was planted; a corn yield and a bean yield turn them into
+      bushels, and a contract size says whether the selection covers it.
+      Then click an elevator pin as usual: the selection routes every field
+      to it &mdash; real driving routes, one per field &mdash; and gives a haul
+      cost weighted by each field&rsquo;s bushels, the total, and the net
+      after the bid. A weight-restricted bridge on any route is flagged.</div>
     <div class="gt-field-head" style="margin-top:12px;padding-top:11px;border-top:1px solid var(--line);">
       <label class="gt-field-toggle" style="margin-top:0;">
         <input type="checkbox" id="gt-truck-toggle" checked>
@@ -570,6 +615,20 @@ PANEL_JS = r"""
       return pts;
     }
 
+    // What a field outline looks like: bold while it is picked, brighter
+    // while a box is counting it, the usual wash otherwise. One place, so
+    // the hover, the box, the picker and Clear all agree.
+    function fieldStyle(f) {
+      return { fillOpacity: f._picked ? 0.5 : f._inBox ? 0.42 : 0.18,
+               strokeWeight: f._picked ? 3 : 1.5 };
+    }
+    function paint(f) {
+      if (f._poly) f._poly.setOptions(fieldStyle(f));
+    }
+    // Clicking an outline chooses it as the haul origin - unless the
+    // selection tool below is picking, in which case it reassigns this.
+    var fieldClick = choose;
+
     // A field's rings, decoded once and kept on the field: the outlines and
     // the measuring box both need them, and there are ~150,000 vertices.
     function rings(f) {
@@ -599,15 +658,11 @@ PANEL_JS = r"""
           fillColor: CROP_FILL[cropKey(f)], fillOpacity: 0.18,
           map: map, zIndex: 1, clickable: true
         });
-        poly.addListener('click', function () { choose(f); });
+        poly.addListener('click', function () { fieldClick(f); });
         poly.addListener('mouseover', function () {
-          poly.setOptions({ fillOpacity: 0.35 });
+          poly.setOptions({ fillOpacity: Math.max(0.35, fieldStyle(f).fillOpacity) });
         });
-        poly.addListener('mouseout', function () {
-          // Back to whichever fill it had: brighter while a measuring box
-          // is counting it, the usual wash otherwise.
-          poly.setOptions({ fillOpacity: f._inBox ? 0.42 : 0.18 });
-        });
+        poly.addListener('mouseout', function () { paint(f); });
         f._poly = poly;
         drawn.push(poly);
       });
@@ -641,9 +696,23 @@ PANEL_JS = r"""
     // share times Deere's own acreage is what is reported, so a field wholly
     // inside comes out at the figure Operations Center shows for it, to the
     // cent, and only a field cut by the edge is ever pro-rated.
-    (function setupBox() {
+    // ---- select fields --------------------------------------------------
+    // Two ways to build a selection - click fields one at a time, or drop a
+    // box and take what is inside - and three things to do with it: total
+    // the acres by crop, check them against a contract, and route every
+    // field to one elevator for a bushel-weighted haul cost. A clicked
+    // field is whole; a field the box's edge cuts through counts only the
+    // part inside, exactly as the box did on its own.
+    //
+    // The haul cost reuses the page's own model - haulCosts() and
+    // netPerBushel() price the single route above, and they price these -
+    // so the weighted figure and the one-field figure can never disagree
+    // about what a mile costs.
+    (function setupSelection() {
+      var pickBtn = container.querySelector('#gt-sel-pick');
       var startBtn = container.querySelector('#gt-box-start');
       var clearBtn = container.querySelector('#gt-box-clear');
+      var hint = container.querySelector('#gt-sel-hint');
       var result = container.querySelector('#gt-box-result');
       var acresOut = container.querySelector('#gt-box-acres');
       var grossOut = container.querySelector('#gt-box-gross');
@@ -653,11 +722,23 @@ PANEL_JS = r"""
       var splitOut = container.querySelector('#gt-box-split');
       var bushelsOut = container.querySelector('#gt-box-bushels');
       var listOut = container.querySelector('#gt-box-list');
+      var cropSel = container.querySelector('#gt-sel-crop');
+      var contractIn = container.querySelector('#gt-sel-contract');
+      var contractOut = container.querySelector('#gt-sel-contract-out');
+      var haul = container.querySelector('#gt-haul');
+      var haulDest = container.querySelector('#gt-haul-dest');
+      var haulRun = container.querySelector('#gt-haul-run');
+      var haulStatus = container.querySelector('#gt-haul-status');
+      var haulSummary = container.querySelector('#gt-haul-summary');
+      var haulList = container.querySelector('#gt-haul-list');
       if (!startBtn || !result) return;
 
       var SQM_PER_ACRE = 4046.8564224;
-      var rect = null, pending = false, lastBox = null;
-      var lastBy = { corn: 0, soybeans: 0, other: 0 };
+      var MIDDOT = ' ' + String.fromCharCode(183) + ' ';
+      var rect = null, pending = false, lastBox = null, picking = false;
+      var picked = {}, dropped = {}, boxed = {};   // field name -> true / true / {acres, share}
+      var rows = [], lastBy = { corn: 0, soybeans: 0, other: 0 };
+      var routed = {};                              // "field|dest" -> {miles, hours, bridges} or {error}
 
       // Metres per degree at a latitude: a flat local frame is fine here,
       // since the ratio is what matters for fields and the gross box figure
@@ -745,11 +826,115 @@ PANEL_JS = r"""
         return acres < 0.05 ? 0 : acres;
       }
 
-      // The one place a field's fill follows whether the box is counting it.
-      function paint(f) {
-        if (f._poly) f._poly.setOptions({ fillOpacity: f._inBox ? 0.42 : 0.18 });
+      function wholeAcres(f) {
+        if (f.a) return f.a;
+        return (f.r && f.r.length) ? prepared(f)._full / SQM_PER_ACRE : 0;
       }
 
+      function yields() {
+        return { corn: parseFloat(yieldCorn.value) || 0,
+                 soybeans: parseFloat(yieldBeans.value) || 0, other: 0 };
+      }
+
+      function fmt(n, d) {
+        return n.toLocaleString(undefined, { maximumFractionDigits: d === undefined ? 0 : d,
+                                             minimumFractionDigits: d === undefined ? 0 : d });
+      }
+
+      // ---- the selection itself ----
+      // A picked field is whole. A boxed field is its share. A field the
+      // user crossed off stays off until Clear, even if the box still
+      // covers it.
+      function selection() {
+        var out = [];
+        gtFields.forEach(function (f) {
+          if (dropped[f.n]) return;
+          var b = boxed[f.n];
+          if (picked[f.n]) out.push({ f: f, acres: wholeAcres(f), share: 1, how: 'picked' });
+          else if (b) out.push({ f: f, acres: b.acres, share: b.share, how: 'box' });
+        });
+        out.sort(function (a, c) { return c.acres - a.acres; });
+        return out;
+      }
+
+      function togglePick(f) {
+        if (picked[f.n]) {
+          delete picked[f.n];
+          if (boxed[f.n]) dropped[f.n] = true;
+        } else if (boxed[f.n] && !dropped[f.n]) {
+          dropped[f.n] = true;                // a boxed field, clicked: take it out
+        } else {
+          picked[f.n] = true;
+          delete dropped[f.n];
+        }
+        recompute();
+      }
+
+      function recompute() {
+        rows = selection();
+        var on = {};
+        rows.forEach(function (r) { on[r.f.n] = r; });
+        gtFields.forEach(function (f) {
+          var r = on[f.n];
+          var pick = !!(r && r.how === 'picked'), box = !!(r && r.how === 'box');
+          if (pick !== !!f._picked || box !== !!f._inBox) {
+            f._picked = pick; f._inBox = box; paint(f);
+          }
+        });
+        var total = 0, byCrop = { corn: 0, soybeans: 0, other: 0 };
+        rows.forEach(function (r) { total += r.acres; byCrop[cropKey(r.f)] += r.acres; });
+        lastBy = byCrop;
+
+        var any = rows.length || rect || picking;
+        result.hidden = !any;
+        clearBtn.hidden = !any;
+        acresOut.textContent = fmt(total, 1);
+        countOut.textContent = rows.length ? rows.length + ' fields' : '';
+        var bits = [];
+        if (byCrop.corn) bits.push('corn ' + byCrop.corn.toFixed(1));
+        if (byCrop.soybeans) bits.push('beans ' + byCrop.soybeans.toFixed(1));
+        if (byCrop.other) bits.push('no planting pass ' + byCrop.other.toFixed(1));
+        splitOut.textContent = bits.length > 1 || byCrop.other ? bits.join(MIDDOT) + ' ac' : '';
+
+        listOut.innerHTML = '';
+        rows.forEach(function (r) {
+          var row = document.createElement('div');
+          row.className = 'gt-box-item';
+          var name = document.createElement('span');
+          name.textContent = r.f.n;
+          row.appendChild(name);
+          row.appendChild(cropTag(r.f));
+          var part = document.createElement('span');
+          part.className = 'gt-box-part';
+          part.textContent = r.how === 'picked' ? 'picked'
+            : (r.share < 0.995 && r.f.a ? Math.round(r.share * 100) + '% of ' + r.f.a.toFixed(1) : 'in box');
+          var ac = document.createElement('span');
+          ac.className = 'gt-field-acres';
+          ac.textContent = r.acres.toFixed(1) + ' ac';
+          var x = document.createElement('span');
+          x.className = 'gt-box-x';
+          x.textContent = String.fromCharCode(215);
+          x.title = 'Take this field out of the selection';
+          x.addEventListener('click', function (e) {
+            e.stopPropagation();
+            delete picked[r.f.n];
+            if (boxed[r.f.n]) dropped[r.f.n] = true;
+            recompute();
+          });
+          row.appendChild(part);
+          row.appendChild(ac);
+          row.appendChild(x);
+          row.addEventListener('click', function () {
+            if (typeof map !== 'undefined' && map) map.panTo(new google.maps.LatLng(r.f.y, r.f.x));
+          });
+          listOut.appendChild(row);
+        });
+        bushels();
+        contract();
+        renderHaul();
+      }
+
+      // ---- the box ----
       function measure() {
         pending = false;
         if (!rect) return;
@@ -762,95 +947,19 @@ PANEL_JS = r"""
         if (lastBox && lastBox.s === box.s && lastBox.n === box.n &&
             lastBox.w === box.w && lastBox.e === box.e) return;
         lastBox = box;
-        var rows = [], total = 0, byCrop = { corn: 0, soybeans: 0, other: 0 };
+        boxed = {};
         gtFields.forEach(function (f) {
-          var acres = acresInside(f, box), was = !!f._inBox;
-          f._inBox = acres > 0;
-          if (f._inBox !== was) paint(f);
-          if (!f._inBox) return;
-          rows.push({ f: f, acres: acres, share: f.a ? acres / f.a : 1 });
-          total += acres;
-          byCrop[cropKey(f)] += acres;
+          var acres = acresInside(f, box);
+          if (acres > 0) boxed[f.n] = { acres: acres, share: f.a ? acres / f.a : 1 };
         });
-        rows.sort(function (a, c) { return c.acres - a.acres; });
-        lastBy = byCrop;
-
         var gross = ringArea([
           { lat: box.s, lng: box.w }, { lat: box.s, lng: box.e },
           { lat: box.n, lng: box.e }, { lat: box.n, lng: box.w }
         ], frame((box.s + box.n) / 2)) / SQM_PER_ACRE;
-
-        acresOut.textContent = total.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
-        grossOut.textContent = 'The box covers ' +
-          gross.toLocaleString(undefined, { maximumFractionDigits: 0 }) + ' acres of ground; ' +
-          rows.length + (rows.length === 1 ? ' field' : ' fields') + ' of yours ' +
-          (rows.length === 1 ? 'is' : 'are') + ' in it.';
-        countOut.textContent = rows.length ? rows.length + ' fields' : '';
-        var bits = [];
-        if (byCrop.corn) bits.push('corn ' + byCrop.corn.toFixed(1));
-        if (byCrop.soybeans) bits.push('beans ' + byCrop.soybeans.toFixed(1));
-        if (byCrop.other) bits.push('no planting pass ' + byCrop.other.toFixed(1));
-        splitOut.textContent = bits.length > 1 || byCrop.other ? bits.join(' ' + String.fromCharCode(183) + ' ') + ' ac' : '';
-
-        listOut.innerHTML = '';
-        rows.forEach(function (r) {
-          var row = document.createElement('div');
-          row.className = 'gt-box-item';
-          var name = document.createElement('span');
-          name.textContent = r.f.n;
-          row.appendChild(name);
-          row.appendChild(cropTag(r.f));
-          var part = document.createElement('span');
-          part.className = 'gt-box-part';
-          part.textContent = r.share < 0.995 && r.f.a
-            ? Math.round(r.share * 100) + '% of ' + r.f.a.toFixed(1) : '';
-          var ac = document.createElement('span');
-          ac.className = 'gt-field-acres';
-          ac.textContent = r.acres.toFixed(1) + ' ac';
-          row.appendChild(part);
-          row.appendChild(ac);
-          row.addEventListener('click', function () {
-            map.panTo(new google.maps.LatLng(r.f.y, r.f.x));
-          });
-          listOut.appendChild(row);
-        });
-        bushels();
-      }
-
-      function bushels() {
-        // One yield per crop. Acres with no planting pass are listed but
-        // never turned into bushels - there is nothing honest to multiply
-        // them by.
-        var yc = parseFloat(yieldCorn.value), yb = parseFloat(yieldBeans.value);
-        var buCorn = (yc > 0) ? lastBy.corn * yc : 0;
-        var buBeans = (yb > 0) ? lastBy.soybeans * yb : 0;
-        var bu = buCorn + buBeans;
-        if (!bu) {
-          bushelsOut.innerHTML = '';
-          return;
-        }
-        var lines = [];
-        if (buCorn) lines.push('<span class="gt-box-line"><b>' +
-          Math.round(buCorn).toLocaleString() + '</b> bu corn at ' + yc.toLocaleString() + '</span>');
-        if (buBeans) lines.push('<span class="gt-box-line"><b>' +
-          Math.round(buBeans).toLocaleString() + '</b> bu beans at ' + yb.toLocaleString() + '</span>');
-        var html = lines.join('');
-        if (buCorn && buBeans) {
-          html += '<span class="gt-box-line"><b>' + Math.round(bu).toLocaleString() +
-            '</b> bushels together</span>';
-        }
-        var capEl = document.getElementById('gt-cap');
-        var cap = capEl ? parseFloat(capEl.value) : NaN;
-        if (cap > 0) {
-          html += '<span class="gt-box-loads">about ' +
-            (bu / cap).toLocaleString(undefined, { maximumFractionDigits: 1 }) +
-            ' loads at ' + cap.toLocaleString() + ' bu a truck</span>';
-        }
-        bushelsOut.innerHTML = html;
-        try {
-          if (yc > 0) localStorage.setItem('gt-box-yield-corn', String(yc));
-          if (yb > 0) localStorage.setItem('gt-box-yield-beans', String(yb));
-        } catch (e) {}
+        var n = Object.keys(boxed).length;
+        grossOut.textContent = 'The box covers ' + fmt(gross) + ' acres of ground; ' +
+          n + (n === 1 ? ' field' : ' fields') + ' of yours ' + (n === 1 ? 'is' : 'are') + ' in it.';
+        recompute();
       }
 
       function schedule() {
@@ -861,8 +970,12 @@ PANEL_JS = r"""
         (window.requestAnimationFrame || setTimeout)(measure);
       }
 
-      function start() {
-        if (!window.google || !window.google.maps || typeof map === 'undefined' || !map) {
+      function mapReady() {
+        return !!(window.google && window.google.maps && typeof map !== 'undefined' && map);
+      }
+
+      function dropBox() {
+        if (!mapReady()) {
           grossOut.textContent = 'The map is still loading - try again in a moment.';
           result.hidden = false;
           return;
@@ -888,36 +1001,317 @@ PANEL_JS = r"""
         } else {
           rect.setBounds(bounds);
         }
-        result.hidden = false;
-        clearBtn.hidden = false;
         startBtn.textContent = 'Re-centre the box';
+        lastBox = null;
         measure();
       }
 
-      function clear() {
-        if (rect) { rect.setMap(null); rect = null; }
-        gtFields.forEach(function (f) { f._inBox = false; paint(f); });
-        lastBox = null;
-        lastBy = { corn: 0, soybeans: 0, other: 0 };
-        result.hidden = true;
-        clearBtn.hidden = true;
-        countOut.textContent = '';
-        startBtn.textContent = 'Drop a box on the map';
+      // ---- picking ----
+      function setPicking(on) {
+        picking = on;
+        pickBtn.textContent = on ? 'Done picking' : 'Pick fields on the map';
+        pickBtn.classList.toggle('gt-box-btn-on', on);
+        hint.hidden = !on;
+        if (mapReady()) map.setOptions({ draggableCursor: on ? 'crosshair' : null });
+        recompute();
       }
+
+      // The outline click goes to the selection while picking, and to the
+      // haul-origin picker otherwise - the same shape does both jobs.
+      fieldClick = function (f) {
+        if (picking) togglePick(f); else choose(f);
+      };
+
+      function clearAll() {
+        if (rect) { rect.setMap(null); rect = null; }
+        picked = {}; dropped = {}; boxed = {};
+        lastBox = null;
+        startBtn.textContent = 'Drop a box';
+        grossOut.textContent = '';
+        if (picking) setPicking(false); else recompute();
+      }
+
+      // ---- bushels and the contract ----
+      function bushels() {
+        // One yield per crop. Acres with no planting pass are listed but
+        // never turned into bushels - there is nothing honest to multiply
+        // them by.
+        var y = yields();
+        var buCorn = lastBy.corn * y.corn, buBeans = lastBy.soybeans * y.soybeans;
+        var bu = buCorn + buBeans;
+        if (!bu) { bushelsOut.innerHTML = ''; return; }
+        var lines = [];
+        if (buCorn) lines.push('<span class="gt-box-line"><b>' + fmt(buCorn) +
+          '</b> bu corn at ' + fmt(y.corn) + '</span>');
+        if (buBeans) lines.push('<span class="gt-box-line"><b>' + fmt(buBeans) +
+          '</b> bu beans at ' + fmt(y.soybeans) + '</span>');
+        var html = lines.join('');
+        if (buCorn && buBeans) {
+          html += '<span class="gt-box-line"><b>' + fmt(bu) + '</b> bushels together</span>';
+        }
+        var cap = parseFloat(capInput.value);
+        if (cap > 0) {
+          html += '<span class="gt-box-loads">about ' + fmt(bu / cap, 1) +
+            ' loads at ' + fmt(cap) + ' bu a truck</span>';
+        }
+        bushelsOut.innerHTML = html;
+        try {
+          if (y.corn > 0) localStorage.setItem('gt-box-yield-corn', String(y.corn));
+          if (y.soybeans > 0) localStorage.setItem('gt-box-yield-beans', String(y.soybeans));
+        } catch (e) {}
+      }
+
+      // Does the selection cover the contract? Production is the selected
+      // acres of that crop at the yield typed above; the shortfall or the
+      // surplus is said in bushels and in acres at that yield, which is
+      // the form the next decision takes - which field to add or leave.
+      function contract() {
+        var crop = cropSel.value, word = crop === 'soybeans' ? 'beans' : 'corn';
+        var c = parseFloat(contractIn.value);
+        if (!(c > 0)) { contractOut.textContent = ''; return; }
+        var y = yields()[crop], acres = lastBy[crop];
+        if (!(y > 0)) {
+          contractOut.textContent = 'Enter a ' + word + ' yield above to check the contract.';
+          return;
+        }
+        var prod = acres * y, need = c / y, diff = prod - c;
+        var text = 'Selected ' + word + ': ' + fmt(acres, 1) + ' ac makes ' + fmt(prod) +
+          ' bu at ' + fmt(y) + '. ';
+        if (!acres) {
+          text = 'No ' + word + ' selected. ' + fmt(c) + ' bu at ' + fmt(y) + ' needs about ' +
+            fmt(need, 1) + ' acres.';
+        } else if (diff >= 0) {
+          text += 'Covers the ' + fmt(c) + ' bu contract with ' + fmt(diff) + ' bu to spare - ' +
+            fmt(acres - need, 1) + ' ac more than it needs.';
+        } else {
+          text += 'Short of the ' + fmt(c) + ' bu contract by ' + fmt(-diff) + ' bu - about ' +
+            fmt(need - acres, 1) + ' more acres at ' + fmt(y) + '.';
+        }
+        contractOut.textContent = text;
+        contractOut.classList.toggle('gt-sel-short', diff < 0 && acres > 0);
+        // The page's own contract-size box feeds fixed cost per bushel;
+        // a contract typed here is that contract.
+        if (contractbuInput && parseFloat(contractbuInput.value) !== c) {
+          contractbuInput.value = String(c);
+          contractbuInput.dispatchEvent(new Event('input'));
+        }
+        try {
+          localStorage.setItem('gt-sel-contract', String(c));
+          localStorage.setItem('gt-sel-crop', crop);
+        } catch (e) {}
+      }
+
+      // ---- the weighted haul ----
+      function facility() {
+        return (typeof selectedDestination !== 'undefined' && selectedDestination) ? selectedDestination : null;
+      }
+
+      function destKey(d) {
+        var p = d.getPosition();
+        return p.lat().toFixed(5) + ',' + p.lng().toFixed(5);
+      }
+
+      function weightOf(r, y) {
+        // Bushels at the typed yield; failing that, acres, and the summary
+        // says so.
+        var perAc = y[cropKey(r.f)];
+        return perAc > 0 ? r.acres * perAc : null;
+      }
+
+      var running = false;
+
+      function routeAll() {
+        var d = facility();
+        if (!d || running || !mapReady() || typeof directionsService === 'undefined' || !directionsService) return;
+        var key = destKey(d);
+        var todo = rows.filter(function (r) { return !routed[r.f.n + '|' + key]; });
+        if (!todo.length) { renderHaul(); return; }
+        running = true;
+        haulRun.disabled = true;
+        var i = 0, retries = 0;
+        function next() {
+          if (i >= todo.length) {
+            running = false;
+            haulRun.disabled = false;
+            haulStatus.textContent = '';
+            renderHaul();
+            return;
+          }
+          var r = todo[i];
+          haulStatus.textContent = 'Routing ' + (i + 1) + ' of ' + todo.length + ' - ' + r.f.n;
+          directionsService.route({
+            origin: { lat: r.f.y, lng: r.f.x },
+            destination: d.getPosition(),
+            travelMode: google.maps.TravelMode.DRIVING
+          }, function (res, status) {
+            if (status === 'OK') {
+              var leg = res.routes[0].legs[0];
+              var bridges = 0;
+              if (bridgeToggle.checked) {
+                var path = [];
+                leg.steps.forEach(function (step) {
+                  step.path.forEach(function (p) { path.push({ lat: p.lat(), lng: p.lng() }); });
+                });
+                bridges = findNearbyBridges(path);
+              }
+              routed[r.f.n + '|' + key] = { miles: leg.distance.value / 1609.34,
+                                           hours: (leg.duration.value * 2) / 3600,
+                                           bridges: bridges };
+              retries = 0;
+              i++;
+            } else if (status === 'OVER_QUERY_LIMIT' && retries < 3) {
+              // Google's per-second limit; back off and ask again.
+              retries++;
+              setTimeout(next, 1200 * retries);
+              return;
+            } else {
+              routed[r.f.n + '|' + key] = { error: status };
+              retries = 0;
+              i++;
+            }
+            renderHaul();
+            setTimeout(next, 180);
+          });
+        }
+        next();
+      }
+
+      function renderHaul() {
+        var d = facility();
+        if (!d || !rows.length) { haul.hidden = true; return; }
+        haul.hidden = false;
+        haulDest.textContent = d.gtData ? d.gtData.name : 'the selected elevator';
+        var key = destKey(d), y = yields();
+        var bid = parseFloat(bidInput.value);
+        var sumW = 0, sumCost = 0, sumNet = 0, sumBu = 0, done = 0, missing = 0, failed = 0;
+        var byAcres = false, bridged = 0;
+        var lines = [];
+        rows.forEach(function (r) {
+          var res = routed[r.f.n + '|' + key];
+          var w = weightOf(r, y);
+          if (w === null) { w = r.acres; byAcres = true; }
+          var bu = weightOf(r, y);
+          var line = { r: r, res: res, w: w, bu: bu, cost: null, net: null };
+          if (!res) missing++;
+          else if (res.error) failed++;
+          else {
+            var c = haulCosts(res.miles, res.hours);
+            line.cost = c.perBushel;
+            line.net = netPerBushel(c, bid);
+            if (c.perBushel !== null) {
+              done++;
+              sumW += w;
+              sumCost += c.perBushel * w;
+              if (line.net !== null) sumNet += line.net * w;
+              if (bu) sumBu += bu;
+            }
+            if (res.bridges) bridged++;
+          }
+          lines.push(line);
+        });
+
+        var todo = missing;
+        haulRun.textContent = todo ? 'Route ' + todo + (todo === 1 ? ' field' : ' fields') +
+          (done ? ' more' : '') : 'Routed';
+        haulRun.disabled = running || !todo;
+
+        var html = '';
+        if (done) {
+          var avg = sumCost / sumW;
+          html += '<span class="gt-box-line"><b>$' + avg.toFixed(3) + '</b> / bu weighted haul cost across ' +
+            done + (done === 1 ? ' field' : ' fields') +
+            (byAcres ? ', weighted by acres - type yields to weight by bushels' : ', weighted by bushels') +
+            '</span>';
+          if (sumBu) {
+            html += '<span class="gt-box-line"><b>$' + fmt(avg * sumBu) + '</b> to haul all ' +
+              fmt(sumBu) + ' bu</span>';
+          }
+          var c = parseFloat(contractIn.value);
+          if (c > 0) {
+            // The contract's own crop, weighted over its own fields.
+            var crop = cropSel.value, cw = 0, cc = 0;
+            lines.forEach(function (l) {
+              if (l.cost !== null && cropKey(l.r.f) === crop && l.w) { cw += l.w; cc += l.cost * l.w; }
+            });
+            if (cw) {
+              html += '<span class="gt-box-line"><b>$' + fmt((cc / cw) * c) + '</b> to haul the ' +
+                fmt(c) + ' bu ' + (crop === 'soybeans' ? 'bean' : 'corn') + ' contract at $' +
+                (cc / cw).toFixed(3) + ' / bu</span>';
+            }
+          }
+          if (!isNaN(bid) && sumW) {
+            html += '<span class="gt-box-line"><b>$' + (sumNet / sumW).toFixed(3) +
+              '</b> / bu net at a $' + bid.toFixed(2) + ' bid, after hauling</span>';
+          }
+          if (bridged) {
+            html += '<span class="gt-box-line gt-haul-warn">' + String.fromCharCode(9888) + ' ' + bridged +
+              (bridged === 1 ? ' route crosses' : ' routes cross') + ' a weight-restricted bridge</span>';
+          }
+        }
+        if (failed) html += '<span class="gt-box-loads">' + failed + ' could not be routed</span>';
+        haulSummary.innerHTML = html;
+
+        haulList.innerHTML = '';
+        lines.forEach(function (l) {
+          var row = document.createElement('div');
+          row.className = 'gt-box-item';
+          var name = document.createElement('span');
+          name.textContent = l.r.f.n;
+          row.appendChild(name);
+          row.appendChild(cropTag(l.r.f));
+          var mi = document.createElement('span');
+          mi.className = 'gt-box-part';
+          mi.textContent = !l.res ? 'not routed' : l.res.error ? 'no route'
+            : l.res.miles.toFixed(1) + ' mi' + (l.res.bridges ? ' ' + String.fromCharCode(9888) : '');
+          var cost = document.createElement('span');
+          cost.className = 'gt-field-acres';
+          cost.textContent = l.cost === null ? '' : '$' + l.cost.toFixed(3);
+          row.appendChild(mi);
+          row.appendChild(cost);
+          haulList.appendChild(row);
+        });
+      }
+
+      // The moment the page finishes routing a single pin - which is how an
+      // elevator becomes selectedDestination - the weighted section wakes.
+      finishRoute = (function (orig) {
+        return function () {
+          orig.apply(null, arguments);
+          renderHaul();
+        };
+      })(finishRoute);
+      if (typeof resetBtn !== 'undefined' && resetBtn) {
+        resetBtn.addEventListener('click', function () { haul.hidden = true; });
+      }
+      [bidInput, shrinkInput, capInput, dieselInput, mpgInput, laborInput,
+       weartearInput, insuranceInput, licenseInput].forEach(function (el) {
+        if (el) el.addEventListener('input', renderHaul);
+      });
+      if (bridgeToggle) bridgeToggle.addEventListener('change', function () {
+        routed = {};                // the warning is part of the result
+        renderHaul();
+      });
 
       try {
         var sc = localStorage.getItem('gt-box-yield-corn');
         var sb = localStorage.getItem('gt-box-yield-beans');
+        var cv = localStorage.getItem('gt-sel-contract');
+        var cr = localStorage.getItem('gt-sel-crop');
         if (sc && parseFloat(sc) > 0) yieldCorn.value = sc;
         if (sb && parseFloat(sb) > 0) yieldBeans.value = sb;
+        if (cv && parseFloat(cv) > 0) contractIn.value = cv;
+        if (cr === 'corn' || cr === 'soybeans') cropSel.value = cr;
       } catch (e) {}
 
-      startBtn.addEventListener('click', start);
-      clearBtn.addEventListener('click', clear);
-      yieldCorn.addEventListener('input', bushels);
-      yieldBeans.addEventListener('input', bushels);
-      var capEl = document.getElementById('gt-cap');
-      if (capEl) capEl.addEventListener('input', bushels);
+      pickBtn.addEventListener('click', function () { setPicking(!picking); });
+      startBtn.addEventListener('click', dropBox);
+      clearBtn.addEventListener('click', clearAll);
+      haulRun.addEventListener('click', routeAll);
+      yieldCorn.addEventListener('input', function () { bushels(); contract(); renderHaul(); });
+      yieldBeans.addEventListener('input', function () { bushels(); contract(); renderHaul(); });
+      cropSel.addEventListener('change', function () { contract(); renderHaul(); });
+      contractIn.addEventListener('input', function () { contract(); renderHaul(); });
+      if (capInput) capInput.addEventListener('input', bushels);
     })();
   })();
 
