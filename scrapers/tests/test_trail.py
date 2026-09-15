@@ -266,6 +266,24 @@ def test_stop_seen_again_with_a_later_start_is_the_same_stop():
     assert events[0]["end"] == "2026-09-12T23:30:00.000Z"
 
 
+def test_duplicates_left_by_the_old_code_are_folded_away():
+    """Two entries for one stop, as the start-keyed version wrote them when
+    the window slid; the next sighting collapses them into one, keeps the
+    earliest start and the newest end, and does not text again."""
+    truck = {"name": "Red 1Ton", "kind": "pickup"}
+    events = [_stop("17:54", "18:31", engine="idling", idle_min=12),
+              _stop("09:00", "18:31", engine="idling", idle_min=12)]
+    for ev in events:
+        ev.update({"id": "vin1", "name": "Red 1Ton", "kind": "pickup"})
+    e, new = jd_trail.remember(events, "vin1", truck,
+                               _stop("17:54", "18:40", engine="idling", idle_min=21))
+    assert not new and len(events) == 1 and events[0] is e
+    assert e["start"] == "2026-09-12T09:00:00.000Z"
+    assert e["end"] == "2026-09-12T18:40:00.000Z"
+    assert e["minutes"] == 580
+    assert not e["_now_idling"]
+
+
 def test_same_time_different_spot_or_truck_is_a_different_stop():
     events = []
     truck = {"name": "Red 1Ton", "kind": "pickup"}
