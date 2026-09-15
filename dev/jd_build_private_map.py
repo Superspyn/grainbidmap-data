@@ -982,12 +982,21 @@ PANEL_JS = r"""
         }
         var v = map.getBounds();
         if (!v) return;
-        // A box through the middle of whatever is on screen, sized so the
-        // handles are easy to grab, and re-centred on every press so the
-        // button also brings a box back from wherever it was left.
+        // A box through the middle of whatever is on screen, re-centred on
+        // every press so the button also brings a box back from wherever it
+        // was left. It starts a half-mile square - a quarter section, about
+        // 160 acres, the unit fields come in - whatever the zoom, clamped so
+        // it is never too small to grab nor more than a third of the view.
+        // It used to be 44% of the view, which at any sensible zoom was
+        // most of a township.
         var sw = v.getSouthWest(), ne = v.getNorthEast();
-        var dLat = (ne.lat() - sw.lat()) * 0.22, dLng = (ne.lng() - sw.lng()) * 0.22;
         var c = map.getCenter();
+        var halfKm = 0.4;
+        var dLat = halfKm / 111.132;
+        var dLng = dLat / Math.max(0.2, Math.cos(c.lat() * Math.PI / 180));
+        var viewLat = (ne.lat() - sw.lat()) / 2, viewLng = (ne.lng() - sw.lng()) / 2;
+        dLat = Math.min(Math.max(dLat, viewLat * 0.06), viewLat * 0.33);
+        dLng = Math.min(Math.max(dLng, viewLng * 0.06), viewLng * 0.33);
         var bounds = new google.maps.LatLngBounds(
           { lat: c.lat() - dLat, lng: c.lng() - dLng },
           { lat: c.lat() + dLat, lng: c.lng() + dLng });
