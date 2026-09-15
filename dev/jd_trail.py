@@ -57,12 +57,31 @@ public repo.
 from __future__ import annotations
 
 import datetime as _dt
-import json
-import math
-import os
 import pathlib
+import sys
 
-STATE = pathlib.Path.home() / ".grain-map-secrets" / "trails.json"
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from jd_common import SECRETS, iso, metres, parse_iso, read_json, write_private  # noqa: E402
+
+_parse, _iso = parse_iso, iso
+
+
+def _metres(a: dict, b: dict) -> float:
+    return metres(a["y"], a["x"], b["y"], b["x"])
+
+
+def _load() -> dict:
+    data = read_json(STATE, {})
+    data.setdefault("vehicles", {})
+    data.setdefault("events", [])
+    return data
+
+
+def _save(data: dict) -> None:
+    write_private(STATE, data, separators=(",", ":"))
+
+
+STATE = SECRETS / "trails.json"
 
 # How much of the path to keep and show.
 TRAIL_HOURS = 24
@@ -124,39 +143,6 @@ FETCH_IF_REPORTED_WITHIN_H = TRAIL_HOURS
 STOPPED_REFRESH_MIN = 30.0
 
 
-def _parse(iso: str | None) -> _dt.datetime | None:
-    if not iso:
-        return None
-    try:
-        return _dt.datetime.fromisoformat(str(iso).replace("Z", "+00:00"))
-    except ValueError:
-        return None
-
-
-def _iso(when: _dt.datetime) -> str:
-    return when.isoformat(timespec="seconds").replace("+00:00", "Z")
-
-
-def _load() -> dict:
-    if not STATE.exists():
-        return {"vehicles": {}, "events": []}
-    try:
-        data = json.loads(STATE.read_text(encoding="utf-8"))
-        data.setdefault("vehicles", {})
-        data.setdefault("events", [])
-        return data
-    except (json.JSONDecodeError, OSError):
-        return {"vehicles": {}, "events": []}
-
-
-def _save(data: dict) -> None:
-    STATE.write_text(json.dumps(data, separators=(",", ":")), encoding="utf-8")
-    try:
-        os.chmod(STATE, 0o600)
-    except OSError:
-        pass
-
-
 def _key(truck: dict) -> str:
     return str(truck.get("vin") or "").strip() or str(truck.get("name") or "").strip()
 
@@ -192,15 +178,6 @@ def fetch_breadcrumbs(api, token: str, principal_id, since: _dt.datetime,
                                       .get("valueAsDouble") or 0.0), 1)})
     rows.sort(key=lambda r: r["t"])
     return rows
-
-
-def _metres(a: dict, b: dict) -> float:
-    r = 6371008.8
-    p1, p2 = math.radians(a["y"]), math.radians(b["y"])
-    h = (math.sin((p2 - p1) / 2) ** 2
-         + math.cos(p1) * math.cos(p2)
-         * math.sin(math.radians(b["x"] - a["x"]) / 2) ** 2)
-    return 2 * r * math.asin(min(1.0, math.sqrt(h)))
 
 
 def read_engine_rows(values: list[dict]) -> list[dict]:
@@ -417,8 +394,10 @@ def prune(events: list[dict], now: _dt.datetime) -> list[dict]:
 
 
 def update(api, token: str, trucks: list[dict], index: dict,
-           budget: int = 20) -> tuple[int, list[dict]]:
-    """Refresh trails and long stops. Returns (trucks fetched, new stops).
+           budget: int = 20) -> tuple[int, list[dict], list[dict]]:
+    """Refresh trails and long stops. Returns (trucks fetched, new stops,
+    stops in the last 24 h) - the last so the caller need not re-read the
+    file it just wrote.
 
     Each truck is asked only for breadcrumbs newer than the last one already
     held, so a busy truck costs one small request per push and a parked one
@@ -464,11 +443,14 @@ def update(api, token: str, trucks: list[dict], index: dict,
         record["to"] = points[-1]["t"] if points else _iso(now)
         data["vehicles"][key] = record
 
-        # One device-state request per truck we were going to read anyway.
-        # It does double duty: it classifies any new stop, and its newest row
-        # is whether the engine is running right now - which is what tells
-        # "idling" from "stopped" on the map.
-        reports = fetch_engine(api, token, machine["principal_id"])
+        # A device-state read does double duty: it classifies the stops, and
+        # its newest row is whether the engine is running right now - which
+        # is what tells "idling" from "stopped" on the map. A moving truck
+        # with no stop on its trail needs neither, so it is not asked.
+        stops = find_stops(points)
+        reports = []
+        if stops or not truck.get("moving"):
+            reports = fetch_engine(api, token, machine["principal_id"])
         if reports:
             record["engine_on"] = bool(reports[-1]["on"])
             record["engine_at"] = reports[-1]["t"]
@@ -477,7 +459,7 @@ def update(api, token: str, trucks: list[dict], index: dict,
         # Every stop on the trail, every time: an ongoing one keeps growing
         # and can turn from parked to idling. `remember` decides which are
         # new, and which have only now become worth a text.
-        for stop in classify_stops(find_stops(points), reports):
+        for stop in classify_stops(stops, reports):
             event, is_new = remember(data["events"], key, truck, stop)
             if is_new or event.pop("_now_idling", False):
                 new_stops.append(event)
@@ -515,10 +497,13 @@ def update(api, token: str, trucks: list[dict], index: dict,
             truck["engine_on"] = bool(record.get("engine_on")) and fresh_enough
             truck["volts"] = record.get("volts")
             truck["engine_at"] = record["engine_at"]
-    return fetched, new_stops
+    return fetched, new_stops, recent_events(24, data["events"])
 
 
-def recent_events(hours: int = 24) -> list[dict]:
-    data = _load()
+def recent_events(hours: int = 24, events: list[dict] | None = None) -> list[dict]:
+    """Stops that ended within the window; from `events` if given, else from
+    the file."""
+    if events is None:
+        events = _load()["events"]
     horizon = _dt.datetime.now(_dt.timezone.utc) - _dt.timedelta(hours=hours)
-    return [e for e in data["events"] if (_parse(e.get("end")) or horizon) >= horizon]
+    return [e for e in events if (_parse(e.get("end")) or horizon) >= horizon]

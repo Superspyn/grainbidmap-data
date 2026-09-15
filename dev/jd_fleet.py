@@ -24,7 +24,6 @@ import base64
 import datetime as _dt
 import json
 import math
-import os
 import pathlib
 import sys
 import urllib.error
@@ -35,8 +34,9 @@ import xml.etree.ElementTree as ET
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import jd_idle  # noqa: E402
 import jd_trail  # noqa: E402
+from jd_common import (SECRETS, iso, now_iso, parse_iso, read_json,  # noqa: E402
+                       signed_area as _signed_area, write_private)
 
-SECRETS = pathlib.Path.home() / ".grain-map-secrets"
 CONFIG = SECRETS / "johndeere.json"
 TOKEN_CACHE = SECRETS / "johndeere-token.json"
 OUTPUT = SECRETS / "fleet.json"
@@ -50,18 +50,16 @@ ACCEPT = "application/vnd.deere.axiom.v3+json"
 TRUCK_TYPES = {"truck", "trailer", "pickup", "semi"}
 
 
-def _read(path: pathlib.Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8-sig"))
-
-
 def refresh_token() -> str:
     """Swap the stored refresh token for a fresh access token.
 
     Tries the client secret first and falls back to PKCE-style public client,
     since Deere accepts 'none' for token endpoint auth.
     """
-    cfg = _read(CONFIG)
-    tok = _read(TOKEN_CACHE)
+    cfg = read_json(CONFIG, None)
+    tok = read_json(TOKEN_CACHE, None)
+    if cfg is None or tok is None:
+        sys.exit(f"missing or unreadable {CONFIG} / {TOKEN_CACHE}")
     payload = {"grant_type": "refresh_token", "refresh_token": tok["refresh_token"],
                "scope": tok.get("scope", "")}
 
@@ -84,11 +82,7 @@ def refresh_token() -> str:
                 new = json.loads(r.read().decode())
             # Deere does not always return a new refresh token.
             new.setdefault("refresh_token", tok["refresh_token"])
-            TOKEN_CACHE.write_text(json.dumps(new, indent=1), encoding="utf-8")
-            try:
-                os.chmod(TOKEN_CACHE, 0o600)
-            except OSError:
-                pass
+            write_private(TOKEN_CACHE, new, indent=1)
             return new["access_token"]
         except urllib.error.HTTPError as e:
             last = f"HTTP {e.code} {e.read().decode()[:150]}"
@@ -134,11 +128,6 @@ def api_all(token: str, url: str) -> list[dict]:
                if l.get("rel") == "nextPage"]
         url = nxt[0] if nxt else None
     return seen
-
-
-def now_iso() -> str:
-    return (_dt.datetime.now(_dt.timezone.utc)
-            .isoformat(timespec="seconds").replace("+00:00", "Z"))
 
 
 def connected_orgs(token: str) -> list[dict]:
@@ -191,15 +180,6 @@ def _acres(measurement: dict | None) -> float | None:
     elif unit in ("m2", "sqm", "square metre", "square meter"):
         value /= SQM_PER_ACRE
     return value
-
-
-def _signed_area(points: list[list[float]]) -> float:
-    """Shoelace area in square degrees, on (lon, lat) so that the sign follows
-    the shapefile convention: negative is clockwise, an outer ring."""
-    total = 0.0
-    for (lat1, lon1), (lat2, lon2) in zip(points, points[1:]):
-        total += lon1 * lat2 - lon2 * lat1
-    return total / 2.0
 
 
 def _is_hole(ring: dict, points: list[list[float]]) -> bool:
@@ -346,6 +326,10 @@ LOCATION_HISTORY = ("https://api.deere.com/platform/machines/{pid}/locationHisto
                     "?startDate={start}&endDate={end}&itemLimit=250")
 
 
+INDEX_CACHE = SECRETS / "equipment-index.json"
+INDEX_MAX_AGE_H = 24.0
+
+
 def equipment_index(token: str, orgs: list[str]) -> dict:
     """Serial number -> machine record, across the given organizations.
 
@@ -353,6 +337,17 @@ def equipment_index(token: str, orgs: list[str]) -> dict:
     by principalId; this is the join between them. All 37 road vehicles
     match on serial.
     """
+    # A machine is added to the account a few times a year; this was being
+    # rebuilt every five minutes, two to four requests a push, ~1,000 a day
+    # against the same rate limit the breadcrumb budget protects. It is
+    # kept for a day, and rebuilt early if a serial it should know is asked
+    # for and missing (see `known`).
+    cached = read_json(INDEX_CACHE, None)
+    built = parse_iso((cached or {}).get("built"))
+    if (cached and built and set(cached.get("orgs") or []) == set(orgs)
+            and (_dt.datetime.now(_dt.timezone.utc) - built).total_seconds()
+            < INDEX_MAX_AGE_H * 3600):
+        return cached["index"]
     index: dict = {}
     for oid in orgs:
         status, body = api(token, EQUIPMENT.format(org=oid))
@@ -363,6 +358,8 @@ def equipment_index(token: str, orgs: list[str]) -> dict:
             if serial and m.get("principalId"):
                 index[serial] = {"principal_id": m["principalId"],
                                  "name": m.get("name"), "org": oid}
+    if index:
+        write_private(INDEX_CACHE, {"built": now_iso(), "orgs": orgs, "index": index})
     return index
 
 
@@ -497,6 +494,14 @@ def main() -> None:
     out = {"generated_at": now_iso(), "organizations": [], "fields": [], "trucks": []}
     refused = 0
 
+    # What is planted changes a few times a year, and reading it is one to
+    # two requests per field - about half of what a build costs. The crop
+    # from the previous build is kept while it is this season's; a field
+    # without one, or with last season's, is asked again.
+    season = _dt.datetime.now().year
+    previous = {f.get("id"): f for f in (read_json(OUTPUT, {}) or {}).get("fields", [])}
+    reused = 0
+
     for org in orgs:
         oid = str(org["id"])
         out["organizations"].append({"id": oid, "name": org.get("name")})
@@ -508,12 +513,21 @@ def main() -> None:
                 continue            # placeholder rows Deere carries
             entry = {"org": oid, "id": f.get("id"), "name": f.get("name")}
             entry.update(field_boundary(token, f))
-            try:
-                entry.update(field_crop(token, oid, f.get("id")))
-            except Exception as exc:  # noqa: BLE001
-                # A crop is a label on the map, not the map. Say so and go on.
-                print(f"    (no crop for {f.get('name')}: {type(exc).__name__})")
+            old = previous.get(f.get("id")) or {}
+            if old.get("crop") and old.get("crop_season") == season:
+                entry.update({k: old[k] for k in ("crop", "crop_code", "crop_season", "planted")
+                              if k in old})
+                reused += 1
+            else:
+                try:
+                    entry.update(field_crop(token, oid, f.get("id"), season))
+                except Exception as exc:  # noqa: BLE001
+                    # A crop is a label on the map, not the map. Say so and go on.
+                    print(f"    (no crop for {f.get('name')}: {type(exc).__name__})")
             out["fields"].append(entry)
+    if reused:
+        print(f"  crops: {reused} carried over from the last build, "
+              f"{len(out['fields']) - reused} read")
 
     # The AEMP feed is account-wide rather than per organization, so it is
     # read once rather than per org.
@@ -534,17 +548,12 @@ def main() -> None:
         index = equipment_index(token, [str(o["id"]) for o in orgs])
         if jd_idle.refine(api, token, out["trucks"], index, budget=40):
             jd_idle.track(out["trucks"])
-        jd_trail.update(api, token, out["trucks"], index, budget=40)
-        out["stops"] = jd_trail.recent_events(24)
+        _, _, out["stops"] = jd_trail.update(api, token, out["trucks"], index, budget=40)
         out["stop_minutes"] = jd_trail.IDLE_MIN
     except Exception as exc:  # noqa: BLE001
         print(f"  (history/trail step skipped: {type(exc).__name__}: {exc})")
 
-    OUTPUT.write_text(json.dumps(out, indent=1), encoding="utf-8")
-    try:
-        os.chmod(OUTPUT, 0o600)
-    except OSError:
-        pass
+    write_private(OUTPUT, out, indent=1)
 
     semis = [t for t in out["trucks"] if t["kind"] == "semi"]
     pickups = [t for t in out["trucks"] if t["kind"] == "pickup"]
@@ -555,9 +564,8 @@ def main() -> None:
         for v in vehicles:
             if not v.get("at"):
                 continue
-            try:
-                t = _dt.datetime.fromisoformat(v["at"].replace("Z", "+00:00"))
-            except ValueError:
+            t = parse_iso(v.get("at"))
+            if t is None:
                 continue
             ages.append((_dt.datetime.now(_dt.timezone.utc) - t).total_seconds() / 60)
         if not ages:

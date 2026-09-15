@@ -46,7 +46,6 @@ from __future__ import annotations
 import base64
 import datetime as _dt
 import json
-import os
 import pathlib
 import re
 import sys
@@ -54,20 +53,35 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
-SECRETS = pathlib.Path.home() / ".grain-map-secrets"
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "scrapers"))
+import match_locations  # noqa: E402
+from jd_common import SECRETS, metres as _metres, parse_iso, read_json, write_private  # noqa: E402
+
+
+def load_pins(html: pathlib.Path) -> list[dict]:
+    """The map's pins, by the scraper's own parser - one regex for the whole
+    project, so a change to the gtLocations shape cannot leave the alerts
+    silently naming nothing."""
+    if not html.exists():
+        return []
+    return match_locations.load_pins(html)
+
+
+def _state() -> dict:
+    return read_json(STATE, {"sent": []})
+
+
+def _save_state(state: dict) -> None:
+    write_private(STATE, state)
+
+
 CONFIG = SECRETS / "sms.json"
 STATE = SECRETS / "sms-state.json"
 
 TWILIO = "https://api.twilio.com/2010-04-01/Accounts/{sid}/Messages.json"
 
 DEFAULT_MAX_PER_HOUR = 6
-
-# Pins from the public map, for saying where a truck stopped rather than
-# quoting coordinates at someone. Same regex the scraper's matcher uses.
-_PIN_RE = re.compile(
-    r"\{\s*name:\s*'((?:[^'\\]|\\.)*)'\s*,\s*type:\s*'([^']*)'\s*,"
-    r"(?:\s*company:\s*'((?:[^'\\]|\\.)*)'\s*,)?"
-    r"\s*lat:\s*(-?[\d.]+)\s*,\s*lng:\s*(-?[\d.]+)")
 
 # How close a stop has to be to a pin or field to be named after it.
 NEAR_PIN_M = 600.0
@@ -147,13 +161,6 @@ def load_config() -> dict | None:
     return cfg
 
 
-def _metres(lat1, lon1, lat2, lon2) -> float:
-    import math
-    dlat = (lat2 - lat1) * 111_320.0
-    dlon = (lon2 - lon1) * 111_320.0 * math.cos(math.radians((lat1 + lat2) / 2))
-    return math.hypot(dlat, dlon)
-
-
 def place_name(lat: float, lon: float, fields: list[dict],
                pins: list[dict]) -> str | None:
     """The nearest elevator or field, so a text can say where.
@@ -173,32 +180,6 @@ def place_name(lat: float, lon: float, fields: list[dict],
         if d <= NEAR_FIELD_M and (best is None or d < best[0]):
             best = (d, field.get("name") or "a field")
     return best[1] if best else None
-
-
-def load_pins(html: pathlib.Path) -> list[dict]:
-    if not html.exists():
-        return []
-    text = html.read_text(encoding="utf-8", errors="replace")
-    return [{"name": m.group(1).replace("\\'", "'").strip(),
-             "lat": float(m.group(4)), "lng": float(m.group(5))}
-            for m in _PIN_RE.finditer(text)]
-
-
-def _state() -> dict:
-    if not STATE.exists():
-        return {"sent": []}
-    try:
-        return json.loads(STATE.read_text(encoding="utf-8"))
-    except (json.JSONDecodeError, OSError):
-        return {"sent": []}
-
-
-def _save_state(state: dict) -> None:
-    STATE.write_text(json.dumps(state), encoding="utf-8")
-    try:
-        os.chmod(STATE, 0o600)
-    except OSError:
-        pass
 
 
 def in_quiet_hours(cfg: dict, when: _dt.datetime) -> bool:
@@ -221,16 +202,9 @@ def compose(stop: dict, where: str | None) -> str:
                   or stop.get("minutes") or 0)
     length = (f"{minutes} min" if minutes < 60
               else f"{minutes // 60} h {minutes % 60} min")
-    when = stop.get("start") or ""
-    try:
-        local = (_dt.datetime.fromisoformat(when.replace("Z", "+00:00"))
-                 .astimezone().strftime("%-I:%M %p"))
-    except (ValueError, TypeError):
-        try:
-            local = (_dt.datetime.fromisoformat(when.replace("Z", "+00:00"))
-                     .astimezone().strftime("%I:%M %p").lstrip("0"))
-        except (ValueError, TypeError):
-            local = "?"
+    when = parse_iso(stop.get("start"))
+    # %I then strip the zero: %-I is glibc-only and raised on Windows.
+    local = when.astimezone().strftime("%I:%M %p").lstrip("0") if when else "?"
     return (f"{stop.get('name')} {word} {length} from {local}"
             + (f" at {where}" if where else "")
             + f" ({stop.get('y'):.4f},{stop.get('x'):.4f})")
@@ -349,7 +323,7 @@ def notify_stops(stops: list[dict], pins: list[dict],
     state = _state()
     hour_ago = now - _dt.timedelta(hours=1)
     recent = [s for s in state["sent"]
-              if _dt.datetime.fromisoformat(s.replace("Z", "+00:00")) >= hour_ago]
+              if (parse_iso(s) or hour_ago) >= hour_ago]
     # An explicit 0 is "texts off", and must not fall through to the default
     # - `or` would have turned it into six an hour.
     raw_cap = cfg.get("max_per_hour")

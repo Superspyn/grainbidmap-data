@@ -27,6 +27,7 @@ import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from jd_trail import TRAIL_HOURS  # noqa: E402
+from jd_common import signed_area  # noqa: E402
 
 SECRETS = pathlib.Path.home() / ".grain-map-secrets"
 FLEET = SECRETS / "fleet.json"
@@ -100,14 +101,6 @@ def build_stops_js(stops: list[dict], threshold: float) -> str:
         ]) + "}")
     return ("  var gtStops = [\n    " + ",\n    ".join(rows) + "\n  ];\n"
             + f"  var gtStopMinutes = {int(threshold)};\n")
-
-
-def signed_area(points: list[list[float]]) -> float:
-    """Shoelace on (lon, lat): negative is clockwise, the outer-ring sense."""
-    total = 0.0
-    for (lat1, lon1), (lat2, lon2) in zip(points, points[1:]):
-        total += lon1 * lat2 - lon2 * lat1
-    return total / 2.0
 
 
 def encode_ring(points: list[list[float]]) -> str:
@@ -577,6 +570,17 @@ PANEL_JS = r"""
       return pts;
     }
 
+    // A field's rings, decoded once and kept on the field: the outlines and
+    // the measuring box both need them, and there are ~150,000 vertices.
+    function rings(f) {
+      if (!f._rings) {
+        f._rings = (f.r || []).map(function (r) {
+          return { hole: r.charAt(0) === 'i', pts: decodeRing(r.slice(1)) };
+        });
+      }
+      return f._rings;
+    }
+
     var drawn = [];
     function drawOutlines() {
       if (drawn.length || typeof map === 'undefined' || !map) return;
@@ -590,7 +594,7 @@ PANEL_JS = r"""
         // (exterior clockwise, holes counter-clockwise) for any renderer
         // that goes by winding instead.
         var poly = new google.maps.Polygon({
-          paths: f.r.map(function (ring) { return decodeRing(ring.slice(1)); }),
+          paths: rings(f).map(function (r) { return r.pts; }),
           strokeColor: CROP_LINE[cropKey(f)], strokeOpacity: 0.9, strokeWeight: 1.5,
           fillColor: CROP_FILL[cropKey(f)], fillOpacity: 0.18,
           map: map, zIndex: 1, clickable: true
@@ -652,7 +656,7 @@ PANEL_JS = r"""
       if (!startBtn || !result) return;
 
       var SQM_PER_ACRE = 4046.8564224;
-      var rect = null, pending = false, lastRows = [], lastAcres = 0;
+      var rect = null, pending = false, lastBox = null;
       var lastBy = { corn: 0, soybeans: 0, other: 0 };
 
       // Metres per degree at a latitude: a flat local frame is fine here,
@@ -704,22 +708,46 @@ PANEL_JS = r"""
         return out;
       }
 
-      // Decoded rings and each field's extent, worked out once and kept.
+      // Each field's extent, local frame and full area, worked out once.
+      // The rings themselves come from rings(f), shared with the outlines,
+      // so nothing is polyline-decoded twice.
       function prepared(f) {
-        if (f._rings) return f;
-        f._rings = f.r.map(function (r) { return { hole: r.charAt(0) === 'i', pts: decodeRing(r.slice(1)) }; });
+        if (f._ext) return f;
         var s = 90, n = -90, w = 180, e = -180;
-        f._rings.forEach(function (r) {
+        rings(f).forEach(function (r) {
           r.pts.forEach(function (p) {
             if (p.lat < s) s = p.lat; if (p.lat > n) n = p.lat;
             if (p.lng < w) w = p.lng; if (p.lng > e) e = p.lng;
           });
         });
         f._ext = { s: s, n: n, w: w, e: e };
-        var fr = frame(f.y), full = 0;
-        f._rings.forEach(function (r) { full += (r.hole ? -1 : 1) * ringArea(r.pts, fr); });
+        f._fr = frame(f.y);
+        var full = 0;
+        rings(f).forEach(function (r) { full += (r.hole ? -1 : 1) * ringArea(r.pts, f._fr); });
         f._full = full;
         return f;
+      }
+
+      // Acres of one field inside the box, or 0.
+      function acresInside(f, box) {
+        if (!f.r || !f.r.length) return 0;
+        prepared(f);
+        var x = f._ext;
+        if (x.n < box.s || x.s > box.n || x.e < box.w || x.w > box.e) return 0;
+        var inside = 0;
+        rings(f).forEach(function (r) {
+          var c = clipRing(r.pts, box);
+          if (c.length > 2) inside += (r.hole ? -1 : 1) * ringArea(c, f._fr);
+        });
+        if (inside <= 0 || f._full <= 0) return 0;
+        // Deere's figure when it is there; the boundary's own area if not.
+        var acres = f.a ? f.a * Math.min(1, inside / f._full) : inside / SQM_PER_ACRE;
+        return acres < 0.05 ? 0 : acres;
+      }
+
+      // The one place a field's fill follows whether the box is counting it.
+      function paint(f) {
+        if (f._poly) f._poly.setOptions({ fillOpacity: f._inBox ? 0.42 : 0.18 });
       }
 
       function measure() {
@@ -729,42 +757,22 @@ PANEL_JS = r"""
         if (!b) return;
         var box = { s: b.getSouthWest().lat(), n: b.getNorthEast().lat(),
                     w: b.getSouthWest().lng(), e: b.getNorthEast().lng() };
+        // bounds_changed also fires when nothing changed; a 444-field pass
+        // and a DOM rebuild are not owed for that.
+        if (lastBox && lastBox.s === box.s && lastBox.n === box.n &&
+            lastBox.w === box.w && lastBox.e === box.e) return;
+        lastBox = box;
         var rows = [], total = 0, byCrop = { corn: 0, soybeans: 0, other: 0 };
         gtFields.forEach(function (f) {
-          var was = !!f._inBox;
-          f._inBox = false;
-          if (!f.r || !f.r.length) return;
-          prepared(f);
-          var x = f._ext;
-          if (x.n < box.s || x.s > box.n || x.e < box.w || x.w > box.e) {
-            if (was && f._poly) f._poly.setOptions({ fillOpacity: 0.18 });
-            return;
-          }
-          var fr = frame(f.y), inside = 0;
-          f._rings.forEach(function (r) {
-            var c = clipRing(r.pts, box);
-            if (c.length > 2) inside += (r.hole ? -1 : 1) * ringArea(c, fr);
-          });
-          if (inside <= 0 || f._full <= 0) {
-            if (was && f._poly) f._poly.setOptions({ fillOpacity: 0.18 });
-            return;
-          }
-          var share = Math.min(1, inside / f._full);
-          // Deere's figure when it is there; the boundary's own area if not.
-          var acres = f.a ? f.a * share : inside / SQM_PER_ACRE;
-          if (acres < 0.05) {
-            if (was && f._poly) f._poly.setOptions({ fillOpacity: 0.18 });
-            return;
-          }
-          f._inBox = true;
-          if (f._poly) f._poly.setOptions({ fillOpacity: 0.42 });
-          rows.push({ f: f, acres: acres, share: share });
+          var acres = acresInside(f, box), was = !!f._inBox;
+          f._inBox = acres > 0;
+          if (f._inBox !== was) paint(f);
+          if (!f._inBox) return;
+          rows.push({ f: f, acres: acres, share: f.a ? acres / f.a : 1 });
           total += acres;
           byCrop[cropKey(f)] += acres;
         });
         rows.sort(function (a, c) { return c.acres - a.acres; });
-        lastRows = rows;
-        lastAcres = total;
         lastBy = byCrop;
 
         var gross = ringArea([
@@ -888,11 +896,9 @@ PANEL_JS = r"""
 
       function clear() {
         if (rect) { rect.setMap(null); rect = null; }
-        gtFields.forEach(function (f) {
-          if (f._inBox && f._poly) f._poly.setOptions({ fillOpacity: 0.18 });
-          f._inBox = false;
-        });
-        lastRows = []; lastAcres = 0;
+        gtFields.forEach(function (f) { f._inBox = false; paint(f); });
+        lastBox = null;
+        lastBy = { corn: 0, soybeans: 0, other: 0 };
         result.hidden = true;
         clearBtn.hidden = true;
         countOut.textContent = '';
@@ -1152,54 +1158,93 @@ PANEL_JS = r"""
       return true;
     }
 
+    // One marker per truck, kept across refreshes and moved rather than
+    // rebuilt. The relay delivers every five minutes, and building 37
+    // markers each time - an SVG data URL apiece - was ~10,000 marker
+    // constructions over a working day, with a visible blink and a closed
+    // info window at each one. The icon only varies by kind and state, so
+    // there are eight of them, built once.
+    var byName = {}, iconCache = {};
+
+    function iconFor(t) {
+      var key = (t.k === 'pickup' ? 'pickup' : 'semi') + '|' + stateOf(t);
+      if (!iconCache[key]) iconCache[key] = truckIcon(t);
+      return iconCache[key];
+    }
+
+    function openInfo(mk) {
+      var t = mk.gtTruck, state = mk.gtState, mins = ageMinutes(t.t);
+      // Clicking the truck whose trail is already up puts it away.
+      var had = trailFor === t.n;
+      var drew = false;
+      if (had) clearTrail(); else drew = showTrail(t);
+      var html = '<div style="font-family:inherit;font-size:13px">' +
+        '<strong>' + escapeHtml(t.n) + '</strong><br>' +
+        escapeHtml(t.m) + ' \u00b7 ' + escapeHtml(t.k) + '<br>' +
+        '<span style="color:' + STATE_COLOUR[state] + ';font-weight:600">' +
+        escapeHtml(stoppedText(t)) + '</span><br>' +
+        '<span style="color:#5B6350">last reported ' + ageText(mins) +
+        (state === 'idling' ? '<br>engine running - the tracker reads ' +
+          'alternator voltage' : '') +
+        (state === 'stale' ? '<br>nothing reported in over ' + QUIET_DAYS +
+          ' days, so this position may be out of date' : '') +
+        '<br>' + (drew
+          ? 'path of the last ' + GT_TRAIL_HOURS + ' h shown - click ' +
+            'the truck again to hide it'
+          : had ? 'path hidden'
+                : 'no movement recorded in the last ' + GT_TRAIL_HOURS + ' h') +
+        '</span></div>';
+      infoWindow.setContent(html);
+      infoWindow.open(map, mk);
+    }
+
     function draw() {
       // These two are plain DOM and owe nothing to Google Maps, so they are
       // built before the early returns: if the Maps script is slow or
       // blocked, you can still read which trucks are idling.
       renderTruckList();
       renderSummary();
-      if (markers.length || typeof map === 'undefined' || !map) return;
+      if (typeof map === 'undefined' || !map) return;
       if (!window.google || !window.google.maps) return;
+      var live = {};
       gtTrucks.forEach(function (t) {
         var mins = ageMinutes(t.t);
         var stopped = stoppedMinutes(t);
         var state = stateOf(t);
-        var mk = new google.maps.Marker({
-          position: { lat: t.y, lng: t.x },
-          map: null,                    // applyVisibility() decides, below
-          icon: truckIcon(t),
-          title: t.n + '  (' + t.m + ')  -  ' + stoppedText(t) +
-                 '  -  reported ' + ageText(mins),
-          zIndex: 500 + (state === 'moving' ? 700 :
-                   stopped === null ? 0 : Math.max(0, 600 - Math.round(stopped)))
-        });
-        mk.addListener('click', function () {
-          // Clicking the truck whose trail is already up puts it away.
-          var had = trailFor === t.n;
-          var drew = false;
-          if (had) clearTrail(); else drew = showTrail(t);
-          var html = '<div style="font-family:inherit;font-size:13px">' +
-            '<strong>' + escapeHtml(t.n) + '</strong><br>' +
-            escapeHtml(t.m) + ' \u00b7 ' + escapeHtml(t.k) + '<br>' +
-            '<span style="color:' + STATE_COLOUR[state] + ';font-weight:600">' +
-            escapeHtml(stoppedText(t)) + '</span><br>' +
-            '<span style="color:#5B6350">last reported ' + ageText(mins) +
-            (state === 'idling' ? '<br>engine running - operating hours are ' +
-              'still climbing' : '') +
-            (state === 'stale' ? '<br>nothing reported in over ' + QUIET_DAYS +
-              ' days, so this position may be out of date' : '') +
-            '<br>' + (drew
-              ? 'path of the last ' + GT_TRAIL_HOURS + ' h shown - click ' +
-                'the truck again to hide it'
-              : had ? 'path hidden'
-                    : 'no movement recorded in the last ' + GT_TRAIL_HOURS + ' h') +
-            '</span></div>';
-          infoWindow.setContent(html);
-          infoWindow.open(map, mk);
-        });
+        var title = t.n + '  (' + t.m + ')  -  ' + stoppedText(t) +
+                    '  -  reported ' + ageText(mins);
+        var z = 500 + (state === 'moving' ? 700 :
+                 stopped === null ? 0 : Math.max(0, 600 - Math.round(stopped)));
+        var mk = byName[t.n];
+        if (!mk) {
+          mk = new google.maps.Marker({
+            position: { lat: t.y, lng: t.x },
+            map: null,                  // applyVisibility() decides, below
+            icon: iconFor(t), title: title, zIndex: z
+          });
+          mk.addListener('click', function () { openInfo(mk); });
+          byName[t.n] = mk;
+          markers.push(mk);
+        } else {
+          // Only what changed: setIcon on an unchanged icon still repaints.
+          if (mk.gtState !== state || mk.gtKind !== t.k) mk.setIcon(iconFor(t));
+          mk.setPosition({ lat: t.y, lng: t.x });
+          mk.setTitle(title);
+          mk.setZIndex(z);
+        }
+        mk.gtTruck = t;
         mk.gtState = state;
-        markers.push(mk);
+        mk.gtKind = t.k;
+        live[t.n] = true;
       });
+      // Trucks that left the feed.
+      for (var i = markers.length - 1; i >= 0; i--) {
+        var gone = markers[i];
+        if (live[gone.gtTruck.n]) continue;
+        gone.setMap(null);
+        delete byName[gone.gtTruck.n];
+        markers.splice(i, 1);
+      }
       applyVisibility();
     }
 
@@ -1311,22 +1356,25 @@ PANEL_JS = r"""
       });
     }
 
+    // The panel is built once, now; the markers when Google's script lands.
+    // This used to rebuild the panel on every half-second poll while the
+    // map loaded, up to sixty times.
     var tries = 0;
     (function wait() {
-      draw();
-      if (!markers.length && tries++ < 60) setTimeout(wait, 500);
+      var ready = !!(window.google && window.google.maps &&
+                     typeof map !== 'undefined' && map);
+      if (ready || tries === 0) draw();
+      if (!ready && tries++ < 60) setTimeout(wait, 500);
     })();
 
-    // Called when the relay delivers a newer set: clear and redraw rather than
-    // moving markers, since vehicles can appear and disappear between pushes.
+    // Called when the relay delivers a newer set. draw() moves the markers
+    // that are still here, adds the new and removes the gone; the trail
+    // the user was looking at is redrawn with the newer points.
     window.gtRedrawTrucks = function () {
       var was = trailFor;
-      clearTrail();
-      markers.forEach(function (m) { m.setMap(null); });
-      markers.length = 0;
       draw();
-      // Keep the trail the user was looking at, now with the newer points.
       if (was) {
+        clearTrail();
         gtTrucks.forEach(function (t) { if (t.n === was) showTrail(t); });
       }
     };

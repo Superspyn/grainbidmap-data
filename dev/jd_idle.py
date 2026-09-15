@@ -34,12 +34,24 @@ this public repo, and holds nothing but positions and timestamps.
 from __future__ import annotations
 
 import datetime as _dt
-import json
-import math
-import os
 import pathlib
+import sys
 
-STATE = pathlib.Path.home() / ".grain-map-secrets" / "idle-state.json"
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from jd_common import SECRETS, metres, parse_iso, read_json, write_private  # noqa: E402
+
+_parse = parse_iso
+
+
+def _load() -> dict:
+    return read_json(STATE, {}).get("vehicles", {})
+
+
+def _save(vehicles: dict, now_iso: str) -> None:
+    write_private(STATE, {"updated": now_iso, "vehicles": vehicles}, indent=1)
+
+
+STATE = SECRETS / "idle-state.json"
 
 # A stationary GPS wanders. The most a parked truck here drifted across five
 # hours was 23 m, so anything inside 60 m is the same parking spot rather
@@ -64,11 +76,6 @@ MAX_PAGES = 6
 # until it next moves.
 REFINE_EVERY_H = 6.0
 
-# Operating hours climbing while the truck has not moved means the engine is
-# running and the truck is not. A hundredth of an hour is the smallest step
-# the feed reports.
-HOURS_EPSILON = 0.005
-
 
 def _key(truck: dict) -> str:
     """Identify a vehicle by serial number, falling back to its name.
@@ -79,42 +86,9 @@ def _key(truck: dict) -> str:
     return str(truck.get("vin") or "").strip() or str(truck.get("name") or "").strip()
 
 
-def metres(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
-    dlat = (lat2 - lat1) * 111_320.0
-    dlon = (lon2 - lon1) * 111_320.0 * math.cos(math.radians((lat1 + lat2) / 2))
-    return math.hypot(dlat, dlon)
-
-
-def _parse(iso: str | None) -> _dt.datetime | None:
-    if not iso:
-        return None
-    try:
-        return _dt.datetime.fromisoformat(str(iso).replace("Z", "+00:00"))
-    except ValueError:
-        return None
-
-
 def _minutes_since(iso: str | None, now: _dt.datetime) -> float | None:
     when = _parse(iso)
     return None if when is None else (now - when).total_seconds() / 60.0
-
-
-def _load() -> dict:
-    if not STATE.exists():
-        return {}
-    try:
-        return json.loads(STATE.read_text(encoding="utf-8")).get("vehicles", {})
-    except (json.JSONDecodeError, OSError):
-        return {}
-
-
-def _save(vehicles: dict, now_iso: str) -> None:
-    STATE.write_text(json.dumps({"updated": now_iso, "vehicles": vehicles},
-                                indent=1), encoding="utf-8")
-    try:
-        os.chmod(STATE, 0o600)
-    except OSError:
-        pass
 
 
 def last_moved(api, token: str, principal_id, lat: float, lon: float,
@@ -235,7 +209,6 @@ def track(trucks: list[dict], persist: bool = True) -> list[dict]:
         if not key or lat is None or lon is None:
             continue
         at = truck.get("at")
-        hours = truck.get("hours")
         prior = was.get(key)
 
         if prior is None:
@@ -246,23 +219,21 @@ def track(trucks: list[dict], persist: bool = True) -> list[dict]:
             # truck here, so nothing is called exact until history or an
             # observed move says so.
             record = {"lat": lat, "lon": lon, "since": at or now_iso,
-                      "anchor_at": at, "hours": hours, "engine_at": None,
-                      "moved_at": None, "refined_at": None,
+                      "anchor_at": at, "moved_at": None, "refined_at": None,
                       "exact": False, "source": "seed"}
         elif metres(prior["lat"], prior["lon"], lat, lon) > JITTER_M:
             # It moved, under observation. The clock restarts from this
             # report and there is nothing provisional about that - this is
             # the one case that needs no history lookup at all.
             record = {"lat": lat, "lon": lon, "since": at or now_iso,
-                      "anchor_at": at, "hours": hours, "engine_at": None,
-                      "moved_at": now_iso, "refined_at": None, "exact": True,
-                      "source": "observed"}
+                      "anchor_at": at, "moved_at": now_iso, "refined_at": None,
+                      "exact": True, "source": "observed"}
         else:
             # Same spot. Hold the arrival time; only the evidence changes.
             record = dict(prior)
             record.update({"lat": lat, "lon": lon})
-            if hours is not None:
-                record["hours"] = hours
+            record.pop("hours", None)       # the dead operating-hours latch
+            record.pop("engine_at", None)
             # A report time still advancing on the spot means the tracker is
             # heartbeating, so the feed's timestamp is a heartbeat and not
             # an arrival - which disproves the first-sighting guess that it

@@ -237,12 +237,16 @@ def load_pins(path: pathlib.Path) -> list[dict]:
 
 
 def haversine_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
-    radius = 6371.0
+    """Great-circle distance. The dev/ audits used to carry three private
+    copies of this; they now call it, so the auditor and the matcher measure
+    an 8 km threshold the same way. Mean Earth radius; the clamp guards the
+    antipodal rounding case."""
+    radius = 6371.0088
     dlat = math.radians(lat2 - lat1)
     dlon = math.radians(lon2 - lon1)
     a = (math.sin(dlat / 2) ** 2
          + math.cos(math.radians(lat1)) * math.cos(math.radians(lat2)) * math.sin(dlon / 2) ** 2)
-    return 2 * radius * math.asin(math.sqrt(a))
+    return 2 * radius * math.asin(min(1.0, math.sqrt(a)))
 
 
 def tokens(name: str) -> set[str]:

@@ -41,10 +41,12 @@ STATE = SECRETS / "relay-state.json"
 
 USER_AGENT = "grain-map/1.0 (farm hauling map; contact github.com/Superspyn)"
 
-# Map pins, read once, so an alert can say "stopped at Heartland Alden"
-# rather than quoting latitude and longitude at someone in a truck.
-PINS = jd_notify.load_pins(
-    pathlib.Path(__file__).resolve().parent.parent / "grain-trucking-map.html")
+def pins() -> list[dict]:
+    """Map pins, so an alert can say "stopped at Heartland Alden" rather
+    than quoting latitude and longitude at someone in a truck. Read only on
+    the push that has something to text - not at import, 288 times a day."""
+    return jd_notify.load_pins(
+        pathlib.Path(__file__).resolve().parent.parent / "grain-trucking-map.html")
 
 
 def load_relay() -> dict:
@@ -109,17 +111,18 @@ def main() -> None:
     # refined or observed moving.
     refined = crumbed = 0
     stops: list[dict] = []
+    recent: list[dict] | None = None
     try:
         index = equipment_index(token, [str(o["id"]) for o in connected_orgs(token)])
         refined = jd_idle.refine(api, token, road, index)
         if refined:
             jd_idle.track(road)      # re-annotate from what history settled
         # Breadcrumbs: the path driven, and any long stop along it.
-        crumbed, stops = jd_trail.update(api, token, road, index)
+        crumbed, stops, recent = jd_trail.update(api, token, road, index)
         if stops:
             # Only the stops found on THIS run. jd_trail dedupes, so one
             # already reported never comes round again.
-            texted = jd_notify.notify_stops(stops, PINS)
+            texted = jd_notify.notify_stops(stops, pins())
             if texted:
                 print(f"  texted {texted} stop(s)")
     except Exception as exc:  # noqa: BLE001
@@ -128,7 +131,8 @@ def main() -> None:
         print(f"  (history/trail step skipped: {type(exc).__name__}: {exc})")
 
     newest = max((v.get("at") or "") for v in road)
-    recent = jd_trail.recent_events(24)
+    if recent is None:                    # the trail step did not run
+        recent = jd_trail.recent_events(24)
     sig = signature(road, newest, recent)
     if sig == last_snapshot():
         print(f"unchanged since {newest} - not pushing")

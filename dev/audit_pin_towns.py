@@ -22,7 +22,6 @@ rather than the town, will show up here and be perfectly correct.
 from __future__ import annotations
 
 import csv
-import math
 import pathlib
 import re
 import sys
@@ -30,6 +29,8 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scrapers"))
 import match_locations  # noqa: E402
+
+km = match_locations.haversine_km
 
 PLACES = ROOT / "dev" / "us-places.csv"
 REPORT = ROOT / "dev" / "pin-town-audit.csv"
@@ -60,14 +61,6 @@ NOISE = {
     "approx", "bean", "soybean", "corn", "shuttle", "rail", "dry", "wet",
     "station", "depot", "yard", "center", "centre", "central", "main",
 }
-
-
-def km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
-    r = 6371.0088
-    p1, p2 = math.radians(lat1), math.radians(lat2)
-    a = (math.sin((p2 - p1) / 2) ** 2
-         + math.cos(p1) * math.cos(p2) * math.sin(math.radians(lon2 - lon1) / 2) ** 2)
-    return 2 * r * math.asin(min(1.0, math.sqrt(a)))
 
 
 def load_places() -> dict:
