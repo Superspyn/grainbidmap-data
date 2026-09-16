@@ -58,7 +58,13 @@ USER_AGENT = "grain-map/1.0 (farm hauling map; contact github.com/Superspyn)"
 # box is visible. Cars are pickups and the odd employee vehicle, which the
 # size floor removes rather than the class.
 VEHICLE_CLASSES = {"truck", "bus", "car"}
-MIN_CONFIDENCE = 0.35
+MIN_CONFIDENCE = 0.30
+
+# The camera is 704x576 and a truck under a pit is 50-odd pixels tall. At
+# the detector's default 640 it found nothing at all in a frame with a
+# truck plainly at the pit; upsampled to 1280 it finds it at 0.41. Trucks
+# queued on the apron are nearer and larger, so this is the hard case.
+DETECT_SIZE = 1280
 
 # How much history to keep, and how far back "recent" reaches when working
 # out the pace of the line.
@@ -166,11 +172,17 @@ def detect(jpeg: bytes) -> list[dict]:
             "pip install ultralytics  (downloads torch; the yolov8n weights "
             "fetch on first run)") from exc
     if _model is None:
-        _model = YOLO(str(pathlib.Path(__file__).resolve().parent / "config" / "yolov8n.pt"))
+        weights = pathlib.Path(__file__).resolve().parent / "config" / "yolov8n.pt"
+        if not weights.exists():
+            # 6 MB from Ultralytics' own GitHub release, into this folder.
+            # Kept out of the repo (it is public and this is a binary).
+            from ultralytics.utils.downloads import attempt_download_asset
+            attempt_download_asset(str(weights))
+        _model = YOLO(str(weights))
     import io
     from PIL import Image
     image = Image.open(io.BytesIO(jpeg)).convert("RGB")
-    results = _model.predict(image, verbose=False, conf=MIN_CONFIDENCE)
+    results = _model.predict(image, verbose=False, conf=MIN_CONFIDENCE, imgsz=DETECT_SIZE)
     boxes = []
     for r in results:
         names = r.names
