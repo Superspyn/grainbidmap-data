@@ -102,10 +102,18 @@ table.hist{width:100%;border-collapse:collapse;font-size:10px;margin-bottom:6px}
 // matched every lab grid to the boundary its points fall inside).
 const FI={},FP={};
 Object.entries(SOIL).forEach(([f,rec])=>{
-  FI[f]={county:rec.county,sets:rec.sets.map(s=>Object.assign({d:s.d,n:s.n,lab:s.lab},s.avg))};
-  const withPts=rec.sets.filter(s=>s.pts&&s.pts.length).map(s=>({d:s.d,n:s.n,lab:s.lab,pts:s.pts}));
+  FI[f]={county:rec.county,sets:rec.sets.map(s=>Object.assign({d:s.d,n:s.n,lab:s.lab,kind:s.kind||'grid'},s.avg))};
+  const withPts=rec.sets.filter(s=>s.pts&&s.pts.length).map(s=>({d:s.d,n:s.n,lab:s.lab,kind:s.kind||'grid',pts:s.pts}));
   if(withPts.length)FP[f]={county:rec.county,sets:withPts};
 });
+// A whole-field composite is ONE lab result for the field, laid out over
+// the boundary by dev/jd_build_rx.py so the rest of the page can treat it
+// like any other sample set. The nutrient map of such a field is flat and
+// means nothing spatially; only the rate map varies, through yield. Say so
+// wherever a number could be mistaken for a grid measurement.
+function latestSet(f){const fp=FP[f];return fp&&fp.sets.length?fp.sets[fp.sets.length-1]:null;}
+function isComposite(f){const s=latestSet(f);return !!s&&s.kind==='whole';}
+const COMPOSITE_NOTE='Whole-field composite &mdash; one lab sample for the field, not a grid. The nutrient map is flat; rates still vary with yield history.';
 const FF={},FPROP={},BNDRY={};
 B.features.forEach(f=>{const p=f.properties,fm=p.org+' · '+p.farm;if(!FF[fm])FF[fm]=[];FF[fm].push(p.field);FPROP[p.field]=p;BNDRY[p.field]=f.geometry;});
 Object.values(FF).forEach(a=>a.sort());
@@ -546,10 +554,12 @@ function rFL(){
     const flds=FF[fm].filter(f=>!q||f.toLowerCase().includes(q)||fm.toLowerCase().includes(q));
     if(!flds.length&&sq)return'';const o=expanded.has(fm)||(q&&flds.length);
     const nS=flds.filter(f=>FP[f]).length;
-    return `<div><div class="fhd" onclick="tF(this.dataset.g)" data-g="${attr(fm)}"><span class="ch ${o?'o':''}">▶</span>${fm}<span class="ct" title="soil-sampled / total">${nS}/${flds.length}</span></div>
+    return `<div><div class="fhd" onclick="tF(this.dataset.g)" data-g="${attr(fm)}"><span class="ch ${o?'o':''}">▶</span>${fm}<span class="ct" title="fields with soil data / total (* = whole-field composite)">${nS}/${flds.length}</span></div>
     ${o?flds.map(f=>{const fi=FI[f],ld=fi?fi.sets[fi.sets.length-1]?.d:'';const p=FPROP[f]||{};
-      const badge=ld?ld.slice(0,4):(YMAPS[f]?'yield':'');
-      return `<div class="fi ${sel===f?'sel':''} ${FP[f]?'':'nosoil'}" onclick="sF(this.dataset.f)" data-f="${attr(f)}" title="${p.acres!=null?p.acres.toFixed(1)+' ac':''}${FP[f]?'':' · no soil grid'}">${f}<span class="ds">${badge}</span></div>`;}).join(''):''}
+      const comp=isComposite(f);
+      const badge=ld?(ld.slice(0,4)+(comp?'*':'')):(YMAPS[f]?'yield':'');
+      const tip=(p.acres!=null?p.acres.toFixed(1)+' ac':'')+(FP[f]?(comp?' · whole-field composite, not a grid':''):' · no soil data');
+      return `<div class="fi ${sel===f?'sel':''} ${FP[f]?'':'nosoil'}" onclick="sF(this.dataset.f)" data-f="${attr(f)}" title="${attr(tip)}">${f}<span class="ds">${badge}</span></div>`;}).join(''):''}
     </div>`;}).join('');
 }
 function rEP(){return `<div class="es"><div class="ic">🌾</div><p>Select a field to view interpolated<br>nutrient maps &amp; build VR prescriptions</p><p style="margin-top:6px;font-size:9px;color:var(--tx2)">Recommendations based on ISU Extension PM 1688</p></div>`;}
@@ -568,8 +578,8 @@ function rFP(){
         <div style="flex:1"><div class="lb">Acres</div><div class="vl">${p.acres!=null?p.acres.toFixed(1):'—'}</div></div>
         <div style="flex:1"><div class="lb">${META.plan_year-1} crop</div><div class="vl">${lastCrop||'—'}</div></div>
         <div style="flex:1"><div class="lb">Sampled</div><div class="vl">${lt?lt.d:'never'}</div></div>
-        <div style="flex:1"><div class="lb">Grid pts</div><div class="vl">${latestPts?latestPts.pts.length:'—'}</div></div>
-      </div></div></div>
+        <div style="flex:1"><div class="lb">Sample</div><div class="vl">${latestPts?(latestPts.kind==='whole'?'composite':latestPts.pts.length+' pts'):'—'}</div></div>
+      </div>${latestPts&&latestPts.kind==='whole'?`<div class="dn" style="margin-top:6px">${COMPOSITE_NOTE}</div>`:''}</div></div>
     <div class="ps">
       <div class="tb">
         ${hasSoil?`<button class="tbtn ${panelTab==='zones'?'a':''}" onclick="panelTab='zones';rP();showInterp()">Nutrient Map</button>
@@ -577,7 +587,7 @@ function rFP(){
         <button class="tbtn ${panelTab==='history'?'a':''}" onclick="panelTab='history';rP();showInterp()">History</button>
         ${hasSoil?`<button class="tbtn ${panelTab==='vr'?'a':''}" onclick="panelTab='vr';rP();showVRInterp()">VR Rx</button>`:''}
       </div>
-      ${hasSoil?'':'<div class="dn">No soil grid on file for this field, so no nutrient map or prescription. Crop history and yield maps still show.</div>'}
+      ${hasSoil?'':'<div class="dn">No soil test on file for this field, so no nutrient map or prescription. Crop history and yield maps still show.</div>'}
       ${panelTab==='zones'?rZones():''}${panelTab==='soil'?rSoil():''}${panelTab==='history'?rHist():''}${panelTab==='vr'?rVR():''}
     </div>`;
 }
@@ -596,9 +606,32 @@ function rYieldPanel(){
     <div class="fc" style="padding:8px"><div class="lb" style="margin-bottom:3px">Share of the field</div>
       ${counts.map((c,i)=>c?`<div class="vr-zone"><div class="vr-color" style="background:rgb(${YIELD_COLORS[i].join(',')})"></div><span>${labels[i]}</span><span class="vr-rate">${Math.round(c/n*100)}%</span><span class="vr-acres">${(c/n*ac).toFixed(0)}ac</span></div>`:'').join('')}</div>`;
 }
+// One lab number for the field: show it against the ISU categories and be
+// explicit that there is nothing to interpolate.
+function rComposite(){
+  const fi=FI[sel],lt=fi.sets[fi.sets.length-1];
+  const t=TH[hNut]||{},v=lt[hNut];
+  const ac=(FPROP[sel]||{}).acres;
+  if(v==null)return `<h2><div class="ic">🧪</div>Whole-field composite</h2>
+    <div class="dn">${COMPOSITE_NOTE}</div>
+    <div class="dn">This sample did not report ${t.nm||hNut}.</div>`;
+  const st=gSt(hNut,v);
+  return `<h2><div class="ic">🧪</div>${t.nm||hNut} &mdash; whole-field composite</h2>
+    <div class="dn">${COMPOSITE_NOTE}</div>
+    <div class="fc" style="padding:8px">
+      <div style="display:flex;gap:8px">
+        <div style="flex:1"><div class="lb">Field value</div><div class="vl">${v} ${t.u||''}</div></div>
+        <div style="flex:1"><div class="lb">ISU category</div><div class="vl">${gSL(st)}</div></div>
+        <div style="flex:1"><div class="lb">Sampled</div><div class="vl">${lt.d}</div></div>
+        <div style="flex:1"><div class="lb">Acres</div><div class="vl">${ac!=null?ac.toFixed(1):'\u2014'}</div></div>
+      </div>
+      <div class="dn" style="margin-top:8px">${lt.lab||'lab'} &middot; the whole field reads as one zone for ${t.nm||hNut}. A grid sample would be needed to vary it by soil test.</div>
+    </div>`;
+}
 function rZones(){
   if(hNut==='yield')return rYieldPanel();
-  const fp=FP[sel];if(!fp||!fp.sets.length)return'<div class="dn">No grid data.</div>';
+  const fp=FP[sel];if(!fp||!fp.sets.length)return'<div class="dn">No soil data.</div>';
+  if(isComposite(sel))return rComposite();
   const pts=fp.sets[fp.sets.length-1].pts;
   const vals=pts.map(p=>p[hNut]).filter(v=>v!=null);
   if(!vals.length)return `<div class="dn">No ${TH[hNut]?.nm||hNut} data.</div>`;
@@ -738,7 +771,7 @@ function rHist(){
 }
 
 function rVR(){
-  const fp=FP[sel],fi=FI[sel];if(!fp||!fp.sets.length)return'<div class="dn">No grid data for VR.</div>';
+  const fp=FP[sel],fi=FI[sel];if(!fp||!fp.sets.length)return'<div class="dn">No soil data for VR.</div>';
   const lt=fi.sets[fi.sets.length-1];
   const pts=fp.sets[fp.sets.length-1].pts;
   const effYG=rxYG;
@@ -800,6 +833,7 @@ function rVR(){
       <div class="plan">Plan <b>${META.plan_year} ${rxCrop}</b> after ${META.plan_year-1} ${lastCrop||'(no planting pass)'}${lastCrop?' (rotation)':''}.
         Goal: ${cropAvg?`this field's last ${hist.slice(-3).length} ${rxCrop} harvests average <b>${cropAvg} bu</b>, so ${defaultGoal(sel,rxCrop)} suggested`:`no ${rxCrop} harvest on file, flat default`}.
         ${ym.length?`Removal varies by spot from <b>${ym.length} yield map${ym.length>1?'s':''}</b> (${ym.map(m=>m.season).join(', ')}).`:'No yield maps yet, so removal is flat across the field.'}</div>
+      ${isComposite(sel)?`<div class="plan" style="border-left:3px solid var(--wr)">Soil here is a <b>whole-field composite</b> sampled ${lt.d}, not a grid. Every acre starts from the same soil test, so the rate varies only with the yield map.</div>`:''}
       <div class="rxr"><label>Nutrient</label><select onchange="rxNut=this.value;rP();showVRInterp()">
         <option value="p" ${rxNut==='p'?'selected':''}>P₂O₅</option><option value="k" ${rxNut==='k'?'selected':''}>K₂O</option>
         <option value="ph" ${rxNut==='ph'?'selected':''}>Lime</option><option value="s" ${rxNut==='s'?'selected':''}>Sulfur</option>
@@ -823,7 +857,7 @@ function rVR(){
         <div style="flex:1"><div class="lb">Total product</div><div class="vl">${(prodLb/2000).toFixed(1)} tons</div></div>
         <div style="flex:1"><div class="lb">Acres</div><div class="vl" style="color:var(--tx2)">${acTot.toFixed(0)}</div></div>
       </div>
-      <div class="lb" style="margin-bottom:3px">Rate Zones: ${NUTRIENT_NAME[rxNut]} → ${prod.name} (low = soil adequate, high = building)</div>
+      <div class="lb" style="margin-bottom:3px">Rate Zones: ${NUTRIENT_NAME[rxNut]} → ${prod.name} (${isComposite(sel)?'zones follow the yield map':'low = soil adequate, high = building'})</div>
       ${zoneBreak.map(z=>`<div class="vr-zone"><div class="vr-color" style="background:${z.color}"></div>
         <span class="vr-range">${z.lo}-${z.hi}</span><span class="vr-rate">${z.rate} → ${Math.round(z.rate/prod.pct)} lb/ac</span>
         <span class="vr-acres">${z.ac.toFixed(0)}ac</span></div>`).join('')}
@@ -1663,7 +1697,7 @@ function runBatch(){
   const gSel=document.getElementById('bGoal').value,gVal=+document.getElementById('bYG').value;
   batchGoal=gSel==='auto'?'auto':(gVal||'auto');
   const prod=productFor(rxNut),nutName=NUTRIENT_NAME[rxNut];
-  const files=[],rows=[['field','org','county','acres','crop','prev_crop','yield_goal','nutrient','avg_nutrient_lb_ac','product','analysis_pct','avg_product_lb_ac','product_lb','product_tons','zones']];
+  const files=[],rows=[['field','org','county','acres','crop','prev_crop','yield_goal','nutrient','avg_nutrient_lb_ac','product','analysis_pct','avg_product_lb_ac','product_lb','product_tons','zones','soil_test','sampled']];
   const names=Object.keys(FP).filter(f=>BNDRY[f]).sort();
   let done=0,skipped=0;
   names.forEach(f=>{
@@ -1679,7 +1713,9 @@ function runBatch(){
     const ac=z.records.reduce((s,r)=>s+r.acres,0);
     const lbProd=z.records.reduce((s,r)=>s+r.rate*r.acres,0),lbNut=z.records.reduce((s,r)=>s+r.nut_rate*r.acres,0);
     const p=FPROP[f]||{};
-    rows.push([f,p.org||'',p.farm||'',ac.toFixed(1),crop,pc,yg,nutName,ac?(lbNut/ac).toFixed(0):'',prod.name,Math.round(prod.pct*100),ac?(lbProd/ac).toFixed(0):'',lbProd.toFixed(0),(lbProd/2000).toFixed(2),z.records.length]);
+    const set=latestSet(f);
+    rows.push([f,p.org||'',p.farm||'',ac.toFixed(1),crop,pc,yg,nutName,ac?(lbNut/ac).toFixed(0):'',prod.name,Math.round(prod.pct*100),ac?(lbProd/ac).toFixed(0):'',lbProd.toFixed(0),(lbProd/2000).toFixed(2),z.records.length,
+      set?(set.kind==='whole'?'whole-field composite':`grid, ${set.pts.length} pts`):'',set?set.d:'']);
     done++;
   });
   const csv=rows.map(r=>r.map(v=>/[",\n]/.test(String(v))?'"'+String(v).replace(/"/g,'""')+'"':v).join(',')).join('\n');

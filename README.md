@@ -72,15 +72,24 @@ Operations Center data in, zone shapefiles for the spreader out. The file at
 the repo root is the code only. The page with the farm's data in it is
 written OUTSIDE the repo, because the repo is public and the data is not:
 
-    python dev/jd_fleet.py                 fields and boundaries (once, then when they change)
-    python dev/jd_rx_soil.py <old page>    one-time: lift the lab grids out of the chat-built page
-    python dev/jd_rx_pull.py               crop history since 2015 and yield maps, from Deere
-    python dev/jd_build_rx.py              -> ~/.grain-map-secrets/rx-builder.html
+    python dev/jd_fleet.py                     fields and boundaries (once, then when they change)
+    python dev/jd_rx_soil_import.py <lab dir>  the lab exports: shapefiles and spreadsheets
+    python dev/jd_rx_pull.py                   crop history since 2015 and yield maps, from Deere
+    python dev/jd_build_rx.py                  -> ~/.grain-map-secrets/rx-builder.html
+
+`dev/jd_rx_soil.py` is the older, one-time version of the import: it lifted
+the grids back out of the chat-built page, which was the only copy of them
+at the time. The lab exports have since replaced it as the source.
 
 Open that file in a browser. What it does, per field:
 
-* **Soil** - the latest lab grid (Waypoint or Midwest Labs), interpolated
-  and classed against ISU PM 1688 categories; the history of every event.
+* **Soil** - the latest lab grid (Waypoint, Midwest Labs or Farmers Edge),
+  interpolated and classed against ISU PM 1688 categories; the history of
+  every event. Some fields, most of the South org, have only a WHOLE-FIELD
+  COMPOSITE for 2026: one lab number for the field, no coordinates. Those
+  are spread over the boundary so the rest of the page works, but the
+  nutrient map of such a field is flat and the page says so on every panel
+  that shows it. Their rates still vary, through the yield map.
 * **Crop history** - each season's planting pass, harvest (Deere's own
   average, moisture, acres) and applications, from Operations Center.
 * **Yield maps** - each harvest pass, thinned to 20 m cells and expressed
@@ -103,7 +112,12 @@ Open that file in a browser. What it does, per field:
 
 Soil grids are matched to Deere fields by where the sample points fall,
 not by name - field names carry the acreage and change when a boundary is
-redrawn, and 20 of 213 had.
+redrawn, and 20 of 213 had. Whole-field composites have no points to match
+on, so those fall back to the name: exact prefix first (the lab truncates
+at 14 characters), then same acreage with a close farm name, which is what
+catches `Beilenbrg70Ben` -> `Bielenbrg70Bentn19_30`. Anything left over is
+listed at the end of the import and can be resolved by hand in
+`~/.grain-map-secrets/soil-field-aliases.json`.
 
 `dev/jd_rx_push.py` uploads the zips into Operations Center's Files as
 prescriptions. It needs the `files` scope, which the map's token was not
