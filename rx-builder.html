@@ -102,8 +102,13 @@ table.hist{width:100%;border-collapse:collapse;font-size:10px;margin-bottom:6px}
 // matched every lab grid to the boundary its points fall inside).
 const FI={},FP={};
 Object.entries(SOIL).forEach(([f,rec])=>{
-  FI[f]={county:rec.county,sets:rec.sets.map(s=>Object.assign({d:s.d,n:s.n,lab:s.lab,kind:s.kind||'grid'},s.avg))};
-  const withPts=rec.sets.filter(s=>s.pts&&s.pts.length).map(s=>({d:s.d,n:s.n,lab:s.lab,kind:s.kind||'grid',pts:s.pts}));
+  // Keep the provenance of a derived set: which grid it came from, which
+  // composite set its level, and which nutrients were actually anchored.
+  const keep=s=>({d:s.d,n:s.n,lab:s.lab,kind:s.kind||'grid',report:s.report,
+                  from_grid:s.from_grid,from_whole:s.from_whole,
+                  anchored:s.anchored,moves:s.moves});
+  FI[f]={county:rec.county,sets:rec.sets.map(s=>Object.assign(keep(s),s.avg))};
+  const withPts=rec.sets.filter(s=>s.pts&&s.pts.length).map(s=>Object.assign(keep(s),{pts:s.pts}));
   if(withPts.length)FP[f]={county:rec.county,sets:withPts};
 });
 // A whole-field composite is ONE lab result for the field, laid out over
@@ -127,9 +132,12 @@ function activeInfo(f){const fi=FI[f];if(!fi||!fi.sets.length)return null;
     if(m.length)return m[m.length-1];}
   return fi.sets[fi.sets.length-1];}
 function isComposite(f){const s=activeSet(f);return !!s&&s.kind==='whole';}
-function setLabel(s){return s.kind==='whole'
-  ? `${s.d} · whole-field composite${s.n?', '+s.n+' samples':''}`
-  : `${s.d} · grid, ${s.pts.length} points`;}
+function setLabel(s){
+  if(s.kind==='whole')return `${s.d} · whole-field composite${s.n?', '+s.n+' samples':''}`;
+  if(s.kind==='scaled')return `${s.d} level on the ${String(s.from_grid).slice(0,4)} grid · ${s.pts.length} points`;
+  return `${s.d} · grid, ${s.pts.length} points`;}
+function isScaled(f){const s=activeSet(f);return !!s&&s.kind==='scaled';}
+const SCALED_NOTE=n=>`A 2026 whole-field test on an older grid's pattern. The ${n.from_grid.slice(0,4)} grid says where the good ground is; the ${n.d} composite says what the field tests now, so every point was moved by the same amount its field average moved. A derived reading, not a lab result.`;
 function pickSet(f,v){setPick[f]=+v;clearOv();rP();
   if(panelTab==='vr')showVRInterp();else showInterp();}
 const COMPOSITE_NOTE='Whole-field composite &mdash; one lab sample for the field, not a grid. The nutrient map is flat; rates still vary with yield history.';
@@ -615,8 +623,8 @@ function rFP(){
         <div style="flex:1"><div class="lb">Acres</div><div class="vl">${p.acres!=null?p.acres.toFixed(1):'—'}</div></div>
         <div style="flex:1"><div class="lb">${META.plan_year-1} crop</div><div class="vl">${lastCrop||'—'}</div></div>
         <div style="flex:1"><div class="lb">Sampled</div><div class="vl">${lt?lt.d:'never'}</div></div>
-        <div style="flex:1"><div class="lb">Sample</div><div class="vl">${latestPts?(latestPts.kind==='whole'?'composite':latestPts.pts.length+' pts'):'—'}</div></div>
-      </div>${latestPts&&latestPts.kind==='whole'?`<div class="dn" style="margin-top:6px">${COMPOSITE_NOTE}</div>`:''}
+        <div style="flex:1"><div class="lb">Sample</div><div class="vl">${latestPts?(latestPts.kind==='whole'?'composite':latestPts.kind==='scaled'?'scaled grid':latestPts.pts.length+' pts'):'—'}</div></div>
+      </div>${latestPts&&latestPts.kind==='whole'?`<div class="dn" style="margin-top:6px">${COMPOSITE_NOTE}</div>`:''}${latestPts&&latestPts.kind==='scaled'?`<div class="dn" style="margin-top:6px">${SCALED_NOTE(latestPts)}</div>`:''}
       ${fp&&fp.sets.length>1?`<div style="margin-top:8px">
         <div class="lb" style="margin-bottom:3px">Soil test in use · ${fp.sets.length} on file</div>
         <select style="width:100%" onchange="pickSet('${attr(sel)}',this.value)">
@@ -822,7 +830,7 @@ function rZones(){
   const catCounts=[0,0,0,0,0];
   vals.forEach(v=>{if(v<catBounds[0])catCounts[0]++;else if(v<=catBounds[1])catCounts[1]++;else if(v<=catBounds[2])catCounts[2]++;else if(v<=catBounds[3])catCounts[3]++;else catCounts[4]++;});
   return `<h2><div class="ic">🗺️</div>Interpolated ${t.nm||hNut} Map</h2>
-    <div class="dn">IDW interpolation (power=1.5) with discrete contour zones from ${vals.length} grid points.</div>
+    <div class="dn">IDW interpolation (power=1.5) with discrete contour zones from ${vals.length} grid points.${isScaled(sel)?' '+SCALED_NOTE(activeSet(sel)):''}</div>
     <div class="fc" style="padding:8px">
       <div style="display:flex;gap:8px;margin-bottom:8px">
         <div style="flex:1"><div class="lb">Min</div><div class="vl">${mn.toFixed(1)}</div></div>
@@ -1007,6 +1015,7 @@ function rVR(){
         Goal: ${cropAvg?`this field's last ${hist.slice(-3).length} ${rxCrop} harvests average <b>${cropAvg} bu</b>, so ${defaultGoal(sel,rxCrop)} suggested`:`no ${rxCrop} harvest on file, flat default`}.
         ${ym.length?`Removal varies by spot from <b>${ym.length} yield map${ym.length>1?'s':''}</b> (${ym.map(m=>m.season).join(', ')}).`:'No yield maps yet, so removal is flat across the field.'}</div>
       ${isComposite(sel)?`<div class="plan" style="border-left:3px solid var(--wr)">Soil here is a <b>whole-field composite</b> sampled ${lt.d}, not a grid. Every acre starts from the same soil test, so the rate varies only with the yield map.</div>`:''}
+      ${isScaled(sel)?`<div class="plan" style="border-left:3px solid var(--wr)">Soil here is the <b>${activeSet(sel).from_grid.slice(0,4)} grid moved to the ${activeSet(sel).d} level</b>: the pattern is measured, the level is this year's whole-field test. Anchored on ${activeSet(sel).anchored.map(k=>TH[k]?.nm||k).join(', ')}. The unscaled grid and the composite are both in the picker above.</div>`:''}
       <div class="rxr"><label>Nutrient</label><select onchange="rxNut=this.value;rP();showVRInterp()">
         <option value="p" ${rxNut==='p'?'selected':''}>P₂O₅</option><option value="k" ${rxNut==='k'?'selected':''}>K₂O</option>
         <option value="ph" ${rxNut==='ph'?'selected':''}>Lime</option><option value="s" ${rxNut==='s'?'selected':''}>Sulfur</option>
@@ -1895,7 +1904,7 @@ function runBatch(){
     const p=FPROP[f]||{};
     const set=activeSet(f);
     rows.push([f,p.org||'',p.farm||'',ac.toFixed(1),crop,pc,yg,nutName,ac?(lbNut/ac).toFixed(0):'',prod.name,Math.round(prod.pct*100),ac?(lbProd/ac).toFixed(0):'',lbProd.toFixed(0),(lbProd/2000).toFixed(2),z.records.length,
-      set?(set.kind==='whole'?'whole-field composite':`grid, ${set.pts.length} pts`):'',set?set.d:'']);
+      set?(set.kind==='whole'?'whole-field composite':set.kind==='scaled'?`${set.d} level on the ${String(set.from_grid).slice(0,4)} grid`:`grid, ${set.pts.length} pts`):'',set?set.d:'']);
     done++;
   });
   const csv=rows.map(r=>r.map(v=>/[",\n]/.test(String(v))?'"'+String(v).replace(/"/g,'""')+'"':v).join(',')).join('\n');

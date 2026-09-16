@@ -168,6 +168,103 @@ def match_soil(soil: dict, fields: list[dict], geoms: dict) -> tuple[dict, list]
     return out, report
 
 
+# --------------------------------------------- grid pattern, newest level
+
+def averages(pts: list[dict]) -> dict:
+    """Field average per nutrient over the points that reported it."""
+    tot: dict = {}
+    for p in pts:
+        for k, v in p.items():
+            if k in ("x", "y", "id") or not isinstance(v, (int, float)):
+                continue
+            a, n = tot.get(k, (0.0, 0))
+            tot[k] = (a + v, n + 1)
+    return {k: round(a / n, 3) for k, (a, n) in tot.items() if n}
+
+
+# pH is a logarithm, so a 2026 pH of 6.4 against a 2022 average of 6.0 is a
+# shift of +0.4 across the field, not a multiplication by 1.067. Everything
+# else here is a concentration and moves by ratio.
+SHIFT_KEYS = ("ph", "bph")
+PH_RANGE = (3.5, 9.5)
+# Nothing is anchored on an average built from a handful of readings, or on
+# a move so large it is more likely a different field than a real change.
+MIN_RATIO, MAX_RATIO = 0.25, 4.0
+
+
+def scale_grid_to_whole(rec: dict) -> dict | None:
+    """A derived sampling event: the newest grid's pattern, moved to the
+    level of a newer whole-field composite.
+
+    A field with a 2022 grid and a 2026 composite knows two different
+    things. The grid knows where the good ground is; the composite knows
+    what the field tests today. Neither alone makes a good prescription,
+    so this holds the grid's shape and slides it onto the composite's
+    level, nutrient by nutrient: every point moves by the same ratio its
+    field average moved.
+
+    It is a derived reading, not a lab result, and is labelled as one
+    everywhere it appears. A nutrient the composite did not report keeps
+    its grid value, since a four-year-old measurement beats none, and the
+    set records which nutrients were actually anchored."""
+    grids = [s for s in rec["sets"] if s.get("kind") != "whole" and s.get("pts")]
+    wholes = [s for s in rec["sets"] if s.get("kind") == "whole"]
+    if not grids or not wholes:
+        return None
+    grid, whole = grids[-1], wholes[-1]
+    if whole["d"] <= grid["d"]:
+        return None
+
+    gavg, wavg = grid.get("avg") or {}, whole.get("avg") or {}
+    moves: dict = {}
+    for key, wv in wavg.items():
+        gv = gavg.get(key)
+        if gv is None or wv is None:
+            continue
+        if key in SHIFT_KEYS:
+            moves[key] = ("shift", round(wv - gv, 3))
+        elif gv > 0 and MIN_RATIO <= wv / gv <= MAX_RATIO:
+            moves[key] = ("ratio", round(wv / gv, 5))
+    if not moves:
+        return None
+
+    pts = []
+    for p in grid["pts"]:
+        q = {"x": p["x"], "y": p["y"], "id": p.get("id")}
+        for key, v in p.items():
+            if key in ("x", "y", "id") or not isinstance(v, (int, float)):
+                continue
+            mv = moves.get(key)
+            if not mv:
+                q[key] = v                      # untouched: kept from the grid
+            elif mv[0] == "shift":
+                q[key] = round(min(PH_RANGE[1], max(PH_RANGE[0], v + mv[1])), 2)
+            else:
+                q[key] = round(max(0.0, v * mv[1]), 3)
+        pts.append(q)
+    if not pts:
+        return None
+
+    return {
+        "d": whole["d"], "n": len(pts), "lab": whole.get("lab"),
+        "kind": "scaled", "pts": pts, "avg": averages(pts),
+        "from_grid": grid["d"], "from_whole": whole["d"],
+        "report": whole.get("report"),
+        "anchored": sorted(moves),
+        "moves": {k: v[1] for k, v in sorted(moves.items())},
+    }
+
+
+def add_scaled_sets(soil_by_field: dict) -> int:
+    n = 0
+    for rec in soil_by_field.values():
+        s = scale_grid_to_whole(rec)
+        if s:
+            rec["sets"].append(s)
+            n += 1
+    return n
+
+
 # ------------------------------------------------------- whole-field spread
 
 # One pseudo-sample per this many acres, so a composite field gets a grid
@@ -310,6 +407,7 @@ def main() -> None:
 
     soil_by_field, report = match_soil(soil, fields, geoms)
     dupes = drop_duplicate_wholes(soil_by_field)
+    scaled = add_scaled_sets(soil_by_field)
     spread = sum(spread_whole(rec, geoms[name])
                  for name, rec in soil_by_field.items() if name in geoms)
     ops_by_field = {}
@@ -350,6 +448,9 @@ def main() -> None:
     if dupes:
         print(f"  {dupes} whole-field rows dropped as the average of a grid "
               f"the same field already has")
+    if scaled:
+        print(f"  {scaled} fields given the newest whole-field level on their "
+              f"grid's pattern")
     if spread:
         print(f"  {spread} whole-field composites spread over their boundaries")
     print(f"fields {len(features)}, soil grids matched {len(soil_by_field)} of {len(soil)}, "
