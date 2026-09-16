@@ -102,6 +102,20 @@ Open that file in a browser. What it does, per field:
   are spread over the boundary so the rest of the page works, but the
   nutrient map of such a field is flat and the page says so on every panel
   that shows it. Their rates still vary, through the yield map.
+* **The map** - the default layer is OVERALL FERTILITY: every spot scored
+  0-100 on how well it feeds a crop, red worst to green best, each nutrient
+  judged on its own ISU scale before they are averaged. P, K, lime, S and Zn
+  each toggle on and off beside the layer picker. These colours are absolute,
+  so a field that tests well everywhere is green everywhere.
+* **Which soil test** - a field is read through its newest sampling by
+  default, and the panel lists every event on file to switch to. Where an
+  older grid is superseded by a newer whole-field composite, a derived event
+  is offered as well and used by default: the grid's PATTERN moved to the
+  composite's LEVEL, every point shifted by the same amount its field average
+  moved (a shift for pH, which is a logarithm, a ratio for everything else).
+  The grid knows where the good ground is, the composite knows what the field
+  tests now, and neither alone makes a good prescription. It is marked as a
+  derived reading wherever it appears, including in the batch order summary.
 * **Crop history** - each season's planting pass, harvest (Deere's own
   average, moisture, acres) and applications, from Operations Center.
 * **Yield maps** - each harvest pass, thinned to 20 m cells and expressed
