@@ -81,6 +81,18 @@ written OUTSIDE the repo, because the repo is public and the data is not:
 the grids back out of the chat-built page, which was the only copy of them
 at the time. The lab exports have since replaced it as the source.
 
+The 2026 whole-field numbers reached the builder through a spreadsheet
+someone transcribed from the lab's report PDFs, and they set the rates on
+53 South fields that have no other soil test. `dev/jd_rx_soil_pdf.py`
+checks that transcription against its source. The reports are not scans:
+every page carries a text layer, so the script reads the lab's own
+per-sample table, averages it, and prints every field average the sheet
+disagrees with. Run it before the import, because it also writes the full
+field names and each field's centroid, which is how a row the lab named
+`Richrdsn264Cha` gets placed on the right Deere field:
+
+    python dev/jd_rx_soil_pdf.py <lab dir>     -> ~/.grain-map-secrets/soil-reports.json
+
 Open that file in a browser. What it does, per field:
 
 * **Soil** - the latest lab grid (Waypoint, Midwest Labs or Farmers Edge),
