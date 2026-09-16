@@ -109,6 +109,10 @@ def count_regions(boxes: list[dict], camera: dict) -> dict:
     its feet. A pit region wins over the line region, so a truck under the
     building is "at the pit", not "in line"."""
     floor = float(camera.get("min_box_height", 0))
+    # Width too, for cameras far from the road: at Shell Rock a semi and a
+    # pickup are both ~30 px tall, but the semi is 46 px long and the
+    # pickup 19. Optional - a camera without it filters on height alone.
+    min_w = float(camera.get("min_box_width", 0))
     pits = camera.get("pits") or {}
     line_poly = camera.get("line") or []
     at_pit = {name: False for name in pits}
@@ -117,7 +121,7 @@ def count_regions(boxes: list[dict], camera: dict) -> dict:
     for b in boxes:
         if b.get("cls") not in VEHICLE_CLASSES or b.get("conf", 0) < MIN_CONFIDENCE:
             continue
-        if (b["y2"] - b["y1"]) < floor:
+        if (b["y2"] - b["y1"]) < floor or (b["x2"] - b["x1"]) < min_w:
             continue
         fx, fy = foot(b)
         where = None

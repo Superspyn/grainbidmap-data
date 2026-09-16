@@ -1,73 +1,86 @@
 [
   {
     "id": "poet-jewell",
-    "name": "POET Jewell",
+    "name": "POET Jewell (pits)",
     "pin": "poet Jewell Ethanol",
     "lat": 42.329504,
     "lon": -93.664923,
     "url": "https://truckline.poet.com/Camera/Jewell",
-    "hours": [
-      6,
-      20
-    ],
+    "hours": [6, 20],
     "default_minutes_per_truck": 5,
     "_regions": "pixel polygons on the 704x576 frame, drawn from a real still on 2026-09-16: the line is the concrete apron in front of the pits; each pit is the bay under its sign. Trucks are placed by their wheels.",
     "min_box_height": 45,
-    "line": [
-      [
-        40,
-        286
-      ],
-      [
-        640,
-        286
-      ],
-      [
-        704,
-        560
-      ],
-      [
-        0,
-        560
-      ]
-    ],
+    "line": [[40, 286], [640, 286], [704, 560], [0, 560]],
     "pits": {
-      "pit1": [
-        [
-          240,
-          190
-        ],
-        [
-          350,
-          190
-        ],
-        [
-          350,
-          285
-        ],
-        [
-          240,
-          285
-        ]
-      ],
-      "pit2": [
-        [
-          135,
-          200
-        ],
-        [
-          240,
-          200
-        ],
-        [
-          240,
-          290
-        ],
-        [
-          135,
-          290
-        ]
-      ]
+      "pit1": [[240, 190], [350, 190], [350, 285], [240, 285]],
+      "pit2": [[135, 200], [240, 200], [240, 290], [135, 290]]
+    }
+  },
+  {
+    "id": "poet-jewell-2",
+    "name": "POET Jewell (probe lane)",
+    "pin": "poet Jewell Ethanol",
+    "lat": 42.329504,
+    "lon": -93.664923,
+    "url": "https://truckline.poet.com/Camera/jewell-2",
+    "hours": [6, 20],
+    "default_minutes_per_truck": 4,
+    "_regions": "1920x1080, drawn 2026-09-16 from an empty lane: the line is the whole concrete lane from the far end down to the camera; the probe bay is the stretch under the sampling arm on the right. Rail cars beyond the lane are class 'train' and ignored anyway. Not yet checked against a frame with trucks in it.",
+    "min_box_height": 50,
+    "line": [[1300, 130], [1650, 130], [1900, 450], [1900, 1080], [400, 1080], [700, 600]],
+    "pits": {
+      "probe": [[1350, 450], [1900, 450], [1900, 1000], [1350, 1000]]
+    }
+  },
+  {
+    "id": "poet-shellrock",
+    "name": "POET Shell Rock",
+    "pin": "Flint Hills Resources/Poet Shell Rock Ethanol",
+    "lat": 42.73769,
+    "lon": -92.617938,
+    "url": "https://truckline.poet.com/Camera/shellrock",
+    "hours": [6, 20],
+    "default_minutes_per_truck": 5,
+    "_regions": "720x650, drawn 2026-09-16 from a frame with one semi waiting and a pickup at the probe: the camera is far from the road, so trucks are ~30 px tall and the width floor is what tells a semi from a pickup. The line is the road east (right) of the probe where inbound trucks queue; the probe bay is the sampling station itself.",
+    "min_box_height": 20,
+    "min_box_width": 35,
+    "line": [[430, 225], [720, 225], [720, 285], [430, 285]],
+    "pits": {
+      "probe": [[300, 225], [430, 225], [430, 290], [300, 290]]
+    }
+  },
+  {
+    "id": "poet-gowrie",
+    "name": "POET Gowrie (pits)",
+    "pin": "poet Gowrie Ethanol",
+    "lat": 42.319626,
+    "lon": -94.288529,
+    "url": "https://truckline.poet.com/Camera/gowrie",
+    "hours": [6, 20],
+    "default_minutes_per_truck": 5,
+    "_regions": "3840x2160, drawn 2026-09-16 from an empty apron: three doors on the receiving building are the pits (wheels in the doorway or just in front of it); the line is the concrete apron below them. Not yet checked against a frame with trucks in it.",
+    "min_box_height": 120,
+    "line": [[0, 1150], [1700, 1150], [2400, 1300], [3840, 1700], [3840, 2160], [0, 2160]],
+    "pits": {
+      "pit1": [[960, 900], [1140, 900], [1140, 1150], [960, 1150]],
+      "pit2": [[1140, 900], [1300, 900], [1300, 1150], [1140, 1150]],
+      "pit3": [[1300, 900], [1480, 900], [1480, 1150], [1300, 1150]]
+    }
+  },
+  {
+    "id": "poet-gowrie-2",
+    "name": "POET Gowrie (scale lane)",
+    "pin": "poet Gowrie Ethanol",
+    "lat": 42.319626,
+    "lon": -94.288529,
+    "url": "https://truckline.poet.com/Camera/gowrie-2",
+    "hours": [6, 20],
+    "default_minutes_per_truck": 4,
+    "_regions": "3840x2160, drawn 2026-09-16 from an empty lane: the line is the inbound lane from the far end to the camera; the scale is the platform at bottom left. Trucks at the very far end are too small for the detector and are not counted. Not yet checked against a frame with trucks in it.",
+    "min_box_height": 80,
+    "line": [[1750, 330], [2150, 330], [3840, 1200], [3840, 2160], [0, 2160], [0, 1250]],
+    "pits": {
+      "scale": [[0, 1250], [550, 1250], [700, 2160], [0, 2160]]
     }
   }
 ]
