@@ -47,6 +47,7 @@ from __future__ import annotations
 import datetime as dt
 import difflib
 import json
+import math
 import pathlib
 import re
 import struct
@@ -413,14 +414,17 @@ def load_reports() -> dict:
     for rep, r in data.get("reports", {}).items():
         f = fields.get(r.get("field_id") or "") or {}
         out[rep] = {"field": f.get("field") or r.get("field"),
+                    "short": r.get("field"),
+                    "grower": r.get("grower"), "received": r.get("received"),
                     "county": f.get("county"), "acres": f.get("acres"),
                     "lat": f.get("lat"), "lon": f.get("lon"),
-                    "samples": len(r.get("samples") or [])}
+                    "samples": r.get("samples") or [],
+                    "printed_avg": r.get("printed_avg") or {}}
     return out
 
 
 def deere_boundaries() -> list:
-    """[(name, org, geometry)] for every field with a boundary."""
+    """[(name, org, geometry, lat, lon, acres)] for every field with a boundary."""
     fleet = read_json(FLEET, None)
     if not fleet:
         return []
@@ -432,8 +436,51 @@ def deere_boundaries() -> list:
             continue
         g = field_geometry(f)
         if g:
-            out.append((f["name"], str(f.get("org")), g))
+            out.append((f["name"], str(f.get("org")), g, f.get("lat"),
+                        f.get("lon"), f.get("acres_workable") or f.get("acres")))
     return out
+
+
+def _km(lat1, lon1, lat2, lon2) -> float:
+    return math.hypot((lat1 - lat2) * 111.32,
+                      (lon1 - lon2) * 111.32 * math.cos(math.radians(lat1)))
+
+
+# How far a lab centroid may sit from a Deere field's centroid, and how
+# closely the acreages must agree, before the two are called the same field.
+NEAR_KM = 2.0
+ACRE_TOL = 0.03
+
+
+def match_by_centroid(lon: float, lat: float, boundaries: list,
+                      org: str | None, acres: float | None = None
+                      ) -> tuple[str | None, str]:
+    """The Deere field a report belongs to, from where the lab says it is.
+
+    Inside a boundary is the strong answer, and only when exactly one
+    field contains the point, since a centroid can land in a neighbour
+    where a field wraps around one. But E4's centroid is a label point,
+    not a true centroid, so on a bent or L-shaped field it can fall
+    outside the field it belongs to. When that happens the acreage breaks
+    the tie: one nearby field whose area agrees to within a few per cent
+    is the same field under a changed name, which is how the lab's
+    "Robards190Warn10" meets Deere's "Robards230Warn10" at 229.6 acres."""
+    here = [b for b in boundaries if not org or b[1] == org]
+    hits = [b[0] for b in here if _contains(b[2], lon, lat)]
+    if len(hits) == 1:
+        return hits[0], "centroid"
+    if len(hits) > 1:
+        return None, f"centroid in {len(hits)} fields"
+    if acres:
+        near = [b[0] for b in here
+                if b[3] and b[5]
+                and _km(lat, lon, b[3], b[4]) <= NEAR_KM
+                and abs(b[5] - acres) / acres <= ACRE_TOL]
+        if len(near) == 1:
+            return near[0], "centroid nearby, acres agree"
+        if len(near) > 1:
+            return None, f"{len(near)} fields nearby with the same acres"
+    return None, "centroid outside every boundary"
 
 
 def _pip(x: float, y: float, ring: list) -> bool:
@@ -456,19 +503,80 @@ def _contains(geom: dict, x: float, y: float) -> bool:
     return False
 
 
-def match_by_centroid(lon: float, lat: float, boundaries: list,
-                      org: str | None) -> tuple[str | None, str]:
-    """The Deere field the report's centroid falls in.
+def report_avg(samples: list) -> dict:
+    """Field average per nutrient over the samples that reported it."""
+    tot: dict = {}
+    for s in samples:
+        for k, v in s.items():
+            if k in ("n", "sample") or not isinstance(v, (int, float)):
+                continue
+            a, n = tot.get(k, (0.0, 0))
+            tot[k] = (a + v, n + 1)
+    return {k: round(a / n, 3) for k, (a, n) in tot.items() if n}
 
-    A centroid can land in a neighbour when a field wraps around one, so
-    a hit is only taken when exactly one field contains the point."""
-    hits = [n for n, o, g in boundaries
-            if (not org or o == org) and _contains(g, lon, lat)]
-    if len(hits) == 1:
-        return hits[0], "centroid"
-    if len(hits) > 1:
-        return None, f"centroid in {len(hits)} fields"
-    return None, "centroid outside every boundary"
+
+def iso_date(text: str) -> str | None:
+    """"11/21/2025" as the lab prints it -> "2025-11-21"."""
+    m = re.match(r"(\d{1,2})/(\d{1,2})/(\d{4})", str(text or "").strip())
+    if not m:
+        return None
+    return f"{m.group(3)}-{int(m.group(1)):02d}-{int(m.group(2)):02d}"
+
+
+def from_reports(fields: dict, byorg: dict, aliases: dict, reports: dict,
+                 boundaries: list) -> tuple[int, list]:
+    """Every 2026 lab report, as a whole-field composite.
+
+    The reports are the source the transcribed spreadsheet was made from,
+    and they carry 90 sampling events the spreadsheet never included, so
+    they are read instead of it. Each report becomes one composite: the
+    average of its own samples, which is finer than the printed average
+    (the lab rounds that to one decimal) and, on the two reports the
+    spreadsheet got wrong, is the number that agrees with the grid export
+    of the same sampling.
+
+    No report carries per-sample coordinates, so a composite is all this
+    can ever be."""
+    unmatched, n_sets = [], 0
+    for rep, r in sorted(reports.items()):
+        samples = r.get("samples") or []
+        if not samples:
+            continue
+        avg = report_avg(samples)
+        if not avg:
+            continue
+        org = ORG_OF.get(r.get("grower") or "")
+        date = iso_date(r.get("received")) or report_date(rep) or "2026-01-01"
+        full = r.get("field")
+        short = r.get("short") or full
+
+        name, how = (None, "")
+        if short in aliases or (full and full in aliases):
+            key = short if short in aliases else full
+            name, how = match_field(key, byorg.get(org, {}), aliases)
+        if not name and boundaries and r.get("lat") and r.get("lon"):
+            name, how = match_by_centroid(r["lon"], r["lat"], boundaries,
+                                          org, r.get("acres"))
+        if not name and full:
+            name, how2 = match_field(full, byorg.get(org, {}), {})
+            how = how2 + " (report name)" if name else how or how2
+        if not name:
+            unmatched.append({"name": short, "full": full,
+                              "grower": r.get("grower") or "", "report": rep,
+                              "d": date, "why": how, "avg": avg,
+                              "county": r.get("county"), "acres": r.get("acres"),
+                              "lat": r.get("lat"), "lon": r.get("lon")})
+            continue
+        rec = fields.setdefault(name, {"county": r.get("county"), "sets": []})
+        if r.get("county"):
+            rec["county"] = rec.get("county") or r["county"]
+        rec["sets"].append({
+            "d": date, "n": len(samples), "lab": "WaypointAnalyticalIowa",
+            "kind": "whole", "avg": avg, "pts": [], "src": full or short,
+            "report": rep, "match": how, "acres": r.get("acres"),
+            "field_id": byorg.get(org, {}).get(name), "org": org})
+        n_sets += 1
+    return n_sets, unmatched
 
 
 def from_waypoint_2026(root: pathlib.Path, fields: dict, byorg: dict,
@@ -590,9 +698,16 @@ def main() -> None:
     if reports:
         print(f"  {len(reports)} lab reports read from the PDFs "
               f"(dev/jd_rx_soil_pdf.py), {len(boundaries)} boundaries to place them in")
-    s3, unmatched = from_waypoint_2026(root, fields, byorg, aliases,
-                                       reports, boundaries)
-    print(f"  Waypoint 2026 whole-field: {s3} matched, {len(unmatched)} unmatched")
+    if reports:
+        s3, unmatched = from_reports(fields, byorg, aliases, reports, boundaries)
+        print(f"  2026 lab reports: {s3} matched, {len(unmatched)} unmatched "
+              f"({sum(len(r['samples']) for r in reports.values()):,} samples)")
+    else:
+        # No PDFs parsed yet, so fall back to the transcribed spreadsheet.
+        s3, unmatched = from_waypoint_2026(root, fields, byorg, aliases,
+                                           reports, boundaries)
+        print(f"  Waypoint 2026 spreadsheet: {s3} matched, "
+              f"{len(unmatched)} unmatched")
     unmatched += fel_whole
 
     dropped = drop_duplicate_wholes(fields)
