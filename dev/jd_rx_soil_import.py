@@ -53,13 +53,14 @@ import struct
 import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-from jd_common import SECRETS, now_iso, write_private  # noqa: E402
+from jd_common import SECRETS, now_iso, read_json, write_private  # noqa: E402
 
 OUTPUT = SECRETS / "soil-samples.json"
 OPS = SECRETS / "rx-ops.json"
 # Hand-written {"lab name": "Operations Center field name"} for rows the
 # matcher cannot place. Anything listed here wins over the guessing below.
 ALIASES = SECRETS / "soil-field-aliases.json"
+FLEET = SECRETS / "fleet.json"
 
 SHP_DIR = "TonySents_SoilSampleData_2014_to_2025_Exported_Fieldalytics"
 FEL_DIR = "Farmers Edge Labs - Spring 2026 1-Acre Grids"
@@ -393,8 +394,92 @@ def match_field(name: str, candidates: dict, aliases: dict) -> tuple[str | None,
     return None, "ambiguous acres" if near else "no match"
 
 
-def from_waypoint_2026(root: pathlib.Path, fields: dict,
-                       byorg: dict, aliases: dict) -> tuple[int, list]:
+REPORTS = SECRETS / "soil-reports.json"
+
+
+def load_reports() -> dict:
+    """{report number: what the PDF says about that field}.
+
+    dev/jd_rx_soil_pdf.py reads the lab's own report PDFs. Their map pages
+    carry the field's FULL name, its county, its acres and its centroid -
+    everything the spreadsheet had to cut down to 14 characters. With the
+    centroid a row can be placed on the map instead of guessed at by
+    name."""
+    if not REPORTS.exists():
+        return {}
+    data = json.load(open(REPORTS, encoding="utf-8"))
+    fields = data.get("fields", {})
+    out = {}
+    for rep, r in data.get("reports", {}).items():
+        f = fields.get(r.get("field_id") or "") or {}
+        out[rep] = {"field": f.get("field") or r.get("field"),
+                    "county": f.get("county"), "acres": f.get("acres"),
+                    "lat": f.get("lat"), "lon": f.get("lon"),
+                    "samples": len(r.get("samples") or [])}
+    return out
+
+
+def deere_boundaries() -> list:
+    """[(name, org, geometry)] for every field with a boundary."""
+    fleet = read_json(FLEET, None)
+    if not fleet:
+        return []
+    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+    from jd_build_rx import field_geometry
+    out = []
+    for f in fleet.get("fields", []):
+        if not f.get("rings"):
+            continue
+        g = field_geometry(f)
+        if g:
+            out.append((f["name"], str(f.get("org")), g))
+    return out
+
+
+def _pip(x: float, y: float, ring: list) -> bool:
+    inside = False
+    j = len(ring) - 1
+    for i in range(len(ring)):
+        xi, yi = ring[i][0], ring[i][1]
+        xj, yj = ring[j][0], ring[j][1]
+        if (yi > y) != (yj > y) and x < (xj - xi) * (y - yi) / (yj - yi) + xi:
+            inside = not inside
+        j = i
+    return inside
+
+
+def _contains(geom: dict, x: float, y: float) -> bool:
+    polys = [geom["coordinates"]] if geom["type"] == "Polygon" else geom["coordinates"]
+    for rings in polys:
+        if _pip(x, y, rings[0]) and not any(_pip(x, y, h) for h in rings[1:]):
+            return True
+    return False
+
+
+def match_by_centroid(lon: float, lat: float, boundaries: list,
+                      org: str | None) -> tuple[str | None, str]:
+    """The Deere field the report's centroid falls in.
+
+    A centroid can land in a neighbour when a field wraps around one, so
+    a hit is only taken when exactly one field contains the point."""
+    hits = [n for n, o, g in boundaries
+            if (not org or o == org) and _contains(g, lon, lat)]
+    if len(hits) == 1:
+        return hits[0], "centroid"
+    if len(hits) > 1:
+        return None, f"centroid in {len(hits)} fields"
+    return None, "centroid outside every boundary"
+
+
+def from_waypoint_2026(root: pathlib.Path, fields: dict, byorg: dict,
+                       aliases: dict, reports: dict,
+                       boundaries: list) -> tuple[int, list]:
+    """The 2026 whole-field rows, placed on Deere fields.
+
+    Each row is tried four ways, best evidence first: a hand-written
+    alias, the lab report's CENTROID falling inside one boundary, the
+    report's full field name, and last the spreadsheet's own name, which
+    the lab cut to 14 characters."""
     import openpyxl
     unmatched, n_sets = [], 0
     for xl in sorted((root / WP_2026).glob("*.xlsx")):
@@ -424,17 +509,38 @@ def from_waypoint_2026(root: pathlib.Path, fields: dict,
                     continue
                 report = str(r[idx["Report_No"]]).strip() if "Report_No" in idx else ""
                 date = report_date(report) or "2026-01-01"
-                name, how = match_field(raw, byorg.get(org, {}), aliases)
+                pdf = reports.get(report) or {}
+                full = pdf.get("field")
+
+                name, how = (None, "")
+                if raw in aliases:
+                    name, how = match_field(raw, byorg.get(org, {}), aliases)
+                if not name and boundaries and pdf.get("lat") and pdf.get("lon"):
+                    name, how = match_by_centroid(pdf["lon"], pdf["lat"],
+                                                  boundaries, org)
+                if not name and full:
+                    name, how2 = match_field(full, byorg.get(org, {}), {})
+                    how = how2 + " (report name)" if name else how or how2
                 if not name:
-                    unmatched.append({"name": raw, "grower": grower,
-                                      "report": report, "d": date,
-                                      "why": how, "avg": avg})
+                    name, how2 = match_field(raw, byorg.get(org, {}), {})
+                    how = how2 if name else how or how2
+                if not name:
+                    unmatched.append({"name": raw, "full": full,
+                                      "grower": grower, "report": report,
+                                      "d": date, "why": how, "avg": avg,
+                                      "county": pdf.get("county"),
+                                      "acres": pdf.get("acres"),
+                                      "lat": pdf.get("lat"), "lon": pdf.get("lon")})
                     continue
-                rec = fields.setdefault(name, {"county": None, "sets": []})
+                rec = fields.setdefault(name, {"county": pdf.get("county"),
+                                               "sets": []})
+                if pdf.get("county"):
+                    rec["county"] = rec.get("county") or pdf["county"]
                 rec["sets"].append({
-                    "d": date, "n": None, "lab": "WaypointAnalyticalIowa",
+                    "d": date, "n": pdf.get("samples"),
+                    "lab": "WaypointAnalyticalIowa",
                     "kind": "whole", "avg": avg, "pts": [],
-                    "src": raw, "report": report, "match": how,
+                    "src": full or raw, "report": report, "match": how,
                     "field_id": byorg.get(org, {}).get(name), "org": org})
                 n_sets += 1
         wb.close()
@@ -479,7 +585,13 @@ def main() -> None:
         print(f"  {len(aliases)} name aliases from {ALIASES.name}")
     s2, p2, fel_whole = from_farmers_edge(root, fields, byorg, aliases)
     print(f"  Farmers Edge 2026 grids: {s2} located events, {p2:,} points")
-    s3, unmatched = from_waypoint_2026(root, fields, byorg, aliases)
+    reports = load_reports()
+    boundaries = deere_boundaries() if reports else []
+    if reports:
+        print(f"  {len(reports)} lab reports read from the PDFs "
+              f"(dev/jd_rx_soil_pdf.py), {len(boundaries)} boundaries to place them in")
+    s3, unmatched = from_waypoint_2026(root, fields, byorg, aliases,
+                                       reports, boundaries)
     print(f"  Waypoint 2026 whole-field: {s3} matched, {len(unmatched)} unmatched")
     unmatched += fel_whole
 
@@ -501,7 +613,15 @@ def main() -> None:
     if unmatched:
         print("\nwhole-field rows with no Operations Center field:")
         for u in unmatched:
-            print(f"  {u['name']:16s} {u['grower']:20s} {u['d']}  {u['why']}")
+            extra = ""
+            if u.get("full") and u["full"] != u["name"]:
+                extra = f"  full name {u['full']}"
+            if u.get("lat"):
+                extra += f"  at {u['lat']:.5f},{u['lon']:.5f}"
+                if u.get("acres"):
+                    extra += f"  {u['acres']:.1f} ac"
+            print(f"  {u['name']:16s} {u['grower']:20s} {u['d']}  "
+                  f"{u['why']}{extra}")
 
 
 if __name__ == "__main__":
