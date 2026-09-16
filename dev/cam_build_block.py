@@ -94,7 +94,10 @@ BLOCK = r"""<!-- Elevator line cameras: private page only (the read token is ins
     var d = new Date(iso);
     return isNaN(d) ? Infinity : (Date.now() - d.getTime()) / 60000;
   }
-  function pitWord(k) { return k.replace(/^pit(\d+)$/i, 'Pit $1'); }
+  function pitWord(k) {
+    if (/^pit\d+$/i.test(k)) return k.replace(/^pit(\d+)$/i, 'Pit $1');
+    return k.charAt(0).toUpperCase() + k.slice(1);   // "probe" -> "Probe", "scale" -> "Scale"
+  }
 
   function card(c) {
     var html = '<div class="gt-cam">';

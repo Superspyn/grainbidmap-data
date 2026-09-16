@@ -42,6 +42,17 @@ def test_small_boxes_and_low_confidence_do_not_count():
     assert counted["line"] == 0 and counted["pits"] == {"pit1": False}
 
 
+def test_width_floor_drops_a_pickup_the_height_floor_lets_through():
+    """Shell Rock: a semi 46 px long and a pickup 19 px long, both 30 tall."""
+    cam = dict(CAM, min_box_height=20, min_box_width=35,
+               line=[[430, 225], [720, 225], [720, 285], [430, 285]])
+    counted = cam_watch.count_regions([
+        box("truck", 501, 236, 547, 266),
+        box("car", 329, 263, 348, 290),
+    ], cam)
+    assert counted["line"] == 1 and len(counted["boxes"]) == 1
+
+
 def test_pit_cycles_count_refills_only():
     """busy, open, busy, busy, open, busy = two trucks through."""
     t0 = "2026-09-16T17:%02d:00Z"
