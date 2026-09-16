@@ -1,7 +1,7 @@
 """Send prescription shapefiles from the Rx builder into Operations Center.
 
     python dev/jd_rx_push.py --org 5294 VR_Rx_batch_P2O5_2027.zip
-    python dev/jd_rx_push.py --org 5294 VR_Rx_Meyer171Madsn6_P2O5_soybean_2027.zip
+    python dev/jd_rx_push.py --org 5294 VR_Rx_Lakeview171Mdsn6_P2O5_soybean_2027.zip
     python dev/jd_rx_push.py --org 5294 --list
 
 Takes either one field's shapefile zip (as the VR Rx tab downloads it) or the

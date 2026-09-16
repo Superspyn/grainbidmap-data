@@ -15,7 +15,7 @@ data is not.
 
 Soil grids are matched to Deere fields by WHERE THE SAMPLES ARE, not by
 name. Field names carry the acreage and get renamed when a boundary is
-redrawn (Robards190Warn10 became Robards230Warn10), and 20 of the 213
+redrawn (Rvrsde190Warn10 became Rvrsde230Warn10), and 20 of the 213
 sampled fields no longer exist under the name the lab knew them by. A grid
 belongs to whichever boundary most of its points fall inside.
 """
@@ -279,8 +279,8 @@ def drop_duplicate_wholes(soil_by_field: dict) -> int:
 
     The importer does this too, but it can only compare records under the
     same lab name. The composite carries the Operations Center name while
-    the grid carries the lab's ("Hansen473Hardn3132" vs
-    "Hansen473Hardn31,32"), so the pair only meets here, after matching."""
+    the grid carries the lab's ("Lakeview473Hrdn3132" vs
+    "Lakeview473Hrdn31,32"), so the pair only meets here, after matching."""
     n = 0
     for rec in soil_by_field.values():
         grids = [dt.date.fromisoformat(s["d"]) for s in rec["sets"]

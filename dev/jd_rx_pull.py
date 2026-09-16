@@ -3,7 +3,7 @@
     python dev/jd_rx_pull.py                   ops history + yield maps, 3 newest seasons
     python dev/jd_rx_pull.py --seasons 2022 2023 2024 2025
     python dev/jd_rx_pull.py --no-yield        just the operation history (minutes)
-    python dev/jd_rx_pull.py --field Meyer171Madsn6 --field Britt53Britt27
+    python dev/jd_rx_pull.py --field Lakeview171Mdsn6 --field Rvrsde53Brtt27
 
 Reads ~/.grain-map-secrets/fleet.json (run dev/jd_fleet.py first for the
 fields and boundaries) and writes, in the same private directory:
