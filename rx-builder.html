@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Studer Farms – Variable Rate Rx Builder</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg:#0c1117;--sf:#151b23;--sf2:#1c2330;--bd:#2a3342;--tx:#e1e7ef;--tx2:#8b95a5;--ac:#4ade80;--ac2:#22c55e;--wr:#f59e0b;--dn:#ef4444;--in:#3b82f6}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);overflow:hidden;height:100vh}
+.app{display:grid;grid-template-columns:300px 1fr 420px;grid-template-rows:50px 1fr;height:100vh}
+.hdr{grid-column:1/-1;background:var(--sf);border-bottom:1px solid var(--bd);display:flex;align-items:center;padding:0 16px;gap:12px;z-index:100}
+.logo{font-weight:700;font-size:16px;color:var(--ac)}.logo span{color:var(--tx2);font-weight:400;font-size:13px}
+.hdr-r{margin-left:auto;display:flex;gap:8px;align-items:center}
+.pill{background:var(--sf2);padding:3px 10px;border-radius:10px;font-size:10px;color:var(--tx2)}.pill .d{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--ac);margin-right:5px}
+.sb{background:var(--sf);border-right:1px solid var(--bd);overflow-y:auto;padding:8px}
+.sb h3{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--tx2);margin:8px 0 4px 4px}
+.fhd{display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:4px;cursor:pointer;font-size:12px;font-weight:600;transition:background .15s}
+.fhd:hover{background:var(--sf2)}.fhd .ch{color:var(--tx2);font-size:8px;transition:transform .2s}.fhd .ch.o{transform:rotate(90deg)}
+.fhd .ct{margin-left:auto;background:var(--sf2);padding:1px 5px;border-radius:6px;font-size:9px;color:var(--tx2)}
+.fi{display:flex;align-items:center;gap:5px;padding:4px 8px 4px 22px;border-radius:3px;cursor:pointer;font-size:11px;color:var(--tx2);transition:all .15s;border-left:2px solid transparent}
+.fi:hover{background:var(--sf2);color:var(--tx)}.fi.sel{background:rgba(74,222,128,.1);color:var(--ac);border-left-color:var(--ac)}
+.fi .ds{margin-left:auto;font-size:9px;font-family:'JetBrains Mono',monospace;opacity:.6}
+.mc{position:relative}#map{width:100%;height:100%;background:var(--bg)}
+.mo{position:absolute;top:8px;left:8px;z-index:1000;display:flex;gap:4px}
+.mb{background:var(--sf);border:1px solid var(--bd);color:var(--tx);padding:4px 8px;border-radius:4px;font-size:10px;font-family:inherit;cursor:pointer}
+.mb.a{background:var(--ac);color:var(--bg);border-color:var(--ac)}
+.ns{position:absolute;top:8px;right:8px;z-index:1000}
+.ns select{background:var(--sf);border:1px solid var(--bd);color:var(--tx);padding:8px 14px;border-radius:6px;font-family:inherit;font-size:13px;font-weight:500;min-width:160px;cursor:pointer}
+.ns select:focus{outline:none;border-color:var(--ac)}
+.pn{background:var(--sf);border-left:1px solid var(--bd);overflow-y:auto;padding:12px}
+.ps{margin-bottom:14px}.ps h2{font-size:12px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.ps h2 .ic{width:16px;height:16px;background:var(--ac);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--bg)}
+.fc{background:var(--sf2);border-radius:6px;padding:10px;margin-bottom:8px}
+.fc .lb{font-size:8px;text-transform:uppercase;letter-spacing:.5px;color:var(--tx2);margin-bottom:2px}.fc .vl{font-size:13px;font-weight:600}
+.ng{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.nc{background:var(--sf2);border-radius:6px;padding:10px 12px;border-left:3px solid var(--bd)}
+.nc.vl{border-left-color:var(--dn)}.nc.lo{border-left-color:#f97316}.nc.opt{border-left-color:var(--ac)}.nc.hi{border-left-color:var(--in)}.nc.vhi{border-left-color:#8b5cf6}
+.nc .nn{font-size:9px;text-transform:uppercase;letter-spacing:.4px;color:var(--tx2);margin-bottom:2px}
+.nc .nv{font-size:18px;font-weight:700;font-family:'JetBrains Mono',monospace;margin:3px 0;line-height:1.1}
+.nc .ns2{font-size:9px;font-weight:500}
+.nc.vl .ns2{color:var(--dn)}.nc.lo .ns2{color:#f97316}.nc.opt .ns2{color:var(--ac)}.nc.hi .ns2{color:var(--in)}.nc.vhi .ns2{color:#8b5cf6}
+.rxb{background:var(--sf2);border-radius:6px;padding:10px}
+.rxr{display:flex;align-items:center;gap:5px;margin-bottom:6px;font-size:11px}
+.rxr label{width:80px;color:var(--tx2);font-size:10px;flex-shrink:0}
+.rxr input,.rxr select{background:var(--bg);border:1px solid var(--bd);color:var(--tx);padding:4px 7px;border-radius:3px;font-family:inherit;font-size:11px;flex:1;min-width:0}
+.rxr input:focus,.rxr select:focus{outline:none;border-color:var(--ac)}
+.btn{background:var(--ac);color:var(--bg);border:none;padding:7px 12px;border-radius:4px;font-family:inherit;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;width:100%}
+.btn:hover{background:var(--ac2)}.btn-o{background:transparent;border:1px solid var(--bd);color:var(--tx)}.btn-o:hover{border-color:var(--ac);color:var(--ac);background:transparent}
+.btn-sm{padding:5px 8px;font-size:10px;width:auto}
+.br{display:flex;gap:5px;margin-top:8px}
+.es{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--tx2);text-align:center}
+.es .ic{font-size:24px;margin-bottom:8px;opacity:.5}.es p{font-size:11px;line-height:1.5}
+.sb-input{background:var(--bg);border:1px solid var(--bd);border-radius:4px;padding:6px 8px;width:100%;color:var(--tx);font-family:inherit;font-size:11px;margin-bottom:5px}
+.sb-input:focus{outline:none;border-color:var(--ac)}.sb-input::placeholder{color:var(--tx2)}
+.lg{position:absolute;bottom:14px;left:8px;z-index:1000;background:var(--sf);border:1px solid var(--bd);border-radius:6px;padding:7px 10px;min-width:130px}
+.lg-t{font-size:8px;text-transform:uppercase;letter-spacing:.5px;color:var(--tx2);margin-bottom:4px}
+.lg-grad{height:10px;border-radius:3px;margin:4px 0 2px}
+.lg-labels{display:flex;justify-content:space-between;font-size:8px;color:var(--tx2);font-family:'JetBrains Mono',monospace}
+.lg-cats{margin-top:4px}
+.lg-cat{display:flex;align-items:center;gap:4px;font-size:8px;margin:1px 0;color:var(--tx2)}
+.lg-cat .dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+.dn{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.12);border-radius:4px;padding:7px 8px;font-size:9px;color:var(--in);margin-bottom:8px;line-height:1.4}.dn b{color:var(--tx)}
+.dn.yield-placeholder{background:rgba(249,115,22,.08);border-color:rgba(249,115,22,.15);color:#f97316}
+.tb{display:flex;gap:2px;margin-bottom:10px;background:var(--bg);border-radius:5px;padding:2px}
+.tbtn{flex:1;background:none;border:none;color:var(--tx2);padding:5px 6px;border-radius:3px;cursor:pointer;font-family:inherit;font-size:9px;font-weight:500;transition:all .15s;white-space:nowrap}
+.tbtn.a{background:var(--ac);color:var(--bg)}
+.vr-zone{display:flex;align-items:center;gap:6px;padding:5px 6px;background:var(--bg);border-radius:4px;margin-bottom:3px;font-size:10px}
+.vr-zone .vr-color{width:14px;height:14px;border-radius:3px;flex-shrink:0}
+.vr-zone .vr-range{color:var(--tx2);font-family:'JetBrains Mono',monospace;font-size:9px}
+.vr-zone .vr-rate{margin-left:auto;font-weight:600;font-family:'JetBrains Mono',monospace}
+.vr-zone .vr-acres{color:var(--tx2);font-size:9px;font-family:'JetBrains Mono',monospace;margin-left:4px}
+.slider-row{display:flex;align-items:center;gap:6px;margin:4px 0}
+.slider-row label{font-size:9px;color:var(--tx2);width:60px;flex-shrink:0}
+.slider-row input[type=range]{flex:1;accent-color:var(--ac);height:4px}
+.slider-row .sv{font-size:10px;font-family:'JetBrains Mono',monospace;width:36px;text-align:right}
+.presets{display:flex;gap:3px;margin:4px 0 8px 66px}
+.preset-btn{background:var(--bg);border:1px solid var(--bd);color:var(--tx2);padding:2px 7px;border-radius:3px;font-size:8px;font-family:inherit;cursor:pointer;transition:all .15s}
+.preset-btn:hover{border-color:var(--ac);color:var(--ac)}.preset-btn.act{background:var(--ac);color:var(--bg);border-color:var(--ac)}
+.modal-ov{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);z-index:2000;display:flex;align-items:center;justify-content:center}
+.modal{background:var(--sf);border:1px solid var(--bd);border-radius:8px;padding:20px;max-width:600px;width:90%;max-height:80vh;overflow-y:auto}
+.modal h2{font-size:14px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.mcl{margin-left:auto;background:none;border:none;color:var(--tx2);cursor:pointer;font-size:16px;padding:2px 6px}.mcl:hover{color:var(--tx)}
+.rxl{display:flex;justify-content:space-between;align-items:center;padding:3px 0;font-size:10px;border-bottom:1px solid var(--bd)}
+.rxl:last-child{border-bottom:none}.rxl .rla{color:var(--tx2)}.rxl .rlv{font-weight:600;font-family:'JetBrains Mono',monospace;font-size:11px}
+.rxl .rlc{font-size:8px;padding:1px 5px;border-radius:3px;margin-left:6px}
+.hist-sel{background:var(--bg);border:1px solid var(--bd);color:var(--tx);padding:4px 6px;border-radius:3px;font-family:inherit;font-size:10px;margin-left:auto}
+.source-tag{display:inline-block;background:rgba(74,222,128,.1);color:var(--ac);font-size:7px;padding:1px 5px;border-radius:3px;font-weight:600;letter-spacing:.3px;margin-left:4px}
+.fi.nosoil{opacity:.55}
+.plan{font-size:9px;color:var(--tx2);line-height:1.5;margin-bottom:8px;padding:6px 8px;background:var(--bg);border-radius:4px}.plan b{color:var(--ac)}
+table.hist{width:100%;border-collapse:collapse;font-size:10px;margin-bottom:6px}table.hist th{text-align:left;font-size:8px;text-transform:uppercase;letter-spacing:.4px;color:var(--tx2);padding:3px 4px;border-bottom:1px solid var(--bd)}table.hist td{padding:3px 4px;border-bottom:1px solid var(--bd);vertical-align:top}table.hist .sub{font-size:8px;color:var(--tx2)}
+.apps .app{font-size:10px;padding:3px 0;border-bottom:1px solid var(--bd);line-height:1.5}.app .d{font-family:'JetBrains Mono',monospace;color:var(--tx2);margin-right:6px;font-size:9px}.app .pr{margin-right:8px;white-space:nowrap}.app .pr b{color:var(--tx)}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px}
+.leaflet-container{background:var(--bg)!important}
+.ftt{background:#151b23!important;color:#e1e7ef!important;border:1px solid #2a3342!important;border-radius:4px!important;padding:5px 8px!important;font-family:'DM Sans',sans-serif!important;font-size:10px!important;box-shadow:0 4px 12px rgba(0,0,0,.3)!important;line-height:1.4!important}.ftt .leaflet-tooltip-tip{display:none}
+</style></head><body>
+<div id="app"><div style="display:flex;align-items:center;justify-content:center;height:100vh;color:#8b95a5;font-family:DM Sans,sans-serif">Loading...</div></div>
+<script>
+// ====== Field data (baked in by dev/jd_build_rx.py) ======
+
+// Farm-field tree from boundaries
+// Derived tables. FI = each field's sampling events with the field averages,
+// FP = the grid points, both keyed by Deere field name (dev/jd_build_rx.py
+// matched every lab grid to the boundary its points fall inside).
+const FI={},FP={};
+Object.entries(SOIL).forEach(([f,rec])=>{
+  FI[f]={county:rec.county,sets:rec.sets.map(s=>Object.assign({d:s.d,n:s.n,lab:s.lab},s.avg))};
+  const withPts=rec.sets.filter(s=>s.pts&&s.pts.length).map(s=>({d:s.d,n:s.n,lab:s.lab,pts:s.pts}));
+  if(withPts.length)FP[f]={county:rec.county,sets:withPts};
+});
+const FF={},FPROP={},BNDRY={};
+B.features.forEach(f=>{const p=f.properties,fm=p.org+' · '+p.farm;if(!FF[fm])FF[fm]=[];FF[fm].push(p.field);FPROP[p.field]=p;BNDRY[p.field]=f.geometry;});
+Object.values(FF).forEach(a=>a.sort());
+// Every exterior ring and every hole of a field, as closed [lon,lat] rings.
+// 178 of the 447 fields are multi-part and 162 have farmstead or waterway
+// cutouts, so "the ring" of a field is not a thing.
+function fieldRings(f){const g=BNDRY[f];if(!g)return{ext:[],holes:[]};const polys=g.type==='MultiPolygon'?g.coordinates:[g.coordinates];
+  return{ext:polys.map(p=>p[0]),holes:polys.flatMap(p=>p.slice(1))};}
+function inField(x,y,fr){return fr.ext.some(r=>pip(x,y,r))&&!fr.holes.some(r=>pip(x,y,r));}
+// Acres of one raster cell at this latitude (cells are sRES degrees square).
+function cellAcres(raster){const lat=raster.ymin+raster.sny*raster.sRES/2;const m=raster.sRES*111320;return m*m*Math.cos(lat*Math.PI/180)/4046.8564;}
+// Which raster cells lie inside the field (cached on the raster).
+function fieldCells(raster,f){if(raster._in)return raster._in;const fr=fieldRings(f),a=new Uint8Array(raster.snx*raster.sny);
+  for(let iy=0;iy<raster.sny;iy++){const py=raster.ymin+(iy+0.5)*raster.sRES;for(let ix=0;ix<raster.snx;ix++){if(inField(raster.xmin+(ix+0.5)*raster.sRES,py,fr))a[iy*raster.snx+ix]=1;}}
+  raster._in=a;return a;}
+// Zone acreage from the raster, not from "points x 2.5 acres".
+function zoneAcres(raster,f){const inF=fieldCells(raster,f),ac=cellAcres(raster),out=new Array(NZONES+1).fill(0);
+  for(let i=0;i<inF.length;i++){if(inF[i]&&raster.mask[i])out[raster.zoneGrid[i]]+=ac;}return out;}
+
+// ISU PM 1688 (2023 update) soil-test interpretation categories
+const TH={
+  p:{vl:8,lo:15,op:20,hi:30,vh:60,u:'ppm',nm:'Phosphorus (P)',rx:'P₂O₅',
+     cats:['Very Low (0-8)','Low (9-15)','Optimum (16-20)','High (21-30)','Very High (>30)']},
+  k:{vl:90,lo:130,op:170,hi:200,vh:350,u:'ppm',nm:'Potassium (K)',rx:'K₂O',
+     cats:['Very Low (0-90)','Low (91-130)','Optimum (131-170)','High (171-200)','Very High (>200)']},
+  ph:{vl:5.0,lo:5.5,op:6.0,hi:7.5,vh:8.5,u:'',nm:'Soil pH',rx:'Lime',
+     cats:['Very Low (<5.0)','Low (5.0-5.5)','Target (5.5-6.0)','Adequate (6.0-7.5)','High (>7.5)']},
+  om:{vl:1.5,lo:2.5,op:3.5,hi:6.0,vh:10,u:'%',nm:'Organic Matter'},
+  cec:{vl:8,lo:12,op:18,hi:30,vh:50,u:'meq/100g',nm:'CEC'},
+  ca:{vl:500,lo:1500,op:3000,hi:5000,vh:10000,u:'ppm',nm:'Calcium'},
+  mg:{vl:50,lo:150,op:300,hi:500,vh:1500,u:'ppm',nm:'Magnesium'},
+  s:{vl:3,lo:6,op:10,hi:20,vh:50,u:'ppm',nm:'Sulfur (S)',rx:'S'},
+  zn:{vl:0.5,lo:0.9,op:2.0,hi:5,vh:20,u:'ppm',nm:'Zinc (Zn)',rx:'Zn',
+     cats:['Very Low (<0.5)','Low (0.5-0.9)','Adequate (0.9-2.0)','High (2.0-5.0)','Very High (>5.0)']},
+  mn:{vl:5,lo:15,op:30,hi:60,vh:200,u:'ppm',nm:'Manganese'},
+  bph:{vl:5.5,lo:6.0,op:6.5,hi:7.0,vh:7.5,u:'',nm:'Buffer pH'},
+  p2:{vl:15,lo:30,op:50,hi:80,vh:150,u:'ppm',nm:'Bray P2'},
+};
+
+// 5-class color scheme: VeryLow=red, Low=orange, Optimum=green, High=blue, VeryHigh=purple
+const CAT_COLORS=['#ef4444','#f97316','#22c55e','#3b82f6','#8b5cf6'];
+
+function nutColor(nut,val){
+  const t=TH[nut];if(!t||val==null)return[80,80,80];
+  // 5 category stops with smooth interpolation
+  const stops=[[0,239,68,68],[t.vl,249,115,22],[t.lo,234,179,8],[(t.lo+t.op)/2,34,197,94],[t.op,34,197,94],[t.hi,59,130,246],[t.vh,139,92,246]];
+  const norm=val;
+  for(let i=0;i<stops.length-1;i++){
+    if(norm>=stops[i][0]&&norm<=stops[i+1][0]){
+      const f=(norm-stops[i][0])/(stops[i+1][0]-stops[i][0]||1);
+      return[Math.round(stops[i][1]+(stops[i+1][1]-stops[i][1])*f),Math.round(stops[i][2]+(stops[i+1][2]-stops[i][2])*f),Math.round(stops[i][3]+(stops[i+1][3]-stops[i][3])*f)];
+    }
+  }
+  return norm<stops[0][0]?[stops[0][1],stops[0][2],stops[0][3]]:[stops[stops.length-1][1],stops[stops.length-1][2],stops[stops.length-1][3]];
+}
+function nutCSS(nut,val){const c=nutColor(nut,val);return `rgb(${c[0]},${c[1]},${c[2]})`;}
+function gSt(n,v){if(v==null)return'unk';const t=TH[n];if(!t)return'unk';if(v<t.vl)return'vl';if(v<=t.lo)return'lo';if(v<=t.op)return'opt';if(v<=t.hi)return'hi';return'vhi';}
+function gSL(s){return{vl:'Very Low',lo:'Low',opt:'Optimum',hi:'High',vhi:'Very High',unk:'—'}[s]||'—';}
+
+// ISU PM 1688 rate calculations — yield goal drives removal, target drives buildup
+
+// ---- Yield, from Operations Center ----
+// OPS has each field's seasons: what was planted, what came off (Deere's own
+// average, acres and moisture per harvest pass) and what was applied.
+// YMAPS has each harvest pass thinned to 20 m cells of yield INDEX: the cell
+// against the field's own average, x100, 0 where the combine never went.
+// Averaging indexes across years and crops gives a productivity map that is
+// steadier than any one year's yield map.
+function cropKey(c){return c==='soybeans'?'soybean':c;}
+function yieldMaps(f){return YMAPS[f]||[];}
+function decodeIdx(m){if(!m._a){const s=atob(m.idx),a=new Uint8Array(s.length);for(let i=0;i<s.length;i++)a[i]=s.charCodeAt(i);m._a=a;}return m._a;}
+// Mean yield index around (x,y): a (2R+1)-cell window in every map that
+// covers the spot, averaged across maps. Null where no combine has been.
+function yieldIndexAt(f,x,y,radius){
+  const maps=yieldMaps(f);if(!maps.length)return null;const R=radius==null?2:radius;let sum=0,n=0;
+  for(const m of maps){const a=decodeIdx(m);const cx=Math.floor((x-m.lon0)/m.dlon),cy=Math.floor((y-m.lat0)/m.dlat);let s=0,c=0;
+    for(let dy=-R;dy<=R;dy++){const yy=cy+dy;if(yy<0||yy>=m.ny)continue;for(let dx=-R;dx<=R;dx++){const xx=cx+dx;if(xx<0||xx>=m.nx)continue;const v=a[yy*m.nx+xx];if(v){s+=v;c++;}}}
+    if(c){sum+=s/c/100;n++;}}
+  return n?sum/n:null;
+}
+function harvestHistory(f){const o=OPS[f];if(!o)return[];
+  return Object.entries(o.seasons).filter(([y,s])=>s.harvest).map(([y,s])=>Object.assign({yr:+y},s.harvest,{crop:cropKey(s.harvest.crop)})).sort((a,b)=>a.yr-b.yr);}
+// The field's recent average for a crop: its last three harvests of it.
+function getFieldYield(f,crop){
+  const h=harvestHistory(f).filter(x=>x.crop===crop&&x.avg);if(!h.length)return null;
+  const last=h.slice(-3);return Math.round(last.reduce((s,x)=>s+x.avg,0)/last.length);
+}
+function seasonCrop(f,yr){const o=OPS[f];const s=o&&o.seasons[String(yr)];if(s&&s.crop)return cropKey(s.crop);
+  const p=FPROP[f];return p&&p.crop&&p.crop_season===yr?cropKey(p.crop):null;}
+// The crop to plan for. The plan year has no planting pass yet, so it is the
+// rotation: whatever went in last, flipped. No history at all reads as corn.
+function planCrop(f){const last=seasonCrop(f,META.plan_year-1);if(last==='corn')return'soybean';if(last==='soybean')return'corn';return'corn';}
+function prevCrop(f){return seasonCrop(f,META.plan_year-1)||'soybean';}
+// Default yield goal: 5% over the field's own recent average, to the nearest
+// 5 bushels, or a flat number when the field has no harvest of that crop.
+function defaultGoal(f,crop){const avg=getFieldYield(f,crop);if(avg)return Math.max(5,Math.round(avg*1.05/5)*5);return crop==='corn'?220:65;}
+
+function calcPRate(p,yg,crop,tgt){
+  if(p==null)return null;
+  if(tgt==null)tgt=20;
+  const removal=crop==='corn'?yg*0.375:yg*0.80;
+  if(p>=tgt) return 0;
+  const buildup=Math.max(0,(tgt-p)*4);
+  return Math.round(buildup+removal);
+}
+function calcKRate(k,yg,crop,tgt){
+  if(k==null)return null;
+  if(tgt==null)tgt=170;
+  const removal=crop==='corn'?yg*0.30:yg*1.50;
+  if(k>=tgt)return 0;
+  const buildup=Math.max(0,(tgt-k)*1.2);
+  return Math.round(buildup+removal);
+}
+function calcLimeRate(ph,bph,tgt){
+  if(ph==null||ph>=tgt)return 0;
+  if(bph==null)bph=6.6;
+  if(ph>=tgt-0.1)return 0;
+  return Math.max(0,Math.round((tgt-ph)*2000*(7.0-bph)/500)*500);
+}
+function calcNRate(om,yg,pc){let b=yg*1.1;if(om!=null&&om>4)b-=(om-4)*15;if(pc==='soybean')b-=45;return Math.max(0,Math.round(b));}
+function calcSRate(s,tgt){
+  if(s==null)return null;
+  if(tgt==null)tgt=10;
+  if(s>=tgt)return 0;
+  return Math.round(Math.max(0,(tgt-s)*2.5));
+}
+function calcZnRate(zn,tgt){
+  if(zn==null)return null;
+  if(tgt==null)tgt=0.9;
+  if(zn>=tgt)return 0;
+  return Math.round(Math.max(0,(tgt-zn)*5));
+}
+
+// Build zone-aware rate function:
+// userYG = the user's yield goal (always rxYG from the slider)
+// Harvest data provides spatial yield variation: high-yielding zones get higher
+// removal, low-yielding zones get lower removal, all centered around userYG.
+// Crop selection determines removal coefficients (corn vs soybean).
+// Prev crop (pc) affects available N credit (soybean credit = -45 lb N/ac).
+function makeZonalRateFn(fieldName,rxNut2,crop,userYG,tgtP,tgtK,tgtPH,tgtS,tgtZn,pc){
+  return function(pt){
+    // The goal scaled by how this spot yields against the field: a spot that
+    // runs 20% above the field average removes 20% more than the goal says.
+    // Where no combine has been, the goal stands as is.
+    function localEffYield(){
+      const idx=yieldIndexAt(fieldName,pt.x,pt.y);
+      if(idx==null)return userYG;
+      return Math.max(10,Math.round(userYG*idx));
+    }
+    
+    if(rxNut2==='p'){
+      const ey=localEffYield();
+      // Prev crop matters: soybean has higher P removal per bushel
+      // Use the CROP being planted this year for removal rate
+      return calcPRate(pt.p,ey,crop,tgtP);
+    }
+    if(rxNut2==='k'){
+      const ey=localEffYield();
+      // K removal is much higher for soybean (1.50 vs 0.30 lb/bu)
+      return calcKRate(pt.k,ey,crop,tgtK);
+    }
+    if(rxNut2==='ph')return calcLimeRate(pt.ph,pt.bph,tgtPH);
+    if(rxNut2==='s')return calcSRate(pt.s,tgtS);
+    if(rxNut2==='zn')return calcZnRate(pt.zn,tgtZn);
+    // N: prev crop provides soybean credit
+    return calcNRate(pt.om,localEffYield(),pc);
+  };
+}
+
+// IDW interpolation - power=1.5 for smooth concentric contours per literature
+function idw(px,py,points,nut,power){
+  let wSum=0,vSum=0;const pw=power||1.5;
+  for(let i=0;i<points.length;i++){
+    const v=points[i][nut];if(v==null)continue;
+    const dx=px-points[i].x,dy=py-points[i].y,d2=dx*dx+dy*dy;
+    if(d2<1e-14)return v;
+    const w=1/Math.pow(Math.sqrt(d2),pw);
+    wSum+=w;vSum+=w*v;
+  }
+  return wSum>0?vSum/wSum:null;
+}
+
+function pip(x,y,poly){
+  let inside=false;
+  for(let i=0,j=poly.length-1;i<poly.length;j=i++){
+    const xi=poly[i][0],yi=poly[i][1],xj=poly[j][0],yj=poly[j][1];
+    if(((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi))inside=!inside;
+  }return inside;
+}
+
+// Number of discrete contour zones
+const NZONES=5;
+// Zone colors: rich saturated palette matching ag industry standard
+// Soil nutrient colors: red(very low) -> yellow -> green -> teal -> blue(very high)
+const ZONE_COLORS_NUT=[
+  [210,40,40],[230,175,30],[50,185,60],[30,155,135],[40,95,200]
+];
+// Rate colors: blue(low/no need) -> green -> yellow -> orange -> red(high need)
+const ZONE_COLORS_RATE=[
+  [40,95,200],[50,185,60],[230,175,30],[230,105,25],[210,40,40]
+];
+
+function genRaster(fieldName,nut,setIdx,isRate,rateFn){
+  const fp=FP[fieldName];if(!fp||!fp.sets.length)return null;
+  const fr=fieldRings(fieldName);if(!fr.ext.length)return null;
+  const sIdx=setIdx!=null?setIdx:fp.sets.length-1;
+  const pts=fp.sets[sIdx].pts;
+  // The grid spans every part of the field; the mask is trimmed per part at export time.
+  const xs=fr.ext.flatMap(r=>r.map(c=>c[0])),ys=fr.ext.flatMap(r=>r.map(c=>c[1]));
+  const xmin=Math.min(...xs),xmax=Math.max(...xs),ymin=Math.min(...ys),ymax=Math.max(...ys);
+
+  // Resolution for smooth contours
+  const RES=0.00009;
+  const pad=RES*4; // expand grid beyond boundary to ensure full coverage
+  const nx=Math.ceil((xmax-xmin+pad*2)/RES)+1,ny=Math.ceil((ymax-ymin+pad*2)/RES)+1;
+  const maxC=22000;let step=1;if(nx*ny>maxC)step=Math.ceil(Math.sqrt(nx*ny/maxC));
+  const snx=Math.ceil(nx/step),sny=Math.ceil(ny/step),sRES=RES*step;
+  const gxmin=xmin-pad,gymin=ymin-pad;
+
+  let vpts;
+  if(isRate&&rateFn){
+    vpts=pts.map(pt=>{const r=rateFn(pt);return r!=null?{x:pt.x,y:pt.y,_v:r}:null;}).filter(Boolean);
+  }else{
+    vpts=pts.filter(p=>p[nut]!=null).map(p=>({x:p.x,y:p.y,_v:p[nut]}));
+  }
+  if(!vpts.length)return null;
+  const vals=vpts.map(p=>p._v),vmin=Math.min(...vals),vmax=Math.max(...vals);
+
+  // 1. IDW interpolation — fill entire expanded grid
+  const grid=new Float32Array(snx*sny),mask=new Uint8Array(snx*sny);
+  for(let iy=0;iy<sny;iy++){
+    const py=gymin+iy*sRES;
+    for(let ix=0;ix<snx;ix++){
+      const px=gxmin+ix*sRES,idx=iy*snx+ix;
+      const v=idw(px,py,vpts,'_v',1.5);
+      if(v!=null){mask[idx]=1;grid[idx]=v;}
+    }
+  }
+
+
+  // 2. Gaussian blur on continuous grid BEFORE classification
+  for(let pass=0;pass<2;pass++){
+    const tmp=new Float32Array(grid);
+    const R=2;
+    for(let iy=R;iy<sny-R;iy++){
+      for(let ix=R;ix<snx-R;ix++){
+        const ci=iy*snx+ix;
+        if(!mask[ci])continue;
+        let sum=0,cnt=0;
+        for(let dy=-R;dy<=R;dy++){for(let dx=-R;dx<=R;dx++){
+          const ni=(iy+dy)*snx+(ix+dx);
+          if(ni>=0&&ni<snx*sny&&mask[ni]){sum+=grid[ni];cnt++;}
+        }}
+        if(cnt>0)tmp[ci]=sum/cnt;
+      }
+    }
+    grid.set(tmp);
+  }
+
+  // 3. Classify into discrete zones
+  const range=vmax-vmin||1;
+  const zoneGrid=new Uint8Array(snx*sny);
+  for(let i=0;i<snx*sny;i++){
+    if(!mask[i])continue;
+    const norm=(grid[i]-vmin)/range;
+    zoneGrid[i]=Math.min(NZONES-1,Math.max(0,Math.floor(norm*NZONES)))+1;
+  }
+
+  // 4. Mode filter with 5x5 kernel, 4 passes — eliminates isolated small zones
+  for(let pass=0;pass<4;pass++){
+    const tmp=new Uint8Array(zoneGrid);
+    const R2=2;
+    for(let iy=R2;iy<sny-R2;iy++){
+      for(let ix=R2;ix<snx-R2;ix++){
+        const ci=iy*snx+ix;
+        if(!mask[ci])continue;
+        const counts=new Uint8Array(NZONES+1);
+        for(let dy=-R2;dy<=R2;dy++){
+          for(let dx=-R2;dx<=R2;dx++){
+            const ni=(iy+dy)*snx+(ix+dx);
+            if(ni>=0&&ni<snx*sny&&mask[ni])counts[zoneGrid[ni]]++;
+          }
+        }
+        let best=zoneGrid[ci],bestC=0;
+        for(let z=1;z<=NZONES;z++){if(counts[z]>bestC){bestC=counts[z];best=z;}}
+        tmp[ci]=best;
+      }
+    }
+    zoneGrid.set(tmp);
+  }
+
+  // 5. Remove isolated fragments — flood-fill each connected region,
+  // if area < threshold, absorb into most common neighboring zone
+  const visited=new Uint8Array(snx*sny);
+  const minArea=8; // minimum cells for a zone fragment to survive
+  for(let i=0;i<snx*sny;i++){
+    if(!mask[i]||visited[i]||!zoneGrid[i])continue;
+    // BFS flood fill
+    const z=zoneGrid[i];
+    const region=[i];
+    const queue=[i];
+    visited[i]=1;
+    const neighborZones=new Uint8Array(NZONES+1);
+    while(queue.length){
+      const ci=queue.shift();
+      const cy=Math.floor(ci/snx),cx=ci%snx;
+      for(let d=0;d<4;d++){
+        const ny2=cy+[0,0,-1,1][d],nx2=cx+[-1,1,0,0][d];
+        if(ny2<0||ny2>=sny||nx2<0||nx2>=snx)continue;
+        const ni=ny2*snx+nx2;
+        if(!mask[ni])continue;
+        if(zoneGrid[ni]===z&&!visited[ni]){visited[ni]=1;region.push(ni);queue.push(ni);}
+        else if(zoneGrid[ni]!==z&&zoneGrid[ni]>0){neighborZones[zoneGrid[ni]]++;}
+      }
+    }
+    // If region is too small, absorb into most common neighbor
+    if(region.length<minArea){
+      let bestZ=z,bestN=0;
+      for(let zz=1;zz<=NZONES;zz++){if(neighborZones[zz]>bestN){bestN=neighborZones[zz];bestZ=zz;}}
+      region.forEach(ci=>{zoneGrid[ci]=bestZ;});
+    }
+  }
+
+  return{grid,zoneGrid,mask,snx,sny,xmin:gxmin,ymin:gymin,sRES,vmin,vmax};
+}
+
+function rasterToCanvas(raster,nut,isRate){
+  if(!raster)return null;
+  const scale=3;
+  const w=raster.snx*scale,h=raster.sny*scale;
+  const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;
+  const ctx=canvas.getContext('2d');
+  const colors=isRate?ZONE_COLORS_RATE:ZONE_COLORS_NUT;
+
+  // Draw solid zone fills
+  const imgData=ctx.createImageData(w,h);
+  for(let iy=0;iy<h;iy++){
+    const sy=raster.sny-1-Math.floor(iy/scale);
+    for(let ix=0;ix<w;ix++){
+      const sx=Math.floor(ix/scale);
+      const si=sy*raster.snx+sx;
+      const di=(iy*w+ix)*4;
+      if(sy>=0&&sy<raster.sny&&sx>=0&&sx<raster.snx&&raster.mask[si]&&raster.zoneGrid[si]>0){
+        const z=raster.zoneGrid[si]-1;
+        const c=colors[z];
+        imgData.data[di]=c[0];imgData.data[di+1]=c[1];imgData.data[di+2]=c[2];imgData.data[di+3]=215;
+      }
+    }
+  }
+  ctx.putImageData(imgData,0,0);
+
+  // Draw contour lines between zones
+  ctx.strokeStyle='rgba(0,0,0,0.3)';
+  ctx.lineWidth=1;
+  for(let iy=0;iy<raster.sny-1;iy++){
+    for(let ix=0;ix<raster.snx-1;ix++){
+      const ci=iy*raster.snx+ix;
+      if(!raster.mask[ci])continue;
+      const z=raster.zoneGrid[ci];
+      const ri=iy*raster.snx+(ix+1);
+      const di2=(iy+1)*raster.snx+ix;
+      if(ix<raster.snx-1&&raster.mask[ri]&&raster.zoneGrid[ri]!==z){
+        ctx.beginPath();ctx.moveTo((ix+1)*scale,(raster.sny-1-iy)*scale);ctx.lineTo((ix+1)*scale,(raster.sny-iy)*scale);ctx.stroke();
+      }
+      if(iy<raster.sny-1&&raster.mask[di2]&&raster.zoneGrid[di2]!==z){
+        ctx.beginPath();ctx.moveTo(ix*scale,(raster.sny-1-iy)*scale);ctx.lineTo((ix+1)*scale,(raster.sny-1-iy)*scale);ctx.stroke();
+      }
+    }
+  }
+  return canvas;
+}
+
+// Yield map colours: red where the field runs short of its own average, blue where it beats it.
+const YIELD_COLORS=[[210,40,40],[230,175,30],[50,185,60],[30,155,135],[40,95,200]];
+const YIELD_BREAKS=[0.8,0.93,1.07,1.2];   // index boundaries between the five colours
+
+// Products the rate can be written in. The prescription goes to the spreader
+// in pounds of PRODUCT, so each nutrient rate is divided by the analysis.
+// The first entry is the default; pct is editable on the VR tab.
+const PRODUCTS={
+  p:[{name:'MAP 11-52-0',pct:0.52},{name:'DAP 18-46-0',pct:0.46},{name:'TSP 0-46-0',pct:0.46},{name:'P2O5 as nutrient',pct:1}],
+  k:[{name:'Potash 0-0-60',pct:0.60},{name:'K2O as nutrient',pct:1}],
+  s:[{name:'AMS 21-0-0-24S',pct:0.24},{name:'Elemental S 90%',pct:0.90},{name:'S as nutrient',pct:1}],
+  zn:[{name:'Zinc sulfate 35.5%',pct:0.355},{name:'Zn as nutrient',pct:1}],
+  ph:[{name:'Ag lime ECCE 100%',pct:1.0},{name:'Ag lime ECCE 80%',pct:0.8},{name:'Ag lime ECCE 60%',pct:0.6}],
+};
+const NUTRIENT_NAME={p:'P2O5',k:'K2O',ph:'LIME',s:'SULFUR',zn:'ZINC'};
+function attr(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+
+// State
+let sel=null,expanded=new Set(['North · Hancock']),mLyr='satellite',hNut='p',sq='',map=null,fLayers={};
+let rxCrop='corn',rxYG=220,rxPC='soybean',rxNut='p';
+let rxProd={p:0,k:0,ph:0,s:0,zn:0};   // index into PRODUCTS per nutrient
+let batchCrop='auto',batchGoal='auto';
+// Configurable targets for each product
+let rxTargetP=20,rxTargetK=170,rxTargetPH=6.0,rxTargetS=10,rxTargetZn=0.9;
+let panelTab='zones',histNut='p',showModal=null,canvasOverlay=null;
+
+function render(){
+  document.getElementById('app').innerHTML=`<div class="app">
+    <div class="hdr"><div class="logo">StuderFarms <span>Variable Rate Rx</span></div>
+      <div class="hdr-r"><button class="btn btn-sm" onclick="openBatchExport()" style="width:auto">📦 Batch Export</button>
+      <div class="pill"><span class="d"></span>${B.features.length} fields · ${Object.keys(FP).length} soil-sampled · ${Object.keys(YMAPS).length} with yield maps · planning ${META.plan_year}</div></div></div>
+    <div class="sb"><input class="sb-input" placeholder="Search fields..." value="${sq}" oninput="uSrch(this.value)"/><h3>Farm Fields</h3>${rFL()}</div>
+    <div class="mc"><div id="map"></div>
+      <div class="mo"><button class="mb ${mLyr==='satellite'?'a':''}" onclick="sML('satellite')">Satellite</button><button class="mb ${mLyr==='topo'?'a':''}" onclick="sML('topo')">Topo</button><button class="mb ${mLyr==='roads'?'a':''}" onclick="sML('roads')">Roads</button></div>
+      <div class="ns"><select onchange="sHN(this.value)"><option value="yield" ${hNut==='yield'?'selected':''}>Yield map (all years)</option>${['p','k','ph','om','cec','s','zn','ca','mg','bph','p2','mn'].map(k=>`<option value="${k}" ${hNut===k?'selected':''}>${TH[k]?.nm||k}</option>`).join('')}</select></div>
+      <div class="lg" id="legend"></div>
+    </div>
+    <div class="pn">${sel?rFP():rEP()}</div></div>`;
+  if(showModal)document.getElementById('app').innerHTML+=showModal;
+  initMap();updateLegend();
+}
+
+function updateLegend(){
+  const lg=document.getElementById('legend');if(!lg)return;
+  if(hNut==='yield'){
+    const grad=YIELD_COLORS.map((c,i)=>`rgb(${c[0]},${c[1]},${c[2]}) ${Math.round(i/(YIELD_COLORS.length-1)*100)}%`).join(',');
+    lg.innerHTML=`<div class="lg-t">Yield vs field average <span class="source-tag">Ops Center</span></div>
+      <div class="lg-grad" style="background:linear-gradient(to right,${grad})"></div>
+      <div class="lg-labels"><span>&lt;80%</span><span>100%</span><span>&gt;120%</span></div>`;
+    return;
+  }
+  const t=TH[hNut];if(!t){lg.innerHTML='';return;}
+  const cNut=ZONE_COLORS_NUT;
+  const grad=cNut.map((c,i)=>`rgb(${c[0]},${c[1]},${c[2]}) ${Math.round(i/(cNut.length-1)*100)}%`).join(',');
+  lg.innerHTML=`<div class="lg-t">${t.nm} <span class="source-tag">ISU PM 1688</span></div>
+    <div class="lg-grad" style="background:linear-gradient(to right,${grad})"></div>
+    <div class="lg-labels"><span>Low</span><span>Optimum</span><span>High</span></div>
+    <div class="lg-cats" style="margin-top:6px">
+      ${['Very Low','Low','Optimum','High','Very High'].map((c,i)=>`<div class="lg-cat"><div class="dot" style="background:${CAT_COLORS[i]}"></div>${c}</div>`).join('')}
+    </div>`;
+}
+
+function rFL(){
+  const q=sq.toLowerCase();
+  return Object.keys(FF).sort().map(fm=>{
+    const flds=FF[fm].filter(f=>!q||f.toLowerCase().includes(q)||fm.toLowerCase().includes(q));
+    if(!flds.length&&sq)return'';const o=expanded.has(fm)||(q&&flds.length);
+    const nS=flds.filter(f=>FP[f]).length;
+    return `<div><div class="fhd" onclick="tF(this.dataset.g)" data-g="${attr(fm)}"><span class="ch ${o?'o':''}">▶</span>${fm}<span class="ct" title="soil-sampled / total">${nS}/${flds.length}</span></div>
+    ${o?flds.map(f=>{const fi=FI[f],ld=fi?fi.sets[fi.sets.length-1]?.d:'';const p=FPROP[f]||{};
+      const badge=ld?ld.slice(0,4):(YMAPS[f]?'yield':'');
+      return `<div class="fi ${sel===f?'sel':''} ${FP[f]?'':'nosoil'}" onclick="sF(this.dataset.f)" data-f="${attr(f)}" title="${p.acres!=null?p.acres.toFixed(1)+' ac':''}${FP[f]?'':' · no soil grid'}">${f}<span class="ds">${badge}</span></div>`;}).join(''):''}
+    </div>`;}).join('');
+}
+function rEP(){return `<div class="es"><div class="ic">🌾</div><p>Select a field to view interpolated<br>nutrient maps &amp; build VR prescriptions</p><p style="margin-top:6px;font-size:9px;color:var(--tx2)">Recommendations based on ISU Extension PM 1688</p></div>`;}
+
+function rFP(){
+  const fi=FI[sel],fp=FP[sel],p=FPROP[sel]||{};
+  const lt=fi?fi.sets[fi.sets.length-1]:null;
+  const latestPts=fp?fp.sets[fp.sets.length-1]:null;
+  const hasSoil=!!latestPts;
+  if(!hasSoil&&panelTab!=='history')panelTab='history';
+  const lastCrop=seasonCrop(sel,META.plan_year-1);
+  return `<div class="ps">
+      <h2><div class="ic">📍</div>${sel}</h2>
+      <div class="fc"><div style="display:flex;gap:10px;flex-wrap:wrap">
+        <div style="flex:1"><div class="lb">County</div><div class="vl">${p.farm||(fi&&fi.county)||'—'}</div></div>
+        <div style="flex:1"><div class="lb">Acres</div><div class="vl">${p.acres!=null?p.acres.toFixed(1):'—'}</div></div>
+        <div style="flex:1"><div class="lb">${META.plan_year-1} crop</div><div class="vl">${lastCrop||'—'}</div></div>
+        <div style="flex:1"><div class="lb">Sampled</div><div class="vl">${lt?lt.d:'never'}</div></div>
+        <div style="flex:1"><div class="lb">Grid pts</div><div class="vl">${latestPts?latestPts.pts.length:'—'}</div></div>
+      </div></div></div>
+    <div class="ps">
+      <div class="tb">
+        ${hasSoil?`<button class="tbtn ${panelTab==='zones'?'a':''}" onclick="panelTab='zones';rP();showInterp()">Nutrient Map</button>
+        <button class="tbtn ${panelTab==='soil'?'a':''}" onclick="panelTab='soil';rP();showInterp()">Soil Data</button>`:''}
+        <button class="tbtn ${panelTab==='history'?'a':''}" onclick="panelTab='history';rP();showInterp()">History</button>
+        ${hasSoil?`<button class="tbtn ${panelTab==='vr'?'a':''}" onclick="panelTab='vr';rP();showVRInterp()">VR Rx</button>`:''}
+      </div>
+      ${hasSoil?'':'<div class="dn">No soil grid on file for this field, so no nutrient map or prescription. Crop history and yield maps still show.</div>'}
+      ${panelTab==='zones'?rZones():''}${panelTab==='soil'?rSoil():''}${panelTab==='history'?rHist():''}${panelTab==='vr'?rVR():''}
+    </div>`;
+}
+
+// The yield-map panel: what is on file and how the field splits around its average.
+function rYieldPanel(){
+  const ym=yieldMaps(sel);if(!ym.length)return'<div class="dn">No yield maps pulled for this field yet.</div>';
+  const counts=new Array(YIELD_COLORS.length).fill(0);let n=0;
+  const m0=ym[0];
+  for(let iy=0;iy<m0.ny;iy++)for(let ix=0;ix<m0.nx;ix++){const v=yieldIndexAt(sel,m0.lon0+(ix+0.5)*m0.dlon,m0.lat0+(iy+0.5)*m0.dlat,0);if(v==null)continue;let k=0;while(k<YIELD_BREAKS.length&&v>=YIELD_BREAKS[k])k++;counts[k]++;n++;}
+  const labels=['under 80%','80-93%','93-107%','107-120%','over 120%'];
+  const ac=(FPROP[sel]||{}).acres||0;
+  return `<h2><div class="ic">🌾</div>Yield vs field average <span class="source-tag">Ops Center</span></h2>
+    <div class="dn">Each harvest pass is thinned to 20 m cells and expressed against its own field average, then the years are averaged. Removal rates on the VR Rx tab follow this map.</div>
+    <div class="fc" style="padding:8px">${ym.map(m=>`<div style="display:flex;justify-content:space-between;font-size:11px;padding:3px 0;border-bottom:1px solid var(--bd)"><span style="color:var(--tx2)">${m.season} ${cropKey(m.crop)}${m.moisture!=null?` · ${m.moisture}%`:''}</span><span style="font-family:'JetBrains Mono',monospace;font-weight:600">${m.avg} bu/ac</span></div>`).join('')}</div>
+    <div class="fc" style="padding:8px"><div class="lb" style="margin-bottom:3px">Share of the field</div>
+      ${counts.map((c,i)=>c?`<div class="vr-zone"><div class="vr-color" style="background:rgb(${YIELD_COLORS[i].join(',')})"></div><span>${labels[i]}</span><span class="vr-rate">${Math.round(c/n*100)}%</span><span class="vr-acres">${(c/n*ac).toFixed(0)}ac</span></div>`:'').join('')}</div>`;
+}
+function rZones(){
+  if(hNut==='yield')return rYieldPanel();
+  const fp=FP[sel];if(!fp||!fp.sets.length)return'<div class="dn">No grid data.</div>';
+  const pts=fp.sets[fp.sets.length-1].pts;
+  const vals=pts.map(p=>p[hNut]).filter(v=>v!=null);
+  if(!vals.length)return `<div class="dn">No ${TH[hNut]?.nm||hNut} data.</div>`;
+  const mn=Math.min(...vals),mx=Math.max(...vals),avg=vals.reduce((a,b)=>a+b,0)/vals.length;
+  const std=Math.sqrt(vals.reduce((s,v)=>s+(v-avg)**2,0)/vals.length);
+  const t=TH[hNut]||{};
+  // Build matching 7-zone breakdown
+  const range=mx-mn||1;
+  const zBounds=[];
+  for(let i=0;i<NZONES;i++){zBounds.push({lo:mn+range*i/NZONES,hi:mn+range*(i+1)/NZONES});}
+  const zCounts=zBounds.map((z,i)=>{
+    const cnt=vals.filter(v=>v>=z.lo&&(i===NZONES-1?v<=z.hi:v<z.hi)).length;
+    return{...z,cnt};
+  });
+  const cNut=ZONE_COLORS_NUT;
+  // Acres per zone from the drawn raster; per ISU category pro-rated from
+  // the field's Deere acreage by share of sample points.
+  const raster=genRaster(sel,hNut);const zac=raster?zoneAcres(raster,sel):null;
+  const fieldAc=(FPROP[sel]||{}).acres||vals.length*2.5;
+  // ISU category counts
+  const catBounds=[t.vl,t.lo,t.op,t.hi,Infinity];
+  const catNames=['Very Low','Low','Optimum','High','Very High'];
+  const catCounts=[0,0,0,0,0];
+  vals.forEach(v=>{if(v<catBounds[0])catCounts[0]++;else if(v<=catBounds[1])catCounts[1]++;else if(v<=catBounds[2])catCounts[2]++;else if(v<=catBounds[3])catCounts[3]++;else catCounts[4]++;});
+  return `<h2><div class="ic">🗺️</div>Interpolated ${t.nm||hNut} Map</h2>
+    <div class="dn">IDW interpolation (power=1.5) with discrete contour zones from ${vals.length} grid points.</div>
+    <div class="fc" style="padding:8px">
+      <div style="display:flex;gap:8px;margin-bottom:8px">
+        <div style="flex:1"><div class="lb">Min</div><div class="vl">${mn.toFixed(1)}</div></div>
+        <div style="flex:1"><div class="lb">Avg</div><div class="vl">${avg.toFixed(1)}</div></div>
+        <div style="flex:1"><div class="lb">Max</div><div class="vl">${mx.toFixed(1)}</div></div>
+        <div style="flex:1"><div class="lb">Std Dev</div><div class="vl">${std.toFixed(1)}</div></div>
+      </div>
+      <div class="lb" style="margin-bottom:3px">Contour Zones (${t.u})</div>
+      ${zCounts.map((z,i)=>{
+        const ac=zac?zac[i+1]:z.cnt*2.5;if(ac<0.5&&!z.cnt)return'';
+        const c=cNut[i];const pct=Math.round(ac/fieldAc*100);
+        return `<div class="vr-zone"><div class="vr-color" style="background:rgb(${c[0]},${c[1]},${c[2]})"></div>
+          <span class="vr-range">${z.lo.toFixed(1)}-${z.hi.toFixed(1)}</span><span class="vr-rate">${pct}%</span>
+          <span class="vr-acres">${ac.toFixed(0)}ac</span></div>`;}).join('')}
+    </div>
+    <div class="fc" style="padding:8px">
+      <div class="lb" style="margin-bottom:3px">ISU Categories <span class="source-tag">PM 1688</span></div>
+      ${catCounts.map((c,i)=>c>0?`<div class="vr-zone"><div class="vr-color" style="background:${CAT_COLORS[i]}"></div>
+        <span>${catNames[i]}</span><span class="vr-rate">${Math.round(c/vals.length*100)}%</span>
+        <span class="vr-acres">${(c/vals.length*fieldAc).toFixed(0)}ac</span></div>`:'').join('')}
+    </div>`;
+}
+
+function rSoil(){
+  const fi=FI[sel],lt=fi.sets[fi.sets.length-1];
+  const nuts=['p','k','ph','om','cec','ca','mg','s','zn','mn','bph'];
+  return `<h2><div class="ic">🧪</div>Field Averages — ${lt.d}</h2>
+    <div class="ng">${nuts.map(n=>{const v=lt[n];if(v==null)return'';const t=TH[n],st=gSt(n,v),c=st;
+      // Calculate position on gauge: where does the value fall between 0 and vh?
+      const pos=t?Math.min(100,Math.max(0,(v/t.vh)*100)):50;
+      const statusColors={vl:'var(--dn)',lo:'#f97316',opt:'var(--ac)',hi:'var(--in)',vhi:'#8b5cf6'};
+      const barColor=statusColors[st]||'var(--tx2)';
+      return `<div class="nc ${c}">
+        <div class="nn">${t?t.nm:n}</div>
+        <div class="nv">${v} ${t&&t.u?`<span style="font-size:10px;font-weight:400;color:var(--tx2)">${t.u}</span>`:''}</div>
+        <div style="height:6px;background:var(--bg);border-radius:3px;margin:4px 0 3px;overflow:hidden;position:relative">
+          ${t?`<div style="position:absolute;left:${(t.lo/t.vh)*100}%;top:0;bottom:0;width:1px;background:rgba(255,255,255,0.15)"></div>
+          <div style="position:absolute;left:${(t.op/t.vh)*100}%;top:0;bottom:0;width:1px;background:rgba(255,255,255,0.15)"></div>
+          <div style="position:absolute;left:${(t.hi/t.vh)*100}%;top:0;bottom:0;width:1px;background:rgba(255,255,255,0.15)"></div>`:''}
+          <div style="height:100%;width:${pos}%;background:${barColor};border-radius:3px"></div>
+        </div>
+        <div class="ns2">${gSL(st)}</div>
+      </div>`;
+    }).join('')}</div>`;
+}
+
+function rHist(){
+  const fi=FI[sel];
+  const n=hNut; // driven by main map dropdown
+  const t=TH[n];
+  const entries=(fi&&t)?fi.sets.filter(s=>s[n]!=null):[];
+  const o=OPS[sel];const seasons=o?Object.keys(o.seasons).map(Number).sort((a,b)=>b-a):[];
+
+  let html='';
+  if(fi&&!entries.length)html+=`<div class="dn">No ${t?t.nm:'soil'} history for this field. Pick a nutrient from the map dropdown.</div>`;
+
+  // Soil test history
+  if(entries.length){
+    const vals=entries.map(s=>s[n]);
+    const mx=Math.max(...vals,t.hi)*1.1;
+    const mn2=Math.min(...vals)*0.85;
+    const range=mx-mn2||1;
+    const threshLines=[{val:t.lo,label:'Low',color:'#f97316'},{val:t.op,label:'Opt',color:'#22c55e'},{val:t.hi,label:'High',color:'#3b82f6'}].filter(l=>l.val>mn2&&l.val<mx);
+    html+=`<h2><div class="ic">📊</div>${t.nm} History</h2>
+    <div style="padding:4px 0">
+      ${entries.map(s=>{
+        const v=s[n];
+        const pct=Math.max(3,((v-mn2)/range)*100);
+        const c=nutCSS(n,v);
+        const status=gSL(gSt(n,v));
+        return `<div style="margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx2)">${s.d}</span>
+            <span style="font-size:9px;color:var(--tx2)">${s.n} pts · ${status}</span>
+          </div>
+          <div style="position:relative;height:28px;background:var(--bg);border-radius:5px;overflow:hidden">
+            ${threshLines.map(l=>{const lx=((l.val-mn2)/range)*100;
+              return `<div style="position:absolute;left:${lx}%;top:0;bottom:0;width:1px;background:${l.color};opacity:0.3;z-index:1"></div>
+                <div style="position:absolute;left:${lx}%;top:1px;font-size:7px;color:${l.color};opacity:0.6;padding-left:2px;z-index:2">${l.label}</div>`;}).join('')}
+            <div style="height:100%;width:${pct}%;background:${c};border-radius:5px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;min-width:40px;position:relative;z-index:3">
+              <span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,0.5)">${v}</span>
+            </div>
+          </div>
+        </div>`;}).join('')}
+      <div style="display:flex;justify-content:space-between;font-size:8px;color:var(--tx2);font-family:'JetBrains Mono',monospace;margin-top:4px;padding:0 2px">
+        <span>${mn2.toFixed(1)}</span>${threshLines.map(l=>`<span style="color:${l.color}">${l.label} ${l.val}</span>`).join('')}<span>${mx.toFixed(1)}</span>
+      </div>
+      <div style="font-size:8px;color:var(--tx2);margin-top:4px;text-align:center">${t.nm} (${t.u}) — ${entries.length} sample events</div>
+    </div>`;
+  }
+  
+  // Crops, yields and applications, season by season, from Operations Center
+  if(seasons.length){
+    html+=`<h2 style="margin-top:14px"><div class="ic">🌾</div>Crops &amp; Yields <span class="source-tag">Ops Center</span></h2>
+      <table class="hist"><tr><th>Year</th><th>Crop</th><th>Planted</th><th>Yield</th><th>Moist</th><th>Acres</th></tr>
+      ${seasons.map(y=>{const s=o.seasons[String(y)];const h=s.harvest||{};const crop=cropKey(s.crop||h.crop||'')||'—';
+        const good=crop==='corn'?[200,170]:[60,50];
+        const yc=h.avg?(h.avg>=good[0]?'var(--ac)':h.avg>=good[1]?'var(--wr)':'var(--dn)'):'var(--tx2)';
+        return `<tr><td>${y}</td><td>${crop}${s.crop_from_harvest?'<div class="sub">from harvest pass</div>':''}${s.varieties&&s.varieties.length?`<div class="sub">${s.varieties.join(', ')}</div>`:''}</td><td>${s.planted||'—'}</td><td style="color:${yc};font-weight:600">${h.avg?h.avg+' bu':'—'}</td><td>${h.moisture!=null?h.moisture+'%':'—'}</td><td>${h.acres!=null?h.acres.toFixed(0):'—'}</td></tr>`;}).join('')}</table>`;
+    const ym=yieldMaps(sel);
+    html+=`<div class="dn">${ym.length?`Yield maps on file: ${ym.map(m=>`${m.season} ${cropKey(m.crop)} ${m.avg} bu`).join(' · ')}. Pick "Yield map" on the map dropdown to see them.`:'No yield maps pulled for this field yet (dev/jd_rx_pull.py).'}</div>`;
+    const apps=seasons.flatMap(y=>(o.seasons[String(y)].apps||[]).map(a=>Object.assign({yr:y},a)));
+    if(apps.length){
+      html+=`<h2 style="margin-top:14px"><div class="ic">🚜</div>Applications logged</h2><div class="apps">${apps.map(a=>`<div class="app"><span class="d">${a.d}</span>${a.products.map(pr=>`<span class="pr">${pr.name}${pr.rate!=null?` <b>${pr.rate}</b> ${String(pr.unit||'').replace('1ac-1','/ac')}`:''}</span>`).join('')}</div>`).join('')}</div>`;
+    }
+  } else {
+    html+=`<div class="dn" style="margin-top:12px"><b>🌾 Yield:</b> No operations in Operations Center for this field.</div>`;
+  }
+
+  return html;
+}
+
+function rVR(){
+  const fp=FP[sel],fi=FI[sel];if(!fp||!fp.sets.length)return'<div class="dn">No grid data for VR.</div>';
+  const lt=fi.sets[fi.sets.length-1];
+  const pts=fp.sets[fp.sets.length-1].pts;
+  const effYG=rxYG;
+  const rateFn=currentRateFn(sel);
+  const rates=pts.map(rateFn).filter(r=>r!=null);
+  if(!rates.length)return `<div class="dn">No ${TH[rxNut]?.nm||rxNut} data for VR.</div>`;
+  const raster=genRaster(sel,null,null,true,rateFn);
+  const zac=raster?zoneAcres(raster,sel):null;
+  const prod=productFor(rxNut);
+  const mn=Math.min(...rates),mx=Math.max(...rates);
+  const unit=rxNut==='ph'?'lb ECC/ac':'lb/ac';
+  const flatRateFns={p:()=>calcPRate(lt.p,effYG,rxCrop,rxTargetP),k:()=>calcKRate(lt.k,effYG,rxCrop,rxTargetK),ph:()=>calcLimeRate(lt.ph,lt.bph,rxTargetPH),s:()=>calcSRate(lt.s,rxTargetS),zn:()=>calcZnRate(lt.zn,rxTargetZn)};
+  const flatRate=flatRateFns[rxNut]?(flatRateFns[rxNut]()||0):0;
+  const range=mx-mn||1;
+  const cRate=ZONE_COLORS_RATE;
+  // The zones exactly as the export writes them: rate = zone midpoint,
+  // acres counted from the raster inside the boundary.
+  const zoneBreak=[];let acTot=0,lbTot=0;
+  for(let i=0;i<NZONES;i++){const lo=mn+range*i/NZONES,hi2=mn+range*(i+1)/NZONES;
+    const ac=zac?zac[i+1]:rates.filter(r=>r>=lo&&(i===NZONES-1?r<=hi2:r<hi2)).length*2.5;
+    if(ac<0.5)continue;const rate=Math.round((lo+hi2)/2);acTot+=ac;lbTot+=rate*ac;
+    zoneBreak.push({lo:Math.round(lo),hi:Math.round(hi2),rate,ac,color:`rgb(${cRate[i][0]},${cRate[i][1]},${cRate[i][2]})`});}
+  const avg=acTot?Math.round(lbTot/acTot):0;
+  const savings=flatRate&&avg<flatRate?Math.round((1-avg/flatRate)*100):0;
+  const prodLb=lbTot/prod.pct;
+  const hist=harvestHistory(sel).filter(h=>h.crop===rxCrop);const cropAvg=getFieldYield(sel,rxCrop);const ym=yieldMaps(sel);
+  const lastCrop=seasonCrop(sel,META.plan_year-1);
+
+  // Target controls — slider + presets for every product (like pH)
+  const targetControls = {
+    p: `<div class="slider-row"><label>Target P</label><input type="range" min="15" max="35" value="${rxTargetP}" oninput="rxTargetP=+this.value;document.getElementById('tval').textContent=this.value" onchange="rP();showVRInterp()"/><span class="sv" id="tval">${rxTargetP}</span><span style="font-size:8px;color:var(--tx2)">ppm</span></div>
+      <div class="presets"><span style="font-size:8px;color:var(--tx2);margin-right:2px">ISU targets:</span>
+        <button class="preset-btn ${rxTargetP===20?'act':''}" onclick="setPreset('p','maintain')">Maintain (20)</button>
+        <button class="preset-btn ${rxTargetP===25?'act':''}" onclick="setPreset('p','build')">Build (25)</button>
+        <button class="preset-btn ${rxTargetP===30?'act':''}" onclick="setPreset('p','aggressive')">Aggressive (30)</button></div>`,
+    k: `<div class="slider-row"><label>Target K</label><input type="range" min="130" max="250" value="${rxTargetK}" oninput="rxTargetK=+this.value;document.getElementById('tval').textContent=this.value" onchange="rP();showVRInterp()"/><span class="sv" id="tval">${rxTargetK}</span><span style="font-size:8px;color:var(--tx2)">ppm</span></div>
+      <div class="presets"><span style="font-size:8px;color:var(--tx2);margin-right:2px">ISU targets:</span>
+        <button class="preset-btn ${rxTargetK===170?'act':''}" onclick="setPreset('k','maintain')">Maintain (170)</button>
+        <button class="preset-btn ${rxTargetK===200?'act':''}" onclick="setPreset('k','build')">Build (200)</button>
+        <button class="preset-btn ${rxTargetK===230?'act':''}" onclick="setPreset('k','aggressive')">Aggressive (230)</button></div>`,
+    ph: `<div class="slider-row"><label>Target pH</label><input type="range" min="55" max="70" step="1" value="${Math.round(rxTargetPH*10)}" oninput="rxTargetPH=this.value/10;document.getElementById('tval').textContent=(this.value/10).toFixed(1)" onchange="rP();showVRInterp()"/><span class="sv" id="tval">${rxTargetPH.toFixed(1)}</span></div>
+      <div class="presets"><span style="font-size:8px;color:var(--tx2);margin-right:2px">ISU targets:</span>
+        <button class="preset-btn ${rxTargetPH===6.0?'act':''}" onclick="setPreset('ph','nw_iowa')">6.0 (NW Iowa)</button>
+        <button class="preset-btn ${rxTargetPH===6.5?'act':''}" onclick="setPreset('ph','standard')">6.5 (Standard)</button></div>`,
+    s: `<div class="slider-row"><label>Target S</label><input type="range" min="5" max="20" value="${rxTargetS}" oninput="rxTargetS=+this.value;document.getElementById('tval').textContent=this.value" onchange="rP();showVRInterp()"/><span class="sv" id="tval">${rxTargetS}</span><span style="font-size:8px;color:var(--tx2)">ppm</span></div>
+      <div class="presets"><span style="font-size:8px;color:var(--tx2);margin-right:2px">Targets:</span>
+        <button class="preset-btn ${rxTargetS===8?'act':''}" onclick="setPreset('s','low')">Conservative (8)</button>
+        <button class="preset-btn ${rxTargetS===10?'act':''}" onclick="setPreset('s','standard')">Standard (10)</button>
+        <button class="preset-btn ${rxTargetS===15?'act':''}" onclick="setPreset('s','high')">Aggressive (15)</button></div>`,
+    zn: `<div class="slider-row"><label>Target Zn</label><input type="range" min="5" max="25" value="${Math.round(rxTargetZn*10)}" oninput="rxTargetZn=this.value/10;document.getElementById('tval').textContent=(this.value/10).toFixed(1)" onchange="rP();showVRInterp()"/><span class="sv" id="tval">${rxTargetZn.toFixed(1)}</span><span style="font-size:8px;color:var(--tx2)">ppm</span></div>
+      <div class="presets"><span style="font-size:8px;color:var(--tx2);margin-right:2px">Targets:</span>
+        <button class="preset-btn ${rxTargetZn===0.9?'act':''}" onclick="setPreset('zn','maintain')">Maintain (0.9)</button>
+        <button class="preset-btn ${rxTargetZn===1.5?'act':''}" onclick="setPreset('zn','build')">Build (1.5)</button>
+        <button class="preset-btn ${rxTargetZn===2.0?'act':''}" onclick="setPreset('zn','high')">Aggressive (2.0)</button></div>`,
+  };
+
+  return `<h2><div class="ic">🎯</div>Variable Rate Rx <span class="source-tag">ISU PM 1688</span></h2>
+    <div class="rxb">
+      <div class="plan">Plan <b>${META.plan_year} ${rxCrop}</b> after ${META.plan_year-1} ${lastCrop||'(no planting pass)'}${lastCrop?' (rotation)':''}.
+        Goal: ${cropAvg?`this field's last ${hist.slice(-3).length} ${rxCrop} harvests average <b>${cropAvg} bu</b>, so ${defaultGoal(sel,rxCrop)} suggested`:`no ${rxCrop} harvest on file, flat default`}.
+        ${ym.length?`Removal varies by spot from <b>${ym.length} yield map${ym.length>1?'s':''}</b> (${ym.map(m=>m.season).join(', ')}).`:'No yield maps yet, so removal is flat across the field.'}</div>
+      <div class="rxr"><label>Nutrient</label><select onchange="rxNut=this.value;rP();showVRInterp()">
+        <option value="p" ${rxNut==='p'?'selected':''}>P₂O₅</option><option value="k" ${rxNut==='k'?'selected':''}>K₂O</option>
+        <option value="ph" ${rxNut==='ph'?'selected':''}>Lime</option><option value="s" ${rxNut==='s'?'selected':''}>Sulfur</option>
+        <option value="zn" ${rxNut==='zn'?'selected':''}>Zinc</option></select></div>
+      <div class="rxr"><label>As product</label><select onchange="rxProd[rxNut]=+this.value;rP()">${PRODUCTS[rxNut].map((p,i)=>`<option value="${i}" ${(rxProd[rxNut]||0)===i?'selected':''}>${p.name}</option>`).join('')}</select>
+        <input type="number" value="${Math.round(prod.pct*100)}" min="1" max="100" style="max-width:52px;flex:none" title="analysis: % of the product that is the nutrient" onchange="PRODUCTS[rxNut][rxProd[rxNut]||0].pct=Math.min(100,Math.max(1,+this.value))/100;rP()"/><span style="font-size:8px;color:var(--tx2)">%</span></div>
+      <div class="rxr"><label>Crop</label><select onchange="rxCrop=this.value;rxYG=defaultGoal(sel,rxCrop);rP();showVRInterp()"><option value="corn" ${rxCrop==='corn'?'selected':''}>Corn</option><option value="soybean" ${rxCrop==='soybean'?'selected':''}>Soybean</option></select></div>
+      <div class="rxr"><label>Yield Goal</label><input type="number" value="${rxYG}" onchange="rxYG=+this.value;rP();showVRInterp()"/></div>
+      ${(rxNut==='p'||rxNut==='k')?`<div style="font-size:8px;color:var(--tx2);padding:2px 0 6px 86px;line-height:1.4">Removal: ${rxNut==='p'?(rxCrop==='corn'?`${effYG}×0.375 = <b style="color:var(--tx)">${Math.round(effYG*0.375)} lb P₂O₅/ac</b>`:`${effYG}×0.80 = <b style="color:var(--tx)">${Math.round(effYG*0.80)} lb P₂O₅/ac</b>`):(rxCrop==='corn'?`${effYG}×0.30 = <b style="color:var(--tx)">${Math.round(effYG*0.30)} lb K₂O/ac</b>`:`${effYG}×1.50 = <b style="color:var(--tx)">${Math.round(effYG*1.50)} lb K₂O/ac</b>`)}${ym.length?' at the field average; more where it yields more':''}</div>`:''}
+      <div class="rxr"><label>Prev Crop</label><select onchange="rxPC=this.value;rP();showVRInterp()"><option value="soybean" ${rxPC==='soybean'?'selected':''}>Soybean</option><option value="corn" ${rxPC==='corn'?'selected':''}>Corn</option></select></div>
+      ${targetControls[rxNut]||''}
+    </div>
+    <div class="fc" style="padding:8px;margin-top:8px">
+      <div style="display:flex;gap:8px;margin-bottom:6px">
+        <div style="flex:1"><div class="lb">VR Avg</div><div class="vl" style="color:var(--ac)">${avg} ${unit}</div></div>
+        <div style="flex:1"><div class="lb">Flat Rate</div><div class="vl" style="color:var(--tx2)">${flatRate||0} ${unit}</div></div>
+        <div style="flex:1"><div class="lb">Savings</div><div class="vl" style="color:${savings>0?'var(--ac)':'var(--tx2)'}">${savings>0?savings+'%':'—'}</div></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:6px">
+        <div style="flex:1"><div class="lb">${prod.name}</div><div class="vl">${acTot?Math.round(prodLb/acTot):0} lb/ac</div></div>
+        <div style="flex:1"><div class="lb">Total product</div><div class="vl">${(prodLb/2000).toFixed(1)} tons</div></div>
+        <div style="flex:1"><div class="lb">Acres</div><div class="vl" style="color:var(--tx2)">${acTot.toFixed(0)}</div></div>
+      </div>
+      <div class="lb" style="margin-bottom:3px">Rate Zones: ${NUTRIENT_NAME[rxNut]} → ${prod.name} (low = soil adequate, high = building)</div>
+      ${zoneBreak.map(z=>`<div class="vr-zone"><div class="vr-color" style="background:${z.color}"></div>
+        <span class="vr-range">${z.lo}-${z.hi}</span><span class="vr-rate">${z.rate} → ${Math.round(z.rate/prod.pct)} lb/ac</span>
+        <span class="vr-acres">${z.ac.toFixed(0)}ac</span></div>`).join('')}
+    </div>
+    ${hist.length?`<div class="fc" style="padding:8px;margin-top:8px;border-left:3px solid #f97316">
+        <div class="lb" style="margin-bottom:4px">🌾 ${rxCrop} harvests on this field <span class="source-tag">Ops Center</span></div>
+        ${hist.slice(-6).map(h=>`<div style="display:flex;justify-content:space-between;font-size:11px;padding:3px 0;border-bottom:1px solid var(--bd)">
+          <span style="color:var(--tx2)">${h.yr}${h.moisture!=null?` · ${h.moisture}%`:''}${h.acres!=null?` · ${h.acres.toFixed(0)} ac`:''}</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-weight:600;color:${(rxCrop==='corn'?h.avg>=200:h.avg>=60)?'var(--ac)':(rxCrop==='corn'?h.avg>=170:h.avg>=50)?'var(--wr)':'var(--dn)'}">${h.avg} bu/ac</span>
+        </div>`).join('')}
+      </div>`:`<div class="dn yield-placeholder" style="margin-top:8px"><b>📊 Yield:</b> No ${rxCrop} harvest in Operations Center for this field.</div>`}
+    <div class="br"><button class="btn" onclick="exportVR()">⬇ Export VR Shapefile (.zip)</button></div>
+    <div class="br"><button class="btn btn-o" onclick="exportCSV()">📄 Export as CSV</button></div>
+    <div class="dn" style="margin-top:6px"><b>Shapefile:</b> one polygon per zone (multi-part fields kept together). RATE is lb/ac of <b>${prod.name}</b>; NUT_RATE is the ${NUTRIENT_NAME[rxNut]} behind it. Import into Operations Center as a prescription and pick RATE.</div>`;
+}
+
+function setPreset(nut,preset){
+  if(nut==='p'){
+    if(preset==='maintain')rxTargetP=20;
+    else if(preset==='build')rxTargetP=25;
+    else if(preset==='aggressive')rxTargetP=30;
+  }
+  if(nut==='k'){
+    if(preset==='maintain')rxTargetK=170;
+    else if(preset==='build')rxTargetK=200;
+    else if(preset==='aggressive')rxTargetK=230;
+  }
+  if(nut==='ph'){rxTargetPH=preset==='nw_iowa'?6.0:6.5;}
+  if(nut==='s'){
+    if(preset==='low')rxTargetS=8;
+    else if(preset==='standard')rxTargetS=10;
+    else if(preset==='high')rxTargetS=15;
+  }
+  if(nut==='zn'){
+    if(preset==='maintain')rxTargetZn=0.9;
+    else if(preset==='build')rxTargetZn=1.5;
+    else if(preset==='high')rxTargetZn=2.0;
+  }
+  rP();showVRInterp();
+}
+
+// Map
+function initMap(){
+  if(map){map.remove();map=null;canvasOverlay=null;}
+  map=L.map('map',{zoomControl:false,attributionControl:false}).setView([42.7,-93.8],8);
+  L.control.zoom({position:'bottomright'}).addTo(map);
+  sTiles();addBounds();
+  if(!sel&&!initMap.fitted){initMap.fitted=true;try{map.fitBounds(L.geoJSON(B).getBounds(),{padding:[20,20]});}catch(e){}}
+  if(sel)setTimeout(()=>{if(panelTab==='zones')showInterp();else if(panelTab==='vr')showVRInterp();},100);
+}
+function sTiles(){if(!map)return;map.eachLayer(l=>{if(l._url)map.removeLayer(l);});
+  const urls={satellite:'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    topo:'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+    roads:'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}'};
+  L.tileLayer(urls[mLyr]||urls.satellite,{maxZoom:19}).addTo(map);}
+
+function addBounds(){
+  if(!map)return;fLayers={};
+  L.geoJSON(B,{
+    style:feat=>{const f=feat.properties.field,isSel=sel===f,sampled=!!FP[f];
+      // Sampled fields bright, unsampled ones dimmer; the selected one green.
+      return{color:isSel?'#4ade80':sampled?'rgba(255,255,255,0.85)':'rgba(255,255,255,0.4)',weight:isSel?3:sampled?1.8:1.2,
+        fillColor:isSel?'rgba(74,222,128,0.08)':'rgba(255,255,255,0.06)',fillOpacity:1,
+        dashArray:isSel?null:'4 2'};},
+    onEachFeature:(feat,layer)=>{const p=feat.properties,f=p.field;fLayers[f]=layer;
+      const fi=FI[f],lt=fi?fi.sets[fi.sets.length-1]:null;
+      let tt=`<b>${f}</b><br>${p.org} · ${p.farm}${p.acres!=null?` · ${p.acres.toFixed(1)} ac`:''}`;
+      const lc=seasonCrop(f,META.plan_year-1);if(lc)tt+=`<br>${META.plan_year-1}: ${lc}`;
+      if(lt){tt+=`<br>${TH[hNut]?.nm||hNut}: ${lt[hNut]!=null?lt[hNut]:'N/A'}<br>Sampled: ${lt.d}`;}else tt+='<br>no soil grid';
+      const ym=yieldMaps(f);if(ym.length)tt+=`<br>yield maps: ${ym.map(m=>m.season).join(', ')}`;
+      layer.bindTooltip(tt,{sticky:true,className:'ftt'});
+      layer.on('click',()=>sF(f));}
+  }).addTo(map);
+}
+
+function clearOv(){
+  if(canvasOverlay){
+    if(Array.isArray(canvasOverlay))canvasOverlay.forEach(l=>map.removeLayer(l));
+    else map.removeLayer(canvasOverlay);
+    canvasOverlay=null;
+  }
+}
+
+function zoomSel(){if(fLayers[sel])map.fitBounds(fLayers[sel].getBounds(),{padding:[40,40],maxZoom:16});}
+function showInterp(){
+  clearOv();if(!sel||!map)return;
+  if(hNut==='yield'){canvasOverlay=renderYieldOverlay(sel);zoomSel();return;}
+  const raster=genRaster(sel,hNut);if(!raster){zoomSel();return;}
+  canvasOverlay=renderRasterOnMap(raster,fieldRings(sel),ZONE_COLORS_NUT);
+  zoomSel();
+}
+function currentRateFn(f){return makeZonalRateFn(f,rxNut,rxCrop,rxYG,rxTargetP,rxTargetK,rxTargetPH,rxTargetS,rxTargetZn,rxPC);}
+function showVRInterp(){
+  clearOv();if(!sel||!map)return;
+  const fp=FP[sel];if(!fp||!fp.sets.length)return;
+  const raster=genRaster(sel,null,null,true,currentRateFn(sel));if(!raster)return;
+  canvasOverlay=renderRasterOnMap(raster,fieldRings(sel),ZONE_COLORS_RATE);
+  zoomSel();
+}
+
+// The multi-year yield index as a map layer: every 20 m cell coloured by how
+// it yields against the field average, averaged over the harvests on file.
+function renderYieldOverlay(f){
+  const maps=yieldMaps(f);if(!maps.length||!map)return null;
+  const fr=fieldRings(f);
+  const lon0=Math.min(...maps.map(m=>m.lon0)),lat0=Math.min(...maps.map(m=>m.lat0));
+  const lon1=Math.max(...maps.map(m=>m.lon0+m.nx*m.dlon)),lat1=Math.max(...maps.map(m=>m.lat0+m.ny*m.dlat));
+  const dlon=maps[0].dlon,dlat=maps[0].dlat;
+  const nx=Math.ceil((lon1-lon0)/dlon),ny=Math.ceil((lat1-lat0)/dlat),scale=4;
+  const canvas=document.createElement('canvas');canvas.width=nx*scale;canvas.height=ny*scale;
+  const ctx=canvas.getContext('2d');
+  ctx.beginPath();
+  fr.ext.concat(fr.holes).forEach(ring=>{ring.forEach((c,i)=>{const px=(c[0]-lon0)/dlon*scale,py=(ny-(c[1]-lat0)/dlat)*scale;if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);});ctx.closePath();});
+  ctx.clip('evenodd');
+  for(let iy=0;iy<ny;iy++){const y=lat0+(iy+0.5)*dlat;
+    for(let ix=0;ix<nx;ix++){const x=lon0+(ix+0.5)*dlon;
+      const v=yieldIndexAt(f,x,y,0);if(v==null)continue;
+      let k=0;while(k<YIELD_BREAKS.length&&v>=YIELD_BREAKS[k])k++;
+      const c=YIELD_COLORS[k];ctx.fillStyle=`rgba(${c[0]},${c[1]},${c[2]},0.85)`;
+      ctx.fillRect(ix*scale,(ny-1-iy)*scale,scale,scale);}}
+  const bounds=[[lat0,lon0],[lat0+ny*dlat,lon0+nx*dlon]];
+  return L.imageOverlay(canvas.toDataURL(),bounds,{opacity:0.9,interactive:false}).addTo(map);
+}
+
+// Pixel-perfect raster rendering for map display.
+// Each pixel has exactly ONE zone — no overlaps, no color artifacts.
+// Canvas clip path clips precisely to field boundary.
+function renderRasterOnMap(raster,fr,colors){
+  const {zoneGrid,mask,snx,sny,xmin,ymin,sRES}=raster;
+  const scale=6;
+  const w=snx*scale,h=sny*scale;
+  
+  // Compute shared boundary smooth vertices
+  const intEdges={};
+  for(let y=0;y<sny;y++){for(let x=0;x<snx;x++){
+    const ci=y*snx+x;if(!mask[ci]||!zoneGrid[ci])continue;const za=zoneGrid[ci];
+    if(x<snx-1){const ri=y*snx+(x+1);if(mask[ri]&&zoneGrid[ri]&&zoneGrid[ri]!==za){
+      const zb=zoneGrid[ri],key=Math.min(za,zb)+'-'+Math.max(za,zb);
+      if(!intEdges[key])intEdges[key]=[];intEdges[key].push({x1:x+1,y1:y,x2:x+1,y2:y+1});}}
+    if(y<sny-1){const bi=(y+1)*snx+x;if(mask[bi]&&zoneGrid[bi]&&zoneGrid[bi]!==za){
+      const zb=zoneGrid[bi],key=Math.min(za,zb)+'-'+Math.max(za,zb);
+      if(!intEdges[key])intEdges[key]=[];intEdges[key].push({x1:x,y1:y+1,x2:x+1,y2:y+1});}}
+  }}
+  const spm={};
+  for(const [key,edges] of Object.entries(intEdges)){
+    const lns=chainEdges(edges);
+    for(const ln of lns){const gl=ln.map(([px2,py2])=>[xmin+px2*sRES,ymin+py2*sRES]);
+      const sm=smoothPolyline(gl);
+      for(let i=0;i<ln.length;i++){const pk=ln[i][0]+','+ln[i][1];
+        const t=ln.length>1?i/(ln.length-1):0;const si2=Math.min(sm.length-1,Math.round(t*(sm.length-1)));
+        spm[pk]=sm[si2];}}}
+  
+  const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;
+  const ctx=canvas.getContext('2d');
+  
+  // Clip to the field: every part, with its cutouts left clear (even-odd).
+  ctx.beginPath();
+  fr.ext.concat(fr.holes).forEach(ring=>{
+    ring.forEach((c,i)=>{
+      const px=(c[0]-xmin)/sRES*scale,py=(sny-(c[1]-ymin)/sRES)*scale;
+      if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
+    });
+    ctx.closePath();
+  });
+  ctx.clip('evenodd');
+  
+  // Draw each zone as smoothed polygons using shared boundary vertices
+  // All rings of same zone in one path, one fill call
+  for(let z=1;z<=NZONES;z++){
+    const bin=new Uint8Array(snx*sny);
+    for(let i2=0;i2<snx*sny;i2++){if(mask[i2]&&zoneGrid[i2]===z)bin[i2]=1;}
+    const pixRings=vectorizeZoneBoundary(bin,snx,sny);
+    if(!pixRings.length)continue;
+    const c=colors[(z-1)%colors.length];
+    ctx.fillStyle=`rgb(${c[0]},${c[1]},${c[2]})`;
+    ctx.beginPath();
+    for(const pRing of pixRings){
+      let first=true;
+      for(let i2=0;i2<pRing.length;i2++){
+        const px=pRing[i2][0],py=pRing[i2][1],pk=px+','+py;
+        const pt=spm[pk]||[xmin+px*sRES,ymin+py*sRES];
+        const cx2=(pt[0]-xmin)/sRES*scale,cy2=(sny-(pt[1]-ymin)/sRES)*scale;
+        if(first){ctx.moveTo(cx2,cy2);first=false;}
+        else ctx.lineTo(cx2,cy2);
+      }
+      ctx.closePath();
+    }
+    ctx.fill('evenodd');
+  }
+  
+  // Thin contour lines between different zones only
+  ctx.strokeStyle='rgba(0,0,0,0.15)';ctx.lineWidth=1;
+  for(const [key,edges] of Object.entries(intEdges)){
+    const lns=chainEdges(edges);
+    for(const ln of lns){
+      const gl=ln.map(([px2,py2])=>[xmin+px2*sRES,ymin+py2*sRES]);
+      const sm=smoothPolyline(gl);
+      ctx.beginPath();
+      for(let i2=0;i2<sm.length;i2++){
+        const cx2=(sm[i2][0]-xmin)/sRES*scale,cy2=(sny-(sm[i2][1]-ymin)/sRES)*scale;
+        if(i2===0)ctx.moveTo(cx2,cy2);else ctx.lineTo(cx2,cy2);
+      }
+      ctx.stroke();
+    }
+  }
+  
+  const bounds=[[ymin,xmin],[ymin+sny*sRES,xmin+snx*sRES]];
+  return L.imageOverlay(canvas.toDataURL(),bounds,{opacity:0.9,interactive:false}).addTo(map);
+}
+
+function productFor(nut){return PRODUCTS[nut][rxProd[nut]||0];}
+// Zone polygons for one field: the rate raster vectorised part by part and
+// clipped to each part's true boundary, then written in pounds of product.
+// Farmstead cutouts are not cut out of the zones (the boundary in the
+// monitor stops the spreader there); their acres are left out of totals.
+function exportZones(f,rateFn,nut,crop,yg){
+  const fp=FP[f];if(!fp||!fp.sets.length)return null;
+  const raster=genRaster(f,null,null,true,rateFn);if(!raster)return null;
+  const pts=fp.sets[fp.sets.length-1].pts;
+  const rates=pts.map(rateFn).filter(r=>r!=null);if(!rates.length)return null;
+  const rMin=Math.min(...rates),rMax=Math.max(...rates),rRange=rMax-rMin||1;
+  const unit=nut==='ph'?'lb_ECC_ac':'lb_ac';
+  const fr=fieldRings(f),byZone={};
+  fr.ext.forEach(ring=>{
+    const recs=buildSmoothedZoneExport(maskToRing(raster,ring),ring,rMin,rRange,NUTRIENT_NAME[nut],crop,yg,unit);
+    recs.forEach(r=>{if(!byZone[r.id])byZone[r.id]=Object.assign({},r,{parts:[]});byZone[r.id].parts.push(...r.parts);});
+  });
+  const prod=productFor(nut),zac=zoneAcres(raster,f);
+  const records=Object.values(byZone).sort((a,b)=>a.id-b.id);
+  records.forEach(r=>{r.parts=orientParts(r.parts);
+    r.nutrient=NUTRIENT_NAME[nut];r.nut_rate=r.rate;r.nut_lo=r.rate_lo;r.nut_hi=r.rate_hi;
+    r.product=prod.name;r.analysis=Math.round(prod.pct*100);
+    r.rate=Math.round(r.nut_rate/prod.pct);r.product_1=r.rate;r.acres=zac[r.id]||0;r.field=f;});
+  return{records,raster,rMin,rMax};
+}
+// The raster with its mask limited to one part's bounding box, so the
+// vectoriser only sees that part (parts of one field sit apart, across a road).
+function maskToRing(raster,ring){
+  const xs=ring.map(c=>c[0]),ys=ring.map(c=>c[1]);const pad=raster.sRES*3;
+  const x0=Math.min(...xs)-pad,x1=Math.max(...xs)+pad,y0=Math.min(...ys)-pad,y1=Math.max(...ys)+pad;
+  const mask=new Uint8Array(raster.mask);
+  for(let iy=0;iy<raster.sny;iy++){const py=raster.ymin+iy*raster.sRES;for(let ix=0;ix<raster.snx;ix++){const px=raster.xmin+ix*raster.sRES;if(px<x0||px>x1||py<y0||py>y1)mask[iy*raster.snx+ix]=0;}}
+  return Object.assign({},raster,{mask});
+}
+function ringArea(r){let a=0;for(let i=0;i<r.length-1;i++)a+=r[i][0]*r[i+1][1]-r[i+1][0]*r[i][1];return a/2;}
+// Shapefile rule: outer rings clockwise, holes counter-clockwise. A ring is
+// a hole when it sits inside an odd number of the record's other rings
+// (three probe vertices vote, since clipped rings share edge points).
+function orientParts(parts){
+  return parts.map((ring,i)=>{
+    const probes=[0,Math.floor(ring.length/3),Math.floor(2*ring.length/3)].map(k=>ring[k]);
+    let votes=0;
+    probes.forEach(p=>{let depth=0;for(let j=0;j<parts.length;j++){if(j!==i&&pip(p[0],p[1],parts[j]))depth++;}if(depth%2===1)votes++;});
+    const hole=votes>=2,ccw=ringArea(ring)>0;
+    return hole!==ccw?ring.slice().reverse():ring;});
+}
+const RX_FIELDS=[
+  {n:'Id',t:'N',l:10,d:0},{n:'RATE',t:'N',l:10,d:0},{n:'Product_1',t:'N',l:10,d:0},
+  {n:'PRODUCT',t:'C',l:24,d:0},{n:'ANALYSIS',t:'N',l:5,d:0},
+  {n:'NUTRIENT',t:'C',l:8,d:0},{n:'NUT_RATE',t:'N',l:10,d:0},{n:'NUT_LO',t:'N',l:10,d:0},{n:'NUT_HI',t:'N',l:10,d:0},
+  {n:'UNIT',t:'C',l:12,d:0},{n:'CROP',t:'C',l:10,d:0},{n:'YIELD_GL',t:'N',l:10,d:0},{n:'ACRES',t:'N',l:10,d:1},
+];
+function rxFileName(f,nut,crop){return `VR_Rx_${f}_${NUTRIENT_NAME[nut]}_${crop}_${META.plan_year}`;}
+function exportVR(){
+  try{
+    if(!sel||!FP[sel])return;
+    const z=exportZones(sel,currentRateFn(sel),rxNut,rxCrop,rxYG);
+    if(!z||!z.records.length){alert('Export failed: no zones');return;}
+    dlZip(buildMultiPartSHP(z.records,RX_FIELDS),rxFileName(sel,rxNut,rxCrop));
+  }catch(err){alert('Export error: '+err.message);}
+}
+
+// Vectorize a binary zone mask into polygon rings by collecting boundary edges
+// and chaining them into ordered closed rings.
+function vectorizeZoneBoundary(bin,w,h){
+  const edges=[];
+  for(let y=0;y<h;y++){for(let x=0;x<w;x++){
+    if(!bin[y*w+x])continue;
+    if(y===0||!bin[(y-1)*w+x])edges.push({x1:x,y1:y,x2:x+1,y2:y});
+    if(y===h-1||!bin[(y+1)*w+x])edges.push({x1:x,y1:y+1,x2:x+1,y2:y+1});
+    if(x===0||!bin[y*w+(x-1)])edges.push({x1:x,y1:y,x2:x,y2:y+1});
+    if(x===w-1||!bin[y*w+(x+1)])edges.push({x1:x+1,y1:y,x2:x+1,y2:y+1});
+  }}
+  if(!edges.length)return[];
+  const ve={};
+  edges.forEach((e,i)=>{
+    const k1=e.x1+','+e.y1,k2=e.x2+','+e.y2;
+    if(!ve[k1])ve[k1]=[];if(!ve[k2])ve[k2]=[];
+    ve[k1].push(i);ve[k2].push(i);
+  });
+  const used=new Uint8Array(edges.length);
+  const rings=[];
+  for(let si=0;si<edges.length;si++){
+    if(used[si])continue;
+    const ring=[];let ci=si,cv=edges[ci].x1+','+edges[ci].y1;
+    for(let it=0;it<edges.length+10;it++){
+      used[ci]=1;const e=edges[ci];
+      const v1=e.x1+','+e.y1,v2=e.x2+','+e.y2;
+      const nv=(cv===v1)?v2:v1;
+      ring.push(nv.split(',').map(Number));
+      const cands=ve[nv];let ni=-1;
+      if(cands)for(const c of cands)if(!used[c]){ni=c;break;}
+      if(ni===-1)break;ci=ni;cv=nv;
+    }
+    if(ring.length>=3){ring.push([ring[0][0],ring[0][1]]);rings.push(ring);}
+  }
+  return rings;
+}
+
+// Chain edge segments into polylines (open, not closed rings)
+function chainEdges(edges){
+  if(!edges.length)return[];
+  const ve={};
+  edges.forEach((e,i)=>{
+    const k1=e.x1+','+e.y1,k2=e.x2+','+e.y2;
+    if(!ve[k1])ve[k1]=[];if(!ve[k2])ve[k2]=[];
+    ve[k1].push(i);ve[k2].push(i);
+  });
+  const used=new Uint8Array(edges.length);
+  const lines=[];
+  for(let si=0;si<edges.length;si++){
+    if(used[si])continue;
+    const line=[];let ci=si,cv=edges[ci].x1+','+edges[ci].y1;
+    line.push(cv.split(',').map(Number));
+    for(let it=0;it<edges.length+10;it++){
+      used[ci]=1;const e=edges[ci];
+      const v1=e.x1+','+e.y1,v2=e.x2+','+e.y2;
+      const nv=(cv===v1)?v2:v1;
+      line.push(nv.split(',').map(Number));
+      const cands=ve[nv];let ni=-1;
+      if(cands)for(const c of cands)if(!used[c]){ni=c;break;}
+      if(ni===-1)break;ci=ni;cv=nv;
+    }
+    if(line.length>=2)lines.push(line);
+  }
+  return lines;
+}
+
+// Smooth an open polyline (keeping endpoints fixed)
+function smoothPolyline(pts){
+  if(pts.length<3)return pts;
+  let r=pts.slice();
+  // Gaussian averaging (3 passes, window=2, endpoints fixed)
+  for(let pass=0;pass<3;pass++){
+    const n=r.length;const s=[];
+    for(let i=0;i<n;i++){
+      if(i<=1||i>=n-2){s.push(r[i]);continue;}
+      let sx=0,sy=0,cnt=0;
+      for(let d=-2;d<=2;d++){sx+=r[i+d][0];sy+=r[i+d][1];cnt++;}
+      s.push([sx/cnt,sy/cnt]);
+    }
+    r=s;
+  }
+  // Douglas-Peucker
+  r=douglasPeucker(r,0.00003);
+  // Chaikin on open polyline (3 passes, keep endpoints)
+  for(let pass=0;pass<3;pass++){
+    const o=[];
+    for(let i=0;i<r.length-1;i++){
+      const p0=r[i],p1=r[i+1];
+      if(i===0)o.push(p0);
+      o.push([p0[0]*0.75+p1[0]*0.25,p0[1]*0.75+p1[1]*0.25]);
+      o.push([p0[0]*0.25+p1[0]*0.75,p0[1]*0.25+p1[1]*0.75]);
+      if(i===r.length-2)o.push(p1);
+    }
+    r=o;
+  }
+  return r;
+}
+
+// ===== SHARED-BOUNDARY EXPORT =====
+// Zone-to-zone boundaries computed ONCE, shared by both neighbors = zero gaps.
+function buildSmoothedZoneExport(raster,fieldRing,rMin,rRange,product,crop,yg,unit){
+  const {zoneGrid,mask,snx,sny,xmin,ymin,sRES}=raster;
+  const denseBdy=densifyRing(fieldRing,sRES*0.4);
+  
+  // Step 1: Collect internal boundary edges keyed by zone pair
+  const intEdges={}; // "za-zb" -> [edges]
+  for(let y=0;y<sny;y++){for(let x=0;x<snx;x++){
+    const ci=y*snx+x;if(!mask[ci]||!zoneGrid[ci])continue;
+    const za=zoneGrid[ci];
+    if(x<snx-1){const ri=y*snx+(x+1);if(mask[ri]&&zoneGrid[ri]&&zoneGrid[ri]!==za){
+      const zb=zoneGrid[ri],key=Math.min(za,zb)+'-'+Math.max(za,zb);
+      if(!intEdges[key])intEdges[key]=[];
+      intEdges[key].push({x1:x+1,y1:y,x2:x+1,y2:y+1});
+    }}
+    if(y<sny-1){const bi=(y+1)*snx+x;if(mask[bi]&&zoneGrid[bi]&&zoneGrid[bi]!==za){
+      const zb=zoneGrid[bi],key=Math.min(za,zb)+'-'+Math.max(za,zb);
+      if(!intEdges[key])intEdges[key]=[];
+      intEdges[key].push({x1:x,y1:y+1,x2:x+1,y2:y+1});
+    }}
+  }}
+  
+  // Step 2: Chain and smooth each shared boundary ONCE
+  // Store as lookup: pixel coord -> smoothed geo coord
+  const smoothPtMap={}; // "px,py" -> [geoX, geoY]
+  
+  for(const [key,edges] of Object.entries(intEdges)){
+    const lines=chainEdges(edges);
+    for(const line of lines){
+      // Convert to geo
+      const geoLine=line.map(([px,py])=>[xmin+px*sRES,ymin+py*sRES]);
+      const smoothed=smoothPolyline(geoLine);
+      // Map original pixel vertices to their smoothed positions
+      // Interpolate: original line has N points, smoothed has M points
+      // Map each original point to the nearest smoothed point
+      for(let i=0;i<line.length;i++){
+        const pk=line[i][0]+','+line[i][1];
+        // Find position along smoothed line proportional to i/(N-1)
+        const t=line.length>1?i/(line.length-1):0;
+        const si=Math.min(smoothed.length-1,Math.round(t*(smoothed.length-1)));
+        smoothPtMap[pk]=smoothed[si];
+      }
+    }
+  }
+  
+  // Step 3: Build zone polygons using shared smoothed coordinates
+  const records=[];
+  for(let z=1;z<=NZONES;z++){
+    const bin=new Uint8Array(snx*sny);
+    for(let i=0;i<snx*sny;i++){if(mask[i]&&zoneGrid[i]===z)bin[i]=1;}
+    const pixRings=vectorizeZoneBoundary(bin,snx,sny);
+    if(!pixRings.length)continue;
+    
+    const geoParts=[];
+    for(const pRing of pixRings){
+      const rawRing=[];
+      for(let i=0;i<pRing.length-1;i++){
+        const px=pRing[i][0],py=pRing[i][1];
+        const pk=px+','+py;
+        
+        if(smoothPtMap[pk]){
+          rawRing.push(smoothPtMap[pk]);
+        } else {
+          const geo=[xmin+px*sRES,ymin+py*sRES];
+          rawRing.push(geo);
+        }
+      }
+      
+      if(rawRing.length<3)continue;
+      
+      // Clip to field boundary with proper handling of concavities/notches.
+      // When the polygon crosses from inside to outside (or vice versa),
+      // insert the actual boundary vertices along the crossing to follow
+      // the boundary shape around farmstead cutouts and concave edges.
+      const clippedRing=[];
+      const n=rawRing.length;
+      for(let i=0;i<n;i++){
+        const pt=rawRing[i];
+        const ptIn=pip(pt[0],pt[1],fieldRing);
+        const nextPt=rawRing[(i+1)%n];
+        const nextIn=pip(nextPt[0],nextPt[1],fieldRing);
+        
+        if(ptIn){
+          clippedRing.push(pt);
+          // If next point is outside, we're exiting the field.
+          // Find where we exit and insert boundary vertices until we re-enter.
+          if(!nextIn){
+            // Find the boundary segment nearest to this exit point
+            let exitPt=projToBdy(pt,nextPt,fieldRing);
+            if(exitPt)clippedRing.push(exitPt);
+          }
+        } else {
+          // Point is outside. Project onto nearest boundary segment.
+          let bestD=Infinity,bestPt=pt;
+          for(let bi=0;bi<fieldRing.length-1;bi++){
+            const a=fieldRing[bi],b=fieldRing[bi+1];
+            const dx2=b[0]-a[0],dy2=b[1]-a[1],lenSq=dx2*dx2+dy2*dy2;
+            if(lenSq<1e-20)continue;
+            const t=Math.max(0,Math.min(1,((pt[0]-a[0])*dx2+(pt[1]-a[1])*dy2)/lenSq));
+            const proj=[a[0]+t*dx2,a[1]+t*dy2];
+            const d2=(pt[0]-proj[0])**2+(pt[1]-proj[1])**2;
+            if(d2<bestD){bestD=d2;bestPt=proj;}
+          }
+          clippedRing.push(bestPt);
+          
+          // If next point is inside, we're re-entering the field.
+          if(nextIn){
+            let enterPt=projToBdy(nextPt,pt,fieldRing);
+            if(enterPt)clippedRing.push(enterPt);
+          }
+        }
+      }
+
+      
+      if(clippedRing.length<3)continue;
+      
+      // Post-process: detect where consecutive vertices create an edge
+      // that crosses through a concave notch (farmstead cutout).
+      // Insert boundary vertices to go AROUND the notch.
+      const fixedRing=[];
+      for(let i=0;i<clippedRing.length;i++){
+        fixedRing.push(clippedRing[i]);
+        const next=clippedRing[(i+1)%clippedRing.length];
+        // Check if the edge from this vertex to next crosses the boundary
+        const crossings=findAllBdyCrossings(clippedRing[i],next,fieldRing);
+        if(crossings.length>=2){
+          // Edge crosses boundary twice = passes through a notch
+          // Insert boundary vertices between the two crossing points
+          // Sort crossings by parameter t along the edge
+          crossings.sort((a,b)=>a.t-b.t);
+          // Find the boundary vertex range between the two crossing segments
+          const seg1=crossings[0].seg;
+          const seg2=crossings[crossings.length-1].seg;
+          // Insert the crossing point, boundary vertices around notch, exit crossing
+          fixedRing.push(crossings[0].pt);
+          // Walk boundary from seg1 to seg2 (choosing the shorter path through the notch)
+          const nBdy=fieldRing.length-1;
+          const fwd=seg2>seg1?seg2-seg1:nBdy-seg1+seg2;
+          const bwd=seg1>seg2?seg1-seg2:nBdy-seg2+seg1;
+          if(fwd<=bwd){
+            for(let s=seg1+1;s!==seg2+1;s=(s+1)%nBdy){
+              fixedRing.push([fieldRing[s][0],fieldRing[s][1]]);
+            }
+          }else{
+            for(let s=seg1;s!==seg2;s=(s-1+nBdy)%nBdy){
+              fixedRing.push([fieldRing[s][0],fieldRing[s][1]]);
+            }
+          }
+          fixedRing.push(crossings[crossings.length-1].pt);
+        }
+      }
+      
+      const finalRing=fixedRing.length>=3?fixedRing:clippedRing;
+      
+      // Thorough cleanup of degenerate geometry artifacts.
+      // Run multiple passes until stable.
+      let cleanRing=finalRing.slice();
+      for(let pass=0;pass<5;pass++){
+        const prev=cleanRing.length;
+        cleanRing=cleanupRing(cleanRing,fieldRing);
+        if(cleanRing.length===prev)break; // stable
+      }
+      
+      if(cleanRing.length<3)continue;
+      cleanRing.push([cleanRing[0][0],cleanRing[0][1]]);
+      geoParts.push(cleanRing);
+    }
+    
+    if(!geoParts.length)continue;
+    const zLo=rMin+rRange*(z-1)/NZONES;
+    const zHi=rMin+rRange*z/NZONES;
+    const rate=Math.round((zLo+zHi)/2);
+    records.push({
+      parts:geoParts,id:z,rate:rate,rate_lo:Math.round(zLo),rate_hi:Math.round(zHi),
+      product:product,crop:crop,yield_gl:yg,unit:unit,product_1:rate,
+    });
+  }
+  return records;
+}
+
+// Clean polygon ring for shapefile export.
+// ALL boundary vertices are protected. Only interior spikes get removed.
+function cleanupRing(ring,fieldRing){
+  if(ring.length<4)return ring;
+  function onBdy(pt){
+    if(!fieldRing)return false;
+    for(let i=0;i<fieldRing.length-1;i++){
+      const a=fieldRing[i],b=fieldRing[i+1],dx=b[0]-a[0],dy=b[1]-a[1],ls=dx*dx+dy*dy;
+      if(ls<1e-20)continue;
+      const t=Math.max(0,Math.min(1,((pt[0]-a[0])*dx+(pt[1]-a[1])*dy)/ls));
+      if((pt[0]-(a[0]+t*dx))**2+(pt[1]-(a[1]+t*dy))**2<1e-14)return true;
+    }
+    return false;
+  }
+  // Remove near-duplicates
+  let r=[ring[0]];
+  for(let i=1;i<ring.length;i++){
+    const dx=ring[i][0]-r[r.length-1][0],dy=ring[i][1]-r[r.length-1][1];
+    if(dx*dx+dy*dy<0.000008*0.000008)continue;
+    r.push(ring[i]);
+  }
+  if(r.length>1){const dx=r[r.length-1][0]-r[0][0],dy=r[r.length-1][1]-r[0][1];if(dx*dx+dy*dy<0.000008*0.000008)r.pop();}
+  if(r.length<4)return r;
+  // Remove interior spikes (boundary vertices untouchable)
+  let changed=true,iter=0;
+  while(changed&&r.length>=4&&iter<200){
+    changed=false;iter++;let worstI=-1,worstA=-1;
+    for(let i=0;i<r.length;i++){
+      if(onBdy(r[i]))continue;
+      const p0=r[(i-1+r.length)%r.length],p1=r[i],p2=r[(i+1)%r.length];
+      const dx1=p1[0]-p0[0],dy1=p1[1]-p0[1],dx2=p2[0]-p1[0],dy2=p2[1]-p1[1];
+      const l1=Math.sqrt(dx1*dx1+dy1*dy1),l2=Math.sqrt(dx2*dx2+dy2*dy2);
+      if(l1<1e-12||l2<1e-12){worstI=i;worstA=999;break;}
+      const dot=(dx1*dx2+dy1*dy2)/(l1*l2);
+      const ang=Math.acos(Math.max(-1,Math.min(1,dot)))*180/Math.PI;
+      const ms=Math.min(l1,l2)*364000;
+      if((ang>90)||(ang>45&&ms<40)){if(ang>worstA){worstA=ang;worstI=i;}}
+    }
+    if(worstI>=0){r.splice(worstI,1);changed=true;}
+  }
+  return r;
+}
+// Find all points where a line segment crosses the field boundary
+function findAllBdyCrossings(p1,p2,bdy){
+  const crossings=[];
+  const dx1=p2[0]-p1[0],dy1=p2[1]-p1[1];
+  for(let i=0;i<bdy.length-1;i++){
+    const a=bdy[i],b=bdy[i+1];
+    const dx2=b[0]-a[0],dy2=b[1]-a[1];
+    const det=dx1*dy2-dy1*dx2;
+    if(Math.abs(det)<1e-15)continue;
+    const t=((a[0]-p1[0])*dy2-(a[1]-p1[1])*dx2)/det;
+    const u=((a[0]-p1[0])*dy1-(a[1]-p1[1])*dx1)/det;
+    if(t>0.001&&t<0.999&&u>=0&&u<=1){
+      crossings.push({t:t,seg:i,pt:[p1[0]+t*dx1,p1[1]+t*dy1]});
+    }
+  }
+  return crossings;
+}
+
+// Find where a line from inside pt to outside pt crosses the field boundary
+function projToBdy(insidePt,outsidePt,bdy){
+  let bestT=Infinity,bestPt=null;
+  for(let i=0;i<bdy.length-1;i++){
+    const a=bdy[i],b=bdy[i+1];
+    // Line-segment intersection between (insidePt->outsidePt) and (a->b)
+    const dx1=outsidePt[0]-insidePt[0],dy1=outsidePt[1]-insidePt[1];
+    const dx2=b[0]-a[0],dy2=b[1]-a[1];
+    const det=dx1*dy2-dy1*dx2;
+    if(Math.abs(det)<1e-15)continue;
+    const t=((a[0]-insidePt[0])*dy2-(a[1]-insidePt[1])*dx2)/det;
+    const u=((a[0]-insidePt[0])*dy1-(a[1]-insidePt[1])*dx1)/det;
+    if(t>=0&&t<=1&&u>=0&&u<=1&&t<bestT){
+      bestT=t;bestPt=[insidePt[0]+t*dx1,insidePt[1]+t*dy1];
+    }
+  }
+  return bestPt;
+}
+
+// Insert actual boundary vertices from index i1 to i2 (shorter arc)
+function insertBdyArc(out,i1,i2,bdy){
+  const n=bdy.length-1; // closed ring, last=first
+  if(n<=0||i1===i2)return;
+  const fwd=i2>i1?i2-i1:n-i1+i2;
+  const bwd=i1>i2?i1-i2:n-i2+i1;
+  if(fwd<=bwd){
+    let ci=i1;
+    for(let s=0;s<fwd&&s<n;s++){ci=(ci+1)%n;out.push([bdy[ci][0],bdy[ci][1]]);}
+  }else{
+    let ci=i1;
+    for(let s=0;s<bwd&&s<n;s++){ci=(ci-1+n)%n;out.push([bdy[ci][0],bdy[ci][1]]);}
+  }
+}
+
+// Douglas-Peucker line simplification
+function douglasPeucker(pts,tol){
+  if(pts.length<=2)return pts;
+  let maxD=0,maxI=0;
+  const a=pts[0],b=pts[pts.length-1];
+  const dx=b[0]-a[0],dy=b[1]-a[1],lenSq=dx*dx+dy*dy;
+  for(let i=1;i<pts.length-1;i++){
+    let d;
+    if(lenSq<1e-20){d=Math.sqrt((pts[i][0]-a[0])**2+(pts[i][1]-a[1])**2);}
+    else{const t=Math.max(0,Math.min(1,((pts[i][0]-a[0])*dx+(pts[i][1]-a[1])*dy)/lenSq));
+      d=Math.sqrt((pts[i][0]-(a[0]+t*dx))**2+(pts[i][1]-(a[1]+t*dy))**2);}
+    if(d>maxD){maxD=d;maxI=i;}
+  }
+  if(maxD>tol){
+    const left=douglasPeucker(pts.slice(0,maxI+1),tol);
+    const right=douglasPeucker(pts.slice(maxI),tol);
+    return left.slice(0,-1).concat(right);
+  }
+  return[pts[0],pts[pts.length-1]];
+}
+
+// Densify a polygon ring so no segment is longer than maxLen
+function densifyRing(ring,maxLen){
+  const out=[];
+  for(let i=0;i<ring.length-1;i++){
+    const p0=ring[i],p1=ring[i+1];out.push(p0);
+    const dx=p1[0]-p0[0],dy=p1[1]-p0[1],len=Math.sqrt(dx*dx+dy*dy);
+    if(len>maxLen){const n=Math.ceil(len/maxLen);
+      for(let j=1;j<n;j++)out.push([p0[0]+dx*j/n,p0[1]+dy*j/n]);}
+  }
+  out.push(ring[ring.length-1]);
+  return out;
+}
+
+// Build a shapefile with multi-part polygons (matching GeoPard format)
+function buildMultiPartSHP(records,flds){
+  // Calculate exact SHP content size
+  let contentLen=0;
+  records.forEach(r=>{
+    const numParts=r.parts.length;
+    const numPoints=r.parts.reduce((s,p)=>s+p.length,0);
+    contentLen+=8+4+32+4+4+numParts*4+numPoints*16;
+  });
+  
+  // Add safety margin
+  const shpBuf=new ArrayBuffer(100+contentLen+1024);
+  const shpDV=new DataView(shpBuf);
+  const shxBuf=new ArrayBuffer(100+records.length*8);
+  const shxDV=new DataView(shxBuf);
+  
+  // Global bbox
+  let gxn=Infinity,gyn=Infinity,gxx=-Infinity,gyx=-Infinity;
+  records.forEach(r=>r.parts.forEach(p=>p.forEach(([x,y])=>{gxn=Math.min(gxn,x);gyn=Math.min(gyn,y);gxx=Math.max(gxx,x);gyx=Math.max(gyx,y);})));
+  
+  // SHP header
+  shpDV.setInt32(0,9994,false);
+  shpDV.setInt32(24,(100+contentLen)/2,false);
+  shpDV.setInt32(28,1000,true);shpDV.setInt32(32,5,true); // Polygon type
+  shpDV.setFloat64(36,gxn,true);shpDV.setFloat64(44,gyn,true);
+  shpDV.setFloat64(52,gxx,true);shpDV.setFloat64(60,gyx,true);
+  
+  // SHX header
+  shxDV.setInt32(0,9994,false);
+  shxDV.setInt32(24,(100+records.length*8)/2,false);
+  shxDV.setInt32(28,1000,true);shxDV.setInt32(32,5,true);
+  shxDV.setFloat64(36,gxn,true);shxDV.setFloat64(44,gyn,true);
+  shxDV.setFloat64(52,gxx,true);shxDV.setFloat64(60,gyx,true);
+  
+  let shpOff=100;
+  let shxWordOff=50; // in 16-bit words
+  
+  records.forEach((rec,recIdx)=>{
+    const numParts=rec.parts.length;
+    const numPoints=rec.parts.reduce((s,p)=>s+p.length,0);
+    const recContentBytes=4+32+4+4+numParts*4+numPoints*16;
+    
+    // SHX entry
+    shxDV.setInt32(100+recIdx*8,shxWordOff,false);
+    shxDV.setInt32(100+recIdx*8+4,recContentBytes/2,false);
+    shxWordOff+=4+recContentBytes/2; // 8 bytes header = 4 words + content
+    
+    // Record header
+    shpDV.setInt32(shpOff,recIdx+1,false); // record number
+    shpDV.setInt32(shpOff+4,recContentBytes/2,false);
+    shpOff+=8;
+    
+    // Shape type
+    shpDV.setInt32(shpOff,5,true); // Polygon
+    shpOff+=4;
+    
+    // Record bbox
+    let rxn=Infinity,ryn=Infinity,rxx=-Infinity,ryx=-Infinity;
+    rec.parts.forEach(p=>p.forEach(([x,y])=>{rxn=Math.min(rxn,x);ryn=Math.min(ryn,y);rxx=Math.max(rxx,x);ryx=Math.max(ryx,y);}));
+    shpDV.setFloat64(shpOff,rxn,true);shpDV.setFloat64(shpOff+8,ryn,true);
+    shpDV.setFloat64(shpOff+16,rxx,true);shpDV.setFloat64(shpOff+24,ryx,true);
+    shpOff+=32;
+    
+    // Num parts and num points
+    shpDV.setInt32(shpOff,numParts,true);shpOff+=4;
+    shpDV.setInt32(shpOff,numPoints,true);shpOff+=4;
+    
+    // Parts index array
+    let ptIdx=0;
+    rec.parts.forEach((p,pi)=>{
+      shpDV.setInt32(shpOff,ptIdx,true);shpOff+=4;
+      ptIdx+=p.length;
+    });
+    
+    // Points
+    rec.parts.forEach(p=>{
+      p.forEach(([x,y])=>{
+        shpDV.setFloat64(shpOff,x,true);
+        shpDV.setFloat64(shpOff+8,y,true);
+        shpOff+=16;
+      });
+    });
+  });
+  
+  // DBF
+  const dbfData=bDBF(flds,records);
+  
+  return{
+    shp:new Uint8Array(shpBuf,0,shpOff),
+    shx:new Uint8Array(shxBuf),
+    dbf:dbfData,
+    prj:'GEOGCS["GCS_WGS_1984",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]]'
+  };
+}
+function exportCSV(){
+  if(!sel)return;const fp=FP[sel];if(!fp||!fp.sets.length)return;
+  const pts=fp.sets[fp.sets.length-1].pts;
+  let csv='ID,LAT,LON,SOIL_P,SOIL_K,SOIL_PH,SOIL_OM,SOIL_S,SOIL_ZN,SOIL_CEC,SOIL_BPH,RX_P2O5,RX_K2O,RX_LIME,RX_N,RX_S,RX_ZN,CROP,YIELD_GOAL\n';
+  pts.forEach(pt=>{csv+=`${pt.id},${pt.y},${pt.x},${pt.p||''},${pt.k||''},${pt.ph||''},${pt.om||''},${pt.s||''},${pt.zn||''},${pt.cec||''},${pt.bph||''},${calcPRate(pt.p,rxYG,rxCrop,rxTargetP)||''},${calcKRate(pt.k,rxYG,rxCrop,rxTargetK)||''},${calcLimeRate(pt.ph,pt.bph,rxTargetPH)},${calcNRate(pt.om,rxYG,rxPC)},${calcSRate(pt.s,rxTargetS)||''},${calcZnRate(pt.zn,rxTargetZn)||''},${rxCrop},${rxYG}\n`;});
+  const blob=new Blob([csv],{type:'text/csv'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`VR_${sel}_${rxCrop}.csv`;document.body.appendChild(a);a.click();document.body.removeChild(a);
+}
+function bSHP(pp){let cl=0;pp.forEach(p=>{cl+=8+4+32+4+4+4+p.length*16;});const buf=new ArrayBuffer(100+cl);const dv=new DataView(buf);
+  let xn=Infinity,yn=Infinity,xx=-Infinity,yx=-Infinity;pp.forEach(p=>p.forEach(([x,y])=>{xn=Math.min(xn,x);yn=Math.min(yn,y);xx=Math.max(xx,x);yx=Math.max(yx,y);}));
+  dv.setInt32(0,9994,false);dv.setInt32(24,(100+cl)/2,false);dv.setInt32(28,1000,true);dv.setInt32(32,5,true);
+  dv.setFloat64(36,xn,true);dv.setFloat64(44,yn,true);dv.setFloat64(52,xx,true);dv.setFloat64(60,yx,true);
+  let o=100;pp.forEach((p,i)=>{const np=p.length,c2=4+32+4+4+4+np*16;dv.setInt32(o,i+1,false);dv.setInt32(o+4,c2/2,false);o+=8;dv.setInt32(o,5,true);o+=4;
+    let rxn=Infinity,ryn=Infinity,rxx=-Infinity,ryx=-Infinity;p.forEach(([x,y])=>{rxn=Math.min(rxn,x);ryn=Math.min(ryn,y);rxx=Math.max(rxx,x);ryx=Math.max(ryx,y);});
+    dv.setFloat64(o,rxn,true);dv.setFloat64(o+8,ryn,true);dv.setFloat64(o+16,rxx,true);dv.setFloat64(o+24,ryx,true);o+=32;
+    dv.setInt32(o,1,true);o+=4;dv.setInt32(o,np,true);o+=4;dv.setInt32(o,0,true);o+=4;
+    p.forEach(([x,y])=>{dv.setFloat64(o,x,true);dv.setFloat64(o+8,y,true);o+=16;});});return new Uint8Array(buf,0,o);}
+function bSHX(pp){const n=pp.length;const buf=new ArrayBuffer(100+n*8);const dv=new DataView(buf);
+  let xn=Infinity,yn=Infinity,xx=-Infinity,yx=-Infinity;pp.forEach(p=>p.forEach(([x,y])=>{xn=Math.min(xn,x);yn=Math.min(yn,y);xx=Math.max(xx,x);yx=Math.max(yx,y);}));
+  dv.setInt32(0,9994,false);dv.setInt32(24,(100+n*8)/2,false);dv.setInt32(28,1000,true);dv.setInt32(32,5,true);
+  dv.setFloat64(36,xn,true);dv.setFloat64(44,yn,true);dv.setFloat64(52,xx,true);dv.setFloat64(60,yx,true);
+  let off=50;pp.forEach((p,i)=>{const c2=(4+32+4+4+4+p.length*16)/2;dv.setInt32(100+i*8,off,false);dv.setInt32(100+i*8+4,c2,false);off+=4+c2;});return new Uint8Array(buf);}
+function bDBF(fields,recs){const nR=recs.length,nF=fields.length;const hSz=32+nF*32+1;const rSz=1+fields.reduce((s,f)=>s+f.l,0);
+  const buf=new ArrayBuffer(hSz+nR*rSz);const dv=new DataView(buf);const b=new Uint8Array(buf);
+  dv.setUint8(0,3);const now=new Date();dv.setUint8(1,now.getFullYear()-1900);dv.setUint8(2,now.getMonth()+1);dv.setUint8(3,now.getDate());
+  dv.setInt32(4,nR,true);dv.setInt16(8,hSz,true);dv.setInt16(10,rSz,true);
+  let fo=32;fields.forEach(f=>{for(let i=0;i<Math.min(f.n.length,11);i++)b[fo+i]=f.n.charCodeAt(i);b[fo+11]=f.t.charCodeAt(0);b[fo+16]=f.l;b[fo+17]=f.d;fo+=32;});b[fo]=0x0D;
+  let ro=hSz;recs.forEach(rec=>{b[ro]=0x20;ro++;
+    fields.forEach(f=>{let v='';const k=f.n.toLowerCase();const rv=rec[k];
+      if(rv==null)v='';else if(f.t==='N')v=f.d>0?Number(rv).toFixed(f.d):String(Math.round(rv));else v=String(rv);
+      v=v.padStart(f.l,' ').slice(0,f.l);for(let i=0;i<f.l;i++)b[ro+i]=v.charCodeAt(i)||0x20;ro+=f.l;});});return new Uint8Array(buf,0,ro);}
+function dlZip(shp,name){const files=[{name:name+'.shp',data:shp.shp},{name:name+'.shx',data:shp.shx},{name:name+'.dbf',data:shp.dbf},{name:name+'.prj',data:new TextEncoder().encode(shp.prj)}];
+  const zip=mkZip(files);const blob=new Blob([zip],{type:'application/zip'});const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=name+'.zip';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);}
+function mkZip(files){const cd=[],lf=[];let off=0;
+  files.forEach(f=>{const nm=new TextEncoder().encode(f.name);const crc=crc32(f.data);
+    const l=new ArrayBuffer(30+nm.length+f.data.length);const ldv=new DataView(l);const lb=new Uint8Array(l);
+    ldv.setUint32(0,0x04034b50,true);ldv.setUint16(4,20,true);ldv.setUint32(14,crc,true);ldv.setUint32(18,f.data.length,true);ldv.setUint32(22,f.data.length,true);ldv.setUint16(26,nm.length,true);lb.set(nm,30);lb.set(f.data,30+nm.length);
+    const c=new ArrayBuffer(46+nm.length);const cdv=new DataView(c);const cb=new Uint8Array(c);
+    cdv.setUint32(0,0x02014b50,true);cdv.setUint16(4,20,true);cdv.setUint16(6,20,true);cdv.setUint32(16,crc,true);cdv.setUint32(20,f.data.length,true);cdv.setUint32(24,f.data.length,true);cdv.setUint16(28,nm.length,true);cdv.setUint32(42,off,true);cb.set(nm,46);
+    lf.push(new Uint8Array(l));cd.push(new Uint8Array(c));off+=l.byteLength;});
+  const cdOff=off;let cdSz=0;cd.forEach(c=>cdSz+=c.length);
+  const eocd=new ArrayBuffer(22);const edv=new DataView(eocd);edv.setUint32(0,0x06054b50,true);edv.setUint16(8,files.length,true);edv.setUint16(10,files.length,true);edv.setUint32(12,cdSz,true);edv.setUint32(16,cdOff,true);
+  const r=new Uint8Array(off+cdSz+22);let p=0;lf.forEach(l=>{r.set(l,p);p+=l.length;});cd.forEach(c=>{r.set(c,p);p+=c.length;});r.set(new Uint8Array(eocd),p);return r;}
+function crc32(d){let c=0xFFFFFFFF;const t=new Uint32Array(256);for(let i=0;i<256;i++){let v=i;for(let j=0;j<8;j++)v=v&1?0xEDB88320^(v>>>1):v>>>1;t[i]=v;}for(let i=0;i<d.length;i++)c=t[(c^d[i])&0xFF]^(c>>>8);return(c^0xFFFFFFFF)>>>0;}
+
+// Batch export
+function openBatchExport(){
+  const nS=Object.keys(FP).filter(f=>BNDRY[f]).length;
+  const nutLabel={p:'P₂O₅',k:'K₂O',ph:'Lime',s:'Sulfur',zn:'Zinc'};
+  showModal=`<div class="modal-ov" onclick="if(event.target===this){showModal=null;render();}"><div class="modal"><h2>📦 Batch VR Export<button class="mcl" onclick="showModal=null;render();">✕</button></h2>
+    <div class="dn"><b>One download for all ${nS} soil-sampled fields.</b> Inside: a shapefile zip per field for Operations Center (RATE in lb of product) and an order summary CSV with acres, average rate and tons per field. Takes a minute or two; the page will sit still while it works.</div>
+    <div class="rxb" style="margin-bottom:12px">
+      <div class="rxr"><label>Nutrient</label><select onchange="rxNut=this.value;openBatchExport()">${['p','k','ph','s','zn'].map(n=>`<option value="${n}" ${rxNut===n?'selected':''}>${nutLabel[n]}</option>`).join('')}</select>
+        <select id="bProd">${PRODUCTS[rxNut].map((p,i)=>`<option value="${i}" ${(rxProd[rxNut]||0)===i?'selected':''}>${p.name} (${Math.round(p.pct*100)}%)</option>`).join('')}</select></div>
+      <div class="rxr"><label>Crop ${META.plan_year}</label><select id="bCrop"><option value="auto" ${batchCrop==='auto'?'selected':''}>Each field's rotation (flip of ${META.plan_year-1})</option><option value="corn" ${batchCrop==='corn'?'selected':''}>All corn</option><option value="soybean" ${batchCrop==='soybean'?'selected':''}>All soybean</option></select></div>
+      <div class="rxr"><label>Yield goal</label><select id="bGoal"><option value="auto" ${batchGoal==='auto'?'selected':''}>Each field's own history +5%</option><option value="fixed" ${batchGoal!=='auto'?'selected':''}>Fixed, bu/ac:</option></select><input id="bYG" type="number" value="${batchGoal==='auto'?rxYG:batchGoal}" style="max-width:70px;flex:none"/></div>
+      <div class="rxr"><label>Targets</label><span style="font-size:10px;color:var(--tx2)">P ${rxTargetP} · K ${rxTargetK} · pH ${rxTargetPH.toFixed(1)} · S ${rxTargetS} · Zn ${rxTargetZn.toFixed(1)} ppm (set on a field's VR Rx tab)</span></div>
+    </div>
+    <div class="br"><button class="btn" onclick="runBatch()">⬇ Export All Fields</button><button class="btn btn-o" onclick="showModal=null;render();">Cancel</button></div></div></div>`;
+  render();}
+function runBatch(){
+  rxProd[rxNut]=+document.getElementById('bProd').value;
+  batchCrop=document.getElementById('bCrop').value;
+  const gSel=document.getElementById('bGoal').value,gVal=+document.getElementById('bYG').value;
+  batchGoal=gSel==='auto'?'auto':(gVal||'auto');
+  const prod=productFor(rxNut),nutName=NUTRIENT_NAME[rxNut];
+  const files=[],rows=[['field','org','county','acres','crop','prev_crop','yield_goal','nutrient','avg_nutrient_lb_ac','product','analysis_pct','avg_product_lb_ac','product_lb','product_tons','zones']];
+  const names=Object.keys(FP).filter(f=>BNDRY[f]).sort();
+  let done=0,skipped=0;
+  names.forEach(f=>{
+    const crop=batchCrop==='auto'?planCrop(f):batchCrop;
+    const pc=prevCrop(f);
+    const yg=batchGoal==='auto'?defaultGoal(f,crop):batchGoal;
+    const rateFn=makeZonalRateFn(f,rxNut,crop,yg,rxTargetP,rxTargetK,rxTargetPH,rxTargetS,rxTargetZn,pc);
+    let z=null;try{z=exportZones(f,rateFn,rxNut,crop,yg);}catch(e){console.warn(f,e);}
+    if(!z||!z.records.length){skipped++;return;}
+    const shp=buildMultiPartSHP(z.records,RX_FIELDS);
+    const nm=rxFileName(f,rxNut,crop);
+    files.push({name:nm+'.zip',data:mkZip([{name:nm+'.shp',data:shp.shp},{name:nm+'.shx',data:shp.shx},{name:nm+'.dbf',data:shp.dbf},{name:nm+'.prj',data:new TextEncoder().encode(shp.prj)}])});
+    const ac=z.records.reduce((s,r)=>s+r.acres,0);
+    const lbProd=z.records.reduce((s,r)=>s+r.rate*r.acres,0),lbNut=z.records.reduce((s,r)=>s+r.nut_rate*r.acres,0);
+    const p=FPROP[f]||{};
+    rows.push([f,p.org||'',p.farm||'',ac.toFixed(1),crop,pc,yg,nutName,ac?(lbNut/ac).toFixed(0):'',prod.name,Math.round(prod.pct*100),ac?(lbProd/ac).toFixed(0):'',lbProd.toFixed(0),(lbProd/2000).toFixed(2),z.records.length]);
+    done++;
+  });
+  const csv=rows.map(r=>r.map(v=>/[",\n]/.test(String(v))?'"'+String(v).replace(/"/g,'""')+'"':v).join(',')).join('\n');
+  files.push({name:`order_summary_${nutName}_${META.plan_year}.csv`,data:new TextEncoder().encode(csv)});
+  const blob=new Blob([mkZip(files)],{type:'application/zip'});const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=`VR_Rx_batch_${nutName}_${META.plan_year}.zip`;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+  showModal=null;render();
+  alert(`Exported ${done} fields${skipped?`, skipped ${skipped} with no zones`:''}. One shapefile zip per field plus order_summary_${nutName}_${META.plan_year}.csv.`);
+}
+
+// Events
+function tF(f){if(expanded.has(f))expanded.delete(f);else expanded.add(f);uSB();}
+function sF(f){sel=f;panelTab=FP[f]?'zones':'history';clearOv();
+  // Each field starts from its own rotation and history: the crop after
+  // last season's, the previous crop as planted, a goal from its yields.
+  rxCrop=planCrop(f);rxPC=prevCrop(f);rxYG=defaultGoal(f,rxCrop);
+  for(const[fm,flds]of Object.entries(FF))if(flds.includes(f)&&!expanded.has(fm))expanded.add(fm);
+  rP();uSB();rfM();showInterp();}
+function uSrch(q){sq=q;uSB();}
+function sML(l){mLyr=l;sTiles();document.querySelectorAll('.mb').forEach(b=>b.classList.remove('a'));event.target.classList.add('a');}
+function sHN(n){hNut=n;rfM();updateLegend();if(sel){if(panelTab==='zones'){rP();showInterp();}else if(panelTab==='history'){rP();}else if(panelTab==='vr'){/* keep current */}}}
+function uSB(){document.querySelector('.sb').innerHTML=`<input class="sb-input" placeholder="Search fields..." value="${sq}" oninput="uSrch(this.value)"/><h3>Farm Fields</h3>${rFL()}`;}
+function rfM(){if(!map)return;map.eachLayer(l=>{if(l.feature)map.removeLayer(l);});addBounds();}
+function rP(){document.querySelector('.pn').innerHTML=sel?rFP():rEP();}
+
+render();
+
+</script></body></html>

@@ -65,6 +65,51 @@ each dealer tells you whether they handle it, and pins that don't pan out can be
 deleted straight out of the `nfDealers` array.
 
 ---
+## Also in this repo: variable-rate fertilizer prescriptions
+
+`rx-builder.html` is a prescription builder: soil-test grids and John Deere
+Operations Center data in, zone shapefiles for the spreader out. The file at
+the repo root is the code only. The page with the farm's data in it is
+written OUTSIDE the repo, because the repo is public and the data is not:
+
+    python dev/jd_fleet.py                 fields and boundaries (once, then when they change)
+    python dev/jd_rx_soil.py <old page>    one-time: lift the lab grids out of the chat-built page
+    python dev/jd_rx_pull.py               crop history since 2015 and yield maps, from Deere
+    python dev/jd_build_rx.py              -> ~/.grain-map-secrets/rx-builder.html
+
+Open that file in a browser. What it does, per field:
+
+* **Soil** - the latest lab grid (Waypoint or Midwest Labs), interpolated
+  and classed against ISU PM 1688 categories; the history of every event.
+* **Crop history** - each season's planting pass, harvest (Deere's own
+  average, moisture, acres) and applications, from Operations Center.
+* **Yield maps** - each harvest pass, thinned to 20 m cells and expressed
+  against the field's own average, averaged over the years on file. The
+  removal part of the rate follows this map: a spot that yields 20% above
+  the field average removes 20% more.
+* **The plan** - the crop for the plan year is the rotation (whatever went
+  in last, flipped), the previous crop is what was actually planted, and the
+  yield goal is the field's last three harvests of that crop plus 5%. All
+  three can be overridden.
+* **Rates** - ISU removal + build-up for P and K, lime from buffer pH,
+  sulfur and zinc from thresholds; written in pounds of PRODUCT (MAP,
+  potash, AMS, zinc sulfate, ag lime at an ECCE) with the nutrient rate
+  alongside, so the shapefile is what the spreader needs.
+* **Export** - one shapefile zip per field, or one download for every
+  sampled field with an order summary CSV (acres, average rate, tons).
+  Multi-part fields stay one prescription; farmstead cutouts are not cut
+  out of the zones (the field boundary in the monitor handles that) but
+  their acres are left out of the totals.
+
+Soil grids are matched to Deere fields by where the sample points fall,
+not by name - field names carry the acreage and change when a boundary is
+redrawn, and 20 of 213 had.
+
+`dev/jd_rx_push.py` uploads the zips into Operations Center's Files as
+prescriptions. It needs the `files` scope, which the map's token was not
+issued with: enable the Files API for the app on developer.deere.com, then
+`python dev/jd_explore.py --with-files` to sign in again.
+
 ## Setup (one time)
 
 ### 1. Push this repo to GitHub
