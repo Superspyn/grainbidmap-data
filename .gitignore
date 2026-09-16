@@ -22,3 +22,6 @@ dev/.private-test.html
 dev/cloudflare/.wrangler/
 dev/cloudflare/node_modules/
 dev/.icon-preview.html
+
+# detector weights, fetched on first run by dev/cam_watch.py
+dev/config/*.pt
