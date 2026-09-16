@@ -1,10 +1,15 @@
 /**
- * Private relay for truck positions.
+ * Private relay for truck positions and elevator-camera readings.
  *
  * Deere's API sends no CORS headers, so the map can never call it directly,
  * and the positions must not be public - they say when the yard is empty and
  * where equipment sits overnight. This Worker sits between: the farm PC PUTs
  * the latest positions, the password-protected page GETs them.
+ *
+ * Paths:
+ *   /          truck positions   (dev/jd_push.py  ->  the private map)
+ *   /cameras   line-camera counts and wait estimates
+ *              (dev/cam_watch.py  ->  the camera block, dev/cam_build_block.py)
  *
  * Two separate tokens, because the two sides need different trust:
  *   PUSH_TOKEN  - only the farm PC has it. Write access.
@@ -22,7 +27,12 @@
  *   4. Settings -> Bindings -> KV namespace, variable name FLEET
  */
 
-const KEY = "fleet";
+// One KV key per path. "/" is the truck positions, as it always was; the
+// camera watcher's readings live beside them under their own key so that a
+// camera push can never overwrite the fleet, nor the other way round. Both
+// use the same two tokens - the readings say where the farm's trucks haul,
+// so they are as private as the positions.
+const KEYS = { "/": "fleet", "/cameras": "cameras" };
 
 // The private page is on a different origin, so the browser preflights.
 function cors(origin) {
@@ -57,6 +67,12 @@ export default {
       return new Response(null, { status: 204, headers });
     }
 
+    const path = new URL(request.url).pathname.replace(/\/+$/, "") || "/";
+    const KEY = KEYS[path];
+    if (!KEY) {
+      return new Response("not found", { status: 404, headers });
+    }
+
     if (request.method === "PUT") {
       if (!sameToken(bearer(request), env.PUSH_TOKEN)) {
         return new Response("forbidden", { status: 403, headers });
@@ -72,7 +88,9 @@ export default {
       body.relayed_at = new Date().toISOString();
       await env.FLEET.put(KEY, JSON.stringify(body));
       return new Response(
-        JSON.stringify({ ok: true, trucks: (body.trucks || []).length }),
+        JSON.stringify({ ok: true, key: KEY,
+                         trucks: (body.trucks || []).length,
+                         cameras: (body.cameras || []).length }),
         { status: 200, headers: { ...headers, "Content-Type": "application/json" } }
       );
     }
@@ -83,7 +101,7 @@ export default {
       }
       const stored = await env.FLEET.get(KEY);
       if (!stored) {
-        return new Response(JSON.stringify({ trucks: [], relayed_at: null }), {
+        return new Response(JSON.stringify({ trucks: [], cameras: [], relayed_at: null }), {
           status: 200,
           headers: { ...headers, "Content-Type": "application/json" },
         });

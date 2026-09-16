@@ -6,7 +6,9 @@
 
 Built like the bid scraper and kept apart from the map on purpose: the farm
 PC runs it, the results land in a log on the PC, and nothing reaches the
-map until that is decided separately.
+map until that is decided separately. What does leave the PC is a small
+summary - counts, wait, which pace was used - pushed to the private relay's
+/cameras key, where the paste-in block from dev/cam_build_block.py reads it.
 
 What one pass does, per camera:
 
@@ -42,6 +44,7 @@ import pathlib
 import re
 import statistics
 import sys
+import urllib.error
 import urllib.request
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
@@ -336,35 +339,117 @@ def watch_once(cameras: list[dict], state: dict, force: bool = False) -> None:
     state["updated"] = now_iso()
 
 
-def report(cameras: list[dict], state: dict) -> None:
-    now = _dt.datetime.now(_dt.timezone.utc)
-    trails = read_json(SECRETS / "trails.json", {})
+def summary(cameras: list[dict], state: dict, now: _dt.datetime | None = None,
+            trails: dict | None = None) -> dict:
+    """Everything a page needs to show the wait, and nothing it does not:
+    no frames, no detection boxes, no region polygons. One entry per camera
+    whether or not it has been read yet, so the page can list a camera as
+    "nothing seen yet" rather than silently leaving it out."""
+    now = now or _dt.datetime.now(_dt.timezone.utc)
+    if trails is None:
+        trails = read_json(SECRETS / "trails.json", {})
+    today = now.astimezone().date()
+    out = []
     for cam in cameras:
         cid = cam["id"]
         hist = (state.get("cameras") or {}).get(cid) or []
-        print(f"\n{cam.get('name', cid)}")
-        if not hist:
+        entry = {"id": cid, "name": cam.get("name", cid), "url": cam.get("url"),
+                 "pin": cam.get("pin"), "hours": cam.get("hours"),
+                 "open": in_hours(cam, now.astimezone()),
+                 "at": None, "camera_time": None, "line": None, "pits": {},
+                 "per_truck": None, "source": None, "wait_min": None,
+                 "today": [], "visits": []}
+        errors = [e for e in state.get("errors", []) if e.get("camera") == cid]
+        if errors and (not hist or errors[-1]["t"] > hist[-1]["t"]):
+            entry["error"] = errors[-1]["error"]
+        if hist:
+            last = hist[-1]
+            visits = own_visits(cam["lat"], cam["lon"], trails) if cam.get("lat") else []
+            per_truck, source = pace(cam, hist, visits, now)
+            entry.update({
+                "at": last["t"], "camera_time": last.get("camera_time"),
+                "line": last["line"], "pits": last.get("pits") or {},
+                "per_truck": round(per_truck, 1), "source": source,
+                "wait_min": round(last["line"] * per_truck),
+                # Today's line counts, thinned to one reading per ten minutes
+                # at most so a fourteen-hour day is under a hundred points.
+                "today": _thin([{"t": h["t"], "line": h["line"]} for h in hist
+                                if (parse_iso(h["t"]) or now).astimezone().date() == today]),
+                "visits": [{"vin": v["vin"][-6:], "start": v["start"], "minutes": v["minutes"]}
+                           for v in sorted(visits, key=lambda v: v["end"])[-3:]],
+            })
+        out.append(entry)
+    return {"generated_at": iso(now), "cameras": out}
+
+
+def _thin(points: list[dict], every_min: float = 10.0) -> list[dict]:
+    kept: list[dict] = []
+    for p in points:
+        if kept and (parse_iso(p["t"]) - parse_iso(kept[-1]["t"])).total_seconds() < every_min * 60:
+            kept[-1] = p if p["line"] > kept[-1]["line"] else kept[-1]   # keep the busier reading
+            continue
+        kept.append(p)
+    return kept
+
+
+def report(cameras: list[dict], state: dict) -> None:
+    for entry in summary(cameras, state)["cameras"]:
+        print(f"\n{entry['name']}")
+        if entry.get("error"):
+            print(f"  last try failed: {entry['error']}")
+        if entry["at"] is None:
             print("  nothing seen yet")
             continue
-        last = hist[-1]
-        visits = own_visits(cam["lat"], cam["lon"], trails) if cam.get("lat") else []
-        per_truck, source = pace(cam, hist, visits, now)
-        wait = last["line"] * per_truck
-        when = parse_iso(last["t"]).astimezone().strftime("%I:%M %p").lstrip("0")
-        pits = ", ".join(f"{k} {'busy' if v else 'open'}" for k, v in (last.get("pits") or {}).items())
-        print(f"  {when}: {last['line']} in line, {pits}")
-        print(f"  about {wait:.0f} min wait at {per_truck:.1f} min/truck - from {source}")
-        today = [h for h in hist if parse_iso(h["t"]).astimezone().date() == _dt.date.today()]
-        if len(today) > 1:
-            line = " ".join(f"{parse_iso(h['t']).astimezone().strftime('%H:%M')}={h['line']}" for h in today[-24:])
+        when = parse_iso(entry["at"]).astimezone().strftime("%I:%M %p").lstrip("0")
+        pits = ", ".join(f"{k} {'busy' if v else 'open'}" for k, v in entry["pits"].items())
+        print(f"  {when}: {entry['line']} in line, {pits}")
+        print(f"  about {entry['wait_min']} min wait at {entry['per_truck']:.1f} min/truck"
+              f" - from {entry['source']}")
+        if len(entry["today"]) > 1:
+            line = " ".join(f"{parse_iso(h['t']).astimezone().strftime('%H:%M')}={h['line']}"
+                            for h in entry["today"][-24:])
             print(f"  today: {line}")
-        if visits:
-            latest = sorted(visits, key=lambda v: v["end"])[-3:]
+        if entry["visits"]:
             print("  your trucks there: " + "; ".join(
-                f"{v['vin'][-6:]} {v['minutes']:.0f} min on {v['start'][5:10]}" for v in latest))
-        errors = [e for e in state.get("errors", []) if e["camera"] == cid]
-        if errors:
-            print(f"  {len(errors)} error(s), last: {errors[-1]['error']}")
+                f"{v['vin']} {v['minutes']:.0f} min on {v['start'][5:10]}" for v in entry["visits"]))
+
+
+# ---------------------------------------------------------------------------
+# the relay
+
+RELAY = SECRETS / "relay.json"
+PUSH_EVERY_MIN = 10.0
+
+
+def push(cameras: list[dict], state: dict) -> str | None:
+    """PUT the summary to the private relay's /cameras key, if a relay is
+    configured. Only when something the page shows has changed, or every
+    ten minutes regardless so its "as of" keeps moving: a quiet afternoon
+    of "0 in line" every two minutes is 400 identical writes a day, and
+    the relay's free tier allows a thousand across trucks and cameras."""
+    cfg = read_json(RELAY, {})
+    if not cfg.get("url") or not cfg.get("push_token"):
+        return None
+    now = _dt.datetime.now(_dt.timezone.utc)
+    body = summary(cameras, state, now)
+    sig = json.dumps([[c["id"], c["line"], c["pits"], c["wait_min"], c["source"], c.get("error")]
+                      for c in body["cameras"]], sort_keys=True)
+    last = state.get("relay") or {}
+    last_at = parse_iso(last.get("at"))
+    if sig == last.get("sig") and last_at and (now - last_at).total_seconds() < PUSH_EVERY_MIN * 60:
+        return "unchanged"
+    request = urllib.request.Request(
+        cfg["url"].rstrip("/") + "/cameras", data=json.dumps(body).encode(), method="PUT")
+    request.add_header("Authorization", "Bearer " + cfg["push_token"])
+    request.add_header("Content-Type", "application/json")
+    request.add_header("User-Agent", USER_AGENT)
+    try:
+        with urllib.request.urlopen(request, timeout=45) as response:
+            result = response.read().decode()[:120]
+    except (urllib.error.URLError, OSError) as exc:
+        return f"relay refused: {exc}"
+    state["relay"] = {"sig": sig, "at": iso(now)}
+    return result
 
 
 def main() -> None:
@@ -397,6 +482,9 @@ def main() -> None:
 
     print(f"watching {len(cameras)} camera(s)...")
     watch_once(cameras, state, force=args.force)
+    pushed = push(cameras, state)
+    if pushed:
+        print(f"  relay: {pushed}")
     write_private(STATE, state, separators=(",", ":"))
 
 

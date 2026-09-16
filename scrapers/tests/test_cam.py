@@ -68,6 +68,87 @@ def test_pace_prefers_camera_then_own_trucks_then_default():
     assert per == 5 and "default" in src
 
 
+def _state_with(readings):
+    return {"cameras": {"t": readings}, "errors": []}
+
+
+def test_summary_lists_an_unread_camera_and_its_last_error():
+    import datetime as dt
+    now = dt.datetime(2026, 9, 16, 18, 0, tzinfo=dt.timezone.utc)
+    cam = dict(CAM, name="Test", url="https://x/y", hours=[0, 24])
+    state = {"cameras": {}, "errors": [{"t": "2026-09-16T17:58:00Z", "camera": "t", "error": "no frame"}]}
+    out = cam_watch.summary([cam], state, now, trails={})
+    assert out["generated_at"] == "2026-09-16T18:00:00Z"
+    (entry,) = out["cameras"]
+    assert entry["at"] is None and entry["error"] == "no frame" and entry["open"]
+    assert entry["name"] == "Test" and entry["url"] == "https://x/y"
+
+
+def test_summary_carries_wait_pace_and_todays_line_and_nothing_heavy():
+    import datetime as dt
+    now = dt.datetime(2026, 9, 16, 18, 0, tzinfo=dt.timezone.utc)
+    cam = dict(CAM, default_minutes_per_truck=4, hours=[0, 24])
+    hist = [{"t": f"2026-09-16T17:{m:02d}:00Z", "line": n, "pits": {"pit1": False}, "vehicles": n}
+            for m, n in [(0, 0), (2, 1), (4, 3), (30, 2)]]
+    out = cam_watch.summary([cam], _state_with(hist), now, trails={})
+    (entry,) = out["cameras"]
+    assert entry["line"] == 2 and entry["per_truck"] == 4.0 and entry["wait_min"] == 8
+    assert "default" in entry["source"] and "error" not in entry
+    # thinned to ten-minute steps, keeping the busiest reading in each
+    assert [p["line"] for p in entry["today"]] == [3, 2]
+    assert "boxes" not in json_dump(entry) and "line\": [[" not in json_dump(entry)
+
+
+def json_dump(obj):
+    import json
+    return json.dumps(obj)
+
+
+def test_push_skips_when_nothing_changed_and_pushes_again_after_ten_minutes(monkeypatch, tmp_path):
+    import json
+    relay = tmp_path / "relay.json"
+    relay.write_text(json.dumps({"url": "https://relay.test/", "push_token": "p"}))
+    monkeypatch.setattr(cam_watch, "RELAY", relay)
+    sent = []
+
+    class _Resp:
+        def __enter__(self): return self
+        def __exit__(self, *a): return False
+        def read(self): return b'{"ok":true}'
+
+    def fake_open(req, timeout):
+        sent.append((req.full_url, req.get_header("Authorization"), json.loads(req.data)))
+        return _Resp()
+    monkeypatch.setattr(cam_watch.urllib.request, "urlopen", fake_open)
+    cam = dict(CAM, hours=[0, 24])
+    hist = [{"t": "2026-09-16T17:00:00Z", "line": 1, "pits": {"pit1": True}}]
+    state = _state_with(hist)
+
+    assert cam_watch.push([cam], state) == '{"ok":true}'
+    assert sent[0][0] == "https://relay.test/cameras" and sent[0][1] == "Bearer p"
+    assert sent[0][2]["cameras"][0]["line"] == 1
+    assert cam_watch.push([cam], state) == "unchanged" and len(sent) == 1
+    # the count changes: pushed at once
+    hist.append({"t": "2026-09-16T17:02:00Z", "line": 2, "pits": {"pit1": True}})
+    assert cam_watch.push([cam], state) == '{"ok":true}' and len(sent) == 2
+    # nothing changes but the last push is old: pushed so "as of" moves
+    state["relay"]["at"] = "2026-09-16T17:00:00Z"
+    assert cam_watch.push([cam], state) == '{"ok":true}' and len(sent) == 3
+
+
+def test_push_is_a_no_op_without_a_relay(monkeypatch, tmp_path):
+    monkeypatch.setattr(cam_watch, "RELAY", tmp_path / "missing.json")
+    assert cam_watch.push([CAM], _state_with([])) is None
+
+
+def test_block_is_ascii_and_carries_only_the_read_token():
+    import cam_build_block
+    html = cam_build_block.build("https://relay.test", "READ123")
+    assert all(ord(c) < 128 for c in html)
+    assert '"READ123"' in html and "__RELAY_" not in html
+    assert "/cameras" in html and "Authorization" in html
+
+
 def test_own_visits_split_on_a_long_gap_and_ignore_far_points():
     pin = (42.3295, -93.6649)
     pts = []
