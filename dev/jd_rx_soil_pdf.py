@@ -168,7 +168,7 @@ def split_merged(tokens: list[str]) -> list[tuple[str, str]]:
 
     On the later pages of a long report the row number and the lab's
     sample id are drawn with no gap between them, so they come back as one
-    word and the row is missed entirely - which is how 88 of Hansen473's
+    word and the row is missed entirely - which is how 88 of one field's
     188 samples went missing. Both numbers count up by one per row, so the
     split is the one place where that holds for the whole page."""
     if len(tokens) < 2:
@@ -329,7 +329,7 @@ def page_average(words: list[dict], cols: dict) -> dict:
 # analysis pages do not: the field's FULL name, its county, its acres, its
 # centroid, the crops, and E4's own min / average / max for that nutrient.
 # The spreadsheet's names are cut at 14 characters, so these pages are how
-# a row like "Richrdsn264Cha" gets its real name and a location.
+# a row like "Rvrsde264Chrl" gets its real name and a location.
 MAP_CODES = {
     "OM": "om", "CEC": "cec", "PH": "ph", "BPH": "bph",
     "MEHLICHP_COLOR": "p", "K": "k", "CA": "ca", "MG": "mg", "S": "s",

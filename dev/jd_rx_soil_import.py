@@ -37,7 +37,7 @@ Two things worth knowing about the numbers:
     so both land in "bph".
 
 The whole-field rows name their field in 14 characters, and some of those
-names have drifted from Operations Center ("Richrdsn31Glen", "Beilenbrg70Ben"),
+names have drifted from Operations Center ("Rvrsde31Glen", "Lakevwe70Ben"),
 so they are matched to Deere fields by farm name plus the acreage in the
 name, never by string equality. Whatever does not match is listed at the
 end and stored under "unmatched" - nothing is dropped silently.
@@ -351,7 +351,7 @@ def deere_names() -> dict:
 
 
 def split_name(name: str) -> tuple[str, str]:
-    """"Richrdsn264Cha" -> ("richrdsn", "264"). The farm, then the acres."""
+    """"Rvrsde264Chrl" -> ("rvrsde", "264"). The farm, then the acres."""
     m = re.match(r"([A-Za-z_]+)(\d+)", name.strip())
     return (m.group(1).lower(), m.group(2)) if m else (name.strip().lower(), "")
 
@@ -369,8 +369,8 @@ def match_field(name: str, candidates: dict, aliases: dict) -> tuple[str | None,
 
     Exact prefix first (the row name is truncated at 14 characters), then
     same acreage with a farm name close enough to be the same farm -
-    which is what catches Beilenbrg/Bielenbrg and Wheatley75Cumm ->
-    Wheatley75/EffingtonCummins1."""
+    which is what catches Lakevwe/Lakeview and Hilltop75Cumm ->
+    Hilltop75/EastCummins1."""
     if name in aliases:
         alias = aliases[name]
         return (alias, "alias") if alias in candidates else (None, "alias not a field")
@@ -464,7 +464,7 @@ def match_by_centroid(lon: float, lat: float, boundaries: list,
     outside the field it belongs to. When that happens the acreage breaks
     the tie: one nearby field whose area agrees to within a few per cent
     is the same field under a changed name, which is how the lab's
-    "Robards190Warn10" meets Deere's "Robards230Warn10" at 229.6 acres."""
+    "Rvrsde190Warn10" meets Deere's "Rvrsde230Warn10" at 229.6 acres."""
     here = [b for b in boundaries if not org or b[1] == org]
     hits = [b[0] for b in here if _contains(b[2], lon, lat)]
     if len(hits) == 1:

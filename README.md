@@ -89,7 +89,7 @@ every page carries a text layer, so the script reads the lab's own
 per-sample table, averages it, and prints every field average the sheet
 disagrees with. Run it before the import, because it also writes the full
 field names and each field's centroid, which is how a row the lab named
-`Richrdsn264Cha` gets placed on the right Deere field:
+`Rvrsde264Chrl` gets placed on the right Deere field:
 
     python dev/jd_rx_soil_pdf.py <lab dir>     -> ~/.grain-map-secrets/soil-reports.json
 
@@ -141,7 +141,7 @@ not by name - field names carry the acreage and change when a boundary is
 redrawn, and 20 of 213 had. Whole-field composites have no points to match
 on, so those fall back to the name: exact prefix first (the lab truncates
 at 14 characters), then same acreage with a close farm name, which is what
-catches `Beilenbrg70Ben` -> `Bielenbrg70Bentn19_30`. Anything left over is
+catches `Lakevwe70Ben` -> `Lakeview70Bentn19_30`. Anything left over is
 listed at the end of the import and can be resolved by hand in
 `~/.grain-map-secrets/soil-field-aliases.json`.
 
