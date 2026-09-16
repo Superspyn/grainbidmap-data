@@ -1,0 +1,73 @@
+[
+  {
+    "id": "poet-jewell",
+    "name": "POET Jewell",
+    "pin": "poet Jewell Ethanol",
+    "lat": 42.329504,
+    "lon": -93.664923,
+    "url": "https://truckline.poet.com/Camera/Jewell",
+    "hours": [
+      6,
+      20
+    ],
+    "default_minutes_per_truck": 5,
+    "_regions": "pixel polygons on the 704x576 frame, drawn from a real still on 2026-09-16: the line is the concrete apron in front of the pits; each pit is the bay under its sign. Trucks are placed by their wheels.",
+    "min_box_height": 45,
+    "line": [
+      [
+        40,
+        286
+      ],
+      [
+        640,
+        286
+      ],
+      [
+        704,
+        560
+      ],
+      [
+        0,
+        560
+      ]
+    ],
+    "pits": {
+      "pit1": [
+        [
+          240,
+          190
+        ],
+        [
+          350,
+          190
+        ],
+        [
+          350,
+          285
+        ],
+        [
+          240,
+          285
+        ]
+      ],
+      "pit2": [
+        [
+          135,
+          200
+        ],
+        [
+          240,
+          200
+        ],
+        [
+          240,
+          290
+        ],
+        [
+          135,
+          290
+        ]
+      ]
+    }
+  }
+]
