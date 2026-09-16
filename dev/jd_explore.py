@@ -5,6 +5,9 @@ data anywhere - it prints a summary to the terminal so we can see what exists
 before designing around it.
 
     python dev/jd_explore.py
+    python dev/jd_explore.py --with-files   also ask for the files + work plan
+                                           scopes, so dev/jd_rx_push.py can
+                                           upload prescriptions
 
 Credentials
 -----------
@@ -57,7 +60,13 @@ API = "https://partnerapi.deere.com"
 
 # Equipment for the trucks, ag for the fields, offline_access so the farm PC
 # can refresh without a browser once this has been done by hand.
-SCOPES = "ag1 ag2 eq1 eq2 org1 org2 offline_access"
+SCOPES = "openid profile ag1 ag2 eq1 eq2 org1 org2 offline_access"
+# Added with --with-files: upload prescriptions (files) and read/create work
+# plans (work1/work2). The app must have those APIs enabled on
+# developer.deere.com first, or Deere's sign-in page refuses the whole
+# request as invalid_scope. A refresh token only ever carries the scopes it
+# was issued with, so a new scope means signing in again, not refreshing.
+EXTRA_SCOPES = "files work1 work2"
 
 ACCEPT = "application/vnd.deere.axiom.v3+json"
 
@@ -156,10 +165,15 @@ def sign_in(cfg: dict) -> dict:
         "response_type": "code",
         "client_id": cfg["client_id"],
         "redirect_uri": cfg["redirect_uri"],
-        "scope": SCOPES,
+        "scope": cfg.get("_scopes") or SCOPES,
         "state": state,
         "code_challenge": challenge,
         "code_challenge_method": "S256",
+        # Force the account chooser. Without this the browser silently reuses
+        # whichever John Deere session it already holds, which is how a token
+        # ends up belonging to an account you did not mean to use - and there
+        # are two logins for the same person on this org with different permissions.
+        "prompt": "login",
     })
     print("Opening your browser to sign in to John Deere...")
     print(f"  if it does not open, paste this in yourself:\n  {url}\n")
@@ -252,7 +266,27 @@ def age(iso: str | None) -> str:
 
 def main() -> None:
     cfg = load_config()
+    if "--with-files" in sys.argv:
+        cfg["_scopes"] = SCOPES + " " + EXTRA_SCOPES
+        print(f"requesting extra scopes: {EXTRA_SCOPES}")
     token = sign_in(cfg)["access_token"]
+
+    # Say which account this token belongs to. With two same-named logins on
+    # one organization and different permissions on each, "who signed in" is
+    # the first thing worth knowing when access is refused.
+    try:
+        req = urllib.request.Request(
+            "https://signin.johndeere.com/oauth2/aus78tnlaysMraFhC1t7/v1/userinfo")
+        req.add_header("Authorization", "Bearer " + token)
+        req.add_header("Accept", "application/json")
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            who = json.loads(resp.read().decode())
+        print("\nsigned in as:")
+        for key in ("name", "preferred_username", "email", "sub"):
+            if who.get(key):
+                print(f"   {key:20s} {who[key]}")
+    except Exception as exc:  # noqa: BLE001
+        print(f"\n(could not read who signed in: {type(exc).__name__})")
 
     orgs = api(token, "/platform/organizations").get("values", [])
     print(f"\n{len(orgs)} organization(s):")
