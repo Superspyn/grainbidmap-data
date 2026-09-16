@@ -4,7 +4,7 @@
 
 Reads, all in ~/.grain-map-secrets/:
     fleet.json          fields and boundaries (dev/jd_fleet.py)
-    soil-samples.json   lab grids (dev/jd_rx_soil.py)
+    soil-samples.json   lab grids and composites (dev/jd_rx_soil_import.py)
     rx-ops.json         crop, harvest and application history (dev/jd_rx_pull.py)
     rx-yield/*.json     thinned yield maps (dev/jd_rx_pull.py)
 
@@ -21,8 +21,10 @@ belongs to whichever boundary most of its points fall inside.
 """
 from __future__ import annotations
 
+import datetime as dt
 import glob
 import json
+import math
 import pathlib
 import sys
 
@@ -140,6 +142,14 @@ def match_soil(soil: dict, fields: list[dict], geoms: dict) -> tuple[dict, list]
                         counts[name] = counts.get(name, 0) + 1
             if counts:
                 best, best_n = max(counts.items(), key=lambda kv: kv[1])
+        if not pts and soil_name in by_name:
+            # A whole-field composite: no coordinates to match on, but the
+            # importer already resolved the lab's name to this field.
+            out.setdefault(soil_name, {"county": rec.get("county"), "sets": []})
+            out[soil_name]["sets"] = sorted(out[soil_name]["sets"] + rec["sets"],
+                                            key=lambda s: s["d"])
+            report.append((soil_name, soil_name, "whole-field composite"))
+            continue
         if best and best_n >= max(3, len(pts) * 0.5):
             how = "same name" if best == soil_name else f"by location ({best_n}/{len(pts)} pts)"
         elif soil_name in by_name:
@@ -156,6 +166,80 @@ def match_soil(soil: dict, fields: list[dict], geoms: dict) -> tuple[dict, list]
             out[best] = {"county": rec.get("county"), "sets": rec["sets"]}
         report.append((soil_name, best, how))
     return out, report
+
+
+# ------------------------------------------------------- whole-field spread
+
+# One pseudo-sample per this many acres, so a composite field gets a grid
+# of the same order as a real 2.5-acre grid.
+SPREAD_ACRES = 2.5
+MAX_SPREAD = 400
+
+
+def drop_duplicate_wholes(soil_by_field: dict) -> int:
+    """A whole-field row that is the average of a grid event this field
+    already has is dropped, keeping the points.
+
+    The importer does this too, but it can only compare records under the
+    same lab name. The composite carries the Operations Center name while
+    the grid carries the lab's ("Hansen473Hardn3132" vs
+    "Hansen473Hardn31,32"), so the pair only meets here, after matching."""
+    n = 0
+    for rec in soil_by_field.values():
+        grids = [dt.date.fromisoformat(s["d"]) for s in rec["sets"]
+                 if s.get("kind") != "whole"]
+        keep = []
+        for s in rec["sets"]:
+            if s.get("kind") == "whole":
+                d = dt.date.fromisoformat(s["d"])
+                if any(abs((d - g).days) <= 14 for g in grids):
+                    n += 1
+                    continue
+            keep.append(s)
+        rec["sets"] = keep
+    return n
+
+
+def spread_whole(rec: dict, geom: dict) -> int:
+    """Give every whole-field composite a point set covering its boundary.
+
+    A 2026 composite is one row of lab numbers for the whole field, with
+    no coordinates. The page draws rates from points, so the composite is
+    laid out as an even grid of identical samples inside the boundary.
+    The nutrient map is then flat, which is honest - one lab number is
+    all we know - but the RATE map still varies across the field, because
+    removal is scaled by the yield index at each spot. The page marks
+    these fields as composites so nobody reads the flat map as a grid."""
+    made = 0
+    for s in rec["sets"]:
+        if s.get("kind") != "whole" or s.get("pts"):
+            continue
+        polys = [geom["coordinates"]] if geom["type"] == "Polygon" else geom["coordinates"]
+        xs = [c[0] for rings in polys for c in rings[0]]
+        ys = [c[1] for rings in polys for c in rings[0]]
+        x0, x1, y0, y1 = min(xs), max(xs), min(ys), max(ys)
+        lat = (y0 + y1) / 2
+        side = math.sqrt(SPREAD_ACRES * 4046.8564)          # metres
+        dlat = side / 111320.0
+        dlon = dlat / max(0.2, math.cos(math.radians(lat)))
+        pts = []
+        y = y0 + dlat / 2
+        while y < y1 and len(pts) < MAX_SPREAD:
+            x = x0 + dlon / 2
+            while x < x1 and len(pts) < MAX_SPREAD:
+                if contains(geom, x, y):
+                    pts.append({"x": round(x, 7), "y": round(y, 7),
+                                "id": len(pts) + 1, **s["avg"]})
+                x += dlon
+            y += dlat
+        if not pts:                      # field smaller than one cell
+            cx = sum(xs) / len(xs)
+            cy = sum(ys) / len(ys)
+            pts = [{"x": round(cx, 7), "y": round(cy, 7), "id": 1, **s["avg"]}]
+        s["pts"] = pts
+        s["spread"] = len(pts)
+        made += 1
+    return made
 
 
 # ---------------------------------------------------------------- history
@@ -225,6 +309,9 @@ def main() -> None:
         }, "geometry": g})
 
     soil_by_field, report = match_soil(soil, fields, geoms)
+    dupes = drop_duplicate_wholes(soil_by_field)
+    spread = sum(spread_whole(rec, geoms[name])
+                 for name, rec in soil_by_field.items() if name in geoms)
     ops_by_field = {}
     for rec in ops.values():
         ops_by_field[rec["name"]] = condense_ops(rec)
@@ -260,6 +347,11 @@ def main() -> None:
     for soil_name, deere_name, how in sorted(report):
         if deere_name != soil_name:
             print(f"  soil {soil_name!r} -> {deere_name!r}: {how}")
+    if dupes:
+        print(f"  {dupes} whole-field rows dropped as the average of a grid "
+              f"the same field already has")
+    if spread:
+        print(f"  {spread} whole-field composites spread over their boundaries")
     print(f"fields {len(features)}, soil grids matched {len(soil_by_field)} of {len(soil)}, "
           f"history for {len(ops_by_field)}, yield maps for {len(ymaps)} fields "
           f"({sum(len(v) for v in ymaps.values())} harvests)")
@@ -273,8 +365,10 @@ def _county(field: dict, county: dict, soil: dict) -> str:
     name = county.get(field["id"]) or (soil.get(field["name"]) or {}).get("county") or "Unknown"
     name = name.strip()
     for suffix in ("_MO", "-MO", "-Mo", " MO"):
-        if name.endswith(suffix):
-            name = name[: -len(suffix)].strip() + ", MO"
+        if name.upper().endswith(suffix.upper()):
+            # One suffix only: tidying "Mercer-MO" to "Mercer, MO" would
+            # otherwise match " MO" on the next pass and give "Mercer,, MO".
+            return name[: -len(suffix)].strip(" ,") + ", MO"
     return name
 
 
