@@ -111,8 +111,27 @@ Object.entries(SOIL).forEach(([f,rec])=>{
 // like any other sample set. The nutrient map of such a field is flat and
 // means nothing spatially; only the rate map varies, through yield. Say so
 // wherever a number could be mistaken for a grid measurement.
-function latestSet(f){const fp=FP[f];return fp&&fp.sets.length?fp.sets[fp.sets.length-1]:null;}
-function isComposite(f){const s=latestSet(f);return !!s&&s.kind==='whole';}
+// Which sampling event a field is being read through. The newest test is
+// the default everywhere; picking an older one is sticky per field, so the
+// map, the rates and anything exported for that field all agree.
+const setPick={};
+function activeIdx(f){const fp=FP[f];if(!fp||!fp.sets.length)return -1;
+  const last=fp.sets.length-1,v=setPick[f];
+  return (v!=null&&v>=0&&v<=last)?v:last;}
+function activeSet(f){const i=activeIdx(f);return i<0?null:FP[f].sets[i];}
+// The same event in the averages table, matched on its date rather than
+// its position: FI carries every event, FP only those with points.
+function activeInfo(f){const fi=FI[f];if(!fi||!fi.sets.length)return null;
+  const s=activeSet(f);
+  if(s){const m=fi.sets.filter(x=>x.d===s.d&&(x.kind||'grid')===(s.kind||'grid'));
+    if(m.length)return m[m.length-1];}
+  return fi.sets[fi.sets.length-1];}
+function isComposite(f){const s=activeSet(f);return !!s&&s.kind==='whole';}
+function setLabel(s){return s.kind==='whole'
+  ? `${s.d} · whole-field composite${s.n?', '+s.n+' samples':''}`
+  : `${s.d} · grid, ${s.pts.length} points`;}
+function pickSet(f,v){setPick[f]=+v;clearOv();rP();
+  if(panelTab==='vr')showVRInterp();else showInterp();}
 const COMPOSITE_NOTE='Whole-field composite &mdash; one lab sample for the field, not a grid. The nutrient map is flat; rates still vary with yield history.';
 const FF={},FPROP={},BNDRY={};
 B.features.forEach(f=>{const p=f.properties,fm=p.org+' · '+p.farm;if(!FF[fm])FF[fm]=[];FF[fm].push(p.field);FPROP[p.field]=p;BNDRY[p.field]=f.geometry;});
@@ -319,7 +338,7 @@ const ZONE_COLORS_RATE=[
 function genRaster(fieldName,nut,setIdx,isRate,rateFn){
   const fp=FP[fieldName];if(!fp||!fp.sets.length)return null;
   const fr=fieldRings(fieldName);if(!fr.ext.length)return null;
-  const sIdx=setIdx!=null?setIdx:fp.sets.length-1;
+  const sIdx=setIdx!=null?setIdx:activeIdx(fieldName);
   const pts=fp.sets[sIdx].pts;
   // The grid spans every part of the field; the mask is trimmed per part at export time.
   const xs=fr.ext.flatMap(r=>r.map(c=>c[0])),ys=fr.ext.flatMap(r=>r.map(c=>c[1]));
@@ -555,7 +574,7 @@ function rFL(){
     if(!flds.length&&sq)return'';const o=expanded.has(fm)||(q&&flds.length);
     const nS=flds.filter(f=>FP[f]).length;
     return `<div><div class="fhd" onclick="tF(this.dataset.g)" data-g="${attr(fm)}"><span class="ch ${o?'o':''}">▶</span>${fm}<span class="ct" title="fields with soil data / total (* = whole-field composite)">${nS}/${flds.length}</span></div>
-    ${o?flds.map(f=>{const fi=FI[f],ld=fi?fi.sets[fi.sets.length-1]?.d:'';const p=FPROP[f]||{};
+    ${o?flds.map(f=>{const ai=activeInfo(f),ld=ai?ai.d:'';const p=FPROP[f]||{};
       const comp=isComposite(f);
       const badge=ld?(ld.slice(0,4)+(comp?'*':'')):(YMAPS[f]?'yield':'');
       const tip=(p.acres!=null?p.acres.toFixed(1)+' ac':'')+(FP[f]?(comp?' · whole-field composite, not a grid':''):' · no soil data');
@@ -566,8 +585,8 @@ function rEP(){return `<div class="es"><div class="ic">🌾</div><p>Select a fie
 
 function rFP(){
   const fi=FI[sel],fp=FP[sel],p=FPROP[sel]||{};
-  const lt=fi?fi.sets[fi.sets.length-1]:null;
-  const latestPts=fp?fp.sets[fp.sets.length-1]:null;
+  const lt=activeInfo(sel);
+  const latestPts=activeSet(sel);
   const hasSoil=!!latestPts;
   if(!hasSoil&&panelTab!=='history')panelTab='history';
   const lastCrop=seasonCrop(sel,META.plan_year-1);
@@ -579,7 +598,12 @@ function rFP(){
         <div style="flex:1"><div class="lb">${META.plan_year-1} crop</div><div class="vl">${lastCrop||'—'}</div></div>
         <div style="flex:1"><div class="lb">Sampled</div><div class="vl">${lt?lt.d:'never'}</div></div>
         <div style="flex:1"><div class="lb">Sample</div><div class="vl">${latestPts?(latestPts.kind==='whole'?'composite':latestPts.pts.length+' pts'):'—'}</div></div>
-      </div>${latestPts&&latestPts.kind==='whole'?`<div class="dn" style="margin-top:6px">${COMPOSITE_NOTE}</div>`:''}</div></div>
+      </div>${latestPts&&latestPts.kind==='whole'?`<div class="dn" style="margin-top:6px">${COMPOSITE_NOTE}</div>`:''}
+      ${fp&&fp.sets.length>1?`<div style="margin-top:8px">
+        <div class="lb" style="margin-bottom:3px">Soil test in use · ${fp.sets.length} on file</div>
+        <select style="width:100%" onchange="pickSet('${attr(sel)}',this.value)">
+          ${fp.sets.map((s,i)=>({s,i})).reverse().map(({s,i})=>`<option value="${i}" ${i===activeIdx(sel)?'selected':''}>${setLabel(s)}${i===fp.sets.length-1?' · latest':''}</option>`).join('')}
+        </select></div>`:''}</div></div>
     <div class="ps">
       <div class="tb">
         ${hasSoil?`<button class="tbtn ${panelTab==='zones'?'a':''}" onclick="panelTab='zones';rP();showInterp()">Nutrient Map</button>
@@ -609,7 +633,7 @@ function rYieldPanel(){
 // One lab number for the field: show it against the ISU categories and be
 // explicit that there is nothing to interpolate.
 function rComposite(){
-  const fi=FI[sel],lt=fi.sets[fi.sets.length-1];
+  const lt=activeInfo(sel);
   const t=TH[hNut]||{},v=lt[hNut];
   const ac=(FPROP[sel]||{}).acres;
   if(v==null)return `<h2><div class="ic">🧪</div>Whole-field composite</h2>
@@ -632,7 +656,7 @@ function rZones(){
   if(hNut==='yield')return rYieldPanel();
   const fp=FP[sel];if(!fp||!fp.sets.length)return'<div class="dn">No soil data.</div>';
   if(isComposite(sel))return rComposite();
-  const pts=fp.sets[fp.sets.length-1].pts;
+  const pts=activeSet(sel).pts;
   const vals=pts.map(p=>p[hNut]).filter(v=>v!=null);
   if(!vals.length)return `<div class="dn">No ${TH[hNut]?.nm||hNut} data.</div>`;
   const mn=Math.min(...vals),mx=Math.max(...vals),avg=vals.reduce((a,b)=>a+b,0)/vals.length;
@@ -682,7 +706,7 @@ function rZones(){
 }
 
 function rSoil(){
-  const fi=FI[sel],lt=fi.sets[fi.sets.length-1];
+  const lt=activeInfo(sel);
   const nuts=['p','k','ph','om','cec','ca','mg','s','zn','mn','bph'];
   return `<h2><div class="ic">🧪</div>Field Averages — ${lt.d}</h2>
     <div class="ng">${nuts.map(n=>{const v=lt[n];if(v==null)return'';const t=TH[n],st=gSt(n,v),c=st;
@@ -772,8 +796,8 @@ function rHist(){
 
 function rVR(){
   const fp=FP[sel],fi=FI[sel];if(!fp||!fp.sets.length)return'<div class="dn">No soil data for VR.</div>';
-  const lt=fi.sets[fi.sets.length-1];
-  const pts=fp.sets[fp.sets.length-1].pts;
+  const lt=activeInfo(sel);
+  const pts=activeSet(sel).pts;
   const effYG=rxYG;
   const rateFn=currentRateFn(sel);
   const rates=pts.map(rateFn).filter(r=>r!=null);
@@ -923,7 +947,7 @@ function addBounds(){
         fillColor:isSel?'rgba(74,222,128,0.08)':'rgba(255,255,255,0.06)',fillOpacity:1,
         dashArray:isSel?null:'4 2'};},
     onEachFeature:(feat,layer)=>{const p=feat.properties,f=p.field;fLayers[f]=layer;
-      const fi=FI[f],lt=fi?fi.sets[fi.sets.length-1]:null;
+      const lt=activeInfo(f);
       let tt=`<b>${f}</b><br>${p.org} · ${p.farm}${p.acres!=null?` · ${p.acres.toFixed(1)} ac`:''}`;
       const lc=seasonCrop(f,META.plan_year-1);if(lc)tt+=`<br>${META.plan_year-1}: ${lc}`;
       if(lt){tt+=`<br>${TH[hNut]?.nm||hNut}: ${lt[hNut]!=null?lt[hNut]:'N/A'}<br>Sampled: ${lt.d}`;}else tt+='<br>no soil grid';
@@ -1076,7 +1100,7 @@ function productFor(nut){return PRODUCTS[nut][rxProd[nut]||0];}
 function exportZones(f,rateFn,nut,crop,yg){
   const fp=FP[f];if(!fp||!fp.sets.length)return null;
   const raster=genRaster(f,null,null,true,rateFn);if(!raster)return null;
-  const pts=fp.sets[fp.sets.length-1].pts;
+  const pts=activeSet(f).pts;
   const rates=pts.map(rateFn).filter(r=>r!=null);if(!rates.length)return null;
   const rMin=Math.min(...rates),rMax=Math.max(...rates),rRange=rMax-rMin||1;
   const unit=nut==='ph'?'lb_ECC_ac':'lb_ac';
@@ -1633,7 +1657,7 @@ function buildMultiPartSHP(records,flds){
 }
 function exportCSV(){
   if(!sel)return;const fp=FP[sel];if(!fp||!fp.sets.length)return;
-  const pts=fp.sets[fp.sets.length-1].pts;
+  const pts=activeSet(sel).pts;
   let csv='ID,LAT,LON,SOIL_P,SOIL_K,SOIL_PH,SOIL_OM,SOIL_S,SOIL_ZN,SOIL_CEC,SOIL_BPH,RX_P2O5,RX_K2O,RX_LIME,RX_N,RX_S,RX_ZN,CROP,YIELD_GOAL\n';
   pts.forEach(pt=>{csv+=`${pt.id},${pt.y},${pt.x},${pt.p||''},${pt.k||''},${pt.ph||''},${pt.om||''},${pt.s||''},${pt.zn||''},${pt.cec||''},${pt.bph||''},${calcPRate(pt.p,rxYG,rxCrop,rxTargetP)||''},${calcKRate(pt.k,rxYG,rxCrop,rxTargetK)||''},${calcLimeRate(pt.ph,pt.bph,rxTargetPH)},${calcNRate(pt.om,rxYG,rxPC)},${calcSRate(pt.s,rxTargetS)||''},${calcZnRate(pt.zn,rxTargetZn)||''},${rxCrop},${rxYG}\n`;});
   const blob=new Blob([csv],{type:'text/csv'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`VR_${sel}_${rxCrop}.csv`;document.body.appendChild(a);a.click();document.body.removeChild(a);
@@ -1713,7 +1737,7 @@ function runBatch(){
     const ac=z.records.reduce((s,r)=>s+r.acres,0);
     const lbProd=z.records.reduce((s,r)=>s+r.rate*r.acres,0),lbNut=z.records.reduce((s,r)=>s+r.nut_rate*r.acres,0);
     const p=FPROP[f]||{};
-    const set=latestSet(f);
+    const set=activeSet(f);
     rows.push([f,p.org||'',p.farm||'',ac.toFixed(1),crop,pc,yg,nutName,ac?(lbNut/ac).toFixed(0):'',prod.name,Math.round(prod.pct*100),ac?(lbProd/ac).toFixed(0):'',lbProd.toFixed(0),(lbProd/2000).toFixed(2),z.records.length,
       set?(set.kind==='whole'?'whole-field composite':`grid, ${set.pts.length} pts`):'',set?set.d:'']);
     done++;
