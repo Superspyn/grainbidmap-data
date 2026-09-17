@@ -1390,6 +1390,7 @@ function rVR(){
         <div style="flex:1"><div class="lb">Total product</div><div class="vl">${(prodLb/2000).toFixed(1)} tons</div></div>
         <div style="flex:1"><div class="lb">Acres</div><div class="vl" style="color:var(--tx2)">${acTot.toFixed(0)}</div></div>
       </div>
+      ${nothingNeeded(zoneBreak)}
       <div class="lb" style="margin-bottom:3px">Rate Zones: ${NUTRIENT_NAME[rxNut]} → ${prod.name} (${isComposite(sel)?'zones follow the yield map':'low = soil adequate, high = building'})</div>
       ${zoneBreak.map(z=>`<div class="vr-zone"><div class="vr-color" style="background:${z.color}"></div>
         <span class="vr-range">${z.lo}-${z.hi}</span><span class="vr-rate">${z.rate} → ${Math.round(z.rate/prod.pct)} lb/ac</span>
@@ -1405,6 +1406,22 @@ function rVR(){
     <div class="br"><button class="btn" onclick="exportVR()">⬇ Export VR Shapefile (.zip)</button></div>
     <div class="br"><button class="btn btn-o" onclick="exportCSV()">📄 Export as CSV</button></div>
     <div class="dn" style="margin-top:6px"><b>Shapefile:</b> one polygon per zone (multi-part fields kept together). RATE is lb/ac of <b>${prod.name}</b>; NUT_RATE is the ${NUTRIENT_NAME[rxNut]} behind it. Import into Operations Center as a prescription and pick RATE.</div>`;
+}
+
+// When the whole field asks for nothing, the map is one zone and the zone
+// list reads "0 → 0", which looks like the soil test never made it to
+// this tab. It did: every spot is above target. Say so, with the numbers.
+function nothingNeeded(zoneBreak){
+  if(!zoneBreak.length||zoneBreak.some(z=>z.rate>0))return'';
+  const set=activeSet(sel);if(!set)return'';
+  const key=rxNut==='ph'?'ph':rxNut;
+  const vals=set.pts.map(p=>p[key]).filter(v=>v!=null);if(!vals.length)return'';
+  const t={p:rxTargetP,k:rxTargetK,ph:rxTargetPH,s:rxTargetS,zn:rxTargetZn}[rxNut];
+  const nm=TH[key]?.nm||rxNut,u=TH[key]?.u||'';
+  const mn=Math.min(...vals),mx=Math.max(...vals);
+  const fmt=v=>rxNut==='ph'?v.toFixed(1):rxNut==='zn'?v.toFixed(1):Math.round(v);
+  const below=vals.filter(v=>v<t).length;
+  return `<div class="dn" style="border-left:3px solid var(--ac)"><b>Nothing to spread.</b> ${nm} tests ${fmt(mn)} to ${fmt(mx)}${u?' '+u:''} across this field against a target of ${fmt(t)}${u?' '+u:''}${below?` (${below} of ${vals.length} points under it, but not enough to make a zone)`:', so no spot is under it'}. The map is one zone at 0 because the soil test says so, not because it is missing; the pattern is on the Nutrient Map tab.${mn>=t?'':' A higher target on the slider would put a rate on the low spots.'}</div>`;
 }
 
 function setPreset(nut,preset){
