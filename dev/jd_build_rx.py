@@ -273,6 +273,77 @@ SPREAD_ACRES = 2.5
 MAX_SPREAD = 400
 
 
+# Two whole-field reports this far apart in days can still be one sampling
+# sent to the lab in two batches. Beyond it, the later one is a re-test and
+# supersedes.
+SPLIT_DAYS = 150
+
+
+def merge_split_wholes(soil_by_field: dict) -> list:
+    """Merge whole-field composites that are two halves of one sampling.
+
+    Boyd445GrantE15,14,13 was sampled once on a 2.5-acre grid and billed as
+    two reports: 136 samples in December and 46 in March. Each became its
+    own whole-field composite covering the entire 445 acres, and the page
+    read the field through the newer, smaller one - phosphorus 16.8 instead
+    of the 22.2 the 182 samples together give, which is the difference
+    between 162 lb of MAP an acre and none at all.
+
+    Two composites inside one sampling window are averaged into one,
+    weighted by how many samples each holds. A composite that already
+    matches a grid has been dropped by then, so this only ever sees
+    coordinate-less reports."""
+    merged = []
+    for name, rec in soil_by_field.items():
+        wholes = [s for s in rec["sets"] if s.get("kind") == "whole"]
+        if len(wholes) < 2:
+            continue
+        groups, used = [], set()
+        for i, a in enumerate(wholes):
+            if i in used:
+                continue
+            group = [a]
+            used.add(i)
+            for j in range(i + 1, len(wholes)):
+                b = wholes[j]
+                if j in used:
+                    continue
+                gap = abs((dt.date.fromisoformat(b["d"])
+                           - dt.date.fromisoformat(a["d"])).days)
+                if gap <= SPLIT_DAYS:
+                    group.append(b)
+                    used.add(j)
+            if len(group) > 1:
+                groups.append(group)
+        for group in groups:
+            ns = [s.get("n") or 1 for s in group]
+            total = sum(ns)
+            avg: dict = {}
+            for key in {k for s in group for k in s["avg"]}:
+                num = den = 0.0
+                for s, n in zip(group, ns):
+                    if s["avg"].get(key) is not None:
+                        num += s["avg"][key] * n
+                        den += n
+                if den:
+                    avg[key] = round(num / den, 3)
+            keep = max(group, key=lambda s: s.get("n") or 0)
+            combined = dict(keep)
+            combined.update({
+                "d": max(s["d"] for s in group), "n": total, "avg": avg,
+                "kind": "whole",
+                "report": ", ".join(str(s.get("report") or "") for s in group).strip(", "),
+                "split_reports": [s.get("report") for s in group],
+                "split_counts": ns,
+            })
+            for s in group:
+                rec["sets"].remove(s)
+            rec["sets"].append(combined)
+            rec["sets"].sort(key=lambda s: (s["d"], s.get("kind") == "scaled"))
+            merged.append((name, [s.get("report") for s in group], ns))
+    return merged
+
+
 def drop_duplicate_wholes(soil_by_field: dict) -> int:
     """A whole-field row that is the average of a grid event this field
     already has is dropped, keeping the points.
@@ -407,6 +478,7 @@ def main() -> None:
 
     soil_by_field, report = match_soil(soil, fields, geoms)
     dupes = drop_duplicate_wholes(soil_by_field)
+    split = merge_split_wholes(soil_by_field)
     scaled = add_scaled_sets(soil_by_field)
     spread = sum(spread_whole(rec, geoms[name])
                  for name, rec in soil_by_field.items() if name in geoms)
@@ -448,6 +520,9 @@ def main() -> None:
     if dupes:
         print(f"  {dupes} whole-field rows dropped as the average of a grid "
               f"the same field already has")
+    for name, reports, counts in split:
+        print(f"  {name}: one sampling billed as {len(reports)} reports "
+              f"({'+'.join(str(c) for c in counts)} samples) merged into one")
     if scaled:
         print(f"  {scaled} fields given the newest whole-field level on their "
               f"grid's pattern")
