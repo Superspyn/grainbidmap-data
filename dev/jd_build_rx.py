@@ -413,37 +413,116 @@ def spread_whole(rec: dict, geom: dict) -> int:
 # ---------------------------------------------------------------- history
 
 def condense_ops(rec: dict) -> dict:
-    """One entry per season: what went in, what came off, what was applied."""
+    """One entry per season: what went in, what came off, what was applied.
+
+    The season's crop is what was HARVESTED, when there is a harvest worth
+    the name. Deere gives a fall-seeded cover crop the same crop season as
+    the cash crop that came off weeks earlier, and taking the latest
+    seeding made 79 seasons read "oats" on ground that grew and harvested
+    soybeans or corn - which flips the rotation the plan year is built
+    from and drops the 45 lb soybean nitrogen credit. The cover crop is
+    kept separately, because knowing it went on is worth something.
+
+    With no harvest to go on, a seeding after the cover-crop cutoff is
+    only used if there is nothing earlier in the season."""
     seasons: dict = {}
     for op in rec.get("ops", []):
         yr = op.get("season")
         if not yr:
             continue
-        s = seasons.setdefault(str(yr), {"apps": []})
+        s = seasons.setdefault(str(yr), {"apps": [], "seedings": []})
         if op["type"] == "seeding" and op.get("crop"):
-            if not s.get("crop") or (op.get("start") or "") >= (s.get("planted") or ""):
-                s["crop"] = op["crop"]
-                s["planted"] = (op.get("start") or "")[:10]
-                s["varieties"] = op.get("varieties") or []
+            s["seedings"].append({
+                "crop": op["crop"], "d": (op.get("start") or "")[:10],
+                "varieties": op.get("varieties") or [],
+                "acres": op.get("acres"),
+            })
         elif op["type"] == "harvest":
             h = {"crop": op.get("crop"), "d": (op.get("start") or "")[:10]}
             for k in ("avg", "acres", "moisture"):
                 if op.get(k) is not None:
                     h[k] = op[k]
-            # A field harvested in two passes: keep the bigger one's numbers,
-            # but note both dates.
-            if "harvest" in s and (s["harvest"].get("acres") or 0) >= (h.get("acres") or 0):
-                continue
-            s["harvest"] = h
+            s.setdefault("harvests", []).append(h)
         elif op["type"] == "application":
             prods = [p for p in op.get("products", []) if p.get("name") and p["name"] != "---"]
             if prods:
                 s["apps"].append({"d": (op.get("start") or "")[:10], "products": prods})
-    for s in seasons.values():
-        if not s.get("crop") and s.get("harvest", {}).get("crop"):
-            s["crop"] = s["harvest"]["crop"]
-            s["crop_from_harvest"] = True
+
+    for yr, s in seasons.items():
+        seedings = sorted(s.pop("seedings", []), key=lambda x: x["d"])
+        harvests = sorted(s.pop("harvests", []), key=lambda x: x["d"])
+        s["harvest"] = combine_harvests(harvests)
+        if harvests:
+            s["harvests"] = harvests
+
+        main = None
+        big = [h for h in harvests if (h.get("acres") or 0) >= MIN_HARVEST_ACRES]
+        if big:
+            # Grown and taken off: that is the season's crop, whatever was
+            # drilled over the stubble afterwards.
+            want = crop_family(big[-1]["crop"])
+            match = [x for x in seedings if crop_family(x["crop"]) == want]
+            main = match[-1] if match else None
+            s["crop"] = big[-1]["crop"]
+            if not match:
+                s["crop_from_harvest"] = True
+        if main is None:
+            early = [x for x in seedings if x["d"][5:] <= COVER_CUTOFF]
+            main = (early or seedings)[-1] if seedings else None
+            if main and not s.get("crop"):
+                s["crop"] = main["crop"]
+        if main:
+            s["planted"] = main["d"]
+            s["varieties"] = main["varieties"]
+        cover = [x for x in seedings if x is not main and x["d"][5:] > COVER_CUTOFF]
+        if cover:
+            s["cover"] = [{"crop": x["crop"], "d": x["d"]} for x in cover]
     return {"seasons": seasons}
+
+
+# A seeding after this day of the year, on ground that already grew a cash
+# crop that season, is a cover crop rather than the season's crop.
+COVER_CUTOFF = "08-01"
+# A harvest smaller than this is a partial pass, not evidence of the crop.
+MIN_HARVEST_ACRES = 5
+
+
+def crop_family(name) -> str:
+    n = str(name or "").lower()
+    if "corn" in n:
+        return "corn"
+    if "soy" in n or "bean" in n:
+        return "soybean"
+    return n
+
+
+def combine_harvests(harvests: list) -> dict:
+    """One number for a season harvested in more than one pass.
+
+    Keeping only the biggest pass threw the rest away: Boyd445 took 306
+    acres at 178.7 bu in September and 130 acres at 127.0 bu the following
+    February, and recorded 178.7 - which then set a yield goal 9% high on
+    the whole field. Same-crop passes are averaged over their acres."""
+    if not harvests:
+        return {}
+    want = crop_family(harvests[-1]["crop"])
+    same = [h for h in harvests if crop_family(h["crop"]) == want]
+    if not same:
+        same = harvests
+    out = dict(same[-1])
+    acres = [h.get("acres") or 0 for h in same]
+    total = sum(acres)
+    if len(same) > 1 and total > 0:
+        num = sum((h.get("avg") or 0) * (h.get("acres") or 0) for h in same)
+        wet = sum((h.get("moisture") or 0) * (h.get("acres") or 0) for h in same)
+        out["avg"] = round(num / total, 1)
+        out["acres"] = round(total, 2)
+        if any(h.get("moisture") is not None for h in same):
+            out["moisture"] = round(wet / total, 1)
+        out["passes"] = [{"d": h["d"], "acres": h.get("acres"), "avg": h.get("avg")}
+                         for h in same]
+        out["d"] = same[0]["d"]
+    return out
 
 
 # ---------------------------------------------------------------- main
