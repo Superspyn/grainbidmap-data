@@ -924,9 +924,23 @@ function svRating(mukey){const m=SV.mapunits[mukey];if(!m)return null;
   if(c!=null&&n!=null)return (c+n)/2;
   return c!=null?c:n!=null?n:null;}
 function svRatingAt(f,x,y){
-  for(const pc of svPiecesLonLat(f)){
+  const pcs=svPiecesLonLat(f);
+  for(const pc of pcs){
     if(pip(x,y,pc.rings[0])&&!pc.rings.slice(1).some(h=>pip(x,y,h)))return svRating(pc.mukey);}
-  return null;}
+  // In no polygon: the seam between two, or just outside the survey's own
+  // edge of the field. Nearest polygon edge wins, within about 30 m.
+  let best=null,bd=(0.0003)**2;
+  for(const pc of pcs){
+    for(const ring of pc.rings){
+      for(let i=0;i<ring.length-1;i++){
+        const d=segDist2(x,y,ring[i][0],ring[i][1],ring[i+1][0],ring[i+1][1]);
+        if(d<bd){bd=d;best=pc;}}}}
+  return best?svRating(best.mukey):null;}
+// Squared distance from a point to a segment, in degrees.
+function segDist2(px,py,ax,ay,bx,by){
+  const dx=bx-ax,dy=by-ay,l2=dx*dx+dy*dy;
+  let t=l2?((px-ax)*dx+(py-ay)*dy)/l2:0;t=Math.max(0,Math.min(1,t));
+  const cx=ax+t*dx,cy=ay+t*dy;return (px-cx)**2+(py-cy)**2;}
 // The field's rating by acres, on the same blend.
 function svRatingAvg(f){let num=0,den=0;for(const pc of svPieces(f)){const v=svRating(pc.mukey);if(v==null)continue;num+=v*pc.ac;den+=pc.ac;}return den?num/den:null;}
 const gapFns={};
@@ -1088,7 +1102,45 @@ function rGap(){
           <span class="vr-range">${nm}</span><span class="vr-rate">${ac?Math.round(a/ac*100):0}%</span>
           <span class="vr-acres">${a.toFixed(0)}ac</span></div>`;}).join('')}
     </div>
+    ${rGapNeeds(set,ac)}
     <div class="dn" style="margin-top:8px">Both numbers run 0 to 100 but are not the same kind of thing: the rating is a property of the soil and never moves, the fertility score moves with every soil test. The gap is a way to rank ground, not a rate. Use the VR Rx tab for the rate.</div>`;
+}
+// Build-up to the top of the score, per nutrient: the level where each one
+// stops limiting the fertility score, and what it takes to lift the field's
+// average there. The same lb-per-ppm build factors as the rate functions,
+// with no crop removal on top, averaged over the sample points. The
+// product is whichever is picked for that nutrient on the VR Rx tab.
+const CEILING={p:t=>t.hi,k:t=>t.hi,s:t=>t.hi,zn:t=>t.hi,ph:()=>6.2};
+function buildToCeiling(k,pt){
+  const t=TH[k],c=CEILING[k](t),v=pt[k];if(v==null)return null;
+  if(k==='ph')return calcLimeRate(v,pt.bph,c);
+  const per={p:4,k:1.2,s:2.5,zn:5}[k];
+  return Math.max(0,(c-v)*per);}
+function rGapNeeds(set,ac){
+  const rows=FERT_NUTS.map(k=>{
+    const t=TH[k],c=CEILING[k](t);
+    const pts=set.pts.filter(p=>p[k]!=null);if(!pts.length)return null;
+    const need=pts.reduce((a,p)=>a+buildToCeiling(k,p),0)/pts.length;
+    const avg=pts.reduce((a,p)=>a+p[k],0)/pts.length;
+    const short=pts.filter(p=>p[k]<c).length/pts.length;
+    const prod=PRODUCTS[k][rxProd[k]||0];
+    return{k,t,c,avg,need,short,prod,lbProd:need/prod.pct};
+  }).filter(Boolean);
+  if(!rows.length)return'';
+  return `<div class="fc" style="padding:8px;margin-top:8px">
+    <div class="lb" style="margin-bottom:3px">To reach full potential &middot; build-up only, no crop removal</div>
+    ${rows.map(r=>{
+      const there=r.need<0.5;
+      const label=r.k==='ph'?'pH':r.t.nm;
+      const tgt=r.k==='ph'?r.c.toFixed(1):r.c+' '+r.t.u;
+      const now=r.k==='ph'?r.avg.toFixed(1):r.avg.toFixed(r.k==='zn'?1:0)+(r.t.u?' '+r.t.u:'');
+      return `<div class="vr-zone" style="flex-wrap:wrap">
+        <span class="vr-range" style="flex:1"><b>${label}</b> averages ${now}, top of score at ${tgt}${r.short>0&&r.short<1?` &middot; ${Math.round(r.short*100)}% of points short`:''}</span>
+        <span class="vr-rate" style="min-width:0">${there?(r.short>0?'average already there':'already there'):`${Math.round(r.need)} lb ${NUTRIENT_NAME[r.k]}/ac`}</span>
+        ${there?'':`<span class="vr-acres" style="min-width:0">${Math.round(r.lbProd)} lb/ac ${r.prod.name}${ac?` &middot; ${(r.lbProd*ac/2000).toFixed(r.lbProd*ac/2000<10?1:0)} ton`:''}</span>`}
+      </div>`;}).join('')}
+    <div class="dn" style="margin-top:4px;margin-bottom:0">The top of the score for P, K, sulfur and zinc is above the ISU optimum, so this is more than the ISU rate; it is what it takes to make the score read 100, not a recommendation. Pick the product on the VR Rx tab.</div>
+  </div>`;
 }
 function rZones(){
   if(hNut==='yield')return rYieldPanel();
