@@ -457,10 +457,12 @@ const ZONE_COLORS_NUT=[
 function rateColors(raster){
   const all=ZONE_COLORS_RATE,rest=all.slice(1),nz=raster.nz||NZONES;
   const pick=n=>{if(n<=0)return[];if(n===1)return[rest[1]];const o=[];for(let i=0;i<n;i++)o.push(rest[Math.round(i*(rest.length-1)/(n-1))]);return o;};
+  if(!(raster.vmax>0))return[all[0]];   // nothing anywhere: one blue zone
   return raster.zeroZone?[all[0],...pick(nz-1)]:pick(nz);}
 function rateZoneNames(raster){
   const nz=raster.nz||NZONES,n=raster.zeroZone?nz-1:nz;
   const pos={1:['One rate'],2:['Lower','Higher'],3:['Low','Medium','High'],4:['Low','Medium','High','Highest']}[n]||['Low','Medium','High','Higher','Highest'];
+  if(!(raster.vmax>0))return['None needed'];
   return raster.zeroZone?['None needed',...pos]:pos;}
 let lastVR=null;   // the rate raster last drawn, for the legend
 const ZONE_COLORS_RATE=[
@@ -1494,7 +1496,7 @@ function rVR(){
         <div class="lb" style="margin-bottom:4px">🌾 ${rxCrop} harvests on this field <span class="source-tag">Ops Center</span></div>
         ${hist.slice(-6).map(h=>`<div style="display:flex;justify-content:space-between;font-size:11px;padding:3px 0;border-bottom:1px solid var(--bd)">
           <span style="color:var(--tx2)">${h.yr}${h.moisture!=null?` · ${h.moisture}%`:''}${h.acres!=null?` · ${h.acres.toFixed(0)} ac`:''}</span>
-          <span style="font-family:'JetBrains Mono',monospace;font-weight:600;color:${(rxCrop==='corn'?h.avg>=200:h.avg>=60)?'var(--ac)':(rxCrop==='corn'?h.avg>=170:h.avg>=50)?'var(--wr)':'var(--dn)'}">${h.avg} bu/ac</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-weight:600;color:${(rxCrop==='corn'?h.avg>=200:h.avg>=60)?'var(--ac)':(rxCrop==='corn'?h.avg>=170:h.avg>=50)?'var(--wr)':'var(--dn)'}">${h.avg!=null?h.avg+' bu/ac':'no yield recorded'}</span>
         </div>`).join('')}
       </div>`:`<div class="dn yield-placeholder" style="margin-top:8px"><b>📊 Yield:</b> No ${rxCrop} harvest in Operations Center for this field.</div>`}
     <div class="br"><button class="btn" onclick="exportVR()">⬇ Export VR Shapefile (.zip)</button></div>
