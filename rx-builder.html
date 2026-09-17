@@ -206,10 +206,13 @@ function zoneAcres(raster,f){const inF=fieldCells(raster,f),ac=cellAcres(raster)
 
 // ISU PM 1688 (2023 update) soil-test interpretation categories
 const TH={
-  p:{vl:8,lo:15,op:20,hi:30,vh:60,u:'ppm',nm:'Phosphorus (P)',rx:'P₂O₅',
-     cats:['Very Low (0-8)','Low (9-15)','Optimum (16-20)','High (21-30)','Very High (>30)']},
-  k:{vl:90,lo:130,op:170,hi:200,vh:350,u:'ppm',nm:'Potassium (K)',rx:'K₂O',
-     cats:['Very Low (0-90)','Low (91-130)','Optimum (131-170)','High (171-200)','Very High (>200)']},
+  // P and K: the February 2023 revision of PM 1688 (Bray-1 P; ammonium
+  // acetate K on dried samples), as reprinted in the Iowa NRCS 590 guide
+  // of November 2023. The 2013 boundaries were 8/15/20/30 and 90/130/170/200.
+  p:{vl:9,lo:17,op:25,hi:34,vh:60,u:'ppm',nm:'Phosphorus (P)',rx:'P₂O₅',
+     cats:['Very Low (0-9)','Low (10-17)','Optimum (18-25)','High (26-34)','Very High (35+)']},
+  k:{vl:125,lo:170,op:220,hi:270,vh:400,u:'ppm',nm:'Potassium (K)',rx:'K₂O',
+     cats:['Very Low (0-125)','Low (126-170)','Optimum (171-220)','High (221-270)','Very High (271+)']},
   ph:{vl:5.0,lo:5.5,op:6.0,hi:7.5,vh:8.5,u:'',nm:'Soil pH',rx:'Lime',
      cats:['Very Low (<5.0)','Low (5.0-5.5)','Target (5.5-6.0)','Adequate (6.0-7.5)','High (>7.5)']},
   om:{vl:1.5,lo:2.5,op:3.5,hi:6.0,vh:10,u:'%',nm:'Organic Matter'},
@@ -308,24 +311,39 @@ function prevCrop(f){return seasonCrop(f,META.plan_year-1)||'soybean';}
 // 5 bushels, or a flat number when the field has no harvest of that crop.
 function defaultGoal(f,crop){const avg=getFieldYield(f,crop);if(avg)return Math.max(5,Math.round(avg*1.05/5)*5);return crop==='corn'?220:65;}
 
-// lb of P2O5 or K2O one bushel takes off (ISU PM 1688 table).
-function removalPerBu(nut,crop){return nut==='p'?(crop==='corn'?0.375:0.80):(crop==='corn'?0.30:1.50);}
-function calcPRate(p,yg,crop,tgt,maint){
-  if(p==null)return null;
-  if(tgt==null)tgt=20;
-  const removal=crop==='corn'?yg*0.375:yg*0.80;
-  if(p>=tgt) return maint?Math.round(removal):0;
-  const buildup=Math.max(0,(tgt-p)*4);
-  return Math.round(buildup+removal);
+// lb of P2O5 or K2O one bushel of grain takes off. ISU PM 1688, February
+// 2023 revision, as reprinted in the Iowa NRCS 590 guide (November 2023):
+// corn at 210 bu removes 67 lb P2O5 and 46 lb K2O; soybean at 70 bu
+// removes 50 and 84. The 2013 table this used to carry (0.375/0.30 corn,
+// 0.80/1.50 soybean) was 17-36% higher.
+function removalPerBu(nut,crop){return nut==='p'?(crop==='corn'?67/210:50/70):(crop==='corn'?46/210:84/70);}
+// lb of nutrient behind one ppm of soil test. The same guide notes that a
+// corn-soybean rotation given no fertilizer (117 lb P2O5 and 130 lb K2O
+// removed over the two years) drops the test 5-6 ppm P and 11-12 ppm K:
+// about 21 lb P2O5 and 11 lb K2O per ppm. It says that varies two-fold
+// between fields, so this is a farm-average figure.
+const PER_PPM={p:21,k:11};
+// What it takes on top of what the soil already holds, to grow the goal
+// and leave the test at the level to hold (tgt):
+//   below it   - build the difference (PER_PPM a ppm) and replace removal;
+//   above it   - the surplus over tgt is a bank of PER_PPM lb a ppm; the
+//                crop draws on that first, and fertilizer covers only
+//                what the bank cannot. Ground far above tgt gets 0 and
+//                the panel says how many years the bank is good for.
+// Build-up is spread over this many years. Lifting 15 ppm to 25 is 210 lb
+// of P2O5; asking for all of it in one year on top of removal gave rates
+// near 500 lb, which nobody spreads. Four years is a usual build plan
+// and lands the low-testing rates near ISU's own Very Low / Low figures.
+const BUILD_YEARS=4;
+function netRate(nut,soil,yg,crop,tgt){
+  if(soil==null)return null;
+  const removal=yg*removalPerBu(nut,crop),per=PER_PPM[nut];
+  if(soil<tgt)return Math.round((tgt-soil)*per/BUILD_YEARS+removal);
+  const bank=(soil-tgt)*per;
+  return Math.round(Math.max(0,removal-bank));
 }
-function calcKRate(k,yg,crop,tgt,maint){
-  if(k==null)return null;
-  if(tgt==null)tgt=170;
-  const removal=crop==='corn'?yg*0.30:yg*1.50;
-  if(k>=tgt)return maint?Math.round(removal):0;
-  const buildup=Math.max(0,(tgt-k)*1.2);
-  return Math.round(buildup+removal);
-}
+function calcPRate(p,yg,crop,tgt){return netRate('p',p,yg,crop,tgt==null?25:tgt);}
+function calcKRate(k,yg,crop,tgt){return netRate('k',k,yg,crop,tgt==null?220:tgt);}
 function calcLimeRate(ph,bph,tgt){
   if(ph==null||ph>=tgt)return 0;
   if(bph==null)bph=6.6;
@@ -381,7 +399,7 @@ function makeZonalRateFn(fieldName,rxNut2,crop,userYG,tgtP,tgtK,tgtPH,tgtS,tgtZn
       if(rxBasis==='removal')return Math.round(ey*removalPerBu(rxNut2,crop));
       // Prev crop matters: soybean has higher P removal per bushel
       // Use the CROP being planted this year for removal rate
-      return rxNut2==='p'?calcPRate(pt.p,ey,crop,tgtP,false):calcKRate(pt.k,ey,crop,tgtK,false);
+      return rxNut2==='p'?calcPRate(pt.p,ey,crop,tgtP):calcKRate(pt.k,ey,crop,tgtK);
     }
     if(rxNut2==='ph')return calcLimeRate(pt.ph,pt.bph,tgtPH);
     if(rxNut2==='s')return calcSRate(pt.s,tgtS);
@@ -773,13 +791,14 @@ let rxCrop='corn',rxYG=220,rxPC='soybean',rxNut='p';
 let rxProd={p:0,k:0,ph:0,s:0,zn:0};   // index into PRODUCTS per nutrient
 let batchCrop='auto',batchGoal='auto';
 // Configurable targets for each product
-let rxTargetP=20,rxTargetK=170,rxTargetPH=6.0,rxTargetS=10,rxTargetZn=0.9;
+let rxTargetP=25,rxTargetK=220,rxTargetPH=6.0,rxTargetS=10,rxTargetZn=0.9;
 // What a P or K rate is based on. 'removal': what the crop at the yield
 // goal takes off, on every acre, spread by spot - the farmer's own
 // framing ("how much gets taken off, and how much it takes to grow 300
-// bu corn"), with no soil-test target in it at all. 'isu': the ISU soil
-// test approach - build up below a target ppm, nothing at or above it -
-// with the target slider and its Maintain / Build / Aggressive presets.
+// bu corn"), with no soil-test target in it at all. 'isu': on top of what
+// the soil holds - the crop's need at the goal, less the bank the soil
+// carries above the level to hold (ISU's optimum), plus build-up where it
+// is under. See netRate().
 let rxBasis='removal';
 // What moves the removal from spot to spot: the yield maps, the soil
 // survey rating (CSR2 and NCCPI, as on the map menu), or both averaged.
@@ -1196,7 +1215,7 @@ const CEILING={p:t=>t.hi,k:t=>t.hi,s:t=>t.hi,zn:t=>t.hi,ph:()=>6.2};
 function buildToCeiling(k,pt){
   const t=TH[k],c=CEILING[k](t),v=pt[k];if(v==null)return null;
   if(k==='ph')return calcLimeRate(v,pt.bph,c);
-  const per={p:4,k:1.2,s:2.5,zn:5}[k];
+  const per={p:PER_PPM.p,k:PER_PPM.k,s:2.5,zn:5}[k];
   return Math.max(0,(c-v)*per);}
 function rGapNeeds(set,ac){
   const rows=FERT_NUTS.map(k=>{
@@ -1397,8 +1416,8 @@ function rVR(){
   const prod=productFor(rxNut);
   const mn=Math.min(...rates),mx=Math.max(...rates);
   const unit=rxNut==='ph'?'lb ECC/ac':'lb/ac';
-  const flatRateFns={p:()=>rxBasis==='removal'?Math.round(effYG*removalPerBu('p',rxCrop)):calcPRate(lt.p,effYG,rxCrop,rxTargetP,false),
-    k:()=>rxBasis==='removal'?Math.round(effYG*removalPerBu('k',rxCrop)):calcKRate(lt.k,effYG,rxCrop,rxTargetK,false),ph:()=>calcLimeRate(lt.ph,lt.bph,rxTargetPH),s:()=>calcSRate(lt.s,rxTargetS),zn:()=>calcZnRate(lt.zn,rxTargetZn)};
+  const flatRateFns={p:()=>rxBasis==='removal'?Math.round(effYG*removalPerBu('p',rxCrop)):calcPRate(lt.p,effYG,rxCrop,rxTargetP),
+    k:()=>rxBasis==='removal'?Math.round(effYG*removalPerBu('k',rxCrop)):calcKRate(lt.k,effYG,rxCrop,rxTargetK),ph:()=>calcLimeRate(lt.ph,lt.bph,rxTargetPH),s:()=>calcSRate(lt.s,rxTargetS),zn:()=>calcZnRate(lt.zn,rxTargetZn)};
   const flatRate=flatRateFns[rxNut]?(flatRateFns[rxNut]()||0):0;
   const cRate=raster?rateColors(raster):ZONE_COLORS_RATE;
   // The zones exactly as the map paints them and the export writes them:
@@ -1421,16 +1440,16 @@ function rVR(){
 
   // Target controls — slider + presets for every product (like pH)
   const targetControls = {
-    p: `<div class="slider-row"><label>Target P</label><input type="range" min="15" max="35" value="${rxTargetP}" oninput="rxTargetP=+this.value;document.getElementById('tval').textContent=this.value" onchange="rP();showVRInterp()"/><span class="sv" id="tval">${rxTargetP}</span><span style="font-size:8px;color:var(--tx2)">ppm</span></div>
-      <div class="presets"><span style="font-size:8px;color:var(--tx2);margin-right:2px">ISU targets:</span>
-        <button class="preset-btn ${rxTargetP===20?'act':''}" onclick="setPreset('p','maintain')">Maintain (20)</button>
-        <button class="preset-btn ${rxTargetP===25?'act':''}" onclick="setPreset('p','build')">Build (25)</button>
-        <button class="preset-btn ${rxTargetP===30?'act':''}" onclick="setPreset('p','aggressive')">Aggressive (30)</button></div>`,
-    k: `<div class="slider-row"><label>Target K</label><input type="range" min="130" max="250" value="${rxTargetK}" oninput="rxTargetK=+this.value;document.getElementById('tval').textContent=this.value" onchange="rP();showVRInterp()"/><span class="sv" id="tval">${rxTargetK}</span><span style="font-size:8px;color:var(--tx2)">ppm</span></div>
-      <div class="presets"><span style="font-size:8px;color:var(--tx2);margin-right:2px">ISU targets:</span>
-        <button class="preset-btn ${rxTargetK===170?'act':''}" onclick="setPreset('k','maintain')">Maintain (170)</button>
-        <button class="preset-btn ${rxTargetK===200?'act':''}" onclick="setPreset('k','build')">Build (200)</button>
-        <button class="preset-btn ${rxTargetK===230?'act':''}" onclick="setPreset('k','aggressive')">Aggressive (230)</button></div>`,
+    p: `<div class="slider-row"><label>Soil P to hold</label><input type="range" min="10" max="40" value="${rxTargetP}" oninput="rxTargetP=+this.value;document.getElementById('tval').textContent=this.value" onchange="rP();showVRInterp()"/><span class="sv" id="tval">${rxTargetP}</span><span style="font-size:8px;color:var(--tx2)">ppm</span></div>
+      <div class="presets"><span style="font-size:8px;color:var(--tx2);margin-right:2px">ISU 2023:</span>
+        <button class="preset-btn ${rxTargetP===17?'act':''}" title="Top of Low" onclick="setPreset('p','low')">Low (17)</button>
+        <button class="preset-btn ${rxTargetP===25?'act':''}" title="Top of Optimum: where ISU says the soil supplies enough" onclick="setPreset('p','optimum')">Optimum (25)</button>
+        <button class="preset-btn ${rxTargetP===34?'act':''}" title="Top of High" onclick="setPreset('p','high')">High (34)</button></div>`,
+    k: `<div class="slider-row"><label>Soil K to hold</label><input type="range" min="120" max="300" value="${rxTargetK}" oninput="rxTargetK=+this.value;document.getElementById('tval').textContent=this.value" onchange="rP();showVRInterp()"/><span class="sv" id="tval">${rxTargetK}</span><span style="font-size:8px;color:var(--tx2)">ppm</span></div>
+      <div class="presets"><span style="font-size:8px;color:var(--tx2);margin-right:2px">ISU 2023:</span>
+        <button class="preset-btn ${rxTargetK===170?'act':''}" title="Top of Low" onclick="setPreset('k','low')">Low (170)</button>
+        <button class="preset-btn ${rxTargetK===220?'act':''}" title="Top of Optimum: where ISU says the soil supplies enough" onclick="setPreset('k','optimum')">Optimum (220)</button>
+        <button class="preset-btn ${rxTargetK===270?'act':''}" title="Top of High" onclick="setPreset('k','high')">High (270)</button></div>`,
     ph: `<div class="slider-row"><label>Target pH</label><input type="range" min="55" max="70" step="1" value="${Math.round(rxTargetPH*10)}" oninput="rxTargetPH=this.value/10;document.getElementById('tval').textContent=(this.value/10).toFixed(1)" onchange="rP();showVRInterp()"/><span class="sv" id="tval">${rxTargetPH.toFixed(1)}</span></div>
       <div class="presets"><span style="font-size:8px;color:var(--tx2);margin-right:2px">ISU targets:</span>
         <button class="preset-btn ${rxTargetPH===6.0?'act':''}" onclick="setPreset('ph','nw_iowa')">6.0 (NW Iowa)</button>
@@ -1462,11 +1481,12 @@ function rVR(){
         <input type="number" value="${Math.round(prod.pct*100)}" min="1" max="100" style="max-width:52px;flex:none" title="analysis: % of the product that is the nutrient" onchange="PRODUCTS[rxNut][rxProd[rxNut]||0].pct=Math.min(100,Math.max(1,+this.value))/100;rP()"/><span style="font-size:8px;color:var(--tx2)">%</span></div>
       <div class="rxr"><label>Crop</label><select onchange="rxCrop=this.value;rxYG=defaultGoal(sel,rxCrop);rP();showVRInterp()"><option value="corn" ${rxCrop==='corn'?'selected':''}>Corn</option><option value="soybean" ${rxCrop==='soybean'?'selected':''}>Soybean</option></select></div>
       <div class="rxr"><label>Yield Goal</label><input type="number" value="${rxYG}" onchange="rxYG=+this.value;rP();showVRInterp()"/></div>
-      ${(rxNut==='p'||rxNut==='k')?`<div style="font-size:8px;color:var(--tx2);padding:2px 0 6px 86px;line-height:1.4">Removal: ${rxNut==='p'?(rxCrop==='corn'?`${effYG}×0.375 = <b style="color:var(--tx)">${Math.round(effYG*0.375)} lb P₂O₅/ac</b>`:`${effYG}×0.80 = <b style="color:var(--tx)">${Math.round(effYG*0.80)} lb P₂O₅/ac</b>`):(rxCrop==='corn'?`${effYG}×0.30 = <b style="color:var(--tx)">${Math.round(effYG*0.30)} lb K₂O/ac</b>`:`${effYG}×1.50 = <b style="color:var(--tx)">${Math.round(effYG*1.50)} lb K₂O/ac</b>`)}${ym.length?' at the field average; more where it yields more':''}</div>${goalGapNote(cropAvg,effYG,prod)}`:''}
+      ${(rxNut==='p'||rxNut==='k')?`<div style="font-size:8px;color:var(--tx2);padding:2px 0 6px 86px;line-height:1.4">Removal: ${effYG}×${removalPerBu(rxNut,rxCrop).toFixed(2)} = <b style="color:var(--tx)">${Math.round(effYG*removalPerBu(rxNut,rxCrop))} lb ${rxNut==='p'?'P₂O₅':'K₂O'}/ac</b> <span class="source-tag">ISU 2023</span>${ym.length?' at the field average; more where it yields more':''}</div>${goalGapNote(cropAvg,effYG,prod)}${ceilingNote(effYG)}`:''}
       <div class="rxr"><label>Prev Crop</label><select onchange="rxPC=this.value;rP();showVRInterp()"><option value="soybean" ${rxPC==='soybean'?'selected':''}>Soybean</option><option value="corn" ${rxPC==='corn'?'selected':''}>Corn</option></select></div>
       ${(rxNut==='p'||rxNut==='k')?`<div class="rxr"><label>Rate basis</label><div class="presets" style="margin:0">
         <button class="preset-btn ${rxBasis==='removal'?'act':''}" title="What the crop at the yield goal takes off, on every acre, spread by spot" onclick="rxBasis='removal';rP();showVRInterp()">Crop removal at goal</button>
-        <button class="preset-btn ${rxBasis==='isu'?'act':''}" title="ISU soil test: build up below a target ppm, nothing at or above it" onclick="rxBasis='isu';rP();showVRInterp()">ISU soil test</button></div></div>
+        <button class="preset-btn ${rxBasis==='isu'?'act':''}" title="The crop's need at the goal, less what the soil already holds above the level to hold; build-up where it is under" onclick="rxBasis='isu';rP();showVRInterp()">On top of the soil</button></div></div>
+      ${(rxNut==='p'||rxNut==='k')&&rxBasis==='isu'?soilBankNote(effYG,prod):''}
       <div class="rxr"><label>Vary by spot</label><div class="presets" style="margin:0">
         <button class="preset-btn ${rxVary==='yield'?'act':''}" title="Removal follows the yield maps" onclick="rxVary='yield';rP();showVRInterp()">Yield maps</button>
         <button class="preset-btn ${rxVary==='rating'?'act':''}" title="Removal follows the soil survey rating (CSR2 and NCCPI), the same one the map menu shows" onclick="rxVary='rating';rP();showVRInterp()">Soil rating</button>
@@ -1517,7 +1537,7 @@ function nothingNeeded(zoneBreak){
   const mn=Math.min(...vals),mx=Math.max(...vals);
   const fmt=v=>rxNut==='ph'?v.toFixed(1):rxNut==='zn'?v.toFixed(1):Math.round(v);
   const below=vals.filter(v=>v<t).length;
-  return `<div class="dn" style="border-left:3px solid var(--ac)"><b>Nothing to spread.</b> ${nm} tests ${fmt(mn)} to ${fmt(mx)}${u?' '+u:''} across this field against a target of ${fmt(t)}${u?' '+u:''}${below?` (${below} of ${vals.length} points under it, but not enough to make a zone)`:', so no spot is under it'}. The map is one zone at 0 because the soil test says so, not because it is missing; the pattern is on the Nutrient Map tab.${mn>=t?'':' A higher target on the slider would put a rate on the low spots.'}${(rxNut==='p'||rxNut==='k')?' Switch <b>Rate basis</b> to crop removal at goal to put what the crop takes off on every acre.':''}</div>`;
+  return `<div class="dn" style="border-left:3px solid var(--ac)"><b>Nothing to spread.</b> ${nm} tests ${fmt(mn)} to ${fmt(mx)}${u?' '+u:''} across this field against a target of ${fmt(t)}${u?' '+u:''}${below?` (${below} of ${vals.length} points under it, but not enough to make a zone)`:', so no spot is under it'}. The map is one zone at 0 because the soil test says so, not because it is missing; the pattern is on the Nutrient Map tab.${mn>=t?'':' A higher target on the slider would put a rate on the low spots.'}${(rxNut==='p'||rxNut==='k')?' The soil bank above the level to hold covers the goal on every acre; the line above the basis buttons says for how long. Switch <b>Rate basis</b> to crop removal at goal to put what the crop takes off on regardless.':''}</div>`;
 }
 
 // The goal against what the field has actually grown: a 350 bu goal on
@@ -1525,14 +1545,53 @@ function nothingNeeded(zoneBreak){
 // field is used to giving back, and that is the "how much more" a bigger
 // crop asks for. Shown per acre and for the field, in the chosen product.
 function goalGapNote(cropAvg,goal,prod){
-  const per=rxNut==='p'?(rxCrop==='corn'?0.375:0.80):(rxCrop==='corn'?0.30:1.50);
+  const per=removalPerBu(rxNut,rxCrop);
   const ac=(FPROP[sel]||{}).acres||0,nut=NUTRIENT_NAME[rxNut];
-  const off=rxBasis==='isu'?` <span style="color:var(--wr)">On the ISU soil test basis ground at or above target gets 0 whatever the goal; switch to Crop removal at goal to put this on every acre.</span>`:'';
+  const off='';
   if(!cropAvg)return `<div style="font-size:8px;color:var(--tx2);padding:0 0 6px 86px;line-height:1.4">No ${rxCrop} harvest on file to compare the goal against, so the removal above is the whole of what a ${goal} bu crop takes off.${off}</div>`;
   const diff=(goal-cropAvg)*per,prodLb=diff/prod.pct;
   if(Math.abs(diff)<1)return `<div style="font-size:8px;color:var(--tx2);padding:0 0 6px 86px;line-height:1.4">The goal is what this field already averages (${cropAvg} bu).${off}</div>`;
   const more=diff>0;
   return `<div style="font-size:8px;color:var(--tx2);padding:0 0 6px 86px;line-height:1.4">To grow <b style="color:var(--tx)">${goal} bu</b> instead of the <b style="color:var(--tx)">${cropAvg} bu</b> this field averages takes <b style="color:var(--tx)">${Math.abs(Math.round(diff))} lb ${nut}/ac ${more?'more':'less'}</b> (${Math.abs(Math.round(prodLb))} lb/ac ${prod.name}${ac?`, ${(Math.abs(prodLb)*ac/2000).toFixed(1)} tons ${more?'more':'less'} over ${ac.toFixed(0)} ac`:''}).${off}</div>`;
+}
+// The field's bank: soil test above the level to hold, in lb of nutrient,
+// against what the goal takes off each year.
+function soilBankNote(goal,prod){
+  const set=activeSet(sel);if(!set)return'';
+  const k=rxNut,tgt=k==='p'?rxTargetP:rxTargetK,per=PER_PPM[k],nut=NUTRIENT_NAME[k];
+  const vals=set.pts.map(p=>p[k]).filter(v=>v!=null);if(!vals.length)return'';
+  const avg=vals.reduce((a,b)=>a+b,0)/vals.length;
+  const removal=goal*removalPerBu(k,rxCrop);
+  const under=vals.filter(v=>v<tgt).length;
+  const bank=(avg-tgt)*per;
+  let line;
+  if(bank>0){const yrs=bank/removal;
+    line=`The soil averages <b>${avg.toFixed(0)} ppm</b> against <b>${tgt}</b> to hold: a bank of about <b>${Math.round(bank)} lb ${nut}/ac</b>, which is <b>${yrs>=20?'20+':yrs.toFixed(yrs<2?1:0)} years</b> of a ${goal} bu ${rxCrop} crop (${Math.round(removal)} lb/ac a year) before the test falls to ${tgt}.`;}
+  else line=`The soil averages <b>${avg.toFixed(0)} ppm</b>, under the <b>${tgt}</b> to hold: about <b>${Math.round(-bank)} lb ${nut}/ac</b> of build-up, spread over ${BUILD_YEARS} years (${Math.round(-bank/BUILD_YEARS)} lb a year) on top of the ${Math.round(removal)} lb a ${goal} bu crop takes off.`;
+  if(under&&under<vals.length)line+=` ${Math.round(under/vals.length*100)}% of the samples are under ${tgt} and get build-up.`;
+  return `<div style="font-size:8px;color:var(--tx2);padding:0 0 6px 86px;line-height:1.4">${line} At ${per} lb per ppm (ISU/NRCS 2023).</div>`;
+}
+// What ground rated like this has made on this farm. Across every field
+// with a soil rating and a harvest of the crop, the best year per rating
+// point; the 90th percentile of that times this field's rating is what
+// the farm's own record says this ground can do.
+const ceilingCache={};
+function ratingCeiling(f,crop){
+  const rating=svRatingAvg(f);if(rating==null)return null;
+  if(!ceilingCache[crop]){
+    const ratios=[];
+    for(const g of Object.keys(OPS)){const r=svRatingAvg(g);if(!r)continue;
+      const best=Math.max(0,...harvestHistory(g).filter(h=>h.crop===crop&&h.avg&&(h.acres||0)>=20).map(h=>h.avg));
+      if(best>0)ratios.push(best/r);}
+    ratios.sort((a,b)=>a-b);
+    ceilingCache[crop]=ratios.length>=5?{per:ratios[Math.floor(ratios.length*0.9)],n:ratios.length}:null;}
+  const c=ceilingCache[crop];if(!c)return null;
+  return{bu:Math.round(c.per*rating/5)*5,rating,per:c.per,n:c.n};
+}
+function ceilingNote(goal){
+  const c=ratingCeiling(sel,rxCrop);if(!c)return'';
+  const over=goal>c.bu;
+  return `<div style="font-size:8px;color:var(--tx2);padding:0 0 6px 86px;line-height:1.4">This ground rates <b>${c.rating.toFixed(0)}</b> (CSR2/NCCPI). Over ${c.n} of your fields, the best ${rxCrop} year on the top ground ran ${c.per.toFixed(1)} bu per rating point, so about <b>${c.bu} bu</b> is what ground rated like this has shown it can make here.${over?` <span style="color:var(--wr)">A ${goal} goal is above that.</span>`:''}</div>`;
 }
 function varyNote(ym){
   const rated=svRatingAvg(sel)!=null;
@@ -1542,20 +1601,12 @@ function varyNote(ym){
   if(rxVary==='yield')src=yTxt;
   else if(rxVary==='rating')src=rTxt;
   else src=[yTxt,rTxt].filter(Boolean).join(' and ');
-  const above=(rxNut==='p'||rxNut==='k')?(rxBasis==='removal'?' The rate is <b>what the crop takes off</b> at the goal; the soil test does not enter into it.':' <b>ISU soil test</b>: build-up below the target, nothing at or above it.'):'';
+  const above=(rxNut==='p'||rxNut==='k')?(rxBasis==='removal'?' The rate is <b>what the crop takes off</b> at the goal; the soil test does not enter into it.':' The rate is the crop\'s need at the goal <b>on top of what the soil holds</b> above the level to hold.'):'';
   return (src?`Removal varies by spot from ${src}.`:'Nothing to vary the removal by, so it is flat across the field.')+above;
 }
 function setPreset(nut,preset){
-  if(nut==='p'){
-    if(preset==='maintain')rxTargetP=20;
-    else if(preset==='build')rxTargetP=25;
-    else if(preset==='aggressive')rxTargetP=30;
-  }
-  if(nut==='k'){
-    if(preset==='maintain')rxTargetK=170;
-    else if(preset==='build')rxTargetK=200;
-    else if(preset==='aggressive')rxTargetK=230;
-  }
+  if(nut==='p')rxTargetP={low:17,optimum:25,high:34}[preset]||25;
+  if(nut==='k')rxTargetK={low:170,optimum:220,high:270}[preset]||220;
   if(nut==='ph'){rxTargetPH=preset==='nw_iowa'?6.0:6.5;}
   if(nut==='s'){
     if(preset==='low')rxTargetS=8;
