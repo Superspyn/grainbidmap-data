@@ -141,8 +141,7 @@ const SCALED_NOTE=n=>`A 2026 whole-field test on an older grid's pattern. The ${
 function pickSet(f,v){setPick[f]=+v;clearOv();
   // The sidebar badge and the map tooltips both read activeInfo(), so they
   // go stale unless they are redrawn too.
-  uSB();rfM();rP();
-  if(panelTab==='vr')showVRInterp();else showInterp();}
+  uSB();rfM();rP();showInterp();}
 const COMPOSITE_NOTE='Whole-field composite &mdash; one lab sample for the field, not a grid. The nutrient map is flat; rates still vary with yield history.';
 const FF={},FPROP={},BNDRY={};
 // USDA-NRCS soil survey (SSURGO) map units under each field, with the two
@@ -151,6 +150,7 @@ const FF={},FPROP={},BNDRY={};
 // national index (0-100, every state), with corn and soybean sub-models.
 const SV=(typeof SURVEY!=='undefined')?SURVEY:{fields:{},mapunits:{}};
 let svCrop='all';   // which NCCPI: all, corn or soy
+let prevNut='fert';  // the menu entry to go back to when leaving the VR zones
 const SV_BREAKS=[40,55,70,85];
 const SV_GRAY='#6b7280';
 function isSurvey(n){return n==='csr'||n==='nccpi';}
@@ -753,7 +753,7 @@ function render(){
 
 function updateLegend(){
   const lg=document.getElementById('legend');if(!lg)return;
-  if(panelTab==='vr'&&sel){
+  if(hNut==='vr'&&sel){
     // The map under the VR tab is the rate map, whatever the map menu
     // says; the legend has to say what those colours are.
     const c=ZONE_COLORS_RATE,names=['None needed','Low','Medium','High','Highest'];
@@ -845,10 +845,10 @@ function rFP(){
         </select></div>`:''}</div></div>
     <div class="ps">
       <div class="tb">
-        ${hasSoil||hasSurvey?`<button class="tbtn ${panelTab==='zones'?'a':''}" onclick="panelTab='zones';rP();showInterp()">Nutrient Map</button>`:''}
-        ${hasSoil?`<button class="tbtn ${panelTab==='soil'?'a':''}" onclick="panelTab='soil';rP();showInterp()">Soil Data</button>`:''}
-        <button class="tbtn ${panelTab==='history'?'a':''}" onclick="panelTab='history';rP();showInterp()">History</button>
-        ${hasSoil?`<button class="tbtn ${panelTab==='vr'?'a':''}" onclick="panelTab='vr';rP();showVRInterp()">VR Rx</button>`:''}
+        ${hasSoil||hasSurvey?`<button class="tbtn ${panelTab==='zones'?'a':''}" onclick="leaveVR();panelTab='zones';rP();showInterp()">Nutrient Map</button>`:''}
+        ${hasSoil?`<button class="tbtn ${panelTab==='soil'?'a':''}" onclick="leaveVR();panelTab='soil';rP();showInterp()">Soil Data</button>`:''}
+        <button class="tbtn ${panelTab==='history'?'a':''}" onclick="leaveVR();panelTab='history';rP();showInterp()">History</button>
+        ${hasSoil?`<button class="tbtn ${panelTab==='vr'?'a':''}" onclick="panelTab='vr';rP();sHN('vr')">VR Rx</button>`:''}
       </div>
       ${hasSoil?'':`<div class="dn">No soil test on file for this field, so no nutrient map or prescription. Crop history${hasSurvey?', yield maps and the soil survey ratings (CSR2, NCCPI)':' and yield maps'} still show.</div>`}
       ${panelTab==='zones'?rZones():''}${panelTab==='soil'?rSoil():''}${panelTab==='history'?rHist():''}${panelTab==='vr'?rVR():''}
@@ -1000,7 +1000,7 @@ function toggleFert(k){
   if(fertOn[k]&&fertNutsOn().length===1)return;   // never leave it empty
   fertOn[k]=!fertOn[k];
   rFertChips();rfM();updateLegend();
-  if(sel){rP();if(panelTab==='vr')showVRInterp();else showInterp();}
+  if(sel){rP();showInterp();}
 }
 
 // The fertility panel: how the field splits, and what is limiting it.
@@ -1487,7 +1487,7 @@ function initMap(){
   L.control.zoom({position:'bottomright'}).addTo(map);
   sTiles();addBounds();
   if(!sel&&!initMap.fitted){initMap.fitted=true;try{map.fitBounds(L.geoJSON(B).getBounds(),{padding:[20,20]});}catch(e){}}
-  if(sel)setTimeout(()=>{if(panelTab==='zones')showInterp();else if(panelTab==='vr')showVRInterp();},100);
+  if(sel)setTimeout(()=>{if(panelTab==='zones'||panelTab==='vr')showInterp();},100);
 }
 function sTiles(){if(!map)return;map.eachLayer(l=>{if(l._url)map.removeLayer(l);});
   const urls={satellite:'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
@@ -1541,6 +1541,12 @@ function renderSurvey(f){
 }
 function showInterp(){
   clearOv();updateLegend();if(!sel||!map)return;
+  if(hNut==='vr'){
+    if(panelTab!=='vr'){leaveVR();}
+    else{const fp=FP[sel];if(!fp||!fp.sets.length)return;
+      const raster=genRaster(sel,null,null,true,currentRateFn(sel));if(!raster)return;
+      canvasOverlay=renderRasterOnMap(raster,fieldRings(sel),ZONE_COLORS_RATE);zoomSel();return;}
+  }
   if(isSurvey(hNut)){canvasOverlay=renderSurvey(sel);zoomSel();return;}
   if(hNut==='gap'){
     const gr=genRaster(sel,null,null,true,makeGapFn(sel),GAP_BREAKS);
@@ -1558,13 +1564,9 @@ function showInterp(){
   zoomSel();
 }
 function currentRateFn(f){return makeZonalRateFn(f,rxNut,rxCrop,rxYG,rxTargetP,rxTargetK,rxTargetPH,rxTargetS,rxTargetZn,rxPC);}
-function showVRInterp(){
-  clearOv();updateLegend();if(!sel||!map)return;
-  const fp=FP[sel];if(!fp||!fp.sets.length)return;
-  const raster=genRaster(sel,null,null,true,currentRateFn(sel));if(!raster)return;
-  canvasOverlay=renderRasterOnMap(raster,fieldRings(sel),ZONE_COLORS_RATE);
-  zoomSel();
-}
+// The VR panel's controls redraw through here. The map is whatever the
+// menu says: the rate zones if that is picked, else the chosen map.
+function showVRInterp(){showInterp();}
 
 // The multi-year yield index as a map layer: every 20 m cell coloured by how
 // it yields against the field average, averaged over the harvests on file.
@@ -2430,7 +2432,8 @@ function runBatch(){
 
 // Events
 function tF(f){if(expanded.has(f))expanded.delete(f);else expanded.add(f);uSB();}
-function sF(f){sel=f;panelTab=FP[f]?'zones':'history';clearOv();
+function sF(f){sel=f;panelTab=FP[f]?'zones':'history';clearOv();leaveVR();
+  {const ns=document.getElementById('nsel');if(ns)ns.innerHTML=rNS();}
   // Each field starts from its own rotation and history: the crop after
   // last season's, the previous crop as planted, a goal from its yields.
   rxCrop=planCrop(f);rxPC=prevCrop(f);rxYG=defaultGoal(f,rxCrop);
@@ -2439,11 +2442,13 @@ function sF(f){sel=f;panelTab=FP[f]?'zones':'history';clearOv();
 function uSrch(q){sq=q;uSB();}
 function sML(l){mLyr=l;sTiles();document.querySelectorAll('.mb').forEach(b=>b.classList.remove('a'));event.target.classList.add('a');}
 function rNS(){
-  return `<select onchange="sHN(this.value)"><option value="fert" ${hNut==='fert'?'selected':''}>Overall fertility</option><option value="yield" ${hNut==='yield'?'selected':''}>Yield map (all years)</option><option value="gap" ${hNut==='gap'?'selected':''}>How far off (rating vs fertility)</option><option value="csr" ${hNut==='csr'?'selected':''}>CSR2 (Iowa soil rating)</option><option value="nccpi" ${hNut==='nccpi'?'selected':''}>NCCPI (soil productivity)</option>${['p','k','ph','om','cec','s','zn','ca','mg','bph','p2','mn'].map(k=>`<option value="${k}" ${hNut===k?'selected':''}>${TH[k]?.nm||k}</option>`).join('')}</select>${hNut==='nccpi'?`<select style="margin-left:6px;min-width:0" onchange="svCrop=this.value;sHN('nccpi')">${[['all','All crops'],['corn','Corn'],['soy','Soybean']].map(([v,l])=>`<option value="${v}" ${svCrop===v?'selected':''}>${l}</option>`).join('')}</select>`:''}`;}
-function sHN(n){hNut=n;const ns=document.getElementById('nsel');if(ns)ns.innerHTML=rNS();rFertChips();rfM();updateLegend();
+  return `<select onchange="sHN(this.value)">${sel&&FP[sel]?`<option value="vr" ${hNut==='vr'?'selected':''}>VR Rx rate zones</option>`:''}<option value="fert" ${hNut==='fert'?'selected':''}>Overall fertility</option><option value="yield" ${hNut==='yield'?'selected':''}>Yield map (all years)</option><option value="gap" ${hNut==='gap'?'selected':''}>How far off (rating vs fertility)</option><option value="csr" ${hNut==='csr'?'selected':''}>CSR2 (Iowa soil rating)</option><option value="nccpi" ${hNut==='nccpi'?'selected':''}>NCCPI (soil productivity)</option>${['p','k','ph','om','cec','s','zn','ca','mg','bph','p2','mn'].map(k=>`<option value="${k}" ${hNut===k?'selected':''}>${TH[k]?.nm||k}</option>`).join('')}</select>${hNut==='nccpi'?`<select style="margin-left:6px;min-width:0" onchange="svCrop=this.value;sHN('nccpi')">${[['all','All crops'],['corn','Corn'],['soy','Soybean']].map(([v,l])=>`<option value="${v}" ${svCrop===v?'selected':''}>${l}</option>`).join('')}</select>`:''}`;}
+function sHN(n){if(n!=='vr')prevNut=n;hNut=n;const ns=document.getElementById('nsel');if(ns)ns.innerHTML=rNS();rFertChips();rfM();updateLegend();
   if(!sel)return;
-  if(panelTab==='vr'){rP();showVRInterp();return;}   // the VR map is its own
   rP();showInterp();}
+// The menu's "VR Rx rate zones" only makes sense with the VR panel open;
+// leaving that tab puts the menu back where it was.
+function leaveVR(){if(hNut==='vr'){hNut=prevNut;const ns=document.getElementById('nsel');if(ns)ns.innerHTML=rNS();rFertChips();}}
 // Only the list is redrawn. Replacing the whole sidebar took the input the
 // user was typing in with it, so focus was lost after every character; and
 // the value was interpolated raw, so a quote in the search text broke out
