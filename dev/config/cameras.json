@@ -10,7 +10,7 @@
     "default_minutes_per_truck": 5,
     "_regions": "pixel polygons on the 704x576 frame, drawn from a real still on 2026-09-16: the line is the concrete apron in front of the pits; each pit is the bay under its sign. Trucks are placed by their wheels.",
     "min_box_height": 45,
-    "line": [[40, 286], [640, 286], [704, 560], [0, 560]],
+    "line": [[40, 286], [640, 286], [704, 576], [0, 576]],
     "pits": {
       "pit1": [[240, 190], [350, 190], [350, 285], [240, 285]],
       "pit2": [[135, 200], [240, 200], [240, 290], [135, 290]]
@@ -44,9 +44,9 @@
     "_regions": "720x650, drawn 2026-09-16 from a frame with one semi waiting and a pickup at the probe: the camera is far from the road, so trucks are ~30 px tall and the width floor is what tells a semi from a pickup. The line is the road east (right) of the probe where inbound trucks queue; the probe bay is the sampling station itself.",
     "min_box_height": 20,
     "min_box_width": 35,
-    "line": [[430, 225], [720, 225], [720, 285], [430, 285]],
+    "line": [[430, 225], [720, 225], [720, 300], [430, 300]],
     "pits": {
-      "probe": [[300, 225], [430, 225], [430, 290], [300, 290]]
+      "probe": [[300, 225], [430, 225], [430, 300], [300, 300]]
     }
   },
   {
@@ -109,9 +109,10 @@
     "url": "https://truckcamera.chsinc.com/mankato",
     "hours": [6, 20],
     "default_minutes_per_truck": 6,
-    "_regions": "3648x2052 fisheye, drawn 2026-09-17 from an empty lot: the line is the whole gravel staging lot; the entrance is the road at the far right where a truck heads into the plant. No pit in view. Not yet checked against a frame with trucks in it. Soybeans only.",
+    "_regions": "3648x2052 fisheye, drawn 2026-09-17 from an empty lot: the line is the whole gravel staging lot; the entrance is the road at the far right where a truck heads into the plant. No pit in view. Checked the same morning: four employee cars parked along the office at the left counted as trucks in line, hence the exclusion strip. Soybeans only.",
     "min_box_height": 90,
     "line": [[300, 250], [3000, 250], [3300, 1300], [2800, 2052], [0, 2052], [0, 1200]],
+    "exclude": [[[0, 600], [765, 600], [765, 1385], [0, 1385]]],
     "pits": {
       "entrance": [[3100, 700], [3648, 700], [3648, 1100], [3100, 1100]]
     }
