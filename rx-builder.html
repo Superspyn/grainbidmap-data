@@ -182,6 +182,24 @@ function fieldCells(raster,f){if(raster._in)return raster._in;const fr=fieldRing
   for(let iy=0;iy<raster.sny;iy++){const py=raster.ymin+(iy+0.5)*raster.sRES;for(let ix=0;ix<raster.snx;ix++){if(inField(raster.xmin+(ix+0.5)*raster.sRES,py,fr))a[iy*raster.snx+ix]=1;}}
   raster._in=a;return a;}
 // Zone acreage from the raster, not from "points x 2.5 acres".
+// Per zone, from the raster the map paints: acres inside the field, the
+// mean rate of its cells (what the export writes), and the lowest and
+// highest cell rate in it. Zone 1 of a map with a no-application zone is
+// exactly 0, whatever stray cells the tidying swept in.
+function zoneStats(raster,f){
+  const inF=fieldCells(raster,f),ac=cellAcres(raster),nz=raster.nz||NZONES;
+  const out=[];for(let z=0;z<=nz;z++)out.push({ac:0,n:0,sum:0,lo:Infinity,hi:-Infinity,mean:0});
+  for(let i=0;i<inF.length;i++){
+    if(!inF[i]||!raster.mask[i])continue;
+    const z=raster.zoneGrid[i],v=raster.grid[i],o=out[z];
+    o.ac+=ac;o.n++;o.sum+=v;if(v>o.hi)o.hi=v;
+    // The spread quoted for a zone leaves out zero cells the tidying
+    // swept in from the no-application ground next door; they are in
+    // the mean, where they belong, but "0-76" is not what the zone is.
+    if(v<o.lo&&(v>0||!raster.zeroZone))o.lo=v;}
+  out.forEach((o,z)=>{if(!o.n){o.lo=o.hi=0;return;}o.mean=Math.round(o.sum/o.n);if(o.lo===Infinity)o.lo=0;
+    if(raster.zeroZone&&z===1){o.mean=0;o.lo=0;o.hi=0;}});
+  return out;}
 function zoneAcres(raster,f){const inF=fieldCells(raster,f),ac=cellAcres(raster),out=new Array((raster.nz||NZONES)+1).fill(0);
   for(let i=0;i<inF.length;i++){if(inF[i]&&raster.mask[i])out[raster.zoneGrid[i]]+=ac;}return out;}
 
@@ -735,6 +753,15 @@ function render(){
 
 function updateLegend(){
   const lg=document.getElementById('legend');if(!lg)return;
+  if(panelTab==='vr'&&sel){
+    // The map under the VR tab is the rate map, whatever the map menu
+    // says; the legend has to say what those colours are.
+    const c=ZONE_COLORS_RATE,names=['None needed','Low','Medium','High','Highest'];
+    lg.innerHTML=`<div class="lg-t">VR Rx: ${NUTRIENT_NAME[rxNut]} rate zones <span class="source-tag">this field</span></div>
+      <div class="lg-cats">${names.map((nm,i)=>`<div class="lg-cat"><div class="dot" style="background:rgb(${c[i].join(',')})"></div>${nm}</div>`).join('')}</div>
+      <div class="lg-t" style="margin-top:6px;font-size:8px">Rates per zone are in the panel</div>`;
+    return;
+  }
   if(hNut==='yield'){
     const grad=YIELD_COLORS.map((c,i)=>`rgb(${c[0]},${c[1]},${c[2]}) ${Math.round(i/(YIELD_COLORS.length-1)*100)}%`).join(',');
     lg.innerHTML=`<div class="lg-t">Yield vs field average <span class="source-tag">Ops Center</span></div>
@@ -1317,15 +1344,19 @@ function rVR(){
   const unit=rxNut==='ph'?'lb ECC/ac':'lb/ac';
   const flatRateFns={p:()=>calcPRate(lt.p,effYG,rxCrop,rxTargetP),k:()=>calcKRate(lt.k,effYG,rxCrop,rxTargetK),ph:()=>calcLimeRate(lt.ph,lt.bph,rxTargetPH),s:()=>calcSRate(lt.s,rxTargetS),zn:()=>calcZnRate(lt.zn,rxTargetZn)};
   const flatRate=flatRateFns[rxNut]?(flatRateFns[rxNut]()||0):0;
-  const range=mx-mn||1;
   const cRate=ZONE_COLORS_RATE;
-  // The zones exactly as the export writes them: rate = zone midpoint,
-  // acres counted from the raster inside the boundary.
+  // The zones exactly as the map paints them and the export writes them:
+  // the raster's own classes, each at the mean of the rates inside it.
+  // This used to slice [min,max] of the sample rates into five equal
+  // bands and quote each band's midpoint, which was not what the map
+  // showed (the map gives "apply nothing" its own zone) and not what the
+  // shapefile carried (the zone mean) - so the blue zone read "13 -> 25
+  // lb/ac" on ground the export sends out at 0.
   const zoneBreak=[];let acTot=0,lbTot=0;
-  for(let i=0;i<NZONES;i++){const lo=mn+range*i/NZONES,hi2=mn+range*(i+1)/NZONES;
-    const ac=zac?zac[i+1]:rates.filter(r=>r>=lo&&(i===NZONES-1?r<=hi2:r<hi2)).length*2.5;
-    if(ac<0.5)continue;const rate=Math.round((lo+hi2)/2);acTot+=ac;lbTot+=rate*ac;
-    zoneBreak.push({lo:Math.round(lo),hi:Math.round(hi2),rate,ac,color:`rgb(${cRate[i][0]},${cRate[i][1]},${cRate[i][2]})`});}
+  const zs=raster?zoneStats(raster,sel):null;
+  if(zs)for(let z=1;z<zs.length;z++){const o=zs[z];
+    if(o.ac<0.5)continue;acTot+=o.ac;lbTot+=o.mean*o.ac;
+    zoneBreak.push({lo:Math.round(o.lo),hi:Math.round(o.hi),rate:o.mean,ac:o.ac,color:`rgb(${cRate[z-1][0]},${cRate[z-1][1]},${cRate[z-1][2]})`});}
   const avg=acTot?Math.round(lbTot/acTot):0;
   const savings=flatRate&&avg<flatRate?Math.round((1-avg/flatRate)*100):0;
   const prodLb=lbTot/prod.pct;
@@ -1393,7 +1424,7 @@ function rVR(){
       ${nothingNeeded(zoneBreak)}
       <div class="lb" style="margin-bottom:3px">Rate Zones: ${NUTRIENT_NAME[rxNut]} → ${prod.name} (${isComposite(sel)?'zones follow the yield map':'low = soil adequate, high = building'})</div>
       ${zoneBreak.map(z=>`<div class="vr-zone"><div class="vr-color" style="background:${z.color}"></div>
-        <span class="vr-range">${z.lo}-${z.hi}</span><span class="vr-rate">${z.rate} → ${Math.round(z.rate/prod.pct)} lb/ac</span>
+        <span class="vr-range">${z.rate===0?'none needed':z.lo===z.hi?z.lo:`${z.lo}-${z.hi}`}</span><span class="vr-rate">${z.rate} → ${Math.round(z.rate/prod.pct)} lb/ac</span>
         <span class="vr-acres">${z.ac.toFixed(0)}ac</span></div>`).join('')}
     </div>
     ${hist.length?`<div class="fc" style="padding:8px;margin-top:8px;border-left:3px solid #f97316">
@@ -1509,7 +1540,7 @@ function renderSurvey(f){
   return group.addTo(map);
 }
 function showInterp(){
-  clearOv();if(!sel||!map)return;
+  clearOv();updateLegend();if(!sel||!map)return;
   if(isSurvey(hNut)){canvasOverlay=renderSurvey(sel);zoomSel();return;}
   if(hNut==='gap'){
     const gr=genRaster(sel,null,null,true,makeGapFn(sel),GAP_BREAKS);
@@ -1528,7 +1559,7 @@ function showInterp(){
 }
 function currentRateFn(f){return makeZonalRateFn(f,rxNut,rxCrop,rxYG,rxTargetP,rxTargetK,rxTargetPH,rxTargetS,rxTargetZn,rxPC);}
 function showVRInterp(){
-  clearOv();if(!sel||!map)return;
+  clearOv();updateLegend();if(!sel||!map)return;
   const fp=FP[sel];if(!fp||!fp.sets.length)return;
   const raster=genRaster(sel,null,null,true,currentRateFn(sel));if(!raster)return;
   canvasOverlay=renderRasterOnMap(raster,fieldRings(sel),ZONE_COLORS_RATE);
@@ -1674,17 +1705,11 @@ function exportZones(f,rateFn,nut,crop,yg){
   // target, so most fields are a big block of zeros and a few high spots,
   // and the band midpoint put fertiliser on ground the model had said
   // needed none.
-  const inF=fieldCells(raster,f),zsum={},zn={};
-  for(let i=0;i<raster.zoneGrid.length;i++){
-    const z=raster.zoneGrid[i];
-    if(!z||!raster.mask[i]||!inF[i])continue;
-    zsum[z]=(zsum[z]||0)+raster.grid[i];zn[z]=(zn[z]||0)+1;
-  }
-  records.forEach(r=>{if(zn[r.id])r.rate=Math.round(zsum[r.id]/zn[r.id]);});
   // Zone 1 of a rate map with a no-application zone means exactly that.
   // A stray cell or two swept in by the zone tidying must not turn "spread
   // nothing here" into a few pounds an acre across most of the field.
-  if(raster.zeroZone)records.forEach(r=>{if(r.id===1)r.rate=0;});
+  const zs=zoneStats(raster,f);
+  records.forEach(r=>{const o=zs[r.id];if(o&&o.n){r.rate=o.mean;r.rate_lo=Math.round(o.lo);r.rate_hi=Math.round(o.hi);}});
   records.forEach(r=>{r.parts=orientParts(r.parts);
     r.nutrient=NUTRIENT_NAME[nut];r.nut_rate=r.rate;r.nut_lo=r.rate_lo;r.nut_hi=r.rate_hi;
     r.product=prod.name;r.analysis=Math.round(prod.pct*100);
