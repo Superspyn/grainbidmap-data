@@ -138,7 +138,10 @@ function setLabel(s){
   return `${s.d} · grid, ${s.pts.length} points`;}
 function isScaled(f){const s=activeSet(f);return !!s&&s.kind==='scaled';}
 const SCALED_NOTE=n=>`A 2026 whole-field test on an older grid's pattern. The ${n.from_grid.slice(0,4)} grid says where the good ground is; the ${n.d} composite says what the field tests now, so every point was moved by the same amount its field average moved. A derived reading, not a lab result.`;
-function pickSet(f,v){setPick[f]=+v;clearOv();rP();
+function pickSet(f,v){setPick[f]=+v;clearOv();
+  // The sidebar badge and the map tooltips both read activeInfo(), so they
+  // go stale unless they are redrawn too.
+  uSB();rfM();rP();
   if(panelTab==='vr')showVRInterp();else showInterp();}
 const COMPOSITE_NOTE='Whole-field composite &mdash; one lab sample for the field, not a grid. The nutrient map is flat; rates still vary with yield history.';
 const FF={},FPROP={},BNDRY={};
@@ -627,7 +630,7 @@ function render(){
     <div class="hdr"><div class="logo">Farm <span>Variable Rate Rx</span></div>
       <div class="hdr-r"><button class="btn btn-sm" onclick="openBatchExport()" style="width:auto">📦 Batch Export</button>
       <div class="pill"><span class="d"></span>${B.features.length} fields · ${Object.keys(FP).length} soil-sampled · ${Object.keys(YMAPS).length} with yield maps · planning ${META.plan_year}</div></div></div>
-    <div class="sb"><input class="sb-input" placeholder="Search fields..." value="${sq}" oninput="uSrch(this.value)"/><h3>Farm Fields</h3>${rFL()}</div>
+    <div class="sb"><input class="sb-input" placeholder="Search fields..." value="${attr(sq)}" oninput="uSrch(this.value)"/><h3>Farm Fields</h3><div class="fl">${rFL()}</div></div>
     <div class="mc"><div id="map"></div>
       <div class="mo"><button class="mb ${mLyr==='satellite'?'a':''}" onclick="sML('satellite')">Satellite</button><button class="mb ${mLyr==='topo'?'a':''}" onclick="sML('topo')">Topo</button><button class="mb ${mLyr==='roads'?'a':''}" onclick="sML('roads')">Roads</button></div>
       <div class="ns"><select onchange="sHN(this.value)"><option value="fert" ${hNut==='fert'?'selected':''}>Overall fertility</option><option value="yield" ${hNut==='yield'?'selected':''}>Yield map (all years)</option>${['p','k','ph','om','cec','s','zn','ca','mg','bph','p2','mn'].map(k=>`<option value="${k}" ${hNut===k?'selected':''}>${TH[k]?.nm||k}</option>`).join('')}</select></div>
@@ -808,7 +811,7 @@ function toggleFert(k){
   if(fertOn[k]&&fertNutsOn().length===1)return;   // never leave it empty
   fertOn[k]=!fertOn[k];
   rFertChips();rfM();updateLegend();
-  if(sel){rP();showInterp();}
+  if(sel){rP();if(panelTab==='vr')showVRInterp();else showInterp();}
 }
 
 // The fertility panel: how the field splits, and what is limiting it.
@@ -1439,7 +1442,11 @@ const RX_FIELDS=[
   {n:'NUTRIENT',t:'C',l:8,d:0},{n:'NUT_RATE',t:'N',l:10,d:0},{n:'NUT_LO',t:'N',l:10,d:0},{n:'NUT_HI',t:'N',l:10,d:0},
   {n:'UNIT',t:'C',l:12,d:0},{n:'CROP',t:'C',l:10,d:0},{n:'YIELD_GL',t:'N',l:10,d:0},{n:'ACRES',t:'N',l:10,d:1},
 ];
-function rxFileName(f,nut,crop){return `VR_Rx_${f}_${NUTRIENT_NAME[nut]}_${crop}_${META.plan_year}`;}
+// Anything that is not safe in a file name inside a zip becomes "_". One
+// field is called Wheatley75/EffingtonCummins1, and the slash turned the
+// four shapefile parts into a folder rather than files at the zip root.
+function fileSafe(n){return String(n).replace(/[\\/:*?"<>|]+/g,'_');}
+function rxFileName(f,nut,crop){return `VR_Rx_${fileSafe(f)}_${NUTRIENT_NAME[nut]}_${crop}_${META.plan_year}`;}
 function exportVR(){
   try{
     if(!sel||!FP[sel])return;
@@ -1968,8 +1975,16 @@ function buildMultiPartSHP(records,flds){
 function exportCSV(){
   if(!sel)return;const fp=FP[sel];if(!fp||!fp.sets.length)return;
   const pts=activeSet(sel).pts;
+  // Every rate here goes through the same zonal function the map and the
+  // shapefile use, so the three agree. Calling calcPRate(pt.p, rxYG, ...)
+  // directly skipped the yield scaling, so the CSV and the shapefile gave
+  // different numbers for the same point. A blank means "no reading"; a
+  // computed rate of 0 is written as 0.
+  const rf=n=>makeZonalRateFn(sel,n,rxCrop,rxYG,rxTargetP,rxTargetK,rxTargetPH,rxTargetS,rxTargetZn,rxPC);
+  const fP=rf('p'),fK=rf('k'),fPH=rf('ph'),fS=rf('s'),fZN=rf('zn'),fN=rf('n');
+  const v=x=>x==null?'':x;
   let csv='ID,LAT,LON,SOIL_P,SOIL_K,SOIL_PH,SOIL_OM,SOIL_S,SOIL_ZN,SOIL_CEC,SOIL_BPH,RX_P2O5,RX_K2O,RX_LIME,RX_N,RX_S,RX_ZN,CROP,YIELD_GOAL\n';
-  pts.forEach(pt=>{csv+=`${pt.id},${pt.y},${pt.x},${pt.p||''},${pt.k||''},${pt.ph||''},${pt.om||''},${pt.s||''},${pt.zn||''},${pt.cec||''},${pt.bph||''},${calcPRate(pt.p,rxYG,rxCrop,rxTargetP)||''},${calcKRate(pt.k,rxYG,rxCrop,rxTargetK)||''},${calcLimeRate(pt.ph,pt.bph,rxTargetPH)},${calcNRate(pt.om,rxYG,rxPC)},${calcSRate(pt.s,rxTargetS)||''},${calcZnRate(pt.zn,rxTargetZn)||''},${rxCrop},${rxYG}\n`;});
+  pts.forEach(pt=>{csv+=`${pt.id},${pt.y},${pt.x},${v(pt.p)},${v(pt.k)},${v(pt.ph)},${v(pt.om)},${v(pt.s)},${v(pt.zn)},${v(pt.cec)},${v(pt.bph)},${v(fP(pt))},${v(fK(pt))},${v(fPH(pt))},${v(fN(pt))},${v(fS(pt))},${v(fZN(pt))},${rxCrop},${rxYG}\n`;});
   const blob=new Blob([csv],{type:'text/csv'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`VR_${sel}_${rxCrop}.csv`;document.body.appendChild(a);a.click();document.body.removeChild(a);
 }
 function bSHP(pp){let cl=0;pp.forEach(p=>{cl+=8+4+32+4+4+4+p.length*16;});const buf=new ArrayBuffer(100+cl);const dv=new DataView(buf);
@@ -1987,14 +2002,20 @@ function bSHX(pp){const n=pp.length;const buf=new ArrayBuffer(100+n*8);const dv=
   dv.setFloat64(36,xn,true);dv.setFloat64(44,yn,true);dv.setFloat64(52,xx,true);dv.setFloat64(60,yx,true);
   let off=50;pp.forEach((p,i)=>{const c2=(4+32+4+4+4+p.length*16)/2;dv.setInt32(100+i*8,off,false);dv.setInt32(100+i*8+4,c2,false);off+=4+c2;});return new Uint8Array(buf);}
 function bDBF(fields,recs){const nR=recs.length,nF=fields.length;const hSz=32+nF*32+1;const rSz=1+fields.reduce((s,f)=>s+f.l,0);
-  const buf=new ArrayBuffer(hSz+nR*rSz);const dv=new DataView(buf);const b=new Uint8Array(buf);
+  const buf=new ArrayBuffer(hSz+nR*rSz+1);   // +1 for the end-of-file marker
+  const dv=new DataView(buf);const b=new Uint8Array(buf);
   dv.setUint8(0,3);const now=new Date();dv.setUint8(1,now.getFullYear()-1900);dv.setUint8(2,now.getMonth()+1);dv.setUint8(3,now.getDate());
   dv.setInt32(4,nR,true);dv.setInt16(8,hSz,true);dv.setInt16(10,rSz,true);
   let fo=32;fields.forEach(f=>{for(let i=0;i<Math.min(f.n.length,11);i++)b[fo+i]=f.n.charCodeAt(i);b[fo+11]=f.t.charCodeAt(0);b[fo+16]=f.l;b[fo+17]=f.d;fo+=32;});b[fo]=0x0D;
   let ro=hSz;recs.forEach(rec=>{b[ro]=0x20;ro++;
     fields.forEach(f=>{let v='';const k=f.n.toLowerCase();const rv=rec[k];
       if(rv==null)v='';else if(f.t==='N')v=f.d>0?Number(rv).toFixed(f.d):String(Math.round(rv));else v=String(rv);
-      v=v.padStart(f.l,' ').slice(0,f.l);for(let i=0;i<f.l;i++)b[ro+i]=v.charCodeAt(i)||0x20;ro+=f.l;});});return new Uint8Array(buf,0,ro);}
+      // dBASE wants character fields left-justified and numbers right-
+      // justified, and an overlong value must lose its tail, not its head.
+      v=v.length>f.l?v.slice(0,f.l):(f.t==='C'?v.padEnd(f.l,' '):v.padStart(f.l,' '));
+      for(let i=0;i<f.l;i++)b[ro+i]=v.charCodeAt(i)||0x20;ro+=f.l;});});
+  b[ro++]=0x1A;   // dBASE end-of-file marker, which older readers expect
+  return new Uint8Array(buf,0,ro);}
 function dlZip(shp,name){const files=[{name:name+'.shp',data:shp.shp},{name:name+'.shx',data:shp.shx},{name:name+'.dbf',data:shp.dbf},{name:name+'.prj',data:new TextEncoder().encode(shp.prj)}];
   const zip=mkZip(files);const blob=new Blob([zip],{type:'application/zip'});const url=URL.createObjectURL(blob);
   const a=document.createElement('a');a.href=url;a.download=name+'.zip';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);}
@@ -2011,27 +2032,38 @@ function mkZip(files){const cd=[],lf=[];let off=0;
 function crc32(d){let c=0xFFFFFFFF;const t=new Uint32Array(256);for(let i=0;i<256;i++){let v=i;for(let j=0;j<8;j++)v=v&1?0xEDB88320^(v>>>1):v>>>1;t[i]=v;}for(let i=0;i<d.length;i++)c=t[(c^d[i])&0xFF]^(c>>>8);return(c^0xFFFFFFFF)>>>0;}
 
 // Batch export
+// Read whatever is on screen back into state. The dialog is rebuilt from
+// scratch when the nutrient changes, so anything the user had already
+// chosen has to be captured first - it used to be silently reset to
+// automatic, and the whole farm was then written on each field's own
+// rotation and history instead of what was asked for.
+function readBatchForm(){
+  const c=document.getElementById('bCrop'),g=document.getElementById('bGoal'),
+        y=document.getElementById('bYG'),pr=document.getElementById('bProd');
+  if(pr)rxProd[rxNut]=+pr.value;
+  if(c)batchCrop=c.value;
+  if(g)batchGoal=(g.value==='auto')?'auto':(+((y&&y.value)||0)||'auto');
+}
+function batchNut(v){readBatchForm();rxNut=v;openBatchExport();}
+function closeBatch(){readBatchForm();showModal=null;render();}
 function openBatchExport(){
   const nS=Object.keys(FP).filter(f=>BNDRY[f]).length;
   const nutLabel={p:'P₂O₅',k:'K₂O',ph:'Lime',s:'Sulfur',zn:'Zinc'};
-  showModal=`<div class="modal-ov" onclick="if(event.target===this){showModal=null;render();}"><div class="modal"><h2>📦 Batch VR Export<button class="mcl" onclick="showModal=null;render();">✕</button></h2>
+  showModal=`<div class="modal-ov" onclick="if(event.target===this){closeBatch();}"><div class="modal"><h2>📦 Batch VR Export<button class="mcl" onclick="closeBatch()">✕</button></h2>
     <div class="dn"><b>One download for all ${nS} soil-sampled fields.</b> Inside: a shapefile zip per field for Operations Center (RATE in lb of product) and an order summary CSV with acres, average rate and tons per field. Takes a minute or two; the page will sit still while it works.</div>
     <div class="rxb" style="margin-bottom:12px">
-      <div class="rxr"><label>Nutrient</label><select onchange="rxNut=this.value;openBatchExport()">${['p','k','ph','s','zn'].map(n=>`<option value="${n}" ${rxNut===n?'selected':''}>${nutLabel[n]}</option>`).join('')}</select>
+      <div class="rxr"><label>Nutrient</label><select onchange="batchNut(this.value)">${['p','k','ph','s','zn'].map(n=>`<option value="${n}" ${rxNut===n?'selected':''}>${nutLabel[n]}</option>`).join('')}</select>
         <select id="bProd">${PRODUCTS[rxNut].map((p,i)=>`<option value="${i}" ${(rxProd[rxNut]||0)===i?'selected':''}>${p.name} (${Math.round(p.pct*100)}%)</option>`).join('')}</select></div>
       <div class="rxr"><label>Crop ${META.plan_year}</label><select id="bCrop"><option value="auto" ${batchCrop==='auto'?'selected':''}>Each field's rotation (flip of ${META.plan_year-1})</option><option value="corn" ${batchCrop==='corn'?'selected':''}>All corn</option><option value="soybean" ${batchCrop==='soybean'?'selected':''}>All soybean</option></select></div>
       <div class="rxr"><label>Yield goal</label><select id="bGoal"><option value="auto" ${batchGoal==='auto'?'selected':''}>Each field's own history +5%</option><option value="fixed" ${batchGoal!=='auto'?'selected':''}>Fixed, bu/ac:</option></select><input id="bYG" type="number" value="${batchGoal==='auto'?rxYG:batchGoal}" style="max-width:70px;flex:none"/></div>
       <div class="rxr"><label>Targets</label><span style="font-size:10px;color:var(--tx2)">P ${rxTargetP} · K ${rxTargetK} · pH ${rxTargetPH.toFixed(1)} · S ${rxTargetS} · Zn ${rxTargetZn.toFixed(1)} ppm (set on a field's VR Rx tab)</span></div>
     </div>
-    <div class="br"><button class="btn" onclick="runBatch()">⬇ Export All Fields</button><button class="btn btn-o" onclick="showModal=null;render();">Cancel</button></div></div></div>`;
+    <div class="br"><button class="btn" onclick="runBatch()">⬇ Export All Fields</button><button class="btn btn-o" onclick="closeBatch()">Cancel</button></div></div></div>`;
   render();}
 function runBatch(){
-  rxProd[rxNut]=+document.getElementById('bProd').value;
-  batchCrop=document.getElementById('bCrop').value;
-  const gSel=document.getElementById('bGoal').value,gVal=+document.getElementById('bYG').value;
-  batchGoal=gSel==='auto'?'auto':(gVal||'auto');
+  readBatchForm();
   const prod=productFor(rxNut),nutName=NUTRIENT_NAME[rxNut];
-  const files=[],rows=[['field','org','county','acres','crop','prev_crop','yield_goal','nutrient','avg_nutrient_lb_ac','product','analysis_pct','avg_product_lb_ac','product_lb','product_tons','zones','soil_test','sampled']];
+  const files=[],rows=[['field','org','farm','county','acres','crop','prev_crop','yield_goal','nutrient','avg_nutrient_lb_ac','product','analysis_pct','avg_product_lb_ac','product_lb','product_tons','zones','soil_test','sampled']];
   const names=Object.keys(FP).filter(f=>BNDRY[f]).sort();
   let done=0,skipped=0;
   names.forEach(f=>{
@@ -2048,7 +2080,7 @@ function runBatch(){
     const lbProd=z.records.reduce((s,r)=>s+r.rate*r.acres,0),lbNut=z.records.reduce((s,r)=>s+r.nut_rate*r.acres,0);
     const p=FPROP[f]||{};
     const set=activeSet(f);
-    rows.push([f,p.org||'',p.farm||'',ac.toFixed(1),crop,pc,yg,nutName,ac?(lbNut/ac).toFixed(0):'',prod.name,Math.round(prod.pct*100),ac?(lbProd/ac).toFixed(0):'',lbProd.toFixed(0),(lbProd/2000).toFixed(2),z.records.length,
+    rows.push([f,p.org||'',p.farm||'',(FI[f]&&FI[f].county)||'',ac.toFixed(1),crop,pc,yg,nutName,ac?(lbNut/ac).toFixed(0):'',prod.name,Math.round(prod.pct*100),ac?(lbProd/ac).toFixed(0):'',lbProd.toFixed(0),(lbProd/2000).toFixed(2),z.records.length,
       set?(set.kind==='whole'?'whole-field composite':set.kind==='scaled'?`${set.d} level on the ${String(set.from_grid).slice(0,4)} grid`:`grid, ${set.pts.length} pts`):'',set?set.d:'']);
     done++;
   });
@@ -2070,8 +2102,21 @@ function sF(f){sel=f;panelTab=FP[f]?'zones':'history';clearOv();
   rP();uSB();rfM();showInterp();}
 function uSrch(q){sq=q;uSB();}
 function sML(l){mLyr=l;sTiles();document.querySelectorAll('.mb').forEach(b=>b.classList.remove('a'));event.target.classList.add('a');}
-function sHN(n){hNut=n;rFertChips();rfM();updateLegend();if(sel){if(panelTab==='zones'){rP();showInterp();}else if(panelTab==='history'){rP();}else if(panelTab==='vr'){/* keep current */}}}
-function uSB(){document.querySelector('.sb').innerHTML=`<input class="sb-input" placeholder="Search fields..." value="${sq}" oninput="uSrch(this.value)"/><h3>Farm Fields</h3>${rFL()}`;}
+function sHN(n){hNut=n;rFertChips();rfM();updateLegend();
+  if(!sel)return;
+  if(panelTab==='vr'){rP();showVRInterp();return;}   // the VR map is its own
+  rP();showInterp();}
+// Only the list is redrawn. Replacing the whole sidebar took the input the
+// user was typing in with it, so focus was lost after every character; and
+// the value was interpolated raw, so a quote in the search text broke out
+// of the attribute and could plant an event handler.
+function uSB(){
+  const box=document.querySelector('.sb');if(!box)return;
+  const inp=box.querySelector('.sb-input');
+  const list=box.querySelector('.fl');
+  if(inp&&list){if(inp.value!==sq)inp.value=sq;list.innerHTML=rFL();return;}
+  box.innerHTML=`<input class="sb-input" placeholder="Search fields..." value="${attr(sq)}" oninput="uSrch(this.value)"/><h3>Farm Fields</h3><div class="fl">${rFL()}</div>`;
+}
 function rfM(){if(!map)return;map.eachLayer(l=>{if(l.feature)map.removeLayer(l);});addBounds();}
 function rP(){document.querySelector('.pn').innerHTML=sel?rFP():rEP();}
 
