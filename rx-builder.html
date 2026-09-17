@@ -198,6 +198,7 @@ function zoneStats(raster,f){
     // the mean, where they belong, but "0-76" is not what the zone is.
     if(v<o.lo&&(v>0||!raster.zeroZone))o.lo=v;}
   out.forEach((o,z)=>{if(!o.n){o.lo=o.hi=0;return;}o.mean=Math.round(o.sum/o.n);if(o.lo===Infinity)o.lo=0;
+    if(raster.bands&&raster.bands[z]){o.lo=raster.bands[z][0];o.hi=raster.bands[z][1];}
     if(raster.zeroZone&&z===1){o.mean=0;o.lo=0;o.hi=0;}});
   return out;}
 function zoneAcres(raster,f){const inF=fieldCells(raster,f),ac=cellAcres(raster),out=new Array((raster.nz||NZONES)+1).fill(0);
@@ -350,6 +351,8 @@ function calcZnRate(zn,tgt){
 // Crop selection determines removal coefficients (corn vs soybean).
 // Prev crop (pc) affects available N credit (soybean credit = -45 lb N/ac).
 const RATE_NEEDS={p:['p'],k:['k'],ph:['ph','bph'],s:['s'],zn:['zn'],n:['om']};
+// The narrowest rate band worth a zone of its own, lb of nutrient per acre.
+const RATE_MIN_BAND={p:5,k:5,ph:250,s:3,zn:1,n:10};
 // How this spot compares with the field, 1 = the field average: from the
 // yield maps, from the soil rating, or the two averaged. Null where the
 // chosen source has nothing here.
@@ -392,6 +395,7 @@ function makeZonalRateFn(fieldName,rxNut2,crop,userYG,tgtP,tgtK,tgtPH,tgtS,tgtZn
   // Which soil readings genRaster has to interpolate before it can ask
   // this function for a rate. See the note in genRaster.
   fn.needs=RATE_NEEDS[rxNut2]||['om'];
+  fn.minBand=RATE_MIN_BAND[rxNut2]||5;
   return fn;
 }
 
@@ -451,6 +455,17 @@ const ZONE_COLORS_NUT=[
   [210,40,40],[230,175,30],[50,185,60],[30,155,135],[40,95,200]
 ];
 // Rate colors: blue(low/no need) -> green -> yellow -> orange -> red(high need)
+// Colours for however many zones a rate map has: blue only for a real
+// "none needed" zone, the rest spread green to red.
+function rateColors(raster){
+  const all=ZONE_COLORS_RATE,rest=all.slice(1),nz=raster.nz||NZONES;
+  const pick=n=>{if(n<=0)return[];if(n===1)return[rest[1]];const o=[];for(let i=0;i<n;i++)o.push(rest[Math.round(i*(rest.length-1)/(n-1))]);return o;};
+  return raster.zeroZone?[all[0],...pick(nz-1)]:pick(nz);}
+function rateZoneNames(raster){
+  const nz=raster.nz||NZONES,n=raster.zeroZone?nz-1:nz;
+  const pos={1:['One rate'],2:['Lower','Higher'],3:['Low','Medium','High'],4:['Low','Medium','High','Highest']}[n]||['Low','Medium','High','Higher','Highest'];
+  return raster.zeroZone?['None needed',...pos]:pos;}
+let lastVR=null;   // the rate raster last drawn, for the legend
 const ZONE_COLORS_RATE=[
   [40,95,200],[50,185,60],[230,175,30],[230,105,25],[210,40,40]
 ];
@@ -573,13 +588,30 @@ function genRaster(fieldName,nut,setIdx,isRate,rateFn,breaks){
   if(isRate&&rateFn&&rateFn!==fertScore&&!breaks)
     for(let i=0;i<snx*sny;i++)if(mask[i]&&grid[i]<=0)zeroCells++;
   const zeroZone=zeroCells>0&&vmax>0;
+  const range=vmax-vmin||1;
   // How many classes this raster carries: the lab's bands run to six.
-  const NZ=breaks?breaks.length+1:NZONES;
+  // A rate map gets as many bands as its spread has room for. Cutting a
+  // field whose rates run 44 to 56 lb into five bands drew five colours
+  // of noise two pounds apart; a band is at least minBand wide (5 lb of
+  // P2O5 or K2O), so that field is one or two zones, which is what a
+  // spreader can tell apart.
+  let NZ=breaks?breaks.length+1:NZONES,bands=null;
+  if(rateMap){
+    const minBand=(rateFn&&rateFn.minBand)||0;
+    if(zeroZone){
+      const nPos=minBand?Math.max(1,Math.min(NZONES-1,Math.floor(vmax/minBand))):NZONES-1;
+      NZ=1+nPos;bands=[null,[0,0]];
+      for(let k=0;k<nPos;k++)bands.push([vmax*k/nPos,vmax*(k+1)/nPos]);
+    }else{
+      const n=minBand?Math.max(1,Math.min(NZONES,Math.floor(range/minBand))):NZONES;
+      NZ=n;bands=[null];
+      for(let k=0;k<n;k++)bands.push([vmin+range*k/n,vmin+range*(k+1)/n]);
+    }
+  }
 
   // 3. Classify into discrete zones. Given absolute breaks, use them: a
   // fertility map has to mean the same thing on every field, where a
   // nutrient map is read against the field's own spread.
-  const range=vmax-vmin||1;
   const zoneGrid=new Uint8Array(snx*sny);
   for(let i=0;i<snx*sny;i++){
     if(!mask[i])continue;
@@ -594,11 +626,11 @@ function genRaster(fieldName,nut,setIdx,isRate,rateFn,breaks){
       if(grid[i]<=0)zoneGrid[i]=1;
       else{
         const norm=grid[i]/(vmax||1);
-        zoneGrid[i]=Math.min(NZONES-2,Math.max(0,Math.floor(norm*(NZONES-1))))+2;
+        zoneGrid[i]=Math.min(NZ-2,Math.max(0,Math.floor(norm*(NZ-1))))+2;
       }
     }else{
       const norm=(grid[i]-vmin)/range;
-      zoneGrid[i]=Math.min(NZONES-1,Math.max(0,Math.floor(norm*NZONES)))+1;
+      zoneGrid[i]=Math.min(NZ-1,Math.max(0,Math.floor(norm*NZ)))+1;
     }
   }
 
@@ -670,7 +702,7 @@ function genRaster(fieldName,nut,setIdx,isRate,rateFn,breaks){
     }
   }
 
-  return{grid,zoneGrid,mask,snx,sny,xmin:gxmin,ymin:gymin,sRES,vmin,vmax,zeroZone,nz:NZ};
+  return{grid,zoneGrid,mask,snx,sny,xmin:gxmin,ymin:gymin,sRES,vmin,vmax,zeroZone,nz:NZ,bands};
 }
 
 function rasterToCanvas(raster,nut,isRate){
@@ -679,7 +711,7 @@ function rasterToCanvas(raster,nut,isRate){
   const w=raster.snx*scale,h=raster.sny*scale;
   const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;
   const ctx=canvas.getContext('2d');
-  const colors=isRate?ZONE_COLORS_RATE:ZONE_COLORS_NUT;
+  const colors=isRate?rateColors(raster):ZONE_COLORS_NUT;
 
   // Draw solid zone fills
   const imgData=ctx.createImageData(w,h);
@@ -776,7 +808,9 @@ function updateLegend(){
   if(hNut==='vr'&&sel){
     // The map under the VR tab is the rate map, whatever the map menu
     // says; the legend has to say what those colours are.
-    const c=ZONE_COLORS_RATE,names=['None needed','Low','Medium','High','Highest'];
+    const r=(lastVR&&lastVR._f===sel&&lastVR._n===rxNut)?lastVR:genRaster(sel,null,null,true,currentRateFn(sel));
+    if(!r){lg.innerHTML='';return;}
+    const c=rateColors(r),names=rateZoneNames(r);
     lg.innerHTML=`<div class="lg-t">VR Rx: ${NUTRIENT_NAME[rxNut]} rate zones <span class="source-tag">this field</span></div>
       <div class="lg-cats">${names.map((nm,i)=>`<div class="lg-cat"><div class="dot" style="background:rgb(${c[i].join(',')})"></div>${nm}</div>`).join('')}</div>
       <div class="lg-t" style="margin-top:6px;font-size:8px">Rates per zone are in the panel</div>`;
@@ -1364,7 +1398,7 @@ function rVR(){
   const unit=rxNut==='ph'?'lb ECC/ac':'lb/ac';
   const flatRateFns={p:()=>calcPRate(lt.p,effYG,rxCrop,rxTargetP,rxAbove==='removal'),k:()=>calcKRate(lt.k,effYG,rxCrop,rxTargetK,rxAbove==='removal'),ph:()=>calcLimeRate(lt.ph,lt.bph,rxTargetPH),s:()=>calcSRate(lt.s,rxTargetS),zn:()=>calcZnRate(lt.zn,rxTargetZn)};
   const flatRate=flatRateFns[rxNut]?(flatRateFns[rxNut]()||0):0;
-  const cRate=ZONE_COLORS_RATE;
+  const cRate=raster?rateColors(raster):ZONE_COLORS_RATE;
   // The zones exactly as the map paints them and the export writes them:
   // the raster's own classes, each at the mean of the rates inside it.
   // This used to slice [min,max] of the sample rates into five equal
@@ -1585,7 +1619,8 @@ function showInterp(){
     if(panelTab!=='vr'){leaveVR();}
     else{const fp=FP[sel];if(!fp||!fp.sets.length)return;
       const raster=genRaster(sel,null,null,true,currentRateFn(sel));if(!raster)return;
-      canvasOverlay=renderRasterOnMap(raster,fieldRings(sel),ZONE_COLORS_RATE);zoomSel();return;}
+      raster._f=sel;raster._n=rxNut;lastVR=raster;updateLegend();
+      canvasOverlay=renderRasterOnMap(raster,fieldRings(sel),rateColors(raster));zoomSel();return;}
   }
   if(isSurvey(hNut)){canvasOverlay=renderSurvey(sel);zoomSel();return;}
   if(hNut==='gap'){
