@@ -307,19 +307,19 @@ function prevCrop(f){return seasonCrop(f,META.plan_year-1)||'soybean';}
 // 5 bushels, or a flat number when the field has no harvest of that crop.
 function defaultGoal(f,crop){const avg=getFieldYield(f,crop);if(avg)return Math.max(5,Math.round(avg*1.05/5)*5);return crop==='corn'?220:65;}
 
-function calcPRate(p,yg,crop,tgt){
+function calcPRate(p,yg,crop,tgt,maint){
   if(p==null)return null;
   if(tgt==null)tgt=20;
   const removal=crop==='corn'?yg*0.375:yg*0.80;
-  if(p>=tgt) return 0;
+  if(p>=tgt) return maint?Math.round(removal):0;
   const buildup=Math.max(0,(tgt-p)*4);
   return Math.round(buildup+removal);
 }
-function calcKRate(k,yg,crop,tgt){
+function calcKRate(k,yg,crop,tgt,maint){
   if(k==null)return null;
   if(tgt==null)tgt=170;
   const removal=crop==='corn'?yg*0.30:yg*1.50;
-  if(k>=tgt)return 0;
+  if(k>=tgt)return maint?Math.round(removal):0;
   const buildup=Math.max(0,(tgt-k)*1.2);
   return Math.round(buildup+removal);
 }
@@ -350,27 +350,38 @@ function calcZnRate(zn,tgt){
 // Crop selection determines removal coefficients (corn vs soybean).
 // Prev crop (pc) affects available N credit (soybean credit = -45 lb N/ac).
 const RATE_NEEDS={p:['p'],k:['k'],ph:['ph','bph'],s:['s'],zn:['zn'],n:['om']};
+// How this spot compares with the field, 1 = the field average: from the
+// yield maps, from the soil rating, or the two averaged. Null where the
+// chosen source has nothing here.
+function ratingIndexAt(f,x,y){
+  const r=svRatingAt(f,x,y),avg=svRatingAvg(f);
+  return r==null||!avg?null:r/avg;}
+function spotIndex(f,x,y){
+  const y1=rxVary==='rating'?null:yieldIndexAt(f,x,y);
+  const r1=rxVary==='yield'?null:ratingIndexAt(f,x,y);
+  if(y1!=null&&r1!=null)return (y1+r1)/2;
+  return y1!=null?y1:r1;}
 function makeZonalRateFn(fieldName,rxNut2,crop,userYG,tgtP,tgtK,tgtPH,tgtS,tgtZn,pc){
   const fn=function(pt){
     // The goal scaled by how this spot yields against the field: a spot that
     // runs 20% above the field average removes 20% more than the goal says.
     // Where no combine has been, the goal stands as is.
     function localEffYield(){
-      const idx=yieldIndexAt(fieldName,pt.x,pt.y);
+      const idx=spotIndex(fieldName,pt.x,pt.y);
       if(idx==null)return userYG;
       return Math.max(10,Math.round(userYG*idx));
     }
-    
+    const maint=rxAbove==='removal';
     if(rxNut2==='p'){
       const ey=localEffYield();
       // Prev crop matters: soybean has higher P removal per bushel
       // Use the CROP being planted this year for removal rate
-      return calcPRate(pt.p,ey,crop,tgtP);
+      return calcPRate(pt.p,ey,crop,tgtP,maint);
     }
     if(rxNut2==='k'){
       const ey=localEffYield();
       // K removal is much higher for soybean (1.50 vs 0.30 lb/bu)
-      return calcKRate(pt.k,ey,crop,tgtK);
+      return calcKRate(pt.k,ey,crop,tgtK,maint);
     }
     if(rxNut2==='ph')return calcLimeRate(pt.ph,pt.bph,tgtPH);
     if(rxNut2==='s')return calcSRate(pt.s,tgtS);
@@ -732,6 +743,15 @@ let rxProd={p:0,k:0,ph:0,s:0,zn:0};   // index into PRODUCTS per nutrient
 let batchCrop='auto',batchGoal='auto';
 // Configurable targets for each product
 let rxTargetP=20,rxTargetK=170,rxTargetPH=6.0,rxTargetS=10,rxTargetZn=0.9;
+// P and K at or above target: ISU says apply nothing ('none'), or put
+// back what the crop takes off ('removal') so the ground keeps testing
+// where it is. Ground that already tests high and rates high can carry
+// a bigger crop than a flat zero allows for.
+let rxAbove='removal';
+// What moves the removal from spot to spot: the yield maps, the soil
+// survey rating (CSR2 and NCCPI, as on the map menu), or both averaged.
+// Where the chosen source has nothing for a spot, the goal stands as is.
+let rxVary='both';
 let panelTab='zones',histNut='p',showModal=null,canvasOverlay=null;
 
 function render(){
@@ -1342,7 +1362,7 @@ function rVR(){
   const prod=productFor(rxNut);
   const mn=Math.min(...rates),mx=Math.max(...rates);
   const unit=rxNut==='ph'?'lb ECC/ac':'lb/ac';
-  const flatRateFns={p:()=>calcPRate(lt.p,effYG,rxCrop,rxTargetP),k:()=>calcKRate(lt.k,effYG,rxCrop,rxTargetK),ph:()=>calcLimeRate(lt.ph,lt.bph,rxTargetPH),s:()=>calcSRate(lt.s,rxTargetS),zn:()=>calcZnRate(lt.zn,rxTargetZn)};
+  const flatRateFns={p:()=>calcPRate(lt.p,effYG,rxCrop,rxTargetP,rxAbove==='removal'),k:()=>calcKRate(lt.k,effYG,rxCrop,rxTargetK,rxAbove==='removal'),ph:()=>calcLimeRate(lt.ph,lt.bph,rxTargetPH),s:()=>calcSRate(lt.s,rxTargetS),zn:()=>calcZnRate(lt.zn,rxTargetZn)};
   const flatRate=flatRateFns[rxNut]?(flatRateFns[rxNut]()||0):0;
   const cRate=ZONE_COLORS_RATE;
   // The zones exactly as the map paints them and the export writes them:
@@ -1395,7 +1415,7 @@ function rVR(){
     <div class="rxb">
       <div class="plan">Plan <b>${META.plan_year} ${rxCrop}</b> after ${META.plan_year-1} ${lastCrop||'(no planting pass)'}${lastCrop?' (rotation)':''}.
         Goal: ${cropAvg?`this field's last ${hist.slice(-3).length} ${rxCrop} harvests average <b>${cropAvg} bu</b>, so ${defaultGoal(sel,rxCrop)} suggested`:`no ${rxCrop} harvest on file, flat default`}.
-        ${ym.length?`Removal varies by spot from <b>${ym.length} yield map${ym.length>1?'s':''}</b> (${ym.map(m=>m.season).join(', ')}).`:'No yield maps yet, so removal is flat across the field.'}</div>
+        ${varyNote(ym)}</div>
       ${isComposite(sel)?`<div class="plan" style="border-left:3px solid var(--wr)">Soil here is a <b>whole-field composite</b> sampled ${lt.d}, not a grid. Every acre starts from the same soil test, so the rate varies only with the yield map.</div>`:''}
       ${isScaled(sel)?`<div class="plan" style="border-left:3px solid var(--wr)">Soil here is the <b>${activeSet(sel).from_grid.slice(0,4)} grid moved to the ${activeSet(sel).d} level</b>: the pattern is measured, the level is this year's whole-field test. Anchored on ${activeSet(sel).anchored.map(k=>TH[k]?.nm||k).join(', ')}. The unscaled grid and the composite are both in the picker above.</div>`:''}
       <div class="rxr"><label>Nutrient</label><select onchange="rxNut=this.value;rP();showVRInterp()">
@@ -1408,6 +1428,15 @@ function rVR(){
       <div class="rxr"><label>Yield Goal</label><input type="number" value="${rxYG}" onchange="rxYG=+this.value;rP();showVRInterp()"/></div>
       ${(rxNut==='p'||rxNut==='k')?`<div style="font-size:8px;color:var(--tx2);padding:2px 0 6px 86px;line-height:1.4">Removal: ${rxNut==='p'?(rxCrop==='corn'?`${effYG}×0.375 = <b style="color:var(--tx)">${Math.round(effYG*0.375)} lb P₂O₅/ac</b>`:`${effYG}×0.80 = <b style="color:var(--tx)">${Math.round(effYG*0.80)} lb P₂O₅/ac</b>`):(rxCrop==='corn'?`${effYG}×0.30 = <b style="color:var(--tx)">${Math.round(effYG*0.30)} lb K₂O/ac</b>`:`${effYG}×1.50 = <b style="color:var(--tx)">${Math.round(effYG*1.50)} lb K₂O/ac</b>`)}${ym.length?' at the field average; more where it yields more':''}</div>`:''}
       <div class="rxr"><label>Prev Crop</label><select onchange="rxPC=this.value;rP();showVRInterp()"><option value="soybean" ${rxPC==='soybean'?'selected':''}>Soybean</option><option value="corn" ${rxPC==='corn'?'selected':''}>Corn</option></select></div>
+      ${(rxNut==='p'||rxNut==='k')?`<div class="rxr"><label>Above target</label><div class="presets" style="margin:0">
+        <button class="preset-btn ${rxAbove==='none'?'act':''}" title="ISU: soil at or above target gets nothing" onclick="rxAbove='none';rP();showVRInterp()">Nothing (ISU)</button>
+        <button class="preset-btn ${rxAbove==='removal'?'act':''}" title="Put back what the crop takes off, so the test holds where it is" onclick="rxAbove='removal';rP();showVRInterp()">Crop removal</button></div></div>
+      <div class="rxr"><label>Vary by spot</label><div class="presets" style="margin:0">
+        <button class="preset-btn ${rxVary==='yield'?'act':''}" title="Removal follows the yield maps" onclick="rxVary='yield';rP();showVRInterp()">Yield maps</button>
+        <button class="preset-btn ${rxVary==='rating'?'act':''}" title="Removal follows the soil survey rating (CSR2 and NCCPI), the same one the map menu shows" onclick="rxVary='rating';rP();showVRInterp()">Soil rating</button>
+        <button class="preset-btn ${rxVary==='both'?'act':''}" title="The two averaged" onclick="rxVary='both';rP();showVRInterp()">Both</button></div></div>
+      ${rxVary!=='yield'&&svRatingAvg(sel)==null?'<div class="dn" style="margin:0 0 6px 86px">No soil survey rating under this field, so the goal stands flat.</div>':''}
+      ${rxVary!=='rating'&&!ym.length?'<div class="dn" style="margin:0 0 6px 86px">No yield maps on this field'+(rxVary==='both'?', so only the soil rating varies it':'; pick Soil rating to vary the removal by the ground')+'.</div>':''}`:''}
       ${targetControls[rxNut]||''}
     </div>
     <div class="fc" style="padding:8px;margin-top:8px">
@@ -1452,9 +1481,20 @@ function nothingNeeded(zoneBreak){
   const mn=Math.min(...vals),mx=Math.max(...vals);
   const fmt=v=>rxNut==='ph'?v.toFixed(1):rxNut==='zn'?v.toFixed(1):Math.round(v);
   const below=vals.filter(v=>v<t).length;
-  return `<div class="dn" style="border-left:3px solid var(--ac)"><b>Nothing to spread.</b> ${nm} tests ${fmt(mn)} to ${fmt(mx)}${u?' '+u:''} across this field against a target of ${fmt(t)}${u?' '+u:''}${below?` (${below} of ${vals.length} points under it, but not enough to make a zone)`:', so no spot is under it'}. The map is one zone at 0 because the soil test says so, not because it is missing; the pattern is on the Nutrient Map tab.${mn>=t?'':' A higher target on the slider would put a rate on the low spots.'}</div>`;
+  return `<div class="dn" style="border-left:3px solid var(--ac)"><b>Nothing to spread.</b> ${nm} tests ${fmt(mn)} to ${fmt(mx)}${u?' '+u:''} across this field against a target of ${fmt(t)}${u?' '+u:''}${below?` (${below} of ${vals.length} points under it, but not enough to make a zone)`:', so no spot is under it'}. The map is one zone at 0 because the soil test says so, not because it is missing; the pattern is on the Nutrient Map tab.${mn>=t?'':' A higher target on the slider would put a rate on the low spots.'}${(rxNut==='p'||rxNut==='k')&&rxAbove==='none'?' To keep the test where it is, switch <b>Above target</b> to crop removal.':''}</div>`;
 }
 
+function varyNote(ym){
+  const rated=svRatingAvg(sel)!=null;
+  const yTxt=ym.length?`<b>${ym.length} yield map${ym.length>1?'s':''}</b> (${ym.map(m=>m.season).join(', ')})`:'';
+  const rTxt=rated?`the <b>soil rating</b> (CSR2/NCCPI, field ${svRatingAvg(sel).toFixed(0)})`:'';
+  let src='';
+  if(rxVary==='yield')src=yTxt;
+  else if(rxVary==='rating')src=rTxt;
+  else src=[yTxt,rTxt].filter(Boolean).join(' and ');
+  const above=(rxNut==='p'||rxNut==='k')?(rxAbove==='removal'?' Ground at or above target gets <b>crop removal</b> back.':' Ground at or above target gets <b>nothing</b> (ISU).'):'';
+  return (src?`Removal varies by spot from ${src}.`:'Nothing to vary the removal by, so it is flat across the field.')+above;
+}
 function setPreset(nut,preset){
   if(nut==='p'){
     if(preset==='maintain')rxTargetP=20;
