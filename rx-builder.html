@@ -1301,11 +1301,87 @@ function rZones(){
     </div>`;
 }
 
+// What a reading means in plain words, and whether "high" is a problem.
+// Five verdicts: too low (red), a bit low (orange), good (green), plenty
+// (blue: more than the crop can use, no harm), too high (purple: it is
+// hurting something). The bar under it stays on the ISU categories.
+const VERDICT={low:['Too low','var(--dn)'],bit:['A bit low','#f97316'],good:['Good','var(--ac)'],plenty:['Plenty','var(--in)'],high:['Too high','#8b5cf6'],info:['For reference','var(--tx2)']};
+function plainWords(n,v,lt){
+  const w=(k,txt)=>({k,label:VERDICT[k][0],color:VERDICT[k][1],txt});
+  switch(n){
+    case 'p':
+      if(v<=9)return w('low','The crop will run short. Build it up.');
+      if(v<=17)return w('bit','Corn and beans still gain from phosphorus here. Build it up over a few years.');
+      if(v<=25)return w('good','Where it should be. Put back what the crop takes off and it stays here.');
+      if(v<=34)return w('plenty','More than the crop can use; no phosphorus pays for yield. Not harmful.');
+      return w('plenty','Far more than the crop can use; no phosphorus pays for years. It does not hurt the crop, but rain can carry it off to water.');
+    case 'k':
+      if(v<=125)return w('low','The crop will run short. Build it up.');
+      if(v<=170)return w('bit','Corn and beans still gain from potash here. Build it up over a few years.');
+      if(v<=220)return w('good','Where it should be. Put back what the crop takes off and it stays here.');
+      if(v<=270)return w('plenty','More than the crop can use; no potash pays for yield. Not harmful.');
+      return w('plenty','Far more than the crop can use; no potash pays for years. Not harmful.');
+    case 'ph':
+      if(v<5.5)return w('low','Too acid. Yields suffer and P and K are locked up. Lime.');
+      if(v<6.0)return w('bit','A little acid for corn and beans. Lime pays.');
+      if(v<=7.3)return w('good','Where corn and beans want it. No lime.');
+      if(v<=7.8)return w('plenty','On the high side. Zinc, manganese and iron get harder for the crop to take up; watch beans for yellowing. Do not lime.');
+      return w('high','Alkaline. Iron and zinc tie-up is likely, especially in beans. It cannot be brought down cheaply; pick tolerant varieties and feed zinc if the test is low.');
+    case 'om':
+      if(v<2)return w('bit','Light ground that holds little water or nitrogen. Cover and residue help.');
+      if(v<3.5)return w('good','Average for Iowa ground.');
+      if(v<6)return w('plenty','Rich ground. It releases nitrogen on its own through the season.');
+      return w('plenty','Very rich ground, often old wet or peaty soil. Releases a lot of nitrogen; not too much of anything.');
+    case 'cec':
+      if(v<10)return w('info','Sandy or light. Holds few nutrients, so smaller, more frequent doses hold better.');
+      if(v<20)return w('info','Medium-textured ground. Holds nutrients normally.');
+      return w('info','Heavy ground with a lot of clay or organic matter. Holds nutrients well and can take bigger doses less often. High is not a problem.');
+    case 'ca':
+      if(v<1000)return w('bit','Low, and usually goes with low pH. Lime fixes both.');
+      if(v<3000)return w('good','Fine.');
+      return w('plenty','Plenty, often from lime in the subsoil. It only matters through pH. Not harmful.');
+    case 'mg':
+      if(v<100)return w('bit','Low. Use dolomitic lime if the field needs lime anyway.');
+      if(v<300)return w('good','Fine.');
+      if(v<600)return w('plenty','Plenty. Not harmful.');
+      return (lt&&lt.k!=null&&lt.k<170)?w('high','Very high, and potassium is low here. That much magnesium crowds potassium out of the plant; potash matters more on this field.'):w('plenty','Very high. Harmless while potassium is adequate.');
+    case 's':
+      if(v<6)return w('low','Low. Corn and beans answer to sulfur here.');
+      if(v<10)return w('bit','Borderline. A little sulfur with the nitrogen is cheap insurance.');
+      if(v<24)return w('good','Enough.');
+      return w('plenty','Plenty. Not harmful.');
+    case 'zn':
+      if(v<0.9)return w('low','Low. Corn answers to zinc, most on high-pH ground.');
+      if(v<2)return w('good','Enough.');
+      if(v<20)return w('plenty','Plenty. No zinc pays. Not harmful.');
+      return w('high','Very high, often from years of manure. Beans can show zinc toxicity at this level on low-pH ground; check the pH.');
+    case 'mn':
+      if(v<5)return w('bit','Low. Beans on high-pH ground can go yellow; a foliar shot fixes it.');
+      if(v<30)return w('good','Fine.');
+      return (lt&&lt.ph!=null&&lt.ph<5.5)?w('high','High on acid ground, where manganese turns toxic. Lime is the fix.'):w('plenty','Plenty. Harmless unless the pH drops under 5.5.');
+    case 'bph':
+      return w('info',`The lime test, not a nutrient. It says how much lime a low pH needs: the lower this number, the more lime.${lt&&lt.ph!=null?(lt.ph>=6.2?' With the pH where it is, no lime is needed, so this number does not matter here.':' With the pH low here, this sets the lime rate.'):''}`);
+  }
+  return null;
+}
+// One line for the field: what needs doing, what to watch, and what is fine.
+function soilBottomLine(lt,nuts){
+  const need=[],watch=[],fine=[];
+  for(const n of nuts){const v=lt[n];if(v==null)continue;const pw=plainWords(n,v,lt);if(!pw)continue;
+    const nm=TH[n]?TH[n].nm.replace(/ \(.*\)/,''):n;
+    if(pw.k==='low'||pw.k==='bit')need.push(nm);else if(pw.k==='high')watch.push(nm);else if(pw.k!=='info')fine.push(nm);}
+  return `<div class="dn" style="margin-bottom:8px">
+    <b>${need.length?`Needs something: ${need.join(', ')}.`:'Nothing on this test is short.'}</b>
+    ${watch.length?` <b style="color:#c4b5fd">Too high and worth watching: ${watch.join(', ')}.</b>`:''}
+    ${fine.length?` Fine or plenty: ${fine.join(', ')}.`:''}
+    <span style="display:block;margin-top:3px">"Plenty" means more than the crop can use and no harm done; "too high" means it is hurting something. The bar is where the number sits on Iowa State's scale.</span></div>`;
+}
 function rSoil(){
   const lt=activeInfo(sel);
   const nuts=['p','k','ph','om','cec','ca','mg','s','zn','mn','bph'];
   return `<h2><div class="ic">🧪</div>Field Averages — ${lt.d}</h2>
-    <div class="ng">${nuts.map(n=>{const v=lt[n];if(v==null)return'';const t=TH[n],st=gSt(n,v),c=st;
+    ${soilBottomLine(lt,nuts)}
+    <div class="ng">${nuts.map(n=>{const v=lt[n];if(v==null)return'';const t=TH[n],st=gSt(n,v),c=st;const pw=plainWords(n,v,lt);
       // Calculate position on gauge: where does the value fall between 0 and vh?
       const pos=t?Math.min(100,Math.max(0,(v/t.vh)*100)):50;
       const statusColors={vl:'var(--dn)',lo:'#f97316',opt:'var(--ac)',hi:'var(--in)',vhi:'#8b5cf6'};
@@ -1319,7 +1395,8 @@ function rSoil(){
           <div style="position:absolute;left:${(t.hi/t.vh)*100}%;top:0;bottom:0;width:1px;background:rgba(255,255,255,0.15)"></div>`:''}
           <div style="height:100%;width:${pos}%;background:${barColor};border-radius:3px"></div>
         </div>
-        <div class="ns2">${gSL(st)}</div>
+        <div class="ns2">${pw?`<span style="color:${pw.color};font-weight:700">${pw.label}</span> <span style="color:var(--tx2)">&middot; ${gSL(st)} on the ISU scale</span>`:gSL(st)}</div>
+        ${pw?`<div style="font-size:9px;color:var(--tx);line-height:1.4;margin-top:4px">${pw.txt}</div>`:''}
       </div>`;
     }).join('')}</div>`;
 }
