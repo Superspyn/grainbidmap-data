@@ -185,6 +185,14 @@ const TH={
 
 // 5-class color scheme: VeryLow=red, Low=orange, Optimum=green, High=blue, VeryHigh=purple
 const CAT_COLORS=['#ef4444','#f97316','#22c55e','#3b82f6','#8b5cf6'];
+// The same five, as RGB, for painting the raster.
+const CAT_RGB=[[239,68,68],[249,115,22],[34,197,94],[59,130,246],[139,92,246]];
+// A nutrient map is drawn against the ISU categories, the same absolute
+// scale the legend and the lab's own maps use - NOT against the field's own
+// spread. Stretching a field's min to max across the palette painted a
+// field testing 50 to 65 ppm P, every acre of it very high, red at one end
+// and blue at the other, which is the opposite of what it means.
+function isuBreaks(nut){const t=TH[nut];return t?[t.vl,t.lo,t.op,t.hi]:null;}
 
 function nutColor(nut,val){
   const t=TH[nut];if(!t||val==null)return[80,80,80];
@@ -319,15 +327,34 @@ function makeZonalRateFn(fieldName,rxNut2,crop,userYG,tgtP,tgtK,tgtPH,tgtS,tgtZn
 }
 
 // IDW interpolation - power=1.5 for smooth concentric contours per literature
+// How many of the nearest samples a cell is interpolated from. Weighting
+// by EVERY sample in the field, which is what this did before, drags every
+// cell towards the field mean: a 658-acre field with 53 of its 272 samples
+// at or below 30 ppm P came out as one flat colour, every acre "very high",
+// because the far side of the field still had a vote. A local
+// neighbourhood is what makes an interpolated map follow its samples.
+const IDW_NEIGHBOURS=12;
 function idw(px,py,points,nut,power){
-  let wSum=0,vSum=0;const pw=power||1.5;
+  const pw=power||1.5,K=IDW_NEIGHBOURS;
+  // Keep the K nearest in a small ordered list rather than sorting all of
+  // them: this runs for every cell of every raster.
+  const bd=new Float64Array(K),bv=new Float64Array(K);let n=0;
   for(let i=0;i<points.length;i++){
     const v=points[i][nut];if(v==null)continue;
     const dx=px-points[i].x,dy=py-points[i].y,d2=dx*dx+dy*dy;
     if(d2<1e-14)return v;
-    const w=1/Math.pow(Math.sqrt(d2),pw);
-    wSum+=w;vSum+=w*v;
+    if(n<K){
+      let j=n++;
+      while(j>0&&bd[j-1]>d2){bd[j]=bd[j-1];bv[j]=bv[j-1];j--;}
+      bd[j]=d2;bv[j]=v;
+    }else if(d2<bd[K-1]){
+      let j=K-1;
+      while(j>0&&bd[j-1]>d2){bd[j]=bd[j-1];bv[j]=bv[j-1];j--;}
+      bd[j]=d2;bv[j]=v;
+    }
   }
+  let wSum=0,vSum=0;
+  for(let i=0;i<n;i++){const w=1/Math.pow(Math.sqrt(bd[i]),pw);wSum+=w;vSum+=w*bv[i];}
   return wSum>0?vSum/wSum:null;
 }
 
@@ -436,7 +463,10 @@ function genRaster(fieldName,nut,setIdx,isRate,rateFn,breaks){
   // fragment sweep below still tidy the zone edges. The fertility score
   // is continuous, so it is blurred like a nutrient map.
   const smooth=!(isRate&&rateFn&&rateFn!==fertScore);
-  for(let pass=0;smooth&&pass<2;pass++){
+  // One pass, not two. With a local neighbourhood doing the interpolation
+  // the surface is already smooth, and a second pass only rubs out small
+  // patches that the samples really did find.
+  for(let pass=0;smooth&&pass<1;pass++){
     const tmp=new Float32Array(grid);
     const R=2;
     for(let iy=R;iy<sny-R;iy++){
@@ -495,7 +525,7 @@ function genRaster(fieldName,nut,setIdx,isRate,rateFn,breaks){
   // product everywhere instead of the right amount in the right places.
   // One pass still removes single-cell speckle, and the flood-fill below
   // clears anything genuinely too small to spread.
-  const modePasses=zeroZone?1:4;
+  const modePasses=1;
   for(let pass=0;pass<modePasses;pass++){
     const tmp=new Uint8Array(zoneGrid);
     const R2=2;
@@ -521,7 +551,10 @@ function genRaster(fieldName,nut,setIdx,isRate,rateFn,breaks){
   // 5. Remove isolated fragments — flood-fill each connected region,
   // if area < threshold, absorb into most common neighboring zone
   const visited=new Uint8Array(snx*sny);
-  const minArea=8; // minimum cells for a zone fragment to survive
+  // A 2.5-acre grid sample stands for about 2.5 acres, which is roughly
+  // 4 cells at this resolution, so a 4-cell patch is a real reading rather
+  // than speckle. Eight threw away ground the lab had actually measured.
+  const minArea=4;
   for(let i=0;i<snx*sny;i++){
     if(!mask[i]||visited[i]||!zoneGrid[i])continue;
     // BFS flood fill
@@ -899,10 +932,11 @@ function rZones(){
     const cnt=vals.filter(v=>v>=z.lo&&(i===NZONES-1?v<=z.hi:v<z.hi)).length;
     return{...z,cnt};
   });
-  const cNut=ZONE_COLORS_NUT;
-  // Acres per zone from the drawn raster; per ISU category pro-rated from
-  // the field's Deere acreage by share of sample points.
-  const raster=genRaster(sel,hNut);const zac=raster?zoneAcres(raster,sel):null;
+  const cNut=CAT_RGB;
+  // The acres come from the raster the map actually draws, classified on
+  // the ISU categories, so the panel and the picture agree.
+  const raster=genRaster(sel,hNut,null,false,null,isuBreaks(hNut));
+  const zac=raster?zoneAcres(raster,sel):null;
   const fieldAc=(FPROP[sel]||{}).acres||vals.length*2.5;
   // ISU category counts
   const catBounds=[t.vl,t.lo,t.op,t.hi,Infinity];
@@ -910,7 +944,7 @@ function rZones(){
   const catCounts=[0,0,0,0,0];
   vals.forEach(v=>{if(v<catBounds[0])catCounts[0]++;else if(v<=catBounds[1])catCounts[1]++;else if(v<=catBounds[2])catCounts[2]++;else if(v<=catBounds[3])catCounts[3]++;else catCounts[4]++;});
   return `<h2><div class="ic">🗺️</div>Interpolated ${t.nm||hNut} Map</h2>
-    <div class="dn">IDW interpolation (power=1.5) with discrete contour zones from ${vals.length} grid points.${isScaled(sel)?' '+SCALED_NOTE(activeSet(sel)):''}</div>
+    <div class="dn">IDW interpolation (power=1.5) from ${vals.length} grid points, coloured on the ISU categories &mdash; the same absolute scale everywhere, so two fields can be compared.${isScaled(sel)?' '+SCALED_NOTE(activeSet(sel)):''}</div>
     <div class="fc" style="padding:8px">
       <div style="display:flex;gap:8px;margin-bottom:8px">
         <div style="flex:1"><div class="lb">Min</div><div class="vl">${mn.toFixed(1)}</div></div>
@@ -918,12 +952,13 @@ function rZones(){
         <div style="flex:1"><div class="lb">Max</div><div class="vl">${mx.toFixed(1)}</div></div>
         <div style="flex:1"><div class="lb">Std Dev</div><div class="vl">${std.toFixed(1)}</div></div>
       </div>
-      <div class="lb" style="margin-bottom:3px">Contour Zones (${t.u})</div>
-      ${zCounts.map((z,i)=>{
-        const ac=zac?zac[i+1]:z.cnt*2.5;if(ac<0.5&&!z.cnt)return'';
+      <div class="lb" style="margin-bottom:3px">By ISU category (${t.u})</div>
+      ${['Very Low','Low','Optimum','High','Very High'].map((nm,i)=>{
+        const ac=zac?zac[i+1]:0;if(ac<0.5)return'';
         const c=cNut[i];const pct=Math.round(ac/fieldAc*100);
+        const lo=i===0?0:[t.vl,t.lo,t.op,t.hi][i-1],hi=i===4?null:[t.vl,t.lo,t.op,t.hi][i];
         return `<div class="vr-zone"><div class="vr-color" style="background:rgb(${c[0]},${c[1]},${c[2]})"></div>
-          <span class="vr-range">${z.lo.toFixed(1)}-${z.hi.toFixed(1)}</span><span class="vr-rate">${pct}%</span>
+          <span class="vr-range">${nm} ${hi==null?'>'+lo:lo+'-'+hi}</span><span class="vr-rate">${pct}%</span>
           <span class="vr-acres">${ac.toFixed(0)}ac</span></div>`;}).join('')}
     </div>
     <div class="fc" style="padding:8px">
@@ -1219,8 +1254,9 @@ function showInterp(){
     const fr2=genRaster(sel,null,null,true,fertScore,FERT_BREAKS);
     if(fr2)canvasOverlay=renderRasterOnMap(fr2,fieldRings(sel),FERT_COLORS);
     zoomSel();return;}
-  const raster=genRaster(sel,hNut);if(!raster){zoomSel();return;}
-  canvasOverlay=renderRasterOnMap(raster,fieldRings(sel),ZONE_COLORS_NUT);
+  const raster=genRaster(sel,hNut,null,false,null,isuBreaks(hNut));
+  if(!raster){zoomSel();return;}
+  canvasOverlay=renderRasterOnMap(raster,fieldRings(sel),CAT_RGB);
   zoomSel();
 }
 function currentRateFn(f){return makeZonalRateFn(f,rxNut,rxCrop,rxYG,rxTargetP,rxTargetK,rxTargetPH,rxTargetS,rxTargetZn,rxPC);}
