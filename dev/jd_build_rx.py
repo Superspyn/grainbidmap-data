@@ -7,6 +7,7 @@ Reads, all in ~/.grain-map-secrets/:
     soil-samples.json   lab grids and composites (dev/jd_rx_soil_import.py)
     rx-ops.json         crop, harvest and application history (dev/jd_rx_pull.py)
     rx-yield/*.json     thinned yield maps (dev/jd_rx_pull.py)
+    ssurgo.json         soil survey map units and ratings (dev/jd_rx_ssurgo.py)
 
 and writes ~/.grain-map-secrets/rx-builder.html: the code in rx-builder.html
 at the repo root with the data baked in. Open it in a browser from disk.
@@ -35,6 +36,7 @@ FLEET = SECRETS / "fleet.json"
 SOIL = SECRETS / "soil-samples.json"
 OPS = SECRETS / "rx-ops.json"
 YIELD_DIR = SECRETS / "rx-yield"
+SURVEY = SECRETS / "ssurgo.json"
 OUTPUT = SECRETS / "rx-builder.html"
 SOURCE = pathlib.Path(__file__).resolve().parent.parent / "rx-builder.html"
 MARKER = "// ====== Field data (baked in by dev/jd_build_rx.py) ======"
@@ -576,15 +578,22 @@ def main() -> None:
     for maps in ymaps.values():
         maps.sort(key=lambda m: m["season"])
 
+    survey = read_json(SURVEY, {}) or {}
+    survey = {"fields": {n: thin_pieces(r) for n, r in survey.get("fields", {}).items()
+                         if n in geoms},
+              "mapunits": survey.get("mapunits", {})}
+
     meta = {"generated": now_iso(), "plan_year": PLAN_YEAR,
             "fields": len(features), "sampled": len(soil_by_field),
-            "with_history": len(ops_by_field), "with_yield_maps": len(ymaps)}
+            "with_history": len(ops_by_field), "with_yield_maps": len(ymaps),
+            "with_survey": len(survey["fields"])}
     data = "\n".join([
         js_const("META", meta),
         js_const("B", {"type": "FeatureCollection", "features": features}),
         js_const("SOIL", soil_by_field),
         js_const("OPS", ops_by_field),
         js_const("YMAPS", ymaps),
+        js_const("SURVEY", survey),
     ])
 
     html = SOURCE.read_text(encoding="utf-8")
@@ -609,8 +618,60 @@ def main() -> None:
         print(f"  {spread} whole-field composites spread over their boundaries")
     print(f"fields {len(features)}, soil grids matched {len(soil_by_field)} of {len(soil)}, "
           f"history for {len(ops_by_field)}, yield maps for {len(ymaps)} fields "
-          f"({sum(len(v) for v in ymaps.values())} harvests)")
+          f"({sum(len(v) for v in ymaps.values())} harvests), soil survey under "
+          f"{len(survey['fields'])} fields ({len(survey['mapunits'])} map units)")
     print(f"wrote {OUTPUT}  ({OUTPUT.stat().st_size / 1e6:.1f} MB)")
+
+
+# Survey polygons come digitised finer than a field map needs (vertices
+# about every 14 m). Three metres of tolerance takes 40% of the vertices
+# out and moves no edge more than ten feet, under a pixel at field zoom.
+SURVEY_TOL_M = 3.0
+
+
+def thin_pieces(rec: dict) -> dict:
+    out = dict(rec)
+    out["pieces"] = [{**pc, "rings": [simplify_ring(r, SURVEY_TOL_M) for r in pc["rings"]]}
+                     for pc in rec.get("pieces", [])]
+    return out
+
+
+def simplify_ring(ring: list, tol_m: float) -> list:
+    """Douglas-Peucker on a (lat, lon) ring, tolerance in metres."""
+    if len(ring) <= 4:
+        return [[round(p[0], 5), round(p[1], 5)] for p in ring]
+    lat0 = ring[0][0]
+    kx = 111320.0 * math.cos(math.radians(lat0))
+    ky = 110540.0
+    pts = [(p[1] * kx, p[0] * ky) for p in ring]
+    keep = [False] * len(pts)
+    keep[0] = keep[-1] = True
+    stack = [(0, len(pts) - 1)]
+    while stack:
+        a, b = stack.pop()
+        if b - a < 2:
+            continue
+        ax, ay = pts[a]
+        bx, by = pts[b]
+        dx, dy = bx - ax, by - ay
+        seg = math.hypot(dx, dy)
+        worst, wi = -1.0, -1
+        for i in range(a + 1, b):
+            px, py = pts[i]
+            if seg == 0:
+                d = math.hypot(px - ax, py - ay)
+            else:
+                d = abs(dx * (ay - py) - dy * (ax - px)) / seg
+            if d > worst:
+                worst, wi = d, i
+        if worst > tol_m:
+            keep[wi] = True
+            stack.append((a, wi))
+            stack.append((wi, b))
+    out = [[round(p[0], 5), round(p[1], 5)] for p, k in zip(ring, keep) if k]
+    if len(out) < 4:
+        return [[round(p[0], 5), round(p[1], 5)] for p in ring]
+    return out
 
 
 def _county(field: dict, county: dict, soil: dict) -> str:

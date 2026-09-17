@@ -145,6 +145,28 @@ function pickSet(f,v){setPick[f]=+v;clearOv();
   if(panelTab==='vr')showVRInterp();else showInterp();}
 const COMPOSITE_NOTE='Whole-field composite &mdash; one lab sample for the field, not a grid. The nutrient map is flat; rates still vary with yield history.';
 const FF={},FPROP={},BNDRY={};
+// USDA-NRCS soil survey (SSURGO) map units under each field, with the two
+// productivity ratings, fetched by dev/jd_rx_ssurgo.py. CSR2 is Iowa's
+// Corn Suitability Rating (5-100, Iowa map units only); NCCPI is the
+// national index (0-100, every state), with corn and soybean sub-models.
+const SV=(typeof SURVEY!=='undefined')?SURVEY:{fields:{},mapunits:{}};
+let svCrop='all';   // which NCCPI: all, corn or soy
+const SV_BREAKS=[40,55,70,85];
+const SV_GRAY='#6b7280';
+function isSurvey(n){return n==='csr'||n==='nccpi';}
+function svLabel(n){return n==='csr'?'CSR2':'NCCPI'+(svCrop==='all'?'':' ('+(svCrop==='corn'?'corn':'soybean')+')');}
+function svValue(mukey){const m=SV.mapunits[mukey];if(!m)return null;
+  if(hNut==='csr')return m.csr2==null?null:m.csr2;
+  const v=(m.nccpi||{})[svCrop];return v==null?null:v;}
+function svClass(v){let k=0;while(k<SV_BREAKS.length&&v>=SV_BREAKS[k])k++;return k;}
+function svColor(v){if(v==null)return SV_GRAY;const c=FERT_COLORS[svClass(v)];return `rgb(${c[0]},${c[1]},${c[2]})`;}
+function svRange(i){return i===0?`under ${SV_BREAKS[0]}`:i>=SV_BREAKS.length?`${SV_BREAKS[i-1]} and up`:`${SV_BREAKS[i-1]} - ${SV_BREAKS[i]}`;}
+function svPieces(f){const r=SV.fields[f];return r&&r.pieces?r.pieces:[];}
+// The field's own number: acres-weighted over the map units that carry one.
+function svSummary(f){
+  const pcs=svPieces(f);let num=0,den=0,unrated=0,total=0;const cls=new Array(SV_BREAKS.length+1).fill(0);
+  for(const pc of pcs){const v=svValue(pc.mukey);total+=pc.ac;if(v==null){unrated+=pc.ac;continue;}num+=v*pc.ac;den+=pc.ac;cls[svClass(v)]+=pc.ac;}
+  return{avg:den?num/den:null,rated:den,unrated,total,cls,n:pcs.length};}
 B.features.forEach(f=>{const p=f.properties,fm=p.org+' · '+p.farm;if(!FF[fm])FF[fm]=[];FF[fm].push(p.field);FPROP[p.field]=p;BNDRY[p.field]=f.geometry;});
 Object.values(FF).forEach(a=>a.sort());
 // Every exterior ring and every hole of a field, as closed [lon,lat] rings.
@@ -701,7 +723,7 @@ function render(){
     <div class="sb"><input class="sb-input" placeholder="Search fields..." value="${attr(sq)}" oninput="uSrch(this.value)"/><h3>Farm Fields</h3><div class="fl">${rFL()}</div></div>
     <div class="mc"><div id="map"></div>
       <div class="mo"><button class="mb ${mLyr==='satellite'?'a':''}" onclick="sML('satellite')">Satellite</button><button class="mb ${mLyr==='topo'?'a':''}" onclick="sML('topo')">Topo</button><button class="mb ${mLyr==='roads'?'a':''}" onclick="sML('roads')">Roads</button></div>
-      <div class="ns"><select onchange="sHN(this.value)"><option value="fert" ${hNut==='fert'?'selected':''}>Overall fertility</option><option value="yield" ${hNut==='yield'?'selected':''}>Yield map (all years)</option>${['p','k','ph','om','cec','s','zn','ca','mg','bph','p2','mn'].map(k=>`<option value="${k}" ${hNut===k?'selected':''}>${TH[k]?.nm||k}</option>`).join('')}</select></div>
+      <div class="ns" id="nsel">${rNS()}</div>
       <div class="ns" id="fchips" style="top:44px;white-space:nowrap;display:none"></div>
       <div class="lg" id="legend"></div>
     </div>
@@ -727,6 +749,12 @@ function updateLegend(){
       <div class="lg-cats" style="margin-top:6px">
         ${FERT_NAMES.map((c,i)=>`<div class="lg-cat"><div class="dot" style="background:rgb(${FERT_COLORS[i].join(',')})"></div>${c}</div>`).join('')}
       </div>`;
+    return;
+  }
+  if(isSurvey(hNut)){
+    lg.innerHTML=`<div class="lg-t">${svLabel(hNut)} <span class="source-tag">USDA soil survey</span></div>
+      <div class="lg-cats">${FERT_COLORS.map((c,i)=>`<div class="lg-cat"><div class="dot" style="background:rgb(${c[0]},${c[1]},${c[2]})"></div>${svRange(i)}</div>`).join('')}
+        <div class="lg-cat"><div class="dot" style="background:${SV_GRAY}"></div>not rated</div></div>`;
     return;
   }
   const t=TH[hNut];if(!t){lg.innerHTML='';return;}
@@ -760,7 +788,8 @@ function rFP(){
   const lt=activeInfo(sel);
   const latestPts=activeSet(sel);
   const hasSoil=!!latestPts;
-  if(!hasSoil&&panelTab!=='history')panelTab='history';
+  const hasSurvey=svPieces(sel).length>0;
+  if(!hasSoil&&panelTab!=='history'&&!(hasSurvey&&panelTab==='zones'))panelTab='history';
   const lastCrop=seasonCrop(sel,META.plan_year-1);
   return `<div class="ps">
       <h2><div class="ic">📍</div>${sel}</h2>
@@ -778,12 +807,12 @@ function rFP(){
         </select></div>`:''}</div></div>
     <div class="ps">
       <div class="tb">
-        ${hasSoil?`<button class="tbtn ${panelTab==='zones'?'a':''}" onclick="panelTab='zones';rP();showInterp()">Nutrient Map</button>
-        <button class="tbtn ${panelTab==='soil'?'a':''}" onclick="panelTab='soil';rP();showInterp()">Soil Data</button>`:''}
+        ${hasSoil||hasSurvey?`<button class="tbtn ${panelTab==='zones'?'a':''}" onclick="panelTab='zones';rP();showInterp()">Nutrient Map</button>`:''}
+        ${hasSoil?`<button class="tbtn ${panelTab==='soil'?'a':''}" onclick="panelTab='soil';rP();showInterp()">Soil Data</button>`:''}
         <button class="tbtn ${panelTab==='history'?'a':''}" onclick="panelTab='history';rP();showInterp()">History</button>
         ${hasSoil?`<button class="tbtn ${panelTab==='vr'?'a':''}" onclick="panelTab='vr';rP();showVRInterp()">VR Rx</button>`:''}
       </div>
-      ${hasSoil?'':'<div class="dn">No soil test on file for this field, so no nutrient map or prescription. Crop history and yield maps still show.</div>'}
+      ${hasSoil?'':`<div class="dn">No soil test on file for this field, so no nutrient map or prescription. Crop history${hasSurvey?', yield maps and the soil survey ratings (CSR2, NCCPI)':' and yield maps'} still show.</div>`}
       ${panelTab==='zones'?rZones():''}${panelTab==='soil'?rSoil():''}${panelTab==='history'?rHist():''}${panelTab==='vr'?rVR():''}
     </div>`;
 }
@@ -947,9 +976,41 @@ function rComposite(){
       <div class="dn" style="margin-top:8px">${lt.lab||'lab'} &middot; the whole field reads as one zone for ${t.nm||hNut}. A grid sample would be needed to vary it by soil test.</div>
     </div>`;
 }
+// The soil-survey panel: the field's rating, its acres by class, and the
+// map units it is made of.
+function rSurvey(){
+  const pcs=svPieces(sel);
+  if(!pcs.length)return'<div class="dn">No soil survey coverage fetched for this field yet (dev/jd_rx_ssurgo.py).</div>';
+  const sm=svSummary(sel),lab=svLabel(hNut);
+  const isCSR=hNut==='csr';
+  const byUnit={};
+  for(const pc of pcs){const u=byUnit[pc.mukey]||(byUnit[pc.mukey]={mukey:pc.mukey,ac:0});u.ac+=pc.ac;}
+  const units=Object.values(byUnit).sort((a,b)=>b.ac-a.ac);
+  const none=isCSR&&sm.rated===0;
+  return `<h2><div class="ic">🗺️</div>${isCSR?'CSR2 · Iowa Corn Suitability Rating':'NCCPI · Crop Productivity Index'} <span class="source-tag">USDA soil survey</span></h2>
+    <div class="dn">${isCSR
+      ?'The rating Iowa land is priced, rented and taxed on, 5 to 100, from the soil survey map unit under each part of the field. It is a soil rating, not a soil test: it does not change with fertilizer.'
+      :'The national soil productivity index, 0 to 100, from the soil survey. Rated for every state, with separate corn and soybean models. A soil rating, not a soil test.'}
+      Fetched from USDA-NRCS Soil Data Access.</div>
+    ${none?`<div class="dn">CSR2 is an Iowa rating and this field sits in a survey area outside Iowa, so it has none. Pick NCCPI in the map menu instead.</div>`:''}
+    <div class="fc"><div style="display:flex;gap:10px;flex-wrap:wrap">
+      <div style="flex:1"><div class="lb">Field ${lab}</div><div class="vl">${sm.avg!=null?sm.avg.toFixed(isCSR?0:1):'—'}</div></div>
+      <div style="flex:1"><div class="lb">Rated acres</div><div class="vl">${sm.rated.toFixed(1)}</div></div>
+      <div style="flex:1"><div class="lb">Not rated</div><div class="vl">${sm.unrated>0.05?sm.unrated.toFixed(1):'0'}</div></div>
+    </div></div>
+    ${sm.rated>0?`<div class="lb" style="margin:8px 0 3px">Acres by ${lab}</div>
+    ${sm.cls.map((ac,i)=>{if(ac<0.05)return'';const c=FERT_COLORS[i];return `<div class="vr-zone"><div class="vr-color" style="background:rgb(${c[0]},${c[1]},${c[2]})"></div>
+      <span class="vr-range">${svRange(i)}</span><span class="vr-rate">${Math.round(ac/sm.total*100)}%</span><span class="vr-acres">${ac.toFixed(1)}ac</span></div>`;}).join('')}`:''}
+    <div class="lb" style="margin:8px 0 3px">Soil map units · ${units.length}</div>
+    ${units.map(u=>{const m=SV.mapunits[u.mukey]||{};const v=svValue(u.mukey);
+      return `<div class="vr-zone" title="${attr(m.muname||'')}"><div class="vr-color" style="background:${svColor(v)}"></div>
+        <span class="vr-range" style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><b>${m.musym||'?'}</b> ${m.muname||''}</span>
+        <span class="vr-rate">${v==null?'—':isCSR?v:v.toFixed(0)}</span><span class="vr-acres">${u.ac.toFixed(1)}ac</span></div>`;}).join('')}`;
+}
 function rZones(){
   if(hNut==='yield')return rYieldPanel();
   if(hNut==='fert')return rFert();
+  if(isSurvey(hNut))return rSurvey();
   const fp=FP[sel];if(!fp||!fp.sets.length)return'<div class="dn">No soil data.</div>';
   if(isComposite(sel))return rComposite();
   const pts=activeSet(sel).pts;
@@ -1281,8 +1342,21 @@ function clearOv(){
 }
 
 function zoomSel(){if(fLayers[sel])map.fitBounds(fLayers[sel].getBounds(),{padding:[40,40],maxZoom:16});}
+function renderSurvey(f){
+  const pcs=svPieces(f);if(!pcs.length)return null;
+  const group=L.layerGroup();
+  for(const pc of pcs){
+    const m=SV.mapunits[pc.mukey]||{},v=svValue(pc.mukey);
+    const poly=L.polygon(pc.rings,{color:'#fff',weight:1,opacity:.7,fillColor:svColor(v),fillOpacity:v==null?.35:.72});
+    const n=(m.nccpi||{});
+    poly.bindTooltip(`<b>${m.musym||'?'}</b> ${m.muname||''}<br>CSR2 ${m.csr2==null?'—':m.csr2} &middot; NCCPI ${n.all==null?'—':n.all.toFixed(0)} (corn ${n.corn==null?'—':n.corn.toFixed(0)}, soy ${n.soy==null?'—':n.soy.toFixed(0)})<br>${pc.ac.toFixed(1)} ac`,{sticky:true,className:'ftt'});
+    group.addLayer(poly);
+  }
+  return group.addTo(map);
+}
 function showInterp(){
   clearOv();if(!sel||!map)return;
+  if(isSurvey(hNut)){canvasOverlay=renderSurvey(sel);zoomSel();return;}
   if(hNut==='yield'){canvasOverlay=renderYieldOverlay(sel);zoomSel();return;}
   if(hNut==='fert'){
     const fr2=genRaster(sel,null,null,true,fertScore,FERT_BREAKS);
@@ -2181,7 +2255,9 @@ function sF(f){sel=f;panelTab=FP[f]?'zones':'history';clearOv();
   rP();uSB();rfM();showInterp();}
 function uSrch(q){sq=q;uSB();}
 function sML(l){mLyr=l;sTiles();document.querySelectorAll('.mb').forEach(b=>b.classList.remove('a'));event.target.classList.add('a');}
-function sHN(n){hNut=n;rFertChips();rfM();updateLegend();
+function rNS(){
+  return `<select onchange="sHN(this.value)"><option value="fert" ${hNut==='fert'?'selected':''}>Overall fertility</option><option value="yield" ${hNut==='yield'?'selected':''}>Yield map (all years)</option><option value="csr" ${hNut==='csr'?'selected':''}>CSR2 (Iowa soil rating)</option><option value="nccpi" ${hNut==='nccpi'?'selected':''}>NCCPI (soil productivity)</option>${['p','k','ph','om','cec','s','zn','ca','mg','bph','p2','mn'].map(k=>`<option value="${k}" ${hNut===k?'selected':''}>${TH[k]?.nm||k}</option>`).join('')}</select>${hNut==='nccpi'?`<select style="margin-left:6px;min-width:0" onchange="svCrop=this.value;sHN('nccpi')">${[['all','All crops'],['corn','Corn'],['soy','Soybean']].map(([v,l])=>`<option value="${v}" ${svCrop===v?'selected':''}>${l}</option>`).join('')}</select>`:''}`;}
+function sHN(n){hNut=n;const ns=document.getElementById('nsel');if(ns)ns.innerHTML=rNS();rFertChips();rfM();updateLegend();
   if(!sel)return;
   if(panelTab==='vr'){rP();showVRInterp();return;}   // the VR map is its own
   rP();showInterp();}
