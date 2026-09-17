@@ -1460,7 +1460,7 @@ function rVR(){
         <input type="number" value="${Math.round(prod.pct*100)}" min="1" max="100" style="max-width:52px;flex:none" title="analysis: % of the product that is the nutrient" onchange="PRODUCTS[rxNut][rxProd[rxNut]||0].pct=Math.min(100,Math.max(1,+this.value))/100;rP()"/><span style="font-size:8px;color:var(--tx2)">%</span></div>
       <div class="rxr"><label>Crop</label><select onchange="rxCrop=this.value;rxYG=defaultGoal(sel,rxCrop);rP();showVRInterp()"><option value="corn" ${rxCrop==='corn'?'selected':''}>Corn</option><option value="soybean" ${rxCrop==='soybean'?'selected':''}>Soybean</option></select></div>
       <div class="rxr"><label>Yield Goal</label><input type="number" value="${rxYG}" onchange="rxYG=+this.value;rP();showVRInterp()"/></div>
-      ${(rxNut==='p'||rxNut==='k')?`<div style="font-size:8px;color:var(--tx2);padding:2px 0 6px 86px;line-height:1.4">Removal: ${rxNut==='p'?(rxCrop==='corn'?`${effYG}×0.375 = <b style="color:var(--tx)">${Math.round(effYG*0.375)} lb P₂O₅/ac</b>`:`${effYG}×0.80 = <b style="color:var(--tx)">${Math.round(effYG*0.80)} lb P₂O₅/ac</b>`):(rxCrop==='corn'?`${effYG}×0.30 = <b style="color:var(--tx)">${Math.round(effYG*0.30)} lb K₂O/ac</b>`:`${effYG}×1.50 = <b style="color:var(--tx)">${Math.round(effYG*1.50)} lb K₂O/ac</b>`)}${ym.length?' at the field average; more where it yields more':''}</div>`:''}
+      ${(rxNut==='p'||rxNut==='k')?`<div style="font-size:8px;color:var(--tx2);padding:2px 0 6px 86px;line-height:1.4">Removal: ${rxNut==='p'?(rxCrop==='corn'?`${effYG}×0.375 = <b style="color:var(--tx)">${Math.round(effYG*0.375)} lb P₂O₅/ac</b>`:`${effYG}×0.80 = <b style="color:var(--tx)">${Math.round(effYG*0.80)} lb P₂O₅/ac</b>`):(rxCrop==='corn'?`${effYG}×0.30 = <b style="color:var(--tx)">${Math.round(effYG*0.30)} lb K₂O/ac</b>`:`${effYG}×1.50 = <b style="color:var(--tx)">${Math.round(effYG*1.50)} lb K₂O/ac</b>`)}${ym.length?' at the field average; more where it yields more':''}</div>${goalGapNote(cropAvg,effYG,prod)}`:''}
       <div class="rxr"><label>Prev Crop</label><select onchange="rxPC=this.value;rP();showVRInterp()"><option value="soybean" ${rxPC==='soybean'?'selected':''}>Soybean</option><option value="corn" ${rxPC==='corn'?'selected':''}>Corn</option></select></div>
       ${(rxNut==='p'||rxNut==='k')?`<div class="rxr"><label>Above target</label><div class="presets" style="margin:0">
         <button class="preset-btn ${rxAbove==='none'?'act':''}" title="ISU: soil at or above target gets nothing" onclick="rxAbove='none';rP();showVRInterp()">Nothing (ISU)</button>
@@ -1518,6 +1518,20 @@ function nothingNeeded(zoneBreak){
   return `<div class="dn" style="border-left:3px solid var(--ac)"><b>Nothing to spread.</b> ${nm} tests ${fmt(mn)} to ${fmt(mx)}${u?' '+u:''} across this field against a target of ${fmt(t)}${u?' '+u:''}${below?` (${below} of ${vals.length} points under it, but not enough to make a zone)`:', so no spot is under it'}. The map is one zone at 0 because the soil test says so, not because it is missing; the pattern is on the Nutrient Map tab.${mn>=t?'':' A higher target on the slider would put a rate on the low spots.'}${(rxNut==='p'||rxNut==='k')&&rxAbove==='none'?' To keep the test where it is, switch <b>Above target</b> to crop removal.':''}</div>`;
 }
 
+// The goal against what the field has actually grown: a 350 bu goal on
+// ground that averages 228 takes off 46 lb more P2O5 an acre than the
+// field is used to giving back, and that is the "how much more" a bigger
+// crop asks for. Shown per acre and for the field, in the chosen product.
+function goalGapNote(cropAvg,goal,prod){
+  const per=rxNut==='p'?(rxCrop==='corn'?0.375:0.80):(rxCrop==='corn'?0.30:1.50);
+  const ac=(FPROP[sel]||{}).acres||0,nut=NUTRIENT_NAME[rxNut];
+  const off=rxAbove==='none'?` <span style="color:var(--wr)">Above target is set to Nothing, so ground already over target still gets 0; switch it to Crop removal to put this on every acre.</span>`:'';
+  if(!cropAvg)return `<div style="font-size:8px;color:var(--tx2);padding:0 0 6px 86px;line-height:1.4">No ${rxCrop} harvest on file to compare the goal against, so the removal above is the whole of what a ${goal} bu crop takes off.${off}</div>`;
+  const diff=(goal-cropAvg)*per,prodLb=diff/prod.pct;
+  if(Math.abs(diff)<1)return `<div style="font-size:8px;color:var(--tx2);padding:0 0 6px 86px;line-height:1.4">The goal is what this field already averages (${cropAvg} bu).${off}</div>`;
+  const more=diff>0;
+  return `<div style="font-size:8px;color:var(--tx2);padding:0 0 6px 86px;line-height:1.4">To grow <b style="color:var(--tx)">${goal} bu</b> instead of the <b style="color:var(--tx)">${cropAvg} bu</b> this field averages takes <b style="color:var(--tx)">${Math.abs(Math.round(diff))} lb ${nut}/ac ${more?'more':'less'}</b> (${Math.abs(Math.round(prodLb))} lb/ac ${prod.name}${ac?`, ${(Math.abs(prodLb)*ac/2000).toFixed(1)} tons ${more?'more':'less'} over ${ac.toFixed(0)} ac`:''}).${off}</div>`;
+}
 function varyNote(ym){
   const rated=svRatingAvg(sel)!=null;
   const yTxt=ym.length?`<b>${ym.length} yield map${ym.length>1?'s':''}</b> (${ym.map(m=>m.season).join(', ')})`:'';
