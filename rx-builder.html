@@ -1370,8 +1370,11 @@ function renderRasterOnMap(raster,fr,colors){
   ctx.clip('evenodd');
   
   // Draw each zone as smoothed polygons using shared boundary vertices
-  // All rings of same zone in one path, one fill call
-  for(let z=1;z<=NZONES;z++){
+  // All rings of same zone in one path, one fill call. Every class the
+  // raster carries, not a fixed five: the lab's phosphorus and zinc bands
+  // run to six, and the sixth - the richest ground - went unpainted and
+  // showed as holes in the map.
+  for(let z=1;z<=(raster.nz||NZONES);z++){
     const bin=new Uint8Array(snx*sny);
     for(let i2=0;i2<snx*sny;i2++){if(mask[i2]&&zoneGrid[i2]===z)bin[i2]=1;}
     const pixRings=vectorizeZoneBoundary(bin,snx,sny);
@@ -1678,7 +1681,7 @@ function buildSmoothedZoneExport(raster,fieldRing,rMin,rRange,product,crop,yg,un
   
   // Step 3: Build zone polygons using shared smoothed coordinates
   const records=[];
-  for(let z=1;z<=NZONES;z++){
+  for(let z=1;z<=(raster.nz||NZONES);z++){
     const bin=new Uint8Array(snx*sny);
     for(let i=0;i<snx*sny;i++){if(mask[i]&&zoneGrid[i]===z)bin[i]=1;}
     const pixRings=vectorizeZoneBoundary(bin,snx,sny);
