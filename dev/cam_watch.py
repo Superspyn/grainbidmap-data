@@ -42,6 +42,7 @@ import html
 import json
 import pathlib
 import re
+import ssl
 import statistics
 import sys
 import urllib.error
@@ -115,6 +116,10 @@ def count_regions(boxes: list[dict], camera: dict) -> dict:
     min_w = float(camera.get("min_box_width", 0))
     pits = camera.get("pits") or {}
     line_poly = camera.get("line") or []
+    # Places inside the line where a vehicle is never a truck in line: the
+    # employee parking on the median at Gowrie counted two cars as trucks
+    # waiting, because at 3840 px wide an SUV clears any sensible size floor.
+    exclude = camera.get("exclude") or []
     at_pit = {name: False for name in pits}
     in_line = 0
     kept = []
@@ -124,6 +129,8 @@ def count_regions(boxes: list[dict], camera: dict) -> dict:
         if (b["y2"] - b["y1"]) < floor or (b["x2"] - b["x1"]) < min_w:
             continue
         fx, fy = foot(b)
+        if any(point_in_polygon(fx, fy, poly) for poly in exclude):
+            continue
         where = None
         for name, poly in pits.items():
             if point_in_polygon(fx, fy, poly):
@@ -140,14 +147,30 @@ def count_regions(boxes: list[dict], camera: dict) -> dict:
 # ---------------------------------------------------------------------------
 # the camera
 
-def fetch_frame(url: str, timeout: float = 20.0) -> dict:
-    """The current frame and its timestamps. Returns {jpeg, page_time,
-    camera_time}; camera_time comes from the JPEG's own EXIF, page_time
-    from the page's caption, either may be None."""
-    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(req, timeout=timeout) as resp:
-        page = resp.read().decode("utf-8", errors="replace")
-    m = re.search(r'src="data:image/jpeg;base64,([^"]+)"', page)
+EXTRA_CA = pathlib.Path(__file__).resolve().parent / "config" / "extra-ca.pem"
+_tls = None
+
+
+def tls_context() -> ssl.SSLContext:
+    """The default verifying context, plus any public intermediate certs in
+    config/extra-ca.pem. CHS's camera host sends its leaf without the
+    Entrust intermediate that signed it; a browser fetches the missing link
+    itself, Python's OpenSSL does not, and the fetch failed with "unable to
+    get local issuer certificate" until the intermediate was on hand.
+    Verification stays on - this only supplies what the server forgot."""
+    global _tls
+    if _tls is None:
+        _tls = ssl.create_default_context()
+        if EXTRA_CA.exists():
+            _tls.load_verify_locations(cafile=str(EXTRA_CA))
+    return _tls
+
+
+def parse_frame(page: str) -> dict:
+    """The inline frame out of a camera page. POET declares it image/jpeg;
+    CHS declares image/png and sends JPEG bytes anyway, so the declared
+    type is ignored and the bytes are what they are."""
+    m = re.search(r'src="data:image/(?:jpeg|jpg|png);base64,([^"]+)"', page)
     if not m:
         raise RuntimeError("no inline JPEG on the camera page")
     jpeg = base64.b64decode(html.unescape(m.group(1)))
@@ -156,6 +179,16 @@ def fetch_frame(url: str, timeout: float = 20.0) -> dict:
     return {"jpeg": jpeg,
             "camera_time": ("%s-%s-%sT%s:%s:%s" % tuple(g.decode() for g in exif.groups())) if exif else None,
             "page_time": cap.group(1) if cap else None}
+
+
+def fetch_frame(url: str, timeout: float = 20.0) -> dict:
+    """The current frame and its timestamps. Returns {jpeg, page_time,
+    camera_time}; camera_time comes from the JPEG's own EXIF, page_time
+    from the page's caption, either may be None."""
+    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    with urllib.request.urlopen(req, timeout=timeout, context=tls_context()) as resp:
+        page = resp.read().decode("utf-8", errors="replace")
+    return parse_frame(page)
 
 
 # ---------------------------------------------------------------------------
@@ -212,6 +245,8 @@ def annotate(jpeg: bytes, counted: dict, camera: dict, out: pathlib.Path) -> Non
     draw = ImageDraw.Draw(image)
     if camera.get("line"):
         draw.polygon([tuple(p) for p in camera["line"]], outline=(60, 160, 60))
+    for poly in camera.get("exclude") or []:
+        draw.polygon([tuple(p) for p in poly], outline=(200, 60, 60))
     for name, poly in (camera.get("pits") or {}).items():
         draw.polygon([tuple(p) for p in poly], outline=(200, 140, 30))
     for b in counted["boxes"]:
