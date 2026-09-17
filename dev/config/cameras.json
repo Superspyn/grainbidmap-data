@@ -247,6 +247,155 @@
     ]
   },
   {
+    "id": "poet-coonrapids",
+    "name": "POET Coon Rapids",
+    "pin": "POET Biorefining - Coon Rapids Ethanol",
+    "lat": 41.861262,
+    "lon": -94.631023,
+    "url": "https://truckline.poet.com/Camera/coonrapids",
+    "hours": [6, 20],
+    "default_minutes_per_truck": 5,
+    "_regions": "1200x650 fisheye, drawn 2026-09-17. This camera mostly watches a stairway and catwalk; the only ground a truck can stand on is the lane across the top. Marginal by design. The frame it was drawn from had a pickup on that lane at 128x75 px, which the first pass counted as a truck in line, so the floors are set above it: a semi there is several times longer. Unverified against a real truck.",
+    "min_box_height": 90,
+    "min_box_width": 250,
+    "line": [[180, 15], [1060, 15], [1120, 195], [140, 195]]
+  },
+  {
+    "id": "poet-corning",
+    "name": "POET Corning",
+    "pin": "Poet Corning Ethanol",
+    "lat": 40.965207,
+    "lon": -94.79694,
+    "url": "https://truckline.poet.com/Camera/corning",
+    "hours": [6, 20],
+    "default_minutes_per_truck": 5,
+    "_regions": "5120x2560 fisheye over the staging apron, drawn 2026-09-17 with one employee car parked on it and no trucks. The line is the apron plus the lane along the top; the dark right third is the building's own roof and is left out. That car measured 695x260 px, so the floors sit just above it - length is the better discriminator at this distance, since a semi on the same ground is well over twice as long but only half again as tall. Unverified against trucks.",
+    "min_box_height": 300,
+    "min_box_width": 800,
+    "line": [[300, 650], [3300, 650], [3450, 1250], [3400, 2400], [400, 2450], [120, 1250]],
+    "exclude": [[[0, 1500], [900, 1500], [900, 2560], [0, 2560]]]
+  },
+  {
+    "id": "poet-arthur",
+    "name": "POET Arthur",
+    "pin": "Flint Hill Resources/poet Arthur Ethanol",
+    "lat": 42.331522,
+    "lon": -95.350883,
+    "url": "https://truckline.poet.com/Camera/arthur-1",
+    "hours": [6, 20],
+    "default_minutes_per_truck": 5,
+    "_regions": "Two angles on the same plant, drawn 2026-09-17 from empty ground. arthur-1 (900x650) looks across the probe station with rail cars behind: the line is the apron, the probe is the sampling stand. arthur-2 (5120x2560) looks down the central driveway between the silos and the rail; trucks at the far end read only ~100 px, so the floor there is a compromise and the far end will be missed. Unverified against trucks.",
+    "views": [
+      {
+        "id": "probe",
+        "url": "https://truckline.poet.com/Camera/arthur-1",
+        "min_box_height": 45,
+        "line": [[0, 250], [890, 250], [890, 345], [0, 345]],
+        "pits": {
+          "probe": [[350, 195], [510, 195], [510, 300], [350, 300]]
+        }
+      },
+      {
+        "id": "driveway",
+        "url": "https://truckline.poet.com/Camera/arthur-2",
+        "min_box_height": 150,
+        "line": [[1700, 550], [2800, 550], [3350, 1200], [3300, 2400], [600, 2450], [900, 1200]]
+      }
+    ]
+  },
+  {
+    "id": "poet-ashton",
+    "name": "POET Ashton",
+    "pin": "POET Ashton Ethanol",
+    "lat": 43.2743718,
+    "lon": -95.8109368,
+    "url": "https://truckline.poet.com/Camera/ashton",
+    "hours": [6, 20],
+    "default_minutes_per_truck": 5,
+    "_regions": "1280x1024, drawn 2026-09-17 from a frame with a loaded hopper directly under the camera. The camera is mounted at the probe looking down, so it reports whether the probe is occupied and cannot see a queue at all - there is no line region, and the wait always reads zero. From that angle the detector calls the trailer a train rather than a truck, at 0.41 and nothing else, which is why this camera opts that class in; no railway is in its frame.",
+    "min_box_height": 300,
+    "classes": ["truck", "bus", "car", "train"],
+    "pits": {
+      "probe": [[180, 140], [1050, 140], [1050, 950], [180, 950]]
+    }
+  },
+  {
+    "id": "poet-preston",
+    "name": "POET Preston",
+    "pin": "POET Preston MN Ethanol",
+    "lat": 43.686569,
+    "lon": -92.091217,
+    "url": "https://truckline.poet.com/Camera/preston",
+    "hours": [6, 20],
+    "default_minutes_per_truck": 5,
+    "_regions": "5120x2560 fisheye, drawn 2026-09-17 from an empty lane: the line is the inbound lane running up to the yellow sampling gantry, and the probe is the ground under that gantry. The frame held sixteen detections, all of them the employee parking row at the left - every one outside the lane polygon, across a grass strip, so no exclusion is needed and the floor can stay low enough to catch a truck at the lane's far end. Unverified against trucks.",
+    "min_box_height": 150,
+    "line": [[1400, 700], [2000, 700], [2200, 1400], [2000, 2450], [600, 2450], [900, 1400]],
+    "pits": {
+      "probe": [[1500, 1300], [2300, 1300], [2300, 2100], [1500, 2100]]
+    }
+  },
+  {
+    "id": "poet-hanlontown",
+    "name": "POET Hanlontown",
+    "pin": "poet hanlontown ethanol",
+    "lat": 43.292221,
+    "lon": -93.392686,
+    "enabled": false,
+    "url": "https://truckline.poet.com/Camera/hanlontown",
+    "hours": [6, 20],
+    "default_minutes_per_truck": 5,
+    "_offline": "POET lists this camera but the page has returned 'An unhandled error has occurred' every time it was tried on 2026-09-16 and 2026-09-17. This is the closest ethanol plant to the farm at 14 miles, so it is the one most worth having: run `python dev/cam_watch.py --recheck` now and then, and if it comes back, draw regions from a frame and set enabled to true."
+  },
+  {
+    "id": "poet-glenville",
+    "name": "POET Glenville",
+    "pin": "POET Glenville MN Ethanol",
+    "lat": 43.5761731,
+    "lon": -93.3020426,
+    "enabled": false,
+    "url": "https://truckline.poet.com/Camera/glenville",
+    "hours": [6, 20],
+    "default_minutes_per_truck": 5,
+    "_offline": "Listed by POET, serves no picture (their server errors). Tried 2026-09-16 and 2026-09-17. 30 miles."
+  },
+  {
+    "id": "poet-fairbank",
+    "name": "POET Fairbank",
+    "pin": "Flint Hills Resources/Poet Faribanks Ethanol",
+    "lat": 42.640684,
+    "lon": -92.028655,
+    "enabled": false,
+    "url": "https://truckline.poet.com/Camera/fairbank",
+    "hours": [6, 20],
+    "default_minutes_per_truck": 5,
+    "_offline": "Listed by POET, serves no picture (their server errors). Tried 2026-09-16 and 2026-09-17. 69 miles."
+  },
+  {
+    "id": "poet-menlo",
+    "name": "POET Menlo",
+    "pin": "Flint Hills/Poet ethanol Menlo",
+    "lat": 41.523724,
+    "lon": -94.382023,
+    "enabled": false,
+    "url": "https://truckline.poet.com/Camera/menlo",
+    "hours": [6, 20],
+    "default_minutes_per_truck": 5,
+    "_offline": "Listed by POET, serves no picture (their server errors). Tried 2026-09-16 and 2026-09-17."
+  },
+  {
+    "id": "poet-binghamlake",
+    "name": "POET Bingham Lake",
+    "pin": "POET Bingham Lake MN Ethanol",
+    "lat": 43.9016212,
+    "lon": -95.0569091,
+    "enabled": false,
+    "url": "https://truckline.poet.com/Camera/binghamlake",
+    "hours": [6, 20],
+    "default_minutes_per_truck": 5,
+    "_offline": "POET lists two angles here (binghamlake, binghamlake-2); both serve no picture (their server errors). Tried 2026-09-16 and 2026-09-17."
+  },
+  {
     "id": "nv-mountainlake",
     "name": "New Vision Mountain Lake",
     "pin": "New Vision Co-op Mountain Lake MN",
