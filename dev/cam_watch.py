@@ -126,11 +126,18 @@ def count_regions(boxes: list[dict], camera: dict) -> dict:
     # employee parking on the median at Gowrie counted two cars as trucks
     # waiting, because at 3840 px wide an SUV clears any sensible size floor.
     exclude = camera.get("exclude") or []
+    # Which detector classes count as a truck here. The default leaves out
+    # COCO's "train", because at Jewell and Gowrie the real rail cars behind
+    # the pits are exactly that. But a camera mounted ON the probe looking
+    # straight down at a loaded hopper - Ashton - has the model calling that
+    # trailer a train at 0.41 and nothing else, and no railway is in its
+    # frame, so that camera opts the class back in.
+    classes = set(camera.get("classes") or VEHICLE_CLASSES)
     at_pit = {name: False for name in pits}
     in_line = 0
     kept = []
     for b in boxes:
-        if b.get("cls") not in VEHICLE_CLASSES or b.get("conf", 0) < MIN_CONFIDENCE:
+        if b.get("cls") not in classes or b.get("conf", 0) < MIN_CONFIDENCE:
             continue
         if (b["y2"] - b["y1"]) < floor or (b["x2"] - b["x1"]) < min_w:
             continue
@@ -343,9 +350,38 @@ def pace(camera: dict, history: list[dict], visits: list[dict],
 # ---------------------------------------------------------------------------
 # the run
 
-def load_cameras() -> list[dict]:
+def load_cameras(include_disabled: bool = False) -> list[dict]:
+    """The cameras to watch. An entry with "enabled": false is one POET (or
+    whoever) publishes a page for that currently serves no picture - their
+    server answers "an unhandled error has occurred" instead. Those are kept
+    in the file rather than deleted, because the camera coming back is a
+    config flag rather than a rediscovery, and `--recheck` is what tries
+    them without putting a permanent failure on the page."""
     cams = json.loads(CONFIG.read_text(encoding="utf-8"))
-    return [c for c in cams if c.get("url")]
+    return [c for c in cams if c.get("url")
+            and (include_disabled or c.get("enabled", True))]
+
+
+def recheck(cameras: list[dict]) -> None:
+    """Try every disabled camera and say which now return a frame."""
+    off = [c for c in cameras if not c.get("enabled", True)]
+    if not off:
+        print("no disabled cameras")
+        return
+    back = []
+    for cam in off:
+        for view in views_of(cam):
+            label = f"{cam['id']}{'/' + view['view'] if view['view'] else ''}"
+            try:
+                frame = fetch_frame(view["url"], timeout=60)
+                print(f"  {label:26s} BACK - {len(frame['jpeg']):,} bytes"
+                      f"  (frame {frame.get('camera_time') or '?'})")
+                back.append(label)
+            except Exception as exc:  # noqa: BLE001
+                print(f"  {label:26s} still down - {type(exc).__name__}: {str(exc)[:60]}")
+    if back:
+        print(f"\n{len(back)} camera(s) are serving pictures again. To switch them on, set")
+        print(f'"enabled": true in {CONFIG} - then draw their regions from a frame.')
 
 
 def views_of(camera: dict) -> list[dict]:
@@ -542,10 +578,16 @@ def main() -> None:
     ap.add_argument("--camera", help="camera id, with --frame")
     ap.add_argument("--view", help="view id within the camera, with --frame")
     ap.add_argument("--force", action="store_true", help="ignore receiving hours")
+    ap.add_argument("--recheck", action="store_true",
+                    help="try the cameras marked offline and say which are back")
     args = ap.parse_args()
 
-    cameras = load_cameras()
+    cameras = load_cameras(include_disabled=args.recheck)
     state = read_json(STATE, {"cameras": {}, "errors": []})
+
+    if args.recheck:
+        recheck(cameras)
+        return
 
     if args.frame:
         cam = next((c for c in cameras if c["id"] == args.camera), cameras[0])

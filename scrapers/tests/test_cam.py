@@ -62,6 +62,29 @@ def test_exclusion_zone_drops_parked_cars_but_not_the_truck_beside_them():
     assert counted["line"] == 1 and [b["cls"] for b in counted["boxes"]] == ["truck"]
 
 
+def test_a_camera_can_opt_the_train_class_in():
+    """Ashton's overhead trailer reads as COCO 'train'; Jewell's rail cars
+    really are trains, so it stays out by default."""
+    pit = {"probe": [[180, 140], [1050, 140], [1050, 950], [180, 950]]}
+    box_train = box("train", 596, 12, 1215, 687, conf=0.41)
+    assert cam_watch.count_regions([box_train], {"id": "j", "pits": pit})["pits"] == {"probe": False}
+    opted = {"id": "a", "pits": pit, "classes": ["truck", "bus", "car", "train"]}
+    assert cam_watch.count_regions([box_train], opted)["pits"] == {"probe": True}
+
+
+def test_disabled_cameras_are_skipped_unless_asked_for(tmp_path, monkeypatch):
+    import json
+    cfg = tmp_path / "cameras.json"
+    cfg.write_text(json.dumps([
+        {"id": "on", "url": "https://a"},
+        {"id": "off", "url": "https://b", "enabled": False},
+        {"id": "nourl"},
+    ]))
+    monkeypatch.setattr(cam_watch, "CONFIG", cfg)
+    assert [c["id"] for c in cam_watch.load_cameras()] == ["on"]
+    assert [c["id"] for c in cam_watch.load_cameras(include_disabled=True)] == ["on", "off"]
+
+
 def test_views_merge_line_counts_and_pit_states_across_two_pictures():
     cam = {"id": "nv", "url": "https://page", "views": [
         {"id": "in", "url": "https://a", "line": [[0, 0], [100, 0], [100, 100], [0, 100]]},
