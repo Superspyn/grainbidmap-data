@@ -62,6 +62,22 @@ def test_exclusion_zone_drops_parked_cars_but_not_the_truck_beside_them():
     assert counted["line"] == 1 and [b["cls"] for b in counted["boxes"]] == ["truck"]
 
 
+def test_views_merge_line_counts_and_pit_states_across_two_pictures():
+    cam = {"id": "nv", "url": "https://page", "views": [
+        {"id": "in", "url": "https://a", "line": [[0, 0], [100, 0], [100, 100], [0, 100]]},
+        {"id": "pit", "url": "https://b", "pits": {"pit1": [[0, 0], [100, 0], [100, 100], [0, 100]]}},
+    ]}
+    frames = {"https://a": {"jpeg": b"A", "camera_time": None}, "https://b": {"jpeg": b"B", "camera_time": "2026-09-17T09:00:00"}}
+    boxes = {b"A": [box("truck", 10, 10, 50, 60), box("truck", 60, 10, 90, 60)],
+             b"B": [box("truck", 10, 10, 50, 60)]}
+    merged, per_view, saved = cam_watch.read_views(cam, fetch=frames.__getitem__, detector=boxes.__getitem__)
+    assert merged["line"] == 2 and merged["pits"] == {"pit1": True} and merged["vehicles"] == 3
+    assert merged["camera_time"] == "2026-09-17T09:00:00"
+    assert [v["view"] for v in per_view] == ["in", "pit"] and [s[0] for s in saved] == ["in", "pit"]
+    # a plain one-url camera is its own single view
+    assert [v["view"] for v in cam_watch.views_of(CAM)] == [""]
+
+
 def test_parse_frame_takes_poet_jpeg_and_chs_png_declared_jpeg():
     import base64
     jpeg = b"\xff\xd8\xff\xe1" + b"2026:09:16 19:03:12" + b"\xff\xd9"

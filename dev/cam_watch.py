@@ -70,6 +70,12 @@ MIN_CONFIDENCE = 0.30
 # queued on the apron are nearer and larger, so this is the hard case.
 DETECT_SIZE = 1280
 
+# Which YOLO. "n" (6 MB) caught trucks near the camera and missed the far
+# ones: 2 of 5 staged at CHS Fairmont, none of the queue at the far end of
+# Jewell's probe lane. "s" (22 MB) found all five and the queue, in under
+# half a second a frame on this PC. Fetched on first use if missing.
+WEIGHTS = "yolov8s.pt"
+
 # How much history to keep, and how far back "recent" reaches when working
 # out the pace of the line.
 KEEP_DAYS = 14
@@ -187,8 +193,14 @@ def fetch_frame(url: str, timeout: float = 20.0) -> dict:
     from the page's caption, either may be None."""
     req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
     with urllib.request.urlopen(req, timeout=timeout, context=tls_context()) as resp:
-        page = resp.read().decode("utf-8", errors="replace")
-    return parse_frame(page)
+        raw = resp.read()
+        ctype = resp.headers.get("Content-Type", "")
+    if ctype.startswith("image/") or raw[:3] == b"\xff\xd8\xff":
+        # New Vision's ipcamlive snapshots are the JPEG itself, no page.
+        exif = re.search(rb"(\d{4}):(\d{2}):(\d{2}) (\d{2}):(\d{2}):(\d{2})", raw[:4096])
+        return {"jpeg": raw, "page_time": None,
+                "camera_time": ("%s-%s-%sT%s:%s:%s" % tuple(g.decode() for g in exif.groups())) if exif else None}
+    return parse_frame(raw.decode("utf-8", errors="replace"))
 
 
 # ---------------------------------------------------------------------------
@@ -212,9 +224,9 @@ def detect(jpeg: bytes) -> list[dict]:
             "pip install ultralytics  (downloads torch; the yolov8n weights "
             "fetch on first run)") from exc
     if _model is None:
-        weights = pathlib.Path(__file__).resolve().parent / "config" / "yolov8n.pt"
+        weights = pathlib.Path(__file__).resolve().parent / "config" / WEIGHTS
         if not weights.exists():
-            # 6 MB from Ultralytics' own GitHub release, into this folder.
+            # From Ultralytics' own GitHub release, into this folder.
             # Kept out of the repo (it is public and this is a binary).
             from ultralytics.utils.downloads import attempt_download_asset
             attempt_download_asset(str(weights))
@@ -336,6 +348,38 @@ def load_cameras() -> list[dict]:
     return [c for c in cams if c.get("url")]
 
 
+def views_of(camera: dict) -> list[dict]:
+    """The pictures a camera entry is read from. Usually one - the entry
+    itself, with its url and regions. New Vision points two cameras at
+    each elevator, an inbound lane and the dump pit, so an entry may carry
+    "views" instead: each with its own url and regions, counted separately
+    and merged into one reading (line counts add, pit states union)."""
+    views = camera.get("views")
+    if not views:
+        return [dict(camera, view="")]
+    return [dict(v, view=v.get("id") or str(i)) for i, v in enumerate(views)]
+
+
+def read_views(camera: dict, fetch=None, detector=None) -> tuple[dict, list[dict], list[tuple[str, bytes]]]:
+    """Fetch and count every view of a camera. Returns the merged counts,
+    the per-view counts, and the frames for annotation."""
+    fetch = fetch or fetch_frame
+    detector = detector or detect
+    merged = {"line": 0, "pits": {}, "vehicles": 0, "camera_time": None}
+    per_view, frames = [], []
+    for view in views_of(camera):
+        frame = fetch(view["url"])
+        counted = count_regions(detector(frame["jpeg"]), view)
+        merged["line"] += counted["line"]
+        for name, busy in counted["pits"].items():
+            merged["pits"][name] = merged["pits"].get(name, False) or busy
+        merged["vehicles"] += len(counted["boxes"])
+        merged["camera_time"] = merged["camera_time"] or frame.get("camera_time")
+        per_view.append(dict(counted, view=view["view"]))
+        frames.append((view["view"], frame["jpeg"]))
+    return merged, per_view, frames
+
+
 def in_hours(camera: dict, now_local: _dt.datetime) -> bool:
     hours = camera.get("hours")
     if not hours:
@@ -352,24 +396,24 @@ def watch_once(cameras: list[dict], state: dict, force: bool = False) -> None:
             print(f"  {cid}: outside receiving hours")
             continue
         try:
-            frame = fetch_frame(cam["url"])
-            boxes = detect(frame["jpeg"])
+            counted, per_view, frames = read_views(cam)
         except Exception as exc:  # noqa: BLE001
             print(f"  {cid}: {type(exc).__name__}: {exc}")
             state.setdefault("errors", []).append({"t": now_iso(), "camera": cid, "error": str(exc)[:200]})
             continue
-        counted = count_regions(boxes, cam)
-        reading = {"t": now_iso(), "camera_time": frame["camera_time"],
+        reading = {"t": now_iso(), "camera_time": counted["camera_time"],
                    "line": counted["line"], "pits": counted["pits"],
-                   "vehicles": len(counted["boxes"])}
+                   "vehicles": counted["vehicles"]}
         hist = state.setdefault("cameras", {}).setdefault(cid, [])
         hist.append(reading)
         FRAMES.mkdir(parents=True, exist_ok=True)
-        (FRAMES / f"{cid}.jpg").write_bytes(frame["jpeg"])
-        annotate(frame["jpeg"], counted, cam, FRAMES / f"{cid}-counted.jpg")
+        for view, (vid, jpeg), one in zip(views_of(cam), frames, per_view):
+            tag = f"{cid}-{vid}" if vid else cid
+            (FRAMES / f"{tag}.jpg").write_bytes(jpeg)
+            annotate(jpeg, one, view, FRAMES / f"{tag}-counted.jpg")
         print(f"  {cid}: {counted['line']} in line, "
               + ", ".join(f"{k} {'busy' if v else 'open'}" for k, v in counted["pits"].items())
-              + f"  (frame {frame['camera_time'] or '?'})")
+              + f"  (frame {counted['camera_time'] or '?'})")
 
     horizon = now - _dt.timedelta(days=KEEP_DAYS)
     for cid, hist in (state.get("cameras") or {}).items():
@@ -496,6 +540,7 @@ def main() -> None:
     ap.add_argument("--report", action="store_true", help="what each camera has seen")
     ap.add_argument("--frame", help="detect on a saved JPEG instead of fetching")
     ap.add_argument("--camera", help="camera id, with --frame")
+    ap.add_argument("--view", help="view id within the camera, with --frame")
     ap.add_argument("--force", action="store_true", help="ignore receiving hours")
     args = ap.parse_args()
 
@@ -504,6 +549,8 @@ def main() -> None:
 
     if args.frame:
         cam = next((c for c in cameras if c["id"] == args.camera), cameras[0])
+        views = views_of(cam)
+        cam = next((v for v in views if v["view"] == (args.view or "")), views[0])
         jpeg = pathlib.Path(args.frame).read_bytes()
         counted = count_regions(detect(jpeg), cam)
         for b in counted["boxes"]:
