@@ -1017,7 +1017,12 @@ function rHist(){
       ${seasons.map(y=>{const s=o.seasons[String(y)];const h=s.harvest||{};const crop=cropKey(s.crop||h.crop||'')||'—';
         const good=crop==='corn'?[200,170]:[60,50];
         const yc=h.avg?(h.avg>=good[0]?'var(--ac)':h.avg>=good[1]?'var(--wr)':'var(--dn)'):'var(--tx2)';
-        return `<tr><td>${y}</td><td>${crop}${s.crop_from_harvest?'<div class="sub">from harvest pass</div>':''}${s.varieties&&s.varieties.length?`<div class="sub">${s.varieties.join(', ')}</div>`:''}</td><td>${s.planted||'—'}</td><td style="color:${yc};font-weight:600">${h.avg?h.avg+' bu':'—'}</td><td>${h.moisture!=null?h.moisture+'%':'—'}</td><td>${h.acres!=null?h.acres.toFixed(0):'—'}</td></tr>`;}).join('')}</table>`;
+        // A cover crop drilled after harvest is shown, but it is not the
+        // season's crop - the rotation follows what came off the field.
+        const cover=(s.cover||[]).map(c=>`${cropKey(c.crop)||c.crop} ${c.d}`).join(', ');
+        const passes=(h.passes||[]).length>1
+          ? `<div class="sub">${h.passes.length} passes: ${h.passes.map(pp=>`${pp.acres!=null?pp.acres.toFixed(0):'?'}ac @ ${pp.avg!=null?pp.avg:'?'} on ${pp.d}</span>`).join(', ')}, acre-weighted</div>` : '';
+        return `<tr><td>${y}</td><td>${crop}${s.crop_from_harvest?'<div class="sub">from harvest pass</div>':''}${s.varieties&&s.varieties.length?`<div class="sub">${s.varieties.join(', ')}</div>`:''}${cover?`<div class="sub">cover: ${cover}</div>`:''}</td><td>${s.planted||'—'}</td><td style="color:${yc};font-weight:600">${h.avg?h.avg+' bu':'—'}${passes}</td><td>${h.moisture!=null?h.moisture+'%':'—'}</td><td>${h.acres!=null?h.acres.toFixed(0):'—'}</td></tr>`;}).join('')}</table>`;
     const ym=yieldMaps(sel);
     html+=`<div class="dn">${ym.length?`Yield maps on file: ${ym.map(m=>`${m.season} ${cropKey(m.crop)} ${m.avg} bu`).join(' · ')}. Pick "Yield map" on the map dropdown to see them.`:'No yield maps pulled for this field yet (dev/jd_rx_pull.py).'}</div>`;
     const apps=seasons.flatMap(y=>(o.seasons[String(y)].apps||[]).map(a=>Object.assign({yr:y},a)));
