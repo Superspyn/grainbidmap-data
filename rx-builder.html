@@ -460,9 +460,9 @@ function genRaster(fieldName,nut,setIdx,isRate,rateFn,breaks){
     cellRate=(px,py)=>{
       const q={x:px,y:py};
       for(const k of need){const src=srcs[k];if(src&&src.length)q[k]=idw(px,py,src,'_v',IDW_POWER,cosLat);}
-      return rateFn(q);
+      return rateFn(q,px,py);
     };
-    vpts=pts.map(pt=>{const r=rateFn(pt);return r!=null?{x:pt.x,y:pt.y,_v:r}:null;}).filter(Boolean);
+    vpts=pts.map(pt=>{const r=rateFn(pt,pt.x,pt.y);return r!=null?{x:pt.x,y:pt.y,_v:r}:null;}).filter(Boolean);
   }else{
     vpts=pts.filter(p=>p[nut]!=null).map(p=>({x:p.x,y:p.y,_v:p[nut]}));
   }
@@ -514,8 +514,9 @@ function genRaster(fieldName,nut,setIdx,isRate,rateFn,breaks){
   // Only the fertility score is blurred now. Tested against the lab's own
   // acres-per-band on a 658-acre field, every smoothing pass on a nutrient
   // map moved it further from the lab's picture, not closer.
-  const smooth=!!(isRate&&rateFn===fertScore);
-  const rateMap=!!(isRate&&rateFn&&rateFn!==fertScore);
+  const scoreMap=!!(isRate&&rateFn&&(rateFn===fertScore||rateFn.continuous));
+  const smooth=scoreMap;
+  const rateMap=!!(isRate&&rateFn&&!scoreMap);
   // One pass, not two. With a local neighbourhood doing the interpolation
   // the surface is already smooth, and a second pass only rubs out small
   // patches that the samples really did find.
@@ -751,6 +752,16 @@ function updateLegend(){
       </div>`;
     return;
   }
+  if(hNut==='gap'){
+    const grad=GAP_COLORS.map((c,i)=>`rgb(${c[0]},${c[1]},${c[2]}) ${Math.round(i/(GAP_COLORS.length-1)*100)}%`).join(',');
+    lg.innerHTML=`<div class="lg-t">How far off <span class="source-tag">rating vs soil test</span></div>
+      <div class="lg-grad" style="background:linear-gradient(to right,${grad})"></div>
+      <div class="lg-labels"><span>testing ahead</span><span>${fertNutsOn().map(k=>TH[k]?.rx||k).join(' + ')}</span><span>testing behind</span></div>
+      <div class="lg-cats" style="margin-top:6px">
+        ${GAP_NAMES.map((c,i)=>`<div class="lg-cat"><div class="dot" style="background:rgb(${GAP_COLORS[i].join(',')})"></div>${c}</div>`).join('')}
+      </div>`;
+    return;
+  }
   if(isSurvey(hNut)){
     lg.innerHTML=`<div class="lg-t">${svLabel(hNut)} <span class="source-tag">USDA soil survey</span></div>
       <div class="lg-cats">${FERT_COLORS.map((c,i)=>`<div class="lg-cat"><div class="dot" style="background:rgb(${c[0]},${c[1]},${c[2]})"></div>${svRange(i)}</div>`).join('')}
@@ -886,6 +897,47 @@ function fertScore(pt){
   return n?Math.round(sum/n*100):null;
 }
 function fertNutsOn(){return FERT_NUTS.filter(k=>fertOn[k]);}
+
+// How far off: the soil rating against the soil test.
+//
+// The survey rating says what the ground itself can do; the fertility
+// score says how well the soil test feeds a crop. Where good ground tests
+// poor, the fertility is the thing holding the field back and fertilizer
+// has the most to gain - that is the red end. Where the test is already
+// as good as or better than the ground deserves, green: money spent
+// there buys less.
+//
+// The rating is CSR2 and NCCPI together (their average) where the map
+// unit has both, and whichever it has otherwise: Missouri map units carry
+// no CSR2. The gap is rating minus fertility score, so positive means the
+// fertility is behind the ground. The raster holds gap + 100 so the
+// zoning code, which treats zero as "no rate", never sees a zero.
+const GAP_BREAKS=[85,100,115,130];
+const GAP_COLORS=[...FERT_COLORS].reverse();
+const GAP_NAMES=['Ahead of the ground by 15+','Ahead by up to 15','Behind by up to 15','Behind by 15 - 30','Behind by 30+'];
+const svLonLat={};
+function svPiecesLonLat(f){
+  if(!svLonLat[f])svLonLat[f]=svPieces(f).map(pc=>({mukey:pc.mukey,rings:pc.rings.map(r=>r.map(q=>[q[1],q[0]]))}));
+  return svLonLat[f];}
+function svRating(mukey){const m=SV.mapunits[mukey];if(!m)return null;
+  const c=m.csr2,n=(m.nccpi||{}).all;
+  if(c!=null&&n!=null)return (c+n)/2;
+  return c!=null?c:n!=null?n:null;}
+function svRatingAt(f,x,y){
+  for(const pc of svPiecesLonLat(f)){
+    if(pip(x,y,pc.rings[0])&&!pc.rings.slice(1).some(h=>pip(x,y,h)))return svRating(pc.mukey);}
+  return null;}
+// The field's rating by acres, on the same blend.
+function svRatingAvg(f){let num=0,den=0;for(const pc of svPieces(f)){const v=svRating(pc.mukey);if(v==null)continue;num+=v*pc.ac;den+=pc.ac;}return den?num/den:null;}
+const gapFns={};
+function makeGapFn(f){
+  if(gapFns[f])return gapFns[f];
+  const fn=(pt,x,y)=>{
+    const fs=fertScore(pt);if(fs==null)return null;
+    const r=svRatingAt(f,x!=null?x:pt.x,y!=null?y:pt.y);if(r==null)return null;
+    return 100+r-fs;};
+  fn.needs=FERT_NUTS;fn.continuous=true;
+  return gapFns[f]=fn;}
 // Which nutrient is holding a spot back, for the panel.
 function fertLimiting(pt){
   let worst=null,wv=2;
@@ -899,7 +951,7 @@ function fertLimiting(pt){
 // redrawing the map layers does not touch the controls.
 function rFertChips(){
   const box=document.getElementById('fchips');if(!box)return;
-  if(hNut!=='fert'){box.style.display='none';box.innerHTML='';return;}
+  if(hNut!=='fert'&&hNut!=='gap'){box.style.display='none';box.innerHTML='';return;}
   box.style.display='';
   box.innerHTML=FERT_NUTS.map(k=>`<button class="preset-btn ${fertOn[k]?'act':''}" style="margin-right:3px" title="${fertOn[k]?'Counting':'Ignoring'} ${TH[k]?.nm||k}" onclick="toggleFert('${k}')">${TH[k]?.rx||TH[k]?.nm||k}</button>`).join('');
 }
@@ -1007,9 +1059,41 @@ function rSurvey(){
         <span class="vr-range" style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><b>${m.musym||'?'}</b> ${m.muname||''}</span>
         <span class="vr-rate">${v==null?'—':isCSR?v:v.toFixed(0)}</span><span class="vr-acres">${u.ac.toFixed(1)}ac</span></div>`;}).join('')}`;
 }
+function rGap(){
+  const set=activeSet(sel);if(!set)return'<div class="dn">No soil test on file, so nothing to hold against the soil rating. The CSR2 and NCCPI maps still show.</div>';
+  if(!svPieces(sel).length)return'<div class="dn">No soil survey coverage fetched for this field yet (dev/jd_rx_ssurgo.py).</div>';
+  const on=fertNutsOn();
+  const scored=set.pts.map(p=>fertScore(p)).filter(v=>v!=null);
+  if(!scored.length)return `<div class="dn">This soil test did not report ${on.map(k=>TH[k]?.nm||k).join(', ')}.</div>`;
+  const fert=scored.reduce((a,b)=>a+b,0)/scored.length;
+  const rating=svRatingAvg(sel);
+  if(rating==null)return'<div class="dn">No map unit under this field carries a rating.</div>';
+  const gap=rating-fert;
+  const raster=genRaster(sel,null,null,true,makeGapFn(sel),GAP_BREAKS);
+  const zac=raster?zoneAcres(raster,sel):null;
+  const ac=(FPROP[sel]||{}).acres||0;
+  const cls=Math.min(4,GAP_BREAKS.filter(b=>gap+100>=b).length);
+  const hasCSR=svPieces(sel).some(pc=>(SV.mapunits[pc.mukey]||{}).csr2!=null);
+  return `<h2><div class="ic">🎯</div>How far off <span class="source-tag">rating vs soil test</span></h2>
+    <div class="dn">${isComposite(sel)?COMPOSITE_NOTE+' ':''}What the ground can do (${hasCSR?'CSR2 and NCCPI together':'NCCPI; no CSR2 outside Iowa'}) against what the soil test says it does (the fertility score for ${on.map(k=>TH[k]?.rx||TH[k]?.nm||k).join(', ')}). <b>Red</b> is good ground testing poor: the fertility is what is holding it back, and fertilizer has the most to gain there. <b>Green</b> already tests as well as the ground deserves.</div>
+    <div class="fc" style="padding:8px">
+      <div style="display:flex;gap:8px;margin-bottom:8px">
+        <div style="flex:1"><div class="lb">Soil rating</div><div class="vl">${rating.toFixed(0)}</div></div>
+        <div style="flex:1"><div class="lb">Fertility score</div><div class="vl">${fert.toFixed(0)}</div></div>
+        <div style="flex:1"><div class="lb">${gap>=0?'Behind by':'Ahead by'}</div><div class="vl" style="color:rgb(${GAP_COLORS[cls].join(',')})">${Math.abs(gap).toFixed(0)}</div></div>
+      </div>
+      <div class="lb" style="margin-bottom:3px">Share of the field</div>
+      ${GAP_NAMES.map((nm,i)=>{const a=zac?zac[i+1]:0;if(a<0.5)return'';
+        return `<div class="vr-zone"><div class="vr-color" style="background:rgb(${GAP_COLORS[i].join(',')})"></div>
+          <span class="vr-range">${nm}</span><span class="vr-rate">${ac?Math.round(a/ac*100):0}%</span>
+          <span class="vr-acres">${a.toFixed(0)}ac</span></div>`;}).join('')}
+    </div>
+    <div class="dn" style="margin-top:8px">Both numbers run 0 to 100 but are not the same kind of thing: the rating is a property of the soil and never moves, the fertility score moves with every soil test. The gap is a way to rank ground, not a rate. Use the VR Rx tab for the rate.</div>`;
+}
 function rZones(){
   if(hNut==='yield')return rYieldPanel();
   if(hNut==='fert')return rFert();
+  if(hNut==='gap')return rGap();
   if(isSurvey(hNut))return rSurvey();
   const fp=FP[sel];if(!fp||!fp.sets.length)return'<div class="dn">No soil data.</div>';
   if(isComposite(sel))return rComposite();
@@ -1323,8 +1407,9 @@ function addBounds(){
       const lt=activeInfo(f);
       let tt=`<b>${f}</b><br>${p.org} · ${p.farm}${p.acres!=null?` · ${p.acres.toFixed(1)} ac`:''}`;
       const lc=seasonCrop(f,META.plan_year-1);if(lc)tt+=`<br>${META.plan_year-1}: ${lc}`;
-      if(lt&&hNut==='fert'){const fs=fertScore(lt);
-        tt+=`<br>Fertility: ${fs!=null?fs+'/100':'N/A'}<br>Sampled: ${lt.d}`;}
+      if(lt&&(hNut==='fert'||hNut==='gap')){const fs=fertScore(lt);
+        tt+=`<br>Fertility: ${fs!=null?fs+'/100':'N/A'}<br>Sampled: ${lt.d}`;
+        if(hNut==='gap'){const r=svRatingAvg(f);if(r!=null&&fs!=null)tt+=`<br>Soil rating ${r.toFixed(0)} · ${r-fs>=0?'behind':'ahead'} by ${Math.abs(r-fs).toFixed(0)}`;}}
       else if(lt){tt+=`<br>${TH[hNut]?.nm||hNut}: ${lt[hNut]!=null?lt[hNut]:'N/A'}<br>Sampled: ${lt.d}`;}
       else tt+='<br>no soil test';
       const ym=yieldMaps(f);if(ym.length)tt+=`<br>yield maps: ${ym.map(m=>m.season).join(', ')}`;
@@ -1357,6 +1442,10 @@ function renderSurvey(f){
 function showInterp(){
   clearOv();if(!sel||!map)return;
   if(isSurvey(hNut)){canvasOverlay=renderSurvey(sel);zoomSel();return;}
+  if(hNut==='gap'){
+    const gr=genRaster(sel,null,null,true,makeGapFn(sel),GAP_BREAKS);
+    if(gr)canvasOverlay=renderRasterOnMap(gr,fieldRings(sel),GAP_COLORS);
+    zoomSel();return;}
   if(hNut==='yield'){canvasOverlay=renderYieldOverlay(sel);zoomSel();return;}
   if(hNut==='fert'){
     const fr2=genRaster(sel,null,null,true,fertScore,FERT_BREAKS);
@@ -2256,7 +2345,7 @@ function sF(f){sel=f;panelTab=FP[f]?'zones':'history';clearOv();
 function uSrch(q){sq=q;uSB();}
 function sML(l){mLyr=l;sTiles();document.querySelectorAll('.mb').forEach(b=>b.classList.remove('a'));event.target.classList.add('a');}
 function rNS(){
-  return `<select onchange="sHN(this.value)"><option value="fert" ${hNut==='fert'?'selected':''}>Overall fertility</option><option value="yield" ${hNut==='yield'?'selected':''}>Yield map (all years)</option><option value="csr" ${hNut==='csr'?'selected':''}>CSR2 (Iowa soil rating)</option><option value="nccpi" ${hNut==='nccpi'?'selected':''}>NCCPI (soil productivity)</option>${['p','k','ph','om','cec','s','zn','ca','mg','bph','p2','mn'].map(k=>`<option value="${k}" ${hNut===k?'selected':''}>${TH[k]?.nm||k}</option>`).join('')}</select>${hNut==='nccpi'?`<select style="margin-left:6px;min-width:0" onchange="svCrop=this.value;sHN('nccpi')">${[['all','All crops'],['corn','Corn'],['soy','Soybean']].map(([v,l])=>`<option value="${v}" ${svCrop===v?'selected':''}>${l}</option>`).join('')}</select>`:''}`;}
+  return `<select onchange="sHN(this.value)"><option value="fert" ${hNut==='fert'?'selected':''}>Overall fertility</option><option value="yield" ${hNut==='yield'?'selected':''}>Yield map (all years)</option><option value="gap" ${hNut==='gap'?'selected':''}>How far off (rating vs fertility)</option><option value="csr" ${hNut==='csr'?'selected':''}>CSR2 (Iowa soil rating)</option><option value="nccpi" ${hNut==='nccpi'?'selected':''}>NCCPI (soil productivity)</option>${['p','k','ph','om','cec','s','zn','ca','mg','bph','p2','mn'].map(k=>`<option value="${k}" ${hNut===k?'selected':''}>${TH[k]?.nm||k}</option>`).join('')}</select>${hNut==='nccpi'?`<select style="margin-left:6px;min-width:0" onchange="svCrop=this.value;sHN('nccpi')">${[['all','All crops'],['corn','Corn'],['soy','Soybean']].map(([v,l])=>`<option value="${v}" ${svCrop===v?'selected':''}>${l}</option>`).join('')}</select>`:''}`;}
 function sHN(n){hNut=n;const ns=document.getElementById('nsel');if(ns)ns.innerHTML=rNS();rFertChips();rfM();updateLegend();
   if(!sel)return;
   if(panelTab==='vr'){rP();showVRInterp();return;}   // the VR map is its own
