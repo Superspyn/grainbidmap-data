@@ -99,5 +99,172 @@
     "pits": {
       "entrance": [[2300, 1300], [3840, 1300], [3840, 2160], [2000, 2160]]
     }
+  },
+  {
+    "id": "chs-mankato",
+    "name": "CHS Mankato (soybeans)",
+    "pin": "CHS Oilseed Processing Mankato MN",
+    "lat": 44.1568573,
+    "lon": -94.0292354,
+    "url": "https://truckcamera.chsinc.com/mankato",
+    "hours": [6, 20],
+    "default_minutes_per_truck": 6,
+    "_regions": "3648x2052 fisheye, drawn 2026-09-17 from an empty lot: the line is the whole gravel staging lot; the entrance is the road at the far right where a truck heads into the plant. No pit in view. Not yet checked against a frame with trucks in it. Soybeans only.",
+    "min_box_height": 90,
+    "line": [[300, 250], [3000, 250], [3300, 1300], [2800, 2052], [0, 2052], [0, 1200]],
+    "pits": {
+      "entrance": [[3100, 700], [3648, 700], [3648, 1100], [3100, 1100]]
+    }
+  },
+  {
+    "id": "nv-hills",
+    "name": "New Vision Hills",
+    "pin": "New Vision Co-op Hills Terminal MN",
+    "lat": 43.546156,
+    "lon": -96.368311,
+    "url": "https://newvision.coop/cameras/",
+    "hours": [6, 20],
+    "default_minutes_per_truck": 5,
+    "_regions": "Two 1280x720 snapshots from New Vision's cameras page, drawn 2026-09-17 from empty yards. S Yard (inbound): the gravel yard right of the employee parking. N Yard (dump pit): the yard in front of the receiving building, whose door is the pit.",
+    "views": [
+      {
+        "id": "inbound",
+        "url": "https://g1.ipcamlive.com/player/snapshot.php?alias=hillsinbound",
+        "min_box_height": 60,
+        "line": [[470, 150], [980, 150], [1180, 380], [1280, 720], [560, 720]]
+      },
+      {
+        "id": "pit",
+        "url": "https://g1.ipcamlive.com/player/snapshot.php?alias=hillspit",
+        "min_box_height": 40,
+        "line": [[180, 160], [1100, 160], [1100, 720], [220, 720]],
+        "pits": {
+          "pit1": [[680, 60], [880, 60], [880, 150], [680, 150]]
+        }
+      }
+    ]
+  },
+  {
+    "id": "nv-heronlake",
+    "name": "New Vision Heron Lake",
+    "pin": "New Vision Co-op Heron Lake MN",
+    "lat": 43.796709,
+    "lon": -95.320179,
+    "url": "https://newvision.coop/cameras/",
+    "hours": [6, 20],
+    "default_minutes_per_truck": 5,
+    "_regions": "Two 1280x720 snapshots, drawn 2026-09-17 from empty lots. East Scale (inbound): the gravel in front of the scale, minus the corner where a forklift parks. West Scale (dump pit): the scale platform at left is the 'scale'; the lot beyond is line.",
+    "views": [
+      {
+        "id": "inbound",
+        "url": "https://g1.ipcamlive.com/player/snapshot.php?alias=heronlakeinbound",
+        "min_box_height": 60,
+        "line": [[0, 230], [1100, 230], [1280, 300], [1280, 720], [0, 720]],
+        "exclude": [[[200, 220], [320, 220], [320, 290], [200, 290]]]
+      },
+      {
+        "id": "pit",
+        "url": "https://g1.ipcamlive.com/player/snapshot.php?alias=heronlakepit",
+        "min_box_height": 50,
+        "line": [[560, 250], [1280, 250], [1280, 720], [560, 720]],
+        "pits": {
+          "scale": [[60, 300], [560, 300], [560, 430], [60, 430]]
+        }
+      }
+    ]
+  },
+  {
+    "id": "nv-miloma",
+    "name": "New Vision Miloma",
+    "pin": "New Vision Co-op Miloma MN",
+    "lat": 43.767921,
+    "lon": -95.363265,
+    "url": "https://newvision.coop/cameras/",
+    "hours": [6, 20],
+    "default_minutes_per_truck": 5,
+    "_regions": "Two 1280x720 snapshots, drawn 2026-09-17. Inbound Scale View: the gravel lane down to the scale platform at bottom right. Lot (dump pit): the receiving building's doors at the far end are the pit - trucks there are ~40 px tall - and the gravel lot in front is line.",
+    "views": [
+      {
+        "id": "inbound",
+        "url": "https://g1.ipcamlive.com/player/snapshot.php?alias=milomain",
+        "min_box_height": 40,
+        "line": [[430, 100], [560, 100], [1100, 450], [1100, 720], [150, 720], [150, 450]],
+        "pits": {
+          "scale": [[700, 480], [1100, 480], [1100, 720], [700, 720]]
+        }
+      },
+      {
+        "id": "pit",
+        "url": "https://g1.ipcamlive.com/player/snapshot.php?alias=milomapitview",
+        "min_box_height": 20,
+        "line": [[430, 150], [1280, 150], [1280, 720], [430, 720]],
+        "pits": {
+          "pit1": [[370, 95], [520, 95], [520, 148], [370, 148]]
+        }
+      }
+    ]
+  },
+  {
+    "id": "nv-magnolia",
+    "name": "New Vision Magnolia",
+    "pin": "New Vision Co-op Magnolia MN",
+    "lat": 43.644475,
+    "lon": -96.098437,
+    "url": "https://newvision.coop/cameras/",
+    "hours": [6, 20],
+    "default_minutes_per_truck": 5,
+    "_regions": "1280x720 snapshot, drawn 2026-09-17 with a tarped truck under the camera: the camera sits over the scale, so the truck filling the bottom of the frame is on the 'scale'; the line is the road curving in from the far end at right.",
+    "views": [
+      {
+        "id": "inbound",
+        "url": "https://g1.ipcamlive.com/player/snapshot.php?alias=maginbound",
+        "min_box_height": 40,
+        "line": [[620, 240], [1280, 240], [1280, 720], [500, 720], [500, 430]],
+        "pits": {
+          "scale": [[450, 400], [1050, 400], [1050, 720], [450, 720]]
+        }
+      }
+    ]
+  },
+  {
+    "id": "nv-brewster",
+    "name": "New Vision Brewster",
+    "pin": "New Vision Co-op Brewster MN",
+    "lat": 43.6890296,
+    "lon": -95.4837112,
+    "url": "https://newvision.coop/cameras/",
+    "hours": [6, 20],
+    "default_minutes_per_truck": 5,
+    "_regions": "1024x576 snapshot through a window, drawn 2026-09-17 from an empty lot: the line is the gravel lot below the horizon. No pit in view.",
+    "views": [
+      {
+        "id": "line",
+        "url": "https://g1.ipcamlive.com/player/snapshot.php?alias=brewstergrainline",
+        "min_box_height": 25,
+        "line": [[200, 395], [900, 395], [1024, 576], [0, 576]]
+      }
+    ]
+  },
+  {
+    "id": "nv-mountainlake",
+    "name": "New Vision Mountain Lake",
+    "pin": "New Vision Co-op Mountain Lake MN",
+    "lat": 43.944954,
+    "lon": -94.875967,
+    "url": "https://newvision.coop/cameras/",
+    "hours": [6, 20],
+    "default_minutes_per_truck": 5,
+    "_regions": "1024x576 snapshot through a window, drawn 2026-09-17 with a hopper at the probe on the right: the probe stand is the 'probe'; the line is the gravel road from the far end down past the scale plate at bottom left.",
+    "views": [
+      {
+        "id": "line",
+        "url": "https://g1.ipcamlive.com/player/snapshot.php?alias=mountainlakeline",
+        "min_box_height": 30,
+        "line": [[400, 220], [700, 220], [1024, 400], [1024, 576], [100, 576], [300, 400]],
+        "pits": {
+          "probe": [[700, 220], [1000, 220], [1000, 330], [700, 330]]
+        }
+      }
+    ]
   }
 ]
