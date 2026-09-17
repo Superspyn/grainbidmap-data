@@ -76,11 +76,28 @@
     "url": "https://truckline.poet.com/Camera/gowrie-2",
     "hours": [6, 20],
     "default_minutes_per_truck": 4,
-    "_regions": "3840x2160, drawn 2026-09-16 from an empty lane: the line is the inbound lane from the far end to the camera; the scale is the platform at bottom left. Trucks at the very far end are too small for the detector and are not counted. Not yet checked against a frame with trucks in it.",
+    "_regions": "3840x2160, drawn 2026-09-16 from an empty lane: the line is the inbound lane from the far end to the camera; the scale is the platform at bottom left. Trucks at the very far end are too small for the detector and are not counted. Checked 2026-09-17: a semi far up the lane counted correctly, but two employee cars parked on the grass median counted too, hence the exclusion box over the parking spots.",
     "min_box_height": 80,
     "line": [[1750, 330], [2150, 330], [3840, 1200], [3840, 2160], [0, 2160], [0, 1250]],
+    "exclude": [[[1350, 700], [2450, 700], [2450, 1330], [1350, 1330]]],
     "pits": {
       "scale": [[0, 1250], [550, 1250], [700, 2160], [0, 2160]]
+    }
+  },
+  {
+    "id": "chs-fairmont",
+    "name": "CHS Fairmont (soybeans)",
+    "pin": "CHS Oilseed Processing Fairmont MN",
+    "lat": 43.6702461,
+    "lon": -94.5058593,
+    "url": "https://truckcamera.chsinc.com/fairmont",
+    "hours": [6, 20],
+    "default_minutes_per_truck": 6,
+    "_regions": "3840x2160, drawn 2026-09-17 from a frame with five trucks staged in the gravel lot: the line is that lot plus the inbound road along the right; the 'entrance' is the road right by the camera, where a truck is about to go into the plant. No pit is in view, so the pace comes from the entrance turning over, your own trucks, or the default. Soybeans only.",
+    "min_box_height": 120,
+    "line": [[0, 700], [2300, 700], [2300, 850], [3840, 1300], [3840, 2160], [0, 2160]],
+    "pits": {
+      "entrance": [[2300, 1300], [3840, 1300], [3840, 2160], [2000, 2160]]
     }
   }
 ]

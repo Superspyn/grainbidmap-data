@@ -53,6 +53,30 @@ def test_width_floor_drops_a_pickup_the_height_floor_lets_through():
     assert counted["line"] == 1 and len(counted["boxes"]) == 1
 
 
+def test_exclusion_zone_drops_parked_cars_but_not_the_truck_beside_them():
+    cam = dict(CAM, exclude=[[[300, 350], [500, 350], [500, 450], [300, 450]]])
+    counted = cam_watch.count_regions([
+        box("car", 320, 300, 480, 440),      # feet (400, 440): in the parking spot
+        box("truck", 550, 300, 690, 440),    # feet (620, 440): on the road next to it
+    ], cam)
+    assert counted["line"] == 1 and [b["cls"] for b in counted["boxes"]] == ["truck"]
+
+
+def test_parse_frame_takes_poet_jpeg_and_chs_png_declared_jpeg():
+    import base64
+    jpeg = b"\xff\xd8\xff\xe1" + b"2026:09:16 19:03:12" + b"\xff\xd9"
+    b64 = base64.b64encode(jpeg).decode()
+    poet = f'<img src="data:image/jpeg;base64,{b64}"> 1:03 PM CDT'
+    chs = f'<img class="img" src="data:image/png;base64,{b64}">'
+    assert cam_watch.parse_frame(poet)["jpeg"] == jpeg
+    assert cam_watch.parse_frame(poet)["camera_time"] == "2026-09-16T19:03:12"
+    assert cam_watch.parse_frame(poet)["page_time"] == "1:03 PM CDT"
+    assert cam_watch.parse_frame(chs)["jpeg"] == jpeg
+    import pytest
+    with pytest.raises(RuntimeError):
+        cam_watch.parse_frame("<html>An unhandled error has occurred.</html>")
+
+
 def test_pit_cycles_count_refills_only():
     """busy, open, busy, busy, open, busy = two trucks through."""
     t0 = "2026-09-16T17:%02d:00Z"
