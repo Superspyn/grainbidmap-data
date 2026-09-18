@@ -479,7 +479,7 @@ function rateColors(raster){
   return raster.zeroZone?[all[0],...pick(nz-1)]:pick(nz);}
 function rateZoneNames(raster){
   const nz=raster.nz||NZONES,n=raster.zeroZone?nz-1:nz;
-  const pos={1:['One rate'],2:['Lower','Higher'],3:['Low','Medium','High'],4:['Low','Medium','High','Highest']}[n]||['Low','Medium','High','Higher','Highest'];
+  const pos={1:['One rate'],2:['Low','High'],3:['Low','Medium','High'],4:['Low','Medium','High','Highest']}[n]||['Low','Medium','High','Higher','Highest'];
   if(!(raster.vmax>0))return['None needed'];
   return raster.zeroZone?['None needed',...pos]:pos;}
 let lastVR=null;   // the rate raster last drawn, for the legend
@@ -615,12 +615,16 @@ function genRaster(fieldName,nut,setIdx,isRate,rateFn,breaks){
   let NZ=breaks?breaks.length+1:NZONES,bands=null;
   if(rateMap){
     const minBand=(rateFn&&rateFn.minBand)||0;
+    // Two zones when that is what was asked for, but never more than the
+    // spread has room for: cutting a field whose rates run four pounds
+    // apart into a "high" and a "low" is two colours of noise.
+    const cap=n=>rxZones==='hilo'?Math.min(2,n):n;
     if(zeroZone){
-      const nPos=minBand?Math.max(1,Math.min(NZONES-1,Math.floor(vmax/minBand))):NZONES-1;
+      const nPos=cap(minBand?Math.max(1,Math.min(NZONES-1,Math.floor(vmax/minBand))):NZONES-1);
       NZ=1+nPos;bands=[null,[0,0]];
       for(let k=0;k<nPos;k++)bands.push([vmax*k/nPos,vmax*(k+1)/nPos]);
     }else{
-      const n=minBand?Math.max(1,Math.min(NZONES,Math.floor(range/minBand))):NZONES;
+      const n=cap(minBand?Math.max(1,Math.min(NZONES,Math.floor(range/minBand))):NZONES);
       NZ=n;bands=[null];
       for(let k=0;k<n;k++)bands.push([vmin+range*k/n,vmin+range*(k+1)/n]);
     }
@@ -690,13 +694,28 @@ function genRaster(fieldName,nut,setIdx,isRate,rateFn,breaks){
   // A 2.5-acre grid sample stands for about 2.5 acres, which is roughly
   // 4 cells at this resolution, so a 4-cell patch is a real reading rather
   // than speckle. Eight threw away ground the lab had actually measured.
-  const minArea=rateMap?4:0;   // 0: keep every patch on a nutrient map
+  // A patch of one rate smaller than this is absorbed into whatever
+  // surrounds it. Four cells was about a quarter of an acre: real on the
+  // map, useless behind a spreader, which cannot turn a rate on and off
+  // over a strip narrower than its own boom. Two acres is a patch an
+  // operator can actually treat. (0 on a nutrient map: that one is a
+  // picture of the soil, not an instruction, so nothing is smoothed away.)
+  const MIN_ZONE_ACRES=2;
+  const minArea=rateMap?Math.max(4,Math.round(MIN_ZONE_ACRES/cellAcres({ymin:gymin,sny,sRES}))):0;
+  // Measured on ground INSIDE the field, not on the padded raster. A patch
+  // that is two acres across the grid but clips to a tenth of an acre
+  // inside the boundary used to survive and ship as a polygon nobody can
+  // spread; the field edge is exactly where those slivers come from.
+  const inFld=rateMap?new Uint8Array(snx*sny):null;
+  if(rateMap)for(let iy=0;iy<sny;iy++){const py=gymin+(iy+0.5)*sRES;
+    for(let ix=0;ix<snx;ix++)if(inField(gxmin+(ix+0.5)*sRES,py,fr))inFld[iy*snx+ix]=1;}
   for(let i=0;i<snx*sny;i++){
     if(!mask[i]||visited[i]||!zoneGrid[i])continue;
     // BFS flood fill
     const z=zoneGrid[i];
     const region=[i];
     const queue=[i];
+    let inCount=inFld?inFld[i]:1;
     visited[i]=1;
     const neighborZones=new Uint8Array(NZ+1);
     while(queue.length){
@@ -707,12 +726,12 @@ function genRaster(fieldName,nut,setIdx,isRate,rateFn,breaks){
         if(ny2<0||ny2>=sny||nx2<0||nx2>=snx)continue;
         const ni=ny2*snx+nx2;
         if(!mask[ni])continue;
-        if(zoneGrid[ni]===z&&!visited[ni]){visited[ni]=1;region.push(ni);queue.push(ni);}
+        if(zoneGrid[ni]===z&&!visited[ni]){visited[ni]=1;region.push(ni);queue.push(ni);if(inFld)inCount+=inFld[ni];}
         else if(zoneGrid[ni]!==z&&zoneGrid[ni]>0){neighborZones[zoneGrid[ni]]++;}
       }
     }
     // If region is too small, absorb into most common neighbor
-    if(region.length<minArea){
+    if((inFld?inCount:region.length)<minArea){
       let bestZ=z,bestN=0;
       for(let zz=1;zz<=NZ;zz++){if(neighborZones[zz]>bestN){bestN=neighborZones[zz];bestZ=zz;}}
       region.forEach(ci=>{zoneGrid[ci]=bestZ;});
@@ -804,6 +823,11 @@ let rxBasis='removal';
 // survey rating (CSR2 and NCCPI, as on the map menu), or both averaged.
 // Where the chosen source has nothing for a spot, the goal stands as is.
 let rxVary='both';
+// How many rate zones a prescription is cut into. 'hilo' is two, a high
+// rate and a low one, which is what most spreaders and most operators
+// actually want; 'auto' gives as many as the spread has room for, up to
+// five. Ground that needs nothing keeps its own zone either way.
+let rxZones='hilo';
 let panelTab='zones',histNut='p',showModal=null,canvasOverlay=null;
 
 function render(){
@@ -1569,6 +1593,9 @@ function rVR(){
         <button class="preset-btn ${rxVary==='yield'?'act':''}" title="Removal follows the yield maps" onclick="rxVary='yield';rP();showVRInterp()">Yield maps</button>
         <button class="preset-btn ${rxVary==='rating'?'act':''}" title="Removal follows the soil survey rating (CSR2 and NCCPI), the same one the map menu shows" onclick="rxVary='rating';rP();showVRInterp()">Soil rating</button>
         <button class="preset-btn ${rxVary==='both'?'act':''}" title="The two averaged" onclick="rxVary='both';rP();showVRInterp()">Both</button></div></div>
+      <div class="rxr"><label>Rate zones</label><div class="presets" style="margin:0">
+        <button class="preset-btn ${rxZones==='hilo'?'act':''}" title="Two zones: a high rate and a low one" onclick="rxZones='hilo';rP();showVRInterp()">High and low</button>
+        <button class="preset-btn ${rxZones==='auto'?'act':''}" title="As many zones as the spread has room for, up to five" onclick="rxZones='auto';rP();showVRInterp()">As many as fit</button></div></div>
       ${rxVary!=='yield'&&svRatingAvg(sel)==null?'<div class="dn" style="margin:0 0 6px 86px">No soil survey rating under this field, so the goal stands flat.</div>':''}
       ${rxVary!=='rating'&&!ym.length?'<div class="dn" style="margin:0 0 6px 86px">No yield maps on this field'+(rxVary==='both'?', so only the soil rating varies it':'; pick Soil rating to vary the removal by the ground')+'.</div>':''}`:''}
       ${((rxNut==='p'||rxNut==='k')&&rxBasis!=='isu')?'':(targetControls[rxNut]||'')}
@@ -2031,7 +2058,7 @@ function exportZones(f,rateFn,nut,crop,yg){
     recs.forEach(r=>{if(!byZone[r.id])byZone[r.id]=Object.assign({},r,{parts:[]});byZone[r.id].parts.push(...r.parts);});
   });
   const prod=productFor(nut),zac=zoneAcres(raster,f);
-  const records=Object.values(byZone).sort((a,b)=>a.id-b.id);
+  let records=Object.values(byZone).sort((a,b)=>a.id-b.id);
   // The rate a zone is written at is the mean of the rates actually
   // computed inside it, over the whole field, not the middle of its band.
   // The bands are equal slices of [min,max], but the recommendation is not
@@ -2044,6 +2071,14 @@ function exportZones(f,rateFn,nut,crop,yg){
   // nothing here" into a few pounds an acre across most of the field.
   const zs=zoneStats(raster,f);
   records.forEach(r=>{const o=zs[r.id];if(o&&o.n){r.rate=o.mean;r.rate_lo=Math.round(o.lo);r.rate_hi=Math.round(o.hi);}});
+  // Where three zones meet at one cell corner the vectoriser can close a
+  // four-point ring around nothing: half a square metre, invisible on the
+  // map, and a polygon the spreader's controller still has to swallow.
+  const trimmed=records.map(r=>Object.assign({},r,{parts:r.parts.filter(p=>ringAcres(p)>=MIN_RING_ACRES)}))
+    .filter(r=>r.parts.length);
+  // Unless that would leave nothing: a field of small parts still needs
+  // its prescription.
+  if(trimmed.length)records=trimmed;
   records.forEach(r=>{r.parts=orientParts(r.parts);
     r.nutrient=NUTRIENT_NAME[nut];r.nut_rate=r.rate;r.nut_lo=r.rate_lo;r.nut_hi=r.rate_hi;
     r.product=prod.name;r.analysis=Math.round(prod.pct*100);
@@ -2079,6 +2114,15 @@ function maskToRing(raster,ring){
   return Object.assign({},raster,{mask});
 }
 function ringArea(r){let a=0;for(let i=0;i<r.length-1;i++)a+=r[i][0]*r[i+1][1]-r[i+1][0]*r[i][1];return a/2;}
+// A ring's acres, from its degrees of latitude and longitude.
+function ringAcres(r){if(!r||r.length<4)return 0;const lat=r[0][1];
+  return Math.abs(ringArea(r))*111320*111320*Math.cos(lat*Math.PI/180)/4046.8564;}
+// A polygon smaller than this is not ground anyone can treat: it is where
+// a zone brushes the field edge and gets cut into crumbs. Across the farm
+// 156 of 1,478 polygons fall under it and they hold 30 acres of 47,000,
+// six hundredths of one percent - ground the boom covers from the pass
+// next to it anyway. Dropping them keeps the order readable.
+const MIN_RING_ACRES=0.5;
 // Shapefile rule: outer rings clockwise, holes counter-clockwise. A ring is
 // a hole when it sits inside an odd number of the record's other rings
 // (three probe vertices vote, since clipped rings share edge points).
