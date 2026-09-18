@@ -1799,6 +1799,46 @@ function yieldPlan(f){
   return{rating,ground,season,fs,fertLoss,fertApplied,plantAdj,hailExp,expected,pGoal,rm,rmInfo,doy,doyField,need,avail,wx:nm,
     fieldBest:best.length?Math.max(...best):null,fieldAvg:getFieldYield(f,'corn'),lt};
 }
+// Numbers that are not this farm's: what the county makes, what Iowa has
+// made, what the weather and ground here allow with nothing else limiting
+// (ISU and Nebraska's Hybrid-Maize sites), and what contest growers have
+// pulled off. The farm's own record is a record of the farm's own
+// management - the fields get fertilizer every year - so it says what has
+// happened, not what the ground could do. These say what the ground could do.
+const BN=(typeof BENCH!=='undefined'&&BENCH&&BENCH.county)?BENCH:null;
+function fieldCentre(f){const fr=fieldRings(f);const pts=fr.ext.flat();if(!pts.length)return null;
+  return{lon:pts.reduce((s,c)=>s+c[0],0)/pts.length,lat:pts.reduce((s,c)=>s+c[1],0)/pts.length};}
+function nearestYpSite(f){if(!BN)return null;const c=fieldCentre(f);if(!c)return null;
+  let best=null,bd=Infinity;for(const st of BN.yield_potential_sites){const d=Math.hypot((st.lat-c.lat)*111,(st.lon-c.lon)*111*Math.cos(c.lat*Math.PI/180));if(d<bd){bd=d;best=Object.assign({km:d},st);}}
+  return best;}
+function fieldCounty(f){const nm=String((FPROP[f]||{}).farm||'');if(!BN||/,\s*MO$/i.test(nm))return null;return BN.county[nm]?Object.assign({name:nm},BN.county[nm]):null;}
+function rBenchmarks(pl){
+  if(!BN)return'';
+  const bu=v=>Math.round(v),g=plGoal;
+  // A yield-potential site only speaks for ground within about 120 km of
+  // it; a Missouri field is not Ames, whatever the arithmetic says.
+  const cty=fieldCounty(sel),yp0=nearestYpSite(sel),yp=yp0&&yp0.km<=120?yp0:null;
+  const contest=BN.contest_2023_iowa_nonirrigated||[],cTop=contest.length?Math.max(...contest.map(c=>c.yield)):null,cLow=contest.length?Math.min(...contest.map(c=>c.yield)):null;
+  const rows=[];
+  if(pl.fieldAvg||pl.fieldBest)rows.push(['This field',pl.fieldAvg?`${pl.fieldAvg} recent average`:'',pl.fieldBest?`${bu(pl.fieldBest)} best year`:'',pl.fieldBest||pl.fieldAvg,'your combine']);
+  if(cty)rows.push([`${cty.name} County`,`${cty.corn_10yr} ten-year average`,`${cty.corn_high} best (${cty.corn_high_year})`,cty.corn_high,'USDA RMA']);
+  rows.push(['Iowa, whole state',`${BN.state_record.corn} record average (${BN.state_record.year})`,'',BN.state_record.corn,'USDA NASS']);
+  if(yp)rows.push([`Yield potential, ${yp.site}`,`${yp.yp_avg} in an average season`,`${yp.forecast_2025[0]}-${yp.forecast_2025[1]} forecast for 2025`,yp.forecast_2025[1],'ISU / Nebraska Hybrid-Maize']);
+  else if(yp0)rows.push(['Yield potential',`no modelled site near this field; the nearest, ${yp0.site}, is ${bu(yp0.km)} km away and speaks for Iowa ground`,'',Infinity,'ISU / Nebraska Hybrid-Maize']);
+  if(cTop)rows.push(['Iowa contest, no irrigation',`${bu(cLow)}-${bu(cTop)} state winners (2023)`,'',cTop,'NCGA']);
+  let verdict;
+  if(yp&&g<=yp.yp_avg)verdict=`<b>${g} is inside what the weather and ground here allow</b> in an average season (${yp.yp_avg} at ${yp.site}${yp.km<80?`, ${bu(yp.km)} km away`:''}). Getting there is a management question: stand, nutrients, timing, disease, and no hail.`;
+  else if(yp&&g<=yp.forecast_2025[1])verdict=`<b>${g} is above the average-season potential here (${yp.yp_avg})</b> but inside what a top season allows (${yp.forecast_2025[1]} forecast in 2025). It takes the season and the management both.`;
+  else if(cTop&&g<=cTop)verdict=yp
+    ?`<b>${g} is above what the weather here allows in any ordinary season</b> (${yp.yp_avg} average, ${yp.forecast_2025[1]} in a top year at ${yp.site}). Iowa growers have reached it without irrigation, ${bu(cLow)}-${bu(cTop)} in the 2023 contest, on their best ground with everything pushed.`
+    :`<b>${g} is well above this field's record</b> and there is no modelled yield potential for ground here to set it against. Iowa growers have reached it without irrigation, ${bu(cLow)}-${bu(cTop)} in the 2023 contest, on their best ground with everything pushed.`;
+  else verdict=`<b>${g} is above anything Iowa has recorded without irrigation</b> (${bu(cTop)} in the 2023 contest).`;
+  return `<div class="fc" style="padding:8px;margin-top:8px">
+    <div class="lb" style="margin-bottom:3px">Outside your fields <span class="source-tag">public numbers</span></div>
+    ${rows.map(([nm,a,b,v,src])=>`<div class="vr-zone" style="flex-wrap:wrap"><span class="vr-range" style="flex:1"><b>${nm}</b> <span style="color:var(--tx2)">${[a,b].filter(Boolean).join(' · ')} <span class="source-tag">${src}</span></span></span><span class="vr-rate" style="color:${g<=v?'var(--ac)':'var(--dn)'}">${v===Infinity?'':g<=v?'reaches '+g:bu(g-v)+' short'}</span></div>`).join('')}
+    <div class="dn" style="margin-top:6px;margin-bottom:0">${verdict} Yield potential is the Hybrid-Maize model's figure for this ground and weather with nutrients, pests and stand not limiting; your own record is what happened under your management, fertilizer every year included, so it says less about the ceiling than these do.</div>
+  </div>`;
+}
 function rPlan(){
   if(!YM)return'<div class="dn">No corn yield model: run dev/jd_rx_weather.py and rebuild.</div>';
   const pl=yieldPlan(sel);if(!pl)return'<div class="dn">No soil rating under this field, so nothing to plan from.</div>';
@@ -1820,7 +1860,7 @@ function rPlan(){
   }
   const yrs=YM.years.map(String);
   return `<h2><div class="ic">🌽</div>Yield plan <span class="source-tag">your records</span></h2>
-    <div class="dn">Built on <b>${YM.n} corn harvests</b> across ${YM.fields} of your fields, ${YM.years[0]}-${YM.years[YM.years.length-1]}: yield runs <b>${YM.b.toFixed(2)} bu per point of soil rating</b>, plus a season swing. Each piece below is a number you can argue with.</div>
+    <div class="dn">Two answers. <b>Your record</b>: ${YM.n} corn harvests across ${YM.fields} of your fields, ${YM.years[0]}-${YM.years[YM.years.length-1]}, where yield runs <b>${YM.b.toFixed(2)} bu per point of soil rating</b> plus a season swing. That is what has happened under your management, not what the ground can do. <b>The outside numbers</b> at the bottom are the ceiling. Each piece is a number you can argue with.</div>
     <div class="fc" style="padding:8px">
       <div class="rxr"><label>Goal</label><input type="number" value="${plGoal}" min="50" max="400" step="5" onchange="plGoal=+this.value;rP()"/><span style="font-size:8px;color:var(--tx2)">bu/ac corn</span></div>
       <div class="rxr"><label>Hybrid</label><input type="number" value="${pl.rm}" min="85" max="120" onchange="plRM=+this.value;rP()"/><span style="font-size:8px;color:var(--tx2)">day RM${pl.rmInfo?` · last planted ${pl.rmInfo.names.slice(0,2).join(', ')} (${pl.rmInfo.year})`:' · farm median'}</span></div>
@@ -1840,7 +1880,7 @@ function rPlan(){
       <div style="display:flex;gap:8px;margin-bottom:6px">
         <div style="flex:1"><div class="lb">Expected</div><div class="vl" style="color:${pl.expected>=plGoal?'var(--ac)':'var(--tx)'}">${bu(pl.expected)} bu</div></div>
         <div style="flex:1"><div class="lb">Likely range</div><div class="vl">${bu(pl.expected-YM.rmse)}-${bu(pl.expected+YM.rmse)}</div></div>
-        <div style="flex:1"><div class="lb">Odds of ${plGoal}</div><div class="vl" style="color:${pl.pGoal>=0.5?'var(--ac)':pl.pGoal>=0.15?'var(--wr)':'var(--dn)'}">${pl.pGoal<0.005?'under 1%':pl.pGoal>0.995?'over 99%':Math.round(pl.pGoal*100)+'%'}</div></div>
+        <div style="flex:1"><div class="lb">Odds of ${plGoal}, farmed as you have</div><div class="vl" style="color:${pl.pGoal>=0.5?'var(--ac)':pl.pGoal>=0.15?'var(--wr)':'var(--dn)'}">${pl.pGoal<0.005?'under 1%':pl.pGoal>0.995?'over 99%':Math.round(pl.pGoal*100)+'%'}</div></div>
       </div>
       <div class="lb" style="margin-bottom:3px">How it adds up</div>
       ${[
@@ -1856,6 +1896,7 @@ function rPlan(){
         :`<b>${plGoal} is ${bu(gap)} bu above the expectation.</b> Your best season on record adds ${sg(Math.max(...Object.values(YM.season)))} bu, and the model is off by ${bu(YM.rmse)} bu on a typical field-year, so ${plGoal} here is ${pl.pGoal<0.05?'a long shot':pl.pGoal<0.25?'possible in a very good year':'a fair bet in a good year'}.${pl.fieldBest?` This field's best corn year was <b>${bu(pl.fieldBest)}</b>${pl.fieldAvg?`, its recent average ${pl.fieldAvg}`:''}.`:''} Longer hybrids ran ${YM.rm_coef.toFixed(2)} bu per maturity day on your records, so maturity is not the lever.`}</div>
     </div>
 
+    ${rBenchmarks(pl)}
     <div class="fc" style="padding:8px;margin-top:8px">
       <div class="lb" style="margin-bottom:3px">Fertilizer for a ${plGoal} bu crop here <span class="source-tag">on top of the soil</span></div>
       ${!lt?'<div class="dn" style="margin:0">No soil test on this field.</div>':rows.map(r=>{
