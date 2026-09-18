@@ -562,6 +562,27 @@ function genRaster(fieldName,nut,setIdx,isRate,rateFn,breaks){
   if(!vpts.length)return null;
   const vals=vpts.map(p=>p._v),vmin=Math.min(...vals),vmax=Math.max(...vals);
 
+  // How far a sample is allowed to speak for. The lab's grid does not
+  // always cover the whole boundary: one field carries 62 samples on a
+  // 2.5-acre spacing, about 155 acres of them, inside a 446-acre
+  // boundary, and every unsampled acre used to take the rate of whichever
+  // edge sample was nearest, so two samples spoke for 300 acres. Ground
+  // further than one and a half grid spacings from any sample is now
+  // left blank: no colour, no zone, no rate, and the panel says how much.
+  const allPts=pts.filter(q=>q.x!=null&&q.y!=null);
+  const nnd=[];
+  for(let i=0;i<allPts.length;i++){let best=Infinity;const a=allPts[i];
+    for(let j=0;j<allPts.length;j++){if(i===j)continue;const b=allPts[j];const dx=(a.x-b.x)*cosLat,dy=a.y-b.y,d=dx*dx+dy*dy;if(d>0&&d<best)best=d;}
+    if(best<Infinity)nnd.push(Math.sqrt(best));}
+  nnd.sort((a,b)=>a-b);
+  let spacing=nnd.length?nnd[nnd.length>>1]:0;
+  // duplicated coordinates give a spacing of nothing; fall back to what an
+  // even grid of this many points over this box would be
+  if(!(spacing>1e-5))spacing=Math.sqrt(((xmax-xmin)*cosLat*(ymax-ymin))/Math.max(1,allPts.length));
+  const reach=1.5*spacing;
+  const nearestDist=(px,py)=>{let best=Infinity;for(const q of allPts){const dx=(q.x-px)*cosLat,dy=q.y-py,d=dx*dx+dy*dy;if(d<best)best=d;}return Math.sqrt(best);};
+  let unsampledCells=0;
+
   // 1. IDW interpolation, over the field and no further.
   //
   // idw() only returns null when there are no sample points at all, so a
@@ -590,6 +611,7 @@ function genRaster(fieldName,nut,setIdx,isRate,rateFn,breaks){
     for(let ix=0;ix<snx;ix++){
       const px=gxmin+(ix+0.5)*sRES,idx=iy*snx+ix;
       if(!touches(px,py))continue;
+      if(nearestDist(px,py)>reach){if(inField(px,py,fr))unsampledCells++;continue;}
       const v=cellRate?cellRate(px,py):idw(px,py,vpts,'_v',IDW_POWER,cosLat);
       if(v!=null){mask[idx]=1;grid[idx]=v;}
     }
@@ -770,7 +792,9 @@ function genRaster(fieldName,nut,setIdx,isRate,rateFn,breaks){
     }
   }
 
-  return{grid,zoneGrid,mask,snx,sny,xmin:gxmin,ymin:gymin,sRES,vmin,vmax,zeroZone,nz:NZ,bands,blocks:usedBlocks};
+  const cellAc=cellAcres({ymin:gymin,sny,sRES});
+  return{grid,zoneGrid,mask,snx,sny,xmin:gxmin,ymin:gymin,sRES,vmin,vmax,zeroZone,nz:NZ,bands,blocks:usedBlocks,
+    unsampledAc:unsampledCells*cellAc,reachM:reach*111320,spacingM:spacing*111320};
 }
 
 function rasterToCanvas(raster,nut,isRate){
@@ -1308,6 +1332,12 @@ function rGapNeeds(set,ac){
     <div class="dn" style="margin-top:4px;margin-bottom:0">The top of the score for P, K, sulfur and zinc is above the ISU optimum, so this is more than the ISU rate; it is what it takes to make the score read 100, not a recommendation. Pick the product on the VR Rx tab.</div>
   </div>`;
 }
+// Ground the samples do not reach, for the panels.
+function unsampledNote(raster){
+  if(!raster||!(raster.unsampledAc>0.5))return'';
+  const ac=(FPROP[sel]||{}).acres||0;
+  return `<div class="dn" style="border-left:3px solid var(--wr)"><b>${raster.unsampledAc.toFixed(0)} of ${ac.toFixed(0)} acres have no sample within reach</b> (grid spacing about ${Math.round(raster.spacingM)} m; a sample speaks for ${Math.round(raster.reachM)} m). That ground is left blank: no colour, no zone, no rate in the file. Sample it, or set it by hand.</div>`;
+}
 function rZones(){
   if(hNut==='yield')return rYieldPanel();
   if(hNut==='fert')return rFert();
@@ -1350,6 +1380,7 @@ function rZones(){
         <div style="flex:1"><div class="lb">Max</div><div class="vl">${mx.toFixed(1)}</div></div>
         <div style="flex:1"><div class="lb">Std Dev</div><div class="vl">${std.toFixed(1)}</div></div>
       </div>
+      ${unsampledNote(raster)}
       <div class="lb" style="margin-bottom:3px">Acres by band (${t.u}) <span class="source-tag">lab's bands</span></div>
       ${cNut.map((c,i)=>{
         const ac=zac?zac[i+1]:0;if(ac<0.5)return'';
@@ -1654,6 +1685,7 @@ function rVR(){
         <div style="flex:1"><div class="lb">Total product</div><div class="vl">${(prodLb/2000).toFixed(1)} tons</div></div>
         <div style="flex:1"><div class="lb">Acres</div><div class="vl" style="color:var(--tx2)">${acTot.toFixed(0)}</div></div>
       </div>
+      ${unsampledNote(raster)}
       ${nothingNeeded(zoneBreak)}
       <div class="lb" style="margin-bottom:3px">Rate Zones: ${NUTRIENT_NAME[rxNut]} → ${prod.name} (${(rxNut==='p'||rxNut==='k')&&rxBasis==='removal'?'follows the yield maps and soil rating':isComposite(sel)?'zones follow the yield map':'low = soil adequate, high = building'})</div>
       ${zoneBreak.map(z=>`<div class="vr-zone"><div class="vr-color" style="background:${z.color}"></div>
