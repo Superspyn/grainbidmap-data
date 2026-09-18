@@ -505,6 +505,25 @@ const ZONE_COLORS_RATE=[
   [40,95,200],[50,185,60],[230,175,30],[230,105,25],[210,40,40]
 ];
 
+// Sample points snapped to the rows and columns of the grid they were
+// taken on. Columns are found by sorting the x's and breaking wherever
+// the gap is more than 0.45 of the typical spacing, rows the same on y;
+// each point moves to the centre of its column and row. If that does not
+// look like a lattice (too few or too many cells for the point count),
+// the points are returned untouched.
+function snapToLattice(pts,cosLat){
+  const P=pts.map(p=>[p.x,p.y]);const n=P.length;if(n<4)return P;
+  const nnd=[];for(let i=0;i<n;i++){let b=Infinity;for(let j=0;j<n;j++){if(i===j)continue;const dx=(P[i][0]-P[j][0])*cosLat,dy=P[i][1]-P[j][1],d=dx*dx+dy*dy;if(d>0&&d<b)b=d;}if(b<Infinity)nnd.push(Math.sqrt(b));}
+  nnd.sort((a,b)=>a-b);const sp=nnd.length?nnd[nnd.length>>1]:0;if(!(sp>1e-5))return P;
+  const cluster=(vals,gap)=>{const idx=vals.map((v,i)=>i).sort((a,b)=>vals[a]-vals[b]);const centre=new Array(vals.length);let grp=[];
+    const flush=()=>{const m=grp.reduce((s,i)=>s+vals[i],0)/grp.length;for(const i of grp)centre[i]=m;grp=[];};
+    for(let k=0;k<idx.length;k++){if(grp.length&&vals[idx[k]]-vals[idx[k-1]]>gap)flush();grp.push(idx[k]);}
+    if(grp.length)flush();return centre;};
+  const cx=cluster(P.map(q=>q[0]),0.45*sp/cosLat),cy=cluster(P.map(q=>q[1]),0.45*sp);
+  const ncx=new Set(cx).size,ncy=new Set(cy).size;
+  if(ncx<2||ncy<2||ncx*ncy<n*0.5||ncx*ncy>n*4)return P;
+  return P.map((q,i)=>[cx[i],cy[i]]);
+}
 function genRaster(fieldName,nut,setIdx,isRate,rateFn,breaks){
   const fp=FP[fieldName];if(!fp||!fp.sets.length)return null;
   const fr=fieldRings(fieldName);if(!fr.ext.length)return null;
@@ -551,7 +570,15 @@ function genRaster(fieldName,nut,setIdx,isRate,rateFn,breaks){
     // reading exactly what its own sample said.
     if(rxShape==='blocks'&&rateFn!==fertScore&&!rateFn.continuous&&vpts.length){
       usedBlocks=true;
-      const rated=pts.map(pt=>{const r=rateFn(pt,pt.x,pt.y);return r!=null?{x:pt.x,y:pt.y,_v:r}:null;}).filter(Boolean);
+      // The pins are snapped to their grid rows and columns first. The
+      // lab's sampler wanders a few metres off the true grid at every stop,
+      // and the line between two pins wanders with it, so the blocks came
+      // out ragged and uneven. Snapped, every pin gets an identical square.
+      // The rate is still computed at the pin's true position; only the
+      // block it owns is squared up. A set that is not on a grid at all is
+      // left where it lies.
+      const snap=snapToLattice(pts,cosLat);
+      const rated=pts.map((pt,i)=>{const r=rateFn(pt,pt.x,pt.y);return r!=null?{x:snap[i][0],y:snap[i][1],_v:r}:null;}).filter(Boolean);
       cellRate=(px,py)=>{let best=null,bd=Infinity;
         for(const q of rated){const dx=(q.x-px)*cosLat,dy=q.y-py,d=dx*dx+dy*dy;if(d<bd){bd=d;best=q;}}
         return best?best._v:null;};
