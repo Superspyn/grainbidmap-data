@@ -1843,70 +1843,66 @@ function rPlan(){
   if(!YM)return'<div class="dn">No corn yield model: run dev/jd_rx_weather.py and rebuild.</div>';
   const pl=yieldPlan(sel);if(!pl)return'<div class="dn">No soil rating under this field, so nothing to plan from.</div>';
   const lt=pl.lt,ac=(FPROP[sel]||{}).acres||0,pc=prevCrop(sel);
-  const bu=v=>Math.round(v),sg=v=>(v>=0?'+':'')+Math.round(v);
-  const col=v=>v>=0?'var(--ac)':'var(--dn)';
-  const gap=plGoal-pl.expected;
-  // what it takes to grow the goal, on top of what the soil holds
+  const bu=v=>Math.round(v);
   const prods=k=>PRODUCTS[k][rxProd[k]||0];
+  // Two published answers per nutrient, side by side. Neither looks at a
+  // yield monitor: one is Iowa State's soil-test guide, the other is what
+  // the crop at the goal hauls off, on Iowa State's per-bushel table.
   const rows=[];
   if(lt){
-    const n=calcNRate(lt.om,plGoal,pc);rows.push({nm:'Nitrogen',lb:n,unit:'lb N',note:pc==='soybean'?'after soybeans (45 lb credit)':'after corn',prod:null});
-    const pr=calcPRate(lt.p,plGoal,'corn',rxTargetP),kr=calcKRate(lt.k,plGoal,'corn',rxTargetK);
-    if(pr!=null)rows.push({nm:'Phosphate',lb:pr,unit:'lb P2O5',note:`soil ${lt.p} ppm, ${pr?'':'the bank covers it'}`.trim().replace(/,\s*$/,''),prod:prods('p')});
-    if(kr!=null)rows.push({nm:'Potash',lb:kr,unit:'lb K2O',note:`soil ${lt.k} ppm${kr?'':', the bank covers it'}`,prod:prods('k')});
-    const lr=calcLimeRate(lt.ph,lt.bph,rxTargetPH);rows.push({nm:'Lime',lb:lr,unit:'lb',note:`pH ${lt.ph}`,prod:prods('ph')});
-    const sr=calcSRate(lt.s,rxTargetS);if(sr!=null)rows.push({nm:'Sulfur',lb:sr,unit:'lb S',note:`soil ${lt.s} ppm`,prod:prods('s')});
-    const zr=calcZnRate(lt.zn,rxTargetZn);if(zr!=null)rows.push({nm:'Zinc',lb:zr,unit:'lb Zn',note:`soil ${lt.zn} ppm`,prod:prods('zn')});
+    const n=calcNRate(lt.om,plGoal,pc);
+    rows.push({nm:'Nitrogen',unit:'lb N',isu:pc==='soybean'?'140-190':'190-240',rem:n,prod:null,
+      note:`${(plGoal*1.1).toFixed(0)} lb at 1.1 lb per bushel${pc==='soybean'?', less the 45 lb soybean credit':''}${lt.om>4?`, less ${bu((lt.om-4)*15)} lb for ${lt.om}% organic matter`:''}. ISU's own N guide (MRTN) does not use a yield goal at all; it prices N against corn and lands at 140-190 lb after soybeans, 190-240 after corn.`});
+    for(const[k,nm,per]of[['p','Phosphate',removalPerBu('p','corn')],['k','Potash',removalPerBu('k','corn')]]){
+      const soil=lt[k];if(soil==null)continue;
+      const tgt=k==='p'?rxTargetP:rxTargetK,isu=k==='p'?calcPRate(soil,plGoal,'corn',tgt):calcKRate(soil,plGoal,'corn',tgt);
+      const rem=Math.round(plGoal*per),bank=(soil-tgt)*PER_PPM[k];
+      const cat=gSL(gSt(k,soil));
+      rows.push({nm,unit:k==='p'?'lb P2O5':'lb K2O',isu,rem,prod:prods(k),
+        note:`Soil tests <b>${soil} ppm</b>, ${cat} on ISU's 2023 scale. A ${plGoal} bu crop removes ${rem} lb (${per.toFixed(2)} lb a bushel). ${bank>0
+          ?`ISU says nothing is needed above ${tgt} ppm: the ${bu(bank)} lb bank above it covers ${bank/rem>=20?'20+':(bank/rem).toFixed(bank/rem<2?1:0)} years of that removal at ${PER_PPM[k]} lb per ppm.`
+          :`Under the ${tgt} ppm to hold, so ISU adds build-up on top of removal: ${bu(-bank)} lb to get there, spread over four years (${bu(-bank/BUILD_YEARS)} a year).`}`});
+    }
+    const lr=calcLimeRate(lt.ph,lt.bph,rxTargetPH);rows.push({nm:'Lime',unit:'lb',isu:lr,rem:lr,prod:prods('ph'),note:`pH ${lt.ph}${lt.ph>=rxTargetPH?', at or above the target; no lime.':', under the target.'}`});
+    const sr=calcSRate(lt.s,rxTargetS);if(sr!=null)rows.push({nm:'Sulfur',unit:'lb S',isu:sr,rem:sr,prod:prods('s'),note:`Soil ${lt.s} ppm against ${rxTargetS}.${sr?'':' ISU: a response is unlikely above 10 ppm.'}`});
+    const zr=calcZnRate(lt.zn,rxTargetZn);if(zr!=null)rows.push({nm:'Zinc',unit:'lb Zn',isu:zr,rem:zr,prod:prods('zn'),note:`Soil ${lt.zn} ppm against ${rxTargetZn}.${zr?'':' ISU: corn does not answer to zinc above about 1 ppm, whatever the goal.'}`});
   }
-  const yrs=YM.years.map(String);
-  return `<h2><div class="ic">🌽</div>Yield plan <span class="source-tag">your records</span></h2>
-    <div class="dn">Two answers. <b>Your record</b>: ${YM.n} corn harvests across ${YM.fields} of your fields, ${YM.years[0]}-${YM.years[YM.years.length-1]}, where yield runs <b>${YM.b.toFixed(2)} bu per point of soil rating</b> plus a season swing. That is what has happened under your management, not what the ground can do. <b>The outside numbers</b> at the bottom are the ceiling. Each piece is a number you can argue with.</div>
+  const cell=v=>v==null?'<span style="color:var(--tx2)">&mdash;</span>':typeof v==='string'?v:v?`${bu(v)}`:'<span style="color:var(--ac)">none</span>';
+  const prodTxt=(r,v)=>!v||!r.prod?'':`<div style="font-size:8px;color:var(--tx2)">${bu(v/r.prod.pct)} lb/ac ${r.prod.name}${ac?` · ${(v/r.prod.pct*ac/2000).toFixed(1)} t`:''}</div>`;
+  const wx=pl.wx;
+  return `<h2><div class="ic">🌽</div>Yield plan <span class="source-tag">Iowa State numbers</span></h2>
+    <div class="dn">Everything here comes from published sources, not from this field's yield history: Iowa State's PM 1688 (2023) for the soil-test guide and the per-bushel removal, the Iowa NRCS guide for what a ppm is worth, and the Hybrid-Maize sites and contest results for what the ground can do. The record is at the bottom, for what it is worth.</div>
     <div class="fc" style="padding:8px">
-      <div class="rxr"><label>Goal</label><input type="number" value="${plGoal}" min="50" max="400" step="5" onchange="plGoal=+this.value;rP()"/><span style="font-size:8px;color:var(--tx2)">bu/ac corn</span></div>
+      <div class="rxr"><label>Goal</label><input type="number" value="${plGoal}" min="50" max="500" step="10" onchange="plGoal=+this.value;rP()"/><span style="font-size:8px;color:var(--tx2)">bu/ac corn</span></div>
       <div class="rxr"><label>Hybrid</label><input type="number" value="${pl.rm}" min="85" max="120" onchange="plRM=+this.value;rP()"/><span style="font-size:8px;color:var(--tx2)">day RM${pl.rmInfo?` · last planted ${pl.rmInfo.names.slice(0,2).join(', ')} (${pl.rmInfo.year})`:' · farm median'}</span></div>
       <div class="rxr"><label>Planting</label><input type="date" value="2027-${String(new Date(2001,0,pl.doy).getMonth()+1).padStart(2,'0')}-${String(new Date(2001,0,pl.doy).getDate()).padStart(2,'0')}" onchange="plPlant=doyOf(this.value);rP()"/><span style="font-size:8px;color:var(--tx2)">${pl.doyField?`this field usually ${doyDate(pl.doyField)}`:''}</span></div>
-      <div class="rxr"><label>Season</label><div class="presets" style="margin:0">
-        ${[['normal','Normal'],['best','Best on record'],['worst','Worst on record'],['year','A year'],['weather','By weather']].map(([v,l])=>`<button class="preset-btn ${plMode===v?'act':''}" onclick="plMode='${v}';rP()">${l}</button>`).join('')}</div></div>
-      ${plMode==='year'?`<div class="rxr"><label></label><select onchange="plYear=this.value;rP()">${yrs.map(y=>`<option value="${y}" ${String(plYear)===y?'selected':''}>${y}: ${sg(YM.season[y])} bu · GDD ${bu(YM.wx[y].gdd)} · fill rain ${YM.wx[y].rain_fill.toFixed(1)} in${YM.wx[y].heat_days>=1?` · ${bu(YM.wx[y].heat_days)} heat days`:''}</option>`).join('')}</select></div>`:''}
-      ${plMode==='weather'?`<div class="rxr"><label>Heat units</label><input type="number" value="${plGdd}" step="25" onchange="plGdd=+this.value;rP()"/><span style="font-size:8px;color:var(--tx2)">GDD May-Sep · normal here ${bu(pl.wx.gdd||0)}${pl.wx.gdd_sd?` ± ${bu(pl.wx.gdd_sd)}`:''}</span></div>
-      <div class="rxr"><label>Fill rain</label><input type="number" value="${plRain}" step="0.5" onchange="plRain=+this.value;rP()"/><span style="font-size:8px;color:var(--tx2)">inches Jul-Aug · normal ${(pl.wx.rain_fill||0).toFixed(1)}${pl.wx.rain_fill_sd?` ± ${pl.wx.rain_fill_sd.toFixed(1)}`:''}</span></div>`:''}
-      <div class="rxr"><label>Hail</label><input type="number" value="${plHail}" min="0" max="100" style="max-width:60px;flex:none" onchange="plHail=+this.value;rP()"/><span style="font-size:8px;color:var(--tx2)">% chance of a hit, losing</span><input type="number" value="${plHailLoss}" min="0" max="100" style="max-width:60px;flex:none" onchange="plHailLoss=+this.value;rP()"/><span style="font-size:8px;color:var(--tx2)">% of the crop · your call</span></div>
-      <div class="rxr"><label>Fertility</label><div class="presets" style="margin:0">
-        <button class="preset-btn ${plFert?'act':''}" onclick="plFert=true;rP()">Fertilized as below</button>
-        <button class="preset-btn ${!plFert?'act':''}" onclick="plFert=false;rP()">Left as it tests</button></div></div>
     </div>
 
     <div class="fc" style="padding:8px;margin-top:8px">
-      <div style="display:flex;gap:8px;margin-bottom:6px">
-        <div style="flex:1"><div class="lb">Expected</div><div class="vl" style="color:${pl.expected>=plGoal?'var(--ac)':'var(--tx)'}">${bu(pl.expected)} bu</div></div>
-        <div style="flex:1"><div class="lb">Likely range</div><div class="vl">${bu(pl.expected-YM.rmse)}-${bu(pl.expected+YM.rmse)}</div></div>
-        <div style="flex:1"><div class="lb">Odds of ${plGoal}, farmed as you have</div><div class="vl" style="color:${pl.pGoal>=0.5?'var(--ac)':pl.pGoal>=0.15?'var(--wr)':'var(--dn)'}">${pl.pGoal<0.005?'under 1%':pl.pGoal>0.995?'over 99%':Math.round(pl.pGoal*100)+'%'}</div></div>
+      <div class="lb" style="margin-bottom:4px">To grow ${plGoal} bu here, on top of what the ground has</div>
+      ${!lt?'<div class="dn" style="margin:0">No soil test on this field.</div>':`
+      <div style="display:grid;grid-template-columns:1fr 78px 78px;gap:2px 6px;font-size:10px;align-items:start">
+        <div></div><div class="lb" title="ISU PM 1688 (2023): build under the level to hold, nothing above it">ISU soil test</div><div class="lb" title="What the crop at the goal hauls off, ISU 2023 per-bushel table">Replace removal</div>
+        ${rows.map(r=>`<div style="padding:3px 0;border-top:1px solid var(--bd)"><b>${r.nm}</b> <span style="color:var(--tx2)">${r.unit}/ac</span><div style="font-size:9px;color:var(--tx2);line-height:1.35;margin-top:1px">${r.note}</div></div>
+          <div style="padding:3px 0;border-top:1px solid var(--bd);font-family:'JetBrains Mono',monospace;font-weight:600">${cell(r.isu)}${prodTxt(r,r.isu)}</div>
+          <div style="padding:3px 0;border-top:1px solid var(--bd);font-family:'JetBrains Mono',monospace;font-weight:600">${cell(r.rem)}${prodTxt(r,r.rem)}</div>`).join('')}
       </div>
-      <div class="lb" style="margin-bottom:3px">How it adds up</div>
-      ${[
-        ['The ground',pl.ground,`soil rating ${pl.rating.toFixed(0)} × ${YM.b.toFixed(2)} + ${bu(YM.a)}`],
-        ['The season',pl.season.eff,pl.season.why],
-        ['Fertility',-(pl.fertLoss-pl.fertApplied),pl.fs==null?'no soil test':plFert?`score ${pl.fs}/100; the ${bu(pl.fertLoss)} bu it would cost is bought back by the fertilizer below`:`score ${pl.fs}/100; up to a quarter of the crop on very low ground`],
-        ['Planting date',pl.plantAdj,`${doyDate(pl.doy)} against the usual ${doyDate(pl.doyField||YM.doy_median)}: ${YM.doy_coef.toFixed(2)} bu a day on your records`],
-        ['Hail',-pl.hailExp,`${plHail}% chance × ${plHailLoss}% loss, your assumption`],
-      ].map(([nm,v,why])=>`<div class="vr-zone" style="flex-wrap:wrap"><span class="vr-range" style="flex:1"><b>${nm}</b> <span style="color:var(--tx2)">${why}</span></span><span class="vr-rate" style="color:${col(v)}">${sg(v)} bu</span></div>`).join('')}
-      <div class="vr-zone" style="margin-top:2px"><span class="vr-range" style="flex:1"><b>Hybrid fit</b> <span style="color:var(--tx2)">a ${pl.rm}-day needs about ${bu(pl.need)} GDD; planted ${doyDate(pl.doy)} this spot averages ${bu(pl.avail)} to first frost (${pl.wx.frost||'?'})</span></span><span class="vr-rate" style="color:${pl.avail>=pl.need?'var(--ac)':'var(--dn)'}">${pl.avail>=pl.need?`${bu(pl.avail-pl.need)} to spare`:`${bu(pl.need-pl.avail)} short`}</span></div>
-      <div class="dn" style="margin-top:6px;margin-bottom:0">${gap<=0
-        ?`<b>${plGoal} is inside what this plan gives.</b> ${pl.fieldBest?`This field's best corn year was ${bu(pl.fieldBest)}.`:''}`
-        :`<b>${plGoal} is ${bu(gap)} bu above the expectation.</b> Your best season on record adds ${sg(Math.max(...Object.values(YM.season)))} bu, and the model is off by ${bu(YM.rmse)} bu on a typical field-year, so ${plGoal} here is ${pl.pGoal<0.05?'a long shot':pl.pGoal<0.25?'possible in a very good year':'a fair bet in a good year'}.${pl.fieldBest?` This field's best corn year was <b>${bu(pl.fieldBest)}</b>${pl.fieldAvg?`, its recent average ${pl.fieldAvg}`:''}.`:''} Longer hybrids ran ${YM.rm_coef.toFixed(2)} bu per maturity day on your records, so maturity is not the lever.`}</div>
+      <div class="dn" style="margin-top:6px;margin-bottom:0">Two answers because two schools of thought publish them. <b>ISU soil test</b> is Iowa State's: the test decides, and above the optimum no phosphate or potash pays at any goal. <b>Replace removal</b> is what the crop hauls off at the goal whatever the test says, which is how growers who want to hold a high test think. Neither is your yield history. No published source gives more than removal on ground that tests very high.</div>`}
+    </div>
+
+    <div class="fc" style="padding:8px;margin-top:8px">
+      <div class="lb" style="margin-bottom:3px">Does the season fit <span class="source-tag">NASA weather, 21 years</span></div>
+      <div class="vr-zone" style="flex-wrap:wrap"><span class="vr-range" style="flex:1"><b>Heat units</b> <span style="color:var(--tx2)">a ${pl.rm}-day hybrid needs about ${bu(pl.need)} GDD to black layer; planted ${doyDate(pl.doy)} this spot averages ${bu(pl.avail)} to first frost (${wx.frost||'?'})</span></span><span class="vr-rate" style="color:${pl.avail>=pl.need?'var(--ac)':'var(--dn)'}">${pl.avail>=pl.need?`${bu(pl.avail-pl.need)} to spare`:`${bu(pl.need-pl.avail)} short`}</span></div>
+      <div class="vr-zone" style="flex-wrap:wrap"><span class="vr-range" style="flex:1"><b>Rain</b> <span style="color:var(--tx2)">Apr-Sep averages ${(wx.rain||0).toFixed(1)} in here, ${(wx.rain_fill||0).toFixed(1)} of it in July-August; corn uses about 22 in over a season and a quarter inch a day through grain fill, the rest from what the soil stored</span></span><span class="vr-rate">${wx.rain_sd?`± ${wx.rain_sd.toFixed(1)}`:''}</span></div>
+      <div class="vr-zone" style="flex-wrap:wrap"><span class="vr-range" style="flex:1"><b>Heat stress</b> <span style="color:var(--tx2)">days at or over 95F in July through mid-August, when pollination and early fill take the damage</span></span><span class="vr-rate">${(wx.heat_days||0).toFixed(1)} a year${wx.heat_days_sd?` ± ${wx.heat_days_sd.toFixed(1)}`:''}</span></div>
+      <div class="dn" style="margin-top:6px;margin-bottom:0">Hail is not in any of this. Iowa loses about 1-2% of its corn to hail in an average year, farm by farm it is all or nothing, and crop insurance is the tool for it, not fertilizer.</div>
     </div>
 
     ${rBenchmarks(pl)}
-    <div class="fc" style="padding:8px;margin-top:8px">
-      <div class="lb" style="margin-bottom:3px">Fertilizer for a ${plGoal} bu crop here <span class="source-tag">on top of the soil</span></div>
-      ${!lt?'<div class="dn" style="margin:0">No soil test on this field.</div>':rows.map(r=>{
-        const prodLb=r.prod?r.lb/r.prod.pct:r.lb;
-        return `<div class="vr-zone" style="flex-wrap:wrap"><span class="vr-range" style="flex:1"><b>${r.nm}</b> <span style="color:var(--tx2)">${r.note}</span></span>
-          <span class="vr-rate">${r.lb?`${bu(r.lb)} ${r.unit}/ac`:'none'}</span>
-          ${r.lb&&r.prod?`<span class="vr-acres" style="min-width:0">${bu(prodLb)} lb/ac ${r.prod.name}${ac?` · ${(prodLb*ac/2000).toFixed(1)} t`:''}</span>`:''}</div>`;}).join('')}
-      <div class="dn" style="margin-top:6px;margin-bottom:0">P and K are the crop's removal at ${plGoal} bu less the bank the soil holds above the level to hold, build-up over four years where it is under, on ISU's 2023 numbers. Nitrogen is 1.1 lb per bushel less the organic-matter and soybean credits; ISU's own N guide (MRTN) prices it instead and usually lands between 140 and 190 lb after soybeans. Lime runs on the formula you asked me to leave alone. The rate map on the VR Rx tab spreads these by spot.</div>
-    </div>`;
+
+    <div class="dn" style="margin-top:8px">For reference only, from the yield monitor: this field averaged <b>${pl.fieldAvg||'?'}</b> bu of corn recently${pl.fieldBest?`, best year <b>${bu(pl.fieldBest)}</b>`:''}. Across the farm a field's record runs about ${YM.b.toFixed(1)} bu per point of soil rating. That is what happened under your management, monitors and all; it is not what the ground can do, and nothing above uses it.</div>`;
 }
+
 function varyNote(ym){
   const rated=svRatingAvg(sel)!=null;
   const yTxt=ym.length?`<b>${ym.length} yield map${ym.length>1?'s':''}</b> (${ym.map(m=>m.season).join(', ')})`:'';
