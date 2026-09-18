@@ -518,7 +518,10 @@ function genRaster(fieldName,nut,setIdx,isRate,rateFn,breaks){
   const RES=0.00009;
   const pad=RES*4; // expand grid beyond boundary to ensure full coverage
   const nx=Math.ceil((xmax-xmin+pad*2)/RES)+1,ny=Math.ceil((ymax-ymin+pad*2)/RES)+1;
-  const maxC=22000;let step=1;if(nx*ny>maxC)step=Math.ceil(Math.sqrt(nx*ny/maxC));
+  // A block map gets more cells: its diagonal edges are drawn straight
+  // from the cell corners, and the finer the cells the truer the line.
+  const blockMap=rxShape==='blocks'&&isRate&&rateFn&&rateFn!==fertScore&&!rateFn.continuous;
+  const maxC=blockMap?60000:22000;let step=1;if(nx*ny>maxC)step=Math.ceil(Math.sqrt(nx*ny/maxC));
   const snx=Math.ceil(nx/step),sny=Math.ceil(ny/step),sRES=RES*step;
   const gxmin=xmin-pad,gymin=ymin-pad;
   const cosLat=Math.cos((gymin+sny*sRES/2)*Math.PI/180);
@@ -2350,7 +2353,7 @@ function renderYieldOverlay(f){
 // Canvas clip path clips precisely to field boundary.
 function renderRasterOnMap(raster,fr,colors){
   const {zoneGrid,mask,snx,sny,xmin,ymin,sRES}=raster;
-  smoothOff=!!raster.blocks;
+  smoothOff=!!raster.blocks;straightTol=sRES;
   const scale=6;
   const w=snx*scale,h=sny*scale;
   
@@ -2371,6 +2374,7 @@ function renderRasterOnMap(raster,fr,colors){
     for(const ln of lns){const gl=ln.map(([px2,py2])=>[xmin+px2*sRES,ymin+py2*sRES]);
       const sm=smoothPolyline(gl);
       for(let i=0;i<ln.length;i++){const pk=ln[i][0]+','+ln[i][1];
+        if(smoothOff){spm[pk]=nearestOnLine(sm,gl[i]);continue;}
         const t=ln.length>1?i/(ln.length-1):0;const si2=Math.min(sm.length-1,Math.round(t*(sm.length-1)));
         spm[pk]=sm[si2];}}}
   
@@ -2636,8 +2640,42 @@ function chainEdges(edges){
 // a smoothed blob from looking like stair-steps would round the corners
 // off squares that are meant to be square.
 let smoothOff=false;
+// Straighten a traced edge: Douglas-Peucker at three quarters of a cell.
+// A diagonal between two samples comes off the raster as a staircase of
+// cell-high steps, every corner within half a cell of the true line, and
+// those all drop out; a real corner, where the edge turns by a whole cell
+// or more, stays. Used in place of smoothing on a block map.
+function straightenLine(pts,tol){
+  if(pts.length<3)return pts;
+  const keep=new Uint8Array(pts.length);keep[0]=keep[pts.length-1]=1;
+  const stack=[[0,pts.length-1]];
+  while(stack.length){const[a,b]=stack.pop();if(b-a<2)continue;
+    const ax=pts[a][0],ay=pts[a][1],dx=pts[b][0]-ax,dy=pts[b][1]-ay,L=Math.hypot(dx,dy)||1;
+    let worst=-1,wi=-1;
+    for(let i=a+1;i<b;i++){const d=Math.abs(dx*(ay-pts[i][1])-dy*(ax-pts[i][0]))/L;if(d>worst){worst=d;wi=i;}}
+    if(worst>tol){keep[wi]=1;stack.push([a,wi],[wi,b]);}}
+  return pts.filter((_,i)=>keep[i]);}
+// The nearest point on a polyline to a point: where a traced vertex lands
+// once its edge has been straightened.
+function nearestOnLine(line,pt){
+  if(line.length===1)return line[0];
+  let best=line[0],bd=Infinity;
+  for(let i=0;i<line.length-1;i++){const ax=line[i][0],ay=line[i][1],bx=line[i+1][0],by=line[i+1][1];
+    const dx=bx-ax,dy=by-ay,l2=dx*dx+dy*dy;let t=l2?((pt[0]-ax)*dx+(pt[1]-ay)*dy)/l2:0;t=Math.max(0,Math.min(1,t));
+    const cx=ax+t*dx,cy=ay+t*dy,d=(pt[0]-cx)**2+(pt[1]-cy)**2;if(d<bd){bd=d;best=[cx,cy];}}
+  return best;}
+let straightTol=0;   // cell size while a block map is being outlined
+// Drop the vertices of a ring that do not turn (under one degree).
+function dropCollinear(ring){
+  const n=ring.length;if(n<4)return ring;const out=[];
+  for(let i=0;i<n;i++){const a=ring[(i-1+n)%n],b=ring[i],c=ring[(i+1)%n];
+    const ax=b[0]-a[0],ay=b[1]-a[1],bx=c[0]-b[0],by=c[1]-b[1],la=Math.hypot(ax,ay),lb=Math.hypot(bx,by);
+    if(!la||!lb)continue;const cos=(ax*bx+ay*by)/(la*lb);
+    if(cos<Math.cos(Math.PI/180))out.push(b);}
+  return out.length>=3?out:ring;}
 function smoothPolyline(pts){
-  if(smoothOff||pts.length<3)return pts;
+  if(smoothOff)return straightenLine(pts,straightTol*0.75);
+  if(pts.length<3)return pts;
   let r=pts.slice();
   // Gaussian averaging (3 passes, window=2, endpoints fixed)
   for(let pass=0;pass<3;pass++){
@@ -2670,7 +2708,7 @@ function smoothPolyline(pts){
 // ===== SHARED-BOUNDARY EXPORT =====
 // Zone-to-zone boundaries computed ONCE, shared by both neighbors = zero gaps.
 function buildSmoothedZoneExport(raster,fieldRing,rMin,rRange,product,crop,yg,unit){
-  smoothOff=!!raster.blocks;
+  smoothOff=!!raster.blocks;straightTol=raster.sRES;
   const {zoneGrid,mask,snx,sny,xmin,ymin,sRES}=raster;
   const denseBdy=densifyRing(fieldRing,sRES*0.4);
   
@@ -2706,6 +2744,7 @@ function buildSmoothedZoneExport(raster,fieldRing,rMin,rRange,product,crop,yg,un
       // Map each original point to the nearest smoothed point
       for(let i=0;i<line.length;i++){
         const pk=line[i][0]+','+line[i][1];
+        if(smoothOff){smoothPtMap[pk]=nearestOnLine(smoothed,geoLine[i]);continue;}
         // Find position along smoothed line proportional to i/(N-1)
         const t=line.length>1?i/(line.length-1):0;
         const si=Math.min(smoothed.length-1,Math.round(t*(smoothed.length-1)));
@@ -2839,6 +2878,11 @@ function buildSmoothedZoneExport(raster,fieldRing,rMin,rRange,product,crop,yg,un
         if(cleanRing.length===prev)break; // stable
       }
       
+      if(cleanRing.length<3)continue;
+      // On a block map the straightened edges still carry a vertex at
+      // every cell along them; the spreader file does not need 3,800
+      // points to describe a square. Anything that does not turn goes.
+      if(raster.blocks)cleanRing=dropCollinear(cleanRing);
       if(cleanRing.length<3)continue;
       cleanRing.push([cleanRing[0][0],cleanRing[0][1]]);
       geoParts.push(cleanRing);
