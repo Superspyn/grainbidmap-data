@@ -1774,8 +1774,13 @@ function fieldRM(f){const o=OPS[f];if(!o)return null;
     const named=(s.varieties||[]).filter(v=>hybridRM(v)!=null),rms=named.map(hybridRM);
     if(rms.length)return{rm:Math.round(rms.reduce((a,b)=>a+b,0)/rms.length),year:y,names:named};}
   return null;}
+// The field's usual corn planting day: the median of its corn plantings
+// that fall in a planting window, April 1 to June 19. A fall cover crop
+// logged as corn (three Missouri fields carry an October "corn" seeding)
+// used to count, and a 4 October planting took five months of heat units
+// off the hybrid fit.
 function fieldPlantDoy(f){const o=OPS[f];if(!o)return null;const ds=[];
-  for(const s of Object.values(o.seasons))if(cropKey(s.crop)==='corn'&&s.planted)ds.push(doyOf(s.planted));
+  for(const s of Object.values(o.seasons))if(cropKey(s.crop)==='corn'&&s.planted){const d=doyOf(s.planted);if(d>=90&&d<=170)ds.push(d);}
   if(!ds.length)return null;ds.sort((a,b)=>a-b);return ds[ds.length>>1];}
 function doyOf(iso){const d=new Date(iso+'T00:00:00');const s=new Date(d.getFullYear(),0,0);return Math.round((d-s)/86400000);}
 function doyDate(doy){const d=new Date(2001,0,doy);return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});}
