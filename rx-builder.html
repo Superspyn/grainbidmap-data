@@ -1633,15 +1633,15 @@ function rVR(){
         <button class="preset-btn ${rxVary==='yield'?'act':''}" title="Removal follows the yield maps" onclick="rxVary='yield';rP();showVRInterp()">Yield maps</button>
         <button class="preset-btn ${rxVary==='rating'?'act':''}" title="Removal follows the soil survey rating (CSR2 and NCCPI), the same one the map menu shows" onclick="rxVary='rating';rP();showVRInterp()">Soil rating</button>
         <button class="preset-btn ${rxVary==='both'?'act':''}" title="The two averaged" onclick="rxVary='both';rP();showVRInterp()">Both</button></div></div>
+      ${rxVary!=='yield'&&svRatingAvg(sel)==null?'<div class="dn" style="margin:0 0 6px 86px">No soil survey rating under this field, so the goal stands flat.</div>':''}
+      ${rxVary!=='rating'&&!ym.length?'<div class="dn" style="margin:0 0 6px 86px">No yield maps on this field'+(rxVary==='both'?', so only the soil rating varies it':'; pick Soil rating to vary the removal by the ground')+'.</div>':''}`:''}
+      ${((rxNut==='p'||rxNut==='k')&&rxBasis!=='isu')?'':(targetControls[rxNut]||'')}
       <div class="rxr"><label>Shapes</label><div class="presets" style="margin:0">
         <button class="preset-btn ${rxShape==='blocks'?'act':''}" title="Every sample owns the ground nearest it: 1-acre squares on a 1-acre grid" onclick="rxShape='blocks';rP();showVRInterp()">Sample blocks</button>
         <button class="preset-btn ${rxShape==='smooth'?'act':''}" title="A surface blended from the four nearest samples, then tidied" onclick="rxShape='smooth';rP();showVRInterp()">Smooth</button></div></div>
       <div class="rxr"><label>Rate zones</label><div class="presets" style="margin:0">
         <button class="preset-btn ${rxZones==='hilo'?'act':''}" title="Two zones: a high rate and a low one" onclick="rxZones='hilo';rP();showVRInterp()">High and low</button>
         <button class="preset-btn ${rxZones==='auto'?'act':''}" title="As many zones as the spread has room for, up to five" onclick="rxZones='auto';rP();showVRInterp()">As many as fit</button></div></div>
-      ${rxVary!=='yield'&&svRatingAvg(sel)==null?'<div class="dn" style="margin:0 0 6px 86px">No soil survey rating under this field, so the goal stands flat.</div>':''}
-      ${rxVary!=='rating'&&!ym.length?'<div class="dn" style="margin:0 0 6px 86px">No yield maps on this field'+(rxVary==='both'?', so only the soil rating varies it':'; pick Soil rating to vary the removal by the ground')+'.</div>':''}`:''}
-      ${((rxNut==='p'||rxNut==='k')&&rxBasis!=='isu')?'':(targetControls[rxNut]||'')}
     </div>
     <div class="fc" style="padding:8px;margin-top:8px">
       <div style="display:flex;gap:8px;margin-bottom:6px">
