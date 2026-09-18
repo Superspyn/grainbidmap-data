@@ -107,6 +107,10 @@ def rows(crop: str = "corn") -> list[dict]:
             rms = [x for x in (hybrid_rm(v) for v in (s.get("varieties") or [])) if x]
             planted = s.get("planted")
             doy = dt.date.fromisoformat(planted).timetuple().tm_yday if planted else None
+            # A fall cover crop logged as corn carries an October date; only
+            # a date in the planting window, April 1 to June 19, is a planting.
+            if doy is not None and not 90 <= doy <= 170:
+                doy = None
             out.append({"field": name, "year": int(yr), "yield": h["avg"], "acres": h["acres"],
                         "rating": r, "gdd": w["gdd"], "gdd_frost": w["gdd_frost"], "rain": w["rain"],
                         "rain_fill": w["rain_fill"], "heat_days": w["heat_days"], "wet_days": w["wet_days"],
