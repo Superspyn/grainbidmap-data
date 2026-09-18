@@ -8,6 +8,7 @@ Reads, all in ~/.grain-map-secrets/:
     rx-ops.json         crop, harvest and application history (dev/jd_rx_pull.py)
     rx-yield/*.json     thinned yield maps (dev/jd_rx_pull.py)
     ssurgo.json         soil survey map units and ratings (dev/jd_rx_ssurgo.py)
+    weather.json        growing-season weather by grid cell (dev/jd_rx_weather.py)
 
 and writes ~/.grain-map-secrets/rx-builder.html: the code in rx-builder.html
 at the repo root with the data baked in. Open it in a browser from disk.
@@ -37,6 +38,7 @@ SOIL = SECRETS / "soil-samples.json"
 OPS = SECRETS / "rx-ops.json"
 YIELD_DIR = SECRETS / "rx-yield"
 SURVEY = SECRETS / "ssurgo.json"
+WEATHER = SECRETS / "weather.json"
 OUTPUT = SECRETS / "rx-builder.html"
 SOURCE = pathlib.Path(__file__).resolve().parent.parent / "rx-builder.html"
 MARKER = "// ====== Field data (baked in by dev/jd_build_rx.py) ======"
@@ -583,10 +585,26 @@ def main() -> None:
                          if n in geoms},
               "mapunits": survey.get("mapunits", {})}
 
+    # Weather normals and seasons per grid cell, and the corn yield model
+    # fitted on the farm's own harvests (dev/jd_rx_yield_model.py). Both are
+    # optional: without them the planner tab simply does not appear.
+    weather = read_json(WEATHER, {}) or {}
+    wx = {"cells": {k: {"lat": v.get("lat"), "lon": v.get("lon"), "normal": v.get("normal", {}),
+                        "years": v.get("years", {})} for k, v in weather.get("cells", {}).items()},
+          "fields": {n: c for n, c in weather.get("fields", {}).items() if n in geoms}}
+    ymodel = {}
+    if wx["cells"]:
+        try:
+            from jd_rx_yield_model import fit_model
+            ymodel = fit_model("corn") or {}
+        except Exception as e:  # numpy missing, or too few rows
+            print(f"  yield model not fitted: {e}")
+
     meta = {"generated": now_iso(), "plan_year": PLAN_YEAR,
             "fields": len(features), "sampled": len(soil_by_field),
             "with_history": len(ops_by_field), "with_yield_maps": len(ymaps),
-            "with_survey": len(survey["fields"])}
+            "with_survey": len(survey["fields"]), "with_weather": len(wx["fields"]),
+            "yield_model_rows": ymodel.get("n", 0)}
     data = "\n".join([
         js_const("META", meta),
         js_const("B", {"type": "FeatureCollection", "features": features}),
@@ -594,6 +612,8 @@ def main() -> None:
         js_const("OPS", ops_by_field),
         js_const("YMAPS", ymaps),
         js_const("SURVEY", survey),
+        js_const("WX", wx),
+        js_const("YMODEL", ymodel),
     ])
 
     html = SOURCE.read_text(encoding="utf-8")
@@ -619,7 +639,8 @@ def main() -> None:
     print(f"fields {len(features)}, soil grids matched {len(soil_by_field)} of {len(soil)}, "
           f"history for {len(ops_by_field)}, yield maps for {len(ymaps)} fields "
           f"({sum(len(v) for v in ymaps.values())} harvests), soil survey under "
-          f"{len(survey['fields'])} fields ({len(survey['mapunits'])} map units)")
+          f"{len(survey['fields'])} fields ({len(survey['mapunits'])} map units), weather for "
+          f"{len(wx['fields'])} fields, corn model on {ymodel.get('n', 0)} field-years")
     print(f"wrote {OUTPUT}  ({OUTPUT.stat().st_size / 1e6:.1f} MB)")
 
 
