@@ -3,7 +3,8 @@
   "county": "ISU Ag Decision Maker File A1-14, Iowa county corn and soybean yields (USDA RMA, non-irrigated): 2025 yield, 10-year average, high and low of the previous ten years. https://www.extension.iastate.edu/agdm/crops/pdf/a1-14.pdf",
   "state_record": "USDA NASS: Iowa corn for grain 2024, record 211.0 bu/ac. https://www.nass.usda.gov/Statistics_by_State/Iowa/Publications/Crop_Report/2024/IA-Crop-Production-11-24.pdf",
   "yield_potential": "UNL/ISU Hybrid-Maize corn yield forecasts, 2025 season, Table 1: long-term average rainfed yield potential by site, i.e. what the weather and soil allow with nutrients, pests and stand not limiting. https://cropwatch.unl.edu/2025-corn-yield-forecasts-july-15/",
-  "contest": "NCGA National Corn Yield Contest 2023, Iowa state winners, non-irrigated classes. https://ncga.com/get-involved/yield-contest"
+  "contest": "NCGA National Corn Yield Contest 2023, Iowa state winners, non-irrigated classes. https://ncga.com/get-involved/yield-contest",
+  "rent_survey": "ISU Ag Decision Maker FM 1851 / C2-10, Cash Rental Rates for Iowa 2026 Survey: county 2021-2025 average corn yield, average row-crop CSR2, and USDA NASS 2018-2022 typical yields by land-quality third. https://www.extension.iastate.edu/agdm/wholefarm/pdf/c2-10.pdf"
  },
  "state_record": {
   "year": 2024,
@@ -1480,6 +1481,680 @@
    "soy_high_year": 2024,
    "soy_low": 55.6,
    "soy_low_year": 2020
+  }
+ },
+ "county_survey": {
+  "Buena Vista": {
+   "corn_2021_25": 209.0,
+   "csr2_avg": 86.0,
+   "corn_high_third": 216.0,
+   "corn_mid_third": 194.0,
+   "corn_low_third": 173.0
+  },
+  "Cherokee": {
+   "corn_2021_25": 212.0,
+   "csr2_avg": 90.0,
+   "corn_high_third": 226.0,
+   "corn_mid_third": 204.0,
+   "corn_low_third": 179.0
+  },
+  "Clay": {
+   "corn_2021_25": 199.0,
+   "csr2_avg": 86.0,
+   "corn_high_third": 210.0,
+   "corn_mid_third": 181.0,
+   "corn_low_third": 154.0
+  },
+  "Dickinson": {
+   "corn_2021_25": 190.0,
+   "csr2_avg": 87.0,
+   "corn_high_third": 194.0,
+   "corn_mid_third": 179.0,
+   "corn_low_third": 156.0
+  },
+  "Emmet": {
+   "corn_2021_25": 204.0,
+   "csr2_avg": 81.0,
+   "corn_high_third": 202.0,
+   "corn_mid_third": 184.0,
+   "corn_low_third": 167.0
+  },
+  "Lyon": {
+   "corn_2021_25": 206.0,
+   "csr2_avg": 80.0,
+   "corn_high_third": 221.0,
+   "corn_mid_third": 194.0,
+   "corn_low_third": 178.0
+  },
+  "O'Brien": {
+   "corn_2021_25": 214.0,
+   "csr2_avg": 94.0,
+   "corn_high_third": 225.0,
+   "corn_mid_third": 203.0,
+   "corn_low_third": 182.0
+  },
+  "Osceola": {
+   "corn_2021_25": 209.0,
+   "csr2_avg": 86.0,
+   "corn_high_third": 208.0,
+   "corn_mid_third": 191.0,
+   "corn_low_third": 166.0
+  },
+  "Palo Alto": {
+   "corn_2021_25": 200.0,
+   "csr2_avg": 82.0,
+   "corn_high_third": 201.0,
+   "corn_mid_third": 177.0,
+   "corn_low_third": 141.0
+  },
+  "Plymouth": {
+   "corn_2021_25": 195.0,
+   "csr2_avg": 82.0,
+   "corn_high_third": 219.0,
+   "corn_mid_third": 187.0,
+   "corn_low_third": 166.0
+  },
+  "Pocahontas": {
+   "corn_2021_25": 212.0,
+   "csr2_avg": 82.0,
+   "corn_high_third": 219.0,
+   "corn_mid_third": 191.0,
+   "corn_low_third": 172.0
+  },
+  "Sioux": {
+   "corn_2021_25": 215.0,
+   "csr2_avg": 88.0,
+   "corn_high_third": 237.0,
+   "corn_mid_third": 206.0,
+   "corn_low_third": 184.0
+  },
+  "Butler": {
+   "corn_2021_25": 203.0,
+   "csr2_avg": 80.0,
+   "corn_high_third": 223.0,
+   "corn_mid_third": 187.0,
+   "corn_low_third": 165.0
+  },
+  "Cerro Gordo": {
+   "corn_2021_25": 207.0,
+   "csr2_avg": 79.0,
+   "corn_high_third": 214.0,
+   "corn_mid_third": 191.0,
+   "corn_low_third": 173.0
+  },
+  "Floyd": {
+   "corn_2021_25": 207.0,
+   "csr2_avg": 83.0,
+   "corn_high_third": 213.0,
+   "corn_mid_third": 193.0,
+   "corn_low_third": 164.0
+  },
+  "Franklin": {
+   "corn_2021_25": 210.0,
+   "csr2_avg": 81.0,
+   "corn_high_third": 226.0,
+   "corn_mid_third": 208.0,
+   "corn_low_third": 178.0
+  },
+  "Hancock": {
+   "corn_2021_25": 209.0,
+   "csr2_avg": 76.0,
+   "corn_high_third": 211.0,
+   "corn_mid_third": 195.0,
+   "corn_low_third": 173.0
+  },
+  "Humboldt": {
+   "corn_2021_25": 205.0,
+   "csr2_avg": 81.0,
+   "corn_high_third": 219.0,
+   "corn_mid_third": 201.0,
+   "corn_low_third": 175.0
+  },
+  "Kossuth": {
+   "corn_2021_25": 204.0,
+   "csr2_avg": 79.0,
+   "corn_high_third": 203.0,
+   "corn_mid_third": 194.0,
+   "corn_low_third": 155.0
+  },
+  "Mitchell": {
+   "corn_2021_25": 208.0,
+   "csr2_avg": 83.0,
+   "corn_high_third": 224.0,
+   "corn_mid_third": 199.0,
+   "corn_low_third": 172.0
+  },
+  "Winnebago": {
+   "corn_2021_25": 206.0,
+   "csr2_avg": 74.0,
+   "corn_high_third": 217.0,
+   "corn_mid_third": 198.0,
+   "corn_low_third": 181.0
+  },
+  "Worth": {
+   "corn_2021_25": 205.0,
+   "csr2_avg": 77.0,
+   "corn_high_third": 218.0,
+   "corn_mid_third": 198.0,
+   "corn_low_third": 174.0
+  },
+  "Wright": {
+   "corn_2021_25": 203.0,
+   "csr2_avg": 79.0,
+   "corn_high_third": 211.0,
+   "corn_mid_third": 193.0,
+   "corn_low_third": 173.0
+  },
+  "Allamakee & Winneshiek": {
+   "corn_2021_25": 209.0,
+   "csr2_avg": 76.0,
+   "corn_high_third": 213.0,
+   "corn_mid_third": 192.0,
+   "corn_low_third": 171.0
+  },
+  "Black Hawk": {
+   "corn_2021_25": 202.0,
+   "csr2_avg": 86.0,
+   "corn_high_third": 226.0,
+   "corn_mid_third": 192.0,
+   "corn_low_third": 169.0
+  },
+  "Bremer": {
+   "corn_2021_25": 208.0,
+   "csr2_avg": 84.0,
+   "corn_high_third": 235.0,
+   "corn_mid_third": 215.0,
+   "corn_low_third": 183.0
+  },
+  "Buchanan": {
+   "corn_2021_25": 211.0,
+   "csr2_avg": 83.0,
+   "corn_high_third": 224.0,
+   "corn_mid_third": 205.0,
+   "corn_low_third": 169.0
+  },
+  "Chickasaw": {
+   "corn_2021_25": 211.0,
+   "csr2_avg": 83.0,
+   "corn_high_third": 219.0,
+   "corn_mid_third": 197.0,
+   "corn_low_third": 180.0
+  },
+  "Clayton": {
+   "corn_2021_25": 215.0,
+   "csr2_avg": 68.0,
+   "corn_high_third": 219.0,
+   "corn_mid_third": 193.0,
+   "corn_low_third": 160.0
+  },
+  "Delaware": {
+   "corn_2021_25": 221.0,
+   "csr2_avg": 77.0,
+   "corn_high_third": 226.0,
+   "corn_mid_third": 215.0,
+   "corn_low_third": 190.0
+  },
+  "Dubuque": {
+   "corn_2021_25": 219.0,
+   "csr2_avg": 69.0,
+   "corn_high_third": 239.0,
+   "corn_mid_third": 213.0,
+   "corn_low_third": 183.0
+  },
+  "Fayette": {
+   "corn_2021_25": 209.0,
+   "csr2_avg": 81.0,
+   "corn_high_third": 216.0,
+   "corn_mid_third": 199.0,
+   "corn_low_third": 180.0
+  },
+  "Howard": {
+   "corn_2021_25": 212.0,
+   "csr2_avg": 83.0,
+   "corn_high_third": 213.0,
+   "corn_mid_third": 196.0,
+   "corn_low_third": 171.0
+  },
+  "Audubon": {
+   "corn_2021_25": 217.0,
+   "csr2_avg": 77.0,
+   "corn_high_third": 215.0,
+   "corn_mid_third": 191.0,
+   "corn_low_third": 173.0
+  },
+  "Calhoun": {
+   "corn_2021_25": 216.0,
+   "csr2_avg": 84.0,
+   "corn_high_third": 210.0,
+   "corn_mid_third": 195.0,
+   "corn_low_third": 178.0
+  },
+  "Carroll": {
+   "corn_2021_25": 220.0,
+   "csr2_avg": 80.0,
+   "corn_high_third": 216.0,
+   "corn_mid_third": 195.0,
+   "corn_low_third": 174.0
+  },
+  "Crawford": {
+   "corn_2021_25": 216.0,
+   "csr2_avg": 73.0,
+   "corn_high_third": 233.0,
+   "corn_mid_third": 208.0,
+   "corn_low_third": 194.0
+  },
+  "Greene": {
+   "corn_2021_25": 219.0,
+   "csr2_avg": 82.0,
+   "corn_high_third": 217.0,
+   "corn_mid_third": 180.0,
+   "corn_low_third": 138.0
+  },
+  "Guthrie": {
+   "corn_2021_25": 213.0,
+   "csr2_avg": 83.0,
+   "corn_high_third": 211.0,
+   "corn_mid_third": 168.0,
+   "corn_low_third": 140.0
+  },
+  "Harrison": {
+   "corn_2021_25": 194.0,
+   "csr2_avg": 73.0,
+   "corn_high_third": 191.0,
+   "corn_mid_third": 170.0,
+   "corn_low_third": 157.0
+  },
+  "Ida": {
+   "corn_2021_25": 224.0,
+   "csr2_avg": 81.0,
+   "corn_high_third": 236.0,
+   "corn_mid_third": 210.0,
+   "corn_low_third": 192.0
+  },
+  "Monona": {
+   "corn_2021_25": 189.0,
+   "csr2_avg": 71.0,
+   "corn_high_third": 218.0,
+   "corn_mid_third": 192.0,
+   "corn_low_third": 152.0
+  },
+  "Sac": {
+   "corn_2021_25": 223.0,
+   "csr2_avg": 86.0,
+   "corn_high_third": 224.0,
+   "corn_mid_third": 204.0,
+   "corn_low_third": 172.0
+  },
+  "Shelby": {
+   "corn_2021_25": 218.0,
+   "csr2_avg": 72.0,
+   "corn_high_third": 215.0,
+   "corn_mid_third": 194.0,
+   "corn_low_third": 167.0
+  },
+  "Woodbury": {
+   "corn_2021_25": 196.0,
+   "csr2_avg": 73.0,
+   "corn_high_third": 225.0,
+   "corn_mid_third": 203.0,
+   "corn_low_third": 183.0
+  },
+  "Boone": {
+   "corn_2021_25": 218.0,
+   "csr2_avg": 85.0,
+   "corn_high_third": 211.0,
+   "corn_mid_third": 193.0,
+   "corn_low_third": 169.0
+  },
+  "Dallas": {
+   "corn_2021_25": 212.0,
+   "csr2_avg": 88.0,
+   "corn_high_third": 205.0,
+   "corn_mid_third": 179.0,
+   "corn_low_third": 146.0
+  },
+  "Grundy": {
+   "corn_2021_25": 223.0,
+   "csr2_avg": 88.0,
+   "corn_high_third": 235.0,
+   "corn_mid_third": 214.0,
+   "corn_low_third": 191.0
+  },
+  "Hamilton": {
+   "corn_2021_25": 215.0,
+   "csr2_avg": 80.0,
+   "corn_high_third": 218.0,
+   "corn_mid_third": 195.0,
+   "corn_low_third": 179.0
+  },
+  "Hardin": {
+   "corn_2021_25": 213.0,
+   "csr2_avg": 84.0,
+   "corn_high_third": 222.0,
+   "corn_mid_third": 203.0,
+   "corn_low_third": 176.0
+  },
+  "Jasper": {
+   "corn_2021_25": 223.0,
+   "csr2_avg": 80.0,
+   "corn_high_third": 239.0,
+   "corn_mid_third": 204.0,
+   "corn_low_third": 183.0
+  },
+  "Marshall": {
+   "corn_2021_25": 225.0,
+   "csr2_avg": 82.0,
+   "corn_high_third": 250.0,
+   "corn_mid_third": 225.0,
+   "corn_low_third": 186.0
+  },
+  "Polk": {
+   "corn_2021_25": 210.0,
+   "csr2_avg": 89.0,
+   "corn_high_third": 215.0,
+   "corn_mid_third": 194.0,
+   "corn_low_third": 164.0
+  },
+  "Poweshiek": {
+   "corn_2021_25": 211.0,
+   "csr2_avg": 79.0,
+   "corn_high_third": 213.0,
+   "corn_mid_third": 183.0,
+   "corn_low_third": 166.0
+  },
+  "Story": {
+   "corn_2021_25": 213.0,
+   "csr2_avg": 86.0,
+   "corn_high_third": 214.0,
+   "corn_mid_third": 187.0,
+   "corn_low_third": 161.0
+  },
+  "Tama": {
+   "corn_2021_25": 218.0,
+   "csr2_avg": 85.0,
+   "corn_high_third": 228.0,
+   "corn_mid_third": 196.0,
+   "corn_low_third": 163.0
+  },
+  "Webster": {
+   "corn_2021_25": 214.0,
+   "csr2_avg": 78.0,
+   "corn_high_third": 217.0,
+   "corn_mid_third": 198.0,
+   "corn_low_third": 179.0
+  },
+  "Benton": {
+   "corn_2021_25": 218.0,
+   "csr2_avg": 86.0,
+   "corn_high_third": 218.0,
+   "corn_mid_third": 189.0,
+   "corn_low_third": 163.0
+  },
+  "Cedar": {
+   "corn_2021_25": 224.0,
+   "csr2_avg": 86.0,
+   "corn_high_third": 226.0,
+   "corn_mid_third": 203.0,
+   "corn_low_third": 183.0
+  },
+  "Clinton": {
+   "corn_2021_25": 222.0,
+   "csr2_avg": 74.0,
+   "corn_high_third": 220.0,
+   "corn_mid_third": 196.0,
+   "corn_low_third": 177.0
+  },
+  "Iowa": {
+   "corn_2021_25": 216.0,
+   "csr2_avg": 79.0,
+   "corn_high_third": 208.0,
+   "corn_mid_third": 183.0,
+   "corn_low_third": 161.0
+  },
+  "Jackson": {
+   "corn_2021_25": 213.0,
+   "csr2_avg": 67.0,
+   "corn_high_third": 214.0,
+   "corn_mid_third": 188.0,
+   "corn_low_third": 169.0
+  },
+  "Johnson": {
+   "corn_2021_25": 214.0,
+   "csr2_avg": 85.0,
+   "corn_high_third": 196.0,
+   "corn_mid_third": 175.0,
+   "corn_low_third": 140.0
+  },
+  "Jones": {
+   "corn_2021_25": 216.0,
+   "csr2_avg": 77.0,
+   "corn_high_third": 219.0,
+   "corn_mid_third": 189.0,
+   "corn_low_third": 165.0
+  },
+  "Linn": {
+   "corn_2021_25": 209.0,
+   "csr2_avg": 87.0,
+   "corn_high_third": 225.0,
+   "corn_mid_third": 193.0,
+   "corn_low_third": 160.0
+  },
+  "Muscatine": {
+   "corn_2021_25": 218.0,
+   "csr2_avg": 83.0,
+   "corn_high_third": 220.0,
+   "corn_mid_third": 201.0,
+   "corn_low_third": 168.0
+  },
+  "Scott": {
+   "corn_2021_25": 227.0,
+   "csr2_avg": 89.0,
+   "corn_high_third": 223.0,
+   "corn_mid_third": 201.0,
+   "corn_low_third": 174.0
+  },
+  "Adair": {
+   "corn_2021_25": 195.0,
+   "csr2_avg": 79.0,
+   "corn_high_third": 182.0,
+   "corn_mid_third": 166.0,
+   "corn_low_third": 138.0
+  },
+  "Adams": {
+   "corn_2021_25": 195.0,
+   "csr2_avg": 79.0,
+   "corn_high_third": 188.0,
+   "corn_mid_third": 171.0,
+   "corn_low_third": 158.0
+  },
+  "Cass": {
+   "corn_2021_25": 207.0,
+   "csr2_avg": 79.0,
+   "corn_high_third": 215.0,
+   "corn_mid_third": 188.0,
+   "corn_low_third": 140.0
+  },
+  "Fremont": {
+   "corn_2021_25": 209.0,
+   "csr2_avg": 81.0,
+   "corn_high_third": 232.0,
+   "corn_mid_third": 200.0,
+   "corn_low_third": 163.0
+  },
+  "Mills": {
+   "corn_2021_25": 207.0,
+   "csr2_avg": 82.0,
+   "corn_high_third": 216.0,
+   "corn_mid_third": 201.0,
+   "corn_low_third": 170.0
+  },
+  "Montgomery": {
+   "corn_2021_25": 209.0,
+   "csr2_avg": 79.0,
+   "corn_high_third": 215.0,
+   "corn_mid_third": 198.0,
+   "corn_low_third": 170.0
+  },
+  "Page": {
+   "corn_2021_25": 203.0,
+   "csr2_avg": 80.0,
+   "corn_high_third": 212.0,
+   "corn_mid_third": 186.0,
+   "corn_low_third": 150.0
+  },
+  "Pottawattamie": {
+   "corn_2021_25": 209.0,
+   "csr2_avg": 79.0,
+   "corn_high_third": 223.0,
+   "corn_mid_third": 200.0,
+   "corn_low_third": 134.0
+  },
+  "Taylor": {
+   "corn_2021_25": 187.0,
+   "csr2_avg": 81.0,
+   "corn_high_third": 184.0,
+   "corn_mid_third": 170.0,
+   "corn_low_third": 129.0
+  },
+  "Appanoose": {
+   "corn_2021_25": 172.0,
+   "csr2_avg": 74.0,
+   "corn_high_third": 174.0,
+   "corn_mid_third": 140.0,
+   "corn_low_third": 119.0
+  },
+  "Clarke": {
+   "corn_2021_25": 173.0,
+   "csr2_avg": 77.0,
+   "corn_high_third": 190.0,
+   "corn_mid_third": 150.0,
+   "corn_low_third": 126.0
+  },
+  "Decatur & Ringgold": {
+   "corn_2021_25": 174.0,
+   "csr2_avg": 75.0,
+   "corn_high_third": 192.0,
+   "corn_mid_third": 170.0,
+   "corn_low_third": 134.0
+  },
+  "Lucas": {
+   "corn_2021_25": 167.0,
+   "csr2_avg": 73.0,
+   "corn_high_third": 164.0,
+   "corn_mid_third": 152.0,
+   "corn_low_third": 110.0
+  },
+  "Madison": {
+   "corn_2021_25": 194.0,
+   "csr2_avg": 86.0,
+   "corn_high_third": 198.0,
+   "corn_mid_third": 174.0,
+   "corn_low_third": 152.0
+  },
+  "Marion": {
+   "corn_2021_25": 203.0,
+   "csr2_avg": 80.0,
+   "corn_high_third": 205.0,
+   "corn_mid_third": 170.0,
+   "corn_low_third": 143.0
+  },
+  "Monroe": {
+   "corn_2021_25": 174.0,
+   "csr2_avg": 82.0,
+   "corn_high_third": 166.0,
+   "corn_mid_third": 138.0,
+   "corn_low_third": 93.0
+  },
+  "Union": {
+   "corn_2021_25": 189.0,
+   "csr2_avg": 85.0,
+   "corn_high_third": 176.0,
+   "corn_mid_third": 161.0,
+   "corn_low_third": 134.0
+  },
+  "Warren": {
+   "corn_2021_25": 190.0,
+   "csr2_avg": 85.0,
+   "corn_high_third": 176.0,
+   "corn_mid_third": 156.0,
+   "corn_low_third": 113.0
+  },
+  "Wayne": {
+   "corn_2021_25": 179.0,
+   "csr2_avg": 66.0,
+   "corn_high_third": 180.0,
+   "corn_mid_third": 161.0,
+   "corn_low_third": 141.0
+  },
+  "Davis": {
+   "corn_2021_25": 172.0,
+   "csr2_avg": 70.0,
+   "corn_high_third": 155.0,
+   "corn_mid_third": 128.0,
+   "corn_low_third": 100.0
+  },
+  "Des Moines": {
+   "corn_2021_25": 213.0,
+   "csr2_avg": 84.0,
+   "corn_high_third": 211.0,
+   "corn_mid_third": 187.0,
+   "corn_low_third": 173.0
+  },
+  "Henry": {
+   "corn_2021_25": 194.0,
+   "csr2_avg": 81.0,
+   "corn_high_third": 206.0,
+   "corn_mid_third": 176.0,
+   "corn_low_third": 148.0
+  },
+  "Jefferson": {
+   "corn_2021_25": 187.0,
+   "csr2_avg": 79.0,
+   "corn_high_third": 187.0,
+   "corn_mid_third": 164.0,
+   "corn_low_third": 129.0
+  },
+  "Mahaska & Keokuk": {
+   "corn_2021_25": 197.0,
+   "csr2_avg": 80.0,
+   "corn_high_third": 201.0,
+   "corn_mid_third": 182.0,
+   "corn_low_third": 155.0
+  },
+  "Lee": {
+   "corn_2021_25": 193.0,
+   "csr2_avg": 75.0,
+   "corn_high_third": 211.0,
+   "corn_mid_third": 174.0,
+   "corn_low_third": 149.0
+  },
+  "Louisa": {
+   "corn_2021_25": 204.0,
+   "csr2_avg": 80.0,
+   "corn_high_third": 214.0,
+   "corn_mid_third": 189.0,
+   "corn_low_third": 155.0
+  },
+  "Wapello": {
+   "corn_2021_25": 198.0,
+   "csr2_avg": 81.0,
+   "corn_high_third": 193.0,
+   "corn_mid_third": 175.0,
+   "corn_low_third": 153.0
+  },
+  "Van Buren": {
+   "corn_2021_25": 168.0,
+   "csr2_avg": 73.0,
+   "corn_high_third": 177.0,
+   "corn_mid_third": 148.0,
+   "corn_low_third": 121.0
+  },
+  "Washington": {
+   "corn_2021_25": 207.0,
+   "csr2_avg": 82.0,
+   "corn_high_third": 204.0,
+   "corn_mid_third": 173.0,
+   "corn_low_third": 154.0
   }
  }
 }
