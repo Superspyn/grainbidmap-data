@@ -138,7 +138,7 @@ function setLabel(s){
   return `${s.d} · grid, ${s.pts.length} points`;}
 function isScaled(f){const s=activeSet(f);return !!s&&s.kind==='scaled';}
 const SCALED_NOTE=n=>`A 2026 whole-field test on an older grid's pattern. The ${n.from_grid.slice(0,4)} grid says where the good ground is; the ${n.d} composite says what the field tests now, so every point was moved by the same amount its field average moved. A derived reading, not a lab result.`;
-function pickSet(f,v){setPick[f]=+v;clearOv();
+function pickSet(f,v){setPick[f]=+v;clearOv();renderPts();
   // The sidebar badge and the map tooltips both read activeInfo(), so they
   // go stale unless they are redrawn too.
   uSB();rfM();rP();showInterp();}
@@ -813,7 +813,8 @@ function render(){
       <div class="pill"><span class="d"></span>${B.features.length} fields · ${Object.keys(FP).length} soil-sampled · ${Object.keys(YMAPS).length} with yield maps · planning ${META.plan_year}</div></div></div>
     <div class="sb"><input class="sb-input" placeholder="Search fields..." value="${attr(sq)}" oninput="uSrch(this.value)"/><h3>Farm Fields</h3><div class="fl">${rFL()}</div></div>
     <div class="mc"><div id="map"></div>
-      <div class="mo"><button class="mb ${mLyr==='satellite'?'a':''}" onclick="sML('satellite')">Satellite</button><button class="mb ${mLyr==='topo'?'a':''}" onclick="sML('topo')">Topo</button><button class="mb ${mLyr==='roads'?'a':''}" onclick="sML('roads')">Roads</button></div>
+      <div class="mo"><button class="mb ${mLyr==='satellite'?'a':''}" onclick="sML('satellite')">Satellite</button><button class="mb ${mLyr==='topo'?'a':''}" onclick="sML('topo')">Topo</button><button class="mb ${mLyr==='roads'?'a':''}" onclick="sML('roads')">Roads</button>
+        <button class="mb ${ptsOn?'a':''}" id="ptsBtn" title="Show the lab's own sample points. Click a pin for everything that sample tested." onclick="togglePts()">📍 Sample points</button></div>
       <div class="ns" id="nsel">${rNS()}</div>
       <div class="ns" id="fchips" style="top:44px;white-space:nowrap;display:none"></div>
       <div class="lg" id="legend"></div>
@@ -1307,7 +1308,7 @@ function rZones(){
 // hurting something). The bar under it stays on the ISU categories.
 const VERDICT={low:['Too low','var(--dn)'],bit:['A bit low','#f97316'],good:['Good','var(--ac)'],plenty:['Plenty','var(--in)'],high:['Too high','#8b5cf6'],info:['For reference','var(--tx2)']};
 function plainWords(n,v,lt){
-  const w=(k,txt)=>({k,label:VERDICT[k][0],color:VERDICT[k][1],txt});
+  const w=(k,txt,label)=>({k,label:label||VERDICT[k][0],color:VERDICT[k][1],txt});
   switch(n){
     case 'p':
       if(v<=9)return w('low','The crop will run short. Build it up.');
@@ -1325,7 +1326,7 @@ function plainWords(n,v,lt){
       if(v<5.5)return w('low','Too acid. Yields suffer and P and K are locked up. Lime.');
       if(v<6.0)return w('bit','A little acid for corn and beans. Lime pays.');
       if(v<=7.3)return w('good','Where corn and beans want it. No lime.');
-      if(v<=7.8)return w('plenty','On the high side. Zinc, manganese and iron get harder for the crop to take up; watch beans for yellowing. Do not lime.');
+      if(v<=7.8)return w('plenty','On the high side. Zinc, manganese and iron get harder for the crop to take up; watch beans for yellowing. Do not lime.','A bit high');
       return w('high','Alkaline. Iron and zinc tie-up is likely, especially in beans. It cannot be brought down cheaply; pick tolerant varieties and feed zinc if the test is low.');
     case 'om':
       if(v<2)return w('bit','Light ground that holds little water or nitrogen. Cover and residue help.');
@@ -1700,7 +1701,7 @@ function setPreset(nut,preset){
 
 // Map
 function initMap(){
-  if(map){map.remove();map=null;canvasOverlay=null;}
+  if(map){map.remove();map=null;canvasOverlay=null;ptsLayer=null;}
   map=L.map('map',{zoomControl:false,attributionControl:false}).setView([42.7,-93.8],8);
   L.control.zoom({position:'bottomright'}).addTo(map);
   sTiles();addBounds();
@@ -1736,6 +1737,77 @@ function addBounds(){
   }).addTo(map);
 }
 
+// The lab's own sample points, on top of whatever map is showing.
+//
+// Every map on this page is interpolated: the colour between the samples is
+// a guess from the four nearest. These pins are the readings themselves, so
+// you can see where the lab actually went and what it found there. They ride
+// over every map view, and each pin is coloured the way that map colours
+// that spot, so a pin that looks out of place against its surroundings is
+// a spot the interpolation had to smooth over.
+let ptsOn=false,ptsLayer=null;
+function togglePts(){ptsOn=!ptsOn;const b=document.getElementById('ptsBtn');if(b)b.classList.toggle('a',ptsOn);renderPts();}
+// The colour this map would give one sample's reading.
+function ptColor(pt){
+  if(hNut==='fert'){const v=fertScore(pt);return v==null?'#94a3b8':`rgb(${FERT_COLORS[Math.min(4,FERT_BREAKS.filter(b=>v>b).length)].join(',')})`;}
+  if(hNut==='gap'){const fs=fertScore(pt),r=svRatingAt(sel,pt.x,pt.y);
+    if(fs==null||r==null)return'#94a3b8';
+    const g=100+r-fs;return `rgb(${GAP_COLORS[Math.min(4,GAP_BREAKS.filter(b=>g>=b).length)].join(',')})`;}
+  if(hNut==='vr'){const fn=currentRateFn(sel),v=fn(pt,pt.x,pt.y);
+    if(v==null)return'#94a3b8';
+    const r=lastVR;if(!r||!(r.vmax>0))return'rgb(40,95,200)';
+    const cols=rateColors(r),nz=cols.length,rgb=c=>`rgb(${c[0]},${c[1]},${c[2]})`;
+    if(r.zeroZone)return rgb(v<=0?cols[0]:cols[Math.min(nz-1,1+Math.floor(v/r.vmax*(nz-1)))]);
+    return rgb(cols[Math.min(nz-1,Math.floor((v-r.vmin)/((r.vmax-r.vmin)||1)*nz))]);}
+  if(hNut==='yield'){const v=yieldIndexAt(sel,pt.x,pt.y);
+    if(v==null)return'#94a3b8';
+    let k=0;while(k<YIELD_BREAKS.length&&v>=YIELD_BREAKS[k])k++;
+    return `rgb(${YIELD_COLORS[k].join(',')})`;}
+  if(isSurvey(hNut)){const v=svValue((svPieces(sel).find(pc=>{const rings=pc.rings.map(rg=>rg.map(q=>[q[1],q[0]]));return pip(pt.x,pt.y,rings[0])&&!rings.slice(1).some(h=>pip(pt.x,pt.y,h));})||{}).mukey);
+    return svColor(v);}
+  const v=pt[hNut];if(v==null)return'#94a3b8';
+  const bk=mapBreaks(hNut);if(!bk)return'#94a3b8';
+  const cols=bandColors(bk.length+1);let z=0;while(z<bk.length&&v>bk[z])z++;
+  const c=cols[Math.min(cols.length-1,z)];return `rgb(${c[0]},${c[1]},${c[2]})`;
+}
+// Everything that sample tested, in the order a report prints it.
+const PT_ROWS=[['p','Phosphorus'],['k','Potassium'],['ph','Soil pH'],['bph','Buffer pH'],['om','Organic matter'],
+  ['cec','CEC'],['s','Sulfur'],['zn','Zinc'],['ca','Calcium'],['mg','Magnesium'],['mn','Manganese'],
+  ['cu','Copper'],['b','Boron'],['fe','Iron'],['na','Sodium'],['bs_k','K saturation'],['bs_ca','Ca saturation'],
+  ['bs_mg','Mg saturation'],['bs_h','H saturation'],['ec','Salts (EC)']];
+function ptPopup(pt,composite){
+  const fs=fertScore(pt),r=svRatingAt(sel,pt.x,pt.y);
+  const rate=(panelTab==='vr')?currentRateFn(sel)(pt,pt.x,pt.y):null;
+  const rows=PT_ROWS.map(([k,nm])=>{const v=pt[k];if(v==null)return'';
+    const t=TH[k],pw=plainWords(k,v,pt);
+    const u=k.startsWith('bs_')?'%':(t&&t.u?t.u:'');
+    return `<tr><td style="padding:1px 8px 1px 0;color:var(--tx2)">${nm}</td>
+      <td style="padding:1px 6px 1px 0;font-family:'JetBrains Mono',monospace;font-weight:600;text-align:right">${v}${u?' '+u:''}</td>
+      <td style="padding:1px 0;color:${pw?pw.color:'var(--tx2)'};font-weight:600">${pw?pw.label:(t?gSL(gSt(k,v)):'')}</td></tr>`;}).join('');
+  return `<div style="min-width:210px;max-height:300px;overflow:auto">
+    <div style="font-weight:700;margin-bottom:2px">Sample ${pt.id!=null?pt.id:''}</div>
+    <div style="font-size:9px;color:var(--tx2);margin-bottom:5px">${activeInfo(sel).d}${composite?' &middot; composite, one lab sample spread over the field':''}</div>
+    ${fs!=null?`<div style="font-size:10px;margin-bottom:4px">Fertility here <b>${fs}/100</b>${r!=null?` &middot; ground rates <b>${r.toFixed(0)}</b>`:''}${rate!=null?` &middot; ${NUTRIENT_NAME[rxNut]} <b>${rate} lb/ac</b>`:''}</div>`:''}
+    <table style="font-size:10px;border-collapse:collapse">${rows}</table></div>`;
+}
+function renderPts(){
+  if(ptsLayer){map.removeLayer(ptsLayer);ptsLayer=null;}
+  if(!ptsOn||!sel||!map)return;
+  const set=activeSet(sel);if(!set||!set.pts||!set.pts.length)return;
+  const composite=isComposite(sel);
+  // A composite is one lab sample spread over the field as identical
+  // pseudo-points; hundreds of pins all reading the same thing would be a
+  // lie about where the lab went. One pin in the middle, labelled.
+  const pts=composite?[set.pts[Math.floor(set.pts.length/2)]]:set.pts;
+  ptsLayer=L.layerGroup();
+  for(const pt of pts){
+    const m=L.circleMarker([pt.y,pt.x],{radius:composite?7:4,color:'#fff',weight:1,opacity:.9,
+      fillColor:ptColor(pt),fillOpacity:.95});
+    m.bindPopup(()=>ptPopup(pt,composite),{maxWidth:280});
+    ptsLayer.addLayer(m);
+  }
+  ptsLayer.addTo(map);
+}
 function clearOv(){
   if(canvasOverlay){
     if(Array.isArray(canvasOverlay))canvasOverlay.forEach(l=>map.removeLayer(l));
@@ -1744,7 +1816,7 @@ function clearOv(){
   }
 }
 
-function zoomSel(){if(fLayers[sel])map.fitBounds(fLayers[sel].getBounds(),{padding:[40,40],maxZoom:16});}
+function zoomSel(){renderPts();if(fLayers[sel])map.fitBounds(fLayers[sel].getBounds(),{padding:[40,40],maxZoom:16});}
 function renderSurvey(f){
   const pcs=svPieces(f);if(!pcs.length)return null;
   const group=L.layerGroup();
@@ -1758,7 +1830,7 @@ function renderSurvey(f){
   return group.addTo(map);
 }
 function showInterp(){
-  clearOv();updateLegend();if(!sel||!map)return;
+  clearOv();updateLegend();setTimeout(renderPts,0);if(!sel||!map)return;
   if(hNut==='vr'){
     if(panelTab!=='vr'){leaveVR();}
     else{const fp=FP[sel];if(!fp||!fp.sets.length)return;
@@ -2679,7 +2751,7 @@ function uSB(){
   if(inp&&list){if(inp.value!==sq)inp.value=sq;list.innerHTML=rFL();return;}
   box.innerHTML=`<input class="sb-input" placeholder="Search fields..." value="${attr(sq)}" oninput="uSrch(this.value)"/><h3>Farm Fields</h3><div class="fl">${rFL()}</div>`;
 }
-function rfM(){if(!map)return;map.eachLayer(l=>{if(l.feature)map.removeLayer(l);});addBounds();}
+function rfM(){if(!map)return;map.eachLayer(l=>{if(l.feature)map.removeLayer(l);});addBounds();renderPts();}
 function rP(){document.querySelector('.pn').innerHTML=sel?rFP():rEP();}
 
 render();
