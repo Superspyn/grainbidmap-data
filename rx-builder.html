@@ -522,7 +522,28 @@ function snapToLattice(pts,cosLat){
   const cx=cluster(P.map(q=>q[0]),0.45*sp/cosLat),cy=cluster(P.map(q=>q[1]),0.45*sp);
   const ncx=new Set(cx).size,ncy=new Set(cy).size;
   if(ncx<2||ncy<2||ncx*ncy<n*0.5||ncx*ncy>n*4)return P;
-  return P.map((q,i)=>[cx[i],cy[i]]);
+  // A pin is only moved if the move is small. Where the columns or rows
+  // are staggered or the grid is not square to north, the clustering can
+  // shove a pin most of a spacing - on one field 294 m - and it would
+  // then land inside a neighbour's square, showing as a red pin on a
+  // green block. Past a third of a spacing the pin keeps its true spot
+  // and its block is cut around that.
+  const lim=0.35*sp;
+  const S=P.map((q,i)=>{const dx=(q[0]-cx[i])*cosLat,dy=q[1]-cy[i];return Math.hypot(dx,dy)<=lim?[cx[i],cy[i]]:q;});
+  // Two pins snapped onto the same node would be one block with two
+  // readings, and whichever came first would win. Both keep their true
+  // positions instead.
+  const seen={};for(let i=0;i<n;i++){if(S[i]===P[i])continue;const k=S[i][0].toFixed(8)+','+S[i][1].toFixed(8);if(seen[k]!=null){S[seen[k]]=P[seen[k]];S[i]=P[i];}else seen[k]=i;}
+  // And a pin must still be nearest its own snapped spot, or its own
+  // square would read a neighbour's sample. Where the columns come out
+  // unevenly spaced that can happen even with a small move; such a pin
+  // keeps its true position, and so do its neighbours' if they in turn
+  // fail, until every pin owns the ground it stands on.
+  for(let pass=0;pass<4;pass++){let changed=false;
+    for(let i=0;i<n;i++){if(S[i]===P[i])continue;const dx0=(P[i][0]-S[i][0])*cosLat,dy0=P[i][1]-S[i][1],own=dx0*dx0+dy0*dy0;
+      for(let j=0;j<n;j++){if(j===i)continue;const dx=(P[i][0]-S[j][0])*cosLat,dy=P[i][1]-S[j][1];if(dx*dx+dy*dy<own){S[i]=P[i];changed=true;break;}}}
+    if(!changed)break;}
+  return S;
 }
 function genRaster(fieldName,nut,setIdx,isRate,rateFn,breaks){
   const fp=FP[fieldName];if(!fp||!fp.sets.length)return null;
@@ -1680,7 +1701,7 @@ function rVR(){
       <div class="rxr"><label>As product</label><select onchange="rxProd[rxNut]=+this.value;rP()">${PRODUCTS[rxNut].map((p,i)=>`<option value="${i}" ${(rxProd[rxNut]||0)===i?'selected':''}>${p.name}</option>`).join('')}</select>
         <input type="number" value="${Math.round(prod.pct*100)}" min="1" max="100" style="max-width:52px;flex:none" title="analysis: % of the product that is the nutrient" onchange="PRODUCTS[rxNut][rxProd[rxNut]||0].pct=Math.min(100,Math.max(1,+this.value))/100;rP()"/><span style="font-size:8px;color:var(--tx2)">%</span></div>
       <div class="rxr"><label>Crop</label><select onchange="rxCrop=this.value;rxYG=defaultGoal(sel,rxCrop);rP();showVRInterp()"><option value="corn" ${rxCrop==='corn'?'selected':''}>Corn</option><option value="soybean" ${rxCrop==='soybean'?'selected':''}>Soybean</option></select></div>
-      <div class="rxr"><label>Yield Goal</label><input type="number" value="${rxYG}" onchange="rxYG=+this.value;rP();showVRInterp()"/></div>
+      <div class="rxr"><label>Yield Goal</label><input type="number" value="${rxYG}" oninput="rxYG=+this.value||rxYG;clearTimeout(window._ygT);window._ygT=setTimeout(showVRInterp,500)" onchange="rxYG=+this.value||rxYG;rP();showVRInterp()"/></div>
       ${(rxNut==='p'||rxNut==='k')?`<div style="font-size:8px;color:var(--tx2);padding:2px 0 6px 86px;line-height:1.4">Removal: ${effYG}×${removalPerBu(rxNut,rxCrop).toFixed(2)} = <b style="color:var(--tx)">${Math.round(effYG*removalPerBu(rxNut,rxCrop))} lb ${rxNut==='p'?'P₂O₅':'K₂O'}/ac</b> <span class="source-tag">ISU 2023</span>${ym.length?' at the field average; more where it yields more':''}</div>${goalGapNote(cropAvg,effYG,prod)}${ceilingNote(effYG)}`:''}
       <div class="rxr"><label>Prev Crop</label><select onchange="rxPC=this.value;rP();showVRInterp()"><option value="soybean" ${rxPC==='soybean'?'selected':''}>Soybean</option><option value="corn" ${rxPC==='corn'?'selected':''}>Corn</option></select></div>
       ${(rxNut==='p'||rxNut==='k')?`<div class="rxr"><label>Rate basis</label><div class="presets" style="margin:0">
