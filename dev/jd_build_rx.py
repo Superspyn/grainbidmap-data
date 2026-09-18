@@ -41,6 +41,10 @@ SURVEY = SECRETS / "ssurgo.json"
 WEATHER = SECRETS / "weather.json"
 OUTPUT = SECRETS / "rx-builder.html"
 SOURCE = pathlib.Path(__file__).resolve().parent.parent / "rx-builder.html"
+# Public reference numbers for the yield planner: Iowa county yields (RMA),
+# the state record, the Hybrid-Maize yield-potential sites and the NCGA
+# contest winners. Nothing of the farm's in it, so it lives in the repo.
+BENCH = pathlib.Path(__file__).resolve().parent / "data" / "iowa_corn_benchmarks.json"
 MARKER = "// ====== Field data (baked in by dev/jd_build_rx.py) ======"
 
 PLAN_YEAR = 2027
@@ -600,6 +604,8 @@ def main() -> None:
         except Exception as e:  # numpy missing, or too few rows
             print(f"  yield model not fitted: {e}")
 
+    bench = read_json(BENCH, {}) or {}
+
     meta = {"generated": now_iso(), "plan_year": PLAN_YEAR,
             "fields": len(features), "sampled": len(soil_by_field),
             "with_history": len(ops_by_field), "with_yield_maps": len(ymaps),
@@ -614,6 +620,7 @@ def main() -> None:
         js_const("SURVEY", survey),
         js_const("WX", wx),
         js_const("YMODEL", ymodel),
+        js_const("BENCH", bench),
     ])
 
     html = SOURCE.read_text(encoding="utf-8")
