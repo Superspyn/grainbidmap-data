@@ -1879,8 +1879,72 @@ function rBenchmarks(pl){
     <div class="dn" style="margin-top:6px;margin-bottom:0">${verdict} Yield potential is the Hybrid-Maize model's figure for this ground and weather with nutrients, pests and stand not limiting; your own record is what happened under your management, fertilizer every year included, so it says less about the ceiling than these do.</div>
   </div>`;
 }
+// ---- The estimate: built from the calculator's inputs and published
+// numbers only. Nothing from this farm's yield monitors is in it.
+//
+//   start   what ground rated like this makes in its county in an average
+//           season: the county's 2021-25 average corn yield divided by the
+//           county's average CSR2 (both from Iowa State's 2026 rent survey)
+//           gives bushels per CSR2 point; times this field's CSR2.
+//   x pop   the Minnesota stand curve.
+//   x date  Iowa State: 100% through May 9, 95% by May 18, then down
+//           about 0.75% a day.
+//   x frost Purdue (Carter & Hesterman 1990): a killing frost before black
+//           layer costs 12% at half milk line, 41% at full dent, 55% at
+//           soft dough. A hybrid short of its GDD by up to 150 is taken at
+//           half milk line, up to 350 at dent, beyond that at dough.
+//   - rain  Nebraska Extension: 13.3 bu for each inch short of normal.
+// Fertility is taken as fertilized per the table below, so no loss. Hail
+// is left to insurance.
+function svCSR2Avg(f){let num=0,den=0;for(const pc of svPieces(f)){const u=SV.mapunits[pc.mukey];if(!u||u.csr2==null)continue;num+=u.csr2*pc.ac;den+=pc.ac;}return den?num/den:null;}
+function iowaBuPerPoint(){if(!BN||!BN.county_survey)return null;const v=Object.values(BN.county_survey);if(!v.length)return null;
+  return v.reduce((s,c)=>s+c.corn_2021_25,0)/v.reduce((s,c)=>s+c.csr2_avg,0);}
+function plantingFactor(doy){if(doy<=129)return 1;if(doy<=138)return 1-0.05*(doy-129)/9;return Math.max(0.4,0.95-0.0075*(doy-138));}
+function frostLoss(short){if(short<=0)return 0;if(short<=150)return 0.12;if(short<=350)return 0.41;return 0.55;}
+function yieldEstimate(pl){
+  const bu=v=>Math.round(v);
+  const cs=fieldCounty(sel),survey=cs&&BN.county_survey?BN.county_survey[cs.name]:null;
+  const csr=svCSR2Avg(sel),rating=csr!=null?csr:pl.rating;
+  let perPoint,startWhy;
+  if(survey){perPoint=survey.corn_2021_25/survey.csr2_avg;
+    startWhy=`${cs.name} County averaged <b>${survey.corn_2021_25} bu</b> in 2021-25 on ground averaging <b>CSR2 ${survey.csr2_avg}</b> (ISU rent survey): ${perPoint.toFixed(2)} bu a point. This field's ${csr!=null?'CSR2':'rating'} is <b>${rating.toFixed(0)}</b>.`;}
+  else{perPoint=iowaBuPerPoint()||2.7;
+    startWhy=`No Iowa county survey for this ground, so Iowa's average of ${perPoint.toFixed(2)} bu a CSR2 point is used against this field's ${csr!=null?'CSR2':'rating (NCCPI, an approximation for CSR2)'} of <b>${rating.toFixed(0)}</b>.`;}
+  const start=perPoint*rating;
+  const pf=popFactor(plPop);
+  const df=plantingFactor(pl.doy);
+  const short=Math.max(0,pl.need-pl.avail),fl=frostLoss(short);
+  const normal=pl.wx.rain||24,rain=plRainIn!=null?plRainIn:normal,rainLoss=rain<normal?(normal-rain)*BU_PER_INCH:0;
+  const a1=start*pf,a2=a1*df,a3=a2*(1-fl),est=Math.max(0,a3-rainLoss);
+  const steps=[
+    ['Start',`${rating.toFixed(0)} × ${perPoint.toFixed(2)}`,start,startWhy],
+    ['Population',`× ${pf.toFixed(2)}`,a1,`${plPop.toLocaleString()} seeds: ${bu(pf*100)}% of the maximum on the Minnesota stand curve.`],
+    ['Planting date',`× ${df.toFixed(2)}`,a2,`${doyDate(pl.doy)}: Iowa State's window gives 100% through May 9 and 95% by May 18, then about 0.75% a day.`],
+    ['Hybrid fit',`× ${(1-fl).toFixed(2)}`,a3,short>0?`${pl.rm}-day short by ${bu(short)} GDD to first frost: frost ${short<=150?'near half milk line, 12%':short<=350?'at full dent, 41%':'at soft dough, 55%'} loss (Purdue).`:`${pl.rm}-day makes black layer with ${bu(pl.avail-pl.need)} GDD to spare: no loss.`],
+    ['Rain',`− ${bu(rainLoss)}`,est,rainLoss>0?`${rain.toFixed(1)} in against a normal ${normal.toFixed(1)}: ${(normal-rain).toFixed(1)} in short at Nebraska's 13.3 bu an inch.`:`${rain.toFixed(1)} in, at or above the normal ${normal.toFixed(1)}: nothing taken off, nothing added.`],
+  ];
+  return{est,steps,start,perPoint,rating,survey,cs,factor:pf*df*(1-fl),rainLoss};
+}
 // What population, rain and the hybrid do to the goal, on published
 // curves rather than this farm's history.
+function rEstimate(pl){
+  const bu=v=>Math.round(v);
+  const e=yieldEstimate(pl);
+  const gap=plGoal-e.est;
+  return `<div class="fc" style="padding:8px;margin-top:8px">
+    <div style="display:flex;gap:8px;margin-bottom:6px">
+      <div style="flex:1"><div class="lb">Estimated yield</div><div class="vl" style="color:${e.est>=plGoal?'var(--ac)':'var(--tx)'}">${bu(e.est)} bu</div></div>
+      <div style="flex:1"><div class="lb">Goal</div><div class="vl">${plGoal} bu</div></div>
+      <div style="flex:1"><div class="lb">${gap>0?'Short by':'Over by'}</div><div class="vl" style="color:${gap>0?'var(--dn)':'var(--ac)'}">${bu(Math.abs(gap))} bu</div></div>
+    </div>
+    <div class="lb" style="margin-bottom:3px">The math <span class="source-tag">published numbers only</span></div>
+    ${e.steps.map(([nm,op,run,why])=>`<div class="vr-zone" style="flex-wrap:wrap;align-items:flex-start"><span class="vr-range" style="flex:1"><b>${nm}</b> <span style="color:var(--tx2)">${why}</span></span><span class="vr-rate" style="font-family:'JetBrains Mono',monospace;white-space:nowrap">${op} = <b>${bu(run)}</b></span></div>`).join('')}
+    <div class="dn" style="margin-top:6px;margin-bottom:0">${gap>0
+      ?`To reach <b>${plGoal}</b> with the other lines as they are, the start would have to be <b>${bu((plGoal+e.rainLoss)/e.factor)}</b>, which is CSR2 <b>${bu((plGoal+e.rainLoss)/e.factor/e.perPoint)}</b> on this county's ${e.perPoint.toFixed(2)} bu a point; or the other lines have to give it back. ${e.survey?`The best third of ${e.cs.name} County ground averaged <b>${e.survey.corn_high_third}</b> in 2018-22 (USDA NASS), the middle third ${e.survey.corn_mid_third}.`:''}`
+      :`The inputs as set reach the goal. ${e.survey?`For scale, the best third of ${e.cs.name} County ground averaged <b>${e.survey.corn_high_third}</b> in 2018-22 (USDA NASS).`:''}`}
+      Fertility is taken as fertilized per the table below. Nothing here comes from this farm's yield monitors.</div>
+  </div>`;
+}
 function rFactors(pl){
   const bu=v=>Math.round(v);
   const pf=popFactor(plPop),popLoss=plGoal*(1-pf);
@@ -1946,6 +2010,7 @@ function rPlan(){
       <div class="rxr"><label>Population</label><input type="number" value="${plPop}" min="16000" max="50000" step="1000" onchange="plPop=+this.value;rP()"/><span style="font-size:8px;color:var(--tx2)">seeds/ac · ISU: max yield near 35,000, best return 3-5,000 under it</span></div>
       <div class="rxr"><label>Season rain</label><input type="number" value="${plRainIn!=null?plRainIn:(pl.wx.rain||24).toFixed(1)}" min="5" max="45" step="0.5" onchange="plRainIn=+this.value;rP()"/><span style="font-size:8px;color:var(--tx2)">inches Apr-Sep · normal here ${(pl.wx.rain||0).toFixed(1)}${pl.wx.rain_sd?` ± ${pl.wx.rain_sd.toFixed(1)}`:''}</span></div>
     </div>
+    ${rEstimate(pl)}
     ${rFactors(pl)}
 
     <div class="fc" style="padding:8px;margin-top:8px">
