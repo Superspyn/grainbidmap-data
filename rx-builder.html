@@ -1729,10 +1729,45 @@ function ceilingNote(goal){
 const YM=(typeof YMODEL!=='undefined'&&YMODEL&&YMODEL.a!=null)?YMODEL:null;
 const WXD=(typeof WX!=='undefined')?WX:{cells:{},fields:{}};
 let plGoal=300,plRM=null,plPlant=null,plMode='normal',plYear=null,plGdd=null,plRain=null,plHail=5,plHailLoss=30,plFert=true;
+let plPop=34000,plRainIn=null,plHybrid=null;
+// Yield against final stand, as a share of the maximum. University of
+// Minnesota, 2005-2011, 228 plots per point: 100% from 32,000 up to
+// 44,000, 99% at 29,000, 96% at 26,000, 87% at 20,000. Iowa State puts
+// the maximum near 35,000 and the economic optimum 3,000-5,000 under it.
+const POP_CURVE=[[20000,0.87],[26000,0.96],[29000,0.99],[32000,1.0],[44000,1.0]];
+function popFactor(pop){
+  if(pop<=POP_CURVE[0][0])return POP_CURVE[0][1]-(POP_CURVE[0][0]-pop)/1000*0.02;   // below the table: 2% a thousand, extrapolated
+  for(let i=1;i<POP_CURVE.length;i++){const[x0,y0]=POP_CURVE[i-1],[x1,y1]=POP_CURVE[i];if(pop<=x1)return y0+(pop-x0)/(x1-x0)*(y1-y0);}
+  return 1.0;}
+// Water: Nebraska Extension's rule for corn, about 13.3 bu for every inch
+// above an 11-inch threshold, and high-yield corn using 22-30 inches over
+// the season. Rain short of normal is charged at that rate; rain above
+// normal is not credited, because Iowa ground stores enough that a wet
+// year is as likely to cost as to pay, and no source prices that.
+const BU_PER_INCH=13.3;
+// Every corn hybrid planted on the farm, most-planted first, with its
+// maturity read off the Pioneer name. Names that do not parse are kept
+// so the list is honest about what went in the ground.
+let hybridList=null;
+function farmHybrids(){
+  if(hybridList)return hybridList;
+  const n={};
+  for(const o of Object.values(OPS))for(const s of Object.values(o.seasons)){
+    if(cropKey(s.crop)!=='corn')continue;
+    for(const v of (s.varieties||[])){const k=String(v).trim();if(!k||k.length<4)continue;
+      const e=n[k]||(n[k]={name:k,rm:hybridRM(k),n:0,years:new Set()});e.n++;e.years.add(+Object.keys(o.seasons).find(y=>o.seasons[y]===s));}}
+  return hybridList=Object.values(n).map(e=>Object.assign(e,{years:[...e.years].sort()})).sort((a,b)=>b.n-a.n);
+}
+function fieldHybrids(f){const o=OPS[f];if(!o)return[];const out=[];
+  for(const[y,s]of Object.entries(o.seasons))if(cropKey(s.crop)==='corn')for(const v of(s.varieties||[]))if(String(v).length>=4)out.push({year:+y,name:v,rm:hybridRM(v)});
+  return out.sort((a,b)=>b.year-a.year);}
 function fieldWX(f){const c=WXD.fields[f];return c?WXD.cells[c]:null;}
 // Pioneer corn names carry the maturity: P0421Q is a 104, P1185Q a 111,
 // P9929AMXT a 99. Soybeans read P28Z30E and do not match.
-function hybridRM(name){const m=/^P(\d{2})(\d{2})[A-Z]/i.exec(String(name||'').trim());if(!m)return null;const a=+m[1];return a<50?100+a:a;}
+// Tolerant of the two ways the names get typed into the monitor: a
+// letter O for the zero (PO339AMXT) and a fifth digit tacked on (P08527V
+// is the 108-day P0852). The maturity is always the first two digits.
+function hybridRM(name){const m=/^P(\d{2})\d{2,3}[A-Z]/i.exec(String(name||'').trim().replace(/^PO(?=\d)/i,'P0'));if(!m)return null;const a=+m[1];return a<50?100+a:a;}
 function fieldRM(f){const o=OPS[f];if(!o)return null;
   const yrs=Object.keys(o.seasons).map(Number).sort((a,b)=>b-a);
   for(const y of yrs){const s=o.seasons[String(y)];if(cropKey(s.crop)!=='corn')continue;
@@ -1839,6 +1874,30 @@ function rBenchmarks(pl){
     <div class="dn" style="margin-top:6px;margin-bottom:0">${verdict} Yield potential is the Hybrid-Maize model's figure for this ground and weather with nutrients, pests and stand not limiting; your own record is what happened under your management, fertilizer every year included, so it says less about the ceiling than these do.</div>
   </div>`;
 }
+// What population, rain and the hybrid do to the goal, on published
+// curves rather than this farm's history.
+function rFactors(pl){
+  const bu=v=>Math.round(v);
+  const pf=popFactor(plPop),popLoss=plGoal*(1-pf);
+  const normal=pl.wx.rain||24,rain=plRainIn!=null?plRainIn:normal;
+  const rainLoss=rain<normal?(normal-rain)*BU_PER_INCH:0;
+  const attain=plGoal*pf-rainLoss;
+  const needGoal=(plGoal+rainLoss)/pf;
+  const fh=fieldHybrids(sel);
+  const rows=[
+    ['Population',`${plPop.toLocaleString()} seeds an acre is ${bu(pf*100)}% of the maximum on the Minnesota curve (100% from 32,000 up; 99% at 29,000; 96% at 26,000; 87% at 20,000). Stand is usually 5-10% under the seeding rate.`,-popLoss],
+    ['Rain',rain<normal?`${rain.toFixed(1)} in against a normal ${normal.toFixed(1)}: ${(normal-rain).toFixed(1)} in short, at Nebraska's ${BU_PER_INCH} bu an inch.`:`${rain.toFixed(1)} in, at or above the normal ${normal.toFixed(1)}. Extra rain is not credited: Iowa ground stores enough that a wet year costs as often as it pays.`,-rainLoss],
+    ['Hybrid',`${pl.rm}-day${plHybrid?` (${plHybrid})`:''} needs about ${bu(pl.need)} GDD; planted ${doyDate(pl.doy)} this spot gives ${bu(pl.avail)} to first frost. ${pl.avail>=pl.need?`Fits, ${bu(pl.avail-pl.need)} to spare.`:`${bu(pl.need-pl.avail)} short: it will not make black layer in a normal year.`} Longer hybrids gain about 1 bu a maturity day where they fit, by the seed companies' rule of thumb.`,pl.avail>=pl.need?0:null],
+  ];
+  return `<div class="fc" style="padding:8px;margin-top:8px">
+    <div class="lb" style="margin-bottom:3px">What these do to a ${plGoal} bu goal <span class="source-tag">published curves</span></div>
+    ${rows.map(([nm,why,v])=>`<div class="vr-zone" style="flex-wrap:wrap"><span class="vr-range" style="flex:1"><b>${nm}</b> <span style="color:var(--tx2)">${why}</span></span><span class="vr-rate" style="color:${v==null?'var(--dn)':v<0?'var(--dn)':'var(--ac)'}">${v==null?'does not fit':v<0?bu(v)+' bu':'no loss'}</span></div>`).join('')}
+    <div class="dn" style="margin-top:6px;margin-bottom:0">${popLoss+rainLoss>0.5
+      ?`With that population and rain, a crop planned at ${plGoal} nets about <b>${bu(attain)}</b>. To net ${plGoal} you would plan for <b>${bu(needGoal)}</b> and fertilize for it; the table below uses ${plGoal} as typed.`
+      :`Population and rain cost nothing at these settings; the ${plGoal} goal stands.`}
+      ${fh.length?` This field has grown ${[...new Set(fh.map(h=>h.name))].slice(0,4).join(', ')}${[...new Set(fh.map(h=>h.name))].length>4?' and others':''} (${fh[fh.length-1].year}-${fh[0].year}). Iowa State's crop performance tests are the outside word on how hybrids compare: crops.extension.iastate.edu/corn-variety-trials.`:''}</div>
+  </div>`;
+}
 function rPlan(){
   if(!YM)return'<div class="dn">No corn yield model: run dev/jd_rx_weather.py and rebuild.</div>';
   const pl=yieldPlan(sel);if(!pl)return'<div class="dn">No soil rating under this field, so nothing to plan from.</div>';
@@ -1876,7 +1935,13 @@ function rPlan(){
       <div class="rxr"><label>Goal</label><input type="number" value="${plGoal}" min="50" max="500" step="10" onchange="plGoal=+this.value;rP()"/><span style="font-size:8px;color:var(--tx2)">bu/ac corn</span></div>
       <div class="rxr"><label>Hybrid</label><input type="number" value="${pl.rm}" min="85" max="120" onchange="plRM=+this.value;rP()"/><span style="font-size:8px;color:var(--tx2)">day RM${pl.rmInfo?` · last planted ${pl.rmInfo.names.slice(0,2).join(', ')} (${pl.rmInfo.year})`:' · farm median'}</span></div>
       <div class="rxr"><label>Planting</label><input type="date" value="2027-${String(new Date(2001,0,pl.doy).getMonth()+1).padStart(2,'0')}-${String(new Date(2001,0,pl.doy).getDate()).padStart(2,'0')}" onchange="plPlant=doyOf(this.value);rP()"/><span style="font-size:8px;color:var(--tx2)">${pl.doyField?`this field usually ${doyDate(pl.doyField)}`:''}</span></div>
+      <div class="rxr"><label>Pick hybrid</label><select onchange="if(this.value){plHybrid=this.value;const r=hybridRM(this.value);if(r)plRM=r;}rP()">
+        <option value="">${plHybrid?`${plHybrid}${hybridRM(plHybrid)?` · ${hybridRM(plHybrid)}-day`:''}`:'from what the farm has planted…'}</option>
+        ${farmHybrids().slice(0,40).map(h=>`<option value="${attr(h.name)}">${h.name}${h.rm?` · ${h.rm}-day`:''} · ${h.n} field-year${h.n===1?'':'s'} (${h.years[0]}${h.years.length>1?'-'+h.years[h.years.length-1]:''})</option>`).join('')}</select></div>
+      <div class="rxr"><label>Population</label><input type="number" value="${plPop}" min="16000" max="50000" step="1000" onchange="plPop=+this.value;rP()"/><span style="font-size:8px;color:var(--tx2)">seeds/ac · ISU: max yield near 35,000, best return 3-5,000 under it</span></div>
+      <div class="rxr"><label>Season rain</label><input type="number" value="${plRainIn!=null?plRainIn:(pl.wx.rain||24).toFixed(1)}" min="5" max="45" step="0.5" onchange="plRainIn=+this.value;rP()"/><span style="font-size:8px;color:var(--tx2)">inches Apr-Sep · normal here ${(pl.wx.rain||0).toFixed(1)}${pl.wx.rain_sd?` ± ${pl.wx.rain_sd.toFixed(1)}`:''}</span></div>
     </div>
+    ${rFactors(pl)}
 
     <div class="fc" style="padding:8px;margin-top:8px">
       <div class="lb" style="margin-bottom:4px">To grow ${plGoal} bu here, on top of what the ground has</div>
@@ -3046,7 +3111,7 @@ function runBatch(){
 
 // Events
 function tF(f){if(expanded.has(f))expanded.delete(f);else expanded.add(f);uSB();}
-function sF(f){sel=f;panelTab=FP[f]?'zones':'history';clearOv();leaveVR();plRM=null;plPlant=null;plGdd=null;plRain=null;
+function sF(f){sel=f;panelTab=FP[f]?'zones':'history';clearOv();leaveVR();plRM=null;plPlant=null;plGdd=null;plRain=null;plRainIn=null;plHybrid=null;
   {const ns=document.getElementById('nsel');if(ns)ns.innerHTML=rNS();}
   // Each field starts from its own rotation and history: the crop after
   // last season's, the previous crop as planted, a goal from its yields.

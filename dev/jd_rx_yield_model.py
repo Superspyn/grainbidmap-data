@@ -52,13 +52,16 @@ MIN_ACRES = 40
 # Pioneer corn: P + four digits, the first two being the relative maturity
 # less 100 (or the maturity itself in the 90s). P0421Q -> 104, P1185Q ->
 # 111, P9929AMXT -> 99. Soybeans read P28Z30E and never match this.
-PIONEER = re.compile(r"^P(\d{2})(\d{2})[A-Z]", re.I)
+PIONEER = re.compile(r"^P(\d{2})\d{2,3}[A-Z]", re.I)
 
 
 def hybrid_rm(name: str | None) -> int | None:
+    """Tolerant of the two ways the names get typed into the monitor: a
+    letter O for the zero (PO339AMXT) and a fifth digit tacked on
+    (P08527V is the 108-day P0852). The maturity is the first two digits."""
     if not name:
         return None
-    m = PIONEER.match(name.strip())
+    m = PIONEER.match(re.sub(r"^PO(?=\d)", "P0", name.strip(), flags=re.I))
     if not m:
         return None
     a = int(m.group(1))
