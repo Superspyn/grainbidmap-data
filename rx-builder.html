@@ -542,6 +542,16 @@ function genRaster(fieldName,nut,setIdx,isRate,rateFn,breaks){
       return rateFn(q,px,py);
     };
     vpts=pts.map(pt=>{const r=rateFn(pt,pt.x,pt.y);return r!=null?{x:pt.x,y:pt.y,_v:r}:null;}).filter(Boolean);
+    // Sample blocks: the rate is computed AT each sample, and every cell
+    // takes the rate of whichever sample is nearest. No blending between
+    // samples, so the map is the lab's grid drawn as squares, each square
+    // reading exactly what its own sample said.
+    if(rxShape==='blocks'&&rateFn!==fertScore&&!rateFn.continuous&&vpts.length){
+      const rated=pts.map(pt=>{const r=rateFn(pt,pt.x,pt.y);return r!=null?{x:pt.x,y:pt.y,_v:r}:null;}).filter(Boolean);
+      cellRate=(px,py)=>{let best=null,bd=Infinity;
+        for(const q of rated){const dx=(q.x-px)*cosLat,dy=q.y-py,d=dx*dx+dy*dy;if(d<bd){bd=d;best=q;}}
+        return best?best._v:null;};
+    }
   }else{
     vpts=pts.filter(p=>p[nut]!=null).map(p=>({x:p.x,y:p.y,_v:p[nut]}));
   }
@@ -683,7 +693,7 @@ function genRaster(fieldName,nut,setIdx,isRate,rateFn,breaks){
   // clears anything genuinely too small to spread.
   // One majority-vote pass tidies a rate map's zone edges; a nutrient map
   // is left exactly as the samples put it.
-  const modePasses=rateMap?1:0;
+  const modePasses=rateMap&&rxShape!=='blocks'?1:0;   // a block is already the unit
   for(let pass=0;pass<modePasses;pass++){
     const tmp=new Uint8Array(zoneGrid);
     const R2=2;
@@ -719,7 +729,7 @@ function genRaster(fieldName,nut,setIdx,isRate,rateFn,breaks){
   // operator can actually treat. (0 on a nutrient map: that one is a
   // picture of the soil, not an instruction, so nothing is smoothed away.)
   const MIN_ZONE_ACRES=2;
-  const minArea=rateMap?Math.max(4,Math.round(MIN_ZONE_ACRES/cellAcres({ymin:gymin,sny,sRES}))):0;
+  const minArea=rateMap?(rxShape==='blocks'?4:Math.max(4,Math.round(MIN_ZONE_ACRES/cellAcres({ymin:gymin,sny,sRES})))):0;
   // Measured on ground INSIDE the field, not on the padded raster. A patch
   // that is two acres across the grid but clips to a tenth of an acre
   // inside the boundary used to survive and ship as a polygon nobody can
@@ -846,6 +856,13 @@ let rxVary='both';
 // actually want; 'auto' gives as many as the spread has room for, up to
 // five. Ground that needs nothing keeps its own zone either way.
 let rxZones='hilo';
+// The shape a rate map is cut in. 'blocks': every sample owns the ground
+// nearest it, so a 1-acre grid gives 1-acre squares, a 2.5-acre grid
+// 2.5-acre squares, and the zones are unions of those - the way the lab's
+// own grid maps look, and what the farmer asked for after the smoothed
+// blobs. 'smooth': the rate surface interpolated from the four nearest
+// samples, tidied, then cut - the old way.
+let rxShape='blocks';
 let panelTab='zones',histNut='p',showModal=null,canvasOverlay=null;
 
 function render(){
@@ -1612,6 +1629,9 @@ function rVR(){
         <button class="preset-btn ${rxVary==='yield'?'act':''}" title="Removal follows the yield maps" onclick="rxVary='yield';rP();showVRInterp()">Yield maps</button>
         <button class="preset-btn ${rxVary==='rating'?'act':''}" title="Removal follows the soil survey rating (CSR2 and NCCPI), the same one the map menu shows" onclick="rxVary='rating';rP();showVRInterp()">Soil rating</button>
         <button class="preset-btn ${rxVary==='both'?'act':''}" title="The two averaged" onclick="rxVary='both';rP();showVRInterp()">Both</button></div></div>
+      <div class="rxr"><label>Shapes</label><div class="presets" style="margin:0">
+        <button class="preset-btn ${rxShape==='blocks'?'act':''}" title="Every sample owns the ground nearest it: 1-acre squares on a 1-acre grid" onclick="rxShape='blocks';rP();showVRInterp()">Sample blocks</button>
+        <button class="preset-btn ${rxShape==='smooth'?'act':''}" title="A surface blended from the four nearest samples, then tidied" onclick="rxShape='smooth';rP();showVRInterp()">Smooth</button></div></div>
       <div class="rxr"><label>Rate zones</label><div class="presets" style="margin:0">
         <button class="preset-btn ${rxZones==='hilo'?'act':''}" title="Two zones: a high rate and a low one" onclick="rxZones='hilo';rP();showVRInterp()">High and low</button>
         <button class="preset-btn ${rxZones==='auto'?'act':''}" title="As many zones as the spread has room for, up to five" onclick="rxZones='auto';rP();showVRInterp()">As many as fit</button></div></div>
