@@ -22,133 +22,195 @@ the Backup/restore box moves them between machines.
 The Iowa Dept of Ag license portal (https://iowadeptag.my.site.com/s/searchlicense)
 is a public Salesforce site whose Apex controller answers guest requests, so
 `dev/fetch_nh3_licensees.py` asks it the same question the Search button does,
-once per county. Four scripts run in order:
+once per county. The pipeline:
 
 ```bash
-python dev/fetch_nh3_licensees.py all   # -> dev/nh3-licensees-raw.csv    (2,524 licensees, all 99 counties)
-python dev/filter_nh3_dealers.py        # -> dev/nh3-dealers-filtered.csv (900 kept)
-python dev/geocode_nh3_dealers.py       # -> dev/nh3-dealers-geocoded.csv
+python dev/fetch_nh3_licensees.py all   # -> nh3-licensees-raw.csv    (2,524 licensees, 99 counties)
+python dev/filter_nh3_dealers.py        # -> nh3-dealers-filtered.csv (900 kept)
+python dev/places_nh3_dealers.py        # -> nh3-dealers-geocoded.csv (locations + websites)
 python dev/make_nh3_pins.py             # rewrites the nfDealers array in nh3-map.html
 ```
 
-Drop the `all` for just the eight counties around Britt. If the fetch ever
-starts failing, the `fwuid` in `AURA_CONTEXT` has gone stale -- load the search
-page in a browser and copy the current one out of any `/s/sfsites/aura` request.
-Two quirks are already handled: O'BRIEN county throws a SOQL error on their end
-(their query doesn't escape the apostrophe), and any county that fails is
-skipped rather than killing the run.
+Drop the `all` for just the eight counties around Britt. If the fetch starts
+failing, the `fwuid` in `AURA_CONTEXT` has gone stale -- load the search page in
+a browser and copy the current one from any `/s/sfsites/aura` request. O'BRIEN
+county throws a SOQL error on their end (their query doesn't escape the
+apostrophe); that's handled, and any county that fails is skipped rather than
+killing the run.
 
 **The portal has no NH3 license type** -- only Ag Lime / Egg / Feed / Fertilizer,
 and "Fertilizer License" is the same license Dollar General holds for bagged lawn
-food. So `filter_nh3_dealers.py` sorts the statewide pull into four buckets:
+food. `filter_nh3_dealers.py` sorts the statewide pull into:
 
-- **dealer** (716) -- co-op agronomy locations and ag retailers that customarily
-  sell anhydrous. Plain pins.
-- **uncertain** (141) -- independents and custom applicators whose name reads
+- **dealer** (717) -- co-op agronomy locations and ag retailers that customarily
+  sell anhydrous.
+- **uncertain** (142) -- independents and custom applicators whose name reads
   like an ag business. Pinned; the bubble says to confirm they handle NH3.
-- **terminal** (41) -- Koch/CF wholesale NH3 terminals. Purple pins, no quote
-  box; that's where retailers load, not where a farmer buys.
+- **terminal** (41) -- Koch/CF wholesale terminals. Purple pins, no quote box.
 - **exclude** (1,604, not mapped) -- Dollar General, Fareway, Hy-Vee, Walmart,
-  Menards, Home Depot, CVS, lawn-care outfits, egg and hog barns, feed mills,
-  wholesale manufacturers, and one-off licensees like a crop-dusting service.
+  Menards, Home Depot, CVS, lawn care, egg and hog barns, feed mills, wholesale
+  manufacturers, and one-off licensees like a crop-dusting service.
 
-That leaves **898 pins**, 38 of them within 25 miles of Britt and 162 within 60.
+### Locations and websites
 
-Geocoding is US Census batch first (in chunks of 250), Nominatim for rural
-addresses it misses, town centroid as a last resort -- 142 pins land there and
-carry `approx: 1`, which the bubble reports as "pin is on the town, not the
-driveway". Two rows are dropped outright for mangled city names in the state
-data ("FREDERICKSBG", "IDAGROVE").
+Two sources, and which one wins matters.
+
+`places_nh3_dealers.py` looks each dealer up in Google Places by name. That is
+the only way to place the 78 rows whose address is nothing but a PO box, and it
+is where the websites and the closed-business flags come from.
+
+But Places is a *business* lookup, and a co-op is one business with many yards.
+Ask it for "Gold-Eagle Cooperative, Clarion" and it returns the main listing --
+the same point for all five Gold-Eagle sites in Clarion, one of which is 5 miles
+out on Hancock Ave. Checked against the licensees' own street addresses, 36 pins
+sat more than a mile from the address on the licence and one was 37 miles out.
+
+The licence names one specific street address per licence number, so
+`finalize_locations.py` lets that address win wherever the Census geocoder can
+resolve it, and falls back to Places only where there is no address to geocode:
+
+```bash
+python dev/places_nh3_dealers.py      # business lookup: websites, PO-box rows
+python dev/finalize_locations.py      # licensed address wins where it resolves
+python dev/match_rmp_nh3.py
+python dev/make_nh3_pins.py
+```
+
+Of 899 pins: **650 sit on the licensed street address**, 225 on the Places
+business match (the PO-box rows), and 24 on a town centroid carrying `approx: 1`,
+which the bubble reports honestly. That also un-stacked the multi-site co-ops --
+868 distinct coordinates now, against 805 before.
+
+**Watch the guards, not just the counts.** Two of them were quietly broken:
+
+- `city_matches` compared the town as a *substring of the whole address*, so
+  "Rake" matched "Drake St, Des Moines", "Elk" matched "Elkader", and a rural
+  house number like 50245 was accepted as a ZIP. It now parses the city out of
+  the formatted address and compares it as its own field.
+- Name-only matching let Places answer with whatever was most plausible in a
+  small town: "New Century FS, Boxholm" came back as The Dog House. `name_ok()`
+  requires shared words with the licensee, allows a bare street address, and
+  keeps an `ALIASES` table for real renames (Nutrien was Crop Production
+  Services, MaxYield is now NEW Cooperative).
+
+**It also needs a server-side key.** The key inside `nh3-map.html` is
+HTTP-referrer restricted, which is right for a key that ships in a public page,
+and Google refuses it from a script. A second key restricted to the Places API
+goes in `grain-map/.places-key` (gitignored). Never put that key in the HTML.
+
+Results cache in `dev/.places-cache.json` and already-located rows carry
+forward, so a re-run only spends calls on what's still missing. Google flags 27
+of these locations as closed (18 permanently, 9 temporarily); they stay on the
+map, since the state still licenses them, but the bubble says so.
+
+### Which of them actually sell anhydrous
+
+The fertilizer licence can't tell you -- but EPA can. Anhydrous is a regulated
+hazardous chemical: store more than 10,000 lbs and you must file a Risk
+Management Plan under Clean Air Act 112(r). A retail NH3 site is far over that
+(the median Iowa site here holds ~134,000 lbs), so essentially every real
+anhydrous dealer is on that list.
+
+```bash
+python dev/fetch_rmp_nh3.py    # -> rmp-nh3-iowa.csv (1,024 Iowa ammonia sites)
+python dev/match_rmp_nh3.py    # tags each dealer pin
+```
+
+EPA's own public RMP tool is offline, so `fetch_rmp_nh3.py` reads the copy the
+Data Liberation Project obtained by FOIA and republished at rmpmap.org
+(CC BY-SA 4.0, no key needed; chemical id 56 is "Ammonia (anhydrous)"). Of
+1,024 Iowa sites, 597 are still registered and all 597 carry coordinates.
+
+`match_rmp_nh3.py` joins them onto the pins by distance, which beats trying to
+match "NEW COOPERATIVE INC" to "NEW Cooperative - Klemme 0342" by name. The
+thresholds matter: a name match earns a 6-mile radius (a town-centroid pin vs
+the co-op at the edge of town), but a distance-only match has to be within
+0.05 mi. At the 0.15 mi I first tried, "CD Custom Ag" in Corwith inherited the
+Gold-Eagle elevator's tank 760 ft away on another street.
+
+Result over 899 pins: **491 confirmed** with bulk anhydrous on site, **74** whose
+only nearby NH3 registration has been deregistered, and 334 with nothing on
+file. The map defaults to showing only the confirmed ones plus the terminals;
+the toggle above the map turns the rest back on, and each bubble says which
+category it's in, with the reported pounds.
+
+### The licence list has holes; EPA fills them
+
+CF Industries holds no Iowa commercial fertilizer licence, so its Garner and
+Spencer terminals -- 120 million lbs of anhydrous apiece -- never entered the
+pipeline at all, while the Koch terminal a mile up Highway 18 did. 260 active
+EPA ammonia sites had no pin within a third of a mile.
+
+`add_epa_sites.py` adds them, but only the ones you could actually buy from:
+meat plants, cold stores and ethanol plants hold big ammonia inventories for
+refrigeration and process use, so it keeps only farm-supply and
+fertilizer-distribution NAICS codes (143 sites dropped on that test, 151 added).
+
+Two matching bugs surfaced with it, both worth keeping fixed:
+
+- **A site belongs to its nearest pin.** The old pass let any pin inside the
+  radius claim a site, so a pin sitting 0.1 mi from CF's Garner terminal took
+  Koch's tonnage from 1.1 mi away, and a custom applicator in Corwith took the
+  co-op tank 760 ft down the street. It is now a greedy nearest-first
+  assignment: one site, one pin, closest wins.
+- **EPA names the terminals better than the licence does.** Both Garner
+  terminals are licensed to Koch; the western one is CF Industries'. Where a
+  terminal's licence name shares no real words with the EPA site it matched,
+  the EPA name and city win.
+
+One physical site can hold several licences, which the nearest-first pass can
+only award to one pin, so the NH3 flag is shared with co-located pins of the
+same outfit rather than telling the others there's nothing here.
+
+Final shape: **1,050 pins** -- 899 from the licence list, 151 from EPA -- of
+which 496 have confirmed bulk anhydrous and 44 are terminals.
+
+Two limits worth remembering: RMP only catches sites over 10,000 lbs, so a small
+dealer with one sub-threshold tank won't appear, and a filing is not a promise
+they'll sell to you this season. It answers "do they have anhydrous", which is
+the question the licence list couldn't.
+
+### Missouri
+
+Iowa was built the long way round: start from the state fertilizer licence
+list, filter 1,604 of 2,524 licensees out, then use EPA to work out who
+actually has anhydrous. Missouri skips that. EPA already answers the real
+question, so `build_state_from_epa.py` makes the RMP ammonia data the backbone
+and no state licence list is needed at all:
+
+```bash
+python dev/fetch_rmp_nh3.py MO           # -> rmp-nh3-mo.csv   (346 sites, 218 active)
+python dev/enrich_rmp_dates.py MO        # filing dates
+python dev/build_state_from_epa.py MO    # -> nh3-dealers-mo.csv (142 sellers)
+python dev/places_nh3_dealers.py --state MO --websites-only
+python dev/finalize_locations.py --state MO
+python dev/make_nh3_pins.py              # writes both states into the map
+```
+
+142 Missouri dealers, every one with confirmed bulk anhydrous by construction,
+70 with a website. MFA is 41 of them; then Ray-Carroll, Service & Supply,
+Central Missouri AgriService. One terminal: CF Industries at Palmyra, 60M lb.
+
+**Don't trust EPA's own coordinates either.** They are self-reported and
+sometimes badly wrong - EPA put Heimsoth Agri Service 28 miles from its own
+street address, and Ray-Carroll Carrollton 13 miles out. `finalize_locations.py`
+runs on Missouri too, so the geocoded street address wins wherever it resolves
+(75 of 142) and EPA's point is only the fallback (67).
+
+That pass also caught a bug worth remembering: `census_batch` had `"IA"`
+hardcoded as the state, so the first Missouri audit geocoded every MO address
+as an Iowa one and reported a dealer 360 miles out. It takes the row's own
+state now.
+
+The map holds both states in one array, tagged `st: 'MO'` (Iowa is the default
+and carries no tag, which keeps 1,050 pins' worth of bytes out of a page that
+gets pasted by hand). State chips above the map switch between them and re-fit
+the view, because fitting bounds over both opens the map zoomed out far enough
+to be useless for either.
 
 The list is a starting point, not a vetted NH3 directory -- the first call to
 each dealer tells you whether they handle it, and pins that don't pan out can be
 deleted straight out of the `nfDealers` array.
-
----
-## Also in this repo: variable-rate fertilizer prescriptions
-
-`rx-builder.html` is a prescription builder: soil-test grids and John Deere
-Operations Center data in, zone shapefiles for the spreader out. The file at
-the repo root is the code only. The page with the farm's data in it is
-written OUTSIDE the repo, because the repo is public and the data is not:
-
-    python dev/jd_fleet.py                     fields and boundaries (once, then when they change)
-    python dev/jd_rx_soil_import.py <lab dir>  the lab exports: shapefiles and spreadsheets
-    python dev/jd_rx_pull.py                   crop history since 2015 and yield maps, from Deere
-    python dev/jd_build_rx.py                  -> ~/.grain-map-secrets/rx-builder.html
-
-`dev/jd_rx_soil.py` is the older, one-time version of the import: it lifted
-the grids back out of the chat-built page, which was the only copy of them
-at the time. The lab exports have since replaced it as the source.
-
-The 2026 whole-field numbers reached the builder through a spreadsheet
-someone transcribed from the lab's report PDFs, and they set the rates on
-53 South fields that have no other soil test. `dev/jd_rx_soil_pdf.py`
-checks that transcription against its source. The reports are not scans:
-every page carries a text layer, so the script reads the lab's own
-per-sample table, averages it, and prints every field average the sheet
-disagrees with. Run it before the import, because it also writes the full
-field names and each field's centroid, which is how a row the lab named
-`Rvrsde264Chrl` gets placed on the right Deere field:
-
-    python dev/jd_rx_soil_pdf.py <lab dir>     -> ~/.grain-map-secrets/soil-reports.json
-
-Open that file in a browser. What it does, per field:
-
-* **Soil** - the latest lab grid (Waypoint, Midwest Labs or Farmers Edge),
-  interpolated and classed against ISU PM 1688 categories; the history of
-  every event. Some fields, most of the South org, have only a WHOLE-FIELD
-  COMPOSITE for 2026: one lab number for the field, no coordinates. Those
-  are spread over the boundary so the rest of the page works, but the
-  nutrient map of such a field is flat and the page says so on every panel
-  that shows it. Their rates still vary, through the yield map.
-* **The map** - the default layer is OVERALL FERTILITY: every spot scored
-  0-100 on how well it feeds a crop, red worst to green best, each nutrient
-  judged on its own ISU scale before they are averaged. P, K, lime, S and Zn
-  each toggle on and off beside the layer picker. These colours are absolute,
-  so a field that tests well everywhere is green everywhere.
-* **Which soil test** - a field is read through its newest sampling by
-  default, and the panel lists every event on file to switch to. Where an
-  older grid is superseded by a newer whole-field composite, a derived event
-  is offered as well and used by default: the grid's PATTERN moved to the
-  composite's LEVEL, every point shifted by the same amount its field average
-  moved (a shift for pH, which is a logarithm, a ratio for everything else).
-  The grid knows where the good ground is, the composite knows what the field
-  tests now, and neither alone makes a good prescription. It is marked as a
-  derived reading wherever it appears, including in the batch order summary.
-* **Crop history** - each season's planting pass, harvest (Deere's own
-  average, moisture, acres) and applications, from Operations Center.
-* **Yield maps** - each harvest pass, thinned to 20 m cells and expressed
-  against the field's own average, averaged over the years on file. The
-  removal part of the rate follows this map: a spot that yields 20% above
-  the field average removes 20% more.
-* **The plan** - the crop for the plan year is the rotation (whatever went
-  in last, flipped), the previous crop is what was actually planted, and the
-  yield goal is the field's last three harvests of that crop plus 5%. All
-  three can be overridden.
-* **Rates** - ISU removal + build-up for P and K, lime from buffer pH,
-  sulfur and zinc from thresholds; written in pounds of PRODUCT (MAP,
-  potash, AMS, zinc sulfate, ag lime at an ECCE) with the nutrient rate
-  alongside, so the shapefile is what the spreader needs.
-* **Export** - one shapefile zip per field, or one download for every
-  sampled field with an order summary CSV (acres, average rate, tons).
-  Multi-part fields stay one prescription; farmstead cutouts are not cut
-  out of the zones (the field boundary in the monitor handles that) but
-  their acres are left out of the totals.
-
-Soil grids are matched to Deere fields by where the sample points fall,
-not by name - field names carry the acreage and change when a boundary is
-redrawn, and 20 of 213 had. Whole-field composites have no points to match
-on, so those fall back to the name: exact prefix first (the lab truncates
-at 14 characters), then same acreage with a close farm name, which is what
-catches `Lakevwe70Ben` -> `Lakeview70Bentn19_30`. Anything left over is
-listed at the end of the import and can be resolved by hand in
-`~/.grain-map-secrets/soil-field-aliases.json`.
-
-`dev/jd_rx_push.py` uploads the zips into Operations Center's Files as
-prescriptions. It needs the `files` scope, which the map's token was not
-issued with: enable the Files API for the app on developer.deere.com, then
-`python dev/jd_explore.py --with-files` to sign in again.
 
 ## Setup (one time)
 
