@@ -523,7 +523,7 @@ function genRaster(fieldName,nut,setIdx,isRate,rateFn,breaks){
   const gxmin=xmin-pad,gymin=ymin-pad;
   const cosLat=Math.cos((gymin+sny*sRES/2)*Math.PI/180);
 
-  let vpts,cellRate=null;
+  let vpts,cellRate=null,usedBlocks=false;
   if(isRate&&rateFn){
     // Interpolate the SOIL TEST and compute the rate per cell, rather than
     // computing rates at the sample points and interpolating those.
@@ -547,6 +547,7 @@ function genRaster(fieldName,nut,setIdx,isRate,rateFn,breaks){
     // samples, so the map is the lab's grid drawn as squares, each square
     // reading exactly what its own sample said.
     if(rxShape==='blocks'&&rateFn!==fertScore&&!rateFn.continuous&&vpts.length){
+      usedBlocks=true;
       const rated=pts.map(pt=>{const r=rateFn(pt,pt.x,pt.y);return r!=null?{x:pt.x,y:pt.y,_v:r}:null;}).filter(Boolean);
       cellRate=(px,py)=>{let best=null,bd=Infinity;
         for(const q of rated){const dx=(q.x-px)*cosLat,dy=q.y-py,d=dx*dx+dy*dy;if(d<bd){bd=d;best=q;}}
@@ -766,7 +767,7 @@ function genRaster(fieldName,nut,setIdx,isRate,rateFn,breaks){
     }
   }
 
-  return{grid,zoneGrid,mask,snx,sny,xmin:gxmin,ymin:gymin,sRES,vmin,vmax,zeroZone,nz:NZ,bands};
+  return{grid,zoneGrid,mask,snx,sny,xmin:gxmin,ymin:gymin,sRES,vmin,vmax,zeroZone,nz:NZ,bands,blocks:usedBlocks};
 }
 
 function rasterToCanvas(raster,nut,isRate){
@@ -2349,6 +2350,7 @@ function renderYieldOverlay(f){
 // Canvas clip path clips precisely to field boundary.
 function renderRasterOnMap(raster,fr,colors){
   const {zoneGrid,mask,snx,sny,xmin,ymin,sRES}=raster;
+  smoothOff=!!raster.blocks;
   const scale=6;
   const w=snx*scale,h=sny*scale;
   
@@ -2630,8 +2632,12 @@ function chainEdges(edges){
 }
 
 // Smooth an open polyline (keeping endpoints fixed)
+// Set while a block-cut raster is being outlined: the rounding that keeps
+// a smoothed blob from looking like stair-steps would round the corners
+// off squares that are meant to be square.
+let smoothOff=false;
 function smoothPolyline(pts){
-  if(pts.length<3)return pts;
+  if(smoothOff||pts.length<3)return pts;
   let r=pts.slice();
   // Gaussian averaging (3 passes, window=2, endpoints fixed)
   for(let pass=0;pass<3;pass++){
@@ -2664,6 +2670,7 @@ function smoothPolyline(pts){
 // ===== SHARED-BOUNDARY EXPORT =====
 // Zone-to-zone boundaries computed ONCE, shared by both neighbors = zero gaps.
 function buildSmoothedZoneExport(raster,fieldRing,rMin,rRange,product,crop,yg,unit){
+  smoothOff=!!raster.blocks;
   const {zoneGrid,mask,snx,sny,xmin,ymin,sRES}=raster;
   const denseBdy=densifyRing(fieldRing,sRES*0.4);
   
