@@ -285,6 +285,24 @@ function gSL(s){return{vl:'Very Low',lo:'Low',opt:'Optimum',hi:'High',vhi:'Very 
 function cropKey(c){return c==='soybeans'?'soybean':c;}
 function yieldMaps(f){return YMAPS[f]||[];}
 function decodeIdx(m){if(!m._a){const s=atob(m.idx),a=new Uint8Array(s.length);for(let i=0;i<s.length;i++)a[i]=s.charCodeAt(i);m._a=a;}return m._a;}
+// Every harvest's reading at one spot: the index around (x,y) in each
+// year's map, and the bushels behind it (the index is against that year's
+// field average, so index x average is what the combine saw there).
+function yieldAt(f,x,y,radius){
+  const maps=yieldMaps(f),R=radius==null?2:radius,out=[];
+  for(const m of maps){
+    const a=decodeIdx(m);
+    const cx=Math.floor((x-m.lon0)/m.dlon),cy=Math.floor((y-m.lat0)/m.dlat);
+    let sum=0,n=0;
+    for(let dy=-R;dy<=R;dy++){const yy=cy+dy;if(yy<0||yy>=m.ny)continue;
+      for(let dx=-R;dx<=R;dx++){const xx=cx+dx;if(xx<0||xx>=m.nx)continue;
+        const v=a[yy*m.nx+xx];if(v){sum+=v;n++;}}}
+    if(n){const idx=sum/n/100;
+      out.push({season:m.season,crop:m.crop?cropKey(m.crop):null,idx,avg:m.avg,
+        bu:m.avg!=null?idx*m.avg:null});}
+  }
+  return out;
+}
 // Mean yield index around (x,y): a (2R+1)-cell window in every map that
 // covers the spot, averaged across maps. Null where no combine has been.
 function yieldIndexAt(f,x,y,radius){
@@ -1732,6 +1750,7 @@ function initMap(){
   map=L.map('map',{zoomControl:false,attributionControl:false}).setView([42.7,-93.8],8);
   L.control.zoom({position:'bottomright'}).addTo(map);
   sTiles();addBounds();
+  map.on('click',yieldClick);
   if(!sel&&!initMap.fitted){initMap.fitted=true;try{map.fitBounds(L.geoJSON(B).getBounds(),{padding:[20,20]});}catch(e){}}
   if(sel)setTimeout(()=>{if(panelTab==='zones'||panelTab==='vr')showInterp();},100);
 }
@@ -1760,7 +1779,7 @@ function addBounds(){
       else tt+='<br>no soil test';
       const ym=yieldMaps(f);if(ym.length)tt+=`<br>yield maps: ${ym.map(m=>m.season).join(', ')}`;
       layer.bindTooltip(tt,{sticky:true,className:'ftt'});
-      layer.on('click',()=>sF(f));}
+      layer.on('click',()=>{if(f!==sel)sF(f);});}
   }).addTo(map);
 }
 
@@ -1884,6 +1903,38 @@ function clearOv(){
   }
 }
 
+// On the yield map every colour is a canvas, not a shape, so there is
+// nothing to click. This reads the maps back at wherever the click landed
+// and says what each harvest made there, which is the same question the
+// soil pins answer for the soil test.
+function yieldClick(e){
+  if(hNut!=='yield'||!sel||!map)return;
+  const x=e.latlng.lng,y=e.latlng.lat;
+  if(!inField(x,y,fieldRings(sel)))return;
+  const rows=yieldAt(sel,x,y);
+  const idx=yieldIndexAt(sel,x,y);
+  const body=rows.length
+    ? `<table style="font-size:10px;border-collapse:collapse">${rows.map(r=>{
+        const k=Math.min(YIELD_COLORS.length-1,YIELD_BREAKS.filter(b=>r.idx>=b).length);
+        const c=YIELD_COLORS[k];
+        return `<tr><td style="padding:1px 8px 1px 0;color:var(--tx2)">${r.season}${r.crop?' '+r.crop:''}</td>
+          <td style="padding:1px 6px 1px 0;font-family:'JetBrains Mono',monospace;font-weight:600;text-align:right">${r.bu!=null?r.bu.toFixed(0)+' bu':'&mdash;'}</td>
+          <td style="padding:1px 0;color:rgb(${c[0]},${c[1]},${c[2]});font-weight:600">${Math.round(r.idx*100)}%</td></tr>`;}).join('')}</table>`
+    : '<div style="font-size:10px;color:var(--tx2)">No combine pass covered this spot.</div>';
+  const lt=activeInfo(sel),fs=lt?fertScore(lt):null;
+  const ptFert=(()=>{const set=activeSet(sel);if(!set||!set.pts.length)return null;
+    let best=null,bd=Infinity;
+    for(const p of set.pts){const d=(p.x-x)**2+(p.y-y)**2;if(d<bd){bd=d;best=p;}}
+    return best?fertScore(best):null;})();
+  L.popup({maxWidth:280}).setLatLng(e.latlng).setContent(
+    `<div style="min-width:190px">
+      <div style="font-weight:700;margin-bottom:2px">Yield here</div>
+      <div style="font-size:9px;color:var(--tx2);margin-bottom:5px">${rows.length?`${rows.length} harvest${rows.length===1?'':'s'} over this spot &middot; % is against that year's field average`:'Nothing on file for this spot'}</div>
+      ${idx!=null?`<div style="font-size:10px;margin-bottom:4px">Across the years this spot runs <b>${Math.round(idx*100)}%</b> of the field${ptFert!=null?` &middot; nearest soil sample scores <b>${ptFert}/100</b>`:''}</div>`:''}
+      ${body}
+      ${rows.length?'<div style="font-size:9px;color:var(--tx2);margin-top:5px">Each figure is the average of a 5-cell window, about 100 m across.</div>':''}
+    </div>`).openOn(map);
+}
 function zoomSel(){renderPts();if(fLayers[sel])map.fitBounds(fLayers[sel].getBounds(),{padding:[40,40],maxZoom:16});}
 function renderSurvey(f){
   const pcs=svPieces(f);if(!pcs.length)return null;
