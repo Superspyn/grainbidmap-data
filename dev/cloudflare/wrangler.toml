@@ -7,6 +7,11 @@
 # Secrets are NOT here - they go in with `wrangler secret put`, which stores
 # them on Cloudflare rather than in this file. This repo is public.
 
+# The name here is a placeholder. The worker that is actually deployed has
+# a different name, the host part of the url in ~/.grain-map-secrets/relay.json,
+# and that name is kept out of this public file. Deploy with:
+#     npx wrangler deploy --name <that name>
+# Deploying without --name would create a second, empty worker.
 name = "grain-fleet"
 main = "worker.js"
 compatibility_date = "2026-09-01"
