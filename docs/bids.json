@@ -1,9 +1,9 @@
 {
   "disclaimer": "Cash bids are collected from each facility's public bid page for reference only and may be delayed or out of date. Confirm with the elevator before hauling.",
-  "generated_at": "2026-09-25T23:41:11Z",
+  "generated_at": "2026-09-26T00:11:18Z",
   "locations": {
     "adm-cedar-rapids-ethanol": {
-      "as_of": "2026-09-25T23:37:02Z",
+      "as_of": "2026-09-26T00:07:07Z",
       "bids": [
         {
           "basis": -0.01,
@@ -161,7 +161,7 @@
       "source_name": "Cedar Rapids, IA"
     },
     "adm-clinton-bean-terminal-ia": {
-      "as_of": "2026-09-25T23:37:16Z",
+      "as_of": "2026-09-26T00:07:21Z",
       "bids": [
         {
           "basis": -0.69,
@@ -239,7 +239,7 @@
       "source_name": "Clinton, IA (Elevator)"
     },
     "adm-clinton-ethanol": {
-      "as_of": "2026-09-25T23:37:16Z",
+      "as_of": "2026-09-26T00:07:21Z",
       "bids": [
         {
           "basis": -0.69,
@@ -317,7 +317,7 @@
       "source_name": "Clinton, IA (Elevator)"
     },
     "adm-deerfield-mo": {
-      "as_of": "2026-09-25T23:37:34Z",
+      "as_of": "2026-09-26T00:07:39Z",
       "bids": [
         {
           "basis": 0.0,
@@ -435,7 +435,7 @@
       "source_name": "Deerfield, MO"
     },
     "adm-mexico-mo": {
-      "as_of": "2026-09-25T23:39:16Z",
+      "as_of": "2026-09-26T00:09:21Z",
       "bids": [
         {
           "basis": -0.2,
@@ -533,7 +533,7 @@
       "source_name": "Mexico, MO"
     },
     "adm-new-madrid-mo-portageville": {
-      "as_of": "2026-09-25T23:39:40Z",
+      "as_of": "2026-09-26T00:09:45Z",
       "bids": [
         {
           "basis": -0.55,
@@ -741,7 +741,7 @@
       "source_name": "New Madrid, MO"
     },
     "adm-north-terminal-st-louis-mo": {
-      "as_of": "2026-09-25T23:40:34Z",
+      "as_of": "2026-09-26T00:10:39Z",
       "bids": [
         {
           "basis": -0.42,
@@ -949,7 +949,7 @@
       "source_name": "St. Louis, MO (Elevator)"
     },
     "adm-st-louis-milling-mo": {
-      "as_of": "2026-09-25T23:40:34Z",
+      "as_of": "2026-09-26T00:10:39Z",
       "bids": [
         {
           "basis": -0.42,
@@ -1209,31 +1209,31 @@
       "source_name": "Tarkio"
     },
     "agp-aberdeen-sd": {
-      "as_of": "2026-09-25T23:34:56Z",
+      "as_of": "2026-09-26T00:04:55Z",
       "bids": [
         {
           "basis": 0.3,
-          "cash": 13.49,
+          "cash": 13.5,
           "delivery_label": "By Sept 28th",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": 0.1,
-          "cash": 13.29,
+          "cash": 13.3,
           "delivery_label": "By Sept 30th",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.35,
-          "cash": 12.84,
+          "cash": 12.85,
           "delivery_label": "Oct/Nov",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
@@ -1244,40 +1244,40 @@
       "source_name": "Aberdeen, SD"
     },
     "agp-chester-ne": {
-      "as_of": "2026-09-25T23:34:56Z",
+      "as_of": "2026-09-26T00:04:55Z",
       "bids": [
         {
           "basis": -0.55,
-          "cash": 4.73,
+          "cash": 4.74,
           "delivery_label": "September",
-          "futures": 5.2825,
+          "futures": 5.2875,
           "futures_change": 0.0075,
           "futures_month": "CZ26",
           "grain": "corn"
         },
         {
           "basis": -0.5,
-          "cash": 4.78,
+          "cash": 4.79,
           "delivery_label": "Oct/Nov",
-          "futures": 5.2825,
+          "futures": 5.2875,
           "futures_change": 0.0075,
           "futures_month": "CZ26",
           "grain": "corn"
         },
         {
           "basis": -0.35,
-          "cash": 12.84,
+          "cash": 12.85,
           "delivery_label": "September",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.35,
-          "cash": 12.84,
+          "cash": 12.85,
           "delivery_label": "Oct/Nov",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
@@ -1288,22 +1288,22 @@
       "source_name": "Chester, NE"
     },
     "agp-cowles-ne": {
-      "as_of": "2026-09-25T23:34:56Z",
+      "as_of": "2026-09-26T00:04:55Z",
       "bids": [
         {
           "basis": -0.4,
-          "cash": 12.79,
+          "cash": 12.8,
           "delivery_label": "September",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.4,
-          "cash": 12.79,
+          "cash": 12.8,
           "delivery_label": "Oct/Nov",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
@@ -1314,49 +1314,49 @@
       "source_name": "Cowles, NE"
     },
     "agp-david-city-ne": {
-      "as_of": "2026-09-25T23:34:56Z",
+      "as_of": "2026-09-26T00:04:55Z",
       "bids": [
         {
           "basis": 0.85,
-          "cash": 14.04,
+          "cash": 14.05,
           "delivery_label": "By Sept 25th",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": 0.85,
-          "cash": 14.04,
+          "cash": 14.05,
           "delivery_label": "By Sept 30th",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.2,
-          "cash": 12.99,
+          "cash": 13.0,
           "delivery_label": "Oct/Nov",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.1,
-          "cash": 13.22,
+          "cash": 13.23,
           "delivery_label": "December",
-          "futures": 13.325,
+          "futures": 13.33,
           "futures_change": 0.005,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
         {
           "basis": -0.1,
-          "cash": 13.22,
+          "cash": 13.23,
           "delivery_label": "January",
-          "futures": 13.325,
+          "futures": 13.33,
           "futures_change": 0.005,
           "futures_month": "SF27",
           "grain": "soybeans"
@@ -1385,40 +1385,40 @@
       "source_name": "David City, NE"
     },
     "agp-dawson-mn": {
-      "as_of": "2026-09-25T23:34:56Z",
+      "as_of": "2026-09-26T00:04:55Z",
       "bids": [
         {
           "basis": -0.35,
-          "cash": 12.84,
+          "cash": 12.85,
           "delivery_label": "September",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.6,
-          "cash": 12.59,
+          "cash": 12.6,
           "delivery_label": "Oct/Nov",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.6,
-          "cash": 12.72,
+          "cash": 12.73,
           "delivery_label": "December",
-          "futures": 13.325,
+          "futures": 13.33,
           "futures_change": 0.005,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
         {
           "basis": -0.6,
-          "cash": 12.72,
+          "cash": 12.73,
           "delivery_label": "January",
-          "futures": 13.325,
+          "futures": 13.33,
           "futures_change": 0.005,
           "futures_month": "SF27",
           "grain": "soybeans"
@@ -1447,49 +1447,49 @@
       "source_name": "Dawson, MN"
     },
     "agp-eagle-grove-ia": {
-      "as_of": "2026-09-25T23:34:56Z",
+      "as_of": "2026-09-26T00:04:55Z",
       "bids": [
         {
           "basis": 0.8,
-          "cash": 13.99,
+          "cash": 14.0,
           "delivery_label": "By Sept 28th",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.35,
-          "cash": 12.84,
+          "cash": 12.85,
           "delivery_label": "By Sept 30th",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.35,
-          "cash": 12.84,
+          "cash": 12.85,
           "delivery_label": "Oct/Nov",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.3,
-          "cash": 13.02,
+          "cash": 13.03,
           "delivery_label": "December",
-          "futures": 13.325,
+          "futures": 13.33,
           "futures_change": 0.005,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
         {
           "basis": -0.3,
-          "cash": 13.02,
+          "cash": 13.03,
           "delivery_label": "January",
-          "futures": 13.325,
+          "futures": 13.33,
           "futures_change": 0.005,
           "futures_month": "SF27",
           "grain": "soybeans"
@@ -1509,49 +1509,49 @@
       "source_name": "Eagle Grove, IA"
     },
     "agp-emmetsburg-ia": {
-      "as_of": "2026-09-25T23:34:56Z",
+      "as_of": "2026-09-26T00:04:55Z",
       "bids": [
         {
           "basis": 0.5,
-          "cash": 13.69,
+          "cash": 13.7,
           "delivery_label": "By Sept 25th",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.35,
-          "cash": 12.84,
+          "cash": 12.85,
           "delivery_label": "By Sept 30th",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.35,
-          "cash": 12.84,
+          "cash": 12.85,
           "delivery_label": "Oct/Nov",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.3,
-          "cash": 13.02,
+          "cash": 13.03,
           "delivery_label": "December",
-          "futures": 13.325,
+          "futures": 13.33,
           "futures_change": 0.005,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
         {
           "basis": -0.3,
-          "cash": 13.02,
+          "cash": 13.03,
           "delivery_label": "January",
-          "futures": 13.325,
+          "futures": 13.33,
           "futures_change": 0.005,
           "futures_month": "SF27",
           "grain": "soybeans"
@@ -1580,22 +1580,22 @@
       "source_name": "Emmetsburg, IA"
     },
     "agp-fairfield-ne": {
-      "as_of": "2026-09-25T23:34:56Z",
+      "as_of": "2026-09-26T00:04:55Z",
       "bids": [
         {
           "basis": -0.3,
-          "cash": 12.89,
+          "cash": 12.9,
           "delivery_label": "September",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.3,
-          "cash": 12.89,
+          "cash": 12.9,
           "delivery_label": "Oct/Nov",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
@@ -1606,40 +1606,40 @@
       "source_name": "Fairfield, NE"
     },
     "agp-hastings-ne-grain-terminal": {
-      "as_of": "2026-09-25T23:34:56Z",
+      "as_of": "2026-09-26T00:04:55Z",
       "bids": [
         {
           "basis": -0.4,
-          "cash": 4.88,
+          "cash": 4.89,
           "delivery_label": "September",
-          "futures": 5.2825,
+          "futures": 5.2875,
           "futures_change": 0.0075,
           "futures_month": "CZ26",
           "grain": "corn"
         },
         {
           "basis": -0.35,
-          "cash": 4.93,
+          "cash": 4.94,
           "delivery_label": "Oct/Nov",
-          "futures": 5.2825,
+          "futures": 5.2875,
           "futures_change": 0.0075,
           "futures_month": "CZ26",
           "grain": "corn"
         },
         {
           "basis": -0.3,
-          "cash": 12.89,
+          "cash": 12.9,
           "delivery_label": "September",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.3,
-          "cash": 12.89,
+          "cash": 12.9,
           "delivery_label": "Oct/Nov",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
@@ -1650,49 +1650,49 @@
       "source_name": "Hastings, NE - Grain (Terminal)"
     },
     "agp-hastings-ne-soy-plant": {
-      "as_of": "2026-09-25T23:34:56Z",
+      "as_of": "2026-09-26T00:04:55Z",
       "bids": [
         {
           "basis": 0.65,
-          "cash": 13.84,
+          "cash": 13.85,
           "delivery_label": "By Sept 25th",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": 0.65,
-          "cash": 13.84,
+          "cash": 13.85,
           "delivery_label": "By Sept 30th",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.25,
-          "cash": 12.94,
+          "cash": 12.95,
           "delivery_label": "Oct/Nov",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.15,
-          "cash": 13.17,
+          "cash": 13.18,
           "delivery_label": "December",
-          "futures": 13.325,
+          "futures": 13.33,
           "futures_change": 0.005,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
         {
           "basis": -0.15,
-          "cash": 13.17,
+          "cash": 13.18,
           "delivery_label": "January",
-          "futures": 13.325,
+          "futures": 13.33,
           "futures_change": 0.005,
           "futures_month": "SF27",
           "grain": "soybeans"
@@ -1721,40 +1721,40 @@
       "source_name": "Hastings, NE - Grain (Soy Plant)"
     },
     "agp-manning-ia": {
-      "as_of": "2026-09-25T23:34:56Z",
+      "as_of": "2026-09-26T00:04:55Z",
       "bids": [
         {
           "basis": 0.25,
-          "cash": 13.44,
+          "cash": 13.45,
           "delivery_label": "By Sep 30th",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.4,
-          "cash": 12.79,
+          "cash": 12.8,
           "delivery_label": "Oct/Nov",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.35,
-          "cash": 12.97,
+          "cash": 12.98,
           "delivery_label": "December",
-          "futures": 13.325,
+          "futures": 13.33,
           "futures_change": 0.005,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
         {
           "basis": -0.35,
-          "cash": 12.97,
+          "cash": 12.98,
           "delivery_label": "January",
-          "futures": 13.325,
+          "futures": 13.33,
           "futures_change": 0.005,
           "futures_month": "SF27",
           "grain": "soybeans"
@@ -1783,58 +1783,58 @@
       "source_name": "Manning, IA"
     },
     "agp-mason-city-ia": {
-      "as_of": "2026-09-25T23:34:56Z",
+      "as_of": "2026-09-26T00:04:55Z",
       "bids": [
         {
           "basis": 0.5,
-          "cash": 13.69,
+          "cash": 13.7,
           "delivery_label": "By Sept 28th",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.4,
-          "cash": 12.79,
+          "cash": 12.8,
           "delivery_label": "By Sept 30th",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.4,
-          "cash": 12.79,
+          "cash": 12.8,
           "delivery_label": "Oct/Nov",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.35,
-          "cash": 12.97,
+          "cash": 12.98,
           "delivery_label": "December",
-          "futures": 13.325,
+          "futures": 13.33,
           "futures_change": 0.005,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
         {
           "basis": -0.35,
-          "cash": 12.97,
+          "cash": 12.98,
           "delivery_label": "January",
-          "futures": 13.325,
+          "futures": 13.33,
           "futures_change": 0.005,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
         {
           "basis": -0.35,
-          "cash": 12.97,
+          "cash": 12.98,
           "delivery_label": "February",
-          "futures": 13.325,
+          "futures": 13.33,
           "futures_change": 0.005,
           "futures_month": "SF27",
           "grain": "soybeans"
@@ -1854,40 +1854,40 @@
       "source_name": "Mason City, IA"
     },
     "agp-sergeant-bluff-ia": {
-      "as_of": "2026-09-25T23:34:56Z",
+      "as_of": "2026-09-26T00:04:55Z",
       "bids": [
         {
           "basis": 0.8,
-          "cash": 13.99,
+          "cash": 14.0,
           "delivery_label": "By Sept 30th",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.35,
-          "cash": 12.84,
+          "cash": 12.85,
           "delivery_label": "Oct/Nov",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.3,
-          "cash": 13.02,
+          "cash": 13.03,
           "delivery_label": "December",
-          "futures": 13.325,
+          "futures": 13.33,
           "futures_change": 0.005,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
         {
           "basis": -0.3,
-          "cash": 13.02,
+          "cash": 13.03,
           "delivery_label": "January",
-          "futures": 13.325,
+          "futures": 13.33,
           "futures_change": 0.005,
           "futures_month": "SF27",
           "grain": "soybeans"
@@ -1916,40 +1916,40 @@
       "source_name": "Sergeant Bluff, IA"
     },
     "agp-sheldon-ia": {
-      "as_of": "2026-09-25T23:34:56Z",
+      "as_of": "2026-09-26T00:04:55Z",
       "bids": [
         {
           "basis": 0.8,
-          "cash": 13.99,
+          "cash": 14.0,
           "delivery_label": "By Sep 30th",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.45,
-          "cash": 12.74,
+          "cash": 12.75,
           "delivery_label": "Oct/Nov",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.4,
-          "cash": 12.92,
+          "cash": 12.93,
           "delivery_label": "December",
-          "futures": 13.325,
+          "futures": 13.33,
           "futures_change": 0.005,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
         {
           "basis": -0.4,
-          "cash": 12.92,
+          "cash": 12.93,
           "delivery_label": "January",
-          "futures": 13.325,
+          "futures": 13.33,
           "futures_change": 0.005,
           "futures_month": "SF27",
           "grain": "soybeans"
@@ -1978,22 +1978,22 @@
       "source_name": "Sheldon, IA"
     },
     "agp-st-joseph-mo": {
-      "as_of": "2026-09-25T23:34:56Z",
+      "as_of": "2026-09-26T00:04:55Z",
       "bids": [
         {
           "basis": 0.8,
-          "cash": 13.99,
+          "cash": 14.0,
           "delivery_label": "September",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
         {
           "basis": -0.3,
-          "cash": 12.89,
+          "cash": 12.9,
           "delivery_label": "Oct/Nov",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 0.015,
           "futures_month": "SX26",
           "grain": "soybeans"
@@ -3814,7 +3814,7 @@
       "source_name": "Royal"
     },
     "butterfield-associates-grain-meadville-mo": {
-      "as_of": "2026-09-25T23:35:05Z",
+      "as_of": "2026-09-26T00:05:04Z",
       "bids": [
         {
           "cash": 4.53,
@@ -10850,7 +10850,7 @@
       "source_name": "CGB SCOTT CITY"
     },
     "chs-kasson-mn": {
-      "as_of": "2026-09-25T23:34:54Z",
+      "as_of": "2026-09-26T00:04:54Z",
       "bids": [
         {
           "basis": -0.72,
@@ -10924,7 +10924,7 @@
       "source_name": "Kasson"
     },
     "chs-oilseed-processing-fairmont-mn": {
-      "as_of": "2026-09-25T23:34:54Z",
+      "as_of": "2026-09-26T00:04:54Z",
       "bids": [
         {
           "basis": 0.7,
@@ -11075,7 +11075,7 @@
       "source_name": "Fairmont"
     },
     "chs-oilseed-processing-mankato-mn": {
-      "as_of": "2026-09-25T23:34:54Z",
+      "as_of": "2026-09-26T00:04:54Z",
       "bids": [
         {
           "basis": 0.5,
@@ -11226,7 +11226,7 @@
       "source_name": "Mankato"
     },
     "chs-pipestone-grain-mn": {
-      "as_of": "2026-09-25T23:34:54Z",
+      "as_of": "2026-09-26T00:04:54Z",
       "bids": [
         {
           "basis": -0.55,
@@ -11358,7 +11358,7 @@
       "source_name": "Pipestone"
     },
     "chs-savage-terminal-mn": {
-      "as_of": "2026-09-25T23:34:54Z",
+      "as_of": "2026-09-26T00:04:54Z",
       "bids": [
         {
           "basis": -0.65,
@@ -11560,7 +11560,7 @@
       "source_name": "Savage"
     },
     "chs-tracy-mn": {
-      "as_of": "2026-09-25T23:34:54Z",
+      "as_of": "2026-09-26T00:04:54Z",
       "bids": [
         {
           "basis": -0.62,
@@ -11692,7 +11692,7 @@
       "source_name": "Tracy"
     },
     "chs-winona-river-and-rail-mn": {
-      "as_of": "2026-09-25T23:34:54Z",
+      "as_of": "2026-09-26T00:04:54Z",
       "bids": [
         {
           "basis": -0.9,
@@ -17704,7 +17704,7 @@
       "source_name": "MG Waldbaum - Wakefield"
     },
     "elite-octane-atlantic-ethanol": {
-      "as_of": "2026-09-25T23:35:08Z",
+      "as_of": "2026-09-26T00:05:07Z",
       "bids": [
         {
           "basis": 0.0,
@@ -17713,7 +17713,7 @@
           "delivery_label": "09/01/2026 - 10/05/2026",
           "delivery_start": "2026-09-01",
           "futures": 5.2825,
-          "futures_change": 0.0075,
+          "futures_change": 0.0,
           "futures_month": "CZ26",
           "grain": "corn"
         },
@@ -17724,7 +17724,7 @@
           "delivery_label": "Oct-Nov 2026",
           "delivery_start": "2026-10-01",
           "futures": 5.2825,
-          "futures_change": 0.0075,
+          "futures_change": 0.0,
           "futures_month": "CZ26",
           "grain": "corn"
         },
@@ -17735,7 +17735,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 5.2825,
-          "futures_change": 0.0075,
+          "futures_change": 0.0,
           "futures_month": "CZ26",
           "grain": "corn"
         },
@@ -17746,7 +17746,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 5.42,
-          "futures_change": 0.005,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -17757,7 +17757,7 @@
           "delivery_label": "Feb 2027",
           "delivery_start": "2027-02-01",
           "futures": 5.42,
-          "futures_change": 0.005,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -17768,7 +17768,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 5.42,
-          "futures_change": 0.005,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -17779,7 +17779,7 @@
           "delivery_label": "Apr 2027",
           "delivery_start": "2027-04-01",
           "futures": 5.4875,
-          "futures_change": 0.005,
+          "futures_change": 0.0,
           "futures_month": "CK27",
           "grain": "corn"
         },
@@ -17790,7 +17790,7 @@
           "delivery_label": "May 2027",
           "delivery_start": "2027-05-01",
           "futures": 5.4875,
-          "futures_change": 0.005,
+          "futures_change": 0.0,
           "futures_month": "CK27",
           "grain": "corn"
         },
@@ -17823,7 +17823,7 @@
           "delivery_label": "Oct-Nov 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.28,
-          "futures_change": 0.0075,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -17834,7 +17834,7 @@
           "delivery_label": "Dec 2027",
           "delivery_start": "2027-12-01",
           "futures": 5.28,
-          "futures_change": 0.0075,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -17845,7 +17845,7 @@
           "delivery_label": "Jan 2028",
           "delivery_start": "2028-01-01",
           "futures": 5.4025,
-          "futures_change": 0.0075,
+          "futures_change": 0.0,
           "futures_month": "CH28",
           "grain": "corn"
         },
@@ -17856,7 +17856,7 @@
           "delivery_label": "Feb 2028",
           "delivery_start": "2028-02-01",
           "futures": 5.4025,
-          "futures_change": 0.0075,
+          "futures_change": 0.0,
           "futures_month": "CH28",
           "grain": "corn"
         },
@@ -17867,7 +17867,7 @@
           "delivery_label": "Mar 2028",
           "delivery_start": "2028-03-01",
           "futures": 5.4025,
-          "futures_change": 0.0075,
+          "futures_change": 0.0,
           "futures_month": "CH28",
           "grain": "corn"
         },
@@ -17878,7 +17878,7 @@
           "delivery_label": "Apr 2028",
           "delivery_start": "2028-04-01",
           "futures": 5.47,
-          "futures_change": 0.005,
+          "futures_change": 0.0,
           "futures_month": "CK28",
           "grain": "corn"
         },
@@ -17889,7 +17889,7 @@
           "delivery_label": "May 2028",
           "delivery_start": "2028-05-01",
           "futures": 5.47,
-          "futures_change": 0.005,
+          "futures_change": 0.0,
           "futures_month": "CK28",
           "grain": "corn"
         },
@@ -17900,7 +17900,7 @@
           "delivery_label": "Jun 2028",
           "delivery_start": "2028-06-01",
           "futures": 5.5,
-          "futures_change": 0.005,
+          "futures_change": 0.0,
           "futures_month": "CN28",
           "grain": "corn"
         },
@@ -17911,7 +17911,7 @@
           "delivery_label": "Jul 2028",
           "delivery_start": "2028-07-01",
           "futures": 5.5,
-          "futures_change": 0.005,
+          "futures_change": 0.0,
           "futures_month": "CN28",
           "grain": "corn"
         },
@@ -17922,7 +17922,7 @@
           "delivery_label": "Oct-Nov 2028",
           "delivery_start": "2028-10-01",
           "futures": 5.165,
-          "futures_change": 0.005,
+          "futures_change": 0.0,
           "futures_month": "CZ28",
           "grain": "corn"
         }
@@ -18247,7 +18247,7 @@
       "source_name": "Rushford"
     },
     "five-star-cooperative-burchinal-ia": {
-      "as_of": "2026-09-25T23:35:17Z",
+      "as_of": "2026-09-26T00:05:17Z",
       "bids": [
         {
           "basis": -0.4,
@@ -18423,7 +18423,7 @@
       "source_name": "Burchinal"
     },
     "five-star-cooperative-dougherty-ia": {
-      "as_of": "2026-09-25T23:35:17Z",
+      "as_of": "2026-09-26T00:05:17Z",
       "bids": [
         {
           "basis": -0.43,
@@ -18599,7 +18599,7 @@
       "source_name": "Dougherty"
     },
     "five-star-cooperative-hanlontown-ia": {
-      "as_of": "2026-09-25T23:35:17Z",
+      "as_of": "2026-09-26T00:05:17Z",
       "bids": [
         {
           "basis": -0.44,
@@ -18775,7 +18775,7 @@
       "source_name": "Hanlontown"
     },
     "five-star-cooperative-ionia-ia": {
-      "as_of": "2026-09-25T23:35:17Z",
+      "as_of": "2026-09-26T00:05:17Z",
       "bids": [
         {
           "basis": -0.48,
@@ -18951,7 +18951,7 @@
       "source_name": "Ionia"
     },
     "five-star-cooperative-klemme-ia": {
-      "as_of": "2026-09-25T23:35:17Z",
+      "as_of": "2026-09-26T00:05:17Z",
       "bids": [
         {
           "basis": -0.3,
@@ -19086,7 +19086,7 @@
       "source_name": "Klemme"
     },
     "five-star-cooperative-lawler-ia": {
-      "as_of": "2026-09-25T23:35:17Z",
+      "as_of": "2026-09-26T00:05:17Z",
       "bids": [
         {
           "basis": -0.49,
@@ -19262,7 +19262,7 @@
       "source_name": "Lawler"
     },
     "five-star-cooperative-lime-springs-ia": {
-      "as_of": "2026-09-25T23:35:17Z",
+      "as_of": "2026-09-26T00:05:17Z",
       "bids": [
         {
           "basis": -0.6,
@@ -19438,7 +19438,7 @@
       "source_name": "Lime Springs"
     },
     "five-star-cooperative-nashua-ia": {
-      "as_of": "2026-09-25T23:35:17Z",
+      "as_of": "2026-09-26T00:05:17Z",
       "bids": [
         {
           "basis": -0.47,
@@ -19614,7 +19614,7 @@
       "source_name": "Nashua"
     },
     "five-star-cooperative-new-hampton-ia": {
-      "as_of": "2026-09-25T23:35:17Z",
+      "as_of": "2026-09-26T00:05:17Z",
       "bids": [
         {
           "basis": -0.45,
@@ -19790,7 +19790,7 @@
       "source_name": "New Hampton"
     },
     "five-star-cooperative-north-washington-ia": {
-      "as_of": "2026-09-25T23:35:17Z",
+      "as_of": "2026-09-26T00:05:17Z",
       "bids": [
         {
           "basis": -0.48,
@@ -19966,7 +19966,7 @@
       "source_name": "North Washington"
     },
     "five-star-cooperative-rockwell-ia": {
-      "as_of": "2026-09-25T23:35:17Z",
+      "as_of": "2026-09-26T00:05:17Z",
       "bids": [
         {
           "basis": -0.4,
@@ -20142,7 +20142,7 @@
       "source_name": "Rockwell"
     },
     "five-star-cooperative-scarville-ia": {
-      "as_of": "2026-09-25T23:35:17Z",
+      "as_of": "2026-09-26T00:05:17Z",
       "bids": [
         {
           "basis": -0.5,
@@ -20318,7 +20318,7 @@
       "source_name": "Scarville"
     },
     "five-star-cooperative-sheffield-ia": {
-      "as_of": "2026-09-25T23:35:17Z",
+      "as_of": "2026-09-26T00:05:17Z",
       "bids": [
         {
           "basis": -0.43,
@@ -20494,7 +20494,7 @@
       "source_name": "Sheffield"
     },
     "five-star-cooperative-ventura-ia": {
-      "as_of": "2026-09-25T23:35:17Z",
+      "as_of": "2026-09-26T00:05:17Z",
       "bids": [
         {
           "basis": -0.44,
@@ -20670,7 +20670,7 @@
       "source_name": "Ventura"
     },
     "flint-hill-resources-poet-arthur-ethanol": {
-      "as_of": "2026-09-25T23:35:26Z",
+      "as_of": "2026-09-26T00:05:26Z",
       "bids": [
         {
           "basis": -0.3,
@@ -20778,7 +20778,7 @@
       "source_name": "Arthur, IA"
     },
     "flint-hills-poet-ethanol-menlo": {
-      "as_of": "2026-09-25T23:36:16Z",
+      "as_of": "2026-09-26T00:06:16Z",
       "bids": [
         {
           "basis": -0.02,
@@ -20896,7 +20896,7 @@
       "source_name": "Menlo, IA"
     },
     "flint-hills-resources-poet-shell-rock-ethanol": {
-      "as_of": "2026-09-25T23:36:32Z",
+      "as_of": "2026-09-26T00:06:32Z",
       "bids": [
         {
           "basis": -0.15,
@@ -23463,7 +23463,7 @@
       "source_name": "WODEN"
     },
     "golden-grain-ethanol-mason-city": {
-      "as_of": "2026-09-25T23:35:17Z",
+      "as_of": "2026-09-26T00:05:18Z",
       "bids": [
         {
           "basis": -0.28,
@@ -23472,7 +23472,7 @@
           "delivery_label": "Sep 2026",
           "delivery_start": "2026-09-01",
           "futures": 5.2825,
-          "futures_change": 0.0075,
+          "futures_change": 0.0,
           "futures_month": "CZ26",
           "grain": "corn"
         },
@@ -23483,7 +23483,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 5.2825,
-          "futures_change": 0.0075,
+          "futures_change": 0.0,
           "futures_month": "CZ26",
           "grain": "corn"
         },
@@ -23494,7 +23494,7 @@
           "delivery_label": "Nov 2026",
           "delivery_start": "2026-11-01",
           "futures": 5.2825,
-          "futures_change": 0.0075,
+          "futures_change": 0.0,
           "futures_month": "CZ26",
           "grain": "corn"
         },
@@ -23505,7 +23505,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 5.2825,
-          "futures_change": 0.0075,
+          "futures_change": 0.0,
           "futures_month": "CZ26",
           "grain": "corn"
         },
@@ -23516,7 +23516,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 5.42,
-          "futures_change": 0.005,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -23527,7 +23527,7 @@
           "delivery_label": "Feb 2027",
           "delivery_start": "2027-02-01",
           "futures": 5.42,
-          "futures_change": 0.005,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -23538,7 +23538,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 5.42,
-          "futures_change": 0.005,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -23549,7 +23549,7 @@
           "delivery_label": "Apr 2027",
           "delivery_start": "2027-04-01",
           "futures": 5.4875,
-          "futures_change": 0.005,
+          "futures_change": 0.0,
           "futures_month": "CK27",
           "grain": "corn"
         },
@@ -23560,7 +23560,7 @@
           "delivery_label": "May 2027",
           "delivery_start": "2027-05-01",
           "futures": 5.4875,
-          "futures_change": 0.005,
+          "futures_change": 0.0,
           "futures_month": "CK27",
           "grain": "corn"
         },
@@ -23593,7 +23593,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.28,
-          "futures_change": 0.0075,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         }
@@ -23606,8 +23606,8 @@
       "as_of": "2026-09-25T18:22:34Z",
       "bids": [
         {
-          "basis": -0.3325,
-          "cash": 4.95,
+          "basis": -0.2925,
+          "cash": 4.99,
           "delivery_end": "2026-09-30",
           "delivery_label": "Sep 2026",
           "delivery_start": "2026-09-01",
@@ -39781,7 +39781,7 @@
       "source_name": "Yetter"
     },
     "little-sioux-corn-processors-marcus-ethanol": {
-      "as_of": "2026-09-25T23:35:10Z",
+      "as_of": "2026-09-26T00:05:09Z",
       "bids": [
         {
           "basis": -0.35,
@@ -39790,7 +39790,7 @@
           "delivery_label": "Sep 2026",
           "delivery_start": "2026-09-01",
           "futures": 5.2825,
-          "futures_change": 0.0075,
+          "futures_change": 0.0,
           "futures_month": "CZ26",
           "grain": "corn"
         },
@@ -39801,7 +39801,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 5.2825,
-          "futures_change": 0.0075,
+          "futures_change": 0.0,
           "futures_month": "CZ26",
           "grain": "corn"
         },
@@ -39812,7 +39812,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 5.2825,
-          "futures_change": 0.0075,
+          "futures_change": 0.0,
           "futures_month": "CZ26",
           "grain": "corn"
         },
@@ -39823,7 +39823,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 5.42,
-          "futures_change": 0.005,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -39834,7 +39834,7 @@
           "delivery_label": "Feb 2027",
           "delivery_start": "2027-02-01",
           "futures": 5.42,
-          "futures_change": 0.005,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -39845,7 +39845,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 5.42,
-          "futures_change": 0.005,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -39856,7 +39856,7 @@
           "delivery_label": "Apr 2027",
           "delivery_start": "2027-04-01",
           "futures": 5.4875,
-          "futures_change": 0.005,
+          "futures_change": 0.0,
           "futures_month": "CK27",
           "grain": "corn"
         },
@@ -39867,7 +39867,7 @@
           "delivery_label": "May 2027",
           "delivery_start": "2027-05-01",
           "futures": 5.4875,
-          "futures_change": 0.005,
+          "futures_change": 0.0,
           "futures_month": "CK27",
           "grain": "corn"
         },
@@ -39900,7 +39900,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.28,
-          "futures_change": 0.0075,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -39911,7 +39911,7 @@
           "delivery_label": "Dec 2027",
           "delivery_start": "2027-12-01",
           "futures": 5.28,
-          "futures_change": 0.0075,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -39922,7 +39922,7 @@
           "delivery_label": "Jan 2028",
           "delivery_start": "2028-01-01",
           "futures": 5.4025,
-          "futures_change": 0.0075,
+          "futures_change": 0.0,
           "futures_month": "CH28",
           "grain": "corn"
         },
@@ -39933,7 +39933,7 @@
           "delivery_label": "Feb 2028",
           "delivery_start": "2028-02-01",
           "futures": 5.4025,
-          "futures_change": 0.0075,
+          "futures_change": 0.0,
           "futures_month": "CH28",
           "grain": "corn"
         },
@@ -39944,7 +39944,7 @@
           "delivery_label": "Mar 2028",
           "delivery_start": "2028-03-01",
           "futures": 5.4025,
-          "futures_change": 0.0075,
+          "futures_change": 0.0,
           "futures_month": "CH28",
           "grain": "corn"
         },
@@ -39955,7 +39955,7 @@
           "delivery_label": "Apr 2028",
           "delivery_start": "2028-04-01",
           "futures": 5.47,
-          "futures_change": 0.005,
+          "futures_change": 0.0,
           "futures_month": "CK28",
           "grain": "corn"
         },
@@ -39966,7 +39966,7 @@
           "delivery_label": "May 2028",
           "delivery_start": "2028-05-01",
           "futures": 5.47,
-          "futures_change": 0.005,
+          "futures_change": 0.0,
           "futures_month": "CK28",
           "grain": "corn"
         },
@@ -39977,7 +39977,7 @@
           "delivery_label": "Jun 2028",
           "delivery_start": "2028-06-01",
           "futures": 5.5,
-          "futures_change": 0.005,
+          "futures_change": 0.0,
           "futures_month": "CN28",
           "grain": "corn"
         },
@@ -39988,7 +39988,7 @@
           "delivery_label": "Jul 2028",
           "delivery_start": "2028-07-01",
           "futures": 5.5,
-          "futures_change": 0.005,
+          "futures_change": 0.0,
           "futures_month": "CN28",
           "grain": "corn"
         },
@@ -39999,7 +39999,7 @@
           "delivery_label": "Oct 2028",
           "delivery_start": "2028-10-01",
           "futures": 5.165,
-          "futures_change": 0.005,
+          "futures_change": 0.0,
           "futures_month": "CZ28",
           "grain": "corn"
         },
@@ -40010,7 +40010,7 @@
           "delivery_label": "Dec 2028",
           "delivery_start": "2028-12-01",
           "futures": 5.165,
-          "futures_change": 0.005,
+          "futures_change": 0.0,
           "futures_month": "CZ28",
           "grain": "corn"
         }
@@ -40020,31 +40020,31 @@
       "source_name": "Little Sioux Corn Processors"
     },
     "lucerne-feed-mill": {
-      "as_of": "2026-09-25T23:35:00Z",
+      "as_of": "2026-09-26T00:05:00Z",
       "bids": [
         {
           "basis": -0.25,
-          "cash": 5.03,
+          "cash": 5.04,
           "delivery_label": "September",
-          "futures": 5.2825,
+          "futures": 5.2875,
           "futures_change": 0.75,
           "futures_month": "CZ26",
           "grain": "corn"
         },
         {
           "basis": -0.35,
-          "cash": 4.93,
+          "cash": 4.94,
           "delivery_label": "October",
-          "futures": 5.2825,
+          "futures": 5.2875,
           "futures_change": 0.75,
           "futures_month": "CZ26",
           "grain": "corn"
         },
         {
           "basis": -0.35,
-          "cash": 4.93,
+          "cash": 4.94,
           "delivery_label": "November",
-          "futures": 5.2825,
+          "futures": 5.2875,
           "futures_change": 0.75,
           "futures_month": "CZ26",
           "grain": "corn"
@@ -40886,13 +40886,13 @@
       "source_name": "Montrose"
     },
     "murphy-brown-nevada-mo-smithfield": {
-      "as_of": "2026-09-25T23:35:00Z",
+      "as_of": "2026-09-26T00:05:00Z",
       "bids": [
         {
           "basis": -0.2,
-          "cash": 5.08,
+          "cash": 5.09,
           "delivery_label": "September",
-          "futures": 5.2825,
+          "futures": 5.2875,
           "futures_change": 0.75,
           "futures_month": "CZ26",
           "grain": "corn"
@@ -40903,7 +40903,7 @@
       "source_name": "Nevada"
     },
     "new-coop-afton": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.2525,
@@ -41050,7 +41050,7 @@
       "source_name": "Afton"
     },
     "new-coop-algona": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -41197,7 +41197,7 @@
       "source_name": "Algona"
     },
     "new-coop-anita": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4025,
@@ -41344,7 +41344,7 @@
       "source_name": "Anita"
     },
     "new-coop-anthon": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -41491,7 +41491,7 @@
       "source_name": "Anthon"
     },
     "new-coop-badger": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4325,
@@ -41638,7 +41638,7 @@
       "source_name": "Badger"
     },
     "new-coop-barnum": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4325,
@@ -41785,7 +41785,7 @@
       "source_name": "Barnum"
     },
     "new-coop-belmond": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -41932,7 +41932,7 @@
       "source_name": "Belmond"
     },
     "new-coop-blairsburg": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4325,
@@ -42079,7 +42079,7 @@
       "source_name": "Blairsburg"
     },
     "new-coop-blencoe": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -42226,7 +42226,7 @@
       "source_name": "Blencoe"
     },
     "new-coop-blencoe-barge-site": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -42373,7 +42373,7 @@
       "source_name": "Blencoe"
     },
     "new-coop-bode": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.3025,
@@ -42520,7 +42520,7 @@
       "source_name": "Bode"
     },
     "new-coop-britt": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -42667,7 +42667,7 @@
       "source_name": "Britt"
     },
     "new-coop-cainsville": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -42814,7 +42814,7 @@
       "source_name": "Cainsville"
     },
     "new-coop-chariton": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4025,
@@ -42961,7 +42961,7 @@
       "source_name": "Chariton"
     },
     "new-coop-churdan": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4325,
@@ -43108,7 +43108,7 @@
       "source_name": "Churdan"
     },
     "new-coop-clare": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4325,
@@ -43255,7 +43255,7 @@
       "source_name": "Clare"
     },
     "new-coop-clearfield": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4025,
@@ -43402,7 +43402,7 @@
       "source_name": "Clearfield"
     },
     "new-coop-cooper": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.3025,
@@ -43549,7 +43549,7 @@
       "source_name": "Cooper"
     },
     "new-coop-correctionville": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -43696,7 +43696,7 @@
       "source_name": "Correctionville"
     },
     "new-coop-creston-1": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.3525,
@@ -43843,7 +43843,7 @@
       "source_name": "Creston 1"
     },
     "new-coop-creston-2": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.2525,
@@ -43920,7 +43920,7 @@
       "source_name": "Creston 2"
     },
     "new-coop-davis-city": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4025,
@@ -44067,7 +44067,7 @@
       "source_name": "Davis City"
     },
     "new-coop-dickens": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -44214,7 +44214,7 @@
       "source_name": "Dickens"
     },
     "new-coop-dows": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4325,
@@ -44361,7 +44361,7 @@
       "source_name": "Dows"
     },
     "new-coop-duncombe": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.3025,
@@ -44508,7 +44508,7 @@
       "source_name": "Duncombe"
     },
     "new-coop-essex": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4025,
@@ -44655,7 +44655,7 @@
       "source_name": "Essex"
     },
     "new-coop-everly": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.3025,
@@ -44802,7 +44802,7 @@
       "source_name": "Everly"
     },
     "new-coop-fostoria": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -44949,7 +44949,7 @@
       "source_name": "Fostoria"
     },
     "new-coop-garner": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -45096,7 +45096,7 @@
       "source_name": "Garner"
     },
     "new-coop-glidden": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4325,
@@ -45243,7 +45243,7 @@
       "source_name": "Glidden"
     },
     "new-coop-greenville": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -45390,7 +45390,7 @@
       "source_name": "Greenville"
     },
     "new-coop-gruver": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -45537,7 +45537,7 @@
       "source_name": "Gruver"
     },
     "new-coop-hornick": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -45684,7 +45684,7 @@
       "source_name": "Hornick"
     },
     "new-coop-humboldt": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4325,
@@ -45831,7 +45831,7 @@
       "source_name": "Humboldt"
     },
     "new-coop-humeston": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4025,
@@ -45978,7 +45978,7 @@
       "source_name": "Humeston"
     },
     "new-coop-klemme": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -46125,7 +46125,7 @@
       "source_name": "Klemme"
     },
     "new-coop-knierim": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4325,
@@ -46272,7 +46272,7 @@
       "source_name": "Knierim"
     },
     "new-coop-knoke": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4325,
@@ -46419,7 +46419,7 @@
       "source_name": "Knoke"
     },
     "new-coop-lamoni": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4025,
@@ -46566,7 +46566,7 @@
       "source_name": "Lamoni"
     },
     "new-coop-lanesboro": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4325,
@@ -46713,7 +46713,7 @@
       "source_name": "Lanesboro"
     },
     "new-coop-langdon": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -46860,7 +46860,7 @@
       "source_name": "Langdon"
     },
     "new-coop-lanyon": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4025,
@@ -47007,7 +47007,7 @@
       "source_name": "Lanyon"
     },
     "new-coop-lidderdale": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.3025,
@@ -47154,7 +47154,7 @@
       "source_name": "Lidderdale"
     },
     "new-coop-lohrville": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4025,
@@ -47301,7 +47301,7 @@
       "source_name": "Lohrville"
     },
     "new-coop-luverne": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4325,
@@ -47448,7 +47448,7 @@
       "source_name": "LuVerne"
     },
     "new-coop-mallard": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -47595,7 +47595,7 @@
       "source_name": "Mallard"
     },
     "new-coop-mapleton": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -47742,7 +47742,7 @@
       "source_name": "Mapleton"
     },
     "new-coop-milford": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -48058,7 +48058,7 @@
       "stale": true
     },
     "new-coop-mt-ayr": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4025,
@@ -48205,7 +48205,7 @@
       "source_name": "Mt. Ayr"
     },
     "new-coop-onawa": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -48352,7 +48352,7 @@
       "source_name": "Onawa"
     },
     "new-coop-osceola": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.3525,
@@ -48499,7 +48499,7 @@
       "source_name": "Osceola"
     },
     "new-coop-otho": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4325,
@@ -48646,7 +48646,7 @@
       "source_name": "Otho"
     },
     "new-coop-palmer": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4325,
@@ -48793,7 +48793,7 @@
       "source_name": "Palmer"
     },
     "new-coop-pierson": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -48940,7 +48940,7 @@
       "source_name": "Pierson"
     },
     "new-coop-pomeroy": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.3025,
@@ -49087,7 +49087,7 @@
       "source_name": "Pomeroy"
     },
     "new-coop-rands": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4025,
@@ -49234,7 +49234,7 @@
       "source_name": "Rands"
     },
     "new-coop-red-oak": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.3525,
@@ -49381,7 +49381,7 @@
       "source_name": "Red Oak"
     },
     "new-coop-roelyn": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4325,
@@ -49528,7 +49528,7 @@
       "source_name": "Roelyn"
     },
     "new-coop-rowan": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.3025,
@@ -49675,7 +49675,7 @@
       "source_name": "Rowan"
     },
     "new-coop-sloan": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -49822,7 +49822,7 @@
       "source_name": "Sloan"
     },
     "new-coop-superior": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -49969,7 +49969,7 @@
       "source_name": "Superior"
     },
     "new-coop-ute": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -50116,7 +50116,7 @@
       "source_name": "Ute"
     },
     "new-coop-villisca": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4025,
@@ -50263,7 +50263,7 @@
       "source_name": "Villisca"
     },
     "new-coop-vincent": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4325,
@@ -50410,7 +50410,7 @@
       "source_name": "Vincent"
     },
     "new-coop-washta": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -50557,7 +50557,7 @@
       "source_name": "Washta"
     },
     "new-coop-west-bend": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -50704,7 +50704,7 @@
       "source_name": "West Bend"
     },
     "new-coop-whiting": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4525,
@@ -50851,7 +50851,7 @@
       "source_name": "Whiting"
     },
     "new-coop-whittemore": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.3025,
@@ -50998,7 +50998,7 @@
       "source_name": "Whittemore"
     },
     "new-coop-woolstock": {
-      "as_of": "2026-09-25T23:32:34Z",
+      "as_of": "2026-09-26T00:02:35Z",
       "bids": [
         {
           "basis": -0.4325,
@@ -53852,7 +53852,7 @@
       "source_name": "WORTHINGTON"
     },
     "nexus-blooming-prairie-mn": {
-      "as_of": "2026-09-25T23:35:12Z",
+      "as_of": "2026-09-26T00:05:12Z",
       "bids": [
         {
           "basis": -0.63,
@@ -54058,7 +54058,7 @@
       "source_name": "Blooming Prairie, MN"
     },
     "nexus-carpenter-ia": {
-      "as_of": "2026-09-25T23:35:12Z",
+      "as_of": "2026-09-26T00:05:12Z",
       "bids": [
         {
           "basis": -0.55,
@@ -54264,7 +54264,7 @@
       "source_name": "Carpenter, IA"
     },
     "nexus-chapin-ia": {
-      "as_of": "2026-09-25T23:35:12Z",
+      "as_of": "2026-09-26T00:05:12Z",
       "bids": [
         {
           "basis": -0.48,
@@ -54470,7 +54470,7 @@
       "source_name": "Chapin, IA"
     },
     "nexus-denison-ia": {
-      "as_of": "2026-09-25T23:35:12Z",
+      "as_of": "2026-09-26T00:05:12Z",
       "bids": [
         {
           "basis": -0.53,
@@ -54676,7 +54676,7 @@
       "source_name": "Denison, IA"
     },
     "nexus-dewar-ia": {
-      "as_of": "2026-09-25T23:35:12Z",
+      "as_of": "2026-09-26T00:05:12Z",
       "bids": [
         {
           "basis": -0.5,
@@ -54882,7 +54882,7 @@
       "source_name": "Dewar, IA"
     },
     "nexus-elgin-ia": {
-      "as_of": "2026-09-25T23:35:12Z",
+      "as_of": "2026-09-26T00:05:12Z",
       "bids": [
         {
           "basis": -0.49,
@@ -55088,7 +55088,7 @@
       "source_name": "Elgin, IA"
     },
     "nexus-harlan-ia": {
-      "as_of": "2026-09-25T23:35:12Z",
+      "as_of": "2026-09-26T00:05:12Z",
       "bids": [
         {
           "basis": -0.53,
@@ -55294,7 +55294,7 @@
       "source_name": "Harlan, IA"
     },
     "nexus-manly-ia": {
-      "as_of": "2026-09-25T23:35:12Z",
+      "as_of": "2026-09-26T00:05:12Z",
       "bids": [
         {
           "basis": -0.5,
@@ -55500,7 +55500,7 @@
       "source_name": "Manly, IA"
     },
     "nexus-marble-rock-ia": {
-      "as_of": "2026-09-25T23:35:12Z",
+      "as_of": "2026-09-26T00:05:12Z",
       "bids": [
         {
           "basis": -0.5,
@@ -55706,7 +55706,7 @@
       "source_name": "Marble Rock, IA"
     },
     "nexus-northwood-ia": {
-      "as_of": "2026-09-25T23:35:12Z",
+      "as_of": "2026-09-26T00:05:12Z",
       "bids": [
         {
           "basis": -0.56,
@@ -55912,7 +55912,7 @@
       "source_name": "Northwood, IA"
     },
     "nexus-oelwein-ia": {
-      "as_of": "2026-09-25T23:35:12Z",
+      "as_of": "2026-09-26T00:05:12Z",
       "bids": [
         {
           "basis": -0.4,
@@ -56118,7 +56118,7 @@
       "source_name": "Oelwein, IA"
     },
     "nexus-rockford-ia": {
-      "as_of": "2026-09-25T23:35:12Z",
+      "as_of": "2026-09-26T00:05:12Z",
       "bids": [
         {
           "basis": -0.53,
@@ -56324,7 +56324,7 @@
       "source_name": "Rockford, IA"
     },
     "nexus-rudd-ia": {
-      "as_of": "2026-09-25T23:35:12Z",
+      "as_of": "2026-09-26T00:05:12Z",
       "bids": [
         {
           "basis": -0.53,
@@ -56530,7 +56530,7 @@
       "source_name": "Rudd, IA"
     },
     "nexus-stacyville-ia": {
-      "as_of": "2026-09-25T23:35:12Z",
+      "as_of": "2026-09-26T00:05:12Z",
       "bids": [
         {
           "basis": -0.54,
@@ -56736,7 +56736,7 @@
       "source_name": "Stacyville, IA"
     },
     "nexus-sumner-ia": {
-      "as_of": "2026-09-25T23:35:12Z",
+      "as_of": "2026-09-26T00:05:12Z",
       "bids": [
         {
           "basis": -0.46,
@@ -56942,7 +56942,7 @@
       "source_name": "Sumner, IA"
     },
     "nexus-toeterville-ia": {
-      "as_of": "2026-09-25T23:35:12Z",
+      "as_of": "2026-09-26T00:05:12Z",
       "bids": [
         {
           "basis": -0.54,
@@ -57942,7 +57942,7 @@
       "source_name": "Plymouth Energy-Merrill"
     },
     "poet-ashton-ethanol": {
-      "as_of": "2026-09-25T23:35:28Z",
+      "as_of": "2026-09-26T00:05:28Z",
       "bids": [
         {
           "basis": -0.35,
@@ -58060,7 +58060,7 @@
       "source_name": "Ashton, IA"
     },
     "poet-bingham-lake-mn-ethanol": {
-      "as_of": "2026-09-25T23:35:32Z",
+      "as_of": "2026-09-26T00:05:32Z",
       "bids": [
         {
           "basis": -0.55,
@@ -58228,7 +58228,7 @@
       "source_name": "Bingham Lake, MN"
     },
     "poet-biorefining-coon-rapids-ethanol": {
-      "as_of": "2026-09-25T23:35:40Z",
+      "as_of": "2026-09-26T00:05:40Z",
       "bids": [
         {
           "basis": -0.35,
@@ -58306,7 +58306,7 @@
       "source_name": "Coon Rapids, IA"
     },
     "poet-corning-ethanol": {
-      "as_of": "2026-09-25T23:35:42Z",
+      "as_of": "2026-09-26T00:05:42Z",
       "bids": [
         {
           "basis": -0.35,
@@ -58384,7 +58384,7 @@
       "source_name": "Corning, IA"
     },
     "poet-emmetsburg-ethanol": {
-      "as_of": "2026-09-25T23:35:44Z",
+      "as_of": "2026-09-26T00:05:44Z",
       "bids": [
         {
           "basis": -0.1,
@@ -58512,7 +58512,7 @@
       "source_name": "Emmetsburg, IA"
     },
     "poet-gowrie-ethanol": {
-      "as_of": "2026-09-25T23:35:54Z",
+      "as_of": "2026-09-26T00:05:54Z",
       "bids": [
         {
           "basis": -0.05,
@@ -58610,7 +58610,7 @@
       "source_name": "Gowrie, IA"
     },
     "poet-hanlontown-ethanol": {
-      "as_of": "2026-09-25T23:35:58Z",
+      "as_of": "2026-09-26T00:05:58Z",
       "bids": [
         {
           "basis": -0.3,
@@ -58658,7 +58658,7 @@
       "source_name": "Hanlontown, IA"
     },
     "poet-jewell-ethanol": {
-      "as_of": "2026-09-25T23:36:04Z",
+      "as_of": "2026-09-26T00:06:04Z",
       "bids": [
         {
           "basis": -0.15,
@@ -58766,7 +58766,7 @@
       "source_name": "Jewell, IA"
     },
     "poet-laddonia-mo-ethanol": {
-      "as_of": "2026-09-25T23:36:06Z",
+      "as_of": "2026-09-26T00:06:06Z",
       "bids": [
         {
           "basis": -0.6,
@@ -58844,7 +58844,7 @@
       "source_name": "Laddonia, MO"
     },
     "poet-lake-crystal-mn-ethanol": {
-      "as_of": "2026-09-25T23:36:08Z",
+      "as_of": "2026-09-26T00:06:08Z",
       "bids": [
         {
           "basis": -0.6,
@@ -59042,7 +59042,7 @@
       "source_name": "Lake Crystal, MN"
     },
     "poet-macon-mo-ethanol": {
-      "as_of": "2026-09-25T23:36:12Z",
+      "as_of": "2026-09-26T00:06:12Z",
       "bids": [
         {
           "basis": -0.51,
@@ -59160,7 +59160,7 @@
       "source_name": "Macon, MO"
     },
     "poet-preston-mn-ethanol": {
-      "as_of": "2026-09-25T23:36:26Z",
+      "as_of": "2026-09-26T00:06:26Z",
       "bids": [
         {
           "basis": -0.8,
@@ -61615,22 +61615,22 @@
       "source_name": "Siouxland Energy"
     },
     "smithfield-grain-feed-mill-allerton": {
-      "as_of": "2026-09-25T23:35:00Z",
+      "as_of": "2026-09-26T00:05:00Z",
       "bids": [
         {
           "basis": -0.45,
-          "cash": 4.83,
+          "cash": 4.84,
           "delivery_label": "October",
-          "futures": 5.2825,
+          "futures": 5.2875,
           "futures_change": 0.75,
           "futures_month": "CZ26",
           "grain": "corn"
         },
         {
           "basis": -0.65,
-          "cash": 12.54,
+          "cash": 12.55,
           "delivery_label": "October",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 1.5,
           "futures_month": "SX26",
           "grain": "soybeans"
@@ -61641,22 +61641,22 @@
       "source_name": "Allerton"
     },
     "southeastern-grain-laclede-mo-smithfield": {
-      "as_of": "2026-09-25T23:35:00Z",
+      "as_of": "2026-09-26T00:05:00Z",
       "bids": [
         {
           "basis": -0.5,
-          "cash": 4.78,
+          "cash": 4.79,
           "delivery_label": "SEP/OCT",
-          "futures": 5.2825,
+          "futures": 5.2875,
           "futures_change": 0.75,
           "futures_month": "CZ26",
           "grain": "corn"
         },
         {
           "basis": -0.6,
-          "cash": 12.59,
+          "cash": 12.6,
           "delivery_label": "October",
-          "futures": 13.19,
+          "futures": 13.2,
           "futures_change": 1.5,
           "futures_month": "SX26",
           "grain": "soybeans"
@@ -63369,7 +63369,7 @@
       "source_name": "Vinton"
     },
     "the-scoular-company-emerson-ia": {
-      "as_of": "2026-09-25T23:34:58Z",
+      "as_of": "2026-09-26T00:04:58Z",
       "bids": [
         {
           "basis": -0.43,
@@ -64160,329 +64160,329 @@
   "sources": {
     "agricharts:agpartners": {
       "bids": 84,
-      "fetched_at": "2026-09-25T23:35:05Z",
+      "fetched_at": "2026-09-26T00:05:04Z",
       "label": "Ag Partners Cooperative",
       "locations": 22,
       "ok": true
     },
     "agricharts:agstate": {
       "bids": 339,
-      "fetched_at": "2026-09-25T23:35:13Z",
+      "fetched_at": "2026-09-26T00:05:13Z",
       "label": "AgState",
       "locations": 28,
       "ok": true
     },
     "agricharts:buchheit": {
       "bids": 42,
-      "fetched_at": "2026-09-25T23:35:07Z",
+      "fetched_at": "2026-09-26T00:05:06Z",
       "label": "Buchheit",
       "locations": 4,
       "ok": true
     },
     "agricharts:butterfield": {
       "bids": 6,
-      "fetched_at": "2026-09-25T23:35:05Z",
+      "fetched_at": "2026-09-26T00:05:04Z",
       "label": "Butterfield & Associates Grain",
       "locations": 1,
       "ok": true
     },
     "agricharts:cargillus": {
-      "bids": 1150,
-      "fetched_at": "2026-09-25T23:34:53Z",
+      "bids": 1149,
+      "fetched_at": "2026-09-26T00:04:53Z",
       "label": "Cargill",
       "locations": 76,
       "ok": true
     },
     "agricharts:cgb": {
       "bids": 932,
-      "fetched_at": "2026-09-25T23:41:08Z",
+      "fetched_at": "2026-09-26T00:11:13Z",
       "label": "CGB",
       "locations": 90,
       "ok": true
     },
     "agricharts:coopfe": {
       "bids": 369,
-      "fetched_at": "2026-09-25T23:41:09Z",
+      "fetched_at": "2026-09-26T00:11:15Z",
       "label": "CFE",
       "locations": 20,
       "ok": true
     },
     "agricharts:craiggrain": {
       "bids": 11,
-      "fetched_at": "2026-09-25T23:35:06Z",
+      "fetched_at": "2026-09-26T00:05:05Z",
       "label": "Craig Supply & Grain",
       "locations": 1,
       "ok": true
     },
     "agricharts:cvacoop": {
-      "bids": 566,
-      "fetched_at": "2026-09-25T23:32:31Z",
+      "bids": 561,
+      "fetched_at": "2026-09-26T00:02:32Z",
       "label": "Central Valley Ag",
       "locations": 55,
       "ok": true
     },
     "agricharts:faasfeed": {
       "bids": 6,
-      "fetched_at": "2026-09-25T23:35:01Z",
+      "fetched_at": "2026-09-26T00:05:00Z",
       "label": "Faas Feed & Grain",
       "locations": 2,
       "ok": true
     },
     "agricharts:farmerselevator": {
       "bids": 4,
-      "fetched_at": "2026-09-25T23:35:04Z",
+      "fetched_at": "2026-09-26T00:05:03Z",
       "label": "Farmers Elevator & Exchange",
       "locations": 1,
       "ok": true
     },
     "agricharts:farmerselevatorco": {
       "bids": 2,
-      "fetched_at": "2026-09-25T23:35:06Z",
+      "fetched_at": "2026-09-26T00:05:06Z",
       "label": "Farmers Elevator & Supply (Clinton)",
       "locations": 1,
       "ok": true
     },
     "agricharts:farmerswin": {
       "bids": 114,
-      "fetched_at": "2026-09-25T23:35:02Z",
+      "fetched_at": "2026-09-26T00:05:01Z",
       "label": "Farmers Win Coop",
       "locations": 18,
       "ok": true
     },
     "agricharts:goldeagle": {
       "bids": 183,
-      "fetched_at": "2026-09-25T23:32:32Z",
+      "fetched_at": "2026-09-26T00:02:32Z",
       "label": "Gold Eagle Co-op",
       "locations": 24,
       "ok": true
     },
     "agricharts:hartog": {
-      "bids": 21,
-      "fetched_at": "2026-09-25T23:35:00Z",
+      "bids": 18,
+      "fetched_at": "2026-09-26T00:05:00Z",
       "label": "Hartog Elevator",
       "locations": 6,
       "ok": true
     },
     "agricharts:hullcoop": {
       "bids": 12,
-      "fetched_at": "2026-09-25T23:35:02Z",
+      "fetched_at": "2026-09-26T00:05:02Z",
       "label": "Hull Cooperative",
       "locations": 1,
       "ok": true
     },
     "agricharts:innovativeag": {
       "bids": 703,
-      "fetched_at": "2026-09-25T23:41:08Z",
+      "fetched_at": "2026-09-26T00:11:14Z",
       "label": "Innovative Ag Services",
       "locations": 46,
       "ok": true
     },
     "agricharts:jbslivepork": {
       "bids": 71,
-      "fetched_at": "2026-09-25T23:41:11Z",
+      "fetched_at": "2026-09-26T00:11:18Z",
       "label": "JBS Live Pork",
       "locations": 9,
       "ok": true
     },
     "agricharts:keycoop": {
       "bids": 320,
-      "fetched_at": "2026-09-25T23:41:07Z",
+      "fetched_at": "2026-09-26T00:11:12Z",
       "label": "Key Cooperative",
       "locations": 27,
       "ok": true
     },
     "agricharts:meadowland": {
       "bids": 16,
-      "fetched_at": "2026-09-25T23:35:01Z",
+      "fetched_at": "2026-09-26T00:05:01Z",
       "label": "Meadowland Farmers Coop",
       "locations": 1,
       "ok": true
     },
     "agricharts:midiowa": {
       "bids": 215,
-      "fetched_at": "2026-09-25T23:32:33Z",
+      "fetched_at": "2026-09-26T00:02:33Z",
       "label": "Mid Iowa Co-op",
       "locations": 30,
       "ok": true
     },
     "agricharts:midmissourienergy": {
       "bids": 6,
-      "fetched_at": "2026-09-25T23:35:04Z",
+      "fetched_at": "2026-09-26T00:05:03Z",
       "label": "Mid-Missouri Energy",
       "locations": 1,
       "ok": true
     },
     "agricharts:montrose": {
       "bids": 4,
-      "fetched_at": "2026-09-25T23:35:05Z",
+      "fetched_at": "2026-09-26T00:05:05Z",
       "label": "Montrose Grain and Supply",
       "locations": 1,
       "ok": true
     },
     "agricharts:newvision": {
       "bids": 254,
-      "fetched_at": "2026-09-25T23:35:10Z",
+      "fetched_at": "2026-09-26T00:05:10Z",
       "label": "New Vision Co-op",
       "locations": 22,
       "ok": true
     },
     "agricharts:nicoop": {
       "bids": 48,
-      "fetched_at": "2026-09-25T23:32:34Z",
+      "fetched_at": "2026-09-26T00:02:34Z",
       "label": "North Iowa Co-op",
       "locations": 4,
       "ok": true
     },
     "agricharts:plymouthenergy": {
-      "bids": 566,
-      "fetched_at": "2026-09-25T23:35:07Z",
+      "bids": 561,
+      "fetched_at": "2026-09-26T00:05:07Z",
       "label": "Plymouth Energy",
       "locations": 55,
       "ok": true
     },
     "agricharts:procooperative": {
       "bids": 202,
-      "fetched_at": "2026-09-25T23:32:33Z",
+      "fetched_at": "2026-09-26T00:02:33Z",
       "label": "Pro Cooperative",
       "locations": 16,
       "ok": true
     },
     "agricharts:silveredgecoop": {
       "bids": 5,
-      "fetched_at": "2026-09-25T23:41:11Z",
+      "fetched_at": "2026-09-26T00:11:17Z",
       "label": "SilverEdge Cooperative",
       "locations": 1,
       "ok": true
     },
     "agricharts:siouxlandenergy": {
       "bids": 11,
-      "fetched_at": "2026-09-25T23:35:03Z",
+      "fetched_at": "2026-09-26T00:05:03Z",
       "label": "Siouxland Energy Cooperative",
       "locations": 1,
       "ok": true
     },
     "agricharts:statelinecoop": {
       "bids": 136,
-      "fetched_at": "2026-09-25T23:41:10Z",
+      "fetched_at": "2026-09-26T00:11:15Z",
       "label": "Stateline Cooperative",
       "locations": 11,
       "ok": true
     },
     "agricharts:tamabentoncoop": {
       "bids": 58,
-      "fetched_at": "2026-09-25T23:41:10Z",
+      "fetched_at": "2026-09-26T00:11:16Z",
       "label": "Tama-Benton Cooperative",
       "locations": 9,
       "ok": true
     },
     "agricharts:tworivers": {
       "bids": 56,
-      "fetched_at": "2026-09-25T23:41:11Z",
+      "fetched_at": "2026-09-26T00:11:17Z",
       "label": "Two Rivers Cooperative",
       "locations": 4,
       "ok": true
     },
     "agricharts:useunited": {
       "bids": 6,
-      "fetched_at": "2026-09-25T23:35:03Z",
+      "fetched_at": "2026-09-26T00:05:02Z",
       "label": "United Cooperatives (MO)",
       "locations": 1,
       "ok": true
     },
     "bushel:agp": {
       "bids": 75,
-      "fetched_at": "2026-09-25T23:34:56Z",
+      "fetched_at": "2026-09-26T00:04:55Z",
       "label": "AGP",
       "locations": 15,
       "ok": true
     },
     "bushel:chs": {
       "bids": 1398,
-      "fetched_at": "2026-09-25T23:34:54Z",
+      "fetched_at": "2026-09-26T00:04:54Z",
       "label": "CHS",
       "locations": 158,
       "ok": true
     },
     "bushel:scoular": {
       "bids": 166,
-      "fetched_at": "2026-09-25T23:34:58Z",
+      "fetched_at": "2026-09-26T00:04:58Z",
       "label": "The Scoular Company",
       "locations": 54,
       "ok": true
     },
     "bushel:smithfield": {
       "bids": 95,
-      "fetched_at": "2026-09-25T23:35:00Z",
+      "fetched_at": "2026-09-26T00:05:00Z",
       "label": "Smithfield",
       "locations": 42,
       "ok": true
     },
     "cihedging:eliteoctane": {
       "bids": 20,
-      "fetched_at": "2026-09-25T23:35:08Z",
+      "fetched_at": "2026-09-26T00:05:07Z",
       "label": "Elite Octane",
       "locations": 1,
       "ok": true
     },
     "cihedging:goldengrain": {
       "bids": 12,
-      "fetched_at": "2026-09-25T23:35:17Z",
+      "fetched_at": "2026-09-26T00:05:18Z",
       "label": "Golden Grain Energy",
       "locations": 1,
       "ok": true
     },
     "cihedging:littlesioux": {
       "bids": 21,
-      "fetched_at": "2026-09-25T23:35:10Z",
+      "fetched_at": "2026-09-26T00:05:09Z",
       "label": "Little Sioux Corn Processors",
       "locations": 1,
       "ok": true
     },
     "fivestar": {
       "bids": 271,
-      "fetched_at": "2026-09-25T23:35:17Z",
+      "fetched_at": "2026-09-26T00:05:17Z",
       "label": "Five Star Cooperative",
       "locations": 21,
       "ok": true
     },
     "gradable:adm": {
       "bids": 1497,
-      "fetched_at": "2026-09-25T23:41:06Z",
+      "fetched_at": "2026-09-26T00:11:11Z",
       "label": "ADM (Gradable)",
       "locations": 108,
       "ok": true
     },
     "gradable:poet": {
       "bids": 350,
-      "fetched_at": "2026-09-25T23:36:32Z",
+      "fetched_at": "2026-09-26T00:06:32Z",
       "label": "POET Biorefining",
       "locations": 35,
       "ok": true
     },
     "heartland": {
       "bids": 644,
-      "fetched_at": "2026-09-25T23:32:31Z",
+      "fetched_at": "2026-09-26T00:02:31Z",
       "label": "Heartland Co-op",
       "locations": 79,
       "ok": true
     },
     "landus": {
       "bids": 559,
-      "fetched_at": "2026-09-25T23:34:51Z",
+      "fetched_at": "2026-09-26T00:04:51Z",
       "label": "Landus Cooperative",
       "locations": 49,
       "ok": true
     },
     "newcoop": {
       "bids": 959,
-      "fetched_at": "2026-09-25T23:32:34Z",
+      "fetched_at": "2026-09-26T00:02:35Z",
       "label": "NEW Cooperative",
       "locations": 69,
       "ok": true
     },
     "nexus": {
       "bids": 486,
-      "fetched_at": "2026-09-25T23:35:12Z",
+      "fetched_at": "2026-09-26T00:05:12Z",
       "label": "Nexus Cooperative",
       "locations": 35,
       "ok": true
