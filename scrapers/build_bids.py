@@ -255,6 +255,20 @@ def assemble(results: dict, status: dict, previous: dict) -> dict:
     for note in drop_mislabelled_bids(out_locations):
         print(f"  dropped mislabelled bid - {note}", file=sys.stderr)
 
+    # A location whose bids all filtered away is not published at all. It is a
+    # normal thing for an elevator to do: Butterfield answered with six bids on
+    # 2026-09-29, none of them corn or soybeans, so after filtering its one
+    # location was left empty. Publishing that empty shell broke the invariant
+    # validation enforces - every published location has at least one bid - and
+    # the scheduled run had refused to push for four days, freezing the whole
+    # map's bids over one co-op that had simply stopped quoting our two crops.
+    # Dropping it instead leaves that pin showing its "View bid page" link,
+    # exactly as a pin with no source does, and the other 465 keep updating.
+    for pin_id in [k for k, v in out_locations.items() if not (v.get("bids") or [])]:
+        print(f"  {pin_id}: no corn or soybean bids right now - not published",
+              file=sys.stderr)
+        del out_locations[pin_id]
+
     # Sources that failed keep their previous status, flagged stale.
     previous_status = previous.get("sources", {})
     for source_id, info in status.items():

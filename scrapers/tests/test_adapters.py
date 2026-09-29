@@ -806,3 +806,57 @@ class TestMislabelledBidGuard:
         locs, drop = self._locations({'nocash': {'bids': [
             {'grain': 'corn', 'cash': None, 'delivery_label': 'Oct 2026'}]}})
         assert drop(locs) == []
+
+
+class TestEmptyLocationsAreNotPublished:
+    """An elevator that stops quoting corn and soybeans must not freeze the feed.
+
+    Butterfield answered normally on 2026-09-29 with six bids, none of them
+    corn or soybeans. After filtering, its one location published with an
+    empty bid list, which violates the invariant validate() enforces, so the
+    scheduled run refused to push and the whole map's bids sat four days
+    stale over one co-op's seasonal gap.
+    """
+
+    @staticmethod
+    def _loc(loc_id, name, bids):
+        from adapters.base import Bid, SourceLocation
+        return SourceLocation(source_location_id=loc_id, name=name, bids=[
+            Bid(grain=g, delivery_start="2026-10-01", delivery_end="2026-10-31",
+                delivery_label="Oct 2026", futures_month="CZ26", futures=4.3,
+                futures_change=0.0, basis=-0.4, cash=3.9) for g in bids])
+
+    def _assemble(self, monkeypatch, results, previous=None):
+        import build_bids
+        monkeypatch.setattr(build_bids, "load_location_map", lambda: {
+            "quiet-pin": {"name": "Quiet Elevator", "source": "s", "source_location_id": "1"},
+            "busy-pin": {"name": "Busy Elevator", "source": "s", "source_location_id": "2"},
+        })
+        status = {"s": {"ok": True, "fetched_at": "2026-09-29T21:04:46Z"}}
+        return build_bids.assemble(results, status, previous or {})
+
+    def test_a_location_with_no_bids_is_dropped_and_the_rest_survive(self, monkeypatch):
+        out = self._assemble(monkeypatch, {"s": [
+            self._loc("1", "Quiet", []),
+            self._loc("2", "Busy", ["corn", "soybeans"]),
+        ]})
+        assert "quiet-pin" not in out["locations"]
+        assert out["locations"]["busy-pin"]["bids"]
+
+    def test_the_result_still_satisfies_validate(self, monkeypatch, tmp_path):
+        import build_bids, json as _json
+        out = self._assemble(monkeypatch, {"s": [
+            self._loc("1", "Quiet", []),
+            self._loc("2", "Busy", ["corn"]),
+        ]})
+        path = tmp_path / "bids.json"
+        path.write_text(_json.dumps(out), encoding="utf-8")
+        assert build_bids.validate(path) == 0
+
+    def test_a_carried_stale_location_that_is_empty_is_also_dropped(self, monkeypatch):
+        """The carry-forward path can resurrect an empty one just as easily."""
+        previous = {"locations": {"quiet-pin": {"name": "Quiet Elevator",
+                                                "source": "s", "bids": []}}}
+        out = self._assemble(monkeypatch, {"s": [self._loc("2", "Busy", ["corn"])]},
+                             previous)
+        assert "quiet-pin" not in out["locations"]
