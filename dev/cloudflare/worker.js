@@ -10,6 +10,9 @@
  *   /          truck positions   (dev/jd_push.py  ->  the private map)
  *   /cameras   line-camera counts and wait estimates
  *              (dev/cam_watch.py  ->  the camera block, dev/cam_build_block.py)
+ *   /moisture  where the combines are and what they read
+ *              (dev/moisture_feed.py  ->  the moisture calculator,
+ *               dev/moisture_build_block.py)
  *
  * Two separate tokens, because the two sides need different trust:
  *   PUSH_TOKEN  - only the farm PC has it. Write access.
@@ -32,7 +35,7 @@
 // camera push can never overwrite the fleet, nor the other way round. Both
 // use the same two tokens - the readings say where the farm's trucks haul,
 // so they are as private as the positions.
-const KEYS = { "/": "fleet", "/cameras": "cameras" };
+const KEYS = { "/": "fleet", "/cameras": "cameras", "/moisture": "moisture" };
 
 // The private page is on a different origin, so the browser preflights.
 function cors(origin) {
