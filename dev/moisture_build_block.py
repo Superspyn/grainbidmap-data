@@ -770,9 +770,22 @@ UI_JS = r"""
 
   fillFields();
   $('gtm-field').onchange = onField;
-  $('gtm-m').onchange = run;
-  $('gtm-target').onchange = run;
-  $('gtm-bu').onchange = run;
+  // Number boxes recalculate as you type, not only when you leave the box -
+  // on a phone "onchange" waits for the keyboard to close, so a new bushel
+  // figure looked like it had done nothing. A short pause first, so typing
+  // 1250 does not fetch for 1, 12 and 125 along the way.
+  var typing = null;
+  function soon() { clearTimeout(typing); typing = setTimeout(run, 450); }
+  ['gtm-m', 'gtm-target', 'gtm-bu'].forEach(function (id) {
+    $(id).oninput = soon;
+    $(id).onchange = run;
+  });
+  // Remember this viewer's usual load size. Browser storage can be missing
+  // or blocked (private windows), so every touch of it is wrapped.
+  try { var savedBu = localStorage.getItem('gtm-bu'); if (+savedBu > 50) $('gtm-bu').value = savedBu; } catch (e) {}
+  $('gtm-bu').addEventListener('input', function () {
+    try { if (+$('gtm-bu').value > 50) localStorage.setItem('gtm-bu', $('gtm-bu').value); } catch (e) {}
+  });
   $('gtm-load').onchange = run;
   $('gtm-dump').onchange = run;
   $('gtm-tab-field').onclick = function () { setMode('field'); };
@@ -802,7 +815,7 @@ BLOCK = r"""<!-- Overnight grain moisture: private page only (field names and th
     <label id="gtm-target-wrap">Target %<input id="gtm-target" type="number" step="0.5" min="8" max="35" inputmode="decimal"></label>
   </div>
   <div id="gtm-truckform" class="gtm-form gtm-hide">
-    <label>Bushels on<input id="gtm-bu" type="number" step="50" min="100" max="2000" value="1300" inputmode="numeric"></label>
+    <label>Bushels on<input id="gtm-bu" type="number" step="1" min="100" max="3000" value="1300" inputmode="numeric"></label>
     <label>Loaded<select id="gtm-load"></select></label>
     <label>Unloaded<select id="gtm-dump"></select></label>
   </div>
