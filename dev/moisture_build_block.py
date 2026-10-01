@@ -407,7 +407,10 @@ var GTM = (function () {
     var rainDelta = 100 * (water + rainLb) / (lb + rainLb) - m0;
     var tLoadF = hours[i0].t * 9 / 5 + 32;
     var safe = safeDays(crop, tLoadF, m0);
-    return { hours: n, surface: surface, rainMm: rainMm, rainDelta: rainDelta, rainLb: rainLb,
+    return { lb: lb, water: water, lbPerBu: LB_PER_BU[crop] || 56, tMean: tMean, rhMean: rhMean,
+             me: emc(crop, tMean, rhMean), diff: diffusivity(tMean),
+             frac: Math.min(1, layerCm / depthCm), openFt2: OPEN_TOP_FT2,
+             hours: n, surface: surface, rainMm: rainMm, rainDelta: rainDelta, rainLb: rainLb,
              tarped: m0 + surface, open: m0 + surface + rainDelta,
              layerCm: layerCm, depthCm: depthCm, tLoadF: tLoadF,
              safeDays: safe.days, beyond: safe.beyond, usedPct: 100 * (n / 24) / safe.days };
@@ -562,7 +565,7 @@ UI_JS = r"""
       if (hours.length < 12) throw new Error('the forecast came back empty');
       if (mode === 'truck') { out.innerHTML = truck(f, hours, m0) + truckFoot(fc); return; }
       var res = GTM.analyse(hours, f.c, m0, target);
-      out.innerHTML = render(f, hours, res) + table(hours, res) + dayTable(hours, res) + foot(f, fc);
+      out.innerHTML = render(f, hours, res) + table(hours, res) + dayTable(hours, res) + mathField(f, hours, res) + foot(f, fc);
     }).catch(function (e) {
       out.innerHTML = '<div class="gtm-verdict gtm-v-none">Could not get the forecast: ' + esc(e.message) +
         '. Try again in a minute.</div>';
@@ -736,7 +739,120 @@ UI_JS = r"""
     h += '<div class="gtm-why">While it sits: low ' + F(Math.min.apply(null, hours.slice(i0, i1).map(function (x) { return x.t; }))) +
       DEG + 'F' + DOT + 'humidity up to ' + Math.round(Math.max.apply(null, hours.slice(i0, i1).map(function (x) { return x.rh; }))) + '%' +
       DOT + (rain ? inch(r.rainMm) + ' in of rain' : 'no rain') + DOT + Math.round(bu).toLocaleString() + ' bu</div>';
+    h += mathTruck(r, bu, m0, f.c);
     return h;
+  }
+
+  // --- "How this is worked out": every step with this page's own numbers --
+  var X = String.fromCharCode(215), DIV = String.fromCharCode(247), APPROX = String.fromCharCode(8776),
+      SQRT = String.fromCharCode(8730), SQ = String.fromCharCode(178), MINUS = String.fromCharCode(8722),
+      GE = String.fromCharCode(8805);
+  function n0(x) { return Math.round(x).toLocaleString(); }
+  function signed(x, d) { return (x < 0 ? MINUS : '+') + Math.abs(x).toFixed(d); }
+  function step(title, calc, why) {
+    return '<li><b>' + title + '</b><div class="gtm-calc">' + calc + '</div>' +
+      (why ? '<div class="gtm-note">' + why + '</div>' : '') + '</li>';
+  }
+  function steps(list) {
+    return '<details class="gtm-det gtm-math"><summary>How this is worked out</summary><ol class="gtm-steps">' +
+      list.join('') + '</ol></details>';
+  }
+
+  function mathTruck(r, bu, m0, crop) {
+    var word = crop === 'soybeans' ? 'beans' : 'corn';
+    var layerIn = r.layerCm / 2.54, depthIn = r.depthCm / 2.54, tF = r.tMean * 9 / 5 + 32;
+    var s = [];
+    s.push(step('What is on the truck',
+      n0(bu) + ' bu ' + X + ' ' + r.lbPerBu + ' lb = ' + n0(r.lb) + ' lb of ' + word + '. ' +
+      pct(m0) + '% of that is water: ' + n0(r.lb) + ' ' + X + ' ' + (m0 / 100).toFixed(3) + ' = ' + n0(r.water) + ' lb of water.'));
+    s.push(step('How deep the load is',
+      n0(bu) + ' bu ' + X + ' 1.24 cu ft per bu ' + DIV + ' ' + r.openFt2 + ' sq ft open top = ' + (depthIn / 12).toFixed(1) + ' ft (' + n0(depthIn) + ' in).',
+      'A semi hopper is about 40 ft long and 7.5 ft across the top.'));
+    s.push(step('How far moisture creeps into still grain',
+      'distance = ' + SQRT + '(D ' + X + ' time) = ' + SQRT + '(' + r.diff.toFixed(7) + ' ' + X + ' ' + r.hours + ' h ' + X + ' 3,600 s) = ' +
+      r.layerCm.toFixed(2) + ' cm ' + APPROX + ' ' + layerIn.toFixed(2) + ' in.',
+      'With no air moving through the load, moisture can only seep kernel to kernel. D is how fast that goes, in cm' + SQ +
+      ' per second: 0.0000025 at 41' + DEG + 'F rising to 0.0000080 at 72' + DEG + 'F (measured on bulk grain). Tonight averages ' +
+      Math.round(tF) + DEG + 'F.'));
+    s.push(step('How much of the load touches the air',
+      layerIn.toFixed(2) + ' in ' + DIV + ' ' + depthIn.toFixed(0) + ' in = ' + (r.frac * 100).toFixed(2) + '% of the load.'));
+    s.push(step('Where the air pulls that top layer',
+      'At ' + Math.round(tF) + DEG + 'F and ' + Math.round(r.rhMean) + '% humidity, ' + word + ' settles at ' + pct(r.me) + '%.',
+      'That is equilibrium moisture - where grain ends up if left long enough in that air - from the published ' +
+      (crop === 'soybeans' ? 'Halsey equation fitted to extension tables' : 'ASAE D245.6 equation for corn') + '.'));
+    s.push(step('Change in the whole load',
+      (r.frac * 100).toFixed(2) + '% ' + X + ' (' + pct(r.me) + '% ' + MINUS + ' ' + pct(m0) + '%) = ' + signed(r.surface, 3) +
+      ' points, so ' + pct(m0) + '% becomes ' + pct(r.tarped) + '%.',
+      'Humidity sets which way the top goes and wind speeds it up, but neither can reach past that thin top layer.'));
+    s.push(r.rainMm >= 0.25
+      ? step('Rain on an open top',
+          inch(r.rainMm) + ' in ' + X + ' ' + r.openFt2 + ' sq ft ' + X + ' 5.2 lb per inch per sq ft = ' + n0(r.rainLb) + ' lb of water. ' +
+          '(' + n0(r.water) + ' + ' + n0(r.rainLb) + ') ' + DIV + ' (' + n0(r.lb) + ' + ' + n0(r.rainLb) + ') = ' + pct(r.open) + '%.',
+          'This is the most it could be: it assumes every drop soaks in. A tarp keeps all of it out.')
+      : step('Rain on an open top', 'No rain in this window, so 0 lb of water lands on it and a tarp changes nothing.'));
+    // Shown to the precision it is divided by, so the step checks by hand.
+    var sd = r.safeDays < 100 ? r.safeDays.toFixed(1) : r.safeDays.toFixed(0);
+    s.push(step('Heating',
+      'At ' + Math.round(r.tLoadF) + DEG + 'F and ' + pct(m0) + '%, the table gives ' + sd + ' days to lose one grade. ' +
+      r.hours + ' h ' + DIV + ' 24 = ' + (r.hours / 24).toFixed(2) + ' days; ' + (r.hours / 24).toFixed(2) + ' ' + DIV + ' ' + sd + ' = ' +
+      (100 * (r.hours / 24) / +sd).toFixed(1) + '% used.',
+      'Safe storage times are Arkansas Extension FSA1058 (0.5% dry matter loss, one U.S. grade), read between table rows; they roughly halve for every 10' + DEG + 'F warmer.'));
+    return steps(s);
+  }
+
+  function mathField(f, hours, res) {
+    if (!res.night) return '';
+    var w = res.night, st = res.stats, s = [];
+    var tSum = 0, rhSum = 0, n = 0;
+    for (var i = w.i0; i < w.i1; i++) { tSum += hours[i].t; rhSum += hours[i].rh; n++; }
+    var tN = n ? tSum / n : hours[0].t, rhN = n ? rhSum / n : hours[0].rh, tF = tN * 9 / 5 + 32;
+    var start = when(hours[w.i0].ms), end = when(hours[Math.min(w.i1, hours.length - 1)].ms);
+    if (f.c === 'soybeans') {
+      s.push(step('Are the pods wet each hour?',
+        'Wet when the dew point comes within 3.6' + DEG + 'F of the air (5.4' + DEG + 'F on a clear, calm night); dry again once the gap is over 6.8' + DEG +
+        'F, or the wind is over 5.6 mph with humidity under 88%. Any hour with 0.01 in of rain is wet.',
+        'On a clear, calm night pods cool below the air, so dew starts sooner. Thresholds from leaf-wetness studies (Lulu et al. 2008; Gleason et al., Iowa State).'));
+      s.push(step('Tonight, ' + start + ' to ' + end,
+        st.wetH + ' wet hour' + (st.wetH === 1 ? '' : 's') + ' (' + st.dewH + ' from dew), ' + inch(st.rainMm) + ' in of rain.'));
+      s.push(step('The rating',
+        'Rain ' + GE + ' 0.1 in = rain.  ' + GE + ' 5 wet hours (or ' + GE + ' 2 with some rain) = high.  1 to 4 = moderate.  None = low.  Tonight: ' +
+        { low: 'low', moderate: 'moderate', high: 'high', rain: 'rain' }[res.level] + '.',
+        'Beans can swing up to about 5 points between dawn and noon. The best published model misses beans by about 7 points, so a rating is the honest answer, not a number.'));
+      if (res.backAt !== null && res.backAt !== undefined) {
+        var b = hours[res.backAt - 1] || hours[res.backAt];
+        s.push(step('Back to ' + pct(res.target) + '%',
+          'First hour tomorrow the pods are dry and the air would hold beans at or under ' + pct(res.target) + '%: ' + when(b.ms) + ', ' +
+          Math.round(b.t * 9 / 5 + 32) + DEG + 'F and ' + Math.round(b.rh) + '% humidity, where beans settle at ' + pct(GTM.emc('soybeans', b.t, b.rh)) +
+          '%. Plus an hour for the beans to catch up = ' + when(hours[res.backAt].ms) + '.',
+          'Bean equilibrium moisture is a Halsey equation fitted to the published extension tables.'));
+      } else {
+        s.push(step('Back to ' + pct(res.target) + '%',
+          'No hour tomorrow has dry pods and air dry enough to hold beans at ' + pct(res.target) + '% or under.'));
+      }
+    } else {
+      var me = GTM.emc('corn', tN, rhN), rate = 0.10 / 24 * 100;
+      s.push(step('Where the corn is headed tonight',
+        'The air averages ' + Math.round(tF) + DEG + 'F and ' + Math.round(rhN) + '% humidity. In that air corn settles at about ' + pct(me) + '%.',
+        'Equilibrium moisture from the ASAE D245.6 equation for corn. Humidity over 95% is counted as 95%, where the equation stops being reliable.'));
+      s.push(step('How fast it gets there',
+        'Each hour corn closes 0.10 ' + DIV + ' 24 = ' + rate.toFixed(2) + '% of the gap when drying, and a quarter of that, ' +
+        (rate / 4).toFixed(2) + '%, when soaking up.',
+        'That rate reproduces the 0.4 to 0.8 points a day Iowa State and Purdue measured in the field; corn soaks up at about a quarter of its drying speed.'));
+      // The reading typed in is "now", which may be mid-morning; the corn has
+      // a day of its own before the night starts, so the three are shown apart.
+      var dusk = w.i0 > 0 ? res.track[w.i0 - 1] : res.m0;
+      s.push(step('Tonight',
+        (w.i0 > 0 ? pct(res.m0) + '% now, ' + pct(dusk) + '% by ' + start + ', ' : pct(res.m0) + '% now, ') +
+        pct(res.dawn) + '% by ' + end + '. Overnight alone: ' + signed(res.dawn - dusk, 2) + ' points.',
+        'The husk keeps dew off the kernels, which is why corn barely moves overnight. Rain is warned about separately and not counted.'));
+      if (res.target < res.m0) {
+        s.push(step('Reaching ' + pct(res.target) + '%',
+          'The same hour-by-hour step run through the week' + "'" + 's forecast: ' +
+          (res.reachAt >= 0 ? 'first hour at or under ' + pct(res.target) + '% is ' + whenDay(hours[res.reachAt].ms) + '.' : 'it does not get there within the forecast.'),
+          'Iowa State' + "'" + 's field model misses corn by about 2 points, so read it as ' + String.fromCharCode(177) + '2.'));
+      }
+    }
+    return steps(s);
   }
 
   function truckFoot(fc) {
@@ -860,6 +976,11 @@ BLOCK = r"""<!-- Overnight grain moisture: private page only (field names and th
   .gtm-tab.gtm-on { background: #2e6b3a; color: #fff; border-color: #2e6b3a; }
   #gtm-truckform { margin-top: 10px; }
   .gtm-hide { display: none !important; }
+  .gtm-steps { padding-left: 20px; margin: 8px 0 4px; }
+  .gtm-steps li { margin: 0 0 10px; }
+  .gtm-calc { font-family: ui-monospace, Consolas, Menlo, monospace; font-size: 13px; background: #f1f5f1;
+              border-radius: 5px; padding: 5px 7px; margin: 3px 0; overflow-wrap: anywhere; }
+  .gtm-math summary { color: #2e6b3a; }
 </style>
 <script>
 __MODEL__
