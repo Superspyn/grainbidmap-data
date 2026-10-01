@@ -334,11 +334,91 @@ var GTM = (function () {
     return Math.sqrt(dx * dx + dy * dy);
   }
 
+  // --- grain sitting in a truck overnight ---------------------------------
+  // A loaded semi is a static bulk with no air moving through it, and in
+  // that case moisture only moves by diffusion, which is very slow: about
+  // 2.5e-6 cm2/s at 5 C and 8e-6 at 22.5 C (bulk grain, J. Stored Prod.
+  // Res.). Over a night that reaches well under an inch into a load five
+  // feet deep, so the load's average barely moves - whatever the air does.
+  // The one thing that does move it is rain landing on an open top.
+  var LB_PER_BU = { corn: 56, soybeans: 60 };
+  var FT3_PER_BU = 1.2445;
+  var OPEN_TOP_FT2 = 300;          // a semi hopper's open top, about 40 by 7.5 ft
+  var LB_WATER_PER_IN_FT2 = 5.2;   // one inch of rain on one square foot
+
+  function diffusivity(tC) {
+    var d = 2.5e-6 + (tC - 5) * (8.0e-6 - 2.5e-6) / (22.5 - 5);
+    return Math.max(1e-6, d);
+  }
+
+  // Safe storage days before 0.5% dry matter loss - the loss of one U.S.
+  // grade - from Arkansas FSA1058. Rows are grain temperature, F, ascending.
+  // The soybean entries the table prints as ">365" are extended at the
+  // table's own rate of about 1.5x per 5 F; they only ever show as "over a
+  // year", so the exact figure does not reach the page.
+  var SAFE = {
+    corn: { m: [15, 17, 19, 21, 23, 25, 30], t: [35, 40, 45, 50, 55, 60, 65, 70, 75],
+      d: [[2126, 671, 295, 161, 102, 72, 41], [1413, 448, 197, 107, 68, 48, 27],
+          [931, 299, 131, 72, 45, 32, 18], [621, 199, 88, 48, 30, 21, 12],
+          [414, 133, 58, 32, 21, 14, 8], [275, 88, 39, 22, 14, 10, 6],
+          [206, 66, 29, 16, 11, 8, 5], [154, 49, 22, 12, 8, 6, 4],
+          [115, 37, 16, 9, 6, 5, 3]] },
+    soybeans: { m: [13, 14, 15, 16, 18, 20, 22],
+      t: [35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90],
+      d: [[2100, 1140, 680, 440, 115, 62, 39], [1400, 760, 455, 293, 88, 48, 30],
+          [950, 510, 303, 195, 66, 37, 24], [630, 339, 202, 130, 50, 29, 19],
+          [420, 226, 134, 86, 38, 22, 14], [278, 150, 89, 57, 28, 17, 11],
+          [210, 113, 67, 43, 22, 13, 9], [157, 85, 50, 32, 16, 10, 7],
+          [117, 63, 38, 24, 12, 8, 5], [87, 47, 28, 18, 9, 6, 4],
+          [66, 36, 21, 14, 7, 5, 3], [49, 27, 16, 10, 5, 4, 3]] }
+  };
+
+  function bracket(xs, x) {
+    if (x <= xs[0]) return [0, 0, 0];
+    if (x >= xs[xs.length - 1]) return [xs.length - 1, xs.length - 1, 0];
+    for (var i = 0; i < xs.length - 1; i++) {
+      if (x <= xs[i + 1]) return [i, i + 1, (x - xs[i]) / (xs[i + 1] - xs[i])];
+    }
+  }
+
+  // Interpolated in log(days), which is how the table behaves: storage time
+  // roughly halves for every 10 F warmer.
+  function safeDays(crop, tF, m) {
+    var tb = SAFE[crop] || SAFE.corn;
+    var a = bracket(tb.t, tF), b = bracket(tb.m, m);
+    function ld(i, j) { return Math.log(tb.d[i][j]); }
+    var lo = ld(a[0], b[0]) * (1 - b[2]) + ld(a[0], b[1]) * b[2];
+    var hi = ld(a[1], b[0]) * (1 - b[2]) + ld(a[1], b[1]) * b[2];
+    return { days: Math.exp(lo * (1 - a[2]) + hi * a[2]),
+             beyond: tF > tb.t[tb.t.length - 1] || m > tb.m[tb.m.length - 1] };
+  }
+
+  // hours[i0] is when it was loaded, hours[i1] when it is dumped.
+  function truckRun(hours, i0, i1, crop, m0, bu) {
+    var lb = bu * (LB_PER_BU[crop] || 56), water = lb * m0 / 100;
+    var depthCm = bu * FT3_PER_BU / OPEN_TOP_FT2 * 30.48;
+    var n = Math.max(0, i1 - i0), tSum = 0, rhSum = 0, rainMm = 0;
+    for (var i = i0; i < i1; i++) { tSum += hours[i].t; rhSum += hours[i].rh; rainMm += hours[i].qpf; }
+    var tMean = n ? tSum / n : hours[i0].t, rhMean = n ? rhSum / n : hours[i0].rh;
+    var layerCm = Math.sqrt(diffusivity(tMean) * n * 3600);
+    var surface = Math.min(1, layerCm / depthCm) * (emc(crop, tMean, rhMean) - m0);
+    // Rain on an open top, every drop of it taken up - an upper bound.
+    var rainLb = rainMm / 25.4 * OPEN_TOP_FT2 * LB_WATER_PER_IN_FT2;
+    var rainDelta = 100 * (water + rainLb) / (lb + rainLb) - m0;
+    var tLoadF = hours[i0].t * 9 / 5 + 32;
+    var safe = safeDays(crop, tLoadF, m0);
+    return { hours: n, surface: surface, rainMm: rainMm, rainDelta: rainDelta, rainLb: rainLb,
+             tarped: m0 + surface, open: m0 + surface + rainDelta,
+             layerCm: layerCm, depthCm: depthCm, tLoadF: tLoadF,
+             safeDays: safe.days, beyond: safe.beyond, usedPct: 100 * (n / 24) / safe.days };
+  }
+
   return { emc: emc, wetness: wetness, nightWindow: nightWindow, dayAfter: dayAfter,
            nightStats: nightStats, soyRating: soyRating, soyBackAt: soyBackAt,
            cornTrack: cornTrack, analyse: analyse, days: days,
            durationHours: durationHours, expand: expand, buildHours: buildHours,
-           pickReading: pickReading, distKm: distKm, SOY_LEVELS: SOY_LEVELS };
+           pickReading: pickReading, distKm: distKm, SOY_LEVELS: SOY_LEVELS,
+           safeDays: safeDays, truckRun: truckRun };
 })();
 if (typeof module !== 'undefined') module.exports = GTM;
 """
@@ -353,7 +433,7 @@ UI_JS = r"""
   var $ = function (id) { return document.getElementById(id); };
   var DOT = ' ' + String.fromCharCode(183) + ' ';
   var DEG = String.fromCharCode(176);
-  var feed = null, cache = {};
+  var feed = null, cache = {}, mode = 'field';
   var byId = {};
   FIELDS.forEach(function (f) { byId[f.id] = f; });
 
@@ -424,8 +504,9 @@ UI_JS = r"""
       $('gtm-m').value = pct(r.m);
       note.innerHTML = r.km === 0
         ? 'Combine average in this field, through ' + esc(whenDay(Date.parse(r.end)))
-        : 'Combine reading from ' + esc(byId[r.fieldId].n) + ', ' + Math.round(r.km * 0.621) +
-          ' mi away, ' + esc(fDate.format(new Date(r.end))) + '. Edit if you have a better number.';
+        : 'Combine reading from ' + esc(byId[r.fieldId].n) + ', ' +
+          (r.km * 0.621 < 1 ? 'under a mile away' : Math.round(r.km * 0.621) + ' mi away') + ', ' +
+          esc(fDate.format(new Date(r.end))) + '. Edit if you have a better number.';
     } else {
       $('gtm-m').value = '';
       note.innerHTML = 'No recent combine reading nearby - enter a tester reading.';
@@ -470,14 +551,16 @@ UI_JS = r"""
       return;
     }
     if (!(m0 > 5 && m0 < 45)) {
-      out.innerHTML = '<div class="gtm-verdict gtm-v-none">Enter what the ' + (f.c === 'corn' ? 'corn' : 'beans') +
-        ' are testing now.</div>';
+      out.innerHTML = '<div class="gtm-verdict gtm-v-none">' + (mode === 'truck'
+        ? 'Enter the moisture it was loaded at.'
+        : 'Enter what the ' + (f.c === 'corn' ? 'corn' : 'beans') + ' are testing now.') + '</div>';
       return;
     }
     out.innerHTML = '<div class="gtm-note">Getting the forecast for this field' + String.fromCharCode(8230) + '</div>';
     forecast(f).then(function (fc) {
       var hours = GTM.buildHours(fc.grid, fc.hourly, Date.now(), 168);
       if (hours.length < 12) throw new Error('the forecast came back empty');
+      if (mode === 'truck') { out.innerHTML = truck(f, hours, m0) + truckFoot(fc); return; }
       var res = GTM.analyse(hours, f.c, m0, target);
       out.innerHTML = render(f, hours, res) + table(hours, res) + dayTable(hours, res) + foot(f, fc);
     }).catch(function (e) {
@@ -587,6 +670,94 @@ UI_JS = r"""
         : 'Corn estimate is good to about ' + String.fromCharCode(177) + '2 points over a day or two, less beyond that.') + '</div>';
   }
 
+  // --- in the truck ----------------------------------------------------------
+  function idxOf(hours, ms) {
+    for (var i = 0; i < hours.length; i++) { if (String(hours[i].ms) === String(ms)) return i; }
+    return -1;
+  }
+
+  // Load: any hour in the next day, "now" first. Unload: up to a day and a
+  // half out, defaulting to 7 am the morning after loading.
+  function fillTimes(hours) {
+    var load = $('gtm-load'), dump = $('gtm-dump');
+    var keepLoad = load.value, keepDump = dump.value;
+    load.innerHTML = hours.slice(0, 24).map(function (h, i) {
+      return '<option value="' + h.ms + '">' + (i === 0 ? 'Now' : esc(whenDay(h.ms))) + '</option>';
+    }).join('');
+    if (idxOf(hours.slice(0, 24), keepLoad) >= 0) load.value = keepLoad;
+    var i0 = Math.max(0, idxOf(hours, load.value));
+    dump.innerHTML = hours.slice(i0 + 1, i0 + 37).map(function (h) {
+      return '<option value="' + h.ms + '">' + esc(whenDay(h.ms)) + '</option>';
+    }).join('');
+    var j = idxOf(hours, keepDump);
+    if (j > i0 && j <= i0 + 36) { dump.value = keepDump; return; }
+    for (var k = i0 + 1; k < Math.min(hours.length, i0 + 37); k++) {
+      if (hours[k].hod === 7) { dump.value = String(hours[k].ms); return; }
+    }
+  }
+
+  function daysText(d) {
+    if (d > 365) return 'over a year';
+    if (d >= 2) return Math.round(d) + ' days';
+    return Math.round(d * 24) + ' hours';
+  }
+
+  function truck(f, hours, m0) {
+    fillTimes(hours);
+    var i0 = idxOf(hours, $('gtm-load').value), i1 = idxOf(hours, $('gtm-dump').value);
+    var bu = parseFloat($('gtm-bu').value);
+    if (!(bu > 50)) return '<div class="gtm-verdict gtm-v-none">Enter how many bushels are on.</div>';
+    if (i0 < 0 || i1 <= i0) return '<div class="gtm-verdict gtm-v-none">Pick an unload time after the load time.</div>';
+    var r = GTM.truckRun(hours, i0, i1, f.c, m0, bu);
+    var crop = f.c === 'soybeans' ? 'beans' : 'corn';
+    // Rain is only worth a warning once it would move the whole load by a
+    // tenth of a point; a trace (0.01 in is about 20 lb on a 70,000 lb load)
+    // is mentioned, not alarmed about.
+    var rain = r.rainMm >= 0.25, matters = r.rainDelta >= 0.1;
+    var layerIn = r.layerCm / 2.54, depthFt = r.depthCm / 30.48;
+    var h = '<div class="gtm-verdict gtm-v-' + (matters ? 'moderate' : 'low') + '">By ' + esc(whenDay(hours[i1].ms)) +
+      ': about ' + pct(r.tarped) + '%' + (matters ? ' if it is tarped' : '') + '</div>';
+    h += '<div class="gtm-line">A load sitting in a truck does not dry down or soak up moisture overnight. ' +
+      'Only the top ' + (layerIn < 0.5 ? 'quarter inch' : layerIn.toFixed(1) + ' inches') + ' of a ' +
+      depthFt.toFixed(1) + '-foot-deep load trades moisture with the air, so the load as a whole moves ' +
+      (Math.abs(r.surface) < 0.05 ? 'less than a tenth of a point' : 'about ' + Math.abs(r.surface).toFixed(1) + ' point') + '.</div>';
+    h += matters
+      ? '<div class="gtm-line"><b>Not tarped: up to about ' + pct(r.open) + '%.</b> ' + inch(r.rainMm) +
+        ' in of rain is forecast while it sits - about ' + Math.round(r.rainLb).toLocaleString() +
+        ' lb of water on an open top. It stays in the top few inches, where the elevator\'s probe starts. Tarp it.</div>'
+      : rain
+        ? '<div class="gtm-line">Only a trace of rain (' + inch(r.rainMm) + ' in) is forecast while it sits - not enough to change the load.</div>'
+        : '<div class="gtm-line">No rain is forecast while it sits, so a tarp makes no difference to moisture.</div>';
+    var used = r.usedPct, lvl = used < 10 ? 0 : used < 30 ? 1 : 2;
+    h += '<div class="gtm-line"><b>Heating: ' + ['no concern', 'keep an eye on it', 'do not let it sit'][lvl] + '.</b> ' +
+      pct(m0) + '% ' + crop + ' at ' + Math.round(r.tLoadF) + DEG + 'F keeps about ' + daysText(r.safeDays) +
+      ' before it starts losing a grade; ' + r.hours + ' hours uses about ' + Math.max(1, Math.round(used)) + '% of that.' +
+      (r.beyond ? ' This is past the edge of the published table, so treat it as rough.' : '') + '</div>';
+    h += '<div class="gtm-why">While it sits: low ' + F(Math.min.apply(null, hours.slice(i0, i1).map(function (x) { return x.t; }))) +
+      DEG + 'F' + DOT + 'humidity up to ' + Math.round(Math.max.apply(null, hours.slice(i0, i1).map(function (x) { return x.rh; }))) + '%' +
+      DOT + (rain ? inch(r.rainMm) + ' in of rain' : 'no rain') + DOT + Math.round(bu).toLocaleString() + ' bu</div>';
+    return h;
+  }
+
+  function truckFoot(fc) {
+    var up = fc.grid.updateTime ? whenDay(Date.parse(fc.grid.updateTime)) : '';
+    return '<div class="gtm-foot">Forecast: National Weather Service for this field' + (up ? ', issued ' + esc(up) : '') + '. ' +
+      'Moisture moves through a still load only by diffusion, which is very slow; the open top is taken as 300 sq ft, a semi hopper. ' +
+      'Grain temperature is taken as the air when it was loaded. Storage times are Arkansas Extension FSA1058, to the loss of one grade. ' +
+      'If very wet corn tests higher at the elevator in the morning, that is not water added - nothing adds water to a load but rain. ' +
+      'Moisture evening out inside the kernels, and the grain cooling, both change what a meter reads; neither is counted here.</div>';
+  }
+
+  function setMode(m) {
+    mode = m;
+    $('gtm-tab-field').className = 'gtm-tab' + (m === 'field' ? ' gtm-on' : '');
+    $('gtm-tab-truck').className = 'gtm-tab' + (m === 'truck' ? ' gtm-on' : '');
+    $('gtm-truckform').className = 'gtm-form' + (m === 'truck' ? '' : ' gtm-hide');
+    $('gtm-target-wrap').className = m === 'truck' ? 'gtm-hide' : '';
+    $('gtm-mlabel').textContent = m === 'truck' ? 'Moisture when loaded %' : 'Moisture now %';
+    run();
+  }
+
   function pullFeed() {
     if (!RELAY || !window.fetch) return Promise.resolve();
     return fetch(RELAY.replace(/\/+$/, '') + '/moisture', { cache: 'no-store',
@@ -601,6 +772,11 @@ UI_JS = r"""
   $('gtm-field').onchange = onField;
   $('gtm-m').onchange = run;
   $('gtm-target').onchange = run;
+  $('gtm-bu').onchange = run;
+  $('gtm-load').onchange = run;
+  $('gtm-dump').onchange = run;
+  $('gtm-tab-field').onclick = function () { setMode('field'); };
+  $('gtm-tab-truck').onclick = function () { setMode('truck'); };
   pullFeed().then(function () {
     renderCombines();
     $('gtm-field').value = defaultField();
@@ -615,11 +791,20 @@ BLOCK = r"""<!-- Overnight grain moisture: private page only (field names and th
     <span class="gtm-title">Overnight grain moisture</span>
     <span class="gtm-asof" id="gtm-asof"></span>
   </div>
+  <div class="gtm-tabs">
+    <button type="button" id="gtm-tab-field" class="gtm-tab gtm-on">Standing crop</button>
+    <button type="button" id="gtm-tab-truck" class="gtm-tab">In the truck</button>
+  </div>
   <div id="gtm-combines" class="gtm-combines"></div>
   <div class="gtm-form">
     <label class="gtm-wide">Field<select id="gtm-field"></select></label>
-    <label>Moisture now %<input id="gtm-m" type="number" step="0.1" min="5" max="45" inputmode="decimal"></label>
-    <label>Target %<input id="gtm-target" type="number" step="0.5" min="8" max="35" inputmode="decimal"></label>
+    <label><span id="gtm-mlabel">Moisture now %</span><input id="gtm-m" type="number" step="0.1" min="5" max="45" inputmode="decimal"></label>
+    <label id="gtm-target-wrap">Target %<input id="gtm-target" type="number" step="0.5" min="8" max="35" inputmode="decimal"></label>
+  </div>
+  <div id="gtm-truckform" class="gtm-form gtm-hide">
+    <label>Bushels on<input id="gtm-bu" type="number" step="50" min="100" max="2000" value="1300" inputmode="numeric"></label>
+    <label>Loaded<select id="gtm-load"></select></label>
+    <label>Unloaded<select id="gtm-dump"></select></label>
   </div>
   <div id="gtm-mnote" class="gtm-note"></div>
   <div id="gtm-out"></div>
@@ -656,6 +841,12 @@ BLOCK = r"""<!-- Overnight grain moisture: private page only (field names and th
   .gtm-t .gtm-wet td { background: #e2ecf8; }
   .gtm-t td.gtm-rainy { color: #b3261e; font-weight: 700; }
   .gtm-foot { font-size: 12px; color: #6b776d; margin-top: 10px; }
+  .gtm-tabs { display: flex; gap: 6px; margin-bottom: 10px; }
+  .gtm-tab { font: inherit; font-size: 15px; font-weight: 600; flex: 1 1 0; padding: 8px 10px; cursor: pointer;
+             border: 1px solid #b9cbbc; border-radius: 8px; background: #fff; color: #2e6b3a; }
+  .gtm-tab.gtm-on { background: #2e6b3a; color: #fff; border-color: #2e6b3a; }
+  #gtm-truckform { margin-top: 10px; }
+  .gtm-hide { display: none !important; }
 </style>
 <script>
 __MODEL__

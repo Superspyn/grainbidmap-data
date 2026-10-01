@@ -116,6 +116,27 @@ readings.a = { m: 19.9, end: '2026-09-30T12:00:00Z' };
 out.pickOwn = G.pickReading(fields[0], fields, readings, now);
 out.pickNone = G.pickReading(fields[0], fields, {}, now);
 
+// --- in the truck ---
+// Storage table spot checks (Arkansas FSA1058, days to 0.5% dry matter loss).
+out.safeCorn70_19 = G.safeDays('corn', 70, 19).days;      // table: 22
+out.safeCorn70_20 = G.safeDays('corn', 70, 20).days;      // between 22 and 12; UMN says 16
+out.safeCorn75_30 = G.safeDays('corn', 75, 30).days;      // table: 3
+out.safeSoy60_13 = G.safeDays('soybeans', 60, 13).days;   // table: 278
+out.safeBeyond = G.safeDays('corn', 85, 32).beyond;
+
+// The farmer's example: 1300 bu of 20% corn combined at 7 pm, dumped at
+// 7 am. A dry night, then the same night with half an inch of rain.
+function hold(rainPerHourMm) {
+  var hs = [];
+  for (var i = 0; i < 13; i++) hs.push(hr(i, { t: 18, dpd: 3, rh: 85, qpf: rainPerHourMm }));
+  return hs;
+}
+var dry = G.truckRun(hold(0), 0, 12, 'corn', 20.0, 1300);
+out.truckDry = { tarped: dry.tarped, open: dry.open, layerCm: dry.layerCm, depthCm: dry.depthCm,
+                 used: dry.usedPct, hours: dry.hours };
+var wet = G.truckRun(hold(12.7 / 12), 0, 12, 'corn', 20.0, 1300);   // 0.5 in over 12 h
+out.truckWet = { tarped: wet.tarped, open: wet.open, rainLb: wet.rainLb };
+
 console.log(JSON.stringify(out));
 """
 
@@ -202,6 +223,34 @@ def test_moisture_now_prefers_the_field_itself_then_the_nearest_same_crop(model)
     assert near["fieldId"] == "c", "nearest fresh corn reading, not the soybean or the stale one"
     assert abs(near["km"] - 1.11) < 0.05
     assert model["pickNone"] is None
+
+
+def test_safe_storage_follows_the_published_table(model):
+    assert abs(model["safeCorn70_19"] - 22) < 0.01
+    assert 15 <= model["safeCorn70_20"] <= 17, "Minnesota Extension puts 20% corn at 70 F at 16 days"
+    assert abs(model["safeCorn75_30"] - 3) < 0.01
+    assert abs(model["safeSoy60_13"] - 278) < 0.01
+    assert model["safeBeyond"] is True
+
+
+def test_a_load_in_a_truck_barely_moves_overnight(model):
+    """Diffusion reaches about 6 mm into a 5-foot load in 12 hours."""
+    d = model["truckDry"]
+    assert d["hours"] == 12
+    assert abs(d["tarped"] - 20.0) < 0.05
+    assert d["open"] == d["tarped"], "no rain, so a tarp changes nothing"
+    assert 0.4 < d["layerCm"] < 0.8
+    assert 150 < d["depthCm"] < 175, "1300 bu over 300 sq ft is about 5.4 ft deep"
+    assert d["used"] < 5, "12 hours of 20% corn uses a few percent of its safe storage life"
+
+
+def test_rain_on_an_open_load_is_the_one_thing_that_moves_it(model):
+    """Half an inch on 300 sq ft is 780 lb of water; on 72,800 lb of 20%
+    corn that is (14,560 + 780) / (72,800 + 780) = 20.85%."""
+    w = model["truckWet"]
+    assert abs(w["rainLb"] - 780) < 1
+    assert abs(w["open"] - 20.85) < 0.03
+    assert abs(w["tarped"] - 20.0) < 0.05
 
 
 def test_the_page_builds_pure_ascii_with_no_placeholder_left(tmp_path):
