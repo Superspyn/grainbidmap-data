@@ -1335,6 +1335,39 @@ PANEL_JS = r"""
           renderHaul();
         };
       })(finishRoute);
+      // With fields selected, an elevator pin is where they go, not where a
+      // haul starts. Before this, the first pin clicked after making a box
+      // became the haul's origin ("now click a second pin"), nothing routed,
+      // and a second pin routed elevator to elevator - so the weighted haul
+      // for the box could only be reached by first clicking a field, which
+      // nothing on the page said. Now, while a selection exists, a click on
+      // an elevator routes the selection to it: the origin pin goes to the
+      // selection's acre-weighted centre, unless a field the user chose is
+      // already the origin, in which case that is kept. Clicking another
+      // elevator re-routes from the same origin instead of starting over,
+      // so elevators can be compared one after another.
+      function selectionCentre(sel) {
+        var a = 0, y = 0, x = 0;
+        sel.forEach(function (r) { var w = r.acres > 0 ? r.acres : 1; a += w; y += r.f.y * w; x += r.f.x * w; });
+        return new google.maps.LatLng(y / a, x / a);
+      }
+      handlePinClick = (function (orig) {
+        return function (marker) {
+          var sel = selection();
+          var elevator = marker && marker !== tempMarker &&
+            !(marker.gtData && marker.gtData.type === 'field');
+          if (sel.length && elevator && mapReady()) {
+            if (!tempMarker || selectedOrigin !== tempMarker) {
+              placeOrMoveTempPin(selectionCentre(sel),
+                sel.length + ' selected field' + (sel.length === 1 ? '' : 's'));
+            } else {
+              selectTempAsOrigin();      // keep the origin, drop the last destination
+            }
+          }
+          orig(marker);
+        };
+      })(handlePinClick);
+
       if (typeof resetBtn !== 'undefined' && resetBtn) {
         resetBtn.addEventListener('click', function () { haul.hidden = true; });
       }
