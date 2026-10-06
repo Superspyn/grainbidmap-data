@@ -640,6 +640,46 @@ PANEL_JS = r"""
       return f._rings;
     }
 
+    // Which drawn field is under a point - for clicks that land on something
+    // lying over the outlines. The measuring box is the case: it has to take
+    // clicks to be dragged and resized, so a click on a field inside it went
+    // to the box, which did nothing with it, and the field could be neither
+    // chosen as the haul origin nor picked. The box now hands its clicks to
+    // the field under them. Even-odd over every ring, so a click in a
+    // farmstead hole is not in the field - the same rule the fill uses.
+    // Only fields actually shown count; with outlines off there is nothing
+    // to click, box or no box.
+    function fieldAt(latLng) {
+      var lat = latLng.lat(), lng = latLng.lng();
+      for (var n = 0; n < gtFields.length; n++) {
+        var f = gtFields[n];
+        if (!f._poly || !f._poly.getMap()) continue;
+        if (!f._bb) {
+          var bb = [90, 180, -90, -180];
+          rings(f).forEach(function (r) {
+            r.pts.forEach(function (p) {
+              if (p.lat < bb[0]) bb[0] = p.lat; if (p.lng < bb[1]) bb[1] = p.lng;
+              if (p.lat > bb[2]) bb[2] = p.lat; if (p.lng > bb[3]) bb[3] = p.lng;
+            });
+          });
+          f._bb = bb;
+        }
+        if (lat < f._bb[0] || lat > f._bb[2] || lng < f._bb[1] || lng > f._bb[3]) continue;
+        var inside = false;
+        rings(f).forEach(function (r) {
+          var pts = r.pts;
+          for (var i = 0, j = pts.length - 1; i < pts.length; j = i++) {
+            if ((pts[i].lat > lat) !== (pts[j].lat > lat) &&
+                lng < (pts[j].lng - pts[i].lng) * (lat - pts[i].lat) / (pts[j].lat - pts[i].lat) + pts[i].lng) {
+              inside = !inside;
+            }
+          }
+        });
+        if (inside) return f;
+      }
+      return null;
+    }
+
     var drawn = [];
     function drawOutlines() {
       if (drawn.length || typeof map === 'undefined' || !map) return;
@@ -1007,6 +1047,12 @@ PANEL_JS = r"""
             fillColor: '#3F8F3F', fillOpacity: 0.08, zIndex: 50
           });
           rect.addListener('bounds_changed', schedule);
+          // The box sits over the outlines and takes their clicks; pass a
+          // click on to the field beneath it (see fieldAt).
+          rect.addListener('click', function (e) {
+            var f = e && e.latLng ? fieldAt(e.latLng) : null;
+            if (f) fieldClick(f);
+          });
         } else {
           rect.setBounds(bounds);
         }
