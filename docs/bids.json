@@ -1,9 +1,9 @@
 {
   "disclaimer": "Cash bids are collected from each facility's public bid page for reference only and may be delayed or out of date. Confirm with the elevator before hauling.",
-  "generated_at": "2026-10-13T22:02:41Z",
+  "generated_at": "2026-10-13T22:33:29Z",
   "locations": {
     "adm-cedar-rapids-ethanol": {
-      "as_of": "2026-10-13T21:58:32Z",
+      "as_of": "2026-10-13T22:29:18Z",
       "bids": [
         {
           "basis": -0.23,
@@ -141,7 +141,7 @@
       "source_name": "Cedar Rapids, IA"
     },
     "adm-clinton-bean-terminal-ia": {
-      "as_of": "2026-10-13T21:58:46Z",
+      "as_of": "2026-10-13T22:29:32Z",
       "bids": [
         {
           "basis": -0.54,
@@ -229,7 +229,7 @@
       "source_name": "Clinton, IA (Elevator)"
     },
     "adm-clinton-ethanol": {
-      "as_of": "2026-10-13T21:58:46Z",
+      "as_of": "2026-10-13T22:29:32Z",
       "bids": [
         {
           "basis": -0.54,
@@ -317,7 +317,7 @@
       "source_name": "Clinton, IA (Elevator)"
     },
     "adm-deerfield-mo": {
-      "as_of": "2026-10-13T21:59:04Z",
+      "as_of": "2026-10-13T22:29:50Z",
       "bids": [
         {
           "basis": 0.1,
@@ -425,7 +425,7 @@
       "source_name": "Deerfield, MO"
     },
     "adm-mexico-mo": {
-      "as_of": "2026-10-13T22:00:46Z",
+      "as_of": "2026-10-13T22:31:32Z",
       "bids": [
         {
           "basis": -0.5,
@@ -523,7 +523,7 @@
       "source_name": "Mexico, MO"
     },
     "adm-new-madrid-mo-portageville": {
-      "as_of": "2026-10-13T22:01:10Z",
+      "as_of": "2026-10-13T22:31:56Z",
       "bids": [
         {
           "basis": -0.15,
@@ -691,7 +691,7 @@
       "source_name": "New Madrid, MO"
     },
     "adm-north-terminal-st-louis-mo": {
-      "as_of": "2026-10-13T22:02:04Z",
+      "as_of": "2026-10-13T22:32:50Z",
       "bids": [
         {
           "basis": -0.09,
@@ -899,7 +899,7 @@
       "source_name": "St. Louis, MO (Elevator)"
     },
     "adm-st-louis-milling-mo": {
-      "as_of": "2026-10-13T22:02:04Z",
+      "as_of": "2026-10-13T22:32:50Z",
       "bids": [
         {
           "basis": -0.09,
@@ -1159,7 +1159,7 @@
       "source_name": "Tarkio"
     },
     "agp-aberdeen-sd": {
-      "as_of": "2026-10-13T21:56:24Z",
+      "as_of": "2026-10-13T22:26:54Z",
       "bids": [
         {
           "basis": -0.6,
@@ -1194,7 +1194,7 @@
       "source_name": "Aberdeen, SD"
     },
     "agp-chester-ne": {
-      "as_of": "2026-10-13T21:56:24Z",
+      "as_of": "2026-10-13T22:26:54Z",
       "bids": [
         {
           "basis": -0.5,
@@ -1211,7 +1211,7 @@
       "source_name": "Chester, NE"
     },
     "agp-cowles-ne": {
-      "as_of": "2026-10-13T21:56:24Z",
+      "as_of": "2026-10-13T22:26:54Z",
       "bids": [
         {
           "basis": -0.55,
@@ -1228,7 +1228,7 @@
       "source_name": "Cowles, NE"
     },
     "agp-david-city-ne": {
-      "as_of": "2026-10-13T21:56:24Z",
+      "as_of": "2026-10-13T22:26:54Z",
       "bids": [
         {
           "basis": -0.45,
@@ -1281,7 +1281,7 @@
       "source_name": "David City, NE"
     },
     "agp-dawson-mn": {
-      "as_of": "2026-10-13T21:56:24Z",
+      "as_of": "2026-10-13T22:26:54Z",
       "bids": [
         {
           "basis": -0.6,
@@ -1334,7 +1334,7 @@
       "source_name": "Dawson, MN"
     },
     "agp-eagle-grove-ia": {
-      "as_of": "2026-10-13T21:56:24Z",
+      "as_of": "2026-10-13T22:26:54Z",
       "bids": [
         {
           "basis": -0.35,
@@ -1396,7 +1396,7 @@
       "source_name": "Eagle Grove, IA"
     },
     "agp-emmetsburg-ia": {
-      "as_of": "2026-10-13T21:56:24Z",
+      "as_of": "2026-10-13T22:26:54Z",
       "bids": [
         {
           "basis": -0.4,
@@ -1458,7 +1458,7 @@
       "source_name": "Emmetsburg, IA"
     },
     "agp-fairfield-ne": {
-      "as_of": "2026-10-13T21:56:24Z",
+      "as_of": "2026-10-13T22:26:54Z",
       "bids": [
         {
           "basis": -0.45,
@@ -1475,7 +1475,7 @@
       "source_name": "Fairfield, NE"
     },
     "agp-hastings-ne-grain-terminal": {
-      "as_of": "2026-10-13T21:56:24Z",
+      "as_of": "2026-10-13T22:26:54Z",
       "bids": [
         {
           "basis": -0.35,
@@ -1501,7 +1501,7 @@
       "source_name": "Hastings, NE - Grain (Terminal)"
     },
     "agp-hastings-ne-soy-plant": {
-      "as_of": "2026-10-13T21:56:24Z",
+      "as_of": "2026-10-13T22:26:54Z",
       "bids": [
         {
           "basis": -0.5,
@@ -1554,7 +1554,7 @@
       "source_name": "Hastings, NE - Grain (Soy Plant)"
     },
     "agp-manning-ia": {
-      "as_of": "2026-10-13T21:56:24Z",
+      "as_of": "2026-10-13T22:26:54Z",
       "bids": [
         {
           "basis": -0.45,
@@ -1607,7 +1607,7 @@
       "source_name": "Manning, IA"
     },
     "agp-mason-city-ia": {
-      "as_of": "2026-10-13T21:56:24Z",
+      "as_of": "2026-10-13T22:26:54Z",
       "bids": [
         {
           "basis": -0.4,
@@ -1669,7 +1669,7 @@
       "source_name": "Mason City, IA"
     },
     "agp-sergeant-bluff-ia": {
-      "as_of": "2026-10-13T21:56:24Z",
+      "as_of": "2026-10-13T22:26:54Z",
       "bids": [
         {
           "basis": -0.5,
@@ -1722,7 +1722,7 @@
       "source_name": "Sergeant Bluff, IA"
     },
     "agp-sheldon-ia": {
-      "as_of": "2026-10-13T21:56:24Z",
+      "as_of": "2026-10-13T22:26:54Z",
       "bids": [
         {
           "basis": -0.55,
@@ -1775,7 +1775,7 @@
       "source_name": "Sheldon, IA"
     },
     "agp-st-joseph-mo": {
-      "as_of": "2026-10-13T21:56:24Z",
+      "as_of": "2026-10-13T22:26:54Z",
       "bids": [
         {
           "basis": -0.2,
@@ -10243,7 +10243,7 @@
       "source_name": "CGB SCOTT CITY"
     },
     "chs-kasson-mn": {
-      "as_of": "2026-10-13T21:56:23Z",
+      "as_of": "2026-10-13T22:26:52Z",
       "bids": [
         {
           "basis": -0.75,
@@ -10295,7 +10295,7 @@
       "source_name": "Kasson"
     },
     "chs-oilseed-processing-fairmont-mn": {
-      "as_of": "2026-10-13T21:56:23Z",
+      "as_of": "2026-10-13T22:26:52Z",
       "bids": [
         {
           "basis": -0.2,
@@ -10435,7 +10435,7 @@
       "source_name": "Fairmont"
     },
     "chs-oilseed-processing-mankato-mn": {
-      "as_of": "2026-10-13T21:56:23Z",
+      "as_of": "2026-10-13T22:26:52Z",
       "bids": [
         {
           "basis": -0.3,
@@ -10575,7 +10575,7 @@
       "source_name": "Mankato"
     },
     "chs-pipestone-grain-mn": {
-      "as_of": "2026-10-13T21:56:23Z",
+      "as_of": "2026-10-13T22:26:52Z",
       "bids": [
         {
           "basis": -0.59,
@@ -10711,7 +10711,7 @@
       "source_name": "Pipestone"
     },
     "chs-savage-terminal-mn": {
-      "as_of": "2026-10-13T21:56:23Z",
+      "as_of": "2026-10-13T22:26:52Z",
       "bids": [
         {
           "basis": -0.62,
@@ -10891,7 +10891,7 @@
       "source_name": "Savage"
     },
     "chs-tracy-mn": {
-      "as_of": "2026-10-13T21:56:23Z",
+      "as_of": "2026-10-13T22:26:52Z",
       "bids": [
         {
           "basis": -0.62,
@@ -11027,7 +11027,7 @@
       "source_name": "Tracy"
     },
     "chs-winona-river-and-rail-mn": {
-      "as_of": "2026-10-13T21:56:23Z",
+      "as_of": "2026-10-13T22:26:52Z",
       "bids": [
         {
           "basis": -0.35,
@@ -12296,7 +12296,7 @@
       "source_name": "CGB - NAPLES"
     },
     "cva-81-20-mclean-ne": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4975,
@@ -12458,7 +12458,7 @@
       "source_name": "81-20"
     },
     "cva-ainsworth-ne": {
-      "as_of": "2026-10-13T16:39:22Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4975,
@@ -12554,7 +12554,7 @@
       "source_name": "Ainsworth"
     },
     "cva-akron-ia": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4375,
@@ -12705,7 +12705,7 @@
       "source_name": "Akron"
     },
     "cva-bee-ne": {
-      "as_of": "2026-10-13T16:39:17Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4875,
@@ -12746,7 +12746,7 @@
       "source_name": "Bee"
     },
     "cva-benedict-ne": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.5075,
@@ -12886,7 +12886,7 @@
       "source_name": "Benedict"
     },
     "cva-bloomfield-ne": {
-      "as_of": "2026-10-13T16:39:11Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.3775,
@@ -12927,7 +12927,7 @@
       "source_name": "MG Waldbaum - Bloomfield"
     },
     "cva-bow-valley-ne": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.6175,
@@ -13078,7 +13078,7 @@
       "source_name": "Bow Valley"
     },
     "cva-bradshaw-ne": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.3975,
@@ -13262,7 +13262,7 @@
       "source_name": "Bradshaw"
     },
     "cva-east-hub-oakland-ne": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4175,
@@ -13402,7 +13402,7 @@
       "source_name": "East Hub"
     },
     "cva-elgin-ne": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -13542,7 +13542,7 @@
       "source_name": "Elgin"
     },
     "cva-fullerton-ne": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4175,
@@ -13693,7 +13693,7 @@
       "source_name": "Fullerton"
     },
     "cva-hampton-ne": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -13877,7 +13877,7 @@
       "source_name": "Hampton"
     },
     "cva-hinton-ia": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.3675,
@@ -14059,7 +14059,7 @@
       "stale": true
     },
     "cva-hordville-ne": {
-      "as_of": "2026-10-13T16:39:22Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -14166,7 +14166,7 @@
       "source_name": "Hordville"
     },
     "cva-humphrey-ne": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -14306,7 +14306,7 @@
       "source_name": "Humphrey"
     },
     "cva-laurel-ne": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4975,
@@ -14468,7 +14468,7 @@
       "source_name": "Laurel"
     },
     "cva-monroe-ne": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.3975,
@@ -14652,7 +14652,7 @@
       "source_name": "Monroe"
     },
     "cva-oyens-ia": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.3875,
@@ -14803,7 +14803,7 @@
       "source_name": "Oyens"
     },
     "cva-petersburg-ne": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -14943,7 +14943,7 @@
       "source_name": "Petersburg"
     },
     "cva-polk-ne": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -15083,7 +15083,7 @@
       "source_name": "Polk"
     },
     "cva-rising-city-ne": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4775,
@@ -15223,7 +15223,7 @@
       "source_name": "Rising City"
     },
     "cva-royal-ne": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4675,
@@ -15407,7 +15407,7 @@
       "source_name": "Royal"
     },
     "cva-scribner-ne": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.5175,
@@ -15547,7 +15547,7 @@
       "source_name": "Scribner"
     },
     "cva-shelby-ne": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -15698,7 +15698,7 @@
       "source_name": "Shelby"
     },
     "cva-st-edward-ne": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -15838,7 +15838,7 @@
       "source_name": "St Edward"
     },
     "cva-stromsburg-ne": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4775,
@@ -16011,7 +16011,7 @@
       "source_name": "Stromsburg"
     },
     "cva-tamora-ne": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -16206,7 +16206,7 @@
       "source_name": "Tamora"
     },
     "cva-tilden-ne": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -16346,7 +16346,7 @@
       "source_name": "Tilden"
     },
     "cva-ulysses-ne": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4875,
@@ -16497,7 +16497,7 @@
       "source_name": "Ulysses"
     },
     "cva-utica-ne": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4775,
@@ -16637,7 +16637,7 @@
       "source_name": "Utica"
     },
     "cva-waco-ne": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4775,
@@ -16788,7 +16788,7 @@
       "source_name": "Waco"
     },
     "cva-wakefield-ne": {
-      "as_of": "2026-10-13T16:39:11Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.3775,
@@ -16829,7 +16829,7 @@
       "source_name": "MG Waldbaum - Wakefield"
     },
     "elite-octane-atlantic-ethanol": {
-      "as_of": "2026-10-13T21:56:37Z",
+      "as_of": "2026-10-13T22:27:21Z",
       "bids": [
         {
           "basis": -0.3,
@@ -17482,7 +17482,7 @@
       "source_name": "Rushford"
     },
     "five-star-cooperative-burchinal-ia": {
-      "as_of": "2026-10-13T21:56:47Z",
+      "as_of": "2026-10-13T22:27:33Z",
       "bids": [
         {
           "basis": -0.44,
@@ -17685,7 +17685,7 @@
       "source_name": "Burchinal"
     },
     "five-star-cooperative-dougherty-ia": {
-      "as_of": "2026-10-13T21:56:47Z",
+      "as_of": "2026-10-13T22:27:33Z",
       "bids": [
         {
           "basis": -0.46,
@@ -17888,7 +17888,7 @@
       "source_name": "Dougherty"
     },
     "five-star-cooperative-hanlontown-ia": {
-      "as_of": "2026-10-13T21:56:47Z",
+      "as_of": "2026-10-13T22:27:33Z",
       "bids": [
         {
           "basis": -0.44,
@@ -18091,7 +18091,7 @@
       "source_name": "Hanlontown"
     },
     "five-star-cooperative-ionia-ia": {
-      "as_of": "2026-10-13T21:56:47Z",
+      "as_of": "2026-10-13T22:27:33Z",
       "bids": [
         {
           "basis": -0.52,
@@ -18294,7 +18294,7 @@
       "source_name": "Ionia"
     },
     "five-star-cooperative-klemme-ia": {
-      "as_of": "2026-10-13T21:56:47Z",
+      "as_of": "2026-10-13T22:27:33Z",
       "bids": [
         {
           "basis": -0.39,
@@ -18431,7 +18431,7 @@
       "source_name": "Klemme"
     },
     "five-star-cooperative-lawler-ia": {
-      "as_of": "2026-10-13T21:56:47Z",
+      "as_of": "2026-10-13T22:27:33Z",
       "bids": [
         {
           "basis": -0.49,
@@ -18634,7 +18634,7 @@
       "source_name": "Lawler"
     },
     "five-star-cooperative-lime-springs-ia": {
-      "as_of": "2026-10-13T21:56:47Z",
+      "as_of": "2026-10-13T22:27:33Z",
       "bids": [
         {
           "basis": -0.59,
@@ -18837,7 +18837,7 @@
       "source_name": "Lime Springs"
     },
     "five-star-cooperative-nashua-ia": {
-      "as_of": "2026-10-13T21:56:47Z",
+      "as_of": "2026-10-13T22:27:33Z",
       "bids": [
         {
           "basis": -0.49,
@@ -19040,7 +19040,7 @@
       "source_name": "Nashua"
     },
     "five-star-cooperative-new-hampton-ia": {
-      "as_of": "2026-10-13T21:56:47Z",
+      "as_of": "2026-10-13T22:27:33Z",
       "bids": [
         {
           "basis": -0.46,
@@ -19243,7 +19243,7 @@
       "source_name": "New Hampton"
     },
     "five-star-cooperative-north-washington-ia": {
-      "as_of": "2026-10-13T21:56:47Z",
+      "as_of": "2026-10-13T22:27:33Z",
       "bids": [
         {
           "basis": -0.52,
@@ -19446,7 +19446,7 @@
       "source_name": "North Washington"
     },
     "five-star-cooperative-rockwell-ia": {
-      "as_of": "2026-10-13T21:56:47Z",
+      "as_of": "2026-10-13T22:27:33Z",
       "bids": [
         {
           "basis": -0.42,
@@ -19649,7 +19649,7 @@
       "source_name": "Rockwell"
     },
     "five-star-cooperative-scarville-ia": {
-      "as_of": "2026-10-13T21:56:47Z",
+      "as_of": "2026-10-13T22:27:33Z",
       "bids": [
         {
           "basis": -0.46,
@@ -19852,7 +19852,7 @@
       "source_name": "Scarville"
     },
     "five-star-cooperative-sheffield-ia": {
-      "as_of": "2026-10-13T21:56:47Z",
+      "as_of": "2026-10-13T22:27:33Z",
       "bids": [
         {
           "basis": -0.45,
@@ -20055,7 +20055,7 @@
       "source_name": "Sheffield"
     },
     "five-star-cooperative-ventura-ia": {
-      "as_of": "2026-10-13T21:56:47Z",
+      "as_of": "2026-10-13T22:27:33Z",
       "bids": [
         {
           "basis": -0.42,
@@ -20258,7 +20258,7 @@
       "source_name": "Ventura"
     },
     "flint-hill-resources-poet-arthur-ethanol": {
-      "as_of": "2026-10-13T21:56:55Z",
+      "as_of": "2026-10-13T22:27:42Z",
       "bids": [
         {
           "basis": -0.35,
@@ -20366,7 +20366,7 @@
       "source_name": "Arthur, IA"
     },
     "flint-hills-poet-ethanol-menlo": {
-      "as_of": "2026-10-13T21:57:45Z",
+      "as_of": "2026-10-13T22:28:32Z",
       "bids": [
         {
           "basis": -0.32,
@@ -20484,7 +20484,7 @@
       "source_name": "Menlo, IA"
     },
     "flint-hills-resources-poet-shell-rock-ethanol": {
-      "as_of": "2026-10-13T21:58:01Z",
+      "as_of": "2026-10-13T22:28:48Z",
       "bids": [
         {
           "basis": -0.35,
@@ -20572,7 +20572,7 @@
       "source_name": "Shell Rock, IA"
     },
     "gold-eagle-coop-clarion": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4495,
@@ -20657,7 +20657,7 @@
       "source_name": "CLARION"
     },
     "gold-eagle-coop-clarion-annex": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4495,
@@ -20742,7 +20742,7 @@
       "source_name": "CLARION"
     },
     "gold-eagle-coop-corwith": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4495,
@@ -20827,7 +20827,7 @@
       "source_name": "CORWITH"
     },
     "gold-eagle-coop-eagle-grove": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.3995,
@@ -20912,7 +20912,7 @@
       "source_name": "EAGLE GROVE"
     },
     "gold-eagle-coop-eagle-grove-feedmill": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.3995,
@@ -20997,7 +20997,7 @@
       "source_name": "EAGLE GROVE"
     },
     "gold-eagle-coop-forest-city": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4495,
@@ -21082,7 +21082,7 @@
       "source_name": "Forest City"
     },
     "gold-eagle-coop-galbraith-lu-verne": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4495,
@@ -21167,7 +21167,7 @@
       "source_name": "GALBRAITH"
     },
     "gold-eagle-coop-galt-feed-mill": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4495,
@@ -21252,7 +21252,7 @@
       "source_name": "GALT FEED MILL"
     },
     "gold-eagle-coop-goldfield": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4495,
@@ -21337,7 +21337,7 @@
       "source_name": "GOLDFIELD"
     },
     "gold-eagle-coop-hardy": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4495,
@@ -21422,7 +21422,7 @@
       "source_name": "HARDY"
     },
     "gold-eagle-coop-hawkeye-pride": {
-      "as_of": "2026-10-13T16:39:22Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.3495,
@@ -21463,7 +21463,7 @@
       "source_name": "HAWKEYE PRIDE"
     },
     "gold-eagle-coop-holmes": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4495,
@@ -21548,7 +21548,7 @@
       "source_name": "HOLMES"
     },
     "gold-eagle-coop-hutchins": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4495,
@@ -21633,7 +21633,7 @@
       "source_name": "HUTCHINS"
     },
     "gold-eagle-coop-kanawha": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4495,
@@ -21718,7 +21718,7 @@
       "source_name": "KANAWHA"
     },
     "gold-eagle-coop-kiester-mn": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.5695,
@@ -21803,7 +21803,7 @@
       "source_name": "Kiester"
     },
     "gold-eagle-coop-leland": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4495,
@@ -21888,7 +21888,7 @@
       "source_name": "Leland"
     },
     "gold-eagle-coop-livermore": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4495,
@@ -21973,7 +21973,7 @@
       "source_name": "LIVERMORE"
     },
     "gold-eagle-coop-renwick": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4495,
@@ -22058,7 +22058,7 @@
       "source_name": "RENWICK"
     },
     "gold-eagle-coop-thompson": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.6495,
@@ -22110,7 +22110,7 @@
       "source_name": "THOMPSON"
     },
     "gold-eagle-coop-thor": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4495,
@@ -22195,7 +22195,7 @@
       "source_name": "THOR"
     },
     "gold-eagle-coop-titonka": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4495,
@@ -22280,7 +22280,7 @@
       "source_name": "TITONKA"
     },
     "gold-eagle-coop-titonka-north": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4495,
@@ -22365,7 +22365,7 @@
       "source_name": "TITONKA"
     },
     "gold-eagle-coop-wesley": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4495,
@@ -22450,7 +22450,7 @@
       "source_name": "WESLEY"
     },
     "gold-eagle-coop-woden": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4495,
@@ -22535,7 +22535,7 @@
       "source_name": "WODEN"
     },
     "golden-grain-ethanol-mason-city": {
-      "as_of": "2026-10-13T21:56:47Z",
+      "as_of": "2026-10-13T22:27:33Z",
       "bids": [
         {
           "basis": -0.35,
@@ -32182,7 +32182,7 @@
       "source_name": "S-14"
     },
     "landus-adair": {
-      "as_of": "2026-10-13T21:42:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.45,
@@ -32202,7 +32202,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -32213,7 +32213,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -32235,7 +32235,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -32254,7 +32254,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -32265,7 +32265,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.02,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -32276,7 +32276,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.02,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -32287,7 +32287,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -32298,7 +32298,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -32319,7 +32319,7 @@
       "source_name": "Adair"
     },
     "landus-aredale-seasonal": {
-      "as_of": "2026-10-13T21:42:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.35,
@@ -32339,7 +32339,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -32350,7 +32350,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -32372,7 +32372,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -32391,7 +32391,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.04,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -32402,7 +32402,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -32413,7 +32413,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -32424,7 +32424,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -32435,7 +32435,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -32446,7 +32446,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -32456,7 +32456,7 @@
       "source_name": "Aredale"
     },
     "landus-atlantic-grain": {
-      "as_of": "2026-10-13T21:42:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.45,
@@ -32476,7 +32476,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -32487,7 +32487,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -32509,7 +32509,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -32528,7 +32528,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.04,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -32539,7 +32539,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -32550,7 +32550,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -32561,7 +32561,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -32572,7 +32572,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -32583,7 +32583,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -32593,7 +32593,7 @@
       "source_name": "Atlantic"
     },
     "landus-bayard": {
-      "as_of": "2026-10-13T21:42:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.4,
@@ -32613,7 +32613,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -32624,7 +32624,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -32646,7 +32646,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -32665,7 +32665,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -32676,7 +32676,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -32687,7 +32687,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -32698,7 +32698,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -32709,7 +32709,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -32720,7 +32720,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -32730,7 +32730,7 @@
       "source_name": "Bayard"
     },
     "landus-beaver": {
-      "as_of": "2026-10-13T21:43:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.4,
@@ -32750,7 +32750,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -32761,7 +32761,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -32783,7 +32783,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -32802,7 +32802,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.04,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -32813,7 +32813,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -32824,7 +32824,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -32835,7 +32835,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -32846,7 +32846,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -32857,7 +32857,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -32867,7 +32867,7 @@
       "source_name": "Beaver"
     },
     "landus-boone": {
-      "as_of": "2026-10-13T21:43:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.36,
@@ -32887,7 +32887,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -32898,7 +32898,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -32920,7 +32920,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -32939,7 +32939,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.04,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -32950,7 +32950,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -32961,7 +32961,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -32972,7 +32972,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -32983,7 +32983,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -32994,7 +32994,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -33004,7 +33004,7 @@
       "source_name": "Boone"
     },
     "landus-boxholm": {
-      "as_of": "2026-10-13T21:43:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.65,
@@ -33013,7 +33013,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -33024,7 +33024,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -33035,7 +33035,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -33046,7 +33046,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -33057,7 +33057,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -33068,7 +33068,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -33078,7 +33078,7 @@
       "source_name": "Boxholm"
     },
     "landus-bradford": {
-      "as_of": "2026-10-13T21:43:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.38,
@@ -33098,7 +33098,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -33109,7 +33109,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -33131,7 +33131,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -33150,7 +33150,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.04,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -33161,7 +33161,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -33172,7 +33172,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -33183,7 +33183,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -33194,7 +33194,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -33205,7 +33205,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -33215,7 +33215,7 @@
       "source_name": "Bradford"
     },
     "landus-bricelyn-seasonal": {
-      "as_of": "2026-10-13T21:43:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.4,
@@ -33235,7 +33235,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -33246,7 +33246,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -33268,7 +33268,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -33287,7 +33287,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.04,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -33298,7 +33298,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -33309,7 +33309,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -33320,7 +33320,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -33331,7 +33331,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -33342,7 +33342,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -33352,7 +33352,7 @@
       "source_name": "Bricelyn"
     },
     "landus-casey-seasonal": {
-      "as_of": "2026-10-13T21:43:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.45,
@@ -33372,7 +33372,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -33383,7 +33383,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -33405,7 +33405,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -33424,7 +33424,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.04,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -33435,7 +33435,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -33446,7 +33446,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -33457,7 +33457,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -33468,7 +33468,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -33479,7 +33479,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -33489,7 +33489,7 @@
       "source_name": "Casey"
     },
     "landus-churdan-seasonal": {
-      "as_of": "2026-10-13T21:43:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.65,
@@ -33498,7 +33498,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -33509,7 +33509,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -33520,7 +33520,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -33531,7 +33531,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -33542,7 +33542,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -33553,7 +33553,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -33563,7 +33563,7 @@
       "source_name": "Churdan"
     },
     "landus-collins": {
-      "as_of": "2026-10-13T21:43:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.35,
@@ -33583,7 +33583,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -33594,7 +33594,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -33616,7 +33616,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -33635,7 +33635,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.09,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -33646,7 +33646,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -33657,7 +33657,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -33668,7 +33668,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -33679,7 +33679,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -33690,7 +33690,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -33700,7 +33700,7 @@
       "source_name": "Collins"
     },
     "landus-conrad-seasonal": {
-      "as_of": "2026-10-13T21:43:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.35,
@@ -33720,7 +33720,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -33731,7 +33731,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -33753,7 +33753,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -33772,7 +33772,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": 0.04,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -33783,7 +33783,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -33794,7 +33794,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -33805,7 +33805,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -33816,7 +33816,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -33827,7 +33827,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -33837,7 +33837,7 @@
       "source_name": "Conrad"
     },
     "landus-coop": {
-      "as_of": "2026-10-13T21:43:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.35,
@@ -33857,7 +33857,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -33868,7 +33868,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -33890,7 +33890,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -33909,7 +33909,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.04,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -33920,7 +33920,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -33931,7 +33931,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -33942,7 +33942,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -33953,7 +33953,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -33964,7 +33964,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -33974,7 +33974,7 @@
       "source_name": "Britt"
     },
     "landus-cooperative-boone-ia": {
-      "as_of": "2026-10-13T21:43:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.36,
@@ -33994,7 +33994,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -34005,7 +34005,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -34027,7 +34027,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -34046,7 +34046,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.04,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -34057,7 +34057,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -34068,7 +34068,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -34079,7 +34079,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -34090,7 +34090,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -34101,7 +34101,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -34111,7 +34111,7 @@
       "source_name": "Boone"
     },
     "landus-cooperative-grant-ia-approx": {
-      "as_of": "2026-10-13T21:43:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.37,
@@ -34131,7 +34131,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -34142,7 +34142,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -34164,7 +34164,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -34183,7 +34183,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -34194,7 +34194,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -34205,7 +34205,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -34216,7 +34216,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -34227,7 +34227,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -34238,7 +34238,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -34248,7 +34248,7 @@
       "source_name": "Grant"
     },
     "landus-cooperative-plainfield-ia": {
-      "as_of": "2026-10-13T21:44:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.35,
@@ -34268,7 +34268,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -34279,7 +34279,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -34301,7 +34301,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -34320,7 +34320,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.04,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -34331,7 +34331,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -34342,7 +34342,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -34353,7 +34353,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -34364,7 +34364,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -34375,7 +34375,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -34385,7 +34385,7 @@
       "source_name": "Plainfield"
     },
     "landus-dawson-will-call": {
-      "as_of": "2026-10-13T21:43:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.37,
@@ -34405,7 +34405,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -34416,7 +34416,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -34438,7 +34438,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -34457,7 +34457,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -34468,7 +34468,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -34479,7 +34479,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -34490,7 +34490,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -34501,7 +34501,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -34512,7 +34512,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -34522,7 +34522,7 @@
       "source_name": "Dawson"
     },
     "landus-early": {
-      "as_of": "2026-10-13T21:43:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.4,
@@ -34542,7 +34542,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -34553,7 +34553,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -34575,7 +34575,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -34594,7 +34594,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -34605,7 +34605,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -34616,7 +34616,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -34627,7 +34627,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -34638,7 +34638,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -34649,7 +34649,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -34659,7 +34659,7 @@
       "source_name": "Early"
     },
     "landus-farnhamville": {
-      "as_of": "2026-10-13T21:43:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.37,
@@ -34679,7 +34679,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -34690,7 +34690,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -34712,7 +34712,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -34731,7 +34731,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -34742,7 +34742,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -34753,7 +34753,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -34764,7 +34764,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -34775,7 +34775,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -34786,7 +34786,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -34796,7 +34796,7 @@
       "source_name": "Farnhamville"
     },
     "landus-gowrie": {
-      "as_of": "2026-10-13T21:43:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.37,
@@ -34816,7 +34816,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -34827,7 +34827,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -34849,7 +34849,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -34868,7 +34868,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -34879,7 +34879,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -34890,7 +34890,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -34901,7 +34901,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -34912,7 +34912,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -34923,7 +34923,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -34933,7 +34933,7 @@
       "source_name": "Gowrie"
     },
     "landus-grant": {
-      "as_of": "2026-10-13T21:43:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.37,
@@ -34953,7 +34953,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -34964,7 +34964,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -34986,7 +34986,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -35005,7 +35005,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -35016,7 +35016,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -35027,7 +35027,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -35038,7 +35038,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -35049,7 +35049,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -35060,7 +35060,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -35070,7 +35070,7 @@
       "source_name": "Grant"
     },
     "landus-greene": {
-      "as_of": "2026-10-13T21:43:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.35,
@@ -35090,7 +35090,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -35101,7 +35101,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -35123,7 +35123,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -35142,7 +35142,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.04,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -35153,7 +35153,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -35164,7 +35164,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -35175,7 +35175,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -35186,7 +35186,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -35197,7 +35197,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -35207,7 +35207,7 @@
       "source_name": "Greene"
     },
     "landus-hamlin": {
-      "as_of": "2026-10-13T21:43:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.28,
@@ -35227,7 +35227,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -35238,7 +35238,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -35260,7 +35260,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -35279,7 +35279,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -35290,7 +35290,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -35301,7 +35301,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -35312,7 +35312,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -35323,7 +35323,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -35334,7 +35334,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -35344,7 +35344,7 @@
       "source_name": "Hamlin"
     },
     "landus-ida-grove": {
-      "as_of": "2026-10-13T21:43:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.4,
@@ -35364,7 +35364,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -35375,7 +35375,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -35397,7 +35397,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -35416,7 +35416,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -35427,7 +35427,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -35438,7 +35438,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -35449,7 +35449,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -35460,7 +35460,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -35471,7 +35471,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -35481,7 +35481,7 @@
       "source_name": "Ida Grove"
     },
     "landus-jefferson": {
-      "as_of": "2026-10-13T21:43:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.37,
@@ -35501,7 +35501,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -35512,7 +35512,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -35534,7 +35534,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -35553,7 +35553,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -35564,7 +35564,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -35575,7 +35575,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -35586,7 +35586,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -35597,7 +35597,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -35608,7 +35608,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -35618,7 +35618,7 @@
       "source_name": "Jefferson"
     },
     "landus-lake-city-seasonal": {
-      "as_of": "2026-10-13T21:43:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.4,
@@ -35638,7 +35638,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -35649,7 +35649,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -35671,7 +35671,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -35690,7 +35690,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -35701,7 +35701,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -35712,7 +35712,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -35723,7 +35723,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -35734,7 +35734,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -35745,7 +35745,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -35755,7 +35755,7 @@
       "source_name": "Lake City"
     },
     "landus-latimer": {
-      "as_of": "2026-10-13T21:44:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.35,
@@ -35775,7 +35775,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -35786,7 +35786,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -35808,7 +35808,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -35827,7 +35827,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.04,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -35838,7 +35838,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -35849,7 +35849,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -35860,7 +35860,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -35871,7 +35871,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -35882,7 +35882,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -35892,7 +35892,7 @@
       "source_name": "Latimer"
     },
     "landus-manilla": {
-      "as_of": "2026-10-13T21:44:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.42,
@@ -35912,7 +35912,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -35923,7 +35923,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -35945,7 +35945,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -35964,7 +35964,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -35975,7 +35975,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -35986,7 +35986,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -35997,7 +35997,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -36008,7 +36008,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -36019,7 +36019,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -36029,7 +36029,7 @@
       "source_name": "Manilla"
     },
     "landus-mcleansboro": {
-      "as_of": "2026-10-13T21:44:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.13,
@@ -36049,7 +36049,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -36060,7 +36060,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -36082,7 +36082,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -36101,7 +36101,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.04,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -36112,7 +36112,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -36123,7 +36123,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -36134,7 +36134,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -36145,7 +36145,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -36156,7 +36156,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -36166,7 +36166,7 @@
       "source_name": "Mcleansboro"
     },
     "landus-mitchellville": {
-      "as_of": "2026-10-13T21:44:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.35,
@@ -36186,7 +36186,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -36197,7 +36197,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -36219,7 +36219,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -36238,7 +36238,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.09,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -36249,7 +36249,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -36260,7 +36260,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -36271,7 +36271,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -36282,7 +36282,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -36293,7 +36293,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -36303,7 +36303,7 @@
       "source_name": "Mitchellville"
     },
     "landus-new-hartford": {
-      "as_of": "2026-10-13T21:44:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.35,
@@ -36323,7 +36323,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -36334,7 +36334,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -36356,7 +36356,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -36375,7 +36375,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.04,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -36386,7 +36386,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -36397,7 +36397,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -36408,7 +36408,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -36419,7 +36419,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -36430,7 +36430,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -36440,7 +36440,7 @@
       "source_name": "New Hartford"
     },
     "landus-newell": {
-      "as_of": "2026-10-13T21:44:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.45,
@@ -36460,7 +36460,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -36471,7 +36471,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -36493,7 +36493,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -36512,7 +36512,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.04,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -36523,7 +36523,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -36534,7 +36534,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -36545,7 +36545,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -36556,7 +36556,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -36567,7 +36567,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -36577,7 +36577,7 @@
       "source_name": "Newell"
     },
     "landus-odebolt": {
-      "as_of": "2026-10-13T21:44:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.4,
@@ -36597,7 +36597,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -36608,7 +36608,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -36630,7 +36630,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -36649,7 +36649,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -36660,7 +36660,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -36671,7 +36671,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -36682,7 +36682,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -36693,7 +36693,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -36704,7 +36704,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -36714,7 +36714,7 @@
       "source_name": "Odebolt"
     },
     "landus-packard": {
-      "as_of": "2026-10-13T21:44:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.35,
@@ -36734,7 +36734,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -36745,7 +36745,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -36767,7 +36767,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -36786,7 +36786,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.04,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -36797,7 +36797,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -36808,7 +36808,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -36819,7 +36819,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -36830,7 +36830,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -36841,7 +36841,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -36851,7 +36851,7 @@
       "source_name": "Packard"
     },
     "landus-panora-will-call": {
-      "as_of": "2026-10-13T21:44:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.35,
@@ -36871,7 +36871,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -36882,7 +36882,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -36904,7 +36904,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -36923,7 +36923,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -36934,7 +36934,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -36945,7 +36945,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -36956,7 +36956,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -36967,7 +36967,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -36978,7 +36978,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -36988,7 +36988,7 @@
       "source_name": "Panora"
     },
     "landus-pleasant-hill": {
-      "as_of": "2026-10-13T21:44:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.38,
@@ -37008,7 +37008,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -37019,7 +37019,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -37041,7 +37041,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -37059,7 +37059,7 @@
       "source_name": "Pleasant Hill"
     },
     "landus-rake": {
-      "as_of": "2026-10-13T21:44:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.35,
@@ -37079,7 +37079,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -37090,7 +37090,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -37112,7 +37112,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -37131,7 +37131,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.04,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -37142,7 +37142,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -37153,7 +37153,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -37164,7 +37164,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -37175,7 +37175,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -37186,7 +37186,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -37196,7 +37196,7 @@
       "source_name": "Rake"
     },
     "landus-ralston-soyplus": {
-      "as_of": "2026-10-13T21:44:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.5,
@@ -37205,7 +37205,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -37216,7 +37216,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.15,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -37227,7 +37227,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.1,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -37238,7 +37238,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.11,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -37249,7 +37249,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.11,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -37260,7 +37260,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -37270,7 +37270,7 @@
       "source_name": "Ralston"
     },
     "landus-rippey-will-call": {
-      "as_of": "2026-10-13T21:44:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.4,
@@ -37290,7 +37290,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -37301,7 +37301,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -37323,7 +37323,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -37342,7 +37342,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -37353,7 +37353,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -37364,7 +37364,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -37375,7 +37375,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -37386,7 +37386,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -37397,7 +37397,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -37407,7 +37407,7 @@
       "source_name": "Rippey"
     },
     "landus-rockwell-city": {
-      "as_of": "2026-10-13T21:44:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.4,
@@ -37427,7 +37427,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -37438,7 +37438,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -37460,7 +37460,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -37479,7 +37479,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -37490,7 +37490,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -37501,7 +37501,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -37512,7 +37512,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -37523,7 +37523,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -37534,7 +37534,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -37544,7 +37544,7 @@
       "source_name": "Rockwell City"
     },
     "landus-rushville": {
-      "as_of": "2026-10-13T21:44:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.2,
@@ -37564,7 +37564,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -37575,7 +37575,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -37597,7 +37597,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -37616,7 +37616,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.04,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -37627,7 +37627,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -37638,7 +37638,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -37649,7 +37649,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -37660,7 +37660,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -37671,7 +37671,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -37681,7 +37681,7 @@
       "source_name": "Rushville"
     },
     "landus-somers-seasonal": {
-      "as_of": "2026-10-13T21:44:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.4,
@@ -37701,7 +37701,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -37712,7 +37712,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -37734,7 +37734,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -37753,7 +37753,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -37764,7 +37764,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -37775,7 +37775,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -37786,7 +37786,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -37797,7 +37797,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -37808,7 +37808,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -37818,7 +37818,7 @@
       "source_name": "Somers"
     },
     "landus-sulphur-springs": {
-      "as_of": "2026-10-13T21:44:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.45,
@@ -37838,7 +37838,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -37849,7 +37849,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -37871,7 +37871,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -37890,7 +37890,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.04,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -37901,7 +37901,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -37912,7 +37912,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -37923,7 +37923,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -37934,7 +37934,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -37945,7 +37945,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -37955,7 +37955,7 @@
       "source_name": "Sulphur Springs"
     },
     "landus-templeton": {
-      "as_of": "2026-10-13T21:44:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.4,
@@ -37975,7 +37975,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -37986,7 +37986,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -38008,7 +38008,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -38027,7 +38027,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -38038,7 +38038,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -38049,7 +38049,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -38060,7 +38060,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -38071,7 +38071,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -38082,7 +38082,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -38092,7 +38092,7 @@
       "source_name": "Templeton"
     },
     "landus-ulmer": {
-      "as_of": "2026-10-13T21:44:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.4,
@@ -38112,7 +38112,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -38123,7 +38123,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -38145,7 +38145,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -38164,7 +38164,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -38175,7 +38175,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -38186,7 +38186,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -38197,7 +38197,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -38208,7 +38208,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -38219,7 +38219,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -38229,7 +38229,7 @@
       "source_name": "Ulmer"
     },
     "landus-wellsburg": {
-      "as_of": "2026-10-13T21:45:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.35,
@@ -38249,7 +38249,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -38260,7 +38260,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -38282,7 +38282,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -38301,7 +38301,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": 0.04,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -38312,7 +38312,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -38323,7 +38323,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -38334,7 +38334,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -38345,7 +38345,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -38356,7 +38356,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -38366,7 +38366,7 @@
       "source_name": "Wellsburg"
     },
     "landus-yale-will-call": {
-      "as_of": "2026-10-13T21:45:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.35,
@@ -38386,7 +38386,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -38397,7 +38397,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -38419,7 +38419,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -38438,7 +38438,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -38449,7 +38449,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -38460,7 +38460,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -38471,7 +38471,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -38482,7 +38482,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -38493,7 +38493,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -38503,7 +38503,7 @@
       "source_name": "Yale"
     },
     "landus-yetter": {
-      "as_of": "2026-10-13T21:45:00Z",
+      "as_of": "2026-10-13T21:50:00Z",
       "bids": [
         {
           "basis": -0.37,
@@ -38523,7 +38523,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -38534,7 +38534,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 4.96,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CH27",
           "grain": "corn"
         },
@@ -38556,7 +38556,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 5.11,
-          "futures_change": -0.01,
+          "futures_change": 0.0,
           "futures_month": "CZ27",
           "grain": "corn"
         },
@@ -38575,7 +38575,7 @@
           "delivery_label": "Oct 2026",
           "delivery_start": "2026-10-01",
           "futures": 12.84,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SX26",
           "grain": "soybeans"
         },
@@ -38586,7 +38586,7 @@
           "delivery_label": "Dec 2026",
           "delivery_start": "2026-12-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -38597,7 +38597,7 @@
           "delivery_label": "Jan 2027",
           "delivery_start": "2027-01-01",
           "futures": 13.0,
-          "futures_change": -0.05,
+          "futures_change": 0.0,
           "futures_month": "SF27",
           "grain": "soybeans"
         },
@@ -38608,7 +38608,7 @@
           "delivery_label": "Mar 2027",
           "delivery_start": "2027-03-01",
           "futures": 13.08,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SH27",
           "grain": "soybeans"
         },
@@ -38619,7 +38619,7 @@
           "delivery_label": "Jul 2027",
           "delivery_start": "2027-07-01",
           "futures": 13.23,
-          "futures_change": -0.06,
+          "futures_change": 0.0,
           "futures_month": "SN27",
           "grain": "soybeans"
         },
@@ -38630,7 +38630,7 @@
           "delivery_label": "Oct 2027",
           "delivery_start": "2027-10-01",
           "futures": 12.58,
-          "futures_change": -0.03,
+          "futures_change": 0.0,
           "futures_month": "SX27",
           "grain": "soybeans"
         }
@@ -38640,7 +38640,7 @@
       "source_name": "Yetter"
     },
     "little-sioux-corn-processors-marcus-ethanol": {
-      "as_of": "2026-10-13T21:56:39Z",
+      "as_of": "2026-10-13T22:27:23Z",
       "bids": [
         {
           "basis": -0.33,
@@ -38879,7 +38879,7 @@
       "source_name": "Little Sioux Corn Processors"
     },
     "lucerne-feed-mill": {
-      "as_of": "2026-10-13T21:56:28Z",
+      "as_of": "2026-10-13T22:26:58Z",
       "bids": [
         {
           "basis": -0.25,
@@ -39391,7 +39391,7 @@
       "source_name": "Meadowland"
     },
     "mid-iowa-milling-edgewood-feed-mill": {
-      "as_of": "2026-10-13T16:39:23Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.3475,
@@ -39509,7 +39509,7 @@
       "source_name": "EDGEWOOD"
     },
     "mid-iowa-milling-mid-state-milling-state-center": {
-      "as_of": "2026-10-13T16:39:22Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.1475,
@@ -39753,7 +39753,7 @@
       "source_name": "Montrose"
     },
     "murphy-brown-nevada-mo-smithfield": {
-      "as_of": "2026-10-13T21:56:28Z",
+      "as_of": "2026-10-13T22:26:58Z",
       "bids": [
         {
           "basis": 0.0,
@@ -39770,7 +39770,7 @@
       "source_name": "Nevada"
     },
     "new-coop-afton": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.3475,
@@ -39898,7 +39898,7 @@
       "source_name": "Afton"
     },
     "new-coop-algona": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -40026,7 +40026,7 @@
       "source_name": "Algona"
     },
     "new-coop-anita": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.3975,
@@ -40154,7 +40154,7 @@
       "source_name": "Anita"
     },
     "new-coop-anthon": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -40282,7 +40282,7 @@
       "source_name": "Anthon"
     },
     "new-coop-badger": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -40410,7 +40410,7 @@
       "source_name": "Badger"
     },
     "new-coop-barnum": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -40538,7 +40538,7 @@
       "source_name": "Barnum"
     },
     "new-coop-belmond": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -40666,7 +40666,7 @@
       "source_name": "Belmond"
     },
     "new-coop-blairsburg": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -40794,7 +40794,7 @@
       "source_name": "Blairsburg"
     },
     "new-coop-blencoe": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -40922,7 +40922,7 @@
       "source_name": "Blencoe"
     },
     "new-coop-blencoe-barge-site": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -41050,7 +41050,7 @@
       "source_name": "Blencoe"
     },
     "new-coop-bode": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -41178,7 +41178,7 @@
       "source_name": "Bode"
     },
     "new-coop-britt": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -41306,7 +41306,7 @@
       "source_name": "Britt"
     },
     "new-coop-cainsville": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -41434,7 +41434,7 @@
       "source_name": "Cainsville"
     },
     "new-coop-chariton": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.3975,
@@ -41562,7 +41562,7 @@
       "source_name": "Chariton"
     },
     "new-coop-churdan": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.3975,
@@ -41690,7 +41690,7 @@
       "source_name": "Churdan"
     },
     "new-coop-clare": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -41818,7 +41818,7 @@
       "source_name": "Clare"
     },
     "new-coop-clearfield": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.3975,
@@ -41946,7 +41946,7 @@
       "source_name": "Clearfield"
     },
     "new-coop-cooper": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.3975,
@@ -42074,7 +42074,7 @@
       "source_name": "Cooper"
     },
     "new-coop-correctionville": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -42202,7 +42202,7 @@
       "source_name": "Correctionville"
     },
     "new-coop-creston-1": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.3475,
@@ -42330,7 +42330,7 @@
       "source_name": "Creston 1"
     },
     "new-coop-creston-2": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.3475,
@@ -42398,7 +42398,7 @@
       "source_name": "Creston 2"
     },
     "new-coop-davis-city": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.3975,
@@ -42526,7 +42526,7 @@
       "source_name": "Davis City"
     },
     "new-coop-dickens": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -42654,7 +42654,7 @@
       "source_name": "Dickens"
     },
     "new-coop-dows": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -42782,7 +42782,7 @@
       "source_name": "Dows"
     },
     "new-coop-duncombe": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -42910,7 +42910,7 @@
       "source_name": "Duncombe"
     },
     "new-coop-essex": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.3975,
@@ -43038,7 +43038,7 @@
       "source_name": "Essex"
     },
     "new-coop-everly": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -43166,7 +43166,7 @@
       "source_name": "Everly"
     },
     "new-coop-fostoria": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -43294,7 +43294,7 @@
       "source_name": "Fostoria"
     },
     "new-coop-garner": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -43422,7 +43422,7 @@
       "source_name": "Garner"
     },
     "new-coop-glidden": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -43550,7 +43550,7 @@
       "source_name": "Glidden"
     },
     "new-coop-greenville": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -43678,7 +43678,7 @@
       "source_name": "Greenville"
     },
     "new-coop-gruver": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -43806,7 +43806,7 @@
       "source_name": "Gruver"
     },
     "new-coop-hornick": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -43934,7 +43934,7 @@
       "source_name": "Hornick"
     },
     "new-coop-humboldt": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -44062,7 +44062,7 @@
       "source_name": "Humboldt"
     },
     "new-coop-humeston": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.3975,
@@ -44190,7 +44190,7 @@
       "source_name": "Humeston"
     },
     "new-coop-klemme": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -44318,7 +44318,7 @@
       "source_name": "Klemme"
     },
     "new-coop-knierim": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -44446,7 +44446,7 @@
       "source_name": "Knierim"
     },
     "new-coop-knoke": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -44574,7 +44574,7 @@
       "source_name": "Knoke"
     },
     "new-coop-lamoni": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.3975,
@@ -44702,7 +44702,7 @@
       "source_name": "Lamoni"
     },
     "new-coop-lanesboro": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -44830,7 +44830,7 @@
       "source_name": "Lanesboro"
     },
     "new-coop-langdon": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -44958,7 +44958,7 @@
       "source_name": "Langdon"
     },
     "new-coop-lanyon": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.3975,
@@ -45086,7 +45086,7 @@
       "source_name": "Lanyon"
     },
     "new-coop-lidderdale": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -45214,7 +45214,7 @@
       "source_name": "Lidderdale"
     },
     "new-coop-lohrville": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.3975,
@@ -45342,7 +45342,7 @@
       "source_name": "Lohrville"
     },
     "new-coop-luverne": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -45470,7 +45470,7 @@
       "source_name": "LuVerne"
     },
     "new-coop-mallard": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -45598,7 +45598,7 @@
       "source_name": "Mallard"
     },
     "new-coop-mapleton": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -45726,7 +45726,7 @@
       "source_name": "Mapleton"
     },
     "new-coop-milford": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -46023,7 +46023,7 @@
       "stale": true
     },
     "new-coop-mt-ayr": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.3975,
@@ -46151,7 +46151,7 @@
       "source_name": "Mt. Ayr"
     },
     "new-coop-onawa": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -46279,7 +46279,7 @@
       "source_name": "Onawa"
     },
     "new-coop-osceola": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.3475,
@@ -46407,7 +46407,7 @@
       "source_name": "Osceola"
     },
     "new-coop-otho": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -46535,7 +46535,7 @@
       "source_name": "Otho"
     },
     "new-coop-palmer": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -46663,7 +46663,7 @@
       "source_name": "Palmer"
     },
     "new-coop-pierson": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -46791,7 +46791,7 @@
       "source_name": "Pierson"
     },
     "new-coop-pomeroy": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -46919,7 +46919,7 @@
       "source_name": "Pomeroy"
     },
     "new-coop-rands": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.3975,
@@ -47047,7 +47047,7 @@
       "source_name": "Rands"
     },
     "new-coop-red-oak": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.3475,
@@ -47175,7 +47175,7 @@
       "source_name": "Red Oak"
     },
     "new-coop-roelyn": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -47303,7 +47303,7 @@
       "source_name": "Roelyn"
     },
     "new-coop-rowan": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -47431,7 +47431,7 @@
       "source_name": "Rowan"
     },
     "new-coop-sloan": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -47559,7 +47559,7 @@
       "source_name": "Sloan"
     },
     "new-coop-superior": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -47687,7 +47687,7 @@
       "source_name": "Superior"
     },
     "new-coop-ute": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -47815,7 +47815,7 @@
       "source_name": "Ute"
     },
     "new-coop-villisca": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.3975,
@@ -47943,7 +47943,7 @@
       "source_name": "Villisca"
     },
     "new-coop-vincent": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -48071,7 +48071,7 @@
       "source_name": "Vincent"
     },
     "new-coop-washta": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -48199,7 +48199,7 @@
       "source_name": "Washta"
     },
     "new-coop-west-bend": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -48327,7 +48327,7 @@
       "source_name": "West Bend"
     },
     "new-coop-whiting": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -48455,7 +48455,7 @@
       "source_name": "Whiting"
     },
     "new-coop-whittemore": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -48583,7 +48583,7 @@
       "source_name": "Whittemore"
     },
     "new-coop-woolstock": {
-      "as_of": "2026-10-13T21:54:02Z",
+      "as_of": "2026-10-13T22:24:31Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -51116,7 +51116,7 @@
       "source_name": "WORTHINGTON"
     },
     "nexus-blooming-prairie-mn": {
-      "as_of": "2026-10-13T21:56:41Z",
+      "as_of": "2026-10-13T22:27:27Z",
       "bids": [
         {
           "basis": -0.63,
@@ -51322,7 +51322,7 @@
       "source_name": "Blooming Prairie, MN"
     },
     "nexus-carpenter-ia": {
-      "as_of": "2026-10-13T21:56:41Z",
+      "as_of": "2026-10-13T22:27:27Z",
       "bids": [
         {
           "basis": -0.52,
@@ -51528,7 +51528,7 @@
       "source_name": "Carpenter, IA"
     },
     "nexus-chapin-ia": {
-      "as_of": "2026-10-13T21:56:41Z",
+      "as_of": "2026-10-13T22:27:27Z",
       "bids": [
         {
           "basis": -0.45,
@@ -51734,7 +51734,7 @@
       "source_name": "Chapin, IA"
     },
     "nexus-denison-ia": {
-      "as_of": "2026-10-13T21:56:41Z",
+      "as_of": "2026-10-13T22:27:27Z",
       "bids": [
         {
           "basis": -0.45,
@@ -51940,7 +51940,7 @@
       "source_name": "Denison, IA"
     },
     "nexus-dewar-ia": {
-      "as_of": "2026-10-13T21:56:41Z",
+      "as_of": "2026-10-13T22:27:27Z",
       "bids": [
         {
           "basis": -0.47,
@@ -52146,7 +52146,7 @@
       "source_name": "Dewar, IA"
     },
     "nexus-elgin-ia": {
-      "as_of": "2026-10-13T21:56:41Z",
+      "as_of": "2026-10-13T22:27:27Z",
       "bids": [
         {
           "basis": -0.42,
@@ -52352,7 +52352,7 @@
       "source_name": "Elgin, IA"
     },
     "nexus-harlan-ia": {
-      "as_of": "2026-10-13T21:56:41Z",
+      "as_of": "2026-10-13T22:27:27Z",
       "bids": [
         {
           "basis": -0.47,
@@ -52558,7 +52558,7 @@
       "source_name": "Harlan, IA"
     },
     "nexus-manly-ia": {
-      "as_of": "2026-10-13T21:56:41Z",
+      "as_of": "2026-10-13T22:27:27Z",
       "bids": [
         {
           "basis": -0.45,
@@ -52764,7 +52764,7 @@
       "source_name": "Manly, IA"
     },
     "nexus-marble-rock-ia": {
-      "as_of": "2026-10-13T21:56:41Z",
+      "as_of": "2026-10-13T22:27:27Z",
       "bids": [
         {
           "basis": -0.45,
@@ -52970,7 +52970,7 @@
       "source_name": "Marble Rock, IA"
     },
     "nexus-northwood-ia": {
-      "as_of": "2026-10-13T21:56:41Z",
+      "as_of": "2026-10-13T22:27:27Z",
       "bids": [
         {
           "basis": -0.53,
@@ -53176,7 +53176,7 @@
       "source_name": "Northwood, IA"
     },
     "nexus-oelwein-ia": {
-      "as_of": "2026-10-13T21:56:41Z",
+      "as_of": "2026-10-13T22:27:27Z",
       "bids": [
         {
           "basis": -0.4,
@@ -53382,7 +53382,7 @@
       "source_name": "Oelwein, IA"
     },
     "nexus-rockford-ia": {
-      "as_of": "2026-10-13T21:56:41Z",
+      "as_of": "2026-10-13T22:27:27Z",
       "bids": [
         {
           "basis": -0.48,
@@ -53588,7 +53588,7 @@
       "source_name": "Rockford, IA"
     },
     "nexus-rudd-ia": {
-      "as_of": "2026-10-13T21:56:41Z",
+      "as_of": "2026-10-13T22:27:27Z",
       "bids": [
         {
           "basis": -0.48,
@@ -53794,7 +53794,7 @@
       "source_name": "Rudd, IA"
     },
     "nexus-stacyville-ia": {
-      "as_of": "2026-10-13T21:56:41Z",
+      "as_of": "2026-10-13T22:27:27Z",
       "bids": [
         {
           "basis": -0.5,
@@ -54000,7 +54000,7 @@
       "source_name": "Stacyville, IA"
     },
     "nexus-sumner-ia": {
-      "as_of": "2026-10-13T21:56:41Z",
+      "as_of": "2026-10-13T22:27:27Z",
       "bids": [
         {
           "basis": -0.46,
@@ -54206,7 +54206,7 @@
       "source_name": "Sumner, IA"
     },
     "nexus-toeterville-ia": {
-      "as_of": "2026-10-13T21:56:41Z",
+      "as_of": "2026-10-13T22:27:27Z",
       "bids": [
         {
           "basis": -0.5,
@@ -54412,7 +54412,7 @@
       "source_name": "Toeterville, IA"
     },
     "north-iowa-coop-clear-lake": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -54530,7 +54530,7 @@
       "source_name": "Clear Lake"
     },
     "north-iowa-coop-plymouth": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -54648,7 +54648,7 @@
       "source_name": "Plymouth"
     },
     "north-iowa-coop-portland": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -54766,7 +54766,7 @@
       "source_name": "Portland"
     },
     "north-iowa-coop-thornton": {
-      "as_of": "2026-10-13T16:39:34Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -55109,7 +55109,7 @@
       "source_name": "Plymouth Energy-Merrill"
     },
     "poet-ashton-ethanol": {
-      "as_of": "2026-10-13T21:56:57Z",
+      "as_of": "2026-10-13T22:27:44Z",
       "bids": [
         {
           "basis": -0.28,
@@ -55217,7 +55217,7 @@
       "source_name": "Ashton, IA"
     },
     "poet-bingham-lake-mn-ethanol": {
-      "as_of": "2026-10-13T21:57:01Z",
+      "as_of": "2026-10-13T22:27:48Z",
       "bids": [
         {
           "basis": -0.55,
@@ -55365,7 +55365,7 @@
       "source_name": "Bingham Lake, MN"
     },
     "poet-biorefining-coon-rapids-ethanol": {
-      "as_of": "2026-10-13T21:57:09Z",
+      "as_of": "2026-10-13T22:27:56Z",
       "bids": [
         {
           "basis": -0.3,
@@ -55443,7 +55443,7 @@
       "source_name": "Coon Rapids, IA"
     },
     "poet-corning-ethanol": {
-      "as_of": "2026-10-13T21:57:11Z",
+      "as_of": "2026-10-13T22:27:58Z",
       "bids": [
         {
           "basis": -0.34,
@@ -55511,7 +55511,7 @@
       "source_name": "Corning, IA"
     },
     "poet-emmetsburg-ethanol": {
-      "as_of": "2026-10-13T21:57:13Z",
+      "as_of": "2026-10-13T22:28:00Z",
       "bids": [
         {
           "basis": -0.38,
@@ -55629,7 +55629,7 @@
       "source_name": "Emmetsburg, IA"
     },
     "poet-gowrie-ethanol": {
-      "as_of": "2026-10-13T21:57:23Z",
+      "as_of": "2026-10-13T22:28:10Z",
       "bids": [
         {
           "basis": -0.18,
@@ -55727,7 +55727,7 @@
       "source_name": "Gowrie, IA"
     },
     "poet-hanlontown-ethanol": {
-      "as_of": "2026-10-13T21:57:27Z",
+      "as_of": "2026-10-13T22:28:14Z",
       "bids": [
         {
           "basis": -0.35,
@@ -55765,7 +55765,7 @@
       "source_name": "Hanlontown, IA"
     },
     "poet-jewell-ethanol": {
-      "as_of": "2026-10-13T21:57:33Z",
+      "as_of": "2026-10-13T22:28:20Z",
       "bids": [
         {
           "basis": -0.3,
@@ -55873,7 +55873,7 @@
       "source_name": "Jewell, IA"
     },
     "poet-laddonia-mo-ethanol": {
-      "as_of": "2026-10-13T21:57:35Z",
+      "as_of": "2026-10-13T22:28:22Z",
       "bids": [
         {
           "basis": -0.45,
@@ -55971,7 +55971,7 @@
       "source_name": "Laddonia, MO"
     },
     "poet-lake-crystal-mn-ethanol": {
-      "as_of": "2026-10-13T21:57:37Z",
+      "as_of": "2026-10-13T22:28:24Z",
       "bids": [
         {
           "basis": -0.6,
@@ -56149,7 +56149,7 @@
       "source_name": "Lake Crystal, MN"
     },
     "poet-macon-mo-ethanol": {
-      "as_of": "2026-10-13T21:57:41Z",
+      "as_of": "2026-10-13T22:28:28Z",
       "bids": [
         {
           "basis": -0.44,
@@ -56247,7 +56247,7 @@
       "source_name": "Macon, MO"
     },
     "poet-preston-mn-ethanol": {
-      "as_of": "2026-10-13T21:57:55Z",
+      "as_of": "2026-10-13T22:28:42Z",
       "bids": [
         {
           "basis": -0.75,
@@ -56335,7 +56335,7 @@
       "source_name": "Preston, MN"
     },
     "pro-coop-ayrshire": {
-      "as_of": "2026-10-13T16:39:29Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -56409,7 +56409,7 @@
       "source_name": "AYRSHIRE.IA"
     },
     "pro-coop-bradgate-elevator": {
-      "as_of": "2026-10-13T16:39:46Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -56549,7 +56549,7 @@
       "source_name": "BRADGATE.IA"
     },
     "pro-coop-gilmore-city-elevator": {
-      "as_of": "2026-10-13T16:39:46Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4775,
@@ -56689,7 +56689,7 @@
       "source_name": "GILMORE CITY.IA"
     },
     "pro-coop-graettinger": {
-      "as_of": "2026-10-13T16:39:46Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -56829,7 +56829,7 @@
       "source_name": "GRAETTINGER.IA"
     },
     "pro-coop-havelock": {
-      "as_of": "2026-10-13T16:39:46Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -56969,7 +56969,7 @@
       "source_name": "HAVELOCK.IA"
     },
     "pro-coop-manson": {
-      "as_of": "2026-10-13T16:39:46Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -57109,7 +57109,7 @@
       "source_name": "MANSON.IA"
     },
     "pro-coop-pioneer": {
-      "as_of": "2026-10-13T16:39:46Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -57249,7 +57249,7 @@
       "source_name": "PIONEER.IA"
     },
     "pro-coop-plover-elevator": {
-      "as_of": "2026-10-13T16:39:46Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -57389,7 +57389,7 @@
       "source_name": "PLOVER.IA"
     },
     "pro-coop-pocahontas-elevator": {
-      "as_of": "2026-10-13T16:39:46Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -57529,7 +57529,7 @@
       "source_name": "POCAHONTAS.IA"
     },
     "pro-coop-rolfe-grain-elevator": {
-      "as_of": "2026-10-13T16:39:46Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -57669,7 +57669,7 @@
       "source_name": "ROLFE.IA"
     },
     "pro-coop-ruthven": {
-      "as_of": "2026-10-13T16:39:46Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -57809,7 +57809,7 @@
       "source_name": "RUTHVEN.IA"
     },
     "pro-coop-rutland": {
-      "as_of": "2026-10-13T16:39:46Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4275,
@@ -57949,7 +57949,7 @@
       "source_name": "RUTLAND.IA"
     },
     "pro-coop-terril": {
-      "as_of": "2026-10-13T16:39:46Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -58089,7 +58089,7 @@
       "source_name": "TERRIL.IA"
     },
     "pro-coop-wallingford": {
-      "as_of": "2026-10-13T16:39:46Z",
+      "as_of": "2026-10-13T13:50:17Z",
       "bids": [
         {
           "basis": -0.4475,
@@ -58465,7 +58465,7 @@
       "source_name": "Siouxland Energy"
     },
     "smithfield-grain-feed-mill-allerton": {
-      "as_of": "2026-10-13T21:56:28Z",
+      "as_of": "2026-10-13T22:26:58Z",
       "bids": [
         {
           "basis": -0.45,
@@ -58491,7 +58491,7 @@
       "source_name": "Allerton"
     },
     "southeastern-grain-laclede-mo-smithfield": {
-      "as_of": "2026-10-13T21:56:28Z",
+      "as_of": "2026-10-13T22:26:58Z",
       "bids": [
         {
           "basis": -0.5,
@@ -60010,7 +60010,7 @@
       "source_name": "Vinton"
     },
     "the-scoular-company-emerson-ia": {
-      "as_of": "2026-10-13T21:56:26Z",
+      "as_of": "2026-10-13T22:26:56Z",
       "bids": [
         {
           "basis": -0.45,
@@ -60695,329 +60695,329 @@
   "sources": {
     "agricharts:agpartners": {
       "bids": 83,
-      "fetched_at": "2026-10-13T21:56:33Z",
+      "fetched_at": "2026-10-13T22:27:13Z",
       "label": "Ag Partners Cooperative",
       "locations": 22,
       "ok": true
     },
     "agricharts:agstate": {
       "bids": 308,
-      "fetched_at": "2026-10-13T21:56:42Z",
+      "fetched_at": "2026-10-13T22:27:28Z",
       "label": "AgState",
       "locations": 28,
       "ok": true
     },
     "agricharts:buchheit": {
       "bids": 36,
-      "fetched_at": "2026-10-13T21:56:36Z",
+      "fetched_at": "2026-10-13T22:27:15Z",
       "label": "Buchheit",
       "locations": 4,
       "ok": true
     },
     "agricharts:butterfield": {
       "bids": 6,
-      "fetched_at": "2026-10-13T21:56:34Z",
+      "fetched_at": "2026-10-13T22:27:13Z",
       "label": "Butterfield & Associates Grain",
       "locations": 1,
       "ok": true
     },
     "agricharts:cargillus": {
       "bids": 1060,
-      "fetched_at": "2026-10-13T21:56:22Z",
+      "fetched_at": "2026-10-13T22:26:52Z",
       "label": "Cargill",
       "locations": 76,
       "ok": true
     },
     "agricharts:cgb": {
       "bids": 900,
-      "fetched_at": "2026-10-13T22:02:37Z",
+      "fetched_at": "2026-10-13T22:33:24Z",
       "label": "CGB",
       "locations": 90,
       "ok": true
     },
     "agricharts:coopfe": {
       "bids": 406,
-      "fetched_at": "2026-10-13T22:02:39Z",
+      "fetched_at": "2026-10-13T22:33:26Z",
       "label": "CFE",
       "locations": 20,
       "ok": true
     },
     "agricharts:craiggrain": {
       "bids": 9,
-      "fetched_at": "2026-10-13T21:56:35Z",
+      "fetched_at": "2026-10-13T22:27:14Z",
       "label": "Craig Supply & Grain",
       "locations": 1,
       "ok": true
     },
     "agricharts:cvacoop": {
       "bids": 535,
-      "fetched_at": "2026-10-13T21:53:59Z",
+      "fetched_at": "2026-10-13T22:24:04Z",
       "label": "Central Valley Ag",
       "locations": 54,
       "ok": true
     },
     "agricharts:faasfeed": {
       "bids": 4,
-      "fetched_at": "2026-10-13T21:56:29Z",
+      "fetched_at": "2026-10-13T22:27:04Z",
       "label": "Faas Feed & Grain",
       "locations": 2,
       "ok": true
     },
     "agricharts:farmerselevator": {
       "bids": 6,
-      "fetched_at": "2026-10-13T21:56:33Z",
+      "fetched_at": "2026-10-13T22:27:12Z",
       "label": "Farmers Elevator & Exchange",
       "locations": 1,
       "ok": true
     },
     "agricharts:farmerselevatorco": {
       "bids": 4,
-      "fetched_at": "2026-10-13T21:56:35Z",
+      "fetched_at": "2026-10-13T22:27:14Z",
       "label": "Farmers Elevator & Supply (Clinton)",
       "locations": 1,
       "ok": true
     },
     "agricharts:farmerswin": {
       "bids": 171,
-      "fetched_at": "2026-10-13T21:56:30Z",
+      "fetched_at": "2026-10-13T22:27:10Z",
       "label": "Farmers Win Coop",
       "locations": 18,
       "ok": true
     },
     "agricharts:goldeagle": {
       "bids": 140,
-      "fetched_at": "2026-10-13T21:54:00Z",
+      "fetched_at": "2026-10-13T22:24:11Z",
       "label": "Gold Eagle Co-op",
       "locations": 21,
       "ok": true
     },
     "agricharts:hartog": {
       "bids": 21,
-      "fetched_at": "2026-10-13T21:56:29Z",
+      "fetched_at": "2026-10-13T22:26:59Z",
       "label": "Hartog Elevator",
       "locations": 6,
       "ok": true
     },
     "agricharts:hullcoop": {
       "bids": 12,
-      "fetched_at": "2026-10-13T21:56:31Z",
+      "fetched_at": "2026-10-13T22:27:11Z",
       "label": "Hull Cooperative",
       "locations": 1,
       "ok": true
     },
     "agricharts:innovativeag": {
       "bids": 729,
-      "fetched_at": "2026-10-13T22:02:38Z",
+      "fetched_at": "2026-10-13T22:33:25Z",
       "label": "Innovative Ag Services",
       "locations": 46,
       "ok": true
     },
     "agricharts:jbslivepork": {
       "bids": 67,
-      "fetched_at": "2026-10-13T22:02:41Z",
+      "fetched_at": "2026-10-13T22:33:28Z",
       "label": "JBS Live Pork",
       "locations": 9,
       "ok": true
     },
     "agricharts:keycoop": {
       "bids": 316,
-      "fetched_at": "2026-10-13T22:02:36Z",
+      "fetched_at": "2026-10-13T22:33:23Z",
       "label": "Key Cooperative",
       "locations": 27,
       "ok": true
     },
     "agricharts:meadowland": {
       "bids": 14,
-      "fetched_at": "2026-10-13T21:56:30Z",
+      "fetched_at": "2026-10-13T22:27:09Z",
       "label": "Meadowland Farmers Coop",
       "locations": 1,
       "ok": true
     },
     "agricharts:midiowa": {
       "bids": 215,
-      "fetched_at": "2026-10-13T21:54:01Z",
+      "fetched_at": "2026-10-13T22:24:24Z",
       "label": "Mid Iowa Co-op",
       "locations": 30,
       "ok": true
     },
     "agricharts:midmissourienergy": {
       "bids": 11,
-      "fetched_at": "2026-10-13T21:56:32Z",
+      "fetched_at": "2026-10-13T22:27:12Z",
       "label": "Mid-Missouri Energy",
       "locations": 1,
       "ok": true
     },
     "agricharts:montrose": {
       "bids": 4,
-      "fetched_at": "2026-10-13T21:56:34Z",
+      "fetched_at": "2026-10-13T22:27:14Z",
       "label": "Montrose Grain and Supply",
       "locations": 1,
       "ok": true
     },
     "agricharts:newvision": {
       "bids": 225,
-      "fetched_at": "2026-10-13T21:56:40Z",
+      "fetched_at": "2026-10-13T22:27:24Z",
       "label": "New Vision Co-op",
       "locations": 22,
       "ok": true
     },
     "agricharts:nicoop": {
       "bids": 40,
-      "fetched_at": "2026-10-13T21:54:01Z",
+      "fetched_at": "2026-10-13T22:24:30Z",
       "label": "North Iowa Co-op",
       "locations": 4,
       "ok": true
     },
     "agricharts:plymouthenergy": {
       "bids": 535,
-      "fetched_at": "2026-10-13T21:56:37Z",
+      "fetched_at": "2026-10-13T22:27:21Z",
       "label": "Plymouth Energy",
       "locations": 54,
       "ok": true
     },
     "agricharts:procooperative": {
       "bids": 174,
-      "fetched_at": "2026-10-13T21:54:00Z",
+      "fetched_at": "2026-10-13T22:24:19Z",
       "label": "Pro Cooperative",
       "locations": 16,
       "ok": true
     },
     "agricharts:silveredgecoop": {
       "bids": 9,
-      "fetched_at": "2026-10-13T22:02:41Z",
+      "fetched_at": "2026-10-13T22:33:28Z",
       "label": "SilverEdge Cooperative",
       "locations": 1,
       "ok": true
     },
     "agricharts:siouxlandenergy": {
       "bids": 11,
-      "fetched_at": "2026-10-13T21:56:32Z",
+      "fetched_at": "2026-10-13T22:27:11Z",
       "label": "Siouxland Energy Cooperative",
       "locations": 1,
       "ok": true
     },
     "agricharts:statelinecoop": {
       "bids": 115,
-      "fetched_at": "2026-10-13T22:02:39Z",
+      "fetched_at": "2026-10-13T22:33:26Z",
       "label": "Stateline Cooperative",
       "locations": 11,
       "ok": true
     },
     "agricharts:tamabentoncoop": {
       "bids": 57,
-      "fetched_at": "2026-10-13T22:02:40Z",
+      "fetched_at": "2026-10-13T22:33:27Z",
       "label": "Tama-Benton Cooperative",
       "locations": 9,
       "ok": true
     },
     "agricharts:tworivers": {
       "bids": 48,
-      "fetched_at": "2026-10-13T22:02:40Z",
+      "fetched_at": "2026-10-13T22:33:27Z",
       "label": "Two Rivers Cooperative",
       "locations": 4,
       "ok": true
     },
     "agricharts:useunited": {
       "bids": 5,
-      "fetched_at": "2026-10-13T21:56:31Z",
+      "fetched_at": "2026-10-13T22:27:11Z",
       "label": "United Cooperatives (MO)",
       "locations": 1,
       "ok": true
     },
     "bushel:agp": {
       "bids": 59,
-      "fetched_at": "2026-10-13T21:56:24Z",
+      "fetched_at": "2026-10-13T22:26:54Z",
       "label": "AGP",
       "locations": 15,
       "ok": true
     },
     "bushel:chs": {
       "bids": 1285,
-      "fetched_at": "2026-10-13T21:56:23Z",
+      "fetched_at": "2026-10-13T22:26:52Z",
       "label": "CHS",
       "locations": 154,
       "ok": true
     },
     "bushel:scoular": {
       "bids": 165,
-      "fetched_at": "2026-10-13T21:56:26Z",
+      "fetched_at": "2026-10-13T22:26:56Z",
       "label": "The Scoular Company",
       "locations": 54,
       "ok": true
     },
     "bushel:smithfield": {
       "bids": 83,
-      "fetched_at": "2026-10-13T21:56:28Z",
+      "fetched_at": "2026-10-13T22:26:58Z",
       "label": "Smithfield",
       "locations": 42,
       "ok": true
     },
     "cihedging:eliteoctane": {
       "bids": 19,
-      "fetched_at": "2026-10-13T21:56:37Z",
+      "fetched_at": "2026-10-13T22:27:21Z",
       "label": "Elite Octane",
       "locations": 1,
       "ok": true
     },
     "cihedging:goldengrain": {
       "bids": 11,
-      "fetched_at": "2026-10-13T21:56:47Z",
+      "fetched_at": "2026-10-13T22:27:33Z",
       "label": "Golden Grain Energy",
       "locations": 1,
       "ok": true
     },
     "cihedging:littlesioux": {
       "bids": 21,
-      "fetched_at": "2026-10-13T21:56:39Z",
+      "fetched_at": "2026-10-13T22:27:23Z",
       "label": "Little Sioux Corn Processors",
       "locations": 1,
       "ok": true
     },
     "fivestar": {
       "bids": 297,
-      "fetched_at": "2026-10-13T21:56:47Z",
+      "fetched_at": "2026-10-13T22:27:33Z",
       "label": "Five Star Cooperative",
       "locations": 21,
       "ok": true
     },
     "gradable:adm": {
       "bids": 1391,
-      "fetched_at": "2026-10-13T22:02:36Z",
+      "fetched_at": "2026-10-13T22:33:22Z",
       "label": "ADM (Gradable)",
       "locations": 108,
       "ok": true
     },
     "gradable:poet": {
       "bids": 326,
-      "fetched_at": "2026-10-13T21:58:01Z",
+      "fetched_at": "2026-10-13T22:28:48Z",
       "label": "POET Biorefining",
       "locations": 35,
       "ok": true
     },
     "heartland": {
       "bids": 644,
-      "fetched_at": "2026-10-13T21:53:58Z",
+      "fetched_at": "2026-10-13T22:23:58Z",
       "label": "Heartland Co-op",
       "locations": 79,
       "ok": true
     },
     "landus": {
       "bids": 558,
-      "fetched_at": "2026-10-13T21:56:20Z",
+      "fetched_at": "2026-10-13T22:26:49Z",
       "label": "Landus Cooperative",
       "locations": 49,
       "ok": true
     },
     "newcoop": {
       "bids": 822,
-      "fetched_at": "2026-10-13T21:54:02Z",
+      "fetched_at": "2026-10-13T22:24:31Z",
       "label": "NEW Cooperative",
       "locations": 69,
       "ok": true
     },
     "nexus": {
       "bids": 486,
-      "fetched_at": "2026-10-13T21:56:41Z",
+      "fetched_at": "2026-10-13T22:27:27Z",
       "label": "Nexus Cooperative",
       "locations": 35,
       "ok": true
