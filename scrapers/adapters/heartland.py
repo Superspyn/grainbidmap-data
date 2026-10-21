@@ -1,12 +1,17 @@
-"""Adapter for Heartland Co-op's cash-bid sheet.
+"""Adapter for Heartland Co-op's cash-bid page.
 
-Heartland replaced their server-rendered bids page with an Excel "Save as Web
-Page" export in a frameset. ``bids.htm`` is now only the frameset - the data
-lives in ``bids_files/sheet001.htm`` - and the old landmarks (CORN BIDS
-headings in ``<th>``, ``basis-num`` cells) are gone entirely, so the previous
-parser found nothing and the source failed rather than returning wrong numbers.
+**Two formats, page first.** ``bids.htm`` is a server-rendered page: four
+tables (regular and processor, corn and soybeans) whose ``<th>`` headers carry
+the delivery window in ``data-start``/``data-end`` plus the futures month, and
+whose cells hold two spans, cash then basis. For a few days around 2026-09-02
+Heartland swapped it for an Excel "Save as Web Page" export in a frameset, and
+this adapter was rewritten to read that export at ``bids_files/sheet001.htm``.
+They then went back to the page - but left the export on the server, frozen at
+its 9/2/2026 close. The adapter kept reading it and reporting success, so 53
+pins showed September bids for six weeks. The page is now read first and the
+export is only a fallback, used when the page has no bid tables.
 
-The sheet holds four blocks, each the same shape::
+The export holds four blocks, each the same shape::
 
     HEARTLAND CO-OP  ...  CORN | SOYBEANS | DIRECT CORN | DIRECT SOYBEANS
     <board rows: symbols, Prev close, High, Low, Close, Change>
@@ -44,7 +49,11 @@ import fetch
 import normalize
 from adapters.base import Bid, SourceLocation
 
-URL = "https://myaccount.heartlandcoop.com/bids_files/sheet001.htm"
+PAGE_URL = "https://myaccount.heartlandcoop.com/bids.htm"
+SHEET_URL = "https://myaccount.heartlandcoop.com/bids_files/sheet001.htm"
+
+# "CU26" / "SX26" - grain letter, month code, two-digit year.
+_FUTURES_RE = re.compile(r"([A-Z]{1,2}[FGHJKMNQUVXZ]\d{2})")
 
 # Rows that end a block or are summaries rather than delivery points.
 SKIP_NAMES = {"average", "ave", "location"}
@@ -66,10 +75,127 @@ class HeartlandAdapter:
     name = "heartland"
 
     def fetch(self) -> list[SourceLocation]:
-        return self.parse(fetch.get(URL, browser_ua=True))
+        try:
+            return self.parse_page(fetch.get(PAGE_URL, browser_ua=True))
+        except ValueError:
+            return self.parse_sheet(fetch.get(SHEET_URL, browser_ua=True))
 
     @classmethod
     def parse(cls, html: str) -> list[SourceLocation]:
+        """Whichever format ``html`` is in."""
+        try:
+            return cls.parse_page(html)
+        except ValueError:
+            return cls.parse_sheet(html)
+
+    # -- the server-rendered page --------------------------------------------
+
+    @classmethod
+    def parse_page(cls, html: str) -> list[SourceLocation]:
+        soup = BeautifulSoup(html, "html.parser")
+        as_of = cls._page_date(soup)
+
+        # Keyed by (is_processor, name): a co-op elevator and a processor can
+        # share a town name but are genuinely different delivery points.
+        collected: dict[tuple[bool, str], SourceLocation] = {}
+
+        for table in soup.find_all("table"):
+            headers = table.find_all("th")
+            if not headers:
+                continue
+            heading = headers[0].get_text(strip=True).upper()
+            grain = normalize.classify_grain(heading)
+            if grain is None:
+                continue
+            is_processor = "PROCESSOR" in heading
+            columns = [cls._page_column(th) for th in headers[1:]]
+
+            for row in table.find_all("tr"):
+                cells = row.find_all("td")
+                if not cells:
+                    continue
+                name = cells[0].get_text(strip=True)
+                if not name:
+                    continue
+                key = (is_processor, name.upper())
+                location = collected.get(key)
+                if location is None:
+                    location = collected[key] = SourceLocation(
+                        source_location_id=("processor:" if is_processor else "") + name.upper(),
+                        name=name,
+                        state="IA",
+                        as_of=as_of,
+                    )
+                for column, cell in zip(columns, cells[1:]):
+                    bid = cls._page_cell(cell, column, grain)
+                    if bid is not None:
+                        location.bids.append(bid)
+
+        locations = [loc for loc in collected.values() if loc.bids]
+        if not locations:
+            raise ValueError("heartland: no corn or soybean bids found on the page")
+        for loc in locations:
+            loc.bids.sort(key=lambda b: (b.grain, b.delivery_start or "9999-99-99"))
+        return locations
+
+    @staticmethod
+    def _page_column(th) -> dict:
+        span = th.find("span")
+        start = normalize.parse_date(span.get("data-start")) if span else None
+        end = normalize.parse_date(span.get("data-end")) if span else None
+        match = _FUTURES_RE.search(th.get_text(strip=True).upper())
+        return {
+            "start": start,
+            "end": end,
+            "label": normalize.format_delivery_label(start, end),
+            "futures_month": match.group(1) if match else None,
+        }
+
+    @staticmethod
+    def _page_cell(cell, column: dict, grain: str) -> Bid | None:
+        spans = cell.find_all("span")
+        if len(spans) < 2:
+            return None
+        cash = normalize.parse_money(spans[0].get_text(strip=True))
+        basis = normalize.parse_money(spans[1].get_text(strip=True))
+        if cash is None:
+            return None
+        return Bid(
+            grain=grain,
+            delivery_start=column["start"],
+            delivery_end=column["end"],
+            delivery_label=column["label"],
+            futures_month=column["futures_month"],
+            futures=round(cash - basis, 4) if basis is not None else None,
+            futures_change=None,   # not published on this page
+            basis=basis,
+            cash=cash,
+        )
+
+    @staticmethod
+    def _page_date(soup) -> str:
+        """Read the stamp out of the "CLOSING GRAIN BIDS 101426" heading.
+
+        The digits run together, so a 5-digit stamp is M-DD-YY and a 6-digit
+        one MM-DD-YY. Anything unexpected falls back to the fetch time.
+        """
+        header = soup.select_one("div.header")
+        if header:
+            digits = re.search(r"\b(\d{5,6})\b", header.get_text(" ", strip=True))
+            if digits:
+                try:
+                    date = _dt.datetime.strptime(digits.group(1).zfill(6), "%m%d%y").date()
+                    # Heartland states these are the 1:15 PM CT close.
+                    return f"{date.isoformat()}T18:15:00Z"
+                except ValueError:
+                    pass
+        return (_dt.datetime.now(_dt.timezone.utc)
+                .isoformat(timespec="seconds").replace("+00:00", "Z"))
+
+    # -- the Excel export (fallback) -----------------------------------------
+
+    @classmethod
+    def parse_sheet(cls, html: str) -> list[SourceLocation]:
         soup = BeautifulSoup(html, "html.parser")
         table = soup.find("table")
         if table is None:

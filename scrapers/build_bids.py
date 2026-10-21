@@ -47,6 +47,13 @@ RAW_OUTPUT = REPO / "scrapers" / ".build" / "raw.json"
 
 STALE_AFTER_HOURS = 48
 
+# How long a pin keeps its last good bids after its source fails or stops
+# listing it. Long enough to ride out a weekend or a co-op's site being down;
+# short enough that a location a co-op has dropped does not show its last
+# prices forever (NEW Coop Morton Mills was still showing 2026-09-04 bids on
+# 2026-10-15).
+MAX_CARRY_DAYS = 5
+
 
 def now_iso() -> str:
     return (
@@ -217,6 +224,42 @@ def drop_mislabelled_bids(out_locations: dict) -> list[str]:
     return dropped
 
 
+def drop_out_of_date(out_locations: dict, now: _dt.datetime | None = None) -> list[str]:
+    """Remove carried-forward pins past MAX_CARRY_DAYS and bids whose delivery
+    window has already ended.
+
+    A delivery window that closed before today is not a price anyone can haul
+    against, whoever still lists it. "Today" is the Central-time date (UTC-6h,
+    close enough either side of DST for a whole-day comparison) so a bid for
+    the 14th is not dropped at 7 PM on the 14th, when UTC has already rolled.
+    A pin left with no bids is then removed by the empty-location rule.
+    """
+    now = now or _dt.datetime.now(_dt.timezone.utc)
+    today = (now - _dt.timedelta(hours=6)).date().isoformat()
+    carry_cutoff = now - _dt.timedelta(days=MAX_CARRY_DAYS)
+    notes = []
+    for pin_id in list(out_locations):
+        loc = out_locations[pin_id]
+        if loc.get("stale"):
+            try:
+                when = _dt.datetime.fromisoformat((loc.get("as_of") or "").replace("Z", "+00:00"))
+            except ValueError:
+                when = None
+            if when is None or when < carry_cutoff:
+                notes.append(f"{pin_id}: last bids from {loc.get('as_of')} - "
+                             f"over {MAX_CARRY_DAYS} days old, not published")
+                del out_locations[pin_id]
+                continue
+        bids = loc.get("bids") or []
+        current = [b for b in bids
+                   if not b.get("delivery_end") or b["delivery_end"] >= today]
+        if len(current) < len(bids):
+            notes.append(f"{pin_id}: dropped {len(bids) - len(current)} bid(s) "
+                         f"whose delivery window ended before {today}")
+            loc["bids"] = current
+    return notes
+
+
 def assemble(results: dict, status: dict, previous: dict) -> dict:
     """Project scraped source data onto map pins, carrying forward stale sources."""
     pin_map = load_location_map()
@@ -254,6 +297,9 @@ def assemble(results: dict, status: dict, previous: dict) -> dict:
 
     for note in drop_mislabelled_bids(out_locations):
         print(f"  dropped mislabelled bid - {note}", file=sys.stderr)
+
+    for note in drop_out_of_date(out_locations):
+        print(f"  {note}", file=sys.stderr)
 
     # A location whose bids all filtered away is not published at all. It is a
     # normal thing for an elevator to do: Butterfield answered with six bids on

@@ -276,10 +276,10 @@ class TestNewCoop:
 
 
 class TestHeartland:
-    """Heartland publishes an Excel "Save as Web Page" export in a frameset.
+    """The fallback: Heartland's Excel "Save as Web Page" export.
 
-    bids.htm is only the frameset now; the data is in bids_files/sheet001.htm,
-    laid out as four blocks (CORN, SOYBEANS, DIRECT CORN, DIRECT SOYBEANS) with
+    For a few days in September 2026 bids.htm was only a frameset and the data
+    was in bids_files/sheet001.htm, laid out as four blocks (CORN, SOYBEANS, DIRECT CORN, DIRECT SOYBEANS) with
     cash and basis alternating across the columns.
     """
 
@@ -353,6 +353,91 @@ class TestHeartland:
     def test_raises_on_a_page_with_no_bid_tables(self):
         with pytest.raises(ValueError):
             HeartlandAdapter().parse("<html><body><p>Down for maintenance</p></body></html>")
+
+
+@pytest.fixture(scope="module")
+def heartland_page():
+    return HeartlandAdapter().parse(read_fixture("heartland_bids.htm"))
+
+
+class TestHeartlandPage:
+    """Heartland's server-rendered bids.htm, the format they went back to.
+
+    The Excel export the adapter had switched to was left on the server frozen
+    at its 9/2/2026 close, so 53 pins showed September bids until 2026-10-15.
+    The page is read first now; the export is only a fallback.
+    """
+
+    def test_reads_the_page_not_the_export(self, heartland_page):
+        assert len(heartland_page) > 70
+        assert heartland_page[0].as_of == "2026-10-14T18:15:00Z"
+
+    def test_reads_cash_basis_and_window(self, heartland_page):
+        cb = next(l for l in heartland_page if l.source_location_id == "COUNCIL BLUFFS")
+        bid = next(b for b in cb.bids
+                   if b.grain == "corn" and b.delivery_start == "2026-10-01")
+        assert bid.delivery_end == "2026-11-30"
+        assert bid.cash == pytest.approx(4.53)
+        assert bid.basis == pytest.approx(-0.27)
+        assert bid.futures_month == "CZ26"
+
+    def test_futures_are_consistent_across_locations(self, heartland_page):
+        by_month: dict[str, set] = {}
+        for loc in heartland_page:
+            for bid in loc.bids:
+                if bid.futures_month and bid.futures is not None:
+                    by_month.setdefault(bid.futures_month, set()).add(round(bid.futures, 2))
+        for month, values in by_month.items():
+            assert len(values) == 1, month + " derived inconsistent futures: " + str(values)
+
+    def test_processors_are_kept_apart(self, heartland_page):
+        ids = {l.source_location_id for l in heartland_page}
+        assert "processor:CARGILL - BLAIR" in ids
+        assert "CARGILL - BLAIR" not in ids
+
+    def test_every_mapped_pin_is_on_the_page(self, heartland_page):
+        mapping = json.loads((FIXTURES.parent.parent / "config" / "location_map.json")
+                             .read_text(encoding="utf-8"))["pins"]
+        wanted = {v["source_location_id"] for v in mapping.values()
+                  if v.get("source") == "heartland"}
+        ids = {l.source_location_id for l in heartland_page}
+        assert wanted and wanted <= ids, sorted(wanted - ids)
+
+
+class TestOutOfDateIsNotPublished:
+    """A pin must not keep showing prices nobody can haul against."""
+
+    @staticmethod
+    def _now():
+        import datetime as dt
+        # 7 PM Central on 2026-10-15 - already the 16th in UTC.
+        return dt.datetime(2026, 10, 16, 0, 0, tzinfo=dt.timezone.utc)
+
+    @staticmethod
+    def _bid(end):
+        return {"grain": "corn", "delivery_end": end, "cash": 4.0}
+
+    def test_ended_windows_are_dropped_but_today_is_kept(self):
+        import build_bids
+        locs = {"p": {"as_of": "2026-10-15T18:00:00Z", "bids": [
+            self._bid("2026-09-30"), self._bid("2026-10-15"), self._bid("2026-11-30"),
+            {"grain": "corn", "cash": 4.0}]}}
+        build_bids.drop_out_of_date(locs, now=self._now())
+        assert [b.get("delivery_end") for b in locs["p"]["bids"]] == [
+            "2026-10-15", "2026-11-30", None]
+
+    def test_carried_pins_expire(self):
+        import build_bids
+        locs = {
+            "old": {"stale": True, "as_of": "2026-09-04T20:45:07Z",
+                    "bids": [self._bid("2026-12-31")]},
+            "recent": {"stale": True, "as_of": "2026-10-13T18:00:00Z",
+                       "bids": [self._bid("2026-12-31")]},
+            "fresh-but-old-date": {"as_of": "2026-09-04T20:45:07Z",
+                                   "bids": [self._bid("2026-12-31")]},
+        }
+        build_bids.drop_out_of_date(locs, now=self._now())
+        assert set(locs) == {"recent", "fresh-but-old-date"}
 
 
 class TestBuiltOutput:
@@ -822,8 +907,10 @@ class TestEmptyLocationsAreNotPublished:
     def _loc(loc_id, name, bids):
         from adapters.base import Bid, SourceLocation
         return SourceLocation(source_location_id=loc_id, name=name, bids=[
-            Bid(grain=g, delivery_start="2026-10-01", delivery_end="2026-10-31",
-                delivery_label="Oct 2026", futures_month="CZ26", futures=4.3,
+            # Far-future window: drop_out_of_date removes ended windows, and
+            # these tests are about empty locations, not the calendar.
+            Bid(grain=g, delivery_start="2099-10-01", delivery_end="2099-10-31",
+                delivery_label="Oct 2099", futures_month="CZ99", futures=4.3,
                 futures_change=0.0, basis=-0.4, cash=3.9) for g in bids])
 
     def _assemble(self, monkeypatch, results, previous=None):
