@@ -88,6 +88,14 @@ try {
     & $python scrapers\build_bids.py --validate docs\bids.json
     if ($LASTEXITCODE -ne 0) { throw "validation failed (exit $LASTEXITCODE)" }
 
+    # Daily bid history (~\grain-bid-history). Never allowed to stop the
+    # publish: the history can be rebuilt from git with --backfill, a frozen
+    # map cannot be un-frozen after the fact.
+    try {
+        $hist = & $python scrapers\bid_history.py 2>&1
+        if ($LASTEXITCODE -ne 0) { Write-Log "WARNING: bid history not recorded: $hist" }
+    } catch { Write-Log "WARNING: bid history not recorded: $_" }
+
     git diff --quiet -- docs/bids.json
     if ($LASTEXITCODE -eq 0) { Write-Log "no bid changes"; exit 0 }
 
