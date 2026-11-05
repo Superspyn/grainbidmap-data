@@ -364,6 +364,10 @@
   #grain-trucking-tool .gt-metric.gt-highlight { background: var(--green-pale); border-color: var(--green); }
   #grain-trucking-tool .gt-metric.gt-highlight .gt-metric-value { color: var(--green); }
 
+  #grain-trucking-tool .gt-wait-pair { display: flex; align-items: center; gap: 6px; }
+  #grain-trucking-tool .gt-wait-pair input { width: 64px; }
+  #grain-trucking-tool .gt-wait-pair span { font-size: 12px; color: var(--ink-soft); }
+
   #grain-trucking-tool .gt-bid-row {
     display: flex;
     gap: 20px;
@@ -625,6 +629,7 @@
 
     #grain-trucking-tool .gt-bid-row { flex-direction: column; align-items: stretch; }
     #grain-trucking-tool .gt-bid-row .gt-field input { width: 100%; }
+    #grain-trucking-tool .gt-bid-row .gt-wait-pair input { width: auto; flex: 1; min-width: 0; }
     #grain-trucking-tool .gt-bid-row .gt-metric { min-width: 0 !important; }
 
     /* iOS Safari zooms the page in when you focus an input under 16px.
@@ -776,6 +781,10 @@
         <div class="gt-metric-value" id="gt-drivetime">&mdash;</div>
       </div>
       <div class="gt-metric">
+        <div class="gt-metric-label">Total trip time (drive + wait)</div>
+        <div class="gt-metric-value" id="gt-triptime">&mdash;</div>
+      </div>
+      <div class="gt-metric">
         <div class="gt-metric-label">Fuel used (round trip)</div>
         <div class="gt-metric-value" id="gt-gallons">&mdash;</div>
       </div>
@@ -806,6 +815,15 @@
     </div>
 
     <div class="gt-bid-row">
+      <div class="gt-field">
+        <label for="gt-wait-h">Wait at elevator</label>
+        <div class="gt-wait-pair">
+          <input type="number" id="gt-wait-h" min="0" step="1" placeholder="0" aria-label="Wait at elevator, hours">
+          <span>hr</span>
+          <input type="number" id="gt-wait-m" min="0" step="5" placeholder="0" aria-label="Wait at elevator, minutes">
+          <span>min</span>
+        </div>
+      </div>
       <div class="gt-field">
         <label for="gt-bid">Elevator bid ($/bu)</label>
         <input type="number" id="gt-bid" step="0.01" min="0" placeholder="optional">
@@ -893,7 +911,7 @@
   </div>
 
   <div class="gt-legend">
-    Fuel cost = (round-trip miles &divide; truck mpg) &times; diesel price. Labor cost = labor rate &times; round-trip drive time. Wear &amp; tear cost = its per-mile rate &times; round-trip miles &mdash; look up a typical maintenance-cost-per-mile figure for your truck if you're not sure what to use. Fixed cost per bushel = (annual insurance + annual license/registration) &divide; contract bushels &mdash; neither scales with miles, so this spreads them evenly across your season's volume instead. Total hauling cost per bushel = (fuel + labor + wear &amp; tear) &divide; truck capacity, plus that fixed cost per bushel &mdash; the full real cost of that trip per bushel, before any bid is even entered, so you can compare hauling cost across elevators on its own. Net price after all costs = (bid &times; bushels after shrink &minus; fuel &minus; labor &minus; wear &amp; tear) &divide; truck capacity, minus fixed cost per bushel. Leave any of these at 0 if you don't want to include them.
+    Fuel cost = (round-trip miles &divide; truck mpg) &times; diesel price. Labor cost = labor rate &times; (round-trip drive time + wait at the elevator). The wait box is for the trip you clicked only &mdash; it is remembered per elevator while the page is open, and it is left out of the best-bids ranking, since every elevator's line is different. Wear &amp; tear cost = its per-mile rate &times; round-trip miles &mdash; look up a typical maintenance-cost-per-mile figure for your truck if you're not sure what to use. Fixed cost per bushel = (annual insurance + annual license/registration) &divide; contract bushels &mdash; neither scales with miles, so this spreads them evenly across your season's volume instead. Total hauling cost per bushel = (fuel + labor + wear &amp; tear) &divide; truck capacity, plus that fixed cost per bushel &mdash; the full real cost of that trip per bushel, before any bid is even entered, so you can compare hauling cost across elevators on its own. Net price after all costs = (bid &times; bushels after shrink &minus; fuel &minus; labor &minus; wear &amp; tear) &divide; truck capacity, minus fixed cost per bushel. Leave any of these at 0 if you don't want to include them.
     <br><br>
     <strong>Your farm isn't pinned on the map.</strong> Click any empty spot on the map (your loadout point) to drop a temporary pin and use it as your starting point &mdash; it's draggable if you need to fine-tune it. The &ldquo;Use my location&rdquo; button on the map does the same thing automatically.
   </div>
@@ -6063,6 +6081,9 @@
   var distanceEl = container.querySelector('#gt-distance');
   var roundtripEl = container.querySelector('#gt-roundtrip');
   var drivetimeEl = container.querySelector('#gt-drivetime');
+  var triptimeEl = container.querySelector('#gt-triptime');
+  var waitHInput = container.querySelector('#gt-wait-h');
+  var waitMInput = container.querySelector('#gt-wait-m');
   var gallonsEl = container.querySelector('#gt-gallons');
   var fuelcostEl = container.querySelector('#gt-fuelcost');
   var laborcostEl = container.querySelector('#gt-laborcost');
@@ -7241,6 +7262,9 @@
     }
     pendingTopBid = null;
     shrinkInput.value = (destData.shrinkPct !== undefined) ? destData.shrinkPct : '';
+    var savedWait = waitByPin[waitKey(destData)];
+    waitHInput.value = savedWait ? savedWait.h : '';
+    waitMInput.value = savedWait ? savedWait.m : '';
     // Mark the results visible first: renderBids reads that state to decide
     // which hint to show.
     resultsEl.classList.add('gt-visible');
@@ -7292,13 +7316,16 @@
   // Google actually returned; the best-bids table prices every elevator off an
   // estimated distance. They must agree, so both call this rather than each
   // keeping their own copy of the arithmetic.
-  function haulCosts(oneWayMiles, roundTripHours) {
+  // waitHours is the line at this one elevator. Optional: the best-bids table
+  // prices every elevator at once and leaves it out.
+  function haulCosts(oneWayMiles, roundTripHours, waitHours) {
+    waitHours = waitHours > 0 ? waitHours : 0;
     var roundTripMiles = oneWayMiles * 2;
     var mpg = parseFloat(mpgInput.value) || 0;
     var contractBu = parseFloat(contractbuInput.value) || 0;
     var gallons = mpg > 0 ? roundTripMiles / mpg : 0;
     var fuelCost = gallons * (parseFloat(dieselInput.value) || 0);
-    var laborCost = (parseFloat(laborInput.value) || 0) * roundTripHours;
+    var laborCost = (parseFloat(laborInput.value) || 0) * (roundTripHours + waitHours);
     var weartearCost = (parseFloat(weartearInput.value) || 0) * roundTripMiles;
     var truckCap = parseFloat(capInput.value) || 0;
     var totalCost = fuelCost + laborCost + weartearCost;
@@ -7309,6 +7336,7 @@
       oneWayMiles: oneWayMiles,
       roundTripMiles: roundTripMiles,
       roundTripHours: roundTripHours,
+      waitHours: waitHours,
       gallons: gallons,
       fuelCost: fuelCost,
       laborCost: laborCost,
@@ -7333,11 +7361,12 @@
 
   function updateResults() {
     if (!lastLegMeters) return;
-    var c = haulCosts(lastLegMeters / 1609.34, (lastLegSeconds * 2) / 3600);
+    var c = haulCosts(lastLegMeters / 1609.34, (lastLegSeconds * 2) / 3600, waitHours());
 
     distanceEl.textContent = c.oneWayMiles.toFixed(1) + ' mi';
     roundtripEl.textContent = c.roundTripMiles.toFixed(1) + ' mi';
     drivetimeEl.textContent = formatDuration(lastLegSeconds * 2);
+    triptimeEl.textContent = formatDuration(lastLegSeconds * 2 + c.waitHours * 3600);
     gallonsEl.textContent = c.gallons.toFixed(1) + ' gal';
     fuelcostEl.textContent = '$' + c.fuelCost.toFixed(2);
     laborcostEl.textContent = '$' + c.laborCost.toFixed(2);
@@ -7352,6 +7381,27 @@
 
   [dieselInput, mpgInput, capInput, laborInput, weartearInput, insuranceInput, licenseInput, contractbuInput, bidInput, shrinkInput].forEach(function (el) {
     el.addEventListener('input', updateResults);
+  });
+
+  // Wait at the elevator, as hours plus minutes - either box alone works, and
+  // 90 in the minutes box is an hour and a half. Remembered per elevator for
+  // as long as the page is open, so clicking back to one restores its wait
+  // and a new one starts blank.
+  var waitByPin = {};
+  function waitHours() {
+    var h = parseFloat(waitHInput.value);
+    var m = parseFloat(waitMInput.value);
+    return Math.max(0, (isNaN(h) ? 0 : h) + (isNaN(m) ? 0 : m) / 60);
+  }
+  function waitKey(d) {
+    return d ? d.name + '@' + d.lat + ',' + d.lng : '';
+  }
+  [waitHInput, waitMInput].forEach(function (el) {
+    el.addEventListener('input', function () {
+      var d = selectedDestination && selectedDestination.gtData;
+      if (d) waitByPin[waitKey(d)] = { h: waitHInput.value, m: waitMInput.value };
+      updateResults();
+    });
   });
 
   // Every cost input feeds the net-price ranking too. The bid box does not -
