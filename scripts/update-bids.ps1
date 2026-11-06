@@ -96,6 +96,13 @@ try {
         if ($LASTEXITCODE -ne 0) { Write-Log "WARNING: bid history not recorded: $hist" }
     } catch { Write-Log "WARNING: bid history not recorded: $_" }
 
+    # Iowa Ag Department's month-end basis reports - checked once a week,
+    # since a new one appears once a month. Same rule: never blocks the bids.
+    try {
+        $iowa = & $python scrapers\iowa_basis_history.py --if-stale-days 7 2>&1
+        if ($LASTEXITCODE -ne 0) { Write-Log "WARNING: Iowa basis history not updated: $iowa" }
+    } catch { Write-Log "WARNING: Iowa basis history not updated: $_" }
+
     git diff --quiet -- docs/bids.json
     if ($LASTEXITCODE -eq 0) { Write-Log "no bid changes"; exit 0 }
 
